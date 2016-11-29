@@ -1,0 +1,52 @@
+.banner{background: url("../images/bg.jpg") no-repeat 0 0; background-size: auto 800px;}
+.banner .header{position: relative;}
+.banner .header .login a{width:96px; height: 46px;border: 2px solid #f7b632;text-align: center;font-size: 18px;
+    line-height: 46px;margin-left: 15px; display: inline-block; transition: all 0.5s; cursor: pointer;color: white;}
+.banner .header .login a:hover{background: #f7b632; }
+.banner .header .login a img{vertical-align: middle; margin-right: 10px;}
+.banner .logo .city{cursor: pointer;}
+.banner .address{position: absolute; left: 88px; bottom:-60px;width: 690px; background: rgba(0,0,0,0.3);}
+.banner .address h2{position: relative;}
+.banner .address input{width:78px; height: 28px; border: 1px solid #fff; margin-left: 11px;color: #fff;
+background: url("../images/trigle02.png") no-repeat 78px center transparent;padding-right: 20px;
+text-align: center; cursor: pointer; font-size: 14px;}
+.banner .address ul{width:98px; height:180px; overflow-y:scroll; background:rgba(0,0,0,0.5); border: 1px solid #fff;
+position: absolute; left: 29px; top:46px; border-top: none; font-size: 14px; display: none;}
+.banner .address ul li{line-height: 30px; height: 30px; text-align: center; cursor: pointer; }
+.banner .address ul li:hover{background:#f7b632; }
+
+.banner .search input{box-sizing: border-box; }
+.banner .search button{cursor: pointer;}
+.banner .servs{ width:840px; margin:80px auto 0;}
+.banner .servs li{margin:20px; width: 240px; height:160px; text-align: center;background:rgba(0,0,0,0.5);}
+.banner .servs li i{display:block; height:85px;}
+.banner .servs li i img{vertical-align: bottom;}
+.banner .servs li h3{line-height: 68px;}
+
+.coop h3{border-bottom: 1px solid #ccc; position: relative; margin:50px auto 0;}
+.coop h3 span{display: inline-block; width:100px; height: 4px; background:#f7b632; position: absolute; left:50%; bottom:-3px;
+transform: translateX(-50%);}
+.coop .coLogos li{margin:0 40px;}
+.coop .coLogos li:first-child{margin:0 30px 0 15px;}
+.coop .coLogos li:last-child{margin-right:0}
+.coop .coLogos li a{display:block;height:132px; line-height: 132px;}
+.coop .coLogos img{vertical-align: middle;}
+.pics .pics-nav span{display: inline-block; width:100px; height:73px; text-align: center; cursor:pointer;transition:all 0.7s;}
+.pics .pics-nav .on{color:#f7b632; border-bottom:4px solid #f7b632;}
+.pics .showBox{margin:28px auto 0;}
+.pics .showBox li{width:320px;}
+.pics .showBox li img{margin:10px; transition: all 0.5s}
+
+.footer{background: url("../images/footer-bg.jpg") repeat-x 0 0; text-align: center}
+.footer ul{margin-top:17px; display: inline-block;}
+.footer ul li{width:136px; height:103px; line-height: 36px; margin-right: 115px; padding-top:33px;
+border:4px dashed #f7a14a; border-radius: 50%;position: relative;}
+.footer ul li:last-child{margin-right:0; line-height: 73px;}
+.footer ul li i{display: inline-block; width: 80px; height:0; border-top:4px dotted #f7a14a; position: absolute;
+right:-102px; top:50%; }
+
+.bot{background:#252525; color: #f5f5f5;text-align: center;}
+.bot .contact p{display: inline-block;}
+.bot .contact p:first-child{margint-left:22px;}
+.bot .contact p:nth-child(2){margin-left:152px;}
+.bot .contact p:nth-child(3){margin-left:156px;}
