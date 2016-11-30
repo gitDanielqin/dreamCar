@@ -340,7 +340,7 @@
                 <button type="button" class="bg-blueL">预览简历</button><button class="bg-orange3">提交</button>
             </div>
         </div>
-        <div class="classBox" style="display: block;">
+        <div class="classBox ListBox" style="display: none;">
             <div class="hd LH-H58">
                 <div class="selectee ">
                     <input type="text" value="全部状态" class="H38 maL30"/>
@@ -351,9 +351,9 @@
                 </div>
                 <p class="fr fSize14 maR30">我学习过的课程<span class="color-orange2 maL10 maR10">1</span>个</p>
             </div>
-            <ul class="classList">
+            <ul class="classList contList">
                 <li>
-                    <div class="class-pic"></div>
+                    <div class="class-pic logo-pic"></div>
                     <div class="class-txt fl paTop20 W328">
                         <h2 class="class-name"><b>课程名称</b><span class="LH-H20 score">4.5分</span></h2>
                         <p>开课学院名称</p>
@@ -361,12 +361,12 @@
                     </div>
                     <div class="class-info fl fSize14">
                         <p>课程时间</p>
-                        <p style="color:#f74a4a;">已开课</p>
+                        <p class="begin">已开课</p>
                         <p>教师评语</p>
                     </div>
                 </li>
                 <li>
-                    <div class="class-pic"></div>
+                    <div class="class-pic logo-pic"></div>
                     <div class="class-txt fl paTop20 W328">
                         <h2 class="class-name"><b>课程名称</b><span class="LH-H20 score">4.5分</span></h2>
                         <p>开课学院名称</p>
@@ -374,12 +374,12 @@
                     </div>
                     <div class="class-info fl fSize14">
                         <p>课程时间</p>
-                        <p style="color:#f74a4a;">已开课</p>
+                        <p class="after">课程结束</p>
                         <p>教师评语</p>
                     </div>
                 </li>
                 <li>
-                    <div class="class-pic"></div>
+                    <div class="class-pic logo-pic"></div>
                     <div class="class-txt fl paTop20 W328">
                         <h2 class="class-name"><b>课程名称</b><span class="LH-H20 score">4.5分</span></h2>
                         <p>开课学院名称</p>
@@ -387,8 +387,135 @@
                     </div>
                     <div class="class-info fl fSize14">
                         <p>课程时间</p>
-                        <p style="color:#f74a4a;">已开课</p>
+                        <p class="before">未开课</p>
                         <p>教师评语</p>
+                    </div>
+                </li>
+            </ul>
+            <ul class="pageBot lis-inline maT30 fr fSize14">
+                <li class="side-page first-page">首页</li>
+                <li class="prev side-page">上一页</li>
+                <li class="page-index">1</li>
+                <li class="page-index">2</li>
+                <li class="page-index">3</li>
+                <li class="next side-page">下一页</li>
+                <li class="side-page last-page">尾页</li>
+            </ul>
+        </div>
+        <div class="collec-study ListBox" style="display: none;">
+            <div class="hd LH-H58">
+                <div class="selectee ">
+                    <input type="text" value="全部状态" class="H38 maL30"/>
+                    <ul>
+                        <li>全部状态</li><li>已开课</li>
+                        <li>未开课</li><li>已结束</li>
+                    </ul>
+                </div>
+                <p class="fr fSize14 maR30">我收藏过的课程<span class="color-orange2 maL10 maR10">1</span>个</p>
+            </div>
+            <ul class="colStudyList contList">
+                <li>
+                    <div class="logo-pic"></div>
+                    <div class="class-txt fl paTop20 W328">
+                        <h2 class="class-name"><b>课程名称</b></h2>
+                        <p>开课学院名称</p>
+                        <p class="teacher">讲课老师<span>|</span>性别<span>|</span>年龄<span>|</span>教学经验</p>
+                    </div>
+                    <div class="col-class-info fl fSize18">
+                        <p>学习时间</p>
+                        <p class="price">15000元</p>
+                        <div class="action"><span>取消收藏</span><span>报名学习</span></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="logo-pic"></div>
+                    <div class="class-txt fl paTop20 W328">
+                        <h2 class="class-name"><b>课程名称</b></h2>
+                        <p>开课学院名称</p>
+                        <p class="teacher">讲课老师<span>|</span>性别<span>|</span>年龄<span>|</span>教学经验</p>
+                    </div>
+                    <div class="col-class-info fl fSize18">
+                        <p>学习时间</p>
+                        <p class="price">15000元</p>
+                        <div class="action"><span>取消收藏</span><span>报名学习</span></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="logo-pic"></div>
+                    <div class="class-txt fl paTop20 W328">
+                        <h2 class="class-name"><b>课程名称</b></h2>
+                        <p>开课学院名称</p>
+                        <p class="teacher">讲课老师<span>|</span>性别<span>|</span>年龄<span>|</span>教学经验</p>
+                    </div>
+                    <div class="col-class-info fl fSize18">
+                        <p>学习时间</p>
+                        <p class="price">15000元</p>
+                        <div class="action"><span>取消收藏</span><span>报名学习</span></div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="pageBot lis-inline maT30 fr fSize14">
+                <li class="side-page first-page">首页</li>
+                <li class="prev side-page">上一页</li>
+                <li class="page-index">1</li>
+                <li class="page-index">2</li>
+                <li class="page-index">3</li>
+                <li class="next side-page">下一页</li>
+                <li class="side-page last-page">尾页</li>
+            </ul>
+        </div>
+        <div class="collec-job ListBox" style="display: block;">
+            <div class="hd LH-H58">
+                <div class="selectee ">
+                    <input type="text" value="全部状态" class="H38 maL30"/>
+                    <ul>
+                        <li>全部状态</li><li>已开课</li>
+                        <li>未开课</li><li>已结束</li>
+                    </ul>
+                </div>
+                <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">1</span>个</p>
+            </div>
+            <ul class="colCompanyList contList">
+                <li>
+                    <div class="logo-pic"></div>
+                    <div class="class-txt fl paTop20 W328">
+                        <h2 class="class-name"><b>职位名称</b></h2>
+                        <p class="teacher">年薪<span>|</span>地区<span>|</span>学历要求<span>|</span>经验要求</p>
+                        <p>发布时间</p>
+                    </div>
+                    <div class="col-company-info fl fSize18">
+                        <p>公司名称</p>
+                        <p>公司所属行业</p>
+                        <p>公司待遇</p>
+                        <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="logo-pic"></div>
+                    <div class="class-txt fl paTop20 W328">
+                        <h2 class="class-name"><b>职位名称</b></h2>
+                        <p class="teacher">年薪<span>|</span>地区<span>|</span>学历要求<span>|</span>经验要求</p>
+                        <p>发布时间</p>
+                    </div>
+                    <div class="col-company-info fl fSize18">
+                        <p>公司名称</p>
+                        <p>公司所属行业</p>
+                        <p>公司待遇</p>
+                        <div class="action"><span>取消收藏</span><span class="end">已投递</span></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="logo-pic"></div>
+                    <div class="class-txt fl paTop20 W328">
+                        <h2 class="class-name"><b>职位名称</b></h2>
+                        <p class="teacher">年薪<span>|</span>地区<span>|</span>学历要求<span>|</span>经验要求</p>
+                        <p>发布时间</p>
+                    </div>
+                    <div class="col-company-info fl fSize18">
+                        <p>公司名称</p>
+                        <p>公司所属行业</p>
+                        <p>公司待遇</p>
+                        <div class="action"><span>取消收藏</span><span class="end">已下线</span></div>
                     </div>
                 </li>
             </ul>

@@ -61,19 +61,39 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .main .resumeBox .text-box p span{margin:0 2px;}
 .main .resumeBox .buttons-commit button{width:150px; height:50px; line-height: 50px; color: #fff; font-size: 18px; text-align: center; margin: 0 10px;cursor: pointer;}
 
-.main .classBox .hd{border:1px solid #ccc;}
-.main .classBox .hd input{width:88px; background: url("../images/icon-select-b.png") no-repeat center right;}
-.main .classBox .classList .class-pic{width:90px;height:80px; background: #5c3333; margin:24px 20px 0 30px;float: left;}
-.main .classBox .classList .class-txt .class-name b{color:#46afe8; font-size: 18px; line-height: 32px; height:32px; display: inline-block; vertical-align: bottom}
-.main .classBox .classList .class-txt .class-name span.score{color:#ec7d0e;height:20px; line-height: 20px; font-size: 12px; display: inline-block;vertical-align: bottom;
+.main .ListBox .hd{border:1px solid #ccc;}
+.main .ListBox .hd input{width:88px; background: url("../images/icon-select-b.png") no-repeat center right;}
+.main .ListBox .contList .logo-pic{width:90px;height:80px; background: #5c3333; margin:24px 20px 0 30px;float: left;}
+.main .ListBox .contList .class-txt .class-name b{color:#46afe8; font-size: 18px; line-height: 32px; height:32px; display: inline-block; vertical-align: bottom}
+.main .ListBox .contList .class-txt .class-name span.score{color:#ec7d0e;height:20px; line-height: 20px; font-size: 12px; display: inline-block;vertical-align: bottom;
     margin-left: 10px;  }
-.main .classBox .classList .class-txt p{line-height: 26px; height:26px; color:#333; font-size: 14px; width: 254px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
-.main .classBox .classList .class-info{padding: 18px; background: url("../images/dashline.png") no-repeat left center;}
-.main .classBox .classList .class-info p{height:30px; line-height: 30px; color: #333;}
-.main .classBox .classList li{overflow: hidden; height:128px; border: 1px solid #ccc; margin-top: 10px;}
-.main .classBox .pageBot li{margin-left: 10px; background: #333; color: #fff;line-height: 30px; height: 30px; text-align: center;}
-.main .classBox .pageBot li.side-page{width:60px;}
-.main .classBox .pageBot li.page-index{width:30px;}
+.main .ListBox .contList .class-txt p{line-height: 26px; height:26px; color:#333; font-size: 14px; width: 254px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
+.main .ListBox .contList .class-info{padding: 18px; background: url("../images/dashline.png") no-repeat left center;}
+.main .ListBox .contList .class-info p{height:30px; line-height: 30px; color: #333;}
+.main .ListBox .contList li{overflow: hidden; height:128px; border: 1px solid #ccc; margin-top: 10px;}
+.main .ListBox .contList .class-info .begin{color:#f74a4a;}
+.main .ListBox .contList .class-info .after{color:#b8b8b8;}
+.main .ListBox .contList .class-info .before{color:#46afe8;}
+/*我的收藏之学习收藏*/
+.main .ListBox .colStudyList li{height:148px;}
+.main .ListBox .contList .class-txt .teacher span{margin:0 12px;}
+.main .ListBox .contList .col-class-info{padding:30px 18px 0; background: url("../images/dashline.png") no-repeat left center;}
+.main .ListBox .contList .col-class-info p{height:32px; line-height: 32px; color: #333;}
+.main .ListBox .contList .col-class-info p.price{color:#dd4040;}
+.main .ListBox .contList .col-class-info .action{height:53px; line-height: 53px; font-size: 14px;}
+.main .ListBox .contList .col-class-info .action span{display: inline-block; margin-right: 35px; color:#46afe8;}
+/*我的收藏之职位收藏*/
+.main .ListBox .colCompanyList li{height:148px;}
+.main .ListBox .contList .col-company-info{padding:30px 18px 0; background: url("../images/dashline.png") no-repeat left center;}
+.main .ListBox .contList .col-company-info p{height:24px; line-height: 24px; font-size: 14px; color: #333;}
+.main .ListBox .contList .col-company-info .action{height:46px; line-height: 46px; font-size: 14px;}
+.main .ListBox .contList .col-company-info .action span{display: inline-block; margin-right: 35px; color:#46afe8;}
+.main .ListBox .contList .col-company-info .action span.post{color:#f7a14a;}
+.main .ListBox .contList .col-company-info .action span.end{color:#666;}
+
+.main .ListBox .pageBot li{margin-left: 10px; background: #333; color: #fff;line-height: 30px; height: 30px; text-align: center;}
+.main .ListBox .pageBot li.side-page{width:60px;}
+.main .ListBox .pageBot li.page-index{width:30px;}
     /*底部样式，与首页基本*/
 .bot{background:#252525; color: #f5f5f5;text-align: center;}
 .bot .contact p{display: inline-block;}
