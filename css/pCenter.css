@@ -10,56 +10,61 @@
 .main .selectee ul li.selected{background: #2ea8e6; color:#fff;}
 
 .main .sInfo{ border: 1px solid #ccc;}
-.main .porto-img{border: 2px dashed #999; background: url("../images/cross.png") no-repeat center center;}
+.porto-img{border: 2px dashed #999; background: url("../images/cross.png") no-repeat center center;}
 .main .infoTxt{position: relative;}
 .main .infoTxt p{line-height: 25px; font-size: 14px;}
 .main .infoTxt i{display: inline-block; position: absolute; right:0; top: 0; font-size: 0;}
 
 .main .sideBox{border:1px solid #ccc;}
-.main .sideBox li{line-height: 40px; height:40px;margin-bottom: 7px;padding-left: 30px; cursor:pointer}
+.main .sideBox >li.on{background:#edeceb;}
+.main .sideBox li{line-height: 40px;margin-bottom: 7px;padding-left: 30px; cursor:pointer}
 .main .sideBox li:hover{background:#edeceb; }
-.main .sideBox li i{display: inline-block; width: 20px; height: 20px; line-height: 20px; text-align: center; font-size: 0;}
+.main .sideBox li i{display: inline-block; width: 20px; height: 20px; line-height: 20px; text-align: center; font-size: 0; vertical-align: middle;margin-right: 5px;}
+.sub-li{display: none;}
+.sub-li .on{color:#f8a85c;}
+.sub-li p{padding-left: 30px;}
+.main .content > div{display: none;}
 .main .resumeBox{border:1px solid #ccc;}
-.main .resumeBox .itemBox input{line-height: 24px; height: 24px; font-size: 14px; color: #666; border: 1px solid #ccc;margin-left: 10px;
+.main .itemBox input{line-height: 24px; height: 24px; font-size: 14px; color: #666; border: 1px solid #ccc;margin-left: 10px;
 padding-left: 10px; width:448px;}
-.main .resumeBox .itemBox label{ width:143px; color:#333; font-size: 14px; text-align: right; display: inline-block; line-height: 26px; height:26px;}
-.main .resumeBox .itemBox .item-row{margin-bottom: 20px;}
-.main .resumeBox .itemBox .address{display: inline-block;}
-.main .resumeBox .itemBox .address input{width:108px;}
-.main .resumeBox .itemBox .career-input{background: url("../images/icon-prop.jpg") no-repeat 438px center;}
-.main .resumeBox .itemBox .sel-salary input{width:98px;}
-.main .resumeBox .itemBox{margin-bottom:35px;}
-.main .resumeBox .item-basic .laLeft{width:135px;}
-.main .resumeBox .item-basic .item-left{width:354px; display: inline-block;}
-.main .resumeBox .item-basic .laRight{width:70px;}
-.main .resumeBox .item-basic input{width:160px;}
-.main .resumeBox .item-basic .birthday{position: relative;}
-.main .resumeBox .item-basic .birthday i{display: inline-block; position: absolute; right: -26px; top:50%; border-top:1px solid #d2d2d2;
+.main .itemBox label{ width:143px; color:#333; font-size: 14px; text-align: right; display: inline-block; line-height: 26px; height:26px;}
+.main .itemBox .item-row{margin-bottom: 20px;}
+.main .itemBox .address{display: inline-block;}
+.main .itemBox .address input{width:108px;}
+.main .itemBox .career-input{background: url("../images/icon-prop.jpg") no-repeat 438px center;}
+.main .itemBox .sel-salary input{width:98px;}
+.main .itemBox{margin-bottom:35px;}
+.main .item-basic .laLeft{width:135px;}
+.main .item-basic .item-left{width:354px; display: inline-block;}
+.main .item-basic .laRight{width:70px;}
+.main .item-basic input{width:160px;}
+.main .item-basic .birthday{position: relative;}
+.main .item-basic .birthday i{display: inline-block; position: absolute; right: -26px; top:50%; border-top:1px solid #d2d2d2;
     height: 0; width: 20px;}
-.main .resumeBox .item-basic .birthday input{width:78px;}
-.main .resumeBox .itemBox .title{height:30px; line-height: 30px; font-size: 18px; margin-bottom: 33px;}
-.main .resumeBox .itemBox .title i{display: inline-block; width:30px; height:30px; line-height: 30px; text-align: center; font-size: 0;
+.main .item-basic .birthday input{width:78px;}
+.itemBox .title{height:30px; line-height: 30px; font-size: 18px; margin-bottom: 33px;}
+.itemBox .title i{display: inline-block; width:30px; height:30px; line-height: 30px; text-align: center; font-size: 0;
 margin-right: 10px;}
-.main .resumeBox .itemBox .works-title .pane-tabs{display: inline-block; vertical-align: middle;}
-.main .resumeBox .itemBox .works-title .pane-tabs li{width:48px; height:16px; line-height: 16px; text-align: right;padding-right: 10px;
+.main .itemBox .works-title .pane-tabs{display: inline-block; vertical-align: middle;}
+.main .itemBox .works-title .pane-tabs li{width:48px; height:16px; line-height: 16px; text-align: right;padding-right: 10px;
 background: url("../images/bg-work.png") no-repeat right center; color:#fff; font-size: 12px; cursor: pointer}
-.main .resumeBox .itemBox .time-interval input{width:78px;}
-.main .resumeBox .itemBox .time-interval i{display: inline-block; position: absolute; right: -26px; top:50%; border-top:1px solid #d2d2d2;  height: 0; width: 20px;}
-.main .resumeBox .itemBox .work-resp textarea{width:438px; height:188px; padding: 5px 10px; border: 1px solid #ccc;margin-left: 10px;vertical-align: top}
-.main .resumeBox .itemBox .addItem{width:618px; height:36px; line-height: 36px; text-align: center; cursor:pointer;margin-left: 38px; border: 1px dotted #ccc; margin-top: 50px;}
-.main .resumeBox .itemBox .addItem i{display: inline-block;}
-.main .resumeBox .itemBox .language-skills input[type="checkbox"]{width:16px; height:16px; background:none;
+.main .itemBox .time-interval input{width:78px;}
+.main .itemBox .time-interval i{display: inline-block; position: absolute; right: -26px; top:50%; border-top:1px solid #d2d2d2;  height: 0; width: 20px;}
+.main .itemBox .work-resp textarea{width:438px; height:188px; padding: 5px 10px; border: 1px solid #ccc;margin-left: 10px;vertical-align: top}
+.main .itemBox .addItem{width:618px; height:36px; line-height: 36px; text-align: center; cursor:pointer;margin-left: 38px; border: 1px dotted #ccc; margin-top: 50px;}
+.main .itemBox .addItem i{display: inline-block;}
+.main .itemBox .language-skills input[type="checkbox"]{width:16px; height:16px; background:none;
     border: 1px solid #ccc;vertical-align: middle; margin-right: 5px; margin-left: 10px;outline: none;}
-.main .resumeBox .itemBox .language-skills label{width:auto;}
-.main .resumeBox .itemBox .project-area textarea{width:438px; height:88px; padding: 5px 10px; border: 1px solid #ccc;margin-left: 10px;vertical-align: top}
-.main .resumeBox .itemBox .project-area p{line-height: 34px; height:34px; text-align: right;padding-right: 104px; font-size: 14px; color: #333;}
-.main .resumeBox .itemBox .project-area p span{margin:0 2px;}
-.main .resumeBox .itemBox .project-area{margin-bottom: 10px;}
-.main .resumeBox .text-box{margin-bottom: 42px;}
-.main .resumeBox .text-box textarea{width:538px; height:88px; padding: 5px 10px; border: 1px solid #ccc; margin-left: 68px; font-size: 14px;}
-.main .resumeBox .text-box p{width:627px; text-align: right; line-height: 34px; height: 34px; font-size: 14px;}
-.main .resumeBox .text-box p span{margin:0 2px;}
-.main .resumeBox .buttons-commit button{width:150px; height:50px; line-height: 50px; color: #fff; font-size: 18px; text-align: center; margin: 0 10px;cursor: pointer;}
+.main .itemBox .language-skills label{width:auto;}
+.main .itemBox .project-area textarea{width:438px; height:88px; padding: 5px 10px; border: 1px solid #ccc;margin-left: 10px;vertical-align: top}
+.main .itemBox .project-area p{line-height: 34px; height:34px; text-align: right;padding-right: 104px; font-size: 14px; color: #333;}
+.main .itemBox .project-area p span{margin:0 2px;}
+.main .itemBox .project-area{margin-bottom: 10px;}
+.main .text-box{margin-bottom: 42px;}
+.main .text-box textarea{width:538px; height:88px; padding: 5px 10px; border: 1px solid #ccc; margin-left: 68px; font-size: 14px;}
+.main .text-box p{width:627px; text-align: right; line-height: 34px; height: 34px; font-size: 14px;}
+.main .text-box p span{margin:0 2px;}
+.main .buttons-commit button{width:150px; height:50px; line-height: 50px; color: #fff; font-size: 18px; text-align: center; margin: 0 10px;cursor: pointer;}
 
 .main .ListBox .hd{border:1px solid #ccc;}
 .main .ListBox .hd input{width:88px; background: url("../images/icon-select-b.png") no-repeat center right;}
@@ -90,10 +95,53 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .main .ListBox .contList .col-company-info .action span{display: inline-block; margin-right: 35px; color:#46afe8;}
 .main .ListBox .contList .col-company-info .action span.post{color:#f7a14a;}
 .main .ListBox .contList .col-company-info .action span.end{color:#666;}
+/*我的求职*/
 
+.main .ListBox .contList .feedback h3{margin-top:21px; height:35px; line-height:35px; font-size: 14px; padding-right: 40px; text-align: right}
+.main .ListBox .contList .feedback .feedState li{margin-top:0;text-align: center; width:50px; font-size: 12px;height:70px;color:#b8b8b8;border:none;margin-right: 18px;}
+.main .ListBox .contList .feedback .feedState li img{display: none;}
+.main .ListBox .contList .feedback .feedState li.on{color:#f7a14a;}
+.main .ListBox .contList .feedback .feedState li.on img{display: block;}
+.main .ListBox .contList .feedback .feedState i{display: inline-block;font-size: 0;height: 20px;}
+.main .ListBox .contList .feedback .feedState li span{display: block; line-height: 30px;}
+/*修改密码*/
+.main .conf-keyword{border:1px solid #ccc;}
+.main .conf-keyword form div{margin-top: 20px;}
+.main .conf-keyword form label{width:118px; text-align: right; display: inline-block; margin-right: 30px;}
+.main .conf-keyword form input{width:290px; padding-left: 10px;background: #f2f0f0;height: 40px; line-height: 40px;}
+.conf-keyword .varify-code{display: inline-block;}
+.main .conf-account{border: 1px solid #ccc;}
+.safe-range{width:382px; height:10px; padding: 2px 1px;border: 1px solid #ccc; border-radius:8px; display: inline-block; vertical-align: middle;}
+.safe-range p{background: -webkit-linear-gradient(left,#f7524a,#f7a14a,#7ebe96);width:80%;height:10px;border-radius: 8px;}
+.safe-range .r-pointer{position: absolute;top:-40px;background: url("../images/icon-range.png") no-repeat top left; left: 326px;}
+.bind-acc{padding-top: 30px;border-top:1px dotted #ccc; padding-bottom: 14px;}
+.bind-acc li{ height:40px; line-height: 40px; vertical-align: middle; margin-bottom: 20px;}
+.bind-acc li img{margin-right: 20px;vertical-align: middle;}
+.bind-acc li button{font-size: 18px;background: none; color:#48c1e4;}
 .main .ListBox .pageBot li{margin-left: 10px; background: #333; color: #fff;line-height: 30px; height: 30px; text-align: center;}
 .main .ListBox .pageBot li.side-page{width:60px;}
 .main .ListBox .pageBot li.page-index{width:30px;}
+
+.preView{ margin: 130px auto 0;}
+.preView .itemBox .title{margin-bottom: 6px;}
+.preView .itemBox .item-row{padding-left: 40px; height:26px; line-height: 26px;}
+.preView .itemBox .item-row label span{margin-left: 10px;}
+.preView .baseInfo .infoTxt p{float: left; width: 50%;}
+.preView .alleInfo table .la-l{width:92px; text-align: right; margin-right: 10px;}
+.preView .alleInfo table .val-l{width:250px;}
+.preView .alleInfo table .la-r{width:56px; text-align: right; margin-right: 10px;}
+.preView .alleInfo .itemBox{padding-bottom: 17px; padding-top:30px;border-bottom: 1px dotted #ccc;}
+.preView .alleInfo .item-basic{padding-top: 40px;}
+
+.phone-change{position: absolute; left:50%; top: 256px;margin-left: -250px;  }
+.phone-change input{height:44px; background: #f3f3f3; font-size: 14px; padding-left: 10px;}
+.phone-change p{text-align: center; margin-bottom: 20px;}
+.phone-change .btn-submit button{width:120px; height:40px; font-size: 18px; color: #fff;}
+.close{cursor: pointer;}
+.wechat-bind{position: absolute; left:50%; top: 256px;margin-left: -250px;}
+.wechat-bind .close{position: absolute; right:10px; top:13px;}
+.modal{display: none;}
+.modal >div{display: none;}
     /*底部样式，与首页基本*/
 .bot{background:#252525; color: #f5f5f5;text-align: center;}
 .bot .contact p{display: inline-block;}

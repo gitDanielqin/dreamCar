@@ -1,0 +1,40 @@
+.login  span{margin-left: 15px;}
+.top-acc{margin-left: 47px; margin-right: 15px;}
+.top-acc img{margin-right: 6px;}
+.search input{width:526px; border: 2px solid #ffa800; background: url(../images/icon-search.png) no-repeat 12px center;}
+.search button{letter-spacing: 16px;}
+
+.queryform{border:1px solid #d2d2d2; position: relative;}
+.queryform label{float: left; width:120px; text-align:right;font-size: 18px; line-height: 36px;}
+.queryform .label-val{float:left; margin-left: 8px; font-size: 18px; height: 34px;}
+.queryform .label-val select{height:34px; line-height: 34px;width: 158px; border-color:#d2d2d2;margin-right: 19px; padding-left: 20px; font-size: 18px; background: url("../images/icon-select-1.png") no-repeat 135px center;
+color:#000; }
+.queryform .label-val .selectee input{font-size: 14px; width: 158px; padding-left: 20px;line-height: 34px; height: 34px; margin-right: 19px;
+    background: url("../images/icon-select-1.png") no-repeat 154px center #fff; }
+.queryform .label-val .selectee ul{background: #fff;}
+.queryform .label-val .selectee ul li{font-size: 14px; width: 158px; padding-left: 20px;line-height: 34px; height: 34px;}
+.queryform .label-val .selectee ul li.over{background: #f5f5f5; color:#ffa800;}
+.queryform .label-val li{position: relative;}
+.queryform .label-val .sel-lis{position: absolute; left: 0; top:33px; border: 1px solid #d2d2d2; background: #fff;z-index: 10; height: 138px; overflow-y: auto; padding: 5px 0;}
+.queryform .label-val .sel-lis dd{float: left; width: 178px; height:31px; line-height: 31px; text-align: center;}
+.queryform .address li{width:71px;margin-right: 14px; line-height: 34px; height:34px;text-align: center;}
+.queryform .address li:hover{color:#ffa800; cursor: pointer;}
+.queryform .address li.on{ border:1px solid #d2d2d2; border-bottom:1px solid #fff; background: #fff;}
+.queryform .address{margin-bottom: 54px;}
+.queryform .district{width: 891px; border: 1px solid #d2d2d2;position: absolute; left:128px; top: 45px;}
+.queryform .district li{width: 60px; font-size: 14px; cursor: pointer; margin:6px 6px;height: 20px; line-height: 20px;}
+.queryform .district li:hover{color:#ffa800; }
+.queryform .district li.on{background: #ffa800; color:white;}
+.queryform .district li:first-child{width: 66px; font-size: 16px; border-top:1px solid #fff;margin: -1px 0 0;padding-left: 5px; padding-top: 5px}
+
+.main-result .title{border-bottom: 1px solid #f7b632; }
+.main-result .results li{width:969px; height:128px; margin-top: 19px; background: #fff; border: 1px solid #ccc;}
+.main-result .results .logo-pic{display: inline-block; vertical-align: middle; background: #2ea8e6; border: 1px solid #959595;}
+.main-result .results .logo-pic img{width: 100%; margin-top: 20px;}
+.main-result .results li p{font-size: 14px; line-height: 28px;height:28px;}
+.main-result .results li p span{margin:0 8px;}
+.main-result .results .institute{border-left:1px dashed #cecece;}
+.main-result .results li button{width: 150px; height: 50px; background: #ffa800; }
+.main-result .results li button:hover{background: #48c1e4;}
+.ads{border:1px solid #c9c9c9;}
+.main-result .ad-pic{overflow: hidden; margin-bottom: 30px; margin-left: 19px;}

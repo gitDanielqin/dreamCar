@@ -14,8 +14,11 @@ function init_center(){
             top:sibInput.height()
         })
     });
+    init_pos();
     selectEventBind();
     init_paneAdd();
+    navEventBind();
+    modalEventBind();
 }
 init_center();
 function tabEventBind(itemBox){
@@ -67,4 +70,47 @@ function selectEventBind(){
     $("body").bind("click",function(){
         $(".selectee ul").hide();
     })
+}
+function init_pos(){
+    var p_left= $(".safe-range p").width()-16+"px";
+    $(".r-pointer").css("left",p_left);
+}
+function navEventBind(){
+    $(".sideBox>li").bind("click",function(){
+        $(".sideBox").children("li.on").removeClass("on");
+        $(this).addClass("on");
+        $(".sideBox .sub-li").hide();
+        if($(this).find(".sub-li").length>0){
+            $(this).find(".sub-li").show();
+            $(this).find(".sub-li p").unbind("click").bind("click",function(){
+                $(".sideBox .sub-li .on").removeClass("on");
+                $(this).addClass("on");
+                $(".content").children().hide();
+                $(".content").children("."+$(this).attr("paneid")).show();
+                return false;
+            });
+        }
+        $(".content").children().hide();
+        $(".content").children("."+$(this).attr("paneid")).show();
+    });
+}
+function modalEventBind(){
+    $(".bind-acc button.chg-phone").click(function(){
+        $(".modal").show();
+        $(".modal").children().hide();
+        $(".modal .phone-change").show();
+        $(".close").unbind("click").bind("click",function(){
+            $(this).closest("div").hide();
+            $(".modal").hide();
+        })
+    });
+    $(".bind-acc button.wechatBind").click(function(){
+        $(".modal").show();
+        $(".modal").children().hide();
+        $(".modal .wechat-bind").show();
+        $(".close").unbind("click").bind("click",function(){
+            $(this).closest("div").hide();
+            $(".modal").hide();
+        });
+    });
 }
