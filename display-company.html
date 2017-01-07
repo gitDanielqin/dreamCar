@@ -11,13 +11,13 @@
 <div class="top bg-dunkel">
     <div class="wrapper clearfix">
         <h3 class="fl LH-H35 fSize14 color-white">您好，欢迎来到校企职通车</h3>
-        <div class="top-right fr LH-H35 fSize14 color-white">
+        <div class="top-right fr LH-H35 fSize14 color-white log-regis" style="display: none;">
             <p class="login fl">
                 <span>【登录】</span><span>|</span><span style="color: red">【注册】</span>
             </p>
             <div class="fl fSize14 top-acc color-white"><img class="v-mid" src="images/icon-account1.png">个人中心</div>
         </div>
-        <ul class="account fr lis-inline color-white fSize14 LH-H35" style="display: none;">
+        <ul class="account fr lis-inline color-white fSize14 LH-H35">
             <li style="margin-right: 14px;">免费发布</li>
             <li><span style="margin-right:14px;">|</span>网站合作<i class="pic-wrapper maR10"><img src="images/icon-dropdown-white.png"/></i>
                 <dl>
@@ -56,28 +56,21 @@
             <ul class="district lis-inline LH-H34 t-center fSize14 bg-white"><li class="fSize16 dis-label">分区：</li><li class="on">西湖区</li><li>滨江区</li><li>拱墅区</li><li>下沙区</li></ul>
         </div>
         <div class="clearfix maB19">
-            <label>高校提供：</label>
+            <label>对校要求：</label>
             <ul class="label-val lis-inline">
+                <li><select class="selFlex"><option>高校性质</option><option>重点高校</option></select></li>
                 <li><select class="selFlex"><option>院系</option><option>应用数学系</option><option>工商管理系</option></select></li>
                 <li><select class="selFlex"><option>专业</option><option>通信工程</option><option>电子技术</option></select></li>
                 <li><select class="selFlex"><option>专业人数</option><option>0-20</option></select></li>
             </ul>
         </div>
         <div class="clearfix maB19">
-            <label>对企要求：</label>
+            <label>企业提供：</label>
             <ul class="label-val lis-inline">
-                <li class="selectLi"><input class="fSize14 sel-input paLeft20 maR20 LH-H34 W158 bg-white" disabled type="text" value="需求行业"/>
-                <dl class="sel-lis W720 clearfix fSize14 disNo LH30">
-                    <dd>林业</dd><dd>畜牧业</dd><dd>采矿业</dd><dd>纺织</dd>
-                    <dd>林业</dd><dd>畜牧业</dd><dd>采矿业</dd><dd>纺织</dd>
-                    <dd>林业</dd><dd>畜牧业</dd><dd>采矿业</dd><dd>纺织</dd>
-                    <dd>煤炭开采和洗涤业</dd><dd>煤炭开采和洗涤业</dd><dd>煤炭开采和洗涤业</dd><dd>煤炭开采和洗涤业</dd>
-                </dl>
+                <li class="selectLi"><input class="fSize14 sel-input paLeft20 maR20 LH-H34 W158 bg-white" disabled type="text" value="岗位名称"/>
+                    <dl class="sel-lis W534 job-pos"><dt style="margin:11px 0 11px 18px"><select class="selFlex"><option>设计师</option><option>程序员</option><option>工程师</option></select><span class="fSize14 color-gray6">(选择此类将包含下方所有小类)</span></dt><dd>平面设计师</dd><dd>UI设计师</dd><dd>动画特效师</dd></dl>
                 </li>
-                <li><select class="selFlex"><option>企业性质</option><option>企业性质</option></select></li>
-                <li><select class="selFlex"><option>企业规模</option><option>0-20</option></select></li>
-                <li><select class="selFlex"><option>岗位名称</option><option>WEB前端</option></select></li>
-                <li><select class="selFlex"><option>岗位数量</option><option>0-5</option></select></li>
+                <li><select class="selFlex"><option>岗位数量</option><option>0-20</option></select></li>
             </ul>
         </div>
         <div class="clearfix maB19">
@@ -87,8 +80,6 @@
                 <li><select class="selFlex"><option>联合培养方式</option><option>到校培训</option></select></li>
             </ul>
         </div>
-
-
     </div>
 </div>
 <div class="main-result">
@@ -101,129 +92,129 @@
         <div class="wrapper clearfix">
             <ul class="results paTop10 fl">
                 <li>
-                    <div class="logo-pic W88 H78 fl maL28 maT24">
-                        <img src="images/coLogo01.jpg"/>
+                    <div class="logo-pic W88 H78 fl maL28 maT24 pic-wrapper">
+                        <img src="images/logo.png"/>
                     </div>
                     <div class="fl paTop23 W388 maL30">
                         <h2 class="fSize18 LH-H30 color-blueL">艺术设计</h2>
-                        <p>企业性质<i>|</i>企业规模<i>|</i>企业所属行业</p>
+                        <p>高校性质<i>|</i>专业名称<i>|</i>专业人数</p>
                         <p>企业提供的培训方式：企业高管到校培训</p>
                     </div>
                     <div class="institute W216 H70 fl fSize14 paLeft20 maT28">
-                        <h3 class="fSize18 LH-H23">中国美术学院</h3>
-                        <p class="LH-H28">本科</p>
+                        <h3 class="fSize18 LH-H23 W178 company-name" title="杭州皇巢信息科技有限公司">杭州皇巢信息科技有限公司</h3>
+                        <p class="LH-H28"><span class="maR20">国企</span><span>岗位数: 20人</span></p>
                         <p class="LH-H19">2016-12-10</p>
                     </div>
                     <button class="fSize18 color-white maT39 co-apply">申请合作<img class="maL4" src="images/handshake.png"/></button>
                 </li>
                 <li>
-                    <div class="logo-pic W88 H78 fl maL28 maT24">
-                        <img src="images/coLogo01.jpg"/>
+                    <div class="logo-pic W88 H78 fl maL28 maT24 pic-wrapper">
+                        <img src="images/logo.png"/>
                     </div>
                     <div class="fl paTop23 W388 maL30">
                         <h2 class="fSize18 LH-H30 color-blueL">艺术设计</h2>
-                        <p>企业性质<i>|</i>企业规模<i>|</i>企业所属行业</p>
+                        <p>高校性质<i>|</i>专业名称<i>|</i>专业人数</p>
                         <p>企业提供的培训方式：企业高管到校培训</p>
                     </div>
                     <div class="institute W216 H70 fl fSize14 paLeft20 maT28">
-                        <h3 class="fSize18 LH-H23">中国美术学院</h3>
-                        <p class="LH-H28">本科</p>
+                        <h3 class="fSize18 LH-H23 W178 company-name" title="杭州皇巢信息科技有限公司">杭州皇巢信息科技有限公司</h3>
+                        <p class="LH-H28"><span class="maR20">国企</span><span>岗位数: 20人</span></p>
                         <p class="LH-H19">2016-12-10</p>
                     </div>
                     <button class="fSize18 color-white maT39 co-apply">申请合作<img class="maL4" src="images/handshake.png"/></button>
                 </li>
                 <li>
-                    <div class="logo-pic W88 H78 fl maL28 maT24">
-                        <img src="images/coLogo01.jpg"/>
+                    <div class="logo-pic W88 H78 fl maL28 maT24 pic-wrapper">
+                        <img src="images/logo.png"/>
                     </div>
                     <div class="fl paTop23 W388 maL30">
                         <h2 class="fSize18 LH-H30 color-blueL">艺术设计</h2>
-                        <p>企业性质<i>|</i>企业规模<i>|</i>企业所属行业</p>
+                        <p>高校性质<i>|</i>专业名称<i>|</i>专业人数</p>
                         <p>企业提供的培训方式：企业高管到校培训</p>
                     </div>
                     <div class="institute W216 H70 fl fSize14 paLeft20 maT28">
-                        <h3 class="fSize18 LH-H23">中国美术学院</h3>
-                        <p class="LH-H28">本科</p>
+                        <h3 class="fSize18 LH-H23 W178 company-name" title="杭州皇巢信息科技有限公司">杭州皇巢信息科技有限公司</h3>
+                        <p class="LH-H28"><span class="maR20">国企</span><span>岗位数: 20人</span></p>
                         <p class="LH-H19">2016-12-10</p>
                     </div>
                     <button class="fSize18 color-white maT39 co-apply">申请合作<img class="maL4" src="images/handshake.png"/></button>
                 </li>
                 <li>
-                    <div class="logo-pic W88 H78 fl maL28 maT24">
-                        <img src="images/coLogo01.jpg"/>
+                    <div class="logo-pic W88 H78 fl maL28 maT24 pic-wrapper">
+                        <img src="images/logo.png"/>
                     </div>
                     <div class="fl paTop23 W388 maL30">
                         <h2 class="fSize18 LH-H30 color-blueL">艺术设计</h2>
-                        <p>企业性质<i>|</i>企业规模<i>|</i>企业所属行业</p>
+                        <p>高校性质<i>|</i>专业名称<i>|</i>专业人数</p>
                         <p>企业提供的培训方式：企业高管到校培训</p>
                     </div>
                     <div class="institute W216 H70 fl fSize14 paLeft20 maT28">
-                        <h3 class="fSize18 LH-H23">中国美术学院</h3>
-                        <p class="LH-H28">本科</p>
+                        <h3 class="fSize18 LH-H23 W178 company-name" title="杭州皇巢信息科技有限公司">杭州皇巢信息科技有限公司</h3>
+                        <p class="LH-H28"><span class="maR20">国企</span><span>岗位数: 20人</span></p>
                         <p class="LH-H19">2016-12-10</p>
                     </div>
                     <button class="fSize18 color-white maT39 co-apply">申请合作<img class="maL4" src="images/handshake.png"/></button>
                 </li>
                 <li>
-                    <div class="logo-pic W88 H78 fl maL28 maT24">
-                        <img src="images/coLogo01.jpg"/>
+                    <div class="logo-pic W88 H78 fl maL28 maT24 pic-wrapper">
+                        <img src="images/logo.png"/>
                     </div>
                     <div class="fl paTop23 W388 maL30">
                         <h2 class="fSize18 LH-H30 color-blueL">艺术设计</h2>
-                        <p>企业性质<i>|</i>企业规模<i>|</i>企业所属行业</p>
+                        <p>高校性质<i>|</i>专业名称<i>|</i>专业人数</p>
                         <p>企业提供的培训方式：企业高管到校培训</p>
                     </div>
                     <div class="institute W216 H70 fl fSize14 paLeft20 maT28">
-                        <h3 class="fSize18 LH-H23">中国美术学院</h3>
-                        <p class="LH-H28">本科</p>
+                        <h3 class="fSize18 LH-H23 W178 company-name" title="杭州皇巢信息科技有限公司">杭州皇巢信息科技有限公司</h3>
+                        <p class="LH-H28"><span class="maR20">国企</span><span>岗位数: 20人</span></p>
                         <p class="LH-H19">2016-12-10</p>
                     </div>
                     <button class="fSize18 color-white maT39 co-apply">申请合作<img class="maL4" src="images/handshake.png"/></button>
                 </li>
                 <li>
-                    <div class="logo-pic W88 H78 fl maL28 maT24">
-                        <img src="images/coLogo01.jpg"/>
+                    <div class="logo-pic W88 H78 fl maL28 maT24 pic-wrapper">
+                        <img src="images/logo.png"/>
                     </div>
                     <div class="fl paTop23 W388 maL30">
                         <h2 class="fSize18 LH-H30 color-blueL">艺术设计</h2>
-                        <p>企业性质<i>|</i>企业规模<i>|</i>企业所属行业</p>
+                        <p>高校性质<i>|</i>专业名称<i>|</i>专业人数</p>
                         <p>企业提供的培训方式：企业高管到校培训</p>
                     </div>
                     <div class="institute W216 H70 fl fSize14 paLeft20 maT28">
-                        <h3 class="fSize18 LH-H23">中国美术学院</h3>
-                        <p class="LH-H28">本科</p>
+                        <h3 class="fSize18 LH-H23 W178 company-name" title="杭州皇巢信息科技有限公司">杭州皇巢信息科技有限公司</h3>
+                        <p class="LH-H28"><span class="maR20">国企</span><span>岗位数: 20人</span></p>
                         <p class="LH-H19">2016-12-10</p>
                     </div>
                     <button class="fSize18 color-white maT39 co-apply">申请合作<img class="maL4" src="images/handshake.png"/></button>
                 </li>
                 <li>
-                    <div class="logo-pic W88 H78 fl maL28 maT24">
-                        <img src="images/coLogo01.jpg"/>
+                    <div class="logo-pic W88 H78 fl maL28 maT24 pic-wrapper">
+                        <img src="images/logo.png"/>
                     </div>
                     <div class="fl paTop23 W388 maL30">
                         <h2 class="fSize18 LH-H30 color-blueL">艺术设计</h2>
-                        <p>企业性质<i>|</i>企业规模<i>|</i>企业所属行业</p>
+                        <p>高校性质<i>|</i>专业名称<i>|</i>专业人数</p>
                         <p>企业提供的培训方式：企业高管到校培训</p>
                     </div>
                     <div class="institute W216 H70 fl fSize14 paLeft20 maT28">
-                        <h3 class="fSize18 LH-H23">中国美术学院</h3>
-                        <p class="LH-H28">本科</p>
+                        <h3 class="fSize18 LH-H23 W178 company-name" title="杭州皇巢信息科技有限公司">杭州皇巢信息科技有限公司</h3>
+                        <p class="LH-H28"><span class="maR20">国企</span><span>岗位数: 20人</span></p>
                         <p class="LH-H19">2016-12-10</p>
                     </div>
                     <button class="fSize18 color-white maT39 co-apply">申请合作<img class="maL4" src="images/handshake.png"/></button>
                 </li>
                 <li>
-                    <div class="logo-pic W88 H78 fl maL28 maT24">
-                        <img src="images/coLogo01.jpg"/>
+                    <div class="logo-pic W88 H78 fl maL28 maT24 pic-wrapper">
+                        <img src="images/logo.png"/>
                     </div>
                     <div class="fl paTop23 W388 maL30">
                         <h2 class="fSize18 LH-H30 color-blueL">艺术设计</h2>
-                        <p>企业性质<i>|</i>企业规模<i>|</i>企业所属行业</p>
+                        <p>高校性质<i>|</i>专业名称<i>|</i>专业人数</p>
                         <p>企业提供的培训方式：企业高管到校培训</p>
                     </div>
                     <div class="institute W216 H70 fl fSize14 paLeft20 maT28">
-                        <h3 class="fSize18 LH-H23">中国美术学院</h3>
-                        <p class="LH-H28">本科</p>
+                        <h3 class="fSize18 LH-H23 W178 company-name" title="杭州皇巢信息科技有限公司">杭州皇巢信息科技有限公司</h3>
+                        <p class="LH-H28"><span class="maR20">国企</span><span>岗位数: 20人</span></p>
                         <p class="LH-H19">2016-12-10</p>
                     </div>
                     <button class="fSize18 color-white maT39 co-apply">申请合作<img class="maL4" src="images/handshake.png"/></button>
@@ -236,7 +227,7 @@
             </div>
         </div>
         <div class="wrapper paBot33">
-            <ul class="pageBot lis-inline maT28 fSize14 maL278">
+            <ul class="pageBot lis-inline maT28 fSize14 maL278" style="display: none;">
                 <li class="side-page first-page">首页</li>
                 <li class="prev side-page">上一页</li>
                 <li class="page-index">1</li>
@@ -245,6 +236,7 @@
                 <li class="next side-page">下一页</li>
                 <li class="side-page last-page">尾页</li>
             </ul>
+            <div class="pageBot lis-inline maT28 fSize14 maL278"></div>
         </div>
     </div>
     <div class="bot paTop8 wrapper t-center">
@@ -271,7 +263,6 @@
             </div>
         </div>
     </div>
-
 </div>
 <div class="modal">
     <div class="dlg-success dlg W800 paBot4  b-Radius5">
@@ -305,6 +296,7 @@
 </div>
 <script src="js/jquery-3.1.0.min.js"></script>
 <script src="js/widget.js"></script>
+<script src="js/jquery.pagination.min.js"></script>
 <script src="js/display-comm.js"></script>
 </body>
 </html>

@@ -12,7 +12,6 @@ commWidget = {
             selDiv.append("<input type='text' disabled/>");
             var oInput = selDiv.children("input");
             oInput.val(selectOpts.first().html());
-            console.log($(this).outerHeight());
             oInput.height($(this).outerHeight());
             var ulObj= $("<ul></ul>");
             var lis="";
