@@ -17,8 +17,8 @@ position: absolute; left: 29px; top:46px; border-top: none; font-size: 14px; dis
 
 .banner .search input{box-sizing: border-box; }
 .banner .search button{cursor: pointer;}
-.banner .servs{ width:840px; margin:80px auto 0;}
-.banner .servs li{margin:20px; width: 240px; height:160px; text-align: center;background:rgba(0,0,0,0.5);}
+.banner .servs{ width:840px; margin:100px 0 0 105px;}
+.banner .servs li{margin:0 65px 40px 0; width: 212px; height:160px; text-align: center;background:rgba(0,0,0,0.5);}
 .banner .servs li i{display:block; height:85px;}
 .banner .servs li i img{vertical-align: bottom;}
 .banner .servs li h3{line-height: 68px;}
@@ -26,27 +26,33 @@ position: absolute; left: 29px; top:46px; border-top: none; font-size: 14px; dis
 .coop h3{border-bottom: 1px solid #ccc; position: relative; margin:50px auto 0;}
 .coop h3 span{display: inline-block; width:100px; height: 4px; background:#f7b632; position: absolute; left:50%; bottom:-3px;
 transform: translateX(-50%);}
-.coop .coLogos li{margin:0 40px;}
-.coop .coLogos li:first-child{margin:0 30px 0 15px;}
+.coop .coLogos li{margin-right:22px;}
+.coop .coLogos li:first-child{margin-left:16px;}
 .coop .coLogos li:last-child{margin-right:0}
-.coop .coLogos li a{display:block;height:132px; line-height: 132px;}
-.coop .coLogos img{vertical-align: middle;}
+.coop .coLogos li a{display:block;height:120px; line-height: 120px; width: 120px;}
+.coop .coLogos img{vertical-align: middle; width:80px;}
 .pics .pics-nav span{display: inline-block; width:100px; height:73px; text-align: center; cursor:pointer;transition:all 0.7s;}
 .pics .pics-nav .on{color:#f7b632; border-bottom:4px solid #f7b632;}
 .pics .showBox{margin:28px auto 0;}
 .pics .showBox li{width:320px;}
 .pics .showBox li img{margin:10px; transition: all 0.5s}
 
-.footer{background: url("../images/footer-bg.jpg") repeat-x 0 0; text-align: center}
-.footer ul{margin-top:17px; display: inline-block;}
-.footer ul li{width:136px; height:103px; line-height: 36px; margin-right: 115px; padding-top:33px;
-border:4px dashed #f7a14a; border-radius: 50%;position: relative;}
-.footer ul li:last-child{margin-right:0; line-height: 73px;}
-.footer ul li i{display: inline-block; width: 80px; height:0; border-top:4px dotted #f7a14a; position: absolute;
-right:-102px; top:50%; }
+.footer{ text-align: center}
+.footer .servinces{display: inline-block;}
+.footer .servinces li{width:130px; padding: 0 22px; }
+.servinces li i{width: 92px; height: 86px; line-height: 86px;background: url("../images/icon-roundtop.png") no-repeat 0 0;}
+.servinces li p{line-height: 29px;}
 
-.bot{background:#252525; color: #f5f5f5;text-align: center;}
-.bot .contact p{display: inline-block;}
-.bot .contact p:first-child{margint-left:22px;}
-.bot .contact p:nth-child(2){margin-left:152px;}
-.bot .contact p:nth-child(3){margin-left:156px;}
+.bot{background:#252525; color: #f5f5f5;padding-top: 15px;}
+
+.bg-main{background: url("../images/bg-cards.png") no-repeat center center; background-size: cover;}
+.us-model{margin-left: 70px; color: white;text-align: left;}
+.us-model h3{height:55px; line-height: 55px; font-size: 16px;}
+.contact p{line-height: 32px;}
+.contact i{width: 30px; height: 30px; margin-right: 5px;}
+.contact img{vertical-align: middle;}
+
+.bot-nav{border-top: 1px solid #8e8e8e; }
+.site-nav{display: inline-block;}
+.site-nav span{margin:0 13px;}
+.site-nav a{color:#666;}

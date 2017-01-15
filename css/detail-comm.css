@@ -1,0 +1,78 @@
+.login  span{margin-left: 15px;}
+.top-acc{margin-left: 47px; margin-right: 15px;}
+.top-acc img{margin-right: 6px;}
+.detail-header img{vertical-align: middle;}
+
+.brief-info .pic-wrapper{margin-right: 17px;}
+.banner{border-top:1px solid #d5d5d5;}
+.btn-collec{ border: 2px solid #ffa800; color:#ffa800; }
+.btn-collec span{letter-spacing: 1em;}
+.collected{background: #48c1e4; color: white; border: 2px solid #48c1e4;}
+.share i.pic-wrapper{margin-left: 22px;}
+
+.descript h3{padding-left: 25px; color: white; line-height: 50px; height:50px; font-size: 30px; border-bottom: 1px solid #dcdcdc;}
+.descript h3:first-child{background: url("../images/head-bg.png") no-repeat 0 0;}
+.descript h3:nth-of-type(2){background: url("../images/head-bg2.png") no-repeat 0 0;}
+.descript h3:nth-of-type(3){background: url("../images/head-bg3.png") no-repeat 0 0;}
+.descript ul{margin-top: 11px; margin-bottom: 21px; line-height: 67px; }
+.descript li{font-size: 20px; padding-left: 50px; width: 370px;}
+.descript label{font-size: 24px; color: #989898; margin-right: 15px;}
+
+.date-table{border-collapse: collapse;}
+.date-table th{border: 2px solid #dcdcdc; line-height: 46px; height:46px;width: 107px;margin: 0}
+.date-table td{border: 2px solid #dcdcdc; line-height: 66px; height:66px; width: 107px;margin: 0}
+.date-aval{background:url("../images/icon-checked.png") no-repeat center center;}
+.uni-logo img{width: 100%; border: 1px solid #959595;}
+.uni-porto{ border-left:1px solid #c4c4c4; border-bottom: 1px solid #c4c4c4;}
+
+.basic-info li{line-height: 37px; margin-top: 10px; padding-left: 37px;}
+.basic-info i{margin-right: 20px;}
+
+.ads{border:1px solid #c9c9c9; margin-left: 80px;}
+.ad-pic{overflow: hidden; margin-bottom: 30px; margin-left: 19px;}
+
+.result-tabs{border-top:2px solid #bfbfbf; border-bottom: 4px solid #ff8a00; width: 962px;}
+.result-tabs li{width:238px; border-right: 2px solid #bfbfbf; position: relative; cursor: pointer;}
+.result-tabs li:first-child{border-left: 2px solid #bfbfbf;}
+.result-tabs li.on{background: #ff8a00; color: white;}
+.result-tabs .msg-info{width:30px; line-height:24px; height:30px; font-size: 14px; position: absolute; display: inline-block;color:white;
+background: url("../images/icon-total.png") no-repeat 0 0; left: 84%; top:-15px;}
+
+.result-table{border-collapse: collapse;}
+.result-table th{border:1px solid #919191; font-weight: normal;}
+.result-table td{border:1px solid #919191; color: #5d5d5d; text-align: center;}
+.result-table .viewed{color:#ff8a00;}
+.tab-cont label{color:#606060}
+.tab-cont {height: 771px; margin-top:16px; display: none; width: 990px;}
+.cont-comment li{height:178px; border-bottom: 1px dashed #e5e5e5; position: relative; }
+.porto img{margin-top:30px; border-radius:50%; width: 100px;}
+.time{line-height: 34px; height: 34px; font-size: 18px; color: #868686; position: absolute;right: 12px; bottom:0;}
+
+.pageBot .active{ background: #333;}
+.pageBot a, .pageBot span{display:inline-block; width:30px;margin-left: 10px; background: #999; color: #fff;line-height: 30px; height: 30px; text-align: center;}
+.pageBot a.prev,.pageBot a.next{width:60px;}
+.pageBot a.prev:hover{background: #333;}
+.pageBot a.next:hover{background: #333;}
+
+.bot{border-top:2px solid #9d9d9d;}
+.bot-nav li:hover{color:#f00; cursor: pointer}
+.bot-nav{display: inline-block;}
+.bot .barcode-text{display: inline-block; vertical-align: middle;}
+
+/*申请成功对话框样式*/
+.modal{display: none;}
+.dlg-success{position: absolute; top:580px; left: 50%; transform: translateX(-50%); background: #fcb62e; display: none;}
+.dlg-login{position: absolute; top:580px; left: 50%; transform: translateX(-50%); background: #fcb62e; display: none;}
+.confirm{background: url("../images/icon-sure.png") no-repeat 86% center #fcb62e;}
+.stamp{position: absolute; left: -48px; top:-42px;}
+.login-form input{width: 436px; height:66px; padding-left: 30px; font-size: 24px; border: 2px solid #e5e5e5; color:#a1a1a1;
+    background: #f8f8f8; margin-top: 30px; margin-left: 31px;}
+.dlg-login .regis{border-left: 1px dashed #eee;}
+.fast-login i{margin-right:44px;}
+a.login-link{display: block; color:#fcb62e;}
+/*账户头部样式*/
+.account .pic-wrapper{margin-left:9px;}
+.account li{cursor: pointer; position: relative;}
+.account dl{position: absolute; left: 0; top:35px; background: #313131; width: 100%; display: none;}
+.account dl dd{padding-left: 14px;}
+.account dl dd:hover{background: #494848;}

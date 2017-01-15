@@ -63,6 +63,7 @@ color:#000; }
 .sel-lis .selectee ul{background: #f1f1f1; height: 170px;}
 .sel-lis .selectee ul li.over{background: #f9c560; color: white;}
 
+/*申请成功对话框样式*/
 .modal{display: none;}
 .dlg-success{position: absolute; top:580px; left: 50%; transform: translateX(-50%); background: #fcb62e; display: none;}
 .dlg-login{position: absolute; top:580px; left: 50%; transform: translateX(-50%); background: #fcb62e; display: none;}
