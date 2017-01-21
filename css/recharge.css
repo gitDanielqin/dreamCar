@@ -1,0 +1,34 @@
+.charge-val{border: 1px solid #ccc; margin:0 8px 0 12px; box-shadow: 0 0 5px #ccc inset}
+.charge-hint{position: absolute; left:374px; top:0; background: url("../images/bg-money.png") no-repeat 0 center; padding-left: 27px;}
+.charge-hint img{vertical-align: middle;}
+
+.pay-way{position: absolute;}
+.pay-way li{
+    margin-right: 10px; border: 1px solid #ccc; padding: 0 24px; line-height: 40px; border-bottom: none; position:relative;
+    cursor: pointer;
+}
+.pay-way li span{display: none}
+.pay-way li.on{border:2px solid #f7b632; box-shadow: 0 0 5px #f7b632; border-bottom: none;}
+.pay-way li.on span.border-bot{display: inline-block; width: 104px; height: 10px; position: absolute; left: 0; top: 33px; background: white;}
+.pay-content{border:2px solid #f7b632; box-shadow: 0 0 5px #f7b632, 0 0 5px #f7b632 inset; }
+.bank-pay table{border:1px solid #7f7f7f;}
+.bank-pay table td{width:170px; border: 1px solid #ccc; border-collapse: collapse;}
+.bank-name img{margin-top: 14px;}
+.bank-name span{line-height: 46px; display: block;}
+
+.pay-agreement span{border: 1px solid #7f7f7f; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;}
+.pay-agreement span.checked-agree{background: url("../images/icon-checked2.png") no-repeat 1px center;}
+
+.bot-nav{border-top: 1px solid #8e8e8e; }
+.site-nav{display: inline-block;}
+.site-nav span{margin:0 13px;}
+.site-nav a{color:#666;}
+
+.fast-pay i.pic-wrapper{width: 25px; margin-right: 6px; }
+.fast-pay input[type="radio"]{margin-left: 17px; margin-right: 12px; vertical-align: middle}
+.fast-pay ul{border: 1px solid #666; line-height: 38px; width: 694px;}
+.fast-pay ul li{border-right: 1px solid #666; font-size: 12px;padding-right: 17px;}
+
+.plattform-pay i.pic-wrapper{border: 1px solid #ccc; cursor: pointer}
+.barcode-pay i.pic-wrapper{border: 1px solid #ccc; cursor: pointer}
+.plattform-sel i.on{border:1px solid #f7b632}

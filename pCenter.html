@@ -7,7 +7,7 @@
     <link href="css/pCenter.css" rel="stylesheet">
 </head>
 <body>
-    <div class="top bg-gray3 H100 color-white">
+<div class="top bg-gray3 H100 color-white">
     <div class="inner">
         <img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;"/>
         <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
@@ -15,7 +15,7 @@
         <div class="fr navs maT42">
             <a href="index.html"><img src="images/icon-home.png"/></a>
             <a href="#"><img src="images/icon-account.png"/></a>
-            <a href="#"><img src="images/icon-msg.png"/></a>
+            <a class="msg-center" href="#"><img src="images/icon-msg.png"/></a>
         </div>
     </div>
 </div>
@@ -638,7 +638,7 @@
         </div>
     </div>
 <div class="modal">
-    <div class="preView W800 bg-white" style="display: none;">
+    <div class="preView W800 bg-white disNo">
         <div class="H200 baseInfo bg-greenL paLeft80">
             <div class="paTop60">
                 <div class="porto fl">
@@ -865,7 +865,7 @@
             </div>
         </div>
     </div>
-    <div class="phone-change W500" style="display: none;">
+    <div class="phone-change W500 disNo" >
         <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换手机号<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13"><img src="images/icon-close.png"/></i></h2>
         <div class="bg-white paTop8 paBot60">
             <h3 class="LH-H83 fSize18 t-center">请输入新的手机号，完成手机号绑定</h3>
@@ -875,12 +875,45 @@
             <div class="btn-submit t-center paTop20"><button class="bg-blueM">完成绑定</button><button class="bg-orange2 maL40">返回</button></div>
         </div>
     </div>
-    <div class="wechat-bind W500">
+    <div class="wechat-bind W500 disNo">
         <h2 class="LH-H60 fSize24 color-white t-center bg-blueM">微信登录<i class="pic-wrapper LH-H40 W40 close"><img src="images/icon-close.png"/></i></h2>
         <div class="bg-white paTop14 t-center paBot53">
             <i class="barCode pic-wrapper W284 LH-H284 bg-grayC maB22"></i>
             <p class="LH-H40 W220 t-center bg-orange2 color-white maCenter" style="border-radius: 20px;">请使用微信扫一扫二维码登录</p>
         </div>
+    </div>
+    <div class="msg-box  W888 maCenter disNo">
+        <h3 class="bg-orange4 LH-H86 fSize30 color-white t-center"><i class="pic-wrapper fl maL30 back show02 disNo"><img src="images/icon-return.png"/> </i><i class="pic-wrapper maR21 show01"><img src="images/icon-email4.png"/></i><span class="msg-head">消息提醒</span> <i class="close pic-wrapper fr maR10 LH-H86 W40"><img src="images/icon-close.png"/></i></h3>
+        <div class="msg-lis show01">
+            <ul class="msg-body ">
+                <li class="msg-date">今天</li>
+                <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
+                <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
+                <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
+                <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
+                <li class="msg-date">2016-6-1</li>
+                <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
+                <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
+            </ul>
+            <div class="msg-bot LH-H70 fSize14 bg-white t-center">
+                <ul class="pageBot lis-inline fSize14">
+                    <li class="side-page first-page">首页</li>
+                    <li class="prev side-page">上一页</li>
+                    <li class="page-index">1</li>
+                    <li class="page-index">2</li>
+                    <li class="page-index">3</li>
+                    <li class="next side-page">下一页</li>
+                    <li class="side-page last-page">尾页</li>
+                </ul>
+                <span class="fr maR40">全部清空</span>
+            </div>
+        </div>
+        <div class="msg-detail fSize14 disNo show02">
+            <p class="H266 bg-white paTop25 LH25">校企2.0上线啦上线啦上线啦</p>
+            <p class="bg-gray-e0 LH-H50 t-center"><span class="date">2016-12-17</span><span class="time">12:12</span></p>
+        </div>
+
+
     </div>
 </div>
 <div class="bot H80 bg-purpleD2 fSize14 LH34">

@@ -141,10 +141,27 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .wechat-bind{position: absolute; left:50%; top: 256px;margin-left: -250px;}
 .wechat-bind .close{position: absolute; right:10px; top:13px;}
 .modal{display: none;}
-.modal >div{display: none;}
     /*底部样式，与首页基本*/
 .bot{background:#252525; color: #f5f5f5;text-align: center;}
 .bot .contact p{display: inline-block;}
 .bot .contact p:first-child{margint-left:22px;}
 .bot .contact p:nth-child(2){margin-left:152px;}
 .bot .contact p:nth-child(3){margin-left:156px;}
+
+.msg-box{margin-top:15%; border: 10px solid rgba(0,0,0,0.3)}
+.msg-box i.closer{display: inline-block; font-family: Consolas;}
+.msg-box .msg-date{font-size: 18px; padding-left:30px; }
+.msg-body li{font-size: 14px; border-top:1px solid #fbd0a4; line-height: 39px;}
+.msg-body li span{display: inline-block; vertical-align: middle;}
+.msg-body li span:first-child{width:135px; padding-left: 30px;}
+.msg-body li span:nth-of-type(2){width:534px;}
+.msg-body li span:nth-child(3){width:92px; text-align: center}
+.msg-body li span:nth-child(4){width:97px; text-align: center}
+.msg-body li:nth-child(2n){background: white;}
+.msg-body li:nth-child(2n+1){background: #fcf1e3;}
+.msg-body li:last-child{border-bottom: 1px solid #fbd0a4;}
+
+.msg-detail p{padding-left: 42px;}
+
+.pageBot{display: inline-block;}
+.pageBot li{margin: 0 10px;}

@@ -113,4 +113,23 @@ function modalEventBind(){
             $(".modal").hide();
         });
     });
+    $(".msg-center").click(function(){
+        $(".modal").show();
+        $(".modal").children().hide();
+        $(".modal .msg-box").show();
+    })
+    $(".msg-body li").bind("click",function(){
+        $(".show01").hide();
+        $(".show02").show();
+        $(".msg-head").text("系统消息");
+    })
+    $(".back").click(function(){
+        $(".show02").hide();
+        $(".show01").show();
+        $(".msg-head").text("消息中心");
+    })
+    $(".close").unbind("click").bind("click",function(){
+        $(this).closest("div").hide();
+        $(".modal").hide();
+    })
 }

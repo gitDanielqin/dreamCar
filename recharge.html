@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>充值中心</title>
+    <link href="css/base.css" rel="stylesheet">
+    <link href="css/recharge.css" rel="stylesheet">
+</head>
+<body>
+<div class="top bg-gray3 H100 color-white">
+    <div class="inner">
+        <img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;"/>
+        <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
+        <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">充值中心</h2>
+    </div>
+</div>
+<div class="bg-gray-f2">
+    <div class="inner bg-white fSize18 paBot53">
+        <p class="LH-H78 paLeft130"><label>公告：</label><span class="color-orange">【特别提示】用于刷新信息、信息置顶、智能推广、等在线服务充值到VIP中心推广余额中。</span></p>
+        <div class="paLeft130 LH-H68 pRel"><label>充值金额：</label><input type="text" class="LH-H38 paLeft10 W108 charge-val fSize20"/>元<p class="charge-hint fSize14 W170 disNo"><img src="images/icon-exclamation.png"/> 充值金额不能修改</p> </div>
+        <div class="paLeft130 LH40 pRel"><label>支付方式：</label><ul class="lis-inline disInline maL10 pay-way v-mid fSize14">
+                <li class="on" name="bank-pay">网银支付<span class="border-bot"></span></li>
+                <li name="fast-pay">快捷支付<span class="border-bot"></span></li>
+                <li name="plattform-pay">平台支付<span class="border-bot"></span></li>
+                <li name="barcode-pay">扫码支付<span class="border-bot"></span></li>
+                <li name="bank-pay">余额支付<span class="border-bot"></span></li>
+            </ul>
+        </div>
+        <div class="W796 pay-content maL90">
+            <div class="bank-pay paLeft38">
+                <h2 class="fSize14 LH-H50 ">请选择支付的银行卡<span class="color-orange-fc">（请确保您的银行卡已开通网银）</span></h2>
+                <table class="t-center">
+                    <tr class="bank-name"><td><img src="images/logo-bank1.png"/><span>工商银行</span></td>
+                        <td><img src="images/logo-bank2.png"/><span>农业银行</span></td>
+                        <td><img src="images/logo-bank3.png"/><span>中国银行</span></td>
+                        <td><img src="images/logo-bank4.png"/><span>建设银行</span></td>
+                    </tr>
+                    <tr class="LH40"><td><input type="radio" name="bank"/></td>
+                        <td><input type="radio" name="bank"/></td>
+                        <td><input type="radio" name="bank"/></td>
+                        <td><input type="radio" name="bank"/></td>
+                    </tr>
+                </table>
+                <button class="LH40 W150 bg-orange2 color-white maT40 fSize18">立即支付</button>
+                <p class="LH-H60 pay-agreement fSize14"><span class="disInline checked-agree"></span>我已阅读同意<a href="#" class="color-orange-fc maL6">校企推广余额服务协议</a> </p>
+            </div>
+            <div class="fast-pay paLeft38 disNo">
+                <h2 class="fSize14 LH-H50 ">请选择支付的银行卡<span class="color-orange-fc">（请确保您的银行卡已开通网银）</span></h2>
+                <h2 class="fSize14 LH-H35 maB7">借记卡快捷（需根据银行预留手机号确认支付）</h2>
+                <ul class="lis-inline maB9">
+                    <li><input type="radio" name="fast-bank"><i class="pic-wrapper"><img src="images/logo-bank1.png"/></i>工商银行</li>
+                    <li><input type="radio" name="fast-bank"><i class="pic-wrapper"><img src="images/logo-bank2.png"/></i>农业银行</li>
+                    <li><input type="radio" name="fast-bank"><i class="pic-wrapper"><img src="images/logo-bank3.png"/></i>中国银行</li>
+                    <li><input type="radio" name="fast-bank"><i class="pic-wrapper"><img src="images/logo-bank4.png"/></i>建设银行</li>
+                    <li style="border-right: none;"><input type="radio" name="fast-bank"><i class="pic-wrapper"><img src="images/icon-bank5.png"/></i>招商银行</li>
+                </ul>
+                <h2 class="fSize14 LH-H35 maB7">借记卡快捷（需根据银行预留手机号确认支付）</h2>
+                <ul class="lis-inline maB9">
+                    <li><input type="radio" name="fast-credit"><i class="pic-wrapper"><img src="images/logo-bank1.png"/></i>工商银行</li>
+                    <li><input type="radio" name="fast-credit"><i class="pic-wrapper"><img src="images/logo-bank2.png"/></i>农业银行</li>
+                    <li><input type="radio" name="fast-credit"><i class="pic-wrapper"><img src="images/logo-bank3.png"/></i>中国银行</li>
+                    <li><input type="radio" name="fast-credit"><i class="pic-wrapper"><img src="images/logo-bank4.png"/></i>建设银行</li>
+                    <li style="border-right: none;"><input type="radio" name="fast-credit"><i class="pic-wrapper"><img src="images/icon-bank5.png"/></i>招商银行</li>
+                </ul>
+                <button class="LH40 W150 bg-orange2 color-white maT20 fSize18">立即支付</button>
+                <p class="LH-H60 pay-agreement fSize14"><span class="disInline checked-agree"></span>我已阅读同意<a href="#" class="color-orange-fc maL6">校企推广余额服务协议</a> </p>
+            </div>
+            <div class="plattform-pay paLeft38 disNo">
+                <h2 class="LH-H50 fSize14">请选择以下合作平台进行支付</h2>
+                <div class="maT10 plattform-sel"><i class="pic-wrapper W150 LH-H50 maR30 on"><img src="images/logo-alipay.jpg"/></i><i class="pic-wrapper"><img src="images/logo-wepay.jpg"/></i> </div>
+                <button class="LH40 W150 bg-orange2 color-white maT40 fSize18">立即支付</button>
+                <p class="LH-H60 pay-agreement fSize14"><span class="disInline checked-agree"></span>我已阅读同意<a href="#" class="color-orange-fc maL6">校企推广余额服务协议</a> </p>
+            </div>
+            <div class="barcode-pay paLeft38 disNo">
+                <h2 class="LH-H50 fSize14">请选择以下合作平台进行支付</h2>
+                <div class="maT10 plattform-sel"><i class="pic-wrapper W150 LH-H50 maR30 on" name="alibarcode"><img src="images/logo-alipay.jpg"/></i><i class="pic-wrapper" name="webarcode"><img src="images/logo-wepay.jpg"/></i> </div>
+                <button class="LH40 W150 bg-orange2 color-white maT40 fSize18">立即支付</button>
+                <p class="LH-H60 pay-agreement fSize14"><span class="disInline checked-agree"></span>我已阅读同意<a href="#" class="color-orange-fc maL6">校企推广余额服务协议</a> </p>
+            </div>
+        </div>
+        <div class="paLeft130 LH32 fSize14">
+            <h3 class="fSize18 LH40 maT30">温馨提示<hr class="maL14 W685 line disInline v-mid" style="border:1px solid #cccccc;"/></h3>
+                <h4 class="fSize14">网银使用须知</h4>
+                <ul class="lis-inline color-gray79"><li>1.尽量使用ie浏览器</li><li>2.过程中请勿按浏览器“后退”键</li><li>3.提交支付后，将转入银行的网站，请根据页面提示操作</li></ul>
+                <h4 class="fSize14">如果提交后页面打不开，可以尝试</h4>
+                <ul class="lis-inline color-gray79"><li>1.过3分钟后再刷新页面</li><li>2.清理IE缓存</li><li>3.卸载3721或google工具条4.换个浏览器或换个上网环境</li></ul>
+        </div>
+    </div>
+</div>
+<div class="bot-nav H70 t-center color-gray79 paBot14 bg-gray3">
+    <ul class="lis-inline LH-H20 site-nav paTop18 ">
+        <li><a href="#">关于校企</a><span>|</span></li>
+        <li><a href="#">网站合作</a><span>|</span></li>
+        <li><a href="#">帮助中心</a><span>|</span></li>
+        <li><a href="#">招贤纳士</a><span>|</span></li>
+        <li><a href="#">友情链接</a><span>|</span></li>
+        <li><a href="#">联系我们</a></li>
+    </ul>
+    <p class="LH-H20">校企职通车版权所有©2016 XxiaoQi  京ICP备456123789号-2  京公网安备12465789123号</p>
+</div>
+<script src="js/jquery-3.1.0.min.js"></script>
+<script src="js/recharge.js"></script>
+</body>
+</html>

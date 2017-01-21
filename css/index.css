@@ -18,10 +18,14 @@ position: absolute; left: 29px; top:46px; border-top: none; font-size: 14px; dis
 .banner .search input{box-sizing: border-box; }
 .banner .search button{cursor: pointer;}
 .banner .servs{ width:840px; margin:100px 0 0 105px;}
-.banner .servs li{margin:0 65px 40px 0; width: 212px; height:160px; text-align: center;background:rgba(0,0,0,0.5);}
+.banner .servs li{margin:0 65px 40px 0; width: 212px; height:160px; text-align: center;background:rgba(0,0,0,0.5); position: relative; overflow: hidden;}
 .banner .servs li i{display:block; height:85px;}
 .banner .servs li i img{vertical-align: bottom;}
 .banner .servs li h3{line-height: 68px;}
+.banner .servs .desc i{display: inline-block; width:30px; height: 30px;margin-right: 10px;}
+.banner .servs .desc i img{width: 100%; vertical-align: middle; }
+.banner .servs .desc{position: absolute; width: 100%; height: 100%; left: 0; top:100%; font-size: 12px;}
+
 
 .coop h3{border-bottom: 1px solid #ccc; position: relative; margin:50px auto 0;}
 .coop h3 span{display: inline-block; width:100px; height: 4px; background:#f7b632; position: absolute; left:50%; bottom:-3px;
@@ -56,3 +60,15 @@ transform: translateX(-50%);}
 .site-nav{display: inline-block;}
 .site-nav span{margin:0 13px;}
 .site-nav a{color:#666;}
+
+.slide-up{-webkit-animation:slide_up 1s ease-out; animation-fill-mode: forwards;}
+.slide-down{-webkit-animation:slide_down 1s ease-in; animation-fill-mode: forwards;}
+
+@keyframes slide_up {
+    0%{top:100%}
+    100%{top:0}
+}
+@keyframes slide_down {
+    0%{top:0}
+    100%{top:100%}
+}

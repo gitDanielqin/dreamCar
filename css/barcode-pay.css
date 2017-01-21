@@ -1,0 +1,9 @@
+.bar-header{border-bottom: 1px solid #ccc;}
+.barcode-box{border: 1px solid #ccc; box-shadow: 0 0 3px #ccc; border-top:6px solid #f7b632;}
+.bar-tab{position: absolute; right:97px; top:-38px; background: #f7b632;}
+.barcode-wrapper{border: 1px solid #ccc; font-size: 0;}
+/*底部样式*/
+.bot-nav{border-top: 1px solid #8e8e8e; }
+.site-nav{display: inline-block;}
+.site-nav span{margin:0 13px;}
+.site-nav a{color:#666;}

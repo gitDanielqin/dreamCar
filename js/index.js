@@ -105,3 +105,15 @@ $(".pics .pics-nav span").click(function(){
     }
 })
 
+//六大板块上滑动事件
+
+$(".servs li").each(function(){
+    this.addEventListener("mouseover",function(){
+        $(this).find(".desc").addClass("slide-up").removeClass("slide-down");
+        return false;
+    });
+    this.addEventListener("mouseout",function(){
+        $(this).find(".desc").addClass("slide-down").removeClass("slide-up")
+    })
+})
+

@@ -27,12 +27,13 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .pRel{position: relative;}
 .modal{position: absolute; left: 0;top: 0; background: rgba(0,0,0,0.5);width: 100%; height:100%; z-index: 5}
 .pic-wrapper{display: inline-block;vertical-align: middle; text-align: center; font-size: 0;}
-.pic-wrapper img{vertical-align: middle;}
+.pic-wrapper img{vertical-align: middle; width: 100%}
 .disNo{display: none;}
 .b-Radius8{border-radius: 8px;}
 .b-Radius5{border-radius: 5px;}
 .border-e4{border:1px solid #e4e4e4;}
 .cur-pointer{cursor: pointer}
+.blackStyle{font-family: "黑体";}
 
 /*宽度和高度*/
 .H800{height:800px;}
@@ -42,11 +43,15 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .H515{height:515px;}
 .H572{height: 572px;}
 .H480{height: 480px;}
+.H478{height: 478px;}
 .H431{height: 431px;}
 .H418{height: 418px;}
 .H352{height: 352px;}
 .H378{height: 378px;}
+.H394{height: 394px;}
 .H298{height:298px;}
+.H291{height:291px;}
+.H266{height:266px;}
 .H252{height:252px;}
 .H231{height:231px;}
 .H200{height:200px;}
@@ -102,9 +107,11 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .W198{width:198px;}
 .W200{width:200px;}
 .W204{width:204px;}
+.W206{width:206px;}
 .W216{width:216px;}
 .W220{width:220px;}
 .W228{width:228px;}
+.W236{width:236px;}
 .W242{width: 242px;}
 .W266{width: 266px;}
 .W272{width: 272px;}
@@ -128,11 +135,15 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .W500{width:500px;}
 .W534{width:534px;}
 .W560{width:560px;}
+.W685{width:685px;}
 .W720{width:720px;}
 .W800{width:800px;}
 .W828{width:828px;}
+.W888{width:888px;}
+.W898{width:898px;}
 .W770{width:770px;}
 .W792{width:792px;}
+.W796{width:796px;}
 .W902{width:902px;}
 .W920{width:920px;}
 .W958{width:958px;}
@@ -145,6 +156,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .LH-H40{line-height: 40px; height: 40px;}
 .LH-H42{line-height: 42px; height: 42px;}
 .LH-H37{line-height: 37px; height: 37px;}
+.LH-H32{line-height: 32px; height: 32px;}
 .LH-H38{line-height: 38px; height: 38px;}
 .LH-H35{line-height: 35px; height: 35px;}
 .LH-H25{line-height: 25px; height: 25px;}
@@ -152,6 +164,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .LH-H60{line-height: 60px; height: 60px;}
 .LH-H64{line-height: 64px; height: 64px;}
 .LH-H66{line-height: 66px; height: 66px;}
+.LH-H68{line-height: 68px; height: 68px;}
 .LH-H50{line-height:50px; height: 50px;}
 .LH-H52{line-height: 52px; height:52px;}
 .LH-H54{line-height: 54px; height:54px;}
@@ -181,12 +194,14 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .LH-H23{line-height: 23px; height: 23px;}
 .LH34{line-height: 34px;}
 .LH30{line-height: 30px;}
+.LH32{line-height: 32px;}
 .LH26{line-height: 26px;}
 .LH25{line-height: 25px;}
 .LH40{line-height: 40px;}
 .LH46{line-height: 46px;}
 .LH48{line-height: 48px;}
 .LH50{line-height: 50px;}
+.LH55{line-height: 55px;}
 .LH57{line-height: 57px;}
 
 
@@ -200,12 +215,14 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .paTop18{padding-top: 18px;}
 .paTop20{padding-top: 20px;}
 .paTop23{padding-top: 23px;}
+.paTop25{padding-top: 25px;}
 .paTop35{padding-top: 35px;}
 .paTop60{padding-top: 60px;}
 .paLeft20{padding-left: 20px;}
 .paLeft30{padding-left: 30px;}
 .paLeft32{padding-left: 32px;}
 .paLeft34{padding-left: 34px;}
+.paLeft38{padding-left: 38px;}
 .paLeft10{padding-left: 10px;}
 .paLeft40{padding-left: 40px;}
 .paLeft50{padding-left: 50px;}
@@ -213,6 +230,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .paLeft60{padding-left: 60px;}
 .paLeft74{padding-left: 74px;}
 .paLeft80{padding-left: 80px;}
+.paLeft130{padding-left: 130px;}
 .paRight80{padding-right: 80px;}
 .paRight40{padding-right: 40px;}
 .paRight32{padding-right: 32px;}
@@ -222,11 +240,13 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .paBot14{padding-bottom: 14px;}
 .paBot33{padding-bottom: 33px;}
 .paBot53{padding-bottom: 53px;}
+.paBot57{padding-bottom: 57px;}
 .paBot60{padding-bottom: 60px;}
 .paBot90{padding-bottom: 90px;}
 .maR5{margin-right: 5px;}
 .maR10{margin-right: 10px;}
 .maR12{margin-right: 12px;}
+.maR15{margin-right: 15px;}
 .maR17{margin-right: 17px;}
 .maR20{margin-right: 20px;}
 .maR21{margin-right: 21px;}
@@ -234,8 +254,10 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .maR28{margin-right: 28px;}
 .maR30{margin-right: 30px;}
 .maR33{margin-right:33px;}
+.maR40{margin-right:40px;}
 .maR56{margin-right:56px;}
 .maR128{margin-right: 128px;}
+.maR179{margin-right: 179px;}
 .maL60{margin-left: 60px;}
 .maL70{margin-left: 70px;}
 .maL10{margin-left: 10px;}
@@ -249,11 +271,16 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .maL20{margin-left: 20px;}
 .maL28{margin-left: 28px;}
 .maL30{margin-left:30px;}
+.maL38{margin-left:38px;}
 .maL40{margin-left:40px;}
 .maL50{margin-left: 50px;}
 .maL54{margin-left:54px;}
+.maL90{margin-left:90px;}
+.maL160{margin-left:160px;}
 .maL278{margin-left: 278px;}
+.maL243{margin-left: 243px;}
 .maT100{margin-top:100px;}
+.maT110{margin-top:110px;}
 .maT106{margin-top:106px;}
 .maT130{margin-top:130px;}
 .maT69{margin-top: 69px;}
@@ -278,10 +305,13 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .maT13{margin-top:13px;}
 .maT11{margin-top:11px;}
 .maT14{margin-top:14px;}
+.maT10{margin-top:10px;}
 .maT9{margin-top: 9px;}
 .maT8{margin-top: 8px;}
 .maT6{margin-top:6px;}
 .maB2{margin-bottom: 2px;}
+.maB7{margin-bottom: 7px;}
+.maB9{margin-bottom: 9px;}
 .maB12{margin-bottom: 12px;}
 .maB19{margin-bottom: 19px;}
 .maB22{margin-bottom: 22px;}
@@ -306,8 +336,10 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .color-gray3{color:#333;}
 .color-grayH{color:#8a8a8a;}
 .color-gray79{color:#797979;}
+.color-gray-c{color:#ccc;}
 .color-orange{color:#f39330;}
 .color-orange2{color:#ec7d0e;}
+.color-orange-fc{color:#fc4f05;}
 .fSize30{font-size: 30px;}
 .fSize32{font-size: 32px;}
 .fSize36{font-size: 36px;}
@@ -335,6 +367,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .bg-grayC{background: #ccc;}
 .bg-gray-f7{background: #f7f7f7;}
 .bg-gray-f2{background: #f2f2f2;}
+.bg-gray-e0{background: #e0ded7;}
 .bg-purpleD{background: #312d3f;}
 .bg-purpleL{background: #685c9c;}
 .bg-purpleD2{background: #1f1b2e;}
