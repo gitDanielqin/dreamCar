@@ -1,7 +1,7 @@
 body{font-family: "微软雅黑", Arial}
 .container{background: url("../images/bg-cards.png") no-repeat bottom center #fff;}
 /*中间样式*/
-.main .card .info01{ width: 138px; margin:0 10px 30px 0;}
+.main .card .info01{ width: 160px; margin:0 10px 30px 0;}
 .main .card input{border:1px solid #d2d2d2; font-size: 14px;height: 36px; line-height: 36px; padding-left: 10px;}
 .main .card .birthday{margin-right: 30px; }
 .main .card .birthday input{width: 78px;}
@@ -9,7 +9,7 @@ body{font-family: "微软雅黑", Arial}
     height: 0; width: 20px;}
 .main .card .address input{width: 108px; margin-right:10px;}
 .main .card .selectee{position: relative; display: inline-block;}
-.main .card .selectee input{background: url("../images/trigle03.png") no-repeat center right;}
+.main .card .selectee input{background: url("../images/trigle03.png") no-repeat center right; }
 .main .card .selectee ul{position: absolute; left: 0; top:36px;border: 1px solid #d2d2d2;
     font-size: 12px; height: 149px; overflow: auto;background: #fff; display: none; z-index: 10;}
 .main .card .selectee ul li{line-height: 24px; height: 24px; cursor: pointer;padding-left: 10px;}
@@ -18,16 +18,18 @@ body{font-family: "微软雅黑", Arial}
 .main .card .save{display:block;}
 .main .uniCard input{margin:0 10px 32px 0;}
 .main .bsCard input{margin:0 10px 32px 0;}
-.main .gender{display: inline-block;}
-.main .gender span{display: inline-block; width: 48px; height: 38px; line-height: 38px;
-font-size: 18px; text-align: center; margin: 0 5px; cursor: pointer;}
+.main .gender{display: inline-block; vertical-align: top}
+.main .gender span{display: inline-block; width: 40px; height: 38px; line-height: 38px;
+font-size: 14px; text-align: center; margin: 0 5px; cursor: pointer;}
 .main .gender span:first-child{border: 1px solid #2ea8e6;}
 .main .gender span.on:first-child{background:#2ea8e6; color: #fff;}
 .main .gender span:last-child{border: 1px solid #e62f4d;}
 .main .gender span.on:last-child{background:#e62f4d; color: #fff; }
 /*底部样式*/
-.bot{color: #f5f5f5;text-align: center;}
-.bot .contact p{display: inline-block;}
-.bot .contact p:first-child{margint-left:22px;}
-.bot .contact p:nth-child(2){margin-left:152px;}
-.bot .contact p:nth-child(3){margin-left:156px;}
+.bot-nav li a{color: white;}
+.bot-nav li a:hover{color:#f7a14a; cursor: pointer}
+.bot-nav{display: inline-block;}
+.bot .barcode-text{display: inline-block; vertical-align: middle;}
+
+.pic-barcode{position: absolute; right:-7px; top: 12px; width: 83px; height:83px;}
+.pic-barcode img{width: 100%}

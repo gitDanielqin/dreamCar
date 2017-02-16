@@ -7,8 +7,7 @@
 .banner .logo .city{cursor: pointer;}
 .banner .address{position: absolute; left: 88px; bottom:-60px;width: 690px; background: rgba(0,0,0,0.3);}
 .banner .address h2{position: relative;}
-.banner .address input{width:78px; height: 28px; border: 1px solid #fff; margin-left: 11px;color: #fff;
-background: url("../images/trigle02.png") no-repeat 78px center transparent;padding-right: 20px;
+.banner .address input{width:78px; height: 28px; border: 1px solid #fff; margin-left: 11px;color: #fff;background: url("../images/trigle02.png") no-repeat 78px center transparent;padding-right: 20px;
 text-align: center; cursor: pointer; font-size: 14px;}
 .banner .address ul{width:98px; height:180px; overflow-y:scroll; background:rgba(0,0,0,0.5); border: 1px solid #fff;
 position: absolute; left: 29px; top:46px; border-top: none; font-size: 14px; display: none;}
@@ -27,13 +26,13 @@ position: absolute; left: 29px; top:46px; border-top: none; font-size: 14px; dis
 .banner .servs .desc{position: absolute; width: 100%; height: 100%; left: 0; top:100%; font-size: 12px;}
 
 
-.coop h3{border-bottom: 1px solid #ccc; position: relative; margin:50px auto 0;}
+.coop h3{border-bottom: 1px solid #ccc; position: relative; margin:0 auto;}
 .coop h3 span{display: inline-block; width:100px; height: 4px; background:#f7b632; position: absolute; left:50%; bottom:-3px;
 transform: translateX(-50%);}
 .coop .coLogos li{margin-right:22px;}
 .coop .coLogos li:first-child{margin-left:16px;}
 .coop .coLogos li:last-child{margin-right:0}
-.coop .coLogos li a{display:block;height:120px; line-height: 120px; width: 120px;}
+.coop .coLogos li a{display:block;height:120px; line-height: 120px; width: 120px; background: #fff; text-align: center;}
 .coop .coLogos img{vertical-align: middle; width:80px;}
 .pics .pics-nav span{display: inline-block; width:100px; height:73px; text-align: center; cursor:pointer;transition:all 0.7s;}
 .pics .pics-nav .on{color:#f7b632; border-bottom:4px solid #f7b632;}
@@ -44,7 +43,8 @@ transform: translateX(-50%);}
 .footer{ text-align: center}
 .footer .servinces{display: inline-block;}
 .footer .servinces li{width:130px; padding: 0 22px; }
-.servinces li i{width: 92px; height: 86px; line-height: 86px;background: url("../images/icon-roundtop.png") no-repeat 0 0;}
+.servinces li i{width: 92px; height: 86px; line-height: 86px;}
+.servinces li i img{vertical-align: top;}
 .servinces li p{line-height: 29px;}
 
 .bot{background:#252525; color: #f5f5f5;padding-top: 15px;}

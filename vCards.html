@@ -14,10 +14,10 @@
         <h3 id="sel-add" class="city fl LH-H80 fSize18 maT16 maL60"><b>北京市<img src="images/trigle01.png" class="v-mid maL10" /></b></h3>
     </div>
 </div>
-<div class="container">
-    <div class="main H572 inner">
+<div class="container paTop30">
+    <div class="main H500 inner bg-white maB42 clearfix">
         <form class="personCard maL70 maT13 card W454 fl"  style="display:block;">
-            <h2 class="LH-H138 fSize36 color-gray3">创建个人名片</h2>
+            <h2 class="LH-H108 fSize30 color-gray3">创建个人名片</h2>
                 <input type="text" class="info01" placeholder="姓名" />
                 <div class="sel-birthyear birthday selectee">
                     <input type="text" placeholder="出生年">
@@ -38,7 +38,16 @@
                         <li>4月</li>
                     </ul>
                 </div>
-            <input type="text" class="info01" placeholder="职业"/><p class="gender maL10"><span class="on">男</span><span>女</span></p>
+            <div class="career selectee">
+                <input type="text" class="info01" placeholder="工作状态"/>
+                <ul>
+                    <li>在职，打算换个新环境</li>
+                    <li>离职，可立即到岗工作</li>
+                    <li>在校学生</li>
+                    <li>应届毕业生</li>
+                    <li>暂时不想找工作</li>
+                </ul>
+            </div><p class="gender maL10"><span class="on">男</span><span>女</span></p>
             <div class="address">
                 <div class="selectee">
                     <input type="text" class="W108" placeholder="省份" />
@@ -64,7 +73,6 @@
             <input type="text" class="W288 maT30" placeholder="请输入常用邮箱" />
             <button class="LH-H40 W140 maT40 bg-orange2 save fSize18 color-white">保存名片</button>
         </form>
-
 
         <form class="uniCard maL70 maT13 card W454 fl" style="display:none;">
             <h2 class="LH-H138 fSize36 color-gray3">创建高校名片</h2>
@@ -144,13 +152,36 @@
         </form>
         <img src="images/cardtxt.png" class="fl maL108 maT148"/>
     </div>
-    <div class="bot H80 fSize14 LH34 bg-black7">
+    <!--<div class="bot H80 fSize14 LH34 bg-black7">
         <div class="contact paTop10">
             <p>电话：12345678900</p>
             <p>邮箱：12345@163.com</p>
             <p>地址：杭州市滨江区六合路368号 海创基地北三楼B3077</p>
         </div>
         <p>@2016-2046 煌巢科技有限公司版权所有</p>
+    </div>-->
+    <div class="bot paTop6 t-center bg-black7 H110">
+        <div class="inner pRel">
+            <div class=" W920 color-white fSize12">
+                <ul class="lis-inline bot-nav LH-H34">
+                    <li><a href="footer-page.html?descript">关于校企</a>-</li>
+                    <li><a href="footer-page.html?coop">网站合作</a>-</li>
+                    <li><a href="footer-page.html?help">帮助中心</a>-</li>
+                    <li><a href="footer-page.html?employ">招贤纳士</a>-</li>
+                    <li><a href="footer-page.html">友情链接</a>-</li>
+                    <li><a href="footer-page.html">教育网</a></li>
+                </ul>
+                <ul class="lis-inline">
+                    <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-phone-w.png"/></i>电话：152 6706 8921</li>
+                    <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-gps-w.png"/></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
+                    <li><i class="pic-wrapper maR15"><img src="images/icon-mail-w.png"/></i>邮箱：xiaoqiztc@yeah.net</li>
+                </ul>
+                <p class="fSize12 t-center LH-H40 color-gray79">©2016 XxiaoQi 京ICP备456123789号-2 京公网安备12465789123号</p>
+            </div>
+            <div class="pic-wrapper pic-barcode">
+                <img src="images/barcode.png"/>
+            </div>
+        </div>
     </div>
 </div>
 <script src="js/jquery-3.1.0.min.js"></script>

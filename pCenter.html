@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>个人中心</title>
     <link href="css/base.css" rel="stylesheet">
     <link href="css/pCenter.css" rel="stylesheet">
 </head>
@@ -25,13 +25,88 @@
                 <div class="porto-img W96 H96"></div>
                 <h3 class="LH-H58 fSize18 t-center color-gray3">编辑头像</h3>
             </div>
-            <div class="infoTxt maT24 maL54 fl color-gray6 W266">
-                <h3 class="LH-H47 fSize18 color-gray3">姓名</h3>
-                <p><span class="maR33">18岁</span>恍恍惚惚昏昏欲睡</p>
-                <p>呵呵呵呵呵呵</p>
+            <div class="infoTxt maT24 maL54 fl color-gray6 W266" style="display:none">
+                <h3 class="LH-H47 fSize18 color-gray3">江玉海</h3>
+                <p><span class="maR33 age">18岁</span><span class="gender">男</span><span class="state">在职打算换个新环境</span></p>
+                <p>浙江-杭州-滨江区</p>
                 <p>手机：1234565555</p>
-                <p>邮箱：qq@qq.com</p>
+                <p>简历完成度<span class="progress pRel W124 H7 b-Radius8"><span class="progress-real W124 H7 b-Radius8"></span></span><span class="fullgrad">87%</span></p>
+                <span class="preview-btn">预览简历</span>
                 <i class="LH-H30 W30 t-center"><img class="v-mid" src="images/icon-edit.png"/></i>
+            </div>
+            <div class="edit-brief maT24 maL54 fl color-gray6 pRel">
+               <h3 class="LH-H47 fSize18 color-gray3">江玉海</h3>
+               <div class="fSize14">
+                    生　　日<div class="sel-birthyear birthday selectee maL13">
+                       <input type="text" placeholder="出生年">
+                       <ul>
+                           <li>2016</li>
+                           <li>2015</li>
+                           <li>2014</li>
+                           <li>2013</li>
+                       </ul>
+                   </div><div class="sel-birthmonth birthday selectee">
+                      <input type="text" placeholder="出生月">
+                      <ul>
+                          <li>1</li>
+                          <li>2</li>
+                          <li>3</li>
+                          <li>4</li>
+                      </ul>
+                 </div><div class="sel-birthday birthday selectee">
+                     <input type="text" placeholder="出生日">
+                     <ul>
+                         <li>1</li>
+                         <li>2</li>
+                         <li>3</li>
+                         <li>4</li>
+                     </ul>
+                 </div>
+                 <span class="maL35">性别</span><div class="sel-gender maL10 selectee">
+                     <input type="text" placeholder="性别">
+                     <ul>
+                         <li>男</li>
+                         <li>女</li>
+                     </ul>
+                 </div>
+               </div>
+               <div class="fSize14 maT10 ">
+                    工作状态<div class="sel-career selectee maL13">
+                        <input type="text" placeholder="工作状态"/>
+                        <ul>
+                            <li>在职，打算换个新环境</li>
+                            <li>离职，可立即到岗工作</li>
+                            <li>在校学生</li>
+                            <li>应届毕业生</li>
+                            <li>暂时不想找工作</li>
+                        </ul>
+                   </div><span class="maL19">所在地</span><div class="selectee maL12">
+                      <input type="text" class="W58" placeholder="省份" />
+                      <ul>
+                          <li>浙江</li>
+                          <li>河南</li>
+                      </ul>
+                 </div><div class="selectee maL10">
+                  <input type="text" class="W58" placeholder="城市" />
+                  <ul>
+                      <li>杭州</li>
+                      <li>新乡</li>
+                  </ul>
+             </div><div class="selectee maL10">
+                  <input type="text" class="W58" placeholder="区/县" />
+                  <ul>
+                      <li>滨江区</li>
+                      <li>红旗区</li>
+                  </ul>
+              </div>
+               </div>
+               <div class="fSize14 edit-phone maT10">
+                    手 机 号<input type="text" class="maL18 paLeft10" value="12345678900"/>
+               </div>
+               <div class="edit-opera">
+                    <button class="maR15 btn-save">保存</button>
+                    <button class="btn-cancel">取消</button>
+               </div>
             </div>
             <div class="barCodeBox maT14 W168 fr color-gray6 fSize14">
                 <p class="LH-H37">扫一扫微信公众号</p>
@@ -49,7 +124,6 @@
                 </div>
             </li>
             <li paneid="jobBox"><i><img src="images/icon-apply.png"/></i>我的求职</li>
-            <li paneid="vipBox"><i><img src="images/icon-vip.png"/></i>VIP中心</li>
             <li class="myConfig" paneid="conf-keyword"><i><img src="images/icon-config.png"/></i>设置
                 <div class="sub-li paTop2 paBot2 LH30">
                     <p class="on" paneid="conf-keyword">修改密码</p>
@@ -916,13 +990,31 @@
 
     </div>
 </div>
-<div class="bot H80 bg-purpleD2 fSize14 LH34">
-    <div class="contact paTop10">
-        <p>电话：12345678900</p>
-        <p>邮箱：12345@163.com</p>
-        <p>地址：杭州市滨江区六合路368号 海创基地北三楼B3077</p>
-    </div>
-    <p>@2016-2046 煌巢科技有限公司版权所有</p>
+<div class="bot paTop8 t-center bot-account">
+     <div class="inner">
+          <div class="fl">
+            <ul class="lis-inline bot-nav color-gray79 LH-H34 fSize12">
+                 <li><a href="footer-page.html?descript">关于校企</a>-</li>
+                 <li><a href="footer-page.html?coop">网站合作</a>-</li>
+                 <li><a href="footer-page.html?help">帮助中心</a>-</li>
+                 <li><a href="footer-page.html?employ">招贤纳士</a>-</li>
+                 <li><a href="footer-page.html">友情链接</a>-</li>
+                 <li><a href="footer-page.html">教育网</a></li>
+            </ul>
+            <ul class="lis-inline fSize12">
+                  <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-phone2.png"/></i>电话：152 6706 8921</li>
+                  <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-gps.png"/></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
+                  <li><i class="pic-wrapper maR15"><img src="images/icon-email2.png"/></i>邮箱：xiaoqiztc@yeah.net</li>
+            </ul>
+            <p class="fSize14 t-center LH-H40 color-gray79">©2016 XxiaoQi 京ICP备456123789号-2 京公网安备12465789123号</p>
+          </div>
+          <div class="fr">
+            <p class="fSize14 W15 barcode-text">关注我们</p>
+            <div class="pic-wrapper maL16">
+                  <img src="images/barcode.png"/>
+            </div>
+          </div>
+     </div>
 </div>
 <script src="js/jquery-3.1.0.min.js"></script>
 <script src="js/userCenter.js"></script>

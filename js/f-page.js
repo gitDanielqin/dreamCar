@@ -4,6 +4,11 @@
 $(function(){
     function _init(){
         initEventBind();
+        var urlStr= window.location.search.substr(1);
+        console.log(urlStr);
+        if(urlStr){
+            $(".main-left li[name="+urlStr+"]").trigger("click");
+        }
     }
 
     function initEventBind(){

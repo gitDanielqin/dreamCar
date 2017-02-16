@@ -13,7 +13,7 @@
 .porto-img{border: 2px dashed #999; background: url("../images/cross.png") no-repeat center center;}
 .main .infoTxt{position: relative;}
 .main .infoTxt p{line-height: 25px; font-size: 14px;}
-.main .infoTxt i{display: inline-block; position: absolute; right:0; top: 0; font-size: 0;}
+.main .infoTxt i{display: inline-block; position: absolute; right:-70px; top: 0; font-size: 0;}
 
 .main .sideBox{border:1px solid #ccc;}
 .main .sideBox >li.on{background:#edeceb;}
@@ -142,11 +142,10 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .wechat-bind .close{position: absolute; right:10px; top:13px;}
 .modal{display: none;}
     /*底部样式，与首页基本*/
-.bot{background:#252525; color: #f5f5f5;text-align: center;}
-.bot .contact p{display: inline-block;}
-.bot .contact p:first-child{margint-left:22px;}
-.bot .contact p:nth-child(2){margin-left:152px;}
-.bot .contact p:nth-child(3){margin-left:156px;}
+.bot-nav{display: inline-block;}
+.bot-nav a{color:#797979;}
+.bot-nav a:hover{color:#f00; cursor: pointer}
+.bot .barcode-text{display: inline-block; vertical-align: middle;}
 
 .msg-box{margin-top:15%; border: 10px solid rgba(0,0,0,0.3)}
 .msg-box i.closer{display: inline-block; font-family: Consolas;}
@@ -165,3 +164,26 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 
 .pageBot{display: inline-block;}
 .pageBot li{margin: 0 10px;}
+
+.progress{display: inline-block;background: #fcfbf9;  margin: 0 10px;}
+.progress-real{display: inline-block;background: #f7aa00; width: 87%; position: absolute; left: 0; top: 0;}
+
+.preview-btn{position: absolute; right:-97px;bottom:0; color:#f77b00; line-height: 25px; cursor: pointer;}
+
+.hd .selectee{line-height: 38px; height: 38px;}
+
+.bot-account{border-top:2px solid #9d9d9d;}
+
+.edit-brief input{line-height: 24px; height: 24px;}
+.edit-brief .birthday{margin-right: 10px;}
+.edit-brief .birthday input{width: 77px;　}
+.edit-brief .sel-gender input{width:77px; }
+.edit-brief .sel-career{ width: 160px; }
+
+.edit-phone input{border: 1px solid #b5b5b5; color:#848484;}
+.edit-opera{position: absolute;right: 0; bottom: 0;}
+.edit-opera button{width: 58px; height: 24px; border-radius: 5px; font-size: 14px; background: none;}
+.btn-save{border:1px solid #ff9933; color:#ff9933;}
+.btn-save:hover{background: #ff9933; color:white;}
+.btn-cancel{border:1px solid #82c4ea; color:#82c4ea;}
+.btn-cancel:hover{background: #82c4ea; color: white;}
