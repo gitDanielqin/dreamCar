@@ -20,92 +20,42 @@
     </div>
 </div>
     <div class="main inner paTop20 clearfix maB60">
-        <div class="W958 H198 sInfo maCenter">
+        <div class="W958 H198 sInfo maCenter" id="app-porto">
             <div class="porto fl maL60 maT30">
                 <div class="porto-img W96 H96"></div>
                 <h3 class="LH-H58 fSize18 t-center color-gray3">编辑头像</h3>
             </div>
-            <div class="infoTxt maT24 maL54 fl color-gray6 W266" style="display:none">
+            <div class="infoTxt maT24 maL54 fl color-gray6 W266" v-show="viewInfo">
                 <h3 class="LH-H47 fSize18 color-gray3">江玉海</h3>
-                <p><span class="maR33 age">18岁</span><span class="gender">男</span><span class="state">在职打算换个新环境</span></p>
-                <p>浙江-杭州-滨江区</p>
-                <p>手机：1234565555</p>
+                <p><span class="maR33 age">{{age(oldInfo.birthyear)}}岁</span><span class="gender">{{oldInfo.gender}}</span><span class="state maL22">{{oldInfo.state}}</span></p>
+                <p>{{oldInfo.address.province}}-{{oldInfo.address.city}}-{{oldInfo.address.district}}</p>
+                <p class="phone">手机：{{oldInfo.phone}}</p>
                 <p>简历完成度<span class="progress pRel W124 H7 b-Radius8"><span class="progress-real W124 H7 b-Radius8"></span></span><span class="fullgrad">87%</span></p>
                 <span class="preview-btn">预览简历</span>
-                <i class="LH-H30 W30 t-center"><img class="v-mid" src="images/icon-edit.png"/></i>
+                <i class="LH-H30 W30 t-center btn-edit" @click="edit"><img class="v-mid" src="images/icon-edit.png"/></i>
             </div>
-            <div class="edit-brief maT24 maL54 fl color-gray6 pRel">
+            <div class="edit-brief maT24 maL54 fl color-gray6 pRel" v-show="!viewInfo">
                <h3 class="LH-H47 fSize18 color-gray3">江玉海</h3>
                <div class="fSize14">
-                    生　　日<div class="sel-birthyear birthday selectee maL13">
-                       <input type="text" placeholder="出生年">
-                       <ul>
-                           <li>2016</li>
-                           <li>2015</li>
-                           <li>2014</li>
-                           <li>2013</li>
-                       </ul>
-                   </div><div class="sel-birthmonth birthday selectee">
-                      <input type="text" placeholder="出生月">
-                      <ul>
-                          <li>1</li>
-                          <li>2</li>
-                          <li>3</li>
-                          <li>4</li>
-                      </ul>
-                 </div><div class="sel-birthday birthday selectee">
-                     <input type="text" placeholder="出生日">
-                     <ul>
-                         <li>1</li>
-                         <li>2</li>
-                         <li>3</li>
-                         <li>4</li>
-                     </ul>
-                 </div>
-                 <span class="maL35">性别</span><div class="sel-gender maL10 selectee">
-                     <input type="text" placeholder="性别">
-                     <ul>
-                         <li>男</li>
-                         <li>女</li>
-                     </ul>
-                 </div>
+                    生　　日
+                    <dropdown classes="sel-birthyear birthday" placeholder="出生年" v-bind:options="[2000,2001,2002]" v-model="newInfo.birthyear"></dropdown>
+                    <dropdown classes="sel-birthmonth birthday" placeholder="出生月" v-bind:options="[1,2,3]" v-model="newInfo.birthmonth"></dropdown>
+                    <dropdown classes="sel-birthday birthday" placeholder="出生日" v-bind:options="[1,2,3,4]" v-model="newInfo.birthday"></dropdown>
+                 <span class="maL35">性别</span><dropdown classes="sel-gender maL10" placeholder="性别" v-bind:options="['男','女']" v-model="newInfo.gender"></dropdown>
                </div>
-               <div class="fSize14 maT10 ">
-                    工作状态<div class="sel-career selectee maL13">
-                        <input type="text" placeholder="工作状态"/>
-                        <ul>
-                            <li>在职，打算换个新环境</li>
-                            <li>离职，可立即到岗工作</li>
-                            <li>在校学生</li>
-                            <li>应届毕业生</li>
-                            <li>暂时不想找工作</li>
-                        </ul>
-                   </div><span class="maL19">所在地</span><div class="selectee maL12">
-                      <input type="text" class="W58" placeholder="省份" />
-                      <ul>
-                          <li>浙江</li>
-                          <li>河南</li>
-                      </ul>
-                 </div><div class="selectee maL10">
-                  <input type="text" class="W58" placeholder="城市" />
-                  <ul>
-                      <li>杭州</li>
-                      <li>新乡</li>
-                  </ul>
-             </div><div class="selectee maL10">
-                  <input type="text" class="W58" placeholder="区/县" />
-                  <ul>
-                      <li>滨江区</li>
-                      <li>红旗区</li>
-                  </ul>
-              </div>
+               <div class="fSize14 maT10">
+                    <label>工作状态</label><dropdown class="sel-career maL13" placeholder="工作状态" v-model="newInfo.state" v-bind:options="['在职，打算换个新环境','离职，可立即到岗工作','在校学生','应届毕业生','暂时不想找工作']"></dropdown>
+                    <span class="maL19">所在地</span>
+                    <dropdown classes="maL12 sel-province sel-add" placeholder="省份" v-bind:options="['浙江','河南']" v-model="newInfo.address.province"></dropdown>
+                    <dropdown classes="maL10 sel-city sel-add" placeholder="城市" v-bind:options="['杭州','新乡']" v-model="newInfo.address.city"></dropdown>
+                    <dropdown classes="maL10 sel-district sel-add" placeholder="区/县" v-bind:options="['滨江区','红旗区']" v-model="newInfo.address.district"></dropdown>
                </div>
                <div class="fSize14 edit-phone maT10">
-                    手 机 号<input type="text" class="maL18 paLeft10" value="12345678900"/>
+                    手 机 号<input type="text" class="maL18 paLeft10" v-model="newInfo.phone"/>
                </div>
                <div class="edit-opera">
-                    <button class="maR15 btn-save">保存</button>
-                    <button class="btn-cancel">取消</button>
+                    <button class="maR15 btn-save" @click="save">保存</button>
+                    <button class="btn-cancel" @click="cancel">取消</button>
                </div>
             </div>
             <div class="barCodeBox maT14 W168 fr color-gray6 fSize14">
@@ -118,9 +68,10 @@
             <li class="on" paneid="resumeBox"><i><img src="images/icon-resume.png"/></i>个人简历</li>
             <li paneid="classBox"><i><img src="images/icon-study.png"/></i>我的学习</li>
             <li class="myCollect" paneid="collec-study"><i><img src="images/icon-collect.png"/></i>我的收藏
-                <div class="sub-li paTop2 paBot2 LH30">
+                <div class="sub-li LH37">
                     <p class="on" paneid="collec-study">学习收藏</p>
                     <p paneid="collec-job">职位收藏</p>
+                    <p paneid="collec-recruitment">招聘会收藏</p>
                 </div>
             </li>
             <li paneid="jobBox"><i><img src="images/icon-apply.png"/></i>我的求职</li>
@@ -563,43 +514,43 @@
                     <li>
                         <div class="logo-pic"></div>
                         <div class="class-txt fl paTop20 W328">
-                            <h2 class="class-name"><b>职位名称</b></h2>
-                            <p class="teacher">年薪<span>|</span>地区<span>|</span>学历要求<span>|</span>经验要求</p>
-                            <p>发布时间</p>
+                            <h2 class="class-name"><b>工业设计</b></h2>
+                            <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
+                            <p><span class="maR20">【滨江区】</span>岗位数:<span>2人</span></p>
                         </div>
                         <div class="col-company-info fl fSize18">
-                            <p>公司名称</p>
-                            <p>公司所属行业</p>
-                            <p>公司待遇</p>
+                            <p>杭州煌巢信息科技有限公司</p>
+                            <p>国企<i>|</i>20-100人</p>
+                            <p>2017-1-30</p>
                             <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
                         </div>
                     </li>
                     <li>
                         <div class="logo-pic"></div>
                         <div class="class-txt fl paTop20 W328">
-                            <h2 class="class-name"><b>职位名称</b></h2>
-                            <p class="teacher">年薪<span>|</span>地区<span>|</span>学历要求<span>|</span>经验要求</p>
-                            <p>发布时间</p>
+                            <h2 class="class-name"><b>工业设计</b></h2>
+                            <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
+                            <p><span class="maR20">【滨江区】</span>岗位数:<span>2人</span></p>
                         </div>
                         <div class="col-company-info fl fSize18">
-                            <p>公司名称</p>
-                            <p>公司所属行业</p>
-                            <p>公司待遇</p>
-                            <div class="action"><span>取消收藏</span><span class="end">已投递</span></div>
+                            <p>杭州煌巢信息科技有限公司</p>
+                            <p>国企<i>|</i>20-100人</p>
+                            <p>2017-1-30</p>
+                            <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
                         </div>
                     </li>
                     <li>
                         <div class="logo-pic"></div>
                         <div class="class-txt fl paTop20 W328">
-                            <h2 class="class-name"><b>职位名称</b></h2>
-                            <p class="teacher">年薪<span>|</span>地区<span>|</span>学历要求<span>|</span>经验要求</p>
-                            <p>发布时间</p>
+                            <h2 class="class-name"><b>工业设计</b></h2>
+                            <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
+                            <p><span class="maR20">【滨江区】</span>岗位数:<span>2人</span></p>
                         </div>
                         <div class="col-company-info fl fSize18">
-                            <p>公司名称</p>
-                            <p>公司所属行业</p>
-                            <p>公司待遇</p>
-                            <div class="action"><span>取消收藏</span><span class="end">已下线</span></div>
+                            <p>杭州煌巢信息科技有限公司</p>
+                            <p>国企<i>|</i>20-100人</p>
+                            <p>2017-1-30</p>
+                            <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
                         </div>
                     </li>
                 </ul>
@@ -613,6 +564,72 @@
                     <li class="side-page last-page">尾页</li>
                 </ul>
             </div>
+            <div class="collec-recruitment ListBox">
+                <div class="hd LH-H58">
+                    <div class="selectee ">
+                        <input type="text" value="全部状态" class="H38 maL30"/>
+                        <ul>
+                            <li>全部状态</li><li>已开课</li>
+                            <li>未开课</li><li>已结束</li>
+                        </ul>
+                    </div>
+                    <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">1</span>个</p>
+                </div>
+                <ul class="colCompanyList contList">
+                    <li>
+                        <div class="logo-pic"></div>
+                        <div class="class-txt fl paTop20 W328">
+                            <h2 class="class-name"><b>工业设计</b></h2>
+                            <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
+                            <p><span>招聘会时间：</span>2017-01-30</p>
+                        </div>
+                        <div class="col-company-info fl fSize18">
+                            <p>杭州煌巢信息科技有限公司</p>
+                            <p>国企<i>|</i>20-100人</p>
+                            <p>2017-1-30</p>
+                            <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="logo-pic"></div>
+                        <div class="class-txt fl paTop20 W328">
+                            <h2 class="class-name"><b>工业设计</b></h2>
+                            <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
+                            <p><span>招聘会时间：</span>2017-01-30</p>
+                        </div>
+                        <div class="col-company-info fl fSize18">
+                            <p>杭州煌巢信息科技有限公司</p>
+                            <p>国企<i>|</i>20-100人</p>
+                            <p>2017-1-30</p>
+                            <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="logo-pic"></div>
+                        <div class="class-txt fl paTop20 W328">
+                            <h2 class="class-name"><b>工业设计</b></h2>
+                            <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
+                            <p><span>招聘会时间：</span>2017-01-30</p>
+                        </div>
+                        <div class="col-company-info fl fSize18">
+                            <p>杭州煌巢信息科技有限公司</p>
+                            <p>国企<i>|</i>20-100人</p>
+                            <p>2017-1-30</p>
+                            <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="pageBot lis-inline maT30 fr fSize14">
+                    <li class="side-page first-page">首页</li>
+                    <li class="prev side-page">上一页</li>
+                    <li class="page-index">1</li>
+                    <li class="page-index">2</li>
+                    <li class="page-index">3</li>
+                    <li class="next side-page">下一页</li>
+                    <li class="side-page last-page">尾页</li>
+                </ul>
+            </div>
+
             <div class="jobBox ListBox">
                 <div class="hd LH-H58">
                     <div class="selectee ">
@@ -1017,6 +1034,8 @@
      </div>
 </div>
 <script src="js/jquery-3.1.0.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/components.js"></script>
 <script src="js/userCenter.js"></script>
 </body>
 </html>

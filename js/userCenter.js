@@ -1,6 +1,59 @@
 /**
  * Created by xuanyuan on 2016/11/27.
  */
+
+
+var appPorto = new Vue({
+     el:"#app-porto",
+     data:{
+          viewInfo:false,
+          newInfo:{
+               gender:"",
+               birthyear:"",
+               birthmonth:"",
+               birthday:"",
+               address:{
+                    province:"",
+                    city:"",
+                    district:""
+               },
+               phone:"",
+               state:""
+          },
+          oldInfo:{
+               gender:"男",
+               birthyear:1988,
+               birthmonth:1,
+               birthday:1,
+               address:{
+                    province:"浙江",
+                    city:"杭州",
+                    district:"滨江区"
+               },
+               phone:15264598785,
+               state:"在职，打算换个新环境"
+          }
+     },
+     methods:{
+          save:function(){
+               this.oldInfo=cloneObj(this.newInfo);
+               this.viewInfo=true;
+          },
+          cancel:function(){
+               this.viewInfo=true;
+          },
+          edit:function(){
+               this.newInfo=cloneObj(this.oldInfo);
+               this.viewInfo=false;
+          },
+          age:function(birthyear){
+               var date = new Date();
+               return (date.getFullYear()-birthyear);
+          }
+     }
+})
+
+
 function init_center(){
     $(".selectee input").each(function(){
         var bgPos=$(this).width()-10+"px center";
@@ -72,7 +125,8 @@ function selectEventBind(){
     })
 }
 function init_pos(){
-    var p_left= $(".safe-range p").width()-16+"px";
+    var p_left= Math.floor($(".safe-range p").width()*$(".safe-range").width()/100)-16+"px";
+    console.log($(".safe-range").width());
     $(".r-pointer").css("left",p_left);
 }
 function navEventBind(){

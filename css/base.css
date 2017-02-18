@@ -196,6 +196,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .LH-H19{line-height: 19px; height: 19px;}
 .LH-H23{line-height: 23px; height: 23px;}
 .LH34{line-height: 34px;}
+.LH37{line-height: 37px;}
 .LH30{line-height: 30px;}
 .LH32{line-height: 32px;}
 .LH26{line-height: 26px;}
@@ -275,6 +276,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .maL18{margin-left: 18px;}
 .maL19{margin-left: 19px;}
 .maL20{margin-left: 20px;}
+.maL22{margin-left: 22px;}
 .maL28{margin-left: 28px;}
 .maL30{margin-left:30px;}
 .maL35{margin-left:35px;}
@@ -347,6 +349,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .color-orange{color:#f39330;}
 .color-orange2{color:#ec7d0e;}
 .color-orange-fc{color:#fc4f05;}
+.color-orange-f7{color:#f7a14a;}
 .fSize30{font-size: 30px;}
 .fSize32{font-size: 32px;}
 .fSize36{font-size: 36px;}
