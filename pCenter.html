@@ -82,7 +82,7 @@
                 </div>
             </li>
         </ul>
-        <div class="content W770 fl maL10 maT20">
+        <div class="content W770 fl maL10 maT20" id="app-content">
             <div style="display: block;" class="resumeBox ">
             <div class="paLeft52 paTop14" >
                 <p class="LH-H88 fSize18 color-gray3">亲爱的校友，您的基本资料尚未填写</p>
@@ -145,7 +145,7 @@
                 <div class="itemBox">
                     <h3 class="title"><i><img src="images/icon-career.png"/></i>职业意向</h3>
                     <div class="item-row">
-                        <label>期望行业</label><input type="text" class="career-input" val="互联网 / 移动互联网 / 电子商务">
+                        <label>期望行业</label><span @click="popTrade"><input type="text" class="career-input"  disabled val="互联网 / 移动互联网 / 电子商务" /></span>
                     </div>
                     <div class="item-row">
                         <label>期望职能</label><input type="text" class="career-input" val="UI设计师">
@@ -728,7 +728,7 @@
             </div>
         </div>
     </div>
-<div class="modal">
+<div class="modal" id="app-modal" v-show="showModal">
     <div class="preView W800 bg-white disNo">
         <div class="H200 baseInfo bg-greenL paLeft80">
             <div class="paTop60">
@@ -1006,9 +1006,30 @@
 
 
     </div>
+    <div class="trade-box W770 H420 maCenter" v-show="showTrade" id="app-trade">
+         <h3 class="bg-gray-e6 fSize14 LH-H36 paLeft30 paRight30 color-black">选择行业分类<i class="pic-wrapper W26 LH-H26 maT5 closer t-center fr cur-pointer" @click="closeTrade"><img src="images/icon-close3.png" /></i></h3>
+         <div class="H328 bg-white paLeft35 cont">
+              <h4 class="LH-H27 fSize12 color-gray9 paTop6">最多可以选择3项</h4>
+              <table class="fSize12">
+                   <tr v-for="trade in trades">
+                        <td class="W158 LH64 t-center">{{trade.title}}</td>
+                        <td class="W539">
+                             <ul class="lis-inline paTop5 paBot5">
+                                  <li v-for="item in trade.items" class="W246 maL12 LH-H27">
+                                       <input type="checkbox" />{{item}}
+                                  </li>
+                             </ul>
+                        </td>
+                   </tr>
+              </table>
+         </div>
+         <div class="trade-bot LH-H56 bg-gray-e6 t-center">
+               <button>确定</button><button>取消</button>
+         </div>
+    </div>
 </div>
 <div class="bot paTop8 t-center bot-account">
-     <div class="inner">
+     <div class="inner clearfix">
           <div class="fl">
             <ul class="lis-inline bot-nav color-gray79 LH-H34 fSize12">
                  <li><a href="footer-page.html?descript">关于校企</a>-</li>

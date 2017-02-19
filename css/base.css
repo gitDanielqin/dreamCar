@@ -46,7 +46,9 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .H480{height: 480px;}
 .H478{height: 478px;}
 .H431{height: 431px;}
+.H420{height: 420px;}
 .H418{height: 418px;}
+.H328{height: 328px;}
 .H352{height: 352px;}
 .H378{height: 378px;}
 .H394{height: 394px;}
@@ -73,6 +75,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .H96{height:96px;}
 .H97{height:97px;}
 .H57{height:57px;}
+.H26{height:26px;}
 .H7{height:7px;}
 
 .W15{width: 15px;}
@@ -84,6 +87,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .W96{width:96px;}
 .W98{width:98px;}
 .W20{width:20px;}
+.W26{width:26px;}
 .W30{width:30px;}
 .W40{width:40px;}
 .W46{width:46px;}
@@ -116,6 +120,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .W228{width:228px;}
 .W236{width:236px;}
 .W242{width: 242px;}
+.W246{width: 246px;}
 .W266{width: 266px;}
 .W272{width: 272px;}
 .W278{width: 278px;}
@@ -137,6 +142,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .W480{width:480px;}
 .W500{width:500px;}
 .W534{width:534px;}
+.W539{width:539px;}
 .W560{width:560px;}
 .W685{width:685px;}
 .W720{width:720px;}
@@ -159,10 +165,13 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .LH-H40{line-height: 40px; height: 40px;}
 .LH-H42{line-height: 42px; height: 42px;}
 .LH-H37{line-height: 37px; height: 37px;}
+.LH-H36{line-height: 36px; height: 36px;}
 .LH-H32{line-height: 32px; height: 32px;}
 .LH-H38{line-height: 38px; height: 38px;}
 .LH-H35{line-height: 35px; height: 35px;}
 .LH-H25{line-height: 25px; height: 25px;}
+.LH-H26{line-height: 26px; height: 26px;}
+.LH-H27{line-height: 27px; height: 27px;}
 .LH-H28{line-height: 28px; height: 28px;}
 .LH-H60{line-height: 60px; height: 60px;}
 .LH-H64{line-height: 64px; height: 64px;}
@@ -207,11 +216,14 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .LH50{line-height: 50px;}
 .LH55{line-height: 55px;}
 .LH57{line-height: 57px;}
+.LH64{line-height: 64px;}
 
 
 /*边距和填充*/
 .paTop2{padding-top:2px;}
 .paTop4{padding-top:4px;}
+.paTop5{padding-top:5px;}
+.paTop6{padding-top:6px;}
 .paTop8{padding-top: 8px;}
 .paTop40{padding-top:40px;}
 .paTop14{padding-top: 14px;}
@@ -227,6 +239,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .paLeft30{padding-left: 30px;}
 .paLeft32{padding-left: 32px;}
 .paLeft34{padding-left: 34px;}
+.paLeft35{padding-left: 35px;}
 .paLeft38{padding-left: 38px;}
 .paLeft10{padding-left: 10px;}
 .paLeft40{padding-left: 40px;}
@@ -239,9 +252,11 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .paRight80{padding-right: 80px;}
 .paRight40{padding-right: 40px;}
 .paRight32{padding-right: 32px;}
+.paRight30{padding-right: 30px;}
 .paRight17{padding-right: 17px;}
 .paBot2{padding-bottom: 2px;}
 .paBot4{padding-bottom: 4px;}
+.paBot5{padding-bottom: 5px;}
 .paBot14{padding-bottom: 14px;}
 .paBot33{padding-bottom: 33px;}
 .paBot53{padding-bottom: 53px;}
@@ -318,6 +333,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .maT9{margin-top: 9px;}
 .maT8{margin-top: 8px;}
 .maT6{margin-top:6px;}
+.maT5{margin-top:5px;}
 .maB2{margin-bottom: 2px;}
 .maB7{margin-bottom: 7px;}
 .maB9{margin-bottom: 9px;}
@@ -335,6 +351,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 
 /*字体*/
 .color-white{color:white}
+.color-black{color:black}
 .color-yellow{color:#f7b632}
 .color-red{color:#ff4633;}
 .color-red2{color:#f7594a;}
@@ -345,6 +362,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .color-gray3{color:#333;}
 .color-grayH{color:#8a8a8a;}
 .color-gray79{color:#797979;}
+.color-gray9{color:#999;}
 .color-gray-c{color:#ccc;}
 .color-orange{color:#f39330;}
 .color-orange2{color:#ec7d0e;}
@@ -378,6 +396,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .bg-gray-f7{background: #f7f7f7;}
 .bg-gray-f2{background: #f2f2f2;}
 .bg-gray-e0{background: #e0ded7;}
+.bg-gray-e6{background: #e6e6e5;}
 .bg-purpleD{background: #312d3f;}
 .bg-purpleL{background: #685c9c;}
 .bg-purpleD2{background: #1f1b2e;}

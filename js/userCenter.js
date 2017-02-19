@@ -53,7 +53,39 @@ var appPorto = new Vue({
      }
 })
 
+var appCont = new Vue({
+     el:"#app-content",
+     data:{
 
+     },
+     methods:{
+          popTrade:function(){
+               appModal.showModal=true;
+               appModal.showTrade=true;
+          }
+     }
+});
+
+var appModal = new Vue({
+     el:"#app-modal",
+     data:{
+          showModal:false,
+          showTrade:false,
+          trades:[
+               {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
+               {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
+               {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
+               {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
+               {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]}
+          ]
+     },
+     methods:{
+          closeTrade:function(){
+               this.showTrade=false;
+               this.showModal=false;
+          }
+     }
+});
 function init_center(){
     $(".selectee input").each(function(){
         var bgPos=$(this).width()-10+"px center";
@@ -126,7 +158,6 @@ function selectEventBind(){
 }
 function init_pos(){
     var p_left= Math.floor($(".safe-range p").width()*$(".safe-range").width()/100)-16+"px";
-    console.log($(".safe-range").width());
     $(".r-pointer").css("left",p_left);
 }
 function navEventBind(){

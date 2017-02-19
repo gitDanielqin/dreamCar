@@ -143,7 +143,7 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .close{cursor: pointer;}
 .wechat-bind{position: absolute; left:50%; top: 256px;margin-left: -250px;}
 .wechat-bind .close{position: absolute; right:10px; top:13px;}
-.modal{display: none;}
+.modal{}
     /*底部样式，与首页基本*/
 .bot-nav{display: inline-block;}
 .bot-nav a{color:#797979;}
@@ -190,3 +190,15 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .btn-save:hover{background: #ff9933; color:white;}
 .btn-cancel{border:1px solid #82c4ea; color:#82c4ea;}
 .btn-cancel:hover{background: #82c4ea; color: white;}
+
+.trade-box{margin-top:15%;}
+.trade-box .closer img{width:12px; height:12px;}
+.trade-box .closer:hover{ background: #d2d2d2;}
+.trade-box table tr:hover{background: #ddf8fe}
+.trade-box table td{border:1px solid #d2d2d2; border-collapse: collapse;}
+.trade-box table td input[type='checkbox']{background: white; width: 15px; height:15px; margin-right: 5px; vertical-align: middle;}
+.trade-box table td ul li:nth-child(2n+1) {margin-right: 23px;}
+.trade-box .cont{overflow: auto;}
+
+.trade-box .trade-bot button{width: 58px; height:28px; border:1px solid #2ea8e6; color:#2ea8e6; font-size: 14px; margin: 0 10px;}
+.trade-box .trade-bot button:hover{background: #2ea8e6; color: white;}
