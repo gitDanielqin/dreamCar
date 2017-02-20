@@ -56,7 +56,7 @@ var appPorto = new Vue({
 var appCont = new Vue({
      el:"#app-content",
      data:{
-
+          tradeItems:""
      },
      methods:{
           popTrade:function(){
@@ -69,6 +69,7 @@ var appCont = new Vue({
 var appModal = new Vue({
      el:"#app-modal",
      data:{
+          checkedTrades:[],
           showModal:false,
           showTrade:false,
           trades:[
@@ -81,6 +82,25 @@ var appModal = new Vue({
      },
      methods:{
           closeTrade:function(){
+               this.showTrade=false;
+               this.showModal=false;
+          },
+          checkfunc:function(item,target){
+               if(!target.checked){
+                    this.checkedTrades.remove(item);
+               }else if(this.checkedTrades.length>=3){
+                    target.checked=false;
+                    return false;
+               }else{
+                    this.checkedTrades.push(item);
+               }
+          },
+          submitTrade:function(){
+               appCont.tradeItems = this.checkedTrades.join();
+               this.showTrade=false;
+               this.showModal=false;
+          },
+          cancelTrade:function(){
                this.showTrade=false;
                this.showModal=false;
           }

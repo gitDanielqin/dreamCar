@@ -90,201 +90,91 @@
                     <h3 class="title"><i><img src="images/icon-basic.png"/></i>基本资料</h3>
                     <div class="item-row">
                         <div class="item-left">
-                            <label class="laLeft">出生年月</label><div class="birthday selectee">
-                            <input type="text" placeholder="出生年">
-                            <ul>
-                                <li>2016</li>
-                                <li>2015</li>
-                                <li>2014</li>
-                                <li>2013</li>
-                            </ul>
-                            <i></i>
-                            </div><div class="birthday selectee" style="margin-left: 19px;">
-                                <input type="text" placeholder="出生月">
-                                <ul>
-                                    <li>1月</li>
-                                    <li>2月</li>
-                                    <li>3月</li>
-                                    <li>4月</li>
-                                </ul>
-                            </div>
-                        </div><label class="laRight">婚姻状况</label><div class="selectee">
-                            <input class="text">
-                            <ul>
-                                <li>已婚</li>
-                                <li>未婚</li>
-                                <li>离异</li>
-                            </ul>
-                        </div>
+                            <label class="laLeft">出生年月</label>
+                            <dropdown classes="birthday" placeholder="出生年" v-bind:options="[2000,2001,2002]" v-model="resume.birthyear"></dropdown>
+                            <dropdown classes="birthday birthmonth" placeholder="出生月" v-bind:options="[1,2,3]" v-model="resume.birthmonth"></dropdown>
+                            </div><label class="laRight">婚姻状况</label>
+                            <dropdown v-bind:options="['已婚','未婚','离异']" v-model="resume.family"></dropdown>
                     </div>
                     <div class="item-row">
                         <div class="item-left">
-                            <label class="laLeft">手机</label><input type="text" />
-                        </div><label class="laRight">邮箱</label><input type="text" />
+                            <label class="laLeft">手机</label><input type="text" v-model="resume.phone"/>
+                       </div><label class="laRight">邮箱</label><input type="text" v-model="resume.email"/>
                     </div>
                     <div class="item-row">
                         <div class="item-left">
-                            <label class="laLeft">籍贯</label><div class="selectee">
-                                <input class="text">
-                                <ul>
-                                    <li>北京</li>
-                                    <li>河南</li>
-                                    <li>浙江</li>
-                                </ul>
-                            </div>
-                        </div><label class="laRight">民族</label><div class="selectee">
-                            <input class="text">
-                            <ul>
-                                <li>汉族</li>
-                                <li>苗族</li>
-                                <li>土家族</li>
-                            </ul>
-                        </div>
+                            <label class="laLeft">籍贯</label>
+                            <dropdown :options="data.address.province" v-model="resume.province"></dropdown>
+                        </div><label class="laRight">民族</label>
+                              <dropdown :options="data.nations" v-model="resume.nation"></dropdown>
                     </div>
                 </div>
                 <div class="itemBox">
                     <h3 class="title"><i><img src="images/icon-career.png"/></i>职业意向</h3>
                     <div class="item-row">
-                        <label>期望行业</label><span @click="popTrade"><input type="text" class="career-input"  disabled val="互联网 / 移动互联网 / 电子商务" /></span>
+                        <label>期望行业</label><span @click="popTrade"><input type="text" class="career-input"  disabled v-model="tradeItems" /></span>
                     </div>
                     <div class="item-row">
-                        <label>期望职能</label><input type="text" class="career-input" val="UI设计师">
+                        <label>期望职能</label><input type="text" class="career-input" val="UI设计师" v-model="posItems">
                     </div>
                     <div class="item-row">
-                        <label>期望地点</label><div class="address">
-                        <div class="selectee">
-                            <input type="text" class="W108" placeholder="省份" />
-                            <ul>
-                                <li>浙江</li>
-                                <li>河南</li>
-                            </ul>
-                        </div><div class="selectee">
-                        <input type="text" class="W108" placeholder="城市" />
-                        <ul>
-                            <li>杭州</li>
-                            <li>新乡</li>
-                        </ul>
-                    </div><div class="selectee">
-                        <input type="text" class="W108" placeholder="区/县" />
-                        <ul>
-                            <li>滨江区</li>
-                            <li>红旗区</li>
-                        </ul>
-                    </div>
+                        <label>期望地点</label>
+                        <div class="address">
+                         <dropdown placeholder="省份" :options="data.address.province" v-model="resume.expProvince"></dropdown>
+                         <dropdown placeholder="城市" :options="data.address.city" v-model="resume.expCity"></dropdown>
+                         <dropdown placeholder="省份" :options="data.address.province" v-model="resume.expDistrict"></dropdown>
                         </div>
                     </div>
                     <div class="item-row">
-                        <label>期望月薪</label><div class="selectee sel-salary">
-                            <input type="text" />
-                            <ul>
-                                <li>3000-6000</li>
-                                <li>6000-8000</li>
-                                <li>8000-10000</li>
-                            </ul>
-                        </div><span class="maL13 fSize14 color-gray3">元 / 月</span>
+                        <label>期望月薪</label>
+                         <dropdown classes="sel-salary" :options="data.salary" v-model="resume.expSalary"></dropdown>
+                         <span class="maL13 fSize14 color-gray3">元 / 月</span>
                     </div>
                 </div>
                 <div class="itemBox">
                     <h3 class="title works-title"><i><img src="images/icon-work.png"/></i>工作经历<ul class="lis-inline pane-tabs"><li>经历1</li></ul></h3>
                     <div class="pane">
                         <div class="item-row">
-                            <label>公司名称</label><input type="text"/>
+                            <label>公司名称</label><input type="text" v-model="resume.worksExp.firma"/>
                         </div>
                         <div class="item-row">
-                            <label>公司行业</label><input type="text"/>
+                            <label>公司行业</label><input type="text" v-model="resume.worksExp.trade"/>
                         </div>
                         <div class="item-row">
-                            <label>职业名称</label><input type="text"/>
+                            <label>职业名称</label><input type="text" v-model="resume.worksExp.pos"/>
                         </div>
                         <div class="item-row time-interval">
-                            <label>任职时间</label><div class="selectee">
-                            <input class="text" value="2016">
-                            <ul>
-                                <li>2016</li>
-                                <li>2015</li>
-                                <li>2014</li>
-                            </ul>
-                        </div><div class="selectee">
-                            <input class="text" value="07">
-                            <ul>
-                                <li>07</li>
-                                <li>08</li>
-                                <li>09</li>
-                            </ul>
-                            <i></i>
-                        </div><div class="selectee" style="margin-left: 22px;">
-                            <input class="text" value="2016">
-                            <ul>
-                                <li>2016</li>
-                                <li>2015</li>
-                                <li>2014</li>
-                            </ul>
-                        </div><div class="selectee">
-                            <input class="text" value="09">
-                            <ul>
-                                <li>01</li>
-                                <li>02</li>
-                                <li>03</li>
-                            </ul>
-                        </div>
+                            <label>任职时间</label>
+                              <dropdown :options="data.year" v-model="resume.works.startyear"></dropdown>
+                              <dropdown :options="data.month" v-model="resume.works.startmonth"></dropdown>
+                              <dropdown :options="data.year" v-model="resume.works.endyear" classes="endyear"></dropdown>
+                              <dropdown :options="data.month" v-model="resume.works.endmonth"></dropdown>
                         </div>
                         <div class="item-row work-resp">
-                            <label>工作职责</label><textarea placeholder="描述你的工作内容和工作业绩"></textarea>
+                            <label>工作职责</label><textarea placeholder="描述你的工作内容和工作业绩" v-model="resume.works.resp"></textarea>
                         </div>
                     </div>
-
                     <div class="addItem color-gray6"><i class="maR5"><img src="images/cross-add.png"/></i>添加工作经历</div>
                 </div>
                 <div class="itemBox">
                     <h3 class="title works-title"><i><img src="images/icon-college.png"/></i>教育经历<ul class="lis-inline pane-tabs"><li>经历1</li></ul></h3>
                     <div class="pane">
                         <div class="item-row">
-                            <label>学校名称</label><input type="text"/>
+                            <label>学校名称</label><input type="text" v-model="resume.edu.uni"/>
                         </div>
                         <div class="item-row">
-                            <label>专业名称</label><input type="text"/>
+                            <label>专业名称</label><input type="text" v-model="resume.edu.major"/>
                         </div>
                         <div class="item-row time-interval">
-                            <label>就读时间</label><div class="selectee">
-                            <input class="text" value="2016">
-                            <ul>
-                                <li>2016</li>
-                                <li>2015</li>
-                                <li>2014</li>
-                            </ul>
-                        </div><div class="selectee">
-                            <input class="text" value="07">
-                            <ul>
-                                <li>07</li>
-                                <li>08</li>
-                                <li>09</li>
-                            </ul>
-                            <i></i>
-                        </div><div class="selectee" style="margin-left: 22px;">
-                            <input class="text" value="2016">
-                            <ul>
-                                <li>2016</li>
-                                <li>2015</li>
-                                <li>2014</li>
-                            </ul>
-                        </div><div class="selectee">
-                            <input class="text" value="09">
-                            <ul>
-                                <li>01</li>
-                                <li>02</li>
-                                <li>03</li>
-                            </ul>
-                        </div>
+                            <label>就读时间</label>
+                            <dropdown :options="data.year" v-model="resume.edu.startyear"></dropdown>
+                            <dropdown :options="data.month" v-model="resume.edu.startmonth"></dropdown>
+                            <dropdown :options="data.year" v-model="resume.edu.endyear" classes="endyear"></dropdown>
+                            <dropdown :options="data.month" v-model="resume.edu.endmonth"></dropdown>
                         </div>
                         <div class="item-row">
-                            <label>学历</label><div class="selectee">
-                            <input class="text" value="本科">
-                            <ul>
-                                <li>硕士</li>
-                                <li>本科</li>
-                                <li>大专</li>
-                            </ul>
-                        </div>
+                            <label>学历</label>
+                              <dropdown :options="data.qualification" v-model="resume.edu.qualification"></dropdown>
                         </div>
                     </div>
                     <div class="addItem color-gray6"><i class="maR5"><img src="images/cross-add.png"/></i>添加教育经历</div>
@@ -303,53 +193,28 @@
                     <h3 class="title works-title"><i><img src="images/icon-project.png"/></i>项目经历<ul class="lis-inline pane-tabs"><li>经历1</li></ul></h3>
                     <div class="pane">
                         <div class="item-row">
-                            <label>项目名称</label><input type="text"/>
+                            <label>项目名称</label><input type="text" v-model="resume.project.name"/>
                         </div>
                         <div class="item-row">
-                            <label>公司名称</label><input type="text"/>
+                            <label>公司名称</label><input type="text" v-model="resume.project.firma"/>
                         </div>
                         <div class="item-row time-interval">
-                            <label>项目时间</label><div class="selectee">
-                            <input class="text" value="2016">
-                            <ul>
-                                <li>2016</li>
-                                <li>2015</li>
-                                <li>2014</li>
-                            </ul>
-                        </div><div class="selectee">
-                            <input class="text" value="07">
-                            <ul>
-                                <li>07</li>
-                                <li>08</li>
-                                <li>09</li>
-                            </ul>
-                            <i></i>
-                        </div><div class="selectee" style="margin-left: 22px;">
-                            <input class="text" value="2016">
-                            <ul>
-                                <li>2016</li>
-                                <li>2015</li>
-                                <li>2014</li>
-                            </ul>
-                        </div><div class="selectee">
-                            <input class="text" value="09">
-                            <ul>
-                                <li>01</li>
-                                <li>02</li>
-                                <li>03</li>
-                            </ul>
-                        </div>
+                            <label>项目时间</label>
+                            <dropdown :options="data.year" v-model="resume.project.startyear"></dropdown>
+                            <dropdown :options="data.month" v-model="resume.project.startmonth"></dropdown>
+                            <dropdown :options="data.year" v-model="resume.project.endyear" classes="endyear"></dropdown>
+                            <dropdown :options="data.month" v-model="resume.project.endmonth"></dropdown>
                         </div>
                         <div class="item-row project-area">
-                            <label>项目描述</label><textarea placeholder="请详细描述项目内容，填写文字限制1000字以内"></textarea>
+                            <label>项目描述</label><textarea placeholder="请详细描述项目内容，填写文字限制1000字以内" v-model="resume.project.desc"></textarea>
                             <p>你还可以输入<span>1000</span>字</p>
                         </div>
                         <div class="item-row project-area">
-                            <label>项目职责</label><textarea placeholder="请详细描述您的职责范围及工作任务，填写文字限制1000字以内"></textarea>
+                            <label>项目职责</label><textarea placeholder="请详细描述您的职责范围及工作任务，填写文字限制1000字以内" v-model="resume.project.resp"></textarea>
                             <p>你还可以输入<span>1000</span>字</p>
                         </div>
                         <div class="item-row project-area">
-                            <label>项目业绩</label><textarea placeholder="请详细描述您在项目中取得的业绩，填写文字限制1000字以内"></textarea>
+                            <label>项目业绩</label><textarea placeholder="请详细描述您在项目中取得的业绩，填写文字限制1000字以内" v-model="resume.project.achiev"></textarea>
                             <p>你还可以输入<span>1000</span>字</p>
                         </div>
                     </div>
@@ -357,17 +222,17 @@
                 </div>
                 <div class="itemBox text-box">
                     <h3 class="title"><i><img src="images/icon-comment.png"/></i>自我评价</h3>
-                    <textarea placeholder="建议您对自己做一个简短的评价"></textarea>
+                    <textarea placeholder="建议您对自己做一个简短的评价" v-model="resume.selfEval"></textarea>
                     <p>你还可以输入<span>1000</span>字</p>
                 </div>
                 <div class="itemBox text-box">
                     <h3 class="title"><i><img src="images/icon-attachment.png"/></i>附加信息</h3>
-                    <textarea placeholder="如：获奖、技能资格证书、专利等"></textarea>
+                    <textarea placeholder="如：获奖、技能资格证书、专利等" v-model="resume.awards"></textarea>
                     <p>你还可以输入<span>1000</span>字</p>
                 </div>
                 <div class="itemBox text-box">
                     <h3 class="title"><i><img src="images/icon-skills.png"/></i>擅长技能</h3>
-                    <textarea placeholder="在此添加您擅长的技能"></textarea>
+                    <textarea placeholder="在此添加您擅长的技能" v-model="resume.skills"></textarea>
                     <p>你还可以输入<span>1000</span>字</p>
                 </div>
             </div>
@@ -1016,7 +881,7 @@
                         <td class="W539">
                              <ul class="lis-inline paTop5 paBot5">
                                   <li v-for="item in trade.items" class="W246 maL12 LH-H27">
-                                       <input type="checkbox" />{{item}}
+                                       <input type="checkbox"  @click="checkfunc(item,$event.target)"/>{{item}}
                                   </li>
                              </ul>
                         </td>
@@ -1024,7 +889,7 @@
               </table>
          </div>
          <div class="trade-bot LH-H56 bg-gray-e6 t-center">
-               <button>确定</button><button>取消</button>
+               <button @click="submitTrade">确定</button><button @click="cancelTrade">取消</button>
          </div>
     </div>
 </div>

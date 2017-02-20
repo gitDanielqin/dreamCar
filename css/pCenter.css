@@ -26,13 +26,14 @@
 .sub-li p{padding-left: 30px;}
 .main .content > div{display: none;}
 .main .resumeBox{border:1px solid #ccc;}
+.main .resumeBox .birthmonth{margin-left: 19px;}
 .main .itemBox input{line-height: 24px; height: 24px; font-size: 14px; color: #666; border: 1px solid #ccc;margin-left: 10px;
-padding-left: 10px; width:448px;}
+padding-left: 10px; width:448px; overflow: hidden;}
 .main .itemBox label{ width:143px; color:#333; font-size: 14px; text-align: right; display: inline-block; line-height: 26px; height:26px;}
 .main .itemBox .item-row{margin-bottom: 20px;}
 .main .itemBox .address{display: inline-block;}
 .main .itemBox .address input{width:108px;}
-.main .itemBox .career-input{background: url("../images/icon-prop.jpg") no-repeat 438px center;}
+.main .itemBox .career-input{background: url("../images/icon-prop.jpg") no-repeat 438px center; padding-right: 23px; width:425px;}
 .main .itemBox .sel-salary input{width:98px;}
 .main .itemBox{margin-bottom:35px;}
 .main .item-basic .laLeft{width:135px;}
@@ -50,6 +51,7 @@ margin-right: 10px;}
 .main .itemBox .works-title .pane-tabs li{width:48px; height:16px; line-height: 16px; text-align: right;padding-right: 10px;
 background: url("../images/bg-work.png") no-repeat right center; color:#fff; font-size: 12px; cursor: pointer}
 .main .itemBox .time-interval input{width:78px;}
+.main .itemBox .time-interval .endyear{margin-left: 22px;}
 .main .itemBox .time-interval i{display: inline-block; position: absolute; right: -26px; top:50%; border-top:1px solid #d2d2d2;  height: 0; width: 20px;}
 .main .itemBox .work-resp textarea{width:438px; height:188px; padding: 5px 10px; border: 1px solid #ccc;margin-left: 10px;vertical-align: top}
 .main .itemBox .addItem{width:618px; height:36px; line-height: 36px; text-align: center; cursor:pointer;margin-left: 38px; border: 1px dotted #ccc; margin-top: 50px;}
