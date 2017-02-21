@@ -56,7 +56,75 @@ var appPorto = new Vue({
 var appCont = new Vue({
      el:"#app-content",
      data:{
-          tradeItems:""
+          tradeItems:"",
+          posItems:"",
+          data:{
+               years:[1988,1989,1990,1991,1992],
+               months:[1,2,3,4,5,6,7,8,9,10,11,12],
+               address:{
+                    province:["浙江","河南","安徽"],
+                    city:["杭州","新乡"],
+                    district:["滨江区","红旗区"]
+               },
+               nations:["汉族","回族","维吾尔族"],
+               salary:["4000-6000","6000-8000","8000-10000"],
+               major:{
+                    main:["信息技术","数学系"],
+                    sub:["计算机科学","通信工程","应用数学"]
+               },
+               qualification:["专科","本科","硕士","博士"]
+          },
+          resume:{
+               birthyear:1988,
+               birthmonth:1,
+               family:"",
+               phone:"",
+               email:"",
+               province:"",
+               nation:"",
+               expect:{
+                    province:"",
+                    city:"",
+                    district:"",
+                    salary:""
+               },
+               worksExp:{
+                    firma:"",
+                    trade:"",
+                    pos:"",
+                    startyear:2010,
+                    startmonth:2,
+                    endyear:2016,
+                    endmonth:10,
+                    resp:""
+               },
+               edu:{
+                    uni:"",
+                    major:"",
+                    submajor:"",
+                    exmajor:"",
+                    startyear:2010,
+                    startmonth:2,
+                    endyear:2016,
+                    endmonth:10,
+                    qualification:"",
+
+               },
+               project:{
+                    name:"",
+                    firma:"",
+                    startyear:2010,
+                    startmonth:2,
+                    endyear:2016,
+                    endmonth:10,
+                    desc:"",
+                    resp:"",
+                    achiev:""
+               },
+               selfEval:"",
+               awards:"",
+               skills:""
+          }
      },
      methods:{
           popTrade:function(){

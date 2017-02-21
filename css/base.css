@@ -379,6 +379,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .fSize18{font-size: 18px;}
 .fSize16{font-size: 16px;}
 .fSize14{font-size: 14px;}
+.fSize0{font-size:0;}
 
 .f-bold{font-weight: bold;}
 
