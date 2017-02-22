@@ -51,8 +51,8 @@ padding-left: 10px; width:448px; overflow: hidden;}
 .itemBox .title{height:30px; line-height: 30px; font-size: 18px; margin-bottom: 33px;}
 .itemBox .title i{display: inline-block; width:30px; height:30px; line-height: 30px; text-align: center; font-size: 0;
 margin-right: 10px;}
-.main .itemBox .works-title .pane-tabs{display: inline-block; vertical-align: middle;}
-.main .itemBox .works-title .pane-tabs li{width:48px; height:16px; line-height: 16px; text-align: right;padding-right: 10px;
+.itemBox .works-title .pane-tabs{display: inline-block; vertical-align: middle;}
+.itemBox .works-title .pane-tabs li{width:48px; height:16px; line-height: 16px; text-align: right;padding-right: 10px;
 background: url("../images/bg-work.png") no-repeat right center; color:#fff; font-size: 12px; cursor: pointer}
 .main .itemBox .time-interval input{width:78px;}
 .main .itemBox .time-interval .bind-line{width:30px;}
@@ -136,11 +136,13 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .preView .itemBox .item-row{padding-left: 40px; height:26px; line-height: 26px;}
 .preView .itemBox .item-row label span{margin-left: 10px;}
 .preView .baseInfo .infoTxt p{float: left; width: 50%;}
-.preView .alleInfo table .la-l{width:92px; text-align: right; margin-right: 10px;}
+.preView .alleInfo table .la-l{width:92px; text-align: right; padding-right: 10px;}
 .preView .alleInfo table .val-l{width:250px;}
-.preView .alleInfo table .la-r{width:56px; text-align: right; margin-right: 10px;}
+.preView .alleInfo table .la-r{width:56px; text-align: right; padding-right: 10px;}
 .preView .alleInfo .itemBox{padding-bottom: 17px; padding-top:30px;border-bottom: 1px dotted #ccc;}
 .preView .alleInfo .item-basic{padding-top: 40px;}
+.headmark{position: absolute; left: 0; top:0; display: inline-block; height: 100%; width: 4px; background-color: #f7a14a;}
+.preView .infopane p{line-height: 27px; height:27px; padding-left: 40px;}
 
 .phone-change{position: absolute; left:50%; top: 256px;margin-left: -250px;  }
 .phone-change input{height:44px; background: #f3f3f3; font-size: 14px; padding-left: 10px;}

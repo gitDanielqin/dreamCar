@@ -49,6 +49,10 @@ var appPorto = new Vue({
           age:function(birthyear){
                var date = new Date();
                return (date.getFullYear()-birthyear);
+          },
+          showPre:function(){
+               appModal.showModal=true;
+               appModal.showPreview=true;
           }
      }
 })
@@ -56,8 +60,6 @@ var appPorto = new Vue({
 var appCont = new Vue({
      el:"#app-content",
      data:{
-          tradeItems:"",
-          posItems:"",
           data:{
                years:[1988,1989,1990,1991,1992],
                months:[1,2,3,4,5,6,7,8,9,10,11,12],
@@ -72,7 +74,10 @@ var appCont = new Vue({
                     main:["信息技术","数学系"],
                     sub:["计算机科学","通信工程","应用数学"]
                },
-               qualification:["专科","本科","硕士","博士"]
+               qualification:["专科","本科","硕士","博士"],
+               languages:[
+                    "英语","法语","日语","韩语","德语","俄语","西班牙语","葡萄牙语","阿拉伯语","其他"
+               ]
           },
           resume:{
                birthyear:1988,
@@ -83,6 +88,8 @@ var appCont = new Vue({
                province:"",
                nation:"",
                expect:{
+                    tradeItems:"",
+                    posItems:"",
                     province:"",
                     city:"",
                     district:"",
@@ -112,7 +119,7 @@ var appCont = new Vue({
                },
                project:{
                     name:"",
-                    firma:"",
+                    firma:"杭州黄巢信息科技有限公司",
                     startyear:2010,
                     startmonth:2,
                     endyear:2016,
@@ -121,8 +128,9 @@ var appCont = new Vue({
                     resp:"",
                     achiev:""
                },
+               laSkills:[],
                selfEval:"",
-               awards:"",
+               psInfo:"",
                skills:""
           }
      },
@@ -130,6 +138,18 @@ var appCont = new Vue({
           popTrade:function(){
                appModal.showModal=true;
                appModal.showTrade=true;
+          },
+          showPre:function(){
+               appModal.showModal=true;
+               appModal.showPreview=true;
+          },
+          checkLan:function(target,language){
+               if(target.checked&&this.resume.laSkills.indexOf(language)<0){
+                    this.resume.laSkills.push(language);
+               }
+               if(!target.checked){
+                    this.resume.laSkills.remove(language);
+               }
           }
      }
 });
@@ -140,13 +160,16 @@ var appModal = new Vue({
           checkedTrades:[],
           showModal:false,
           showTrade:false,
+          showPreview:false,
           trades:[
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]}
-          ]
+          ],
+          baseInfo:appPorto.oldInfo,
+          resumeInfo:appCont.resume
      },
      methods:{
           closeTrade:function(){
@@ -164,13 +187,22 @@ var appModal = new Vue({
                }
           },
           submitTrade:function(){
-               appCont.tradeItems = this.checkedTrades.join();
+               appCont.resume.expect.tradeItems = this.checkedTrades.join();
                this.showTrade=false;
                this.showModal=false;
           },
           cancelTrade:function(){
                this.showTrade=false;
                this.showModal=false;
+          },
+          hidemodal:function(){
+               this.showModal=false;
+               this.showTrade=false;
+               this.showPreview=false;
+          },
+          stayshow:function(ev){
+               ev.stopPropagation();
+               return false;
           }
      }
 });
