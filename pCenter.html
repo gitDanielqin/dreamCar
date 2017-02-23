@@ -133,55 +133,55 @@
                     </div>
                 </div>
                 <div class="itemBox">
-                    <h3 class="title works-title"><i><img src="images/icon-work.png"/></i>工作经历<ul class="lis-inline pane-tabs"><li>经历1</li></ul></h3>
-                    <div class="pane">
+                    <h3 class="title works-title"><i><img src="images/icon-work.png"/></i>工作经历<ul class="lis-inline pane-tabs"><li v-for="(worksExp,index) in resume.worksExps" @click="workSwipe(index)">经历{{index+1}}</li></ul></h3>
+                    <div class="pane" v-for="worksExp in resume.worksExps" v-show="worksExp.show">
                         <div class="item-row">
-                            <label>公司名称</label><input type="text" v-model="resume.worksExp.firma"/>
+                            <label>公司名称</label><input type="text" v-model="worksExp.firma"/>
+                       </div>
+                        <div class="item-row">
+                            <label>公司行业</label><input type="text" v-model="worksExp.trade"/>
                         </div>
                         <div class="item-row">
-                            <label>公司行业</label><input type="text" v-model="resume.worksExp.trade"/>
-                        </div>
-                        <div class="item-row">
-                            <label>职业名称</label><input type="text" v-model="resume.worksExp.pos"/>
+                            <label>职业名称</label><input type="text" v-model="worksExp.pos"/>
                         </div>
                         <div class="item-row time-interval">
                             <label>任职时间</label>
-                              <dropdown :options="data.years" v-model="resume.worksExp.startyear"></dropdown>
-                              <dropdown :options="data.months" v-model="resume.worksExp.startmonth"></dropdown>
-                              <dropdown :options="data.years" v-model="resume.worksExp.endyear" classes="endyear"></dropdown>
-                              <dropdown :options="data.months" v-model="resume.worksExp.endmonth"></dropdown>
+                              <dropdown :options="data.years" v-model="worksExp.startyear"></dropdown>
+                              <dropdown :options="data.months" v-model="worksExp.startmonth"></dropdown><i class="bind-line"></i
+                              <dropdown :options="data.years" v-model="worksExp.endyear" classes="endyear"></dropdown>
+                              <dropdown :options="data.months" v-model="worksExp.endmonth"></dropdown>
                         </div>
                         <div class="item-row work-resp">
-                            <label>工作职责</label><textarea placeholder="描述你的工作内容和工作业绩" v-model="resume.worksExp.resp"></textarea>
+                            <label>工作职责</label><textarea placeholder="描述你的工作内容和工作业绩" v-model="worksExp.resp"></textarea>
                         </div>
                     </div>
-                    <div class="addItem color-gray6"><i class="maR5"><img src="images/cross-add.png"/></i>添加工作经历</div>
+                    <div class="addItem color-gray6" @click="addWorksexp"><i class="maR5"><img src="images/cross-add.png"/></i>添加工作经历</div>
                 </div>
                 <div class="itemBox">
-                    <h3 class="title works-title"><i><img src="images/icon-college.png"/></i>教育经历<ul class="lis-inline pane-tabs"><li>经历1</li></ul></h3>
-                    <div class="pane">
+                    <h3 class="title works-title"><i><img src="images/icon-college.png"/></i>教育经历<ul class="lis-inline pane-tabs"><li v-for="(edu,index) in resume.edus" @click="eduSwipe(index)">经历{{index+1}}</li></ul></h3>
+                    <div class="pane" v-for="edu in resume.edus" v-show="edu.show">
                         <div class="item-row">
-                            <label>学校名称</label><input type="text" v-model="resume.edu.uni"/>
+                            <label>学校名称</label><input type="text" v-model="edu.uni"/>
                         </div>
                         <div class="item-row">
                             <label>专业名称</label>
-                              <dropdown :options="data.major.main" placeholder="选择/修改" v-model="resume.edu.major" classes="major-name"></dropdown>
-                              <dropdown :options="data.major.sub" placeholder="选择/修改" v-model="resume.edu.submajor" classes="major-name"></dropdown>
-                            <input type="text" class="exmajor" v-model="resume.edu.exmajor"/>
+                              <dropdown :options="data.major.main" placeholder="选择/修改" v-model="edu.major" classes="major-name"></dropdown>
+                              <dropdown :options="data.major.sub" placeholder="选择/修改" v-model="edu.submajor" classes="major-name"></dropdown>
+                            <input type="text" class="exmajor" v-model="edu.exmajor"/>
                         </div>
                         <div class="item-row time-interval">
                             <label>就读时间</label>
-                            <dropdown :options="data.years" v-model="resume.edu.startyear"></dropdown>
-                            <dropdown :options="data.months" v-model="resume.edu.startmonth"></dropdown><i class="bind-line"></i>
-                            <dropdown :options="data.years" v-model="resume.edu.endyear" classes="endyear"></dropdown>
-                            <dropdown :options="data.months" v-model="resume.edu.endmonth"></dropdown>
+                            <dropdown :options="data.years" v-model="edu.startyear"></dropdown>
+                            <dropdown :options="data.months" v-model="edu.startmonth"></dropdown><i class="bind-line"></i>
+                            <dropdown :options="data.years" v-model="edu.endyear" classes="endyear"></dropdown>
+                            <dropdown :options="data.months" v-model="edu.endmonth"></dropdown>
                         </div>
                         <div class="item-row">
                             <label>学历</label>
-                              <dropdown :options="data.qualification" v-model="resume.edu.qualification" classes="qualific"></dropdown>
+                              <dropdown :options="data.qualification" v-model="edu.qualification" classes="qualific"></dropdown>
                         </div>
                     </div>
-                    <div class="addItem color-gray6"><i class="maR5"><img src="images/cross-add.png"/></i>添加教育经历</div>
+                    <div class="addItem color-gray6" @click="addEdu"><i class="maR5"><img src="images/cross-add.png"/></i>添加教育经历</div>
                 </div>
                 <div class="itemBox">
                     <h3 class="title works-title"><i><img src="images/icon-language.png"/></i>语言能力</h3>
@@ -190,35 +190,35 @@
                     </form>
                 </div>
                 <div class="itemBox">
-                    <h3 class="title works-title"><i><img src="images/icon-project.png"/></i>项目经历<ul class="lis-inline pane-tabs"><li>经历1</li></ul></h3>
-                    <div class="pane">
+                    <h3 class="title works-title"><i><img src="images/icon-project.png"/></i>项目经历<ul class="lis-inline pane-tabs"><li v-for="(project,index) in resume.projects" @click="projectSwipe(index)">经历{{index+1}}</li></ul></h3>
+                    <div class="pane" v-for="project in resume.projects" v-show="project.show">
                         <div class="item-row">
-                            <label>项目名称</label><input type="text" v-model="resume.project.name"/>
+                            <label>项目名称</label><input type="text" v-model="project.name"/>
                         </div>
                         <div class="item-row">
-                            <label>公司名称</label><input type="text" v-model="resume.project.firma"/>
+                            <label>公司名称</label><input type="text" v-model="project.firma"/>
                         </div>
                         <div class="item-row time-interval">
                             <label>项目时间</label>
-                            <dropdown :options="data.year" v-model="resume.project.startyear"></dropdown>
-                            <dropdown :options="data.month" v-model="resume.project.startmonth"></dropdown><i class="bind-line"></i>
-                            <dropdown :options="data.year" v-model="resume.project.endyear" classes="endyear"></dropdown>
-                            <dropdown :options="data.month" v-model="resume.project.endmonth"></dropdown>
+                            <dropdown :options="data.years" v-model="project.startyear"></dropdown>
+                            <dropdown :options="data.months" v-model="project.startmonth"></dropdown><i class="bind-line"></i>
+                            <dropdown :options="data.years" v-model="project.endyear" classes="endyear"></dropdown>
+                            <dropdown :options="data.months" v-model="project.endmonth"></dropdown>
                         </div>
                         <div class="item-row project-area">
-                            <label>项目描述</label><textarea placeholder="请详细描述项目内容，填写文字限制1000字以内" v-model="resume.project.desc"></textarea>
+                            <label>项目描述</label><textarea placeholder="请详细描述项目内容，填写文字限制1000字以内" v-model="project.desc"></textarea>
                             <p>你还可以输入<span>1000</span>字</p>
                         </div>
                         <div class="item-row project-area">
-                            <label>项目职责</label><textarea placeholder="请详细描述您的职责范围及工作任务，填写文字限制1000字以内" v-model="resume.project.resp"></textarea>
+                            <label>项目职责</label><textarea placeholder="请详细描述您的职责范围及工作任务，填写文字限制1000字以内" v-model="project.resp"></textarea>
                             <p>你还可以输入<span>1000</span>字</p>
                         </div>
                         <div class="item-row project-area">
-                            <label>项目业绩</label><textarea placeholder="请详细描述您在项目中取得的业绩，填写文字限制1000字以内" v-model="resume.project.achiev"></textarea>
+                            <label>项目业绩</label><textarea placeholder="请详细描述您在项目中取得的业绩，填写文字限制1000字以内" v-model="project.achiev"></textarea>
                             <p>你还可以输入<span>1000</span>字</p>
                         </div>
                     </div>
-                    <div class="addItem color-gray6"><i class="maR5"><img src="images/cross-add.png"/></i>添加项目经历</div>
+                    <div class="addItem color-gray6" @click="addProject"><i class="maR5"><img src="images/cross-add.png"/></i>添加项目经历</div>
                 </div>
                 <div class="itemBox text-box">
                     <h3 class="title"><i><img src="images/icon-comment.png"/></i>自我评价</h3>
@@ -633,20 +633,20 @@
                 </div>
             </div>
             <div class="itemBox">
-                <h3 class="title works-title"><i><img src="images/icon-work.png"/></i>工作经历<ul class="lis-inline pane-tabs"><li>经历1</li></ul></h3>
-                <div class="infopane maB22">
-                     <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">2013.10--2015.1</span>杭州黄巢信息科技有限公司<i class="headmark"></i></h4>
-                     <p>游戏视觉设计</p>
-                     <p><span>工作职能：</span>视觉设计</p>
+                <h3 class="title works-title"><i><img src="images/icon-work.png"/></i>工作经历<ul class="lis-inline pane-tabs"><li v-for="(worksExp,index) in resumeInfo.worksExps">经历{{index+1}}</li></ul></h3>
+                <div class="infopane maB22" v-for="worksExp in resumeInfo.worksExps">
+                     <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{worksExp.startyear}}.{{worksExp.startmonth}}--{{worksExp.endyear}}.{{worksExp.endmonth}}</span>{{worksExp.firma}}<i class="headmark"></i></h4>
+                     <p>{{worksExp.trade}}</p>
+                     <p><span>工作职能：</span>{{worksExp.pos}}</p>
                      <p><span>工作地点：</span>杭州-滨江</p>
                      <p><span>工作职责：</span>负责产品视觉所有设计与呈现</p>
                 </div>
             </div>
             <div class="itemBox">
-                <h3 class="title works-title"><i><img src="images/icon-college.png"/></i>教育经历<ul class="lis-inline pane-tabs"><li>经历1</li></ul></h3>
-                <div class="infopane maT13 maB16">
-                     <h4 class="fSize14 LH-H30 paLeft40">中国美术学院（2009/09-2013/06）</h4>
-                     <p class="LH-H25"><span class="W250 disInline">专业名称：工业设计</span><span>学历：硕士</span></p>
+                <h3 class="title works-title"><i><img src="images/icon-college.png"/></i>教育经历<ul class="lis-inline pane-tabs"><li v-for="(edu,index) in resumeInfo.edus">经历{{index+1}}</li></ul></h3>
+                <div class="infopane maT13 maB16" v-for="edu in resumeInfo.edus">
+                     <h4 class="fSize14 LH-H30 paLeft40">中国美术学院（{{edu.startyear}}/{{edu.startmonth}}-{{edu.endyear}}/{{edu.endmonth}}）</h4>
+                     <p class="LH-H25"><span class="W250 disInline">专业名称：{{edu.submajor}}</span><span>学历：{{edu.qualification}}</span></p>
                 </div>
             </div>
             <div class="itemBox">
@@ -654,13 +654,13 @@
                 <p class="LH-H32 paLeft40">{{resumeInfo.laSkills.join()}}</p>
             </div>
             <div class="itemBox">
-                <h3 class="title works-title"><i><img src="images/icon-project.png"/></i>项目经历<ul class="lis-inline pane-tabs"><li>经历1</li></ul></h3>
-                <div class="infopane maB22">
-                     <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{resumeInfo.project.startyear}}.{{resumeInfo.project.startmonth}}--{{resumeInfo.project.endyear}}.{{resumeInfo.project.endmonth}}</span>校企职通车<i class="headmark"></i></h4>
-                     <p>{{resumeInfo.project.firma}}</p>
-                     <p><span>项目描述：</span>{{resumeInfo.project.desc}}</p>
-                     <p><span>项目职责：</span>{{resumeInfo.project.resp}}</p>
-                     <p><span>项目业绩：</span>{{resumeInfo.project.achiev}}</p>
+                <h3 class="title works-title"><i><img src="images/icon-project.png"/></i>项目经历<ul class="lis-inline pane-tabs"><li v-for="(project,index) in resumeInfo.projects">经历{{index}}</li></ul></h3>
+                <div class="infopane maB22" v-for="project in resumeInfo.projects">
+                     <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{project.startyear}}.{{project.startmonth}}--{{project.endyear}}.{{project.endmonth}}</span>校企职通车<i class="headmark"></i></h4>
+                     <p>{{project.firma}}</p>
+                     <p><span>项目描述：</span>{{project.desc}}</p>
+                     <p><span>项目职责：</span>{{project.resp}}</p>
+                     <p><span>项目业绩：</span>{{project.achiev}}</p>
                 </div>
             </div>
             <div class="itemBox text-box">

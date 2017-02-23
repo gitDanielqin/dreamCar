@@ -2,7 +2,7 @@
  * Created by xuanyuan on 2016/11/27.
  */
 
-
+var objMe=this;
 var appPorto = new Vue({
      el:"#app-porto",
      data:{
@@ -95,7 +95,8 @@ var appCont = new Vue({
                     district:"",
                     salary:""
                },
-               worksExp:{
+               worksExps:[{
+                    show:true,
                     firma:"",
                     trade:"",
                     pos:"",
@@ -103,9 +104,10 @@ var appCont = new Vue({
                     startmonth:2,
                     endyear:2016,
                     endmonth:10,
-                    resp:""
-               },
-               edu:{
+                    resp:""}
+               ],
+               edus:[{
+                    show:true,
                     uni:"",
                     major:"",
                     submajor:"",
@@ -116,8 +118,9 @@ var appCont = new Vue({
                     endmonth:10,
                     qualification:"",
 
-               },
-               project:{
+               }],
+               projects:[{
+                    show:true,
                     name:"",
                     firma:"杭州黄巢信息科技有限公司",
                     startyear:2010,
@@ -127,7 +130,7 @@ var appCont = new Vue({
                     desc:"",
                     resp:"",
                     achiev:""
-               },
+               }],
                laSkills:[],
                selfEval:"",
                psInfo:"",
@@ -150,7 +153,81 @@ var appCont = new Vue({
                if(!target.checked){
                     this.resume.laSkills.remove(language);
                }
+          },
+          addWorksexp:function(){
+               for(var i=0; i<this.resume.worksExps.length; i++){
+                    this.resume.worksExps[i].show=false;
+               }
+               var worksexp ={
+                    show:true,
+                    firma:"",
+                    trade:"",
+                    pos:"",
+                    startyear:2010,
+                    startmonth:2,
+                    endyear:2016,
+                    endmonth:10,
+                    resp:""}
+               this.resume.worksExps.push(worksexp);
+          },
+          workSwipe:function(index){
+               for(var i=0; i<this.resume.worksExps.length; i++){
+                    this.resume.worksExps[i].show=false;
+               }
+               this.resume.worksExps[index].show=true;
+          },
+          addEdu:function(){
+               for(var i=0; i<this.resume.edus.length; i++){
+                    this.resume.edus[i].show=false;
+               };
+               var edusExp ={
+                    show:true,
+                    uni:"",
+                    major:"",
+                    submajor:"",
+                    exmajor:"",
+                    startyear:2010,
+                    startmonth:2,
+                    endyear:2016,
+                    endmonth:10,
+                    qualification:"",
+               };
+               this.resume.edus.push(edusExp);
+          },
+          eduSwipe:function(index){
+               for(var i=0; i<this.resume.edus.length; i++){
+                    this.resume.edus[i].show=false;
+               };
+               this.resume.edus[index].show=true;
+          },
+          addProject:function(){
+               for(var i=0; i<this.resume.projects.length; i++){
+                    this.resume.projects[i].show=false;
+               };
+               var project = {
+                    show:true,
+                    name:"",
+                    firma:"杭州黄巢信息科技有限公司",
+                    startyear:2010,
+                    startmonth:2,
+                    endyear:2016,
+                    endmonth:10,
+                    desc:"",
+                    resp:"",
+                    achiev:""
+               };
+               this.resume.projects.push(project);
+          },
+          projectSwipe:function(index){
+               for(var i=0; i<this.resume.edus.length; i++){
+                    this.resume.projects[i].show=false;
+               }
+               this.resume.projects[index].show=true;
           }
+     },
+     updated:function(){
+          window.selectInitPos();
+          window.selectEventBind();
      }
 });
 
@@ -207,7 +284,17 @@ var appModal = new Vue({
      }
 });
 function init_center(){
-    $(".selectee input").each(function(){
+     selectInitPos();
+    init_pos();
+    selectEventBind();
+   // init_paneAdd();
+    navEventBind();
+    modalEventBind();
+}
+init_center();
+
+function selectInitPos(){
+     $(".selectee input").each(function(){
         var bgPos=$(this).width()-10+"px center";
         $(this).attr("disabled","true").css("background-position",bgPos);
     });
@@ -219,54 +306,23 @@ function init_center(){
             top:sibInput.height()
         })
     });
-    init_pos();
-    selectEventBind();
-    init_paneAdd();
-    navEventBind();
-    modalEventBind();
-}
-init_center();
-function tabEventBind(itemBox){
-    $(".pane-tabs li",$(itemBox)).each(function(){
-        $(this).click(function(){
-            var paneindex=$(".pane-tabs li",$(itemBox)).index($(this));
-            $(itemBox).children(".pane").hide();
-            $(itemBox).children(".pane").eq(paneindex).show();
-        });
-    })
-}
-function init_paneAdd(){
-    $(".addItem").unbind("click").bind("click",function(){
-        var parItemBox = $(this).closest(".itemBox");
-        var nums_Pane=parItemBox.find(".pane-tabs li").length;
-        var newTab="<li>经历"+(nums_Pane+1)+"</li>";
-        parItemBox.find(".pane-tabs").append(newTab);
-        var lastPane= parItemBox.children(".pane:last")
-        var newPane =lastPane.clone();
-        newPane.find("input").val("");
-        newPane.find("textarea").val("");
-        lastPane.after(newPane);
-        lastPane.hide();
-        tabEventBind(parItemBox);
-        selectEventBind();
-    })
 }
 function selectEventBind(){
-    $(".selectee ul li").bind(
-        {"mouseover":function(){
+    $(".selectee ul li").bind({
+        "mouseover":function(){
             $(this).addClass("over");
         },
-            "mouseout":function(){
-                $(this).removeClass("over");
-            },
-            "click":function(){
-                $(this).siblings(".selected").removeClass("selected");
-                $(this).addClass("selected");
-                $(this).parent().siblings("input").val($(this).text());
-                $(this).parent().hide();
-                return false;
-            }
-        });
+       "mouseout":function(){
+           $(this).removeClass("over");
+       },
+       "click":function(){
+           $(this).siblings(".selected").removeClass("selected");
+           $(this).addClass("selected");
+           $(this).parent().siblings("input").val($(this).text());
+           $(this).parent().hide();
+           return false;
+       }
+     });
     $(".selectee").bind("click",function(){
         $(".selectee ul").hide();
         $(this).children("ul").show();
