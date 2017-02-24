@@ -6,19 +6,19 @@ var objMe=this;
 var appPorto = new Vue({
      el:"#app-porto",
      data:{
-          viewInfo:false,
+          viewInfo:true,
           newInfo:{
-               gender:"",
-               birthyear:"",
-               birthmonth:"",
-               birthday:"",
+               gender:"男",
+               birthyear:"1988",
+               birthmonth:"1",
+               birthday:"1",
                address:{
-                    province:"",
-                    city:"",
-                    district:""
+                    province:"浙江",
+                    city:"杭州",
+                    district:"滨江"
                },
-               phone:"",
-               state:""
+               phone:"15264598745",
+               state:"中国"
           },
           oldInfo:{
                gender:"男",
@@ -54,6 +54,10 @@ var appPorto = new Vue({
                appModal.showModal=true;
                appModal.showPreview=true;
           }
+     },
+     updated:function(){
+          window.selectInitPos();
+          window.selectEventBind();
      }
 })
 
@@ -82,41 +86,41 @@ var appCont = new Vue({
           resume:{
                birthyear:1988,
                birthmonth:1,
-               family:"",
-               phone:"",
-               email:"",
-               province:"",
-               nation:"",
+               family:"已婚",
+               phone:"15264598745",
+               email:"xqztc@163.com",
+               province:"安徽",
+               nation:"汉",
                expect:{
-                    tradeItems:"",
-                    posItems:"",
-                    province:"",
-                    city:"",
-                    district:"",
-                    salary:""
+                    tradeItems:"互联网",
+                    posItems:"IT工程师",
+                    province:"浙江",
+                    city:"杭州",
+                    district:"滨江",
+                    salary:"8000-10000"
                },
                worksExps:[{
                     show:true,
-                    firma:"",
-                    trade:"",
-                    pos:"",
+                    firma:"阿里巴巴",
+                    trade:"互联网",
+                    pos:"Web前端工程师",
                     startyear:2010,
                     startmonth:2,
                     endyear:2016,
                     endmonth:10,
-                    resp:""}
+                    resp:"前端工作"}
                ],
                edus:[{
                     show:true,
-                    uni:"",
-                    major:"",
-                    submajor:"",
+                    uni:"郑州大学",
+                    major:"信息技术",
+                    submajor:"通信工程",
                     exmajor:"",
-                    startyear:2010,
+                    startyear:2006,
                     startmonth:2,
-                    endyear:2016,
+                    endyear:2010,
                     endmonth:10,
-                    qualification:"",
+                    qualification:"本科",
 
                }],
                projects:[{
@@ -127,14 +131,14 @@ var appCont = new Vue({
                     startmonth:2,
                     endyear:2016,
                     endmonth:10,
-                    desc:"",
-                    resp:"",
-                    achiev:""
+                    desc:"校企联合培训",
+                    resp:"前端工作",
+                    achiev:"前端页面开发"
                }],
-               laSkills:[],
-               selfEval:"",
-               psInfo:"",
-               skills:""
+               laSkills:["英语","德语"],
+               selfEval:"我是一个好人",
+               psInfo:"我真的是一个好人",
+               skills:"前端各种技术"
           }
      },
      methods:{
@@ -145,6 +149,7 @@ var appCont = new Vue({
           showPre:function(){
                appModal.showModal=true;
                appModal.showPreview=true;
+               $(window).scrollTop(0);
           },
           checkLan:function(target,language){
                if(target.checked&&this.resume.laSkills.indexOf(language)<0){
@@ -223,6 +228,14 @@ var appCont = new Vue({
                     this.resume.projects[i].show=false;
                }
                this.resume.projects[index].show=true;
+          },
+          edit:function(){
+               $(".view").hide();
+               $(".edit").show();
+          },
+          submit:function(){
+               $(".edit").hide();
+               $(".view").show();
           }
      },
      updated:function(){

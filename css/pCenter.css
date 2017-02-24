@@ -144,6 +144,18 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .headmark{position: absolute; left: 0; top:0; display: inline-block; height: 100%; width: 4px; background-color: #f7a14a;}
 .preView .infopane p{line-height: 27px; height:27px; padding-left: 40px;}
 
+.main .resumeBox .view{position: relative;}
+.main .resumeBox .view .title{margin-bottom: 6px;}
+.main .resumeBox .view .btn-edit{position: absolute; right: 0; top: 30px; cursor: pointer;}
+.main .resumeBox .view .item-row{ height:26px; line-height: 26px; margin-bottom: 0; font-size: 12px;}
+.main .resumeBox .view .item-row p span{margin-left: 10px;}
+.main .resumeBox .view table .la-l{width:100px; text-align: right; padding-right: 5px;}
+.main .resumeBox .view table .val-l{width:230px;}
+.main .resumeBox .view table .la-r{width:76px; text-align: right; padding-right: 5px;}
+.main .resumeBox .view {padding-bottom: 17px; padding-top:30px;border-bottom: 1px dotted #ccc; margin-bottom: 0;}
+.main .resumeBox .view.item-basic{padding-top: 16px;}
+.main .resumeBox .view p{line-height: 27px; height:27px; padding-left: 40px; text-align: left;}
+
 .phone-change{position: absolute; left:50%; top: 256px;margin-left: -250px;  }
 .phone-change input{height:44px; background: #f3f3f3; font-size: 14px; padding-left: 10px;}
 .phone-change p{text-align: center; margin-bottom: 20px;}
@@ -210,3 +222,7 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 
 .trade-box .trade-bot button{width: 58px; height:28px; border:1px solid #2ea8e6; color:#2ea8e6; font-size: 14px; margin: 0 10px;}
 .trade-box .trade-bot button:hover{background: #2ea8e6; color: white;}
+
+.edit{display: none;}
+
+.msg-info{display: inline-block; width: 24px; height: 24px; background: #ef3e3e; line-height: 24px; color: white; position: absolute; right: 1px; top: 3px; border-radius: 50%;}
