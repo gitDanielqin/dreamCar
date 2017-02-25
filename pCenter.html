@@ -19,7 +19,7 @@
         </div>
     </div>
 </div>
-    <div class="main inner paTop20 clearfix maB60">
+<div class="main inner paTop20 clearfix maB60">
         <div class="W958 H198 sInfo maCenter" id="app-porto">
             <div class="porto fl maL60 maT30">
                 <div class="porto-img W96 H96"></div>
@@ -86,7 +86,7 @@
             <div style="display: block;" class="resumeBox">
             <div class="paLeft52 paTop14 paRight73" >
                 <p class="LH-H88 fSize18 color-gray3 edit">亲爱的校友，您的基本资料尚未填写</p>
-                <div class="itemBox item-basic edit">
+                <div class="itemBox item-basic edit edit-item" name="basic">
                     <h3 class="title"><i><img src="images/icon-basic.png"/></i>基本资料</h3>
                     <div class="item-row">
                         <div class="item-left fSize0">
@@ -109,17 +109,20 @@
                         </div><label class="laRight">民族</label>
                               <dropdown :options="data.nations" v-model="resume.nation"></dropdown>
                     </div>
+                    <div class="buttons">
+                         <button>保存</button><button>取消</button>
+                    </div>
                 </div>
-                <div class="itemBox item-basic view">
+                <div class="itemBox item-basic view view-item" name="basic">
                     <h3 class="title"><i><img src="images/icon-basic.png"/></i>基本资料</h3>
                     <table class="fSize12 LH-H25">
                         <tr><td class="la-l">出生年月：</td><td class="val-l">{{resume.birthyear}}年{{resume.birthmonth}}月</td><td class="la-r">婚姻状况：</td><td>{{resume.family}}</td></tr>
                         <tr><td class="la-l">手机：</td><td class="val-l">{{resume.phone}}</td><td class="la-r">邮箱：</td><td>{{resume.email}}</td></tr>
                         <tr><td class="la-l">籍贯：</td><td class="val-l">{{resume.province}}</td><td class="la-r">民族：</td><td>{{resume.nation}}</td></tr>
                     </table>
-                    <i class="LH-H30 W30 t-center btn-edit" style="top:16px;" @click="edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                    <i class="LH-H30 W30 t-center btn-edit" style="top:16px;"><img class="v-mid" src="images/icon-edit.png"/></i>
                 </div>
-                <div class="itemBox edit">
+                <div class="itemBox edit edit-item" name="trade">
                     <h3 class="title"><i><img src="images/icon-career.png"/></i>职业意向</h3>
                     <div class="item-row">
                         <label>期望行业</label><span @click="popTrade"><input type="text" class="career-input"  disabled v-model="resume.expect.tradeItems" /></span>
@@ -140,8 +143,11 @@
                          <dropdown classes="sel-salary" :options="data.salary" v-model="resume.expect.salary"></dropdown>
                          <span class="maL13 fSize14 color-gray3">元 / 月</span>
                     </div>
+                    <div class="buttons">
+                         <button>保存</button><button>取消</button>
+                    </div>
                 </div>
-                <div class="itemBox view">
+                <div class="itemBox view view-item" name="trade">
                     <h3 class="title"><i><img src="images/icon-career.png"/></i>职业意向</h3>
                     <div class="item-row">
                     <p>期望行业：<span>{{resume.expect.tradeItems}}</span></p>
@@ -155,9 +161,9 @@
                     <div class="item-row">
                         <p>期望月薪：<span>{{resume.expect.salary}}</span></p>
                     </div>
-                    <i class="LH-H30 W30 t-center btn-edit" @click="edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                    <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
                 </div>
-                <div class="itemBox edit">
+                <div class="itemBox edit edit-item" name="work">
                     <h3 class="title works-title"><i><img src="images/icon-work.png"/></i>工作经历<ul class="lis-inline pane-tabs"><li v-for="(worksExp,index) in resume.worksExps" @click="workSwipe(index)">经历{{index+1}}</li></ul></h3>
                     <div class="pane" v-for="worksExp in resume.worksExps" v-show="worksExp.show">
                         <div class="item-row">
@@ -181,8 +187,11 @@
                         </div>
                     </div>
                     <div class="addItem color-gray6" @click="addWorksexp"><i class="maR5"><img src="images/cross-add.png"/></i>添加工作经历</div>
+                    <div class="buttons">
+                         <button>保存</button><button>取消</button>
+                    </div>
                 </div>
-                <div class="itemBox view">
+                <div class="itemBox view view-item" name="work">
                     <h3 class="title works-title"><i><img src="images/icon-work.png"/></i>工作经历<ul class="lis-inline pane-tabs"><li v-for="(worksExp,index) in resume.worksExps">经历{{index+1}}</li></ul></h3>
                     <div class="infopane" v-for="worksExp in resume.worksExps">
                          <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB12"><span class="maR24">{{worksExp.startyear}}.{{worksExp.startmonth}}--{{worksExp.endyear}}.{{worksExp.endmonth}}</span>{{worksExp.firma}}<i class="headmark"></i></h4>
@@ -191,9 +200,9 @@
                          <p><span>工作地点：</span>杭州-滨江</p>
                          <p><span>工作职责：</span>负责产品视觉所有设计与呈现</p>
                     </div>
-                    <i class="LH-H30 W30 t-center btn-edit" @click="edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                    <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
                 </div>
-                <div class="itemBox edit">
+                <div class="itemBox edit edit-item" name="edu">
                     <h3 class="title works-title"><i><img src="images/icon-college.png"/></i>教育经历<ul class="lis-inline pane-tabs"><li v-for="(edu,index) in resume.edus" @click="eduSwipe(index)">经历{{index+1}}</li></ul></h3>
                     <div class="pane" v-for="edu in resume.edus" v-show="edu.show">
                         <div class="item-row">
@@ -218,27 +227,33 @@
                         </div>
                     </div>
                     <div class="addItem color-gray6" @click="addEdu"><i class="maR5"><img src="images/cross-add.png"/></i>添加教育经历</div>
+                    <div class="buttons">
+                         <button>保存</button><button>取消</button>
+                    </div>
                 </div>
-                <div class="itemBox view">
+                <div class="itemBox view view-item" name="edu">
                     <h3 class="title works-title"><i><img src="images/icon-college.png"/></i>教育经历<ul class="lis-inline pane-tabs"><li v-for="(edu,index) in resume.edus">经历{{index+1}}</li></ul></h3>
                     <div class="infopane" v-for="edu in resume.edus">
                          <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB12"><span class="maR24">{{edu.startyear}}.{{edu.startmonth}}--{{edu.endyear}}.{{edu.endmonth}}</span>{{edu.uni}}<i class="headmark"></i></h4>
                          <p class="LH-H25"><span class="W250 disInline">专业名称：{{edu.submajor}}</span><span>学历：{{edu.qualification}}</span></p>
                     </div>
-                    <i class="LH-H30 W30 t-center btn-edit" @click="edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                    <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
                 </div>
-                <div class="itemBox edit">
+                <div class="itemBox edit edit-item" name="speech">
                     <h3 class="title works-title"><i><img src="images/icon-language.png"/></i>语言能力</h3>
                     <form class="language-skills maL30 fSize14 W620">
                         <label v-for="language in data.languages"><input type="checkbox" @click="checkLan($event.target,language)">{{language}}</label>
                     </form>
+                    <div class="buttons">
+                         <button>保存</button><button>取消</button>
+                    </div>
                 </div>
-                <div class="itemBox view">
+                <div class="itemBox view view-item" name="speech">
                     <h3 class="title works-title"><i><img src="images/icon-language.png"/></i>语言能力</h3>
                     <p class="LH-H32 paLeft40">{{resume.laSkills.join()}}</p>
-                    <i class="LH-H30 W30 t-center btn-edit" @click="edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                    <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
                 </div>
-                <div class="itemBox edit">
+                <div class="itemBox edit edit-item" name="project">
                     <h3 class="title works-title"><i><img src="images/icon-project.png"/></i>项目经历<ul class="lis-inline pane-tabs"><li v-for="(project,index) in resume.projects" @click="projectSwipe(index)">经历{{index+1}}</li></ul></h3>
                     <div class="pane" v-for="project in resume.projects" v-show="project.show">
                         <div class="item-row">
@@ -268,8 +283,11 @@
                         </div>
                     </div>
                     <div class="addItem color-gray6" @click="addProject"><i class="maR5"><img src="images/cross-add.png"/></i>添加项目经历</div>
+                    <div class="buttons">
+                         <button>保存</button><button>取消</button>
+                    </div>
                 </div>
-                <div class="itemBox view">
+                <div class="itemBox view view-item" name="project">
                     <h3 class="title works-title"><i><img src="images/icon-project.png"/></i>项目经历<ul class="lis-inline pane-tabs"><li v-for="(project,index) in resume.projects">经历{{index+1}}</li></ul></h3>
                     <div class="infopane" v-for="project in resume.projects">
                          <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{project.startyear}}.{{project.startmonth}}--{{project.endyear}}.{{project.endmonth}}</span>校企职通车<i class="headmark"></i></h4>
@@ -278,37 +296,46 @@
                          <p><span>项目职责：</span>{{project.resp}}</p>
                          <p><span>项目业绩：</span>{{project.achiev}}</p>
                     </div>
-                    <i class="LH-H30 W30 t-center btn-edit" @click="edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                    <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
                 </div>
-                <div class="itemBox text-box edit">
+                <div class="itemBox text-box edit edit-item" name="selfeval">
                     <h3 class="title"><i><img src="images/icon-comment.png"/></i>自我评价</h3>
                     <textarea placeholder="建议您对自己做一个简短的评价" v-model="resume.selfEval"></textarea>
                     <p>你还可以输入<span>1000</span>字</p>
+                    <div class="buttons">
+                         <button>保存</button><button>取消</button>
+                    </div>
                 </div>
-                <div class="itemBox text-box view">
+                <div class="itemBox text-box view view-item" name="selfeval">
                     <h3 class="title"><i><img src="images/icon-comment.png"/></i>自我评价</h3>
                     <p class="LH-H20 maT9 paLeft40">{{resume.selfEval}}</p>
-                    <i class="LH-H30 W30 t-center btn-edit" @click="edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                    <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
                 </div>
-                <div class="itemBox text-box edit">
+                <div class="itemBox text-box edit edit-item" name="psinfo">
                     <h3 class="title"><i><img src="images/icon-attachment.png"/></i>附加信息</h3>
                     <textarea placeholder="如：获奖、技能资格证书、专利等" v-model="resume.psInfo"></textarea>
                     <p>你还可以输入<span>1000</span>字</p>
+                    <div class="buttons">
+                         <button>保存</button><button>取消</button>
+                    </div>
                 </div>
-                <div class="itemBox text-box view">
+                <div class="itemBox text-box view view-item" name="psinfo">
                     <h3 class="title"><i><img src="images/icon-attachment.png"/></i>附加信息</h3>
                     <p class="LH-H20 maT9 paLeft40">{{resume.psInfo}}</p>
-                    <i class="LH-H30 W30 t-center btn-edit" @click="edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                    <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
                 </div>
-                <div class="itemBox text-box edit">
+                <div class="itemBox text-box edit edit-item" name="skill">
                     <h3 class="title"><i><img src="images/icon-skills.png"/></i>擅长技能</h3>
                     <textarea placeholder="在此添加您擅长的技能" v-model="resume.skills"></textarea>
                     <p>你还可以输入<span>1000</span>字</p>
+                    <div class="buttons">
+                         <button>保存</button><button>取消</button>
+                    </div>
                 </div>
-                <div class="itemBox text-box view" style="border-bottom:none">
+                <div class="itemBox text-box view view-item" name="skill" style="border-bottom:none">
                     <h3 class="title"><i><img src="images/icon-skills.png"/></i>擅长技能</h3>
                     <p class="LH-H20 maT9 paLeft40">{{resume.skills}}</p>
-                    <i class="LH-H30 W30 t-center btn-edit" @click="edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                    <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
                 </div>
             </div>
             <div class="buttons-commit t-center maT55 maB108">

@@ -1,15 +1,29 @@
 /**
  * Created by xuanyuan on 2016/11/6.
  */
-$(".regis .agreement").click(function(){
-        $(".agree-modal").show();
-})
-$(".agree-modal").bind("click",function(){
-    $(this).hide();
-});
-$(".agreementBox").bind("click",function(){
-    return false;
-})
+
+
+function _init(){
+     loginEventBind();
+     regisEventBind();
+     agreementEventBind();
+     pdjuge();
+     validEventBind();
+}
+_init();
+//协议事件绑定
+function agreementEventBind(){
+     $(".regis .agreement").click(function(){
+             $(".agree-modal").show();
+     })
+     $(".agree-modal").bind("click",function(){
+         $(this).hide();
+     });
+     $(".agreementBox").bind("click",function(){
+         return false;
+     });
+};
+//页面登录判断
     function pdjuge(){
         $(".logBox").hide();
         var urlStr= window.location.search.substr(1);
@@ -21,62 +35,71 @@ $(".agreementBox").bind("click",function(){
             $(".login").show();
         }
     }
-pdjuge();
 
-$(".logBox .log-nav li").click(function(){
-    $(".logBox .log-nav .on").removeClass("on");
-    $(this).addClass("on");
-})
-$(".regis .login-footer").click(function(){
-    $(".regis").fadeOut();
-    $(".login").fadeIn("slow");
-});
-$(".login .login-footer").click(function(){
-    $(".login").fadeOut();
-    $(".regis").fadeIn("slow");
-});
 
-/*登录输入判断*/
-var isAccValid=false;
-var isPassValid=false;
-$(".logBox .account").change(function(){
-    var mobiReg=/^1[34578]\d{9}$/;
-    var mailReg=/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
-    if($(this).val()==""){
-        alert("该项不能为空！");
-        isAccValid=false;
-    }else if(!(mobiReg.test($(this).val()))&&!(mailReg.test($(this).val()))){
-        alert("请输入正确的手机号或邮箱！");
-        isAccValid=false;
-    }else{
-        isAccValid=true;
-    }
-    validation();
-});
 
-$(".logBox input[type='password']").change(function(){
-    if($(this).val()==""){
-        alert("该项不能为空！");
-        isPassValid=false;
-    }else if(!(/^[a-zA-Z0-9]{6,16}$/.test($(this).val()))){
-        alert("密码格式不正确！");
-        isPassValid=false;
-    }else{
-        isPassValid=true;
-    }
-    validation();
-});
 
-function validation(){
-    if(isAccValid&&isPassValid){
-        $(".logBox button").removeAttr("disabled");
-    }else{
-        $(".logBox button").attr("disabled","disabled");
-    }
+
+//登录框事件绑定
+function loginEventBind(){
+     $(".login .login-footer").click(function(){
+         $(".login").fadeOut();
+         $(".regis").fadeIn("slow");
+     });
 }
-
-$(".logBox button").click(function(){
-    window.location="http://www.baidu.com";
-    window.open("vCards.html");
-});
-
+//注册框事件绑定
+function regisEventBind(){
+     $(".logBox .log-nav li").click(function(){
+         $(".logBox .log-nav .on").removeClass("on");
+         $(this).addClass("on");
+    });
+    $(".regis .login-footer").click(function(){
+        $(".regis").fadeOut();
+        $(".login").fadeIn("slow");
+    });
+    $(".codeReq").click(function(){
+         var emailStr = $(".regis .account").val();
+         $.post("http://101.37.31.30/easily_xq_WebApi/sys/emailCode?",{"email":emailStr,"type":0},function(data){
+           //   var data = JSON.parse(data);
+              alert(data.info);
+         })
+    })
+}
+/*登录输入验证*/
+function validEventBind(){
+     var isAccValid=false;
+     var isPassValid=false;
+     function validation(){
+         if(isAccValid&&isPassValid){
+             $(".logBox button").removeAttr("disabled");
+         }else{
+             $(".logBox button").attr("disabled","disabled");
+         }
+     }
+     $(".logBox .account").change(function(){
+         var mobiReg=/^1[34578]\d{9}$/;
+         var mailReg=/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
+         if($(this).val()==""){
+             alert("该项不能为空！");
+             isAccValid=false;
+         }else if(!(mobiReg.test($(this).val()))&&!(mailReg.test($(this).val()))){
+             alert("请输入正确的手机号或邮箱！");
+             isAccValid=false;
+         }else{
+             isAccValid=true;
+         }
+         validation();
+     });
+     $(".logBox input[type='password']").change(function(){
+         if($(this).val()==""){
+             alert("该项不能为空！");
+             isPassValid=false;
+         }else if(!(/^[a-zA-Z0-9]{6,16}$/.test($(this).val()))){
+             alert("密码格式不正确！");
+             isPassValid=false;
+         }else{
+             isPassValid=true;
+         }
+         validation();
+     });
+}

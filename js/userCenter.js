@@ -300,12 +300,36 @@ function init_center(){
      selectInitPos();
     init_pos();
     selectEventBind();
+    editEventBind();
    // init_paneAdd();
     navEventBind();
     modalEventBind();
 }
 init_center();
 
+function editEventBind(){
+//     $(".resumeBox .btn-edit").each(function(index){
+     var oldResume = cloneObj(appCont.resume);
+
+          $(".resumeBox .btn-edit").click(function(){
+               var editName =  $(this).closest(".view-item").attr("name");
+               $(this).closest(".view-item").hide();
+               $(".resumeBox .edit-item[name="+editName+"]").show();
+               oldResume = cloneObj(appCont.resume);
+          //     console.log(appCont.resume.birthmonth);
+          });
+          $(".resumeBox .edit-item .buttons button:nth-of-type(1)").click(function(){
+               var viewName =  $(this).closest(".edit-item").attr("name");
+               $(this).closest(".edit-item").hide();
+               $(".resumeBox .view-item[name="+viewName+"]").show();
+          });
+          $(".resumeBox .edit-item .buttons button:nth-of-type(2)").click(function(){
+               appCont.resume = cloneObj(oldResume);
+               var viewName =  $(this).closest(".edit-item").attr("name");
+               $(this).closest(".edit-item").hide();
+               $(".resumeBox .view-item[name="+viewName+"]").show();
+          })
+}
 function selectInitPos(){
      $(".selectee input").each(function(){
         var bgPos=$(this).width()-10+"px center";

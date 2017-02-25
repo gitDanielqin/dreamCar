@@ -30,7 +30,7 @@
 padding-left: 10px; width:448px; overflow: hidden;}
 .main .itemBox label{ width:143px; color:#333; font-size: 14px; text-align: right; display: inline-block; line-height: 26px; height:26px;}
 .main .itemBox .item-row{margin-bottom: 20px; font-size: 0;}
-.main .major-name input{width:128px; margin-right: 10px;}
+.main .major-name input{width:118px; margin-right: 10px;}
 .main .itemBox input.exmajor{width:148px;}
 .main .itemBox .qualific input{width:88px;}
 .main .itemBox .address{display: inline-block;}
@@ -223,6 +223,9 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .trade-box .trade-bot button{width: 58px; height:28px; border:1px solid #2ea8e6; color:#2ea8e6; font-size: 14px; margin: 0 10px;}
 .trade-box .trade-bot button:hover{background: #2ea8e6; color: white;}
 
-.edit{display: none;}
-
+.edit{display: none; position: relative;}
+.edit .buttons{position: absolute;right: 32px;top:8px; }
+.edit .buttons button{width:54px;height: 20px; line-height: 20px;color:white;margin-left: 12px; font-size: 12px;}
+.edit .buttons button:first-child{background: #48c1e4;}
+.edit .buttons button:last-child{background: #e69545;}
 .msg-info{display: inline-block; width: 24px; height: 24px; background: #ef3e3e; line-height: 24px; color: white; position: absolute; right: 1px; top: 3px; border-radius: 50%;}

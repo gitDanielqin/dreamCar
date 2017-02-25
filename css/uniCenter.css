@@ -1,0 +1,21 @@
+.top .navs a{display: inline-block; width: 50px; height: 50px; line-height: 50px; text-align: center;margin-left: 20px;}
+.top .navs a img{vertical-align: middle;}
+.msg-info{display: inline-block; width: 24px; height: 24px; background: #ef3e3e; line-height: 24px; color: white; position: absolute; right: 1px; top: 3px; border-radius: 50%;}
+
+.main .selectee{position: relative; display: inline-block;}
+.main .selectee input{background: url("../images/icon-select.png") no-repeat right 10px; border:1px solid #ccc; padding-left: 10px;}
+.main .selectee ul{position: absolute; left: 0; top:36px;border: 1px solid #d2d2d2;
+    font-size: 12px; height: 149px; overflow: auto;background: #fff; display: none; z-index: 10;}
+.main .selectee ul li{line-height: 24px; height: 24px; cursor: pointer;padding-left: 10px;}
+.main .selectee ul li.over{background: #9bcce5; color:#fff;}
+.main .selectee ul li.selected{background: #2ea8e6; color:#fff;}
+
+.sel-add input{width:58px;}
+.main .sInfo{ border: 1px solid #ccc;}
+.porto-img{border: 2px dashed #999; background: url("../images/cross.png") no-repeat center center;}
+.main .infoTxt{position: relative;}
+.main .infoTxt p{line-height: 25px; font-size: 14px;}
+.main .infoTxt i{display: inline-block; position: absolute; right:-70px; top: 0; font-size: 0;}
+.progress{display: inline-block;background: #fcfbf9;  margin: 0 10px;}
+.progress-real{display: inline-block;background: #f7aa00; width: 87%; position: absolute; left: 0; top: 0;}
+.preview-btn{position: absolute; right:-97px;bottom:0; color:#f77b00; line-height: 25px; cursor: pointer;}
