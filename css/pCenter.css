@@ -15,7 +15,7 @@
 .main .infoTxt{position: relative;}
 .main .infoTxt p{line-height: 25px; font-size: 14px;}
 .main .infoTxt i{display: inline-block; position: absolute; right:-70px; top: 0; font-size: 0;}
-
+/*侧边栏导航*/
 .main .sideBox{border:1px solid #ccc;}
 .main .sideBox >li.on{background:#edeceb;}
 .main .sideBox li{line-height: 40px;margin-bottom: 7px;padding-left: 30px; cursor:pointer}
@@ -24,6 +24,7 @@
 .sub-li{display: none;}
 .sub-li .on{color:#f8a85c;}
 .sub-li p{padding-left: 30px;}
+
 .main .content > div{display: none;}
 .main .resumeBox{border:1px solid #ccc;}
 .main .itemBox input{line-height: 24px; height: 24px; font-size: 14px; color: #666; border: 1px solid #ccc;margin-left: 10px;
@@ -73,7 +74,7 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .main .text-box p span{margin:0 2px;}
 .main .buttons-commit button{width:150px; height:50px; line-height: 50px; color: #fff; font-size: 18px; text-align: center; margin: 0 10px;cursor: pointer;}
 
-.main .ListBox .hd{border:1px solid #ccc;}
+.main .ListBox .hd{border:1px solid #ccc; background: white;}
 .main .ListBox .hd input{width:88px; background: url("../images/icon-select-b.png") no-repeat center right;}
 .main .ListBox .contList .logo-pic{width:90px;height:80px; background: #5c3333; margin:24px 20px 0 30px;float: left;}
 .main .ListBox .contList .class-txt .class-name b{color:#46afe8; font-size: 18px; line-height: 32px; height:32px; display: inline-block; vertical-align: bottom}
@@ -82,7 +83,7 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .main .ListBox .contList .class-txt p{line-height: 26px; height:26px; color:#333; font-size: 14px; width: 275px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
 .main .ListBox .contList .class-info{padding: 18px; background: url("../images/dashline.png") no-repeat left center;}
 .main .ListBox .contList .class-info p{height:30px; line-height: 30px; color: #333;}
-.main .ListBox .contList li{overflow: hidden; height:128px; border: 1px solid #ccc; margin-top: 10px;}
+.main .ListBox .contList li{overflow: hidden; height:128px; border: 1px solid #ccc; margin-top: 10px; background: white}
 .main .ListBox .contList .class-info .begin{color:#f74a4a;}
 .main .ListBox .contList .class-info .after{color:#b8b8b8;}
 .main .ListBox .contList .class-info .before{color:#46afe8;}
@@ -114,12 +115,12 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .main .ListBox .contList .feedback .feedState i{display: inline-block;font-size: 0;height: 20px;}
 .main .ListBox .contList .feedback .feedState li span{display: block; line-height: 30px;}
 /*修改密码*/
-.main .conf-keyword{border:1px solid #ccc;}
+.main .conf-keyword{border:1px solid #ccc; background: white;}
 .main .conf-keyword form div{margin-top: 20px;}
 .main .conf-keyword form label{width:118px; text-align: right; display: inline-block; margin-right: 30px;}
 .main .conf-keyword form input{width:290px; padding-left: 10px;background: #f2f0f0;height: 40px; line-height: 40px;}
 .conf-keyword .varify-code{display: inline-block;}
-.main .conf-account{border: 1px solid #ccc;}
+.main .conf-account{border: 1px solid #ccc; background: white;}
 .safe-range{width:382px; height:10px; padding: 2px 1px;border: 1px solid #ccc; border-radius:8px; display: inline-block; vertical-align: middle;}
 .safe-range p{background: -webkit-linear-gradient(left,#f7524a,#f7a14a,#7ebe96);width:80%;height:10px;border-radius: 8px;}
 .safe-range .r-pointer{position: absolute;top:-40px;background: url("../images/icon-range.png") no-repeat top left; left: 326px;}

@@ -66,6 +66,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .H38{height:38px;}
 .H40{height:40px;}
 .H47{height:47px;}
+.H50{height:50px;}
 .H44{height:44px;}
 .H60{height:60px;}
 .H66{height:66px;}
@@ -98,6 +99,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .W124{width:124px;}
 .W128{width:128px;}
 .W137{width:137px;}
+.W138{width:138px;}
 .W140{width: 140px;}
 .W142{width: 142px;}
 .W148{width: 148px;}
@@ -128,6 +130,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .W284{width:284px;}
 .W288{width:288px;}
 .W290{width:290px;}
+.W298{width:298px;}
 .W300{width:300px;}
 .W305{width:305px;}
 .W328{width:328px;}
@@ -239,6 +242,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .paTop30{padding-top: 30px;}
 .paTop35{padding-top: 35px;}
 .paTop60{padding-top: 60px;}
+.paLeft7{padding-left: 7px;}
 .paLeft20{padding-left: 20px;}
 .paLeft30{padding-left: 30px;}
 .paLeft32{padding-left: 32px;}
@@ -327,6 +331,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .maT30{margin-top:30px;}
 .maT34{margin-top:34px;}
 .maT28{margin-top:28px;}
+.maT26{margin-top:26px;}
 .maT24{margin-top:24px;}
 .maT22{margin-top:22px;}
 .maT20{margin-top:20px;}
@@ -347,6 +352,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .maB12{margin-bottom: 12px;}
 .maB14{margin-bottom: 14px;}
 .maB16{margin-bottom: 16px;}
+.maB17{margin-bottom: 17px;}
 .maB18{margin-bottom: 18px;}
 .maB19{margin-bottom: 19px;}
 .maB22{margin-bottom: 22px;}
@@ -390,6 +396,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .fSize18{font-size: 18px;}
 .fSize16{font-size: 16px;}
 .fSize14{font-size: 14px;}
+.fSize12{font-size: 12px;}
 .fSize0{font-size:0;}
 
 .f-bold{font-weight: bold;}

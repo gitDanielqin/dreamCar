@@ -1,69 +1,141 @@
 <!DOCTYPE html>
 <html>
-     <head>
-          <meta charset="utf-8">
-          <title>高校中心</title>
-          <link href="css/base.css" rel="stylesheet">
-          <link href="css/uniCenter.css" rel="stylesheet">
-     </head>
-     <body>
-          <div class="top bg-gray3 H100 color-white">
-              <div class="inner">
-                  <img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;"/>
-                  <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
-                  <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">高校中心</h2>
-                  <div class="fr navs maT42">
-                      <a href="index.html"><img src="images/icon-home.png"/></a>
-                      <a href="#"><img src="images/icon-account.png"/></a>
-                      <a class="msg-center pRel" href="#"><img src="images/icon-msg.png"/><i class="msg-info">99</i></a>
-                  </div>
+
+<head>
+    <meta charset="utf-8">
+    <title>高校中心</title>
+    <link href="css/base.css" rel="stylesheet">
+    <link href="css/uniCenter.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-f2">
+    <div class="top bg-gray3 H100 color-white">
+        <div class="inner">
+            <img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" />
+            <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
+            <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">高校中心</h2>
+            <div class="fr navs maT42">
+                <a href="index.html"><img src="images/icon-home.png" /></a>
+                <a href="#"><img src="images/icon-account.png" /></a>
+                <a class="msg-center pRel" href="#"><img src="images/icon-msg.png" /><i class="msg-info">99</i></a>
+            </div>
+        </div>
+    </div>
+    <div class="main inner paTop20 clearfix maB60">
+        <div class="W958 H198 sInfo maCenter bg-white" id="app-porto">
+            <div class="porto fl maL60 maT30">
+                <div class="porto-img W96 H96"></div>
+                <h3 class="LH-H58 fSize18 t-center color-gray3">编辑头像</h3>
+            </div>
+            <div class="infoTxt maT24 maL54 fl color-gray6 W266" v-show="viewInfo">
+                <h3 class="LH-H47 fSize18 color-gray3">{{uni}}</h3>
+                <p><span class="maR33">学校性质</span>{{classic}}</p>
+                <p><span class="maR33">所在地</span>{{address.province}}-{{address.city}}-{{address.district}}</p>
+                <p><span class="maR33">邮箱</span>{{email}}</p>
+                <p>简历完成度<span class="progress pRel W124 H7 b-Radius8"><span class="progress-real W124 H7 b-Radius8"></span></span><span class="fullgrad">87%</span></p>
+                <span class="preview-btn">预览简历</span>
+                <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+            </div>
+            <div class="barCodeBox maT14 W168 fr color-gray6 fSize14">
+                <p class="LH-H37">扫一扫微信公众号</p>
+                <img class="maL6 v-mid" src="images/barcode.png" />
+                <p class="LH-H25">实时了解最新动态</p>
+            </div>
+        </div>
+        <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3 bg-white">
+            <li class="on" paneid="resumeBox"><i><img src="images/icon-resume.png"/></i>高校简介</li>
+            <li paneid="classBox"><i><img src="images/icon-study.png"/></i>高校需求</li>
+            <li class="myCollect" paneid="collec-study"><i><img src="images/icon-collect.png"/></i>高校收藏
+                <div class="sub-li LH37">
+                    <p class="on" paneid="collec-study">校企合作消息</p>
+                    <p paneid="collec-job">招聘会合作消息</p>
+                </div>
+            </li>
+            <li paneid="jobBox"><i><img src="images/icon-apply.png"/></i>消息中心
+                <div class="sub-li LH37">
+                    <p class="on" paneid="collec-study">学习收藏</p>
+                    <p paneid="collec-job">职位收藏</p>
+                    <p paneid="collec-recruitment">招聘会收藏</p>
+                </div>
+            </li>
+            <li paneid="jobBox"><i><img src="images/icon-apply.png"/></i>VIP中心</li>
+            <li paneid="jobBox"><i><img src="images/icon-apply.png"/></i>校企合作</li>
+            <li class="myConfig" paneid="conf-keyword"><i><img src="images/icon-config.png"/></i>设置
+                <div class="sub-li paTop2 paBot2 LH30">
+                    <p class="on" paneid="conf-keyword">修改密码</p>
+                    <p paneid="conf-account">绑定账号</p>
+                </div>
+            </li>
+        </ul>
+        <div class="content W770 fl maL10 maT20" id="app-content">
+            <div class="resumeBox bg-white">
+                <h3 class="fSize18 LH-H30 maB17"><i class="pic-wrapper hd-icon"><img src="images/icon-resume.png"/></i>高校简介</h3>
+                <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校名称</label><input type="text" v-model="resume.uni" class="W298"/></p>
+                <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校类别</label><dropdown placeholder="请选择高校类别" :options="database.classific" v-model="resume.classific" classes="W138"></dropdown></p>
+                <p class="LH-H26 paLeft7 resume-item uni-level"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校性质</label><dropdown placeholder="高校性质" :options="database.unilevel" v-model="resume.level" classes="W138"></dropdown><input type="radio" name="level" />985<input type="radio" name="level" />211</p>
+                <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>在校人数</label><dropdown placeholder="请选择在校人数" :options="database.amount" v-model="resume.amount" classes="W138"></dropdown></p>
+                <div class="LH26 paLeft7 resume-item clearfix">
+                     <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>重点专业</label></p>
+                     <ul class="fl">
+                          <li v-for="spmajor in resume.specialmajor" class="maB14">
+                               <dropdown placeholder="一级学科" :options="majorArr" v-model="spmajor.major" classes="W138 maR10"></dropdown>
+                               <dropdown placeholder="一级学科" :options="submajors(spmajor.major)" v-model="spmajor.submajor" classes="W138"></dropdown>
+                          </li>
+                     </ul>
+                     <p class="fSize12 color-gray6"><button class="color-blueL maL20 btn-add-major">+ 添加</button>（最多可添加5个重点专业）</p>
+                </div>
+                <div class="LH26 paLeft7 resume-item clearfix">
+                     <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校认证</label></p>
+                     <ul class="fl uni-valid-upload color-gray6 fSize12">
+                          <li><span>重新上传营业执照<i class="pic-wrapper"><img src="images/icon-upload.png"/></i></span>（查看之前上传的营业执照）</li>
+                          <li><span>重新上传办学许可证<i class="pic-wrapper"><img src="images/icon-upload.png"/></i></span>（查看之前上传的办学许可证）</li>
+                     </ul>
+                </div>
+                <div class="uni-intro LH26 paLeft7 resume-item clearfix">
+                    <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校简介</label></p>
+                    <div class="fl">
+                         <textarea class="fl" v-model="resume.intro">{{resume.intro}}</textarea>
+                         <p class="t-right">你还可以输入{{wordscal}}字</p>
+                    </div>
+                </div>
+                <div class="t-center">
+                     <button type="button" class="W150 H50 color-white bg-orange3 fSize18 maT26">保存</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="bot paTop8 t-center bot-account">
+         <div class="inner clearfix">
+              <div class="fl">
+                <ul class="lis-inline bot-nav color-gray79 LH-H34 fSize12">
+                     <li><a href="footer-page.html?descript">关于校企</a>-</li>
+                     <li><a href="footer-page.html?coop">网站合作</a>-</li>
+                     <li><a href="footer-page.html?help">帮助中心</a>-</li>
+                     <li><a href="footer-page.html?employ">招贤纳士</a>-</li>
+                     <li><a href="footer-page.html">友情链接</a>-</li>
+                     <li><a href="footer-page.html">教育网</a></li>
+                </ul>
+                <ul class="lis-inline fSize12">
+                      <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-phone2.png"/></i>电话：152 6706 8921</li>
+                      <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-gps.png"/></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
+                      <li><i class="pic-wrapper maR15"><img src="images/icon-email2.png"/></i>邮箱：xiaoqiztc@yeah.net</li>
+                </ul>
+                <p class="fSize14 t-center LH-H40 color-gray79">©2016 XxiaoQi 京ICP备456123789号-2 京公网安备12465789123号</p>
               </div>
-          </div>
-          <div class="main inner paTop20 clearfix maB60">
-               <div class="W958 H198 sInfo maCenter" id="app-porto">
-                      <div class="porto fl maL60 maT30">
-                          <div class="porto-img W96 H96"></div>
-                          <h3 class="LH-H58 fSize18 t-center color-gray3">编辑头像</h3>
-                      </div>
-                      <div class="infoTxt maT24 maL54 fl color-gray6 W266" v-show="viewInfo">
-                          <h3 class="LH-H47 fSize18 color-gray3">{{uni}}</h3>
-                          <p><span class="maR33">学校性质</span>{{classic}}</p>
-                          <p><span class="maR33">所在地</span>{{address.province}}-{{address.city}}-{{address.district}}</p>
-                          <p><span class="maR33">邮箱</span>{{email}}</p>
-                          <p>简历完成度<span class="progress pRel W124 H7 b-Radius8"><span class="progress-real W124 H7 b-Radius8"></span></span><span class="fullgrad">87%</span></p>
-                          <span class="preview-btn">预览简历</span>
-                          <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
-                      </div>
-                      <div class="barCodeBox maT14 W168 fr color-gray6 fSize14">
-                          <p class="LH-H37">扫一扫微信公众号</p>
-                          <img class="maL6 v-mid" src="images/barcode.png"/>
-                          <p class="LH-H25">实时了解最新动态</p>
-                      </div>
-                  </div>
-                  <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3" >
-                      <li class="on" paneid="resumeBox"><i><img src="images/icon-resume.png"/></i>个人简历</li>
-                      <li paneid="classBox"><i><img src="images/icon-study.png"/></i>我的学习</li>
-                      <li class="myCollect" paneid="collec-study"><i><img src="images/icon-collect.png"/></i>我的收藏
-                          <div class="sub-li LH37">
-                              <p class="on" paneid="collec-study">学习收藏</p>
-                              <p paneid="collec-job">职位收藏</p>
-                              <p paneid="collec-recruitment">招聘会收藏</p>
-                          </div>
-                      </li>
-                      <li paneid="jobBox"><i><img src="images/icon-apply.png"/></i>我的求职</li>
-                      <li class="myConfig" paneid="conf-keyword"><i><img src="images/icon-config.png"/></i>设置
-                          <div class="sub-li paTop2 paBot2 LH30">
-                              <p class="on" paneid="conf-keyword">修改密码</p>
-                              <p paneid="conf-account">绑定账号</p>
-                          </div>
-                      </li>
-                 </ul>
+              <div class="fr">
+                <p class="fSize14 W15 barcode-text">关注我们</p>
+                <div class="pic-wrapper maL16">
+                      <img src="images/barcode.png"/>
+                </div>
+              </div>
+         </div>
+    </div>
+    <script src="js/jquery-3.1.0.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/uniCenter.js"></script>
+</body>
 
-
-          </div>
-          <script src="js/jquery-3.1.0.min.js"></script>
-          <script src="js/vue.js"></script>
-          <script src="js/components.js"></script>
-          <script src="js/uniCenter.js"></script>
-     </body>
 </html>

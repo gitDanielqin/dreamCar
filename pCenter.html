@@ -6,7 +6,7 @@
     <link href="css/base.css" rel="stylesheet">
     <link href="css/pCenter.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-gray-f2">
 <div class="top bg-gray3 H100 color-white">
     <div class="inner">
         <img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;"/>
@@ -19,681 +19,683 @@
         </div>
     </div>
 </div>
-<div class="main inner paTop20 clearfix maB60">
-        <div class="W958 H198 sInfo maCenter" id="app-porto">
-            <div class="porto fl maL60 maT30">
-                <div class="porto-img W96 H96"></div>
-                <h3 class="LH-H58 fSize18 t-center color-gray3">编辑头像</h3>
-            </div>
-            <div class="infoTxt maT24 maL54 fl color-gray6 W266" v-show="viewInfo">
+<div class="main paTop20 clearfix maB60">
+     <div class="inner">
+          <div class="W958 H198 sInfo maCenter bg-white" id="app-porto">
+             <div class="porto fl maL60 maT30">
+                 <div class="porto-img W96 H96"></div>
+                 <h3 class="LH-H58 fSize18 t-center color-gray3">编辑头像</h3>
+             </div>
+             <div class="infoTxt maT24 maL54 fl color-gray6 W266" v-show="viewInfo">
+                 <h3 class="LH-H47 fSize18 color-gray3">江玉海</h3>
+                 <p><span class="maR33 age">{{age(oldInfo.birthyear)}}岁</span><span class="gender">{{oldInfo.gender}}</span><span class="state maL22">{{oldInfo.state}}</span></p>
+                 <p>{{oldInfo.address.province}}-{{oldInfo.address.city}}-{{oldInfo.address.district}}</p>
+                 <p class="phone">手机：{{oldInfo.phone}}</p>
+                 <p>简历完成度<span class="progress pRel W124 H7 b-Radius8"><span class="progress-real W124 H7 b-Radius8"></span></span><span class="fullgrad">87%</span></p>
+                 <span class="preview-btn" @click="showPre">预览简历</span>
+                 <i class="LH-H30 W30 t-center btn-edit" @click="edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+             </div>
+             <div class="edit-brief maT24 maL54 fl color-gray6 pRel" v-show="!viewInfo">
                 <h3 class="LH-H47 fSize18 color-gray3">江玉海</h3>
-                <p><span class="maR33 age">{{age(oldInfo.birthyear)}}岁</span><span class="gender">{{oldInfo.gender}}</span><span class="state maL22">{{oldInfo.state}}</span></p>
-                <p>{{oldInfo.address.province}}-{{oldInfo.address.city}}-{{oldInfo.address.district}}</p>
-                <p class="phone">手机：{{oldInfo.phone}}</p>
-                <p>简历完成度<span class="progress pRel W124 H7 b-Radius8"><span class="progress-real W124 H7 b-Radius8"></span></span><span class="fullgrad">87%</span></p>
-                <span class="preview-btn" @click="showPre">预览简历</span>
-                <i class="LH-H30 W30 t-center btn-edit" @click="edit"><img class="v-mid" src="images/icon-edit.png"/></i>
-            </div>
-            <div class="edit-brief maT24 maL54 fl color-gray6 pRel" v-show="!viewInfo">
-               <h3 class="LH-H47 fSize18 color-gray3">江玉海</h3>
-               <div class="fSize14">
-                    生　　日
-                    <dropdown classes="sel-birthyear birthday" placeholder="出生年" v-bind:options="[2000,2001,2002]" v-model="newInfo.birthyear"></dropdown>
-                    <dropdown classes="sel-birthmonth birthday" placeholder="出生月" v-bind:options="[1,2,3]" v-model="newInfo.birthmonth"></dropdown>
-                    <dropdown classes="sel-birthday birthday" placeholder="出生日" v-bind:options="[1,2,3,4]" v-model="newInfo.birthday"></dropdown>
-                 <span class="maL35">性别</span><dropdown classes="sel-gender maL10" placeholder="性别" v-bind:options="['男','女']" v-model="newInfo.gender"></dropdown>
-               </div>
-               <div class="fSize14 maT10">
-                    <label>工作状态</label><dropdown class="sel-career maL13" placeholder="工作状态" v-model="newInfo.state" v-bind:options="['在职，打算换个新环境','离职，可立即到岗工作','在校学生','应届毕业生','暂时不想找工作']"></dropdown>
-                    <span class="maL19">所在地</span>
-                    <dropdown classes="maL12 sel-province sel-add" placeholder="省份" v-bind:options="['浙江','河南']" v-model="newInfo.address.province"></dropdown>
-                    <dropdown classes="maL10 sel-city sel-add" placeholder="城市" v-bind:options="['杭州','新乡']" v-model="newInfo.address.city"></dropdown>
-                    <dropdown classes="maL10 sel-district sel-add" placeholder="区/县" v-bind:options="['滨江区','红旗区']" v-model="newInfo.address.district"></dropdown>
-               </div>
-               <div class="fSize14 edit-phone maT10">
-                    手 机 号<input type="text" class="maL18 paLeft10" v-model="newInfo.phone"/>
-               </div>
-               <div class="edit-opera">
-                    <button class="maR15 btn-save" @click="save">保存</button>
-                    <button class="btn-cancel" @click="cancel">取消</button>
-               </div>
-            </div>
-            <div class="barCodeBox maT14 W168 fr color-gray6 fSize14">
-                <p class="LH-H37">扫一扫微信公众号</p>
-                <img class="maL6 v-mid" src="images/barcode.png"/>
-                <p class="LH-H25">实时了解最新动态</p>
-            </div>
-        </div>
-        <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3">
-            <li class="on" paneid="resumeBox"><i><img src="images/icon-resume.png"/></i>个人简历</li>
-            <li paneid="classBox"><i><img src="images/icon-study.png"/></i>我的学习</li>
-            <li class="myCollect" paneid="collec-study"><i><img src="images/icon-collect.png"/></i>我的收藏
-                <div class="sub-li LH37">
-                    <p class="on" paneid="collec-study">学习收藏</p>
-                    <p paneid="collec-job">职位收藏</p>
-                    <p paneid="collec-recruitment">招聘会收藏</p>
+                <div class="fSize14">
+                     生　　日
+                     <dropdown classes="sel-birthyear birthday" placeholder="出生年" v-bind:options="[2000,2001,2002]" v-model="newInfo.birthyear"></dropdown>
+                     <dropdown classes="sel-birthmonth birthday" placeholder="出生月" v-bind:options="[1,2,3]" v-model="newInfo.birthmonth"></dropdown>
+                     <dropdown classes="sel-birthday birthday" placeholder="出生日" v-bind:options="[1,2,3,4]" v-model="newInfo.birthday"></dropdown>
+                  <span class="maL35">性别</span><dropdown classes="sel-gender maL10" placeholder="性别" v-bind:options="['男','女']" v-model="newInfo.gender"></dropdown>
                 </div>
-            </li>
-            <li paneid="jobBox"><i><img src="images/icon-apply.png"/></i>我的求职</li>
-            <li class="myConfig" paneid="conf-keyword"><i><img src="images/icon-config.png"/></i>设置
-                <div class="sub-li paTop2 paBot2 LH30">
-                    <p class="on" paneid="conf-keyword">修改密码</p>
-                    <p paneid="conf-account">绑定账号</p>
+                <div class="fSize14 maT10">
+                     <label>工作状态</label><dropdown class="sel-career maL13" placeholder="工作状态" v-model="newInfo.state" v-bind:options="['在职，打算换个新环境','离职，可立即到岗工作','在校学生','应届毕业生','暂时不想找工作']"></dropdown>
+                     <span class="maL19">所在地</span>
+                     <dropdown classes="maL12 sel-province sel-add" placeholder="省份" v-bind:options="['浙江','河南']" v-model="newInfo.address.province"></dropdown>
+                     <dropdown classes="maL10 sel-city sel-add" placeholder="城市" v-bind:options="['杭州','新乡']" v-model="newInfo.address.city"></dropdown>
+                     <dropdown classes="maL10 sel-district sel-add" placeholder="区/县" v-bind:options="['滨江区','红旗区']" v-model="newInfo.address.district"></dropdown>
                 </div>
-            </li>
-        </ul>
-        <div class="content W770 fl maL10 maT20" id="app-content">
-            <div style="display: block;" class="resumeBox">
-            <div class="paLeft52 paTop14 paRight73" >
-                <p class="LH-H88 fSize18 color-gray3 edit">亲爱的校友，您的基本资料尚未填写</p>
-                <div class="itemBox item-basic edit edit-item" name="basic">
-                    <h3 class="title"><i><img src="images/icon-basic.png"/></i>基本资料</h3>
-                    <div class="item-row">
-                        <div class="item-left fSize0">
-                            <label class="laLeft">出生年月</label>
-                            <dropdown classes="birthday" placeholder="出生年" v-bind:options="data.years" v-model="resume.birthyear"></dropdown><i class="bind-line"></i>
-                            <dropdown classes="birthday birthmonth" placeholder="出生月" v-bind:options="data.months" v-model="resume.birthmonth"></dropdown>
-                            </div>
-                            <label class="laRight">婚姻状况</label>
-                            <dropdown v-bind:options="['已婚','未婚','离异']" v-model="resume.family"></dropdown>
-                    </div>
-                    <div class="item-row">
-                        <div class="item-left">
-                            <label class="laLeft">手机</label><input type="text" v-model="resume.phone"/>
-                       </div><label class="laRight">邮箱</label><input type="text" v-model="resume.email"/>
-                    </div>
-                    <div class="item-row">
-                        <div class="item-left">
-                            <label class="laLeft">籍贯</label>
-                            <dropdown :options="data.address.province" v-model="resume.province"></dropdown>
-                        </div><label class="laRight">民族</label>
-                              <dropdown :options="data.nations" v-model="resume.nation"></dropdown>
-                    </div>
-                    <div class="buttons">
-                         <button>保存</button><button>取消</button>
-                    </div>
+                <div class="fSize14 edit-phone maT10">
+                     手 机 号<input type="text" class="maL18 paLeft10" v-model="newInfo.phone"/>
                 </div>
-                <div class="itemBox item-basic view view-item" name="basic">
-                    <h3 class="title"><i><img src="images/icon-basic.png"/></i>基本资料</h3>
-                    <table class="fSize12 LH-H25">
-                        <tr><td class="la-l">出生年月：</td><td class="val-l">{{resume.birthyear}}年{{resume.birthmonth}}月</td><td class="la-r">婚姻状况：</td><td>{{resume.family}}</td></tr>
-                        <tr><td class="la-l">手机：</td><td class="val-l">{{resume.phone}}</td><td class="la-r">邮箱：</td><td>{{resume.email}}</td></tr>
-                        <tr><td class="la-l">籍贯：</td><td class="val-l">{{resume.province}}</td><td class="la-r">民族：</td><td>{{resume.nation}}</td></tr>
-                    </table>
-                    <i class="LH-H30 W30 t-center btn-edit" style="top:16px;"><img class="v-mid" src="images/icon-edit.png"/></i>
+                <div class="edit-opera">
+                     <button class="maR15 btn-save" @click="save">保存</button>
+                     <button class="btn-cancel" @click="cancel">取消</button>
                 </div>
-                <div class="itemBox edit edit-item" name="trade">
-                    <h3 class="title"><i><img src="images/icon-career.png"/></i>职业意向</h3>
-                    <div class="item-row">
-                        <label>期望行业</label><span @click="popTrade"><input type="text" class="career-input"  disabled v-model="resume.expect.tradeItems" /></span>
-                    </div>
-                    <div class="item-row">
-                        <label>期望职能</label><input type="text" class="career-input" val="UI设计师" v-model="resume.expect.posItems">
-                    </div>
-                    <div class="item-row">
-                        <label>期望地点</label>
-                        <div class="address">
-                         <dropdown placeholder="省份" :options="data.address.province" v-model="resume.expect.province"></dropdown>
-                         <dropdown placeholder="城市" :options="data.address.city" v-model="resume.expect.city"></dropdown>
-                         <dropdown placeholder="区/县" :options="data.address.district" v-model="resume.expect.district"></dropdown>
+             </div>
+             <div class="barCodeBox maT14 W168 fr color-gray6 fSize14">
+                 <p class="LH-H37">扫一扫微信公众号</p>
+                 <img class="maL6 v-mid" src="images/barcode.png"/>
+                 <p class="LH-H25">实时了解最新动态</p>
+             </div>
+         </div>
+         <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3 bg-white">
+             <li class="on" paneid="resumeBox"><i><img src="images/icon-resume.png"/></i>个人简历</li>
+             <li paneid="classBox"><i><img src="images/icon-study.png"/></i>我的学习</li>
+             <li class="myCollect" paneid="collec-study"><i><img src="images/icon-collect.png"/></i>我的收藏
+                 <div class="sub-li LH37">
+                     <p class="on" paneid="collec-study">学习收藏</p>
+                     <p paneid="collec-job">职位收藏</p>
+                     <p paneid="collec-recruitment">招聘会收藏</p>
+                 </div>
+             </li>
+             <li paneid="jobBox"><i><img src="images/icon-apply.png"/></i>我的求职</li>
+             <li class="myConfig" paneid="conf-keyword"><i><img src="images/icon-config.png"/></i>设置
+                 <div class="sub-li paTop2 paBot2 LH30">
+                     <p class="on" paneid="conf-keyword">修改密码</p>
+                     <p paneid="conf-account">绑定账号</p>
+                 </div>
+             </li>
+         </ul>
+         <div class="content W770 fl maL10 maT20" id="app-content">
+             <div style="display: block;" class="resumeBox bg-white">
+                  <div class="paLeft52 paTop14 paRight73" >
+                 <p class="LH-H88 fSize18 color-gray3 edit">亲爱的校友，您的基本资料尚未填写</p>
+                 <div class="itemBox item-basic edit edit-item" name="basic">
+                     <h3 class="title"><i><img src="images/icon-basic.png"/></i>基本资料</h3>
+                     <div class="item-row">
+                         <div class="item-left fSize0">
+                             <label class="laLeft">出生年月</label>
+                             <dropdown classes="birthday" placeholder="出生年" v-bind:options="data.years" v-model="resume.birthyear"></dropdown><i class="bind-line"></i>
+                             <dropdown classes="birthday birthmonth" placeholder="出生月" v-bind:options="data.months" v-model="resume.birthmonth"></dropdown>
+                             </div>
+                             <label class="laRight">婚姻状况</label>
+                             <dropdown v-bind:options="['已婚','未婚','离异']" v-model="resume.family"></dropdown>
+                     </div>
+                     <div class="item-row">
+                         <div class="item-left">
+                             <label class="laLeft">手机</label><input type="text" v-model="resume.phone"/>
+                        </div><label class="laRight">邮箱</label><input type="text" v-model="resume.email"/>
+                     </div>
+                     <div class="item-row">
+                         <div class="item-left">
+                             <label class="laLeft">籍贯</label>
+                             <dropdown :options="data.address.province" v-model="resume.province"></dropdown>
+                         </div><label class="laRight">民族</label>
+                               <dropdown :options="data.nations" v-model="resume.nation"></dropdown>
+                     </div>
+                     <div class="buttons">
+                          <button>保存</button><button>取消</button>
+                     </div>
+                 </div>
+                 <div class="itemBox item-basic view view-item" name="basic">
+                     <h3 class="title"><i><img src="images/icon-basic.png"/></i>基本资料</h3>
+                     <table class="fSize12 LH-H25">
+                         <tr><td class="la-l">出生年月：</td><td class="val-l">{{resume.birthyear}}年{{resume.birthmonth}}月</td><td class="la-r">婚姻状况：</td><td>{{resume.family}}</td></tr>
+                         <tr><td class="la-l">手机：</td><td class="val-l">{{resume.phone}}</td><td class="la-r">邮箱：</td><td>{{resume.email}}</td></tr>
+                         <tr><td class="la-l">籍贯：</td><td class="val-l">{{resume.province}}</td><td class="la-r">民族：</td><td>{{resume.nation}}</td></tr>
+                     </table>
+                     <i class="LH-H30 W30 t-center btn-edit" style="top:16px;"><img class="v-mid" src="images/icon-edit.png"/></i>
+                 </div>
+                 <div class="itemBox edit edit-item" name="trade">
+                     <h3 class="title"><i><img src="images/icon-career.png"/></i>职业意向</h3>
+                     <div class="item-row">
+                         <label>期望行业</label><span @click="popTrade"><input type="text" class="career-input"  disabled v-model="resume.expect.tradeItems" /></span>
+                     </div>
+                     <div class="item-row">
+                         <label>期望职能</label><input type="text" class="career-input" val="UI设计师" v-model="resume.expect.posItems">
+                     </div>
+                     <div class="item-row">
+                         <label>期望地点</label>
+                         <div class="address">
+                          <dropdown placeholder="省份" :options="data.address.province" v-model="resume.expect.province"></dropdown>
+                          <dropdown placeholder="城市" :options="data.address.city" v-model="resume.expect.city"></dropdown>
+                          <dropdown placeholder="区/县" :options="data.address.district" v-model="resume.expect.district"></dropdown>
+                         </div>
+                     </div>
+                     <div class="item-row">
+                         <label>期望月薪</label>
+                          <dropdown classes="sel-salary" :options="data.salary" v-model="resume.expect.salary"></dropdown>
+                          <span class="maL13 fSize14 color-gray3">元 / 月</span>
+                     </div>
+                     <div class="buttons">
+                          <button>保存</button><button>取消</button>
+                     </div>
+                 </div>
+                 <div class="itemBox view view-item" name="trade">
+                     <h3 class="title"><i><img src="images/icon-career.png"/></i>职业意向</h3>
+                     <div class="item-row">
+                     <p>期望行业：<span>{{resume.expect.tradeItems}}</span></p>
+                     </div>
+                     <div class="item-row">
+                         <p>期望职能：<span>{{resume.expect.posItems}}</span></p>
+                     </div>
+                     <div class="item-row">
+                         <p>期望地点：<span>{{resume.expect.city}} {{resume.expect.district}}</span></p>
+                     </div>
+                     <div class="item-row">
+                         <p>期望月薪：<span>{{resume.expect.salary}}</span></p>
+                     </div>
+                     <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                 </div>
+                 <div class="itemBox edit edit-item" name="work">
+                     <h3 class="title works-title"><i><img src="images/icon-work.png"/></i>工作经历<ul class="lis-inline pane-tabs"><li v-for="(worksExp,index) in resume.worksExps" @click="workSwipe(index)">经历{{index+1}}</li></ul></h3>
+                     <div class="pane" v-for="worksExp in resume.worksExps" v-show="worksExp.show">
+                         <div class="item-row">
+                             <label>公司名称</label><input type="text" v-model="worksExp.firma"/>
                         </div>
-                    </div>
-                    <div class="item-row">
-                        <label>期望月薪</label>
-                         <dropdown classes="sel-salary" :options="data.salary" v-model="resume.expect.salary"></dropdown>
-                         <span class="maL13 fSize14 color-gray3">元 / 月</span>
-                    </div>
-                    <div class="buttons">
-                         <button>保存</button><button>取消</button>
-                    </div>
-                </div>
-                <div class="itemBox view view-item" name="trade">
-                    <h3 class="title"><i><img src="images/icon-career.png"/></i>职业意向</h3>
-                    <div class="item-row">
-                    <p>期望行业：<span>{{resume.expect.tradeItems}}</span></p>
-                    </div>
-                    <div class="item-row">
-                        <p>期望职能：<span>{{resume.expect.posItems}}</span></p>
-                    </div>
-                    <div class="item-row">
-                        <p>期望地点：<span>{{resume.expect.city}} {{resume.expect.district}}</span></p>
-                    </div>
-                    <div class="item-row">
-                        <p>期望月薪：<span>{{resume.expect.salary}}</span></p>
-                    </div>
-                    <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
-                </div>
-                <div class="itemBox edit edit-item" name="work">
-                    <h3 class="title works-title"><i><img src="images/icon-work.png"/></i>工作经历<ul class="lis-inline pane-tabs"><li v-for="(worksExp,index) in resume.worksExps" @click="workSwipe(index)">经历{{index+1}}</li></ul></h3>
-                    <div class="pane" v-for="worksExp in resume.worksExps" v-show="worksExp.show">
-                        <div class="item-row">
-                            <label>公司名称</label><input type="text" v-model="worksExp.firma"/>
-                       </div>
-                        <div class="item-row">
-                            <label>公司行业</label><input type="text" v-model="worksExp.trade"/>
-                        </div>
-                        <div class="item-row">
-                            <label>职业名称</label><input type="text" v-model="worksExp.pos"/>
-                        </div>
-                        <div class="item-row time-interval">
-                            <label>任职时间</label>
-                              <dropdown :options="data.years" v-model="worksExp.startyear"></dropdown>
-                              <dropdown :options="data.months" v-model="worksExp.startmonth"></dropdown><i class="bind-line"></i
-                              <dropdown :options="data.years" v-model="worksExp.endyear" classes="endyear"></dropdown>
-                              <dropdown :options="data.months" v-model="worksExp.endmonth"></dropdown>
-                        </div>
-                        <div class="item-row work-resp">
-                            <label>工作职责</label><textarea placeholder="描述你的工作内容和工作业绩" v-model="worksExp.resp"></textarea>
-                        </div>
-                    </div>
-                    <div class="addItem color-gray6" @click="addWorksexp"><i class="maR5"><img src="images/cross-add.png"/></i>添加工作经历</div>
-                    <div class="buttons">
-                         <button>保存</button><button>取消</button>
-                    </div>
-                </div>
-                <div class="itemBox view view-item" name="work">
-                    <h3 class="title works-title"><i><img src="images/icon-work.png"/></i>工作经历<ul class="lis-inline pane-tabs"><li v-for="(worksExp,index) in resume.worksExps">经历{{index+1}}</li></ul></h3>
-                    <div class="infopane" v-for="worksExp in resume.worksExps">
-                         <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB12"><span class="maR24">{{worksExp.startyear}}.{{worksExp.startmonth}}--{{worksExp.endyear}}.{{worksExp.endmonth}}</span>{{worksExp.firma}}<i class="headmark"></i></h4>
-                         <p>{{worksExp.trade}}</p>
-                         <p><span>工作职能：</span>{{worksExp.pos}}</p>
-                         <p><span>工作地点：</span>杭州-滨江</p>
-                         <p><span>工作职责：</span>负责产品视觉所有设计与呈现</p>
-                    </div>
-                    <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
-                </div>
-                <div class="itemBox edit edit-item" name="edu">
-                    <h3 class="title works-title"><i><img src="images/icon-college.png"/></i>教育经历<ul class="lis-inline pane-tabs"><li v-for="(edu,index) in resume.edus" @click="eduSwipe(index)">经历{{index+1}}</li></ul></h3>
-                    <div class="pane" v-for="edu in resume.edus" v-show="edu.show">
-                        <div class="item-row">
-                            <label>学校名称</label><input type="text" v-model="edu.uni"/>
-                        </div>
-                        <div class="item-row">
-                            <label>专业名称</label>
-                              <dropdown :options="data.major.main" placeholder="选择/修改" v-model="edu.major" classes="major-name"></dropdown>
-                              <dropdown :options="data.major.sub" placeholder="选择/修改" v-model="edu.submajor" classes="major-name"></dropdown>
-                            <input type="text" class="exmajor" v-model="edu.exmajor"/>
-                        </div>
-                        <div class="item-row time-interval">
-                            <label>就读时间</label>
-                            <dropdown :options="data.years" v-model="edu.startyear"></dropdown>
-                            <dropdown :options="data.months" v-model="edu.startmonth"></dropdown><i class="bind-line"></i>
-                            <dropdown :options="data.years" v-model="edu.endyear" classes="endyear"></dropdown>
-                            <dropdown :options="data.months" v-model="edu.endmonth"></dropdown>
-                        </div>
-                        <div class="item-row">
-                            <label>学历</label>
-                              <dropdown :options="data.qualification" v-model="edu.qualification" classes="qualific"></dropdown>
-                        </div>
-                    </div>
-                    <div class="addItem color-gray6" @click="addEdu"><i class="maR5"><img src="images/cross-add.png"/></i>添加教育经历</div>
-                    <div class="buttons">
-                         <button>保存</button><button>取消</button>
-                    </div>
-                </div>
-                <div class="itemBox view view-item" name="edu">
-                    <h3 class="title works-title"><i><img src="images/icon-college.png"/></i>教育经历<ul class="lis-inline pane-tabs"><li v-for="(edu,index) in resume.edus">经历{{index+1}}</li></ul></h3>
-                    <div class="infopane" v-for="edu in resume.edus">
-                         <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB12"><span class="maR24">{{edu.startyear}}.{{edu.startmonth}}--{{edu.endyear}}.{{edu.endmonth}}</span>{{edu.uni}}<i class="headmark"></i></h4>
-                         <p class="LH-H25"><span class="W250 disInline">专业名称：{{edu.submajor}}</span><span>学历：{{edu.qualification}}</span></p>
-                    </div>
-                    <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
-                </div>
-                <div class="itemBox edit edit-item" name="speech">
-                    <h3 class="title works-title"><i><img src="images/icon-language.png"/></i>语言能力</h3>
-                    <form class="language-skills maL30 fSize14 W620">
-                        <label v-for="language in data.languages"><input type="checkbox" @click="checkLan($event.target,language)">{{language}}</label>
-                    </form>
-                    <div class="buttons">
-                         <button>保存</button><button>取消</button>
-                    </div>
-                </div>
-                <div class="itemBox view view-item" name="speech">
-                    <h3 class="title works-title"><i><img src="images/icon-language.png"/></i>语言能力</h3>
-                    <p class="LH-H32 paLeft40">{{resume.laSkills.join()}}</p>
-                    <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
-                </div>
-                <div class="itemBox edit edit-item" name="project">
-                    <h3 class="title works-title"><i><img src="images/icon-project.png"/></i>项目经历<ul class="lis-inline pane-tabs"><li v-for="(project,index) in resume.projects" @click="projectSwipe(index)">经历{{index+1}}</li></ul></h3>
-                    <div class="pane" v-for="project in resume.projects" v-show="project.show">
-                        <div class="item-row">
-                            <label>项目名称</label><input type="text" v-model="project.name"/>
-                        </div>
-                        <div class="item-row">
-                            <label>公司名称</label><input type="text" v-model="project.firma"/>
-                        </div>
-                        <div class="item-row time-interval">
-                            <label>项目时间</label>
-                            <dropdown :options="data.years" v-model="project.startyear"></dropdown>
-                            <dropdown :options="data.months" v-model="project.startmonth"></dropdown><i class="bind-line"></i>
-                            <dropdown :options="data.years" v-model="project.endyear" classes="endyear"></dropdown>
-                            <dropdown :options="data.months" v-model="project.endmonth"></dropdown>
-                        </div>
-                        <div class="item-row project-area">
-                            <label>项目描述</label><textarea placeholder="请详细描述项目内容，填写文字限制1000字以内" v-model="project.desc"></textarea>
-                            <p>你还可以输入<span>1000</span>字</p>
-                        </div>
-                        <div class="item-row project-area">
-                            <label>项目职责</label><textarea placeholder="请详细描述您的职责范围及工作任务，填写文字限制1000字以内" v-model="project.resp"></textarea>
-                            <p>你还可以输入<span>1000</span>字</p>
-                        </div>
-                        <div class="item-row project-area">
-                            <label>项目业绩</label><textarea placeholder="请详细描述您在项目中取得的业绩，填写文字限制1000字以内" v-model="project.achiev"></textarea>
-                            <p>你还可以输入<span>1000</span>字</p>
-                        </div>
-                    </div>
-                    <div class="addItem color-gray6" @click="addProject"><i class="maR5"><img src="images/cross-add.png"/></i>添加项目经历</div>
-                    <div class="buttons">
-                         <button>保存</button><button>取消</button>
-                    </div>
-                </div>
-                <div class="itemBox view view-item" name="project">
-                    <h3 class="title works-title"><i><img src="images/icon-project.png"/></i>项目经历<ul class="lis-inline pane-tabs"><li v-for="(project,index) in resume.projects">经历{{index+1}}</li></ul></h3>
-                    <div class="infopane" v-for="project in resume.projects">
-                         <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{project.startyear}}.{{project.startmonth}}--{{project.endyear}}.{{project.endmonth}}</span>校企职通车<i class="headmark"></i></h4>
-                         <p>{{project.firma}}</p>
-                         <p><span>项目描述：</span>{{project.desc}}</p>
-                         <p><span>项目职责：</span>{{project.resp}}</p>
-                         <p><span>项目业绩：</span>{{project.achiev}}</p>
-                    </div>
-                    <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
-                </div>
-                <div class="itemBox text-box edit edit-item" name="selfeval">
-                    <h3 class="title"><i><img src="images/icon-comment.png"/></i>自我评价</h3>
-                    <textarea placeholder="建议您对自己做一个简短的评价" v-model="resume.selfEval"></textarea>
-                    <p>你还可以输入<span>1000</span>字</p>
-                    <div class="buttons">
-                         <button>保存</button><button>取消</button>
-                    </div>
-                </div>
-                <div class="itemBox text-box view view-item" name="selfeval">
-                    <h3 class="title"><i><img src="images/icon-comment.png"/></i>自我评价</h3>
-                    <p class="LH-H20 maT9 paLeft40">{{resume.selfEval}}</p>
-                    <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
-                </div>
-                <div class="itemBox text-box edit edit-item" name="psinfo">
-                    <h3 class="title"><i><img src="images/icon-attachment.png"/></i>附加信息</h3>
-                    <textarea placeholder="如：获奖、技能资格证书、专利等" v-model="resume.psInfo"></textarea>
-                    <p>你还可以输入<span>1000</span>字</p>
-                    <div class="buttons">
-                         <button>保存</button><button>取消</button>
-                    </div>
-                </div>
-                <div class="itemBox text-box view view-item" name="psinfo">
-                    <h3 class="title"><i><img src="images/icon-attachment.png"/></i>附加信息</h3>
-                    <p class="LH-H20 maT9 paLeft40">{{resume.psInfo}}</p>
-                    <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
-                </div>
-                <div class="itemBox text-box edit edit-item" name="skill">
-                    <h3 class="title"><i><img src="images/icon-skills.png"/></i>擅长技能</h3>
-                    <textarea placeholder="在此添加您擅长的技能" v-model="resume.skills"></textarea>
-                    <p>你还可以输入<span>1000</span>字</p>
-                    <div class="buttons">
-                         <button>保存</button><button>取消</button>
-                    </div>
-                </div>
-                <div class="itemBox text-box view view-item" name="skill" style="border-bottom:none">
-                    <h3 class="title"><i><img src="images/icon-skills.png"/></i>擅长技能</h3>
-                    <p class="LH-H20 maT9 paLeft40">{{resume.skills}}</p>
-                    <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
-                </div>
-            </div>
-            <div class="buttons-commit t-center maT55 maB108">
+                         <div class="item-row">
+                             <label>公司行业</label><input type="text" v-model="worksExp.trade"/>
+                         </div>
+                         <div class="item-row">
+                             <label>职业名称</label><input type="text" v-model="worksExp.pos"/>
+                         </div>
+                         <div class="item-row time-interval">
+                             <label>任职时间</label>
+                               <dropdown :options="data.years" v-model="worksExp.startyear"></dropdown>
+                               <dropdown :options="data.months" v-model="worksExp.startmonth"></dropdown><i class="bind-line"></i
+                               <dropdown :options="data.years" v-model="worksExp.endyear" classes="endyear"></dropdown>
+                               <dropdown :options="data.months" v-model="worksExp.endmonth"></dropdown>
+                         </div>
+                         <div class="item-row work-resp">
+                             <label>工作职责</label><textarea placeholder="描述你的工作内容和工作业绩" v-model="worksExp.resp"></textarea>
+                         </div>
+                     </div>
+                     <div class="addItem color-gray6" @click="addWorksexp"><i class="maR5"><img src="images/cross-add.png"/></i>添加工作经历</div>
+                     <div class="buttons">
+                          <button>保存</button><button>取消</button>
+                     </div>
+                 </div>
+                 <div class="itemBox view view-item" name="work">
+                     <h3 class="title works-title"><i><img src="images/icon-work.png"/></i>工作经历<ul class="lis-inline pane-tabs"><li v-for="(worksExp,index) in resume.worksExps">经历{{index+1}}</li></ul></h3>
+                     <div class="infopane" v-for="worksExp in resume.worksExps">
+                          <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB12"><span class="maR24">{{worksExp.startyear}}.{{worksExp.startmonth}}--{{worksExp.endyear}}.{{worksExp.endmonth}}</span>{{worksExp.firma}}<i class="headmark"></i></h4>
+                          <p>{{worksExp.trade}}</p>
+                          <p><span>工作职能：</span>{{worksExp.pos}}</p>
+                          <p><span>工作地点：</span>杭州-滨江</p>
+                          <p><span>工作职责：</span>负责产品视觉所有设计与呈现</p>
+                     </div>
+                     <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                 </div>
+                 <div class="itemBox edit edit-item" name="edu">
+                     <h3 class="title works-title"><i><img src="images/icon-college.png"/></i>教育经历<ul class="lis-inline pane-tabs"><li v-for="(edu,index) in resume.edus" @click="eduSwipe(index)">经历{{index+1}}</li></ul></h3>
+                     <div class="pane" v-for="edu in resume.edus" v-show="edu.show">
+                         <div class="item-row">
+                             <label>学校名称</label><input type="text" v-model="edu.uni"/>
+                         </div>
+                         <div class="item-row">
+                             <label>专业名称</label>
+                               <dropdown :options="data.major.main" placeholder="选择/修改" v-model="edu.major" classes="major-name"></dropdown>
+                               <dropdown :options="data.major.sub" placeholder="选择/修改" v-model="edu.submajor" classes="major-name"></dropdown>
+                             <input type="text" class="exmajor" v-model="edu.exmajor"/>
+                         </div>
+                         <div class="item-row time-interval">
+                             <label>就读时间</label>
+                             <dropdown :options="data.years" v-model="edu.startyear"></dropdown>
+                             <dropdown :options="data.months" v-model="edu.startmonth"></dropdown><i class="bind-line"></i>
+                             <dropdown :options="data.years" v-model="edu.endyear" classes="endyear"></dropdown>
+                             <dropdown :options="data.months" v-model="edu.endmonth"></dropdown>
+                         </div>
+                         <div class="item-row">
+                             <label>学历</label>
+                               <dropdown :options="data.qualification" v-model="edu.qualification" classes="qualific"></dropdown>
+                         </div>
+                     </div>
+                     <div class="addItem color-gray6" @click="addEdu"><i class="maR5"><img src="images/cross-add.png"/></i>添加教育经历</div>
+                     <div class="buttons">
+                          <button>保存</button><button>取消</button>
+                     </div>
+                 </div>
+                 <div class="itemBox view view-item" name="edu">
+                     <h3 class="title works-title"><i><img src="images/icon-college.png"/></i>教育经历<ul class="lis-inline pane-tabs"><li v-for="(edu,index) in resume.edus">经历{{index+1}}</li></ul></h3>
+                     <div class="infopane" v-for="edu in resume.edus">
+                          <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB12"><span class="maR24">{{edu.startyear}}.{{edu.startmonth}}--{{edu.endyear}}.{{edu.endmonth}}</span>{{edu.uni}}<i class="headmark"></i></h4>
+                          <p class="LH-H25"><span class="W250 disInline">专业名称：{{edu.submajor}}</span><span>学历：{{edu.qualification}}</span></p>
+                     </div>
+                     <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                 </div>
+                 <div class="itemBox edit edit-item" name="speech">
+                     <h3 class="title works-title"><i><img src="images/icon-language.png"/></i>语言能力</h3>
+                     <form class="language-skills maL30 fSize14 W620">
+                         <label v-for="language in data.languages"><input type="checkbox" @click="checkLan($event.target,language)">{{language}}</label>
+                     </form>
+                     <div class="buttons">
+                          <button>保存</button><button>取消</button>
+                     </div>
+                 </div>
+                 <div class="itemBox view view-item" name="speech">
+                     <h3 class="title works-title"><i><img src="images/icon-language.png"/></i>语言能力</h3>
+                     <p class="LH-H32 paLeft40">{{resume.laSkills.join()}}</p>
+                     <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                 </div>
+                 <div class="itemBox edit edit-item" name="project">
+                     <h3 class="title works-title"><i><img src="images/icon-project.png"/></i>项目经历<ul class="lis-inline pane-tabs"><li v-for="(project,index) in resume.projects" @click="projectSwipe(index)">经历{{index+1}}</li></ul></h3>
+                     <div class="pane" v-for="project in resume.projects" v-show="project.show">
+                         <div class="item-row">
+                             <label>项目名称</label><input type="text" v-model="project.name"/>
+                         </div>
+                         <div class="item-row">
+                             <label>公司名称</label><input type="text" v-model="project.firma"/>
+                         </div>
+                         <div class="item-row time-interval">
+                             <label>项目时间</label>
+                             <dropdown :options="data.years" v-model="project.startyear"></dropdown>
+                             <dropdown :options="data.months" v-model="project.startmonth"></dropdown><i class="bind-line"></i>
+                             <dropdown :options="data.years" v-model="project.endyear" classes="endyear"></dropdown>
+                             <dropdown :options="data.months" v-model="project.endmonth"></dropdown>
+                         </div>
+                         <div class="item-row project-area">
+                             <label>项目描述</label><textarea placeholder="请详细描述项目内容，填写文字限制1000字以内" v-model="project.desc"></textarea>
+                             <p>你还可以输入<span>1000</span>字</p>
+                         </div>
+                         <div class="item-row project-area">
+                             <label>项目职责</label><textarea placeholder="请详细描述您的职责范围及工作任务，填写文字限制1000字以内" v-model="project.resp"></textarea>
+                             <p>你还可以输入<span>1000</span>字</p>
+                         </div>
+                         <div class="item-row project-area">
+                             <label>项目业绩</label><textarea placeholder="请详细描述您在项目中取得的业绩，填写文字限制1000字以内" v-model="project.achiev"></textarea>
+                             <p>你还可以输入<span>1000</span>字</p>
+                         </div>
+                     </div>
+                     <div class="addItem color-gray6" @click="addProject"><i class="maR5"><img src="images/cross-add.png"/></i>添加项目经历</div>
+                     <div class="buttons">
+                          <button>保存</button><button>取消</button>
+                     </div>
+                 </div>
+                 <div class="itemBox view view-item" name="project">
+                     <h3 class="title works-title"><i><img src="images/icon-project.png"/></i>项目经历<ul class="lis-inline pane-tabs"><li v-for="(project,index) in resume.projects">经历{{index+1}}</li></ul></h3>
+                     <div class="infopane" v-for="project in resume.projects">
+                          <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{project.startyear}}.{{project.startmonth}}--{{project.endyear}}.{{project.endmonth}}</span>校企职通车<i class="headmark"></i></h4>
+                          <p>{{project.firma}}</p>
+                          <p><span>项目描述：</span>{{project.desc}}</p>
+                          <p><span>项目职责：</span>{{project.resp}}</p>
+                          <p><span>项目业绩：</span>{{project.achiev}}</p>
+                     </div>
+                     <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                 </div>
+                 <div class="itemBox text-box edit edit-item" name="selfeval">
+                     <h3 class="title"><i><img src="images/icon-comment.png"/></i>自我评价</h3>
+                     <textarea placeholder="建议您对自己做一个简短的评价" v-model="resume.selfEval"></textarea>
+                     <p>你还可以输入<span>1000</span>字</p>
+                     <div class="buttons">
+                          <button>保存</button><button>取消</button>
+                     </div>
+                 </div>
+                 <div class="itemBox text-box view view-item" name="selfeval">
+                     <h3 class="title"><i><img src="images/icon-comment.png"/></i>自我评价</h3>
+                     <p class="LH-H20 maT9 paLeft40">{{resume.selfEval}}</p>
+                     <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                 </div>
+                 <div class="itemBox text-box edit edit-item" name="psinfo">
+                     <h3 class="title"><i><img src="images/icon-attachment.png"/></i>附加信息</h3>
+                     <textarea placeholder="如：获奖、技能资格证书、专利等" v-model="resume.psInfo"></textarea>
+                     <p>你还可以输入<span>1000</span>字</p>
+                     <div class="buttons">
+                          <button>保存</button><button>取消</button>
+                     </div>
+                 </div>
+                 <div class="itemBox text-box view view-item" name="psinfo">
+                     <h3 class="title"><i><img src="images/icon-attachment.png"/></i>附加信息</h3>
+                     <p class="LH-H20 maT9 paLeft40">{{resume.psInfo}}</p>
+                     <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                 </div>
+                 <div class="itemBox text-box edit edit-item" name="skill">
+                     <h3 class="title"><i><img src="images/icon-skills.png"/></i>擅长技能</h3>
+                     <textarea placeholder="在此添加您擅长的技能" v-model="resume.skills"></textarea>
+                     <p>你还可以输入<span>1000</span>字</p>
+                     <div class="buttons">
+                          <button>保存</button><button>取消</button>
+                     </div>
+                 </div>
+                 <div class="itemBox text-box view view-item" name="skill" style="border-bottom:none">
+                     <h3 class="title"><i><img src="images/icon-skills.png"/></i>擅长技能</h3>
+                     <p class="LH-H20 maT9 paLeft40">{{resume.skills}}</p>
+                     <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                 </div>
+             </div>
+                  <div class="buttons-commit t-center maT55 maB108">
                     <button type="button" class="bg-blueL edit" @click="showPre">预览简历</button><button class="bg-orange3 edit" @click="submit">提交</button>
-          </div>
-            </div>
-            <div class="classBox ListBox" >
-                <div class="hd LH-H58">
-                    <div class="selectee LH-H38">
-                        <input type="text" value="全部状态" class="H38 maL30"/>
-                        <ul>
-                            <li>全部状态</li><li>已开课</li>
-                            <li>未开课</li><li>已结束</li>
-                        </ul>
-                    </div>
-                    <p class="fr fSize14 maR30">我学习过的课程<span class="color-orange2 maL10 maR10">1</span>个</p>
-                </div>
-                <ul class="classList contList">
-                    <li>
-                        <div class="class-pic logo-pic"></div>
-                        <div class="class-txt fl paTop20 W328">
-                            <h2 class="class-name"><b>课程名称</b><span class="LH-H20 score">4.5分</span></h2>
-                            <p>开课学院名称</p>
-                            <p>课程内容：带你进入一片知识的海洋</p>
-                        </div>
-                        <div class="class-info fl fSize14">
-                            <p>课程时间</p>
-                            <p class="begin">已开课</p>
-                            <p>教师评语</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="class-pic logo-pic"></div>
-                        <div class="class-txt fl paTop20 W328">
-                            <h2 class="class-name"><b>课程名称</b><span class="LH-H20 score">4.5分</span></h2>
-                            <p>开课学院名称</p>
-                            <p>课程内容：带你进入一片知识的海洋</p>
-                        </div>
-                        <div class="class-info fl fSize14">
-                            <p>课程时间</p>
-                            <p class="after">课程结束</p>
-                            <p>教师评语</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="class-pic logo-pic"></div>
-                        <div class="class-txt fl paTop20 W328">
-                            <h2 class="class-name"><b>课程名称</b><span class="LH-H20 score">4.5分</span></h2>
-                            <p>开课学院名称</p>
-                            <p>课程内容：带你进入一片知识的海洋</p>
-                        </div>
-                        <div class="class-info fl fSize14">
-                            <p>课程时间</p>
-                            <p class="before">未开课</p>
-                            <p>教师评语</p>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="pageBot lis-inline maT30 fr fSize14">
-                    <li class="side-page first-page">首页</li>
-                    <li class="prev side-page">上一页</li>
-                    <li class="page-index">1</li>
-                    <li class="page-index">2</li>
-                    <li class="page-index">3</li>
-                    <li class="next side-page">下一页</li>
-                    <li class="side-page last-page">尾页</li>
-                </ul>
-            </div>
-            <div class="collec-study ListBox">
-                <div class="hd LH-H58">
-                    <div class="selectee ">
-                        <input type="text" value="全部状态" class="H38 maL30"/>
-                        <ul>
-                            <li>全部状态</li><li>已开课</li>
-                            <li>未开课</li><li>已结束</li>
-                        </ul>
-                    </div>
-                    <p class="fr fSize14 maR30">我收藏过的课程<span class="color-orange2 maL10 maR10">1</span>个</p>
-                </div>
-                <ul class="colStudyList contList">
-                    <li>
-                        <div class="logo-pic"></div>
-                        <div class="class-txt fl paTop20 W328">
-                            <h2 class="class-name"><b>课程名称</b></h2>
-                            <p>开课学院名称</p>
-                            <p class="teacher">讲课老师<span>|</span>性别<span>|</span>年龄<span>|</span>教学经验</p>
-                        </div>
-                        <div class="col-class-info fl fSize18">
-                            <p>学习时间</p>
-                            <p class="price">15000元</p>
-                            <div class="action"><span>取消收藏</span><span>报名学习</span></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="logo-pic"></div>
-                        <div class="class-txt fl paTop20 W328">
-                            <h2 class="class-name"><b>课程名称</b></h2>
-                            <p>开课学院名称</p>
-                            <p class="teacher">讲课老师<span>|</span>性别<span>|</span>年龄<span>|</span>教学经验</p>
-                        </div>
-                        <div class="col-class-info fl fSize18">
-                            <p>学习时间</p>
-                            <p class="price">15000元</p>
-                            <div class="action"><span>取消收藏</span><span>报名学习</span></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="logo-pic"></div>
-                        <div class="class-txt fl paTop20 W328">
-                            <h2 class="class-name"><b>课程名称</b></h2>
-                            <p>开课学院名称</p>
-                            <p class="teacher">讲课老师<span>|</span>性别<span>|</span>年龄<span>|</span>教学经验</p>
-                        </div>
-                        <div class="col-class-info fl fSize18">
-                            <p>学习时间</p>
-                            <p class="price">15000元</p>
-                            <div class="action"><span>取消收藏</span><span>报名学习</span></div>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="pageBot lis-inline maT30 fr fSize14">
-                    <li class="side-page first-page">首页</li>
-                    <li class="prev side-page">上一页</li>
-                    <li class="page-index">1</li>
-                    <li class="page-index">2</li>
-                    <li class="page-index">3</li>
-                    <li class="next side-page">下一页</li>
-                    <li class="side-page last-page">尾页</li>
-                </ul>
-            </div>
-            <div class="collec-job ListBox">
-                <div class="hd LH-H58">
-                    <div class="selectee ">
-                        <input type="text" value="全部状态" class="H38 maL30"/>
-                        <ul>
-                            <li>全部状态</li><li>已开课</li>
-                            <li>未开课</li><li>已结束</li>
-                        </ul>
-                    </div>
-                    <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">1</span>个</p>
-                </div>
-                <ul class="colCompanyList contList">
-                    <li>
-                        <div class="logo-pic"></div>
-                        <div class="class-txt fl paTop20 W328">
-                            <h2 class="class-name"><b>工业设计</b></h2>
-                            <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
-                            <p><span class="maR20">【滨江区】</span>岗位数:<span>2人</span></p>
-                        </div>
-                        <div class="col-company-info fl fSize18">
-                            <p>杭州煌巢信息科技有限公司</p>
-                            <p>国企<i>|</i>20-100人</p>
-                            <p>2017-1-30</p>
-                            <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="logo-pic"></div>
-                        <div class="class-txt fl paTop20 W328">
-                            <h2 class="class-name"><b>工业设计</b></h2>
-                            <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
-                            <p><span class="maR20">【滨江区】</span>岗位数:<span>2人</span></p>
-                        </div>
-                        <div class="col-company-info fl fSize18">
-                            <p>杭州煌巢信息科技有限公司</p>
-                            <p>国企<i>|</i>20-100人</p>
-                            <p>2017-1-30</p>
-                            <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="logo-pic"></div>
-                        <div class="class-txt fl paTop20 W328">
-                            <h2 class="class-name"><b>工业设计</b></h2>
-                            <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
-                            <p><span class="maR20">【滨江区】</span>岗位数:<span>2人</span></p>
-                        </div>
-                        <div class="col-company-info fl fSize18">
-                            <p>杭州煌巢信息科技有限公司</p>
-                            <p>国企<i>|</i>20-100人</p>
-                            <p>2017-1-30</p>
-                            <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="pageBot lis-inline maT30 fr fSize14">
-                    <li class="side-page first-page">首页</li>
-                    <li class="prev side-page">上一页</li>
-                    <li class="page-index">1</li>
-                    <li class="page-index">2</li>
-                    <li class="page-index">3</li>
-                    <li class="next side-page">下一页</li>
-                    <li class="side-page last-page">尾页</li>
-                </ul>
-            </div>
-            <div class="collec-recruitment ListBox">
-                <div class="hd LH-H58">
-                    <div class="selectee ">
-                        <input type="text" value="全部状态" class="H38 maL30"/>
-                        <ul>
-                            <li>全部状态</li><li>已开课</li>
-                            <li>未开课</li><li>已结束</li>
-                        </ul>
-                    </div>
-                    <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">1</span>个</p>
-                </div>
-                <ul class="colCompanyList contList">
-                    <li>
-                        <div class="logo-pic"></div>
-                        <div class="class-txt fl paTop20 W328">
-                            <h2 class="class-name"><b>工业设计</b></h2>
-                            <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
-                            <p><span>招聘会时间：</span>2017-01-30</p>
-                        </div>
-                        <div class="col-company-info fl fSize18">
-                            <p>杭州煌巢信息科技有限公司</p>
-                            <p>国企<i>|</i>20-100人</p>
-                            <p>2017-1-30</p>
-                            <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="logo-pic"></div>
-                        <div class="class-txt fl paTop20 W328">
-                            <h2 class="class-name"><b>工业设计</b></h2>
-                            <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
-                            <p><span>招聘会时间：</span>2017-01-30</p>
-                        </div>
-                        <div class="col-company-info fl fSize18">
-                            <p>杭州煌巢信息科技有限公司</p>
-                            <p>国企<i>|</i>20-100人</p>
-                            <p>2017-1-30</p>
-                            <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="logo-pic"></div>
-                        <div class="class-txt fl paTop20 W328">
-                            <h2 class="class-name"><b>工业设计</b></h2>
-                            <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
-                            <p><span>招聘会时间：</span>2017-01-30</p>
-                        </div>
-                        <div class="col-company-info fl fSize18">
-                            <p>杭州煌巢信息科技有限公司</p>
-                            <p>国企<i>|</i>20-100人</p>
-                            <p>2017-1-30</p>
-                            <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="pageBot lis-inline maT30 fr fSize14">
-                    <li class="side-page first-page">首页</li>
-                    <li class="prev side-page">上一页</li>
-                    <li class="page-index">1</li>
-                    <li class="page-index">2</li>
-                    <li class="page-index">3</li>
-                    <li class="next side-page">下一页</li>
-                    <li class="side-page last-page">尾页</li>
-                </ul>
-            </div>
-            <div class="jobBox ListBox">
-                <div class="hd LH-H58">
-                    <div class="selectee ">
-                        <input type="text" value="全部状态" class="H38 maL30"/>
-                        <ul>
-                            <li>全部状态</li><li>已开课</li>
-                            <li>未开课</li><li>已结束</li>
-                        </ul>
-                    </div>
-                    <p class="fr fSize14 maR30">已投递简历<span class="color-orange2 maL10 maR10">20</span>份</p>
-                </div>
-                <ul class="collectList contList">
-                    <li>
-                        <div class="logo-pic"></div>
-                        <div class="class-txt fl paTop20 W328">
-                            <h2 class="class-name"><b>职位名称</b></h2>
-                            <p class="teacher">年薪<span>|</span>地区<span>|</span>学历要求<span>|</span>经验要求</p>
-                            <p>投递于： 2016-10-25</p>
-                        </div>
-                        <div class="feedback fr fSize18">
-                            <h3>公司名称</h3>
-                            <ul class="lis-inline feedState">
-                                <li class="on"><i><img src="images/icon-feedback.png"/></i><span>已投递</span></li>
-                                <li><i><img src="images/icon-feedback.png"/></i><span>已查看</span></li>
-                                <li><i><img src="images/icon-feedback.png"/></i><span>已反馈</span></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="logo-pic"></div>
-                        <div class="class-txt fl paTop20 W328">
-                            <h2 class="class-name"><b>职位名称</b></h2>
-                            <p class="teacher">年薪<span>|</span>地区<span>|</span>学历要求<span>|</span>经验要求</p>
-                            <p>投递于： 2016-10-25</p>
-                        </div>
-                        <div class="feedback fr fSize18">
-                            <h3>公司名称</h3>
-                            <ul class="lis-inline feedState">
-                                <li><i><img src="images/icon-feedback.png"/></i><span>已投递</span></li>
-                                <li class="on"><i><img src="images/icon-feedback.png"/></i><span>已查看</span></li>
-                                <li><i><img src="images/icon-feedback.png"/></i><span>已反馈</span></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="logo-pic"></div>
-                        <div class="class-txt fl paTop20 W328">
-                            <h2 class="class-name"><b>职位名称</b></h2>
-                            <p class="teacher">年薪<span>|</span>地区<span>|</span>学历要求<span>|</span>经验要求</p>
-                            <p>投递于： 2016-10-25</p>
-                        </div>
-                        <div class="feedback fr fSize18">
-                            <h3>公司名称</h3>
-                            <ul class="lis-inline feedState">
-                                <li><i><img src="images/icon-feedback.png"/></i><span>已投递</span></li>
-                                <li><i><img src="images/icon-feedback.png"/></i><span>已查看</span></li>
-                                <li class="on"><i><img src="images/icon-feedback.png"/></i><span>已反馈</span></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="pageBot lis-inline maT30 fr fSize14">
-                    <li class="side-page first-page">首页</li>
-                    <li class="prev side-page">上一页</li>
-                    <li class="page-index">1</li>
-                    <li class="page-index">2</li>
-                    <li class="page-index">3</li>
-                    <li class="next side-page">下一页</li>
-                    <li class="side-page last-page">尾页</li>
-                </ul>
-            </div>
-            <div class="conf-keyword ListBox">
-                <h2 class="paTop14 LH-H52 fSize24 paLeft40">修改密码</h2>
-                <form class="paLeft40 fSize18 LH40">
-                    <div><label>登陆账号</label><span>1234567890</span></div>
-                    <div><label>当前密码</label><input type="password"/></div>
-                    <div><label>新密码</label><input type="password"/></div>
-                    <div><label>确认密码</label><input type="password"/></div>
-                    <div><label>验证码</label><input type="password"/><i class="varify-code W100 LH-H40 bg-pinkL maL10 t-center">验证码</i></div>
-                    <div class="t-center paTop20 "><button class="LH-H40 W100 bg-orange2 fSize18 color-white maB40">保存</button></div>
-                </form>
-            </div>
-            <div class="conf-account paLeft40 paRight40">
-                <h2 class="fSize24 LH-H80 maB2">绑定账号</h2>
-                <div class="safeLevel maB12">
-                    <h3 class="paLeft40 fSize18 LH-H20"><i class="pic-wrapper W20 LH-H20 maR10"><img src="images/icon-safe.png"/></i>安全等级</h3>
-                    <div class="LH-H50 paLeft80 fSize14 maT20"><span class="maR12 color-red2">危险</span><div class="safe-range pRel"><p></p><div class="r-pointer LH26 H40 t-center W46 color-white">80%</div></div><span class="maL12 color-green">安全</span></div>
-                </div>
-                <p class="fSize14 LH-H35">登录账号：123456789</p>
-                <p class="fSize14 LH-H35 maB22">绑定后，你可以同时使用以下方式登录</p>
-                <ul class="bind-acc fSize18">
-                    <li><img src="images/icon-phone.png"/>已绑定手机号 12345678900<button class="maL20 chg-phone">更换手机号</button></li>
-                    <li><img src="images/icon-email.png"/><button>绑定邮箱</button></li>
-                    <li><img src="images/icon-weixin.png"/><button class="wechatBind">绑定微信账号</button></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+                  </div>
+             </div>
+             <div class="classBox ListBox" >
+                 <div class="hd LH-H58 bg-white">
+                     <div class="selectee LH-H38">
+                         <input type="text" value="全部状态" class="H38 maL30"/>
+                         <ul>
+                             <li>全部状态</li><li>已开课</li>
+                             <li>未开课</li><li>已结束</li>
+                         </ul>
+                     </div>
+                     <p class="fr fSize14 maR30">我学习过的课程<span class="color-orange2 maL10 maR10">1</span>个</p>
+                 </div>
+                 <ul class="classList contList">
+                     <li>
+                         <div class="class-pic logo-pic"></div>
+                         <div class="class-txt fl paTop20 W328">
+                             <h2 class="class-name"><b>课程名称</b><span class="LH-H20 score">4.5分</span></h2>
+                             <p>开课学院名称</p>
+                             <p>课程内容：带你进入一片知识的海洋</p>
+                         </div>
+                         <div class="class-info fl fSize14">
+                             <p>课程时间</p>
+                             <p class="begin">已开课</p>
+                             <p>教师评语</p>
+                         </div>
+                     </li>
+                     <li>
+                         <div class="class-pic logo-pic"></div>
+                         <div class="class-txt fl paTop20 W328">
+                             <h2 class="class-name"><b>课程名称</b><span class="LH-H20 score">4.5分</span></h2>
+                             <p>开课学院名称</p>
+                             <p>课程内容：带你进入一片知识的海洋</p>
+                         </div>
+                         <div class="class-info fl fSize14">
+                             <p>课程时间</p>
+                             <p class="after">课程结束</p>
+                             <p>教师评语</p>
+                         </div>
+                     </li>
+                     <li>
+                         <div class="class-pic logo-pic"></div>
+                         <div class="class-txt fl paTop20 W328">
+                             <h2 class="class-name"><b>课程名称</b><span class="LH-H20 score">4.5分</span></h2>
+                             <p>开课学院名称</p>
+                             <p>课程内容：带你进入一片知识的海洋</p>
+                         </div>
+                         <div class="class-info fl fSize14">
+                             <p>课程时间</p>
+                             <p class="before">未开课</p>
+                             <p>教师评语</p>
+                         </div>
+                     </li>
+                 </ul>
+                 <ul class="pageBot lis-inline maT30 fr fSize14">
+                     <li class="side-page first-page">首页</li>
+                     <li class="prev side-page">上一页</li>
+                     <li class="page-index">1</li>
+                     <li class="page-index">2</li>
+                     <li class="page-index">3</li>
+                     <li class="next side-page">下一页</li>
+                     <li class="side-page last-page">尾页</li>
+                 </ul>
+             </div>
+             <div class="collec-study ListBox">
+                 <div class="hd LH-H58">
+                     <div class="selectee ">
+                         <input type="text" value="全部状态" class="H38 maL30"/>
+                         <ul>
+                             <li>全部状态</li><li>已开课</li>
+                             <li>未开课</li><li>已结束</li>
+                         </ul>
+                     </div>
+                     <p class="fr fSize14 maR30">我收藏过的课程<span class="color-orange2 maL10 maR10">1</span>个</p>
+                 </div>
+                 <ul class="colStudyList contList">
+                     <li>
+                         <div class="logo-pic"></div>
+                         <div class="class-txt fl paTop20 W328">
+                             <h2 class="class-name"><b>课程名称</b></h2>
+                             <p>开课学院名称</p>
+                             <p class="teacher">讲课老师<span>|</span>性别<span>|</span>年龄<span>|</span>教学经验</p>
+                         </div>
+                         <div class="col-class-info fl fSize18">
+                             <p>学习时间</p>
+                             <p class="price">15000元</p>
+                             <div class="action"><span>取消收藏</span><span>报名学习</span></div>
+                         </div>
+                     </li>
+                     <li>
+                         <div class="logo-pic"></div>
+                         <div class="class-txt fl paTop20 W328">
+                             <h2 class="class-name"><b>课程名称</b></h2>
+                             <p>开课学院名称</p>
+                             <p class="teacher">讲课老师<span>|</span>性别<span>|</span>年龄<span>|</span>教学经验</p>
+                         </div>
+                         <div class="col-class-info fl fSize18">
+                             <p>学习时间</p>
+                             <p class="price">15000元</p>
+                             <div class="action"><span>取消收藏</span><span>报名学习</span></div>
+                         </div>
+                     </li>
+                     <li>
+                         <div class="logo-pic"></div>
+                         <div class="class-txt fl paTop20 W328">
+                             <h2 class="class-name"><b>课程名称</b></h2>
+                             <p>开课学院名称</p>
+                             <p class="teacher">讲课老师<span>|</span>性别<span>|</span>年龄<span>|</span>教学经验</p>
+                         </div>
+                         <div class="col-class-info fl fSize18">
+                             <p>学习时间</p>
+                             <p class="price">15000元</p>
+                             <div class="action"><span>取消收藏</span><span>报名学习</span></div>
+                         </div>
+                     </li>
+                 </ul>
+                 <ul class="pageBot lis-inline maT30 fr fSize14">
+                     <li class="side-page first-page">首页</li>
+                     <li class="prev side-page">上一页</li>
+                     <li class="page-index">1</li>
+                     <li class="page-index">2</li>
+                     <li class="page-index">3</li>
+                     <li class="next side-page">下一页</li>
+                     <li class="side-page last-page">尾页</li>
+                 </ul>
+             </div>
+             <div class="collec-job ListBox">
+                 <div class="hd LH-H58">
+                     <div class="selectee ">
+                         <input type="text" value="全部状态" class="H38 maL30"/>
+                         <ul>
+                             <li>全部状态</li><li>已开课</li>
+                             <li>未开课</li><li>已结束</li>
+                         </ul>
+                     </div>
+                     <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">1</span>个</p>
+                 </div>
+                 <ul class="colCompanyList contList">
+                     <li>
+                         <div class="logo-pic"></div>
+                         <div class="class-txt fl paTop20 W328">
+                             <h2 class="class-name"><b>工业设计</b></h2>
+                             <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
+                             <p><span class="maR20">【滨江区】</span>岗位数:<span>2人</span></p>
+                         </div>
+                         <div class="col-company-info fl fSize18">
+                             <p>杭州煌巢信息科技有限公司</p>
+                             <p>国企<i>|</i>20-100人</p>
+                             <p>2017-1-30</p>
+                             <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
+                         </div>
+                     </li>
+                     <li>
+                         <div class="logo-pic"></div>
+                         <div class="class-txt fl paTop20 W328">
+                             <h2 class="class-name"><b>工业设计</b></h2>
+                             <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
+                             <p><span class="maR20">【滨江区】</span>岗位数:<span>2人</span></p>
+                         </div>
+                         <div class="col-company-info fl fSize18">
+                             <p>杭州煌巢信息科技有限公司</p>
+                             <p>国企<i>|</i>20-100人</p>
+                             <p>2017-1-30</p>
+                             <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
+                         </div>
+                     </li>
+                     <li>
+                         <div class="logo-pic"></div>
+                         <div class="class-txt fl paTop20 W328">
+                             <h2 class="class-name"><b>工业设计</b></h2>
+                             <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
+                             <p><span class="maR20">【滨江区】</span>岗位数:<span>2人</span></p>
+                         </div>
+                         <div class="col-company-info fl fSize18">
+                             <p>杭州煌巢信息科技有限公司</p>
+                             <p>国企<i>|</i>20-100人</p>
+                             <p>2017-1-30</p>
+                             <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
+                         </div>
+                     </li>
+                 </ul>
+                 <ul class="pageBot lis-inline maT30 fr fSize14">
+                     <li class="side-page first-page">首页</li>
+                     <li class="prev side-page">上一页</li>
+                     <li class="page-index">1</li>
+                     <li class="page-index">2</li>
+                     <li class="page-index">3</li>
+                     <li class="next side-page">下一页</li>
+                     <li class="side-page last-page">尾页</li>
+                 </ul>
+             </div>
+             <div class="collec-recruitment ListBox">
+                 <div class="hd LH-H58">
+                     <div class="selectee ">
+                         <input type="text" value="全部状态" class="H38 maL30"/>
+                         <ul>
+                             <li>全部状态</li><li>已开课</li>
+                             <li>未开课</li><li>已结束</li>
+                         </ul>
+                     </div>
+                     <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">1</span>个</p>
+                 </div>
+                 <ul class="colCompanyList contList">
+                     <li>
+                         <div class="logo-pic"></div>
+                         <div class="class-txt fl paTop20 W328">
+                             <h2 class="class-name"><b>工业设计</b></h2>
+                             <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
+                             <p><span>招聘会时间：</span>2017-01-30</p>
+                         </div>
+                         <div class="col-company-info fl fSize18">
+                             <p>杭州煌巢信息科技有限公司</p>
+                             <p>国企<i>|</i>20-100人</p>
+                             <p>2017-1-30</p>
+                             <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
+                         </div>
+                     </li>
+                     <li>
+                         <div class="logo-pic"></div>
+                         <div class="class-txt fl paTop20 W328">
+                             <h2 class="class-name"><b>工业设计</b></h2>
+                             <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
+                             <p><span>招聘会时间：</span>2017-01-30</p>
+                         </div>
+                         <div class="col-company-info fl fSize18">
+                             <p>杭州煌巢信息科技有限公司</p>
+                             <p>国企<i>|</i>20-100人</p>
+                             <p>2017-1-30</p>
+                             <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
+                         </div>
+                     </li>
+                     <li>
+                         <div class="logo-pic"></div>
+                         <div class="class-txt fl paTop20 W328">
+                             <h2 class="class-name"><b>工业设计</b></h2>
+                             <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
+                             <p><span>招聘会时间：</span>2017-01-30</p>
+                         </div>
+                         <div class="col-company-info fl fSize18">
+                             <p>杭州煌巢信息科技有限公司</p>
+                             <p>国企<i>|</i>20-100人</p>
+                             <p>2017-1-30</p>
+                             <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
+                         </div>
+                     </li>
+                 </ul>
+                 <ul class="pageBot lis-inline maT30 fr fSize14">
+                     <li class="side-page first-page">首页</li>
+                     <li class="prev side-page">上一页</li>
+                     <li class="page-index">1</li>
+                     <li class="page-index">2</li>
+                     <li class="page-index">3</li>
+                     <li class="next side-page">下一页</li>
+                     <li class="side-page last-page">尾页</li>
+                 </ul>
+             </div>
+             <div class="jobBox ListBox">
+                 <div class="hd LH-H58">
+                     <div class="selectee ">
+                         <input type="text" value="全部状态" class="H38 maL30"/>
+                         <ul>
+                             <li>全部状态</li><li>已开课</li>
+                             <li>未开课</li><li>已结束</li>
+                         </ul>
+                     </div>
+                     <p class="fr fSize14 maR30">已投递简历<span class="color-orange2 maL10 maR10">20</span>份</p>
+                 </div>
+                 <ul class="collectList contList">
+                     <li>
+                         <div class="logo-pic"></div>
+                         <div class="class-txt fl paTop20 W328">
+                             <h2 class="class-name"><b>职位名称</b></h2>
+                             <p class="teacher">年薪<span>|</span>地区<span>|</span>学历要求<span>|</span>经验要求</p>
+                             <p>投递于： 2016-10-25</p>
+                         </div>
+                         <div class="feedback fr fSize18">
+                             <h3>公司名称</h3>
+                             <ul class="lis-inline feedState">
+                                 <li class="on"><i><img src="images/icon-feedback.png"/></i><span>已投递</span></li>
+                                 <li><i><img src="images/icon-feedback.png"/></i><span>已查看</span></li>
+                                 <li><i><img src="images/icon-feedback.png"/></i><span>已反馈</span></li>
+                             </ul>
+                         </div>
+                     </li>
+                     <li>
+                         <div class="logo-pic"></div>
+                         <div class="class-txt fl paTop20 W328">
+                             <h2 class="class-name"><b>职位名称</b></h2>
+                             <p class="teacher">年薪<span>|</span>地区<span>|</span>学历要求<span>|</span>经验要求</p>
+                             <p>投递于： 2016-10-25</p>
+                         </div>
+                         <div class="feedback fr fSize18">
+                             <h3>公司名称</h3>
+                             <ul class="lis-inline feedState">
+                                 <li><i><img src="images/icon-feedback.png"/></i><span>已投递</span></li>
+                                 <li class="on"><i><img src="images/icon-feedback.png"/></i><span>已查看</span></li>
+                                 <li><i><img src="images/icon-feedback.png"/></i><span>已反馈</span></li>
+                             </ul>
+                         </div>
+                     </li>
+                     <li>
+                         <div class="logo-pic"></div>
+                         <div class="class-txt fl paTop20 W328">
+                             <h2 class="class-name"><b>职位名称</b></h2>
+                             <p class="teacher">年薪<span>|</span>地区<span>|</span>学历要求<span>|</span>经验要求</p>
+                             <p>投递于： 2016-10-25</p>
+                         </div>
+                         <div class="feedback fr fSize18">
+                             <h3>公司名称</h3>
+                             <ul class="lis-inline feedState">
+                                 <li><i><img src="images/icon-feedback.png"/></i><span>已投递</span></li>
+                                 <li><i><img src="images/icon-feedback.png"/></i><span>已查看</span></li>
+                                 <li class="on"><i><img src="images/icon-feedback.png"/></i><span>已反馈</span></li>
+                             </ul>
+                         </div>
+                     </li>
+                 </ul>
+                 <ul class="pageBot lis-inline maT30 fr fSize14">
+                     <li class="side-page first-page">首页</li>
+                     <li class="prev side-page">上一页</li>
+                     <li class="page-index">1</li>
+                     <li class="page-index">2</li>
+                     <li class="page-index">3</li>
+                     <li class="next side-page">下一页</li>
+                     <li class="side-page last-page">尾页</li>
+                 </ul>
+             </div>
+             <div class="conf-keyword ListBox">
+                 <h2 class="paTop14 LH-H52 fSize24 paLeft40">修改密码</h2>
+                 <form class="paLeft40 fSize18 LH40">
+                     <div><label>登陆账号</label><span>1234567890</span></div>
+                     <div><label>当前密码</label><input type="password"/></div>
+                     <div><label>新密码</label><input type="password"/></div>
+                     <div><label>确认密码</label><input type="password"/></div>
+                     <div><label>验证码</label><input type="password"/><i class="varify-code W100 LH-H40 bg-pinkL maL10 t-center">验证码</i></div>
+                     <div class="t-center paTop20 "><button class="LH-H40 W100 bg-orange2 fSize18 color-white maB40">保存</button></div>
+                 </form>
+             </div>
+             <div class="conf-account paLeft40 paRight40">
+                 <h2 class="fSize24 LH-H80 maB2">绑定账号</h2>
+                 <div class="safeLevel maB12">
+                     <h3 class="paLeft40 fSize18 LH-H20"><i class="pic-wrapper W20 LH-H20 maR10"><img src="images/icon-safe.png"/></i>安全等级</h3>
+                     <div class="LH-H50 paLeft80 fSize14 maT20"><span class="maR12 color-red2">危险</span><div class="safe-range pRel"><p></p><div class="r-pointer LH26 H40 t-center W46 color-white">80%</div></div><span class="maL12 color-green">安全</span></div>
+                 </div>
+                 <p class="fSize14 LH-H35">登录账号：123456789</p>
+                 <p class="fSize14 LH-H35 maB22">绑定后，你可以同时使用以下方式登录</p>
+                 <ul class="bind-acc fSize18">
+                     <li><img src="images/icon-phone.png"/>已绑定手机号 12345678900<button class="maL20 chg-phone">更换手机号</button></li>
+                     <li><img src="images/icon-email.png"/><button>绑定邮箱</button></li>
+                     <li><img src="images/icon-weixin.png"/><button class="wechatBind">绑定微信账号</button></li>
+                 </ul>
+             </div>
+         </div>
+     </div>
+</div>
 <div class="modal" id="app-modal" v-show="showModal" @click="hidemodal">
     <div class="preView W800 bg-white" v-show="showPreview" @click="stayshow($event)">
         <div class="H200 baseInfo bg-white-ec paLeft80">
