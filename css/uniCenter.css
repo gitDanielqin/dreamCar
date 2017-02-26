@@ -38,10 +38,12 @@
 .resumeBox input{border: 1px solid #ccc; height: 24px; line-height: 24px; padding-left: 10px; color: #999; box-sizing: border-box;}
 .uni-level input[type="radio"]{margin-left: 20px; margin-right: 7px; vertical-align: middle;}
 .btn-add-major{background: none;}
-.uni-valid-upload li{height: 20px; line-height: 20px; margin-bottom: 20px; }
+.uni-valid-upload li{height: 20px; line-height: 20px; margin-bottom: 14px; }
 .uni-valid-upload span{position: relative;display: inline-block; border-radius: 5px; background: #e4e6e7;padding-left: 10px; vertical-align: middle; margin-right: 20px; width: 140px; cursor: pointer;}
 .uni-valid-upload span i{position: absolute;right: 5px; }
+.uni-valid-upload button{font-size: 12px; background: none; vertical-align: middle;}
 .uni-intro textarea{width: 498px; height: 198px; box-sizing: border-box; border: 1px solid #ccc; padding: 5px 10px; line-height: 26px;}
+.resumeBox .btn-edit{position: absolute;right: 73px; top:29px; cursor: pointer;}
 
 /*底部样式，与首页基本*/
 .bot-nav{display: inline-block;}

@@ -58,11 +58,28 @@ function regisEventBind(){
         $(".login").fadeIn("slow");
     });
     $(".codeReq").click(function(){
+          var objMe=this;
+         $(this).attr("disabled",true);
+         var start=0;
+         var timer = setInterval(function(){
+              start++;
+              if(start==60){
+                   $(objMe).html("获取验证码");
+                   $(objMe).attr("disabled",false);
+                   clearInterval(timer);
+              }
+              $(objMe).html("重新获取 ("+(60-start)+"s)");
+         },1000);
          var emailStr = $(".regis .account").val();
+
          $.post("http://101.37.31.30/easily_xq_WebApi/sys/emailCode?",{"email":emailStr,"type":0},function(data){
            //   var data = JSON.parse(data);
+           clearInterval(timer);
+           $(objMe).html("获取验证码");
+               $(objMe).attr("disabled",false);
               alert(data.info);
-         })
+         });
+
     })
 }
 /*登录输入验证*/

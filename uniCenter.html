@@ -68,40 +68,67 @@
             </li>
         </ul>
         <div class="content W770 fl maL10 maT20" id="app-content">
-            <div class="resumeBox bg-white">
-                <h3 class="fSize18 LH-H30 maB17"><i class="pic-wrapper hd-icon"><img src="images/icon-resume.png"/></i>高校简介</h3>
+            <div class="resumeBox bg-white" v-show="resume.edit">
+                <p class="LH-H88 fSize18 color-gray3" v-show="resume.firstEdit">亲爱的校友，您需要完善高校简介</p>
+                <h3 class="fSize18 LH-H30 maB17" v-show="!resume.firstEdit"><i class="pic-wrapper hd-icon"><img src="images/icon-resume.png"/></i>高校简介</h3>
                 <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校名称</label><input type="text" v-model="resume.uni" class="W298"/></p>
                 <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校类别</label><dropdown placeholder="请选择高校类别" :options="database.classific" v-model="resume.classific" classes="W138"></dropdown></p>
-                <p class="LH-H26 paLeft7 resume-item uni-level"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校性质</label><dropdown placeholder="高校性质" :options="database.unilevel" v-model="resume.level" classes="W138"></dropdown><input type="radio" name="level" />985<input type="radio" name="level" />211</p>
+                <p class="LH-H26 paLeft7 resume-item uni-level"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校性质</label><dropdown placeholder="高校性质" :options="database.unilevel" v-model="resume.level" classes="W138"></dropdown><input type="radio" name="level" value="985" @click="checkExlv"/>985<input type="radio" name="level" value="211" @click="checkExlv"/>211</p>
                 <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>在校人数</label><dropdown placeholder="请选择在校人数" :options="database.amount" v-model="resume.amount" classes="W138"></dropdown></p>
                 <div class="LH26 paLeft7 resume-item clearfix">
                      <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>重点专业</label></p>
                      <ul class="fl">
                           <li v-for="spmajor in resume.specialmajor" class="maB14">
                                <dropdown placeholder="一级学科" :options="majorArr" v-model="spmajor.major" classes="W138 maR10"></dropdown>
-                               <dropdown placeholder="一级学科" :options="submajors(spmajor.major)" v-model="spmajor.submajor" classes="W138"></dropdown>
+                               <dropdown placeholder="二级学科" :options="submajors(spmajor.major)" v-model="spmajor.submajor" classes="W138"></dropdown>
                           </li>
                      </ul>
-                     <p class="fSize12 color-gray6"><button class="color-blueL maL20 btn-add-major">+ 添加</button>（最多可添加5个重点专业）</p>
+                     <p class="fSize12 color-gray6"><button class="color-blueL maL20 btn-add-major" @click="addMajors">+ 添加</button>（最多可添加5个重点专业）</p>
                 </div>
                 <div class="LH26 paLeft7 resume-item clearfix">
                      <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校认证</label></p>
                      <ul class="fl uni-valid-upload color-gray6 fSize12">
-                          <li><span>重新上传营业执照<i class="pic-wrapper"><img src="images/icon-upload.png"/></i></span>（查看之前上传的营业执照）</li>
-                          <li><span>重新上传办学许可证<i class="pic-wrapper"><img src="images/icon-upload.png"/></i></span>（查看之前上传的办学许可证）</li>
+                          <li><span>重新上传营业执照<i class="pic-wrapper"><img src="images/icon-upload.png"/></i></span><button v-show="!resume.firstEdit">（查看之前上传的营业执照）</button></li>
+                          <li><span>重新上传办学许可证<i class="pic-wrapper"><img src="images/icon-upload.png"/></i></span><button v-show="!resume.firstEdit">（查看之前上传的办学许可证）</button></li>
                      </ul>
                 </div>
                 <div class="uni-intro LH26 paLeft7 resume-item clearfix">
                     <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校简介</label></p>
                     <div class="fl">
-                         <textarea class="fl" v-model="resume.intro">{{resume.intro}}</textarea>
+                         <textarea class="fl" v-model="resume.intro"></textarea>
                          <p class="t-right">你还可以输入{{wordscal}}字</p>
                     </div>
                 </div>
                 <div class="t-center">
-                     <button type="button" class="W150 H50 color-white bg-orange3 fSize18 maT26">保存</button>
+                     <button type="button" class="W150 H50 color-white bg-orange3 fSize18 maT26" @click="saveResume">保存</button>
                 </div>
             </div>
+          <div class="resumeBox bg-white pRel" v-show="resume.view">
+               <h3 class="fSize18 LH-H30 maB17"><i class="pic-wrapper hd-icon"><img src="images/icon-resume.png"/></i>高校简介</h3>
+               <div class="paLeft40 paRight40 LH33 fSize14">
+                    <p><label>高校名称：</label>{{resume.uni}}</p>
+                    <p><label>高校类别：</label>{{resume.classific}}</p>
+                    <p><label>高校性质：</label>{{resume.level}}<span v-if="resume.specialLv">（{{resume.specialLv}}）</span></p>
+                    <p><label>在校人数：</label>{{resume.amount}}</p>
+                    <div class="clearfix">
+                         <label class="fl">重点专业：</label>
+                         <ul class="fl LH25 paTop5">
+                              <li v-for="spmajor in resume.specialmajor">
+                                   <span v-if="spmajor!=''&&spmajor.submajor!=''">{{spmajor.major}}-{{spmajor.submajor}}</span>
+                              </li>
+                         </ul>
+                    </div>
+                    <div class="clearfix">
+                         <p class="fl"><label>高校认证：</label></p>
+                         <ul class="fl uni-valid-upload color-gray6 fSize12 paTop5">
+                              <li><span>重新上传营业执照</span><button class="color-blueL">（查看之前上传的营业执照）</button></li>
+                              <li><span>重新上传办学许可证</span><button class="color-blueL">（查看之前上传的办学许可证）</button></li>
+                         </ul>
+                    </div>
+                    <p><label>高校简介：</label>{{resume.intro}}</p>
+               </div>
+               <i class="LH-H30 W30 t-center btn-edit" @click="editSwipe"><img class="v-mid" src="images/icon-edit.png"/></i>
+          </div>
         </div>
 
 

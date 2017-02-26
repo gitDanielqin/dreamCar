@@ -30,11 +30,15 @@ var appCont = new Vue({
               classific:"艺术类",
               amount:"",
               level:"重点",
+              specialLv:"",
               specialmajor:[
                    {major:"艺术",submajor:"行为艺术"},
-                   {major:"艺术",submajor:"人体艺术"},
+                   {major:"艺术",submajor:"行为艺术"}
               ],
-              intro:"世界一流的艺术大学"
+              intro:"世界一流的艺术大学",
+              firstEdit:true,
+              edit:true,
+              view:false
          }
     },
     methods:{
@@ -48,6 +52,26 @@ var appCont = new Vue({
                    }
               }
          },
+         addMajors:function(){
+              if(this.resume.specialmajor.length<5){
+                   this.resume.specialmajor.push({major:"",submajor:""});
+              }else{
+                   return false;
+              }
+
+         },
+         editSwipe:function(){
+              this.resume.firstEdit=false;
+              this.resume.edit=true;
+              this.resume.view=false;
+         },
+         saveResume:function(){
+              this.resume.edit=false;
+              this.resume.view=true;
+         },
+         checkExlv:function(){
+              this.resume.specialLv=$(".uni-level input[type='radio']:checked").val();
+         }
 
     },
     computed:{
@@ -61,6 +85,10 @@ var appCont = new Vue({
          wordscal:function(){
               return (1000-this.resume.intro.length);
          }
+    },
+    updated:function(){
+         selectInitPos();
+         selectEventBind();
     }
 });
 
