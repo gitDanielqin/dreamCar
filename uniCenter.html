@@ -129,6 +129,61 @@
                </div>
                <i class="LH-H30 W30 t-center btn-edit" @click="editSwipe"><img class="v-mid" src="images/icon-edit.png"/></i>
           </div>
+          <div class="uni-require">
+               <div class="ListBox">
+                  <div class="hd LH-H58 bg-white">
+                      <dropdown classes="state" :options="['全部状态','校企合作','招聘会']" v-model="require.state"></dropdown>
+                      <p class="fr fSize14 maR30">我发布过的需求<span class="color-orange2 maL10 maR10">1</span>个</p>
+                  </div>
+               <ul class="info-items">
+                    <li v-for="item in require.items">
+                         <div v-if="item.classic=='校企合作'" class="paLeft29 clearfix H128 pRel">
+                              <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                              <div class="item-block-left fl paTop22 W280 maL20">
+                                  <h2 class="color-blueL fSize18 LH-H30">{{item.major}}</h2>
+                                  <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
+                                  <p>{{item.trainWay}}</p>
+                              </div>
+                              <div class="item-block-right fl fSize14 LH25">
+                                  <p>{{item.uniname}}</p>
+                                  <p>{{item.uniLevel}}</p>
+                                  <p>{{item.date}}</p>
+                              </div>
+                              <div class="operations color-blueL">
+                                   <p><span>修改</span><span>删除</span></p>
+                                   <p><span>刷新</span><span>置顶</span></p>
+                              </div>
+                         </div>
+                         <div v-else-if="item.classic=='招聘会'" class="paLeft29 clearfix H128 pRel">
+                              <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                              <div class="item-block-left fl paTop22 W280 maL20">
+                                  <h2 class="color-blueL fSize18 LH-H30">{{item.major}}</h2>
+                                  <p>{{item.major}}<i class="depart">|</i>{{item.majorScale}}<i class="depart">|</i>{{item.recruitAddr}}</p>
+                                  <p>招聘会时间：{{item.recruitDate}}</p>
+                              </div>
+                              <div class="item-block-right fl fSize14 LH25">
+                                  <p>高校对企要求</p>
+                                  <p>{{item.IncScale}}<i class="depart">|</i>{{item.IncProps}}<i class="depart">|</i>{{item.IncPos}}</p>
+                                  <p>{{item.date}}</p>
+                              </div>
+                              <div class="operations color-blueL">
+                                   <p><span>修改</span><span>删除</span></p>
+                                   <p><span>刷新</span><span>置顶</span></p>
+                              </div>
+                         </div>
+                    </li>
+               </ul>
+                  <ul class="pageBot lis-inline maT30 fr fSize14">
+                      <li class="side-page first-page">首页</li>
+                      <li class="prev side-page">上一页</li>
+                      <li class="page-index">1</li>
+                      <li class="page-index">2</li>
+                      <li class="page-index">3</li>
+                      <li class="next side-page">下一页</li>
+                      <li class="side-page last-page">尾页</li>
+                  </ul>
+              </div>
+          </div>
         </div>
 
 
