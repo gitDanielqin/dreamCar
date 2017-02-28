@@ -44,12 +44,8 @@
         </div>
         <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3 bg-white">
             <li class="on" paneid="resumeBox"><i><img src="images/icon-resume.png"/></i>高校简介</li>
-            <li paneid="classBox"><i><img src="images/icon-study.png"/></i>高校需求</li>
-            <li class="myCollect" paneid="collec-study"><i><img src="images/icon-collect.png"/></i>高校收藏
-                <div class="sub-li LH37">
-                    <p class="on" paneid="collec-study">校企合作消息</p>
-                    <p paneid="collec-job">招聘会合作消息</p>
-                </div>
+            <li paneid="requireBox"><i><img src="images/icon-study.png"/></i>高校需求</li>
+            <li class="myCollect" paneid="collectBox"><i><img src="images/icon-collect.png"/></i>高校收藏
             </li>
             <li paneid="jobBox"><i><img src="images/icon-apply.png"/></i>消息中心
                 <div class="sub-li LH37">
@@ -68,7 +64,8 @@
             </li>
         </ul>
         <div class="content W770 fl maL10 maT20" id="app-content">
-            <div class="resumeBox bg-white" v-show="resume.edit">
+             <div class="resumeBox" style="display:none">
+              <div class="resumeCont bg-white" v-show="resume.edit">
                 <p class="LH-H88 fSize18 color-gray3" v-show="resume.firstEdit">亲爱的校友，您需要完善高校简介</p>
                 <h3 class="fSize18 LH-H30 maB17" v-show="!resume.firstEdit"><i class="pic-wrapper hd-icon"><img src="images/icon-resume.png"/></i>高校简介</h3>
                 <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校名称</label><input type="text" v-model="resume.uni" class="W298"/></p>
@@ -103,7 +100,7 @@
                      <button type="button" class="W150 H50 color-white bg-orange3 fSize18 maT26" @click="saveResume">保存</button>
                 </div>
             </div>
-          <div class="resumeBox bg-white pRel" v-show="resume.view">
+              <div class="resumeCont bg-white pRel" v-show="resume.view">
                <h3 class="fSize18 LH-H30 maB17"><i class="pic-wrapper hd-icon"><img src="images/icon-resume.png"/></i>高校简介</h3>
                <div class="paLeft40 paRight40 LH33 fSize14">
                     <p><label>高校名称：</label>{{resume.uni}}</p>
@@ -129,14 +126,15 @@
                </div>
                <i class="LH-H30 W30 t-center btn-edit" @click="editSwipe"><img class="v-mid" src="images/icon-edit.png"/></i>
           </div>
-          <div class="uni-require">
+            </div>
+          <div class="uni-require requireBox" style="display:none">
                <div class="ListBox">
                   <div class="hd LH-H58 bg-white">
                       <dropdown classes="state" :options="['全部状态','校企合作','招聘会']" v-model="require.state"></dropdown>
-                      <p class="fr fSize14 maR30">我发布过的需求<span class="color-orange2 maL10 maR10">1</span>个</p>
+                      <p class="fr fSize14 maR30">我发布过的需求<span class="color-orange2 maL10 maR10">{{require.items.length}}</span>个</p>
                   </div>
                <ul class="info-items">
-                    <li v-for="item in require.items">
+                    <li v-for="item in require.items" :name="item.classic">
                          <div v-if="item.classic=='校企合作'" class="paLeft29 clearfix H128 pRel">
                               <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                               <div class="item-block-left fl paTop22 W280 maL20">
@@ -150,7 +148,7 @@
                                   <p>{{item.date}}</p>
                               </div>
                               <div class="operations color-blueL">
-                                   <p><span>修改</span><span>删除</span></p>
+                                   <p><span>修改</span><span @click="delItem(item)">删除</span></p>
                                    <p><span>刷新</span><span>置顶</span></p>
                               </div>
                          </div>
@@ -167,8 +165,47 @@
                                   <p>{{item.date}}</p>
                               </div>
                               <div class="operations color-blueL">
-                                   <p><span>修改</span><span>删除</span></p>
+                                   <p><span>修改</span><span @click="delItem(item)">删除</span></p>
                                    <p><span>刷新</span><span>置顶</span></p>
+                              </div>
+                         </div>
+                    </li>
+               </ul>
+                  <ul class="pageBot lis-inline maT30 fr fSize14">
+                      <li class="side-page first-page">首页</li>
+                      <li class="prev side-page">上一页</li>
+                      <li class="page-index">1</li>
+                      <li class="page-index">2</li>
+                      <li class="page-index">3</li>
+                      <li class="next side-page">下一页</li>
+                      <li class="side-page last-page">尾页</li>
+                  </ul>
+              </div>
+          </div>
+          <div class="uni-require collectBox">
+               <div class="ListBox">
+                  <div class="hd LH-H58 bg-white">
+                      <dropdown classes="state" :options="['全部状态','近一个星期','近一个月','近三个月']" v-model="collect.state"></dropdown>
+                      <p class="fr fSize14 maR30">我发布过的需求<span class="color-orange2 maL10 maR10">{{collect.items.length}}</span>个</p>
+                  </div>
+               <ul class="info-items">
+                    <li v-for="item in collect.items" :name="item.classic">
+                         <div class="paLeft29 clearfix H128 pRel">
+                              <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                              <div class="item-block-left fl paTop22 W280 maL20">
+                                  <h2 class="color-blueL fSize18 LH-H30">{{item.pos}}</h2>
+                                  <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.uniLevel}}</p>
+                                  <p>{{item.uniApply}}</p>
+                                  <p>{{item.date}} {{item.time}}</p>
+                              </div>
+                              <div class="item-block-right fl fSize14 LH25">
+                                  <p>{{item.IncName}}</p>
+                                  <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
+                                  <p>{{item.publicDate}}</p>
+                                  <div class="collect-btn">
+                                        <button class="color-blueL">取消收藏</button>
+                                        <button class="color-orange-f7">申请合作</button>
+                                  </div>
                               </div>
                          </div>
                     </li>

@@ -1,3 +1,4 @@
+
 var appPorto = new Vue({
     el: "#app-porto",
     data: {
@@ -37,7 +38,7 @@ var appCont = new Vue({
               ],
               intro:"世界一流的艺术大学",
               firstEdit:true,
-              edit:false,
+              edit:true,
               view:false
          },
          require:{
@@ -45,9 +46,32 @@ var appCont = new Vue({
               items:[
                    {classic:"校企合作",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11"},
                    {classic:"校企合作",major:"通信工程",IncProps:"国有企业",IncScale:"600人以上",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11"},
-                   {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},   
-              ]
+                   {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},
+              ],
+              showCombi:true,
+              showRecruit:true
+         },
+         collect:{
+              state:"全部状态",
+              items:[
+                   {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"},
+                   {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"},
+                   {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"}
+              ],
          }
+    },
+    watch:{
+      "require.state":function(curval,oldval){
+           if(curval=="全部状态"){
+                $(".info-items li").show();
+           }else if(curval=="校企合作"){
+                $(".info-items li[name='校企合作']").show();
+                $(".info-items li[name='招聘会']").hide();
+           }else if(curval=="招聘会"){
+                $(".info-items li[name='校企合作']").hide();
+                $(".info-items li[name='招聘会']").show();
+           }
+      }
     },
     methods:{
          submajors:function(major){
@@ -79,6 +103,9 @@ var appCont = new Vue({
          },
          checkExlv:function(){
               this.resume.specialLv=$(".uni-level input[type='radio']:checked").val();
+         },
+         delItem:function(item){
+              this.require.items.remove(item);
          }
 
     },
@@ -149,4 +176,27 @@ function selectEventBind(){
     $("body").bind("click",function(){
         $(".selectee ul").hide();
     })
+}
+function _init() {
+     navEventBind();
+}
+_init();
+function navEventBind(){
+    $(".sideBox>li").bind("click",function(){
+        $(".sideBox").children("li.on").removeClass("on");
+        $(this).addClass("on");
+        $(".sideBox .sub-li").hide();
+        if($(this).find(".sub-li").length>0){
+            $(this).find(".sub-li").show();
+            $(this).find(".sub-li p").unbind("click").bind("click",function(){
+                $(".sideBox .sub-li .on").removeClass("on");
+                $(this).addClass("on");
+                $(".content").children().hide();
+                $(".content").children("."+$(this).attr("paneid")).show();
+                return false;
+            });
+        }
+        $(".content").children().hide();
+        $(".content").children("."+$(this).attr("paneid")).show();
+    });
 }
