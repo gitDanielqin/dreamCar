@@ -45,21 +45,36 @@
 .uni-intro textarea{width: 498px; height: 198px; box-sizing: border-box; border: 1px solid #ccc; padding: 5px 10px; line-height: 26px;}
 .resumeCont .btn-edit{position: absolute;right: 73px; top:29px; cursor: pointer;}
 
+.state{line-height: 38px;}
 .state input{width:98px; margin-left: 29px; height: 38px; line-height: 38px;}
 .ListBox .hd{border: 1px solid #ccc;}
 .info-items{height:410px;}
-.info-items li{height: 128px; margin-top: 10px; border: 1px solid #ccc; background: white;}
-.collectBox .info-items li{height:148px;}
+.info-items>li{height: 128px; margin-top: 10px; border: 1px solid #ccc; background: white;}
+.collectBox .info-items>li{height:148px;}
+.uni-message .info-items>li{height:148px;}
 .depart{margin:0 12px; }
 .info-items p{line-height: 28px; font-size: 14px;}
 .item-block-right{padding: 18px; background: url("../images/dashline.png") no-repeat left 26px;}
 .item-block-right p{color: #333;}
+.info-items .item-date{font-size: 12px; color: #666;}
 
 .operations{position: absolute;top: 10px; right: 20px;}
 .operations p{line-height: 50px;}
 .operations span{margin-left: 24px; cursor: pointer;}
 
 .collect-btn button{margin-right: 35px; background: none; font-size: 14px;}
+/*消息中心*/
+.message-btn button{margin-right: 40px; background: none; font-size: 14px;}
+.contact-box{width: 160px; height: 70px; background: url("../images/contact-block.png") no-repeat 0 0;padding: 19px 0 0 11px;
+position: absolute;  display:none;}
+.message-btn .contact-box{left: -17px; top: 30px;}
+.msg-apply .contact-box{left: 153px; top: 100px;}
+.contact-box p{font-size: 12px; color: white;line-height: 21px;}
+.state-icon{height: 20px; display:block;background: url("../images/icon-apply-state.png") no-repeat center center;}
+.state-line li{width: 70px; text-align: center; line-height: 34px;}
+.state-line li.on{color:#f7a14a;}
+.state-line li.on .state-icon{background-image: url("../images/icon-apply-state1.png");}
+.state-line{background: url("../images/msg-line.png") no-repeat 33px 8px;}
 
 .pageBot li{margin-left: 10px; background: #333; color: #fff;line-height: 30px; height: 30px; text-align: center;}
 .pageBot li.side-page{width:60px;}

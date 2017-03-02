@@ -47,11 +47,10 @@
             <li paneid="requireBox"><i><img src="images/icon-study.png"/></i>高校需求</li>
             <li class="myCollect" paneid="collectBox"><i><img src="images/icon-collect.png"/></i>高校收藏
             </li>
-            <li paneid="jobBox"><i><img src="images/icon-apply.png"/></i>消息中心
+            <li paneid="combi-msg"><i><img src="images/icon-apply.png"/></i>消息中心
                 <div class="sub-li LH37">
-                    <p class="on" paneid="collec-study">学习收藏</p>
-                    <p paneid="collec-job">职位收藏</p>
-                    <p paneid="collec-recruitment">招聘会收藏</p>
+                    <p class="on" paneid="combi-msg">校企合作消息</p>
+                    <p paneid="recruit-msg">招聘会合作消息</p>
                 </div>
             </li>
             <li paneid="jobBox"><i><img src="images/icon-apply.png"/></i>VIP中心</li>
@@ -64,192 +63,309 @@
             </li>
         </ul>
         <div class="content W770 fl maL10 maT20" id="app-content">
-             <div class="resumeBox" style="display:none">
-              <div class="resumeCont bg-white" v-show="resume.edit">
-                <p class="LH-H88 fSize18 color-gray3" v-show="resume.firstEdit">亲爱的校友，您需要完善高校简介</p>
-                <h3 class="fSize18 LH-H30 maB17" v-show="!resume.firstEdit"><i class="pic-wrapper hd-icon"><img src="images/icon-resume.png"/></i>高校简介</h3>
-                <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校名称</label><input type="text" v-model="resume.uni" class="W298"/></p>
-                <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校类别</label><dropdown placeholder="请选择高校类别" :options="database.classific" v-model="resume.classific" classes="W138"></dropdown></p>
-                <p class="LH-H26 paLeft7 resume-item uni-level"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校性质</label><dropdown placeholder="高校性质" :options="database.unilevel" v-model="resume.level" classes="W138"></dropdown><input type="radio" name="level" value="985" @click="checkExlv"/>985<input type="radio" name="level" value="211" @click="checkExlv"/>211</p>
-                <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>在校人数</label><dropdown placeholder="请选择在校人数" :options="database.amount" v-model="resume.amount" classes="W138"></dropdown></p>
-                <div class="LH26 paLeft7 resume-item clearfix">
-                     <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>重点专业</label></p>
-                     <ul class="fl">
-                          <li v-for="spmajor in resume.specialmajor" class="maB14">
-                               <dropdown placeholder="一级学科" :options="majorArr" v-model="spmajor.major" classes="W138 maR10"></dropdown>
-                               <dropdown placeholder="二级学科" :options="submajors(spmajor.major)" v-model="spmajor.submajor" classes="W138"></dropdown>
-                          </li>
-                     </ul>
-                     <p class="fSize12 color-gray6"><button class="color-blueL maL20 btn-add-major" @click="addMajors">+ 添加</button>（最多可添加5个重点专业）</p>
-                </div>
-                <div class="LH26 paLeft7 resume-item clearfix">
-                     <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校认证</label></p>
-                     <ul class="fl uni-valid-upload color-gray6 fSize12">
-                          <li><span>重新上传营业执照<i class="pic-wrapper"><img src="images/icon-upload.png"/></i></span><button v-show="!resume.firstEdit">（查看之前上传的营业执照）</button></li>
-                          <li><span>重新上传办学许可证<i class="pic-wrapper"><img src="images/icon-upload.png"/></i></span><button v-show="!resume.firstEdit">（查看之前上传的办学许可证）</button></li>
-                     </ul>
-                </div>
-                <div class="uni-intro LH26 paLeft7 resume-item clearfix">
-                    <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校简介</label></p>
-                    <div class="fl">
-                         <textarea class="fl" v-model="resume.intro"></textarea>
-                         <p class="t-right">你还可以输入{{wordscal}}字</p>
+            <div class="resumeBox" style="display:none">
+                <div class="resumeCont bg-white" v-show="resume.edit">
+                    <p class="LH-H88 fSize18 color-gray3" v-show="resume.firstEdit">亲爱的校友，您需要完善高校简介</p>
+                    <h3 class="fSize18 LH-H30 maB17" v-show="!resume.firstEdit"><i class="pic-wrapper hd-icon"><img src="images/icon-resume.png"/></i>高校简介</h3>
+                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校名称</label><input type="text" v-model="resume.uni" class="W298" /></p>
+                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校类别</label>
+                        <dropdown placeholder="请选择高校类别" :options="database.classific" v-model="resume.classific" classes="W138"></dropdown>
+                    </p>
+                    <p class="LH-H26 paLeft7 resume-item uni-level"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校性质</label>
+                        <dropdown placeholder="高校性质" :options="database.unilevel" v-model="resume.level" classes="W138"></dropdown><input type="radio" name="level" value="985" @click="checkExlv" />985<input type="radio" name="level" value="211" @click="checkExlv" />211</p>
+                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>在校人数</label>
+                        <dropdown placeholder="请选择在校人数" :options="database.amount" v-model="resume.amount" classes="W138"></dropdown>
+                    </p>
+                    <div class="LH26 paLeft7 resume-item clearfix">
+                        <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>重点专业</label></p>
+                        <ul class="fl">
+                            <li v-for="spmajor in resume.specialmajor" class="maB14">
+                                <dropdown placeholder="一级学科" :options="majorArr" v-model="spmajor.major" classes="W138 maR10"></dropdown>
+                                <dropdown placeholder="二级学科" :options="submajors(spmajor.major)" v-model="spmajor.submajor" classes="W138"></dropdown>
+                            </li>
+                        </ul>
+                        <p class="fSize12 color-gray6"><button class="color-blueL maL20 btn-add-major" @click="addMajors">+ 添加</button>（最多可添加5个重点专业）</p>
+                    </div>
+                    <div class="LH26 paLeft7 resume-item clearfix">
+                        <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校认证</label></p>
+                        <ul class="fl uni-valid-upload color-gray6 fSize12">
+                            <li><span>重新上传营业执照<i class="pic-wrapper"><img src="images/icon-upload.png"/></i></span><button v-show="!resume.firstEdit">（查看之前上传的营业执照）</button></li>
+                            <li><span>重新上传办学许可证<i class="pic-wrapper"><img src="images/icon-upload.png"/></i></span><button v-show="!resume.firstEdit">（查看之前上传的办学许可证）</button></li>
+                        </ul>
+                    </div>
+                    <div class="uni-intro LH26 paLeft7 resume-item clearfix">
+                        <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校简介</label></p>
+                        <div class="fl">
+                            <textarea class="fl" v-model="resume.intro"></textarea>
+                            <p class="t-right">你还可以输入{{wordscal}}字</p>
+                        </div>
+                    </div>
+                    <div class="t-center">
+                        <button type="button" class="W150 H50 color-white bg-orange3 fSize18 maT26" @click="saveResume">保存</button>
                     </div>
                 </div>
-                <div class="t-center">
-                     <button type="button" class="W150 H50 color-white bg-orange3 fSize18 maT26" @click="saveResume">保存</button>
+                <div class="resumeCont bg-white pRel" v-show="resume.view">
+                    <h3 class="fSize18 LH-H30 maB17"><i class="pic-wrapper hd-icon"><img src="images/icon-resume.png"/></i>高校简介</h3>
+                    <div class="paLeft40 paRight40 LH33 fSize14">
+                        <p><label>高校名称：</label>{{resume.uni}}</p>
+                        <p><label>高校类别：</label>{{resume.classific}}</p>
+                        <p><label>高校性质：</label>{{resume.level}}<span v-if="resume.specialLv">（{{resume.specialLv}}）</span></p>
+                        <p><label>在校人数：</label>{{resume.amount}}</p>
+                        <div class="clearfix">
+                            <label class="fl">重点专业：</label>
+                            <ul class="fl LH25 paTop5">
+                                <li v-for="spmajor in resume.specialmajor">
+                                    <span v-if="spmajor!=''&&spmajor.submajor!=''">{{spmajor.major}}-{{spmajor.submajor}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="clearfix">
+                            <p class="fl"><label>高校认证：</label></p>
+                            <ul class="fl uni-valid-upload color-gray6 fSize12 paTop5">
+                                <li><span>重新上传营业执照</span><button class="color-blueL">（查看之前上传的营业执照）</button></li>
+                                <li><span>重新上传办学许可证</span><button class="color-blueL">（查看之前上传的办学许可证）</button></li>
+                            </ul>
+                        </div>
+                        <p><label>高校简介：</label>{{resume.intro}}</p>
+                    </div>
+                    <i class="LH-H30 W30 t-center btn-edit" @click="editSwipe"><img class="v-mid" src="images/icon-edit.png"/></i>
                 </div>
             </div>
-              <div class="resumeCont bg-white pRel" v-show="resume.view">
-               <h3 class="fSize18 LH-H30 maB17"><i class="pic-wrapper hd-icon"><img src="images/icon-resume.png"/></i>高校简介</h3>
-               <div class="paLeft40 paRight40 LH33 fSize14">
-                    <p><label>高校名称：</label>{{resume.uni}}</p>
-                    <p><label>高校类别：</label>{{resume.classific}}</p>
-                    <p><label>高校性质：</label>{{resume.level}}<span v-if="resume.specialLv">（{{resume.specialLv}}）</span></p>
-                    <p><label>在校人数：</label>{{resume.amount}}</p>
-                    <div class="clearfix">
-                         <label class="fl">重点专业：</label>
-                         <ul class="fl LH25 paTop5">
-                              <li v-for="spmajor in resume.specialmajor">
-                                   <span v-if="spmajor!=''&&spmajor.submajor!=''">{{spmajor.major}}-{{spmajor.submajor}}</span>
-                              </li>
-                         </ul>
+            <div class="uni-require requireBox" style="display:none">
+                <div class="ListBox">
+                    <div class="hd LH-H58 bg-white">
+                        <dropdown classes="state" :options="['全部状态','校企合作','招聘会']" v-model="require.state"></dropdown>
+                        <p class="fr fSize14 maR30">我发布过的需求<span class="color-orange2 maL10 maR10">{{require.items.length}}</span>个</p>
                     </div>
-                    <div class="clearfix">
-                         <p class="fl"><label>高校认证：</label></p>
-                         <ul class="fl uni-valid-upload color-gray6 fSize12 paTop5">
-                              <li><span>重新上传营业执照</span><button class="color-blueL">（查看之前上传的营业执照）</button></li>
-                              <li><span>重新上传办学许可证</span><button class="color-blueL">（查看之前上传的办学许可证）</button></li>
-                         </ul>
-                    </div>
-                    <p><label>高校简介：</label>{{resume.intro}}</p>
-               </div>
-               <i class="LH-H30 W30 t-center btn-edit" @click="editSwipe"><img class="v-mid" src="images/icon-edit.png"/></i>
-          </div>
+                    <ul class="info-items">
+                        <li v-for="item in require.items" :name="item.classic">
+                            <div v-if="item.classic=='校企合作'" class="paLeft29 clearfix H128 pRel">
+                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                <div class="item-block-left fl paTop22 W280 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30">{{item.major}}</h2>
+                                    <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
+                                    <p>{{item.trainWay}}</p>
+                                </div>
+                                <div class="item-block-right fl fSize14 LH25">
+                                    <p>{{item.uniname}}</p>
+                                    <p>{{item.uniLevel}}</p>
+                                    <p>{{item.date}}</p>
+                                </div>
+                                <div class="operations color-blueL">
+                                    <p><span>修改</span><span @click="delItem(item)">删除</span></p>
+                                    <p><span>刷新</span><span>置顶</span></p>
+                                </div>
+                            </div>
+                            <div v-else-if="item.classic=='招聘会'" class="paLeft29 clearfix H128 pRel">
+                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                <div class="item-block-left fl paTop22 W280 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30">{{item.major}}</h2>
+                                    <p>{{item.major}}<i class="depart">|</i>{{item.majorScale}}<i class="depart">|</i>{{item.recruitAddr}}</p>
+                                    <p>招聘会时间：{{item.recruitDate}}</p>
+                                </div>
+                                <div class="item-block-right fl fSize14 LH25">
+                                    <p>高校对企要求</p>
+                                    <p>{{item.IncScale}}<i class="depart">|</i>{{item.IncProps}}<i class="depart">|</i>{{item.IncPos}}</p>
+                                    <p>{{item.date}}</p>
+                                </div>
+                                <div class="operations color-blueL">
+                                    <p><span>修改</span><span @click="delItem(item)">删除</span></p>
+                                    <p><span>刷新</span><span>置顶</span></p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="pageBot lis-inline maT30 fr fSize14">
+                        <li class="side-page first-page">首页</li>
+                        <li class="prev side-page">上一页</li>
+                        <li class="page-index">1</li>
+                        <li class="page-index">2</li>
+                        <li class="page-index">3</li>
+                        <li class="next side-page">下一页</li>
+                        <li class="side-page last-page">尾页</li>
+                    </ul>
+                </div>
             </div>
-          <div class="uni-require requireBox" style="display:none">
-               <div class="ListBox">
-                  <div class="hd LH-H58 bg-white">
-                      <dropdown classes="state" :options="['全部状态','校企合作','招聘会']" v-model="require.state"></dropdown>
-                      <p class="fr fSize14 maR30">我发布过的需求<span class="color-orange2 maL10 maR10">{{require.items.length}}</span>个</p>
-                  </div>
-               <ul class="info-items">
-                    <li v-for="item in require.items" :name="item.classic">
-                         <div v-if="item.classic=='校企合作'" class="paLeft29 clearfix H128 pRel">
-                              <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                              <div class="item-block-left fl paTop22 W280 maL20">
-                                  <h2 class="color-blueL fSize18 LH-H30">{{item.major}}</h2>
-                                  <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
-                                  <p>{{item.trainWay}}</p>
-                              </div>
-                              <div class="item-block-right fl fSize14 LH25">
-                                  <p>{{item.uniname}}</p>
-                                  <p>{{item.uniLevel}}</p>
-                                  <p>{{item.date}}</p>
-                              </div>
-                              <div class="operations color-blueL">
-                                   <p><span>修改</span><span @click="delItem(item)">删除</span></p>
-                                   <p><span>刷新</span><span>置顶</span></p>
-                              </div>
-                         </div>
-                         <div v-else-if="item.classic=='招聘会'" class="paLeft29 clearfix H128 pRel">
-                              <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                              <div class="item-block-left fl paTop22 W280 maL20">
-                                  <h2 class="color-blueL fSize18 LH-H30">{{item.major}}</h2>
-                                  <p>{{item.major}}<i class="depart">|</i>{{item.majorScale}}<i class="depart">|</i>{{item.recruitAddr}}</p>
-                                  <p>招聘会时间：{{item.recruitDate}}</p>
-                              </div>
-                              <div class="item-block-right fl fSize14 LH25">
-                                  <p>高校对企要求</p>
-                                  <p>{{item.IncScale}}<i class="depart">|</i>{{item.IncProps}}<i class="depart">|</i>{{item.IncPos}}</p>
-                                  <p>{{item.date}}</p>
-                              </div>
-                              <div class="operations color-blueL">
-                                   <p><span>修改</span><span @click="delItem(item)">删除</span></p>
-                                   <p><span>刷新</span><span>置顶</span></p>
-                              </div>
-                         </div>
-                    </li>
-               </ul>
-                  <ul class="pageBot lis-inline maT30 fr fSize14">
-                      <li class="side-page first-page">首页</li>
-                      <li class="prev side-page">上一页</li>
-                      <li class="page-index">1</li>
-                      <li class="page-index">2</li>
-                      <li class="page-index">3</li>
-                      <li class="next side-page">下一页</li>
-                      <li class="side-page last-page">尾页</li>
-                  </ul>
-              </div>
-          </div>
-          <div class="uni-require collectBox">
-               <div class="ListBox">
-                  <div class="hd LH-H58 bg-white">
-                      <dropdown classes="state" :options="['全部状态','近一个星期','近一个月','近三个月']" v-model="collect.state"></dropdown>
-                      <p class="fr fSize14 maR30">我发布过的需求<span class="color-orange2 maL10 maR10">{{collect.items.length}}</span>个</p>
-                  </div>
-               <ul class="info-items">
-                    <li v-for="item in collect.items" :name="item.classic">
-                         <div class="paLeft29 clearfix H128 pRel">
-                              <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                              <div class="item-block-left fl paTop22 W280 maL20">
-                                  <h2 class="color-blueL fSize18 LH-H30">{{item.pos}}</h2>
-                                  <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.uniLevel}}</p>
-                                  <p>{{item.uniApply}}</p>
-                                  <p>{{item.date}} {{item.time}}</p>
-                              </div>
-                              <div class="item-block-right fl fSize14 LH25">
-                                  <p>{{item.IncName}}</p>
-                                  <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
-                                  <p>{{item.publicDate}}</p>
-                                  <div class="collect-btn">
+            <div class="uni-collect collectBox" style="display:none">
+                <div class="ListBox">
+                    <div class="hd LH-H58 bg-white">
+                        <dropdown classes="state" :options="['全部状态','近一个星期','近一个月','近三个月']" v-model="collect.state"></dropdown>
+                        <p class="fr fSize14 maR30">我发布过的需求<span class="color-orange2 maL10 maR10">{{collect.items.length}}</span>个</p>
+                    </div>
+                    <ul class="info-items">
+                        <li v-for="item in collect.items" :name="item.classic">
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                <div class="item-block-left fl paTop22 W280 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30">{{item.pos}}</h2>
+                                    <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.uniLevel}}</p>
+                                    <p>{{item.uniApply}}</p>
+                                    <p class="item-date">{{item.date}}</span> {{item.time}}</p>
+                                </div>
+                                <div class="item-block-right fl fSize14 LH25">
+                                    <p>{{item.IncName}}</p>
+                                    <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
+                                    <p class="pubdate">{{item.publicDate}}</p>
+                                    <div class="collect-btn">
                                         <button class="color-blueL">取消收藏</button>
                                         <button class="color-orange-f7">申请合作</button>
-                                  </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="pageBot lis-inline maT30 fr fSize14">
+                        <li class="side-page first-page">首页</li>
+                        <li class="prev side-page">上一页</li>
+                        <li class="page-index">1</li>
+                        <li class="page-index">2</li>
+                        <li class="page-index">3</li>
+                        <li class="next side-page">下一页</li>
+                        <li class="side-page last-page">尾页</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uni-message combi-msg" style="display:none">
+                <div class="ListBox">
+                    <div class="hd LH-H58 bg-white">
+                        <dropdown classes="state" :options="['全部状态','发出的邀请','收到的邀请']" v-model="message.combi.state"></dropdown>
+                        <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{combimsg}}</span>个</p>
+                    </div>
+                    <ul class="info-items">
+                        <li v-for="item in message.combi.items" :name="item.code">
+                            <template v-if="item.code=='01'">
+                              <div class="paLeft29 clearfix H128 pRel">
+                                   <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                   <div class="item-block-left fl paTop22 W280 maL20">
+                                       <h2 class="color-blueL fSize18 LH-H30">{{item.pos}}</h2>
+                                       <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.uniLevel}}</p>
+                                       <p>{{item.uniApply}}</p>
+                                       <p class="item-date">{{item.date}}</span> {{item.time}}</p>
+                                   </div>
+                                   <div class="item-block-right fl fSize14 LH25">
+                                       <p>{{item.IncName}}</p>
+                                       <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
+                                       <div class="message-btn LH-H35 pRel">
+                                             <button class="color-orange-f7 to-contact">待沟通</button>
+                                             <button class="color-blueL">同意</button>
+                                             <button class="color-red">不同意</button>
+                                             <div class="contact-box">
+                                                  <p>企业联系人：<span>{{item.contactpep}}</span></p>
+                                                  <p>联系方式：<span>{{item.contactway}}</span></p>
+                                             </div>
+                                       </div>
+                                   </div>
                               </div>
-                         </div>
-                    </li>
-               </ul>
-                  <ul class="pageBot lis-inline maT30 fr fSize14">
-                      <li class="side-page first-page">首页</li>
-                      <li class="prev side-page">上一页</li>
-                      <li class="page-index">1</li>
-                      <li class="page-index">2</li>
-                      <li class="page-index">3</li>
-                      <li class="next side-page">下一页</li>
-                      <li class="side-page last-page">尾页</li>
-                  </ul>
-              </div>
-          </div>
+                         </template>
+                            <template v-else>
+                              <div class="paLeft29 clearfix H128 pRel msg-apply">
+                                   <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                   <div class="item-block-left fl paTop22 W280 maL20">
+                                       <h2 class="color-blueL fSize18 LH-H30">{{item.major}}</h2>
+                                       <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
+                                       <p>{{item.trainWay}}</p>
+                                       <p class="item-date">{{item.date}}</span> {{item.time}}</p>
+                                   </div>
+                                   <div class="item-block-right fl fSize14 LH25 pRel">
+                                       <p class="t-right">{{item.IncName}}</p>
+                                       <ul class="state-line lis-inline maT3">
+                                             <li :class="{on:item.applystate=='01'}"><i class="state-icon"></i>已发出</li>
+                                             <li :class="{on:item.applystate=='02'}"><i class="state-icon"></i>已查看</li>
+                                             <li :class="{on:(item.applystate=='03'),'to-contact':true}"><i class="state-icon"></i>待沟通</li>
+                                             <li :class="{on:item.applystate=='04'}"><i class="state-icon"></i>反馈结果</li>
+                                       </ul>
+                                       <div class="contact-box">
+                                            <p>企业联系人：<span>{{item.contactpep}}</span></p>
+                                            <p>联系方式：<span>{{item.contactway}}</span></p>
+                                       </div>
+                                   </div>
+                              </div>
+                         </template>
+                        </li>
+                    </ul>
+                    <ul class="pageBot lis-inline maT30 fr fSize14">
+                        <li class="side-page first-page">首页</li>
+                        <li class="prev side-page">上一页</li>
+                        <li class="page-index">1</li>
+                        <li class="page-index">2</li>
+                        <li class="page-index">3</li>
+                        <li class="next side-page">下一页</li>
+                        <li class="side-page last-page">尾页</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uni-message recruit-msg">
+                <div class="ListBox">
+                    <div class="hd LH-H58 bg-white">
+                        <dropdown classes="state" :options="['全部状态','发出的邀请','收到的邀请']" v-model="message.combi.state"></dropdown>
+                        <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{message.recruit.items.length}}</span>个</p>
+                    </div>
+                    <ul class="info-items">
+                        <li v-for="item in message.recruit.items">
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                <div class="item-block-left fl paTop22 W280 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30">{{item.major}}</h2>
+                                    <p>{{item.salary}}<i class="depart">|</i>{{item.posAmount}}<i class="depart">|</i>{{item.qualific}}</p>
+                                    <p>公司地址：{{item.IncAddress.city}}{{item.IncAddress.district}}</p>
+                                    <p class="item-date">{{item.date}}</span> {{item.time}}</p>
+                                </div>
+                                <div class="item-block-right fl fSize14 LH25">
+                                    <p>{{item.IncName}}</p>
+                                    <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
+                                    <div class="message-btn LH-H35 pRel">
+                                        <button class="color-orange-f7 to-contact">待沟通</button>
+                                        <button class="color-blueL">同意</button>
+                                        <button class="color-red">不同意</button>
+                                        <div class="contact-box">
+                                            <p>企业联系人：<span>{{item.contactpep}}</span></p>
+                                            <p>联系方式：<span>{{item.contactway}}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="pageBot lis-inline maT30 fr fSize14">
+                        <li class="side-page first-page">首页</li>
+                        <li class="prev side-page">上一页</li>
+                        <li class="page-index">1</li>
+                        <li class="page-index">2</li>
+                        <li class="page-index">3</li>
+                        <li class="next side-page">下一页</li>
+                        <li class="side-page last-page">尾页</li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
 
     </div>
     <div class="bot paTop8 t-center bot-account">
-         <div class="inner clearfix">
-              <div class="fl">
+        <div class="inner clearfix">
+            <div class="fl">
                 <ul class="lis-inline bot-nav color-gray79 LH-H34 fSize12">
-                     <li><a href="footer-page.html?descript">关于校企</a>-</li>
-                     <li><a href="footer-page.html?coop">网站合作</a>-</li>
-                     <li><a href="footer-page.html?help">帮助中心</a>-</li>
-                     <li><a href="footer-page.html?employ">招贤纳士</a>-</li>
-                     <li><a href="footer-page.html">友情链接</a>-</li>
-                     <li><a href="footer-page.html">教育网</a></li>
+                    <li><a href="footer-page.html?descript">关于校企</a>-</li>
+                    <li><a href="footer-page.html?coop">网站合作</a>-</li>
+                    <li><a href="footer-page.html?help">帮助中心</a>-</li>
+                    <li><a href="footer-page.html?employ">招贤纳士</a>-</li>
+                    <li><a href="footer-page.html">友情链接</a>-</li>
+                    <li><a href="footer-page.html">教育网</a></li>
                 </ul>
                 <ul class="lis-inline fSize12">
-                      <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-phone2.png"/></i>电话：152 6706 8921</li>
-                      <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-gps.png"/></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
-                      <li><i class="pic-wrapper maR15"><img src="images/icon-email2.png"/></i>邮箱：xiaoqiztc@yeah.net</li>
+                    <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-phone2.png"/></i>电话：152 6706 8921</li>
+                    <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-gps.png"/></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
+                    <li><i class="pic-wrapper maR15"><img src="images/icon-email2.png"/></i>邮箱：xiaoqiztc@yeah.net</li>
                 </ul>
                 <p class="fSize14 t-center LH-H40 color-gray79">©2016 XxiaoQi 京ICP备456123789号-2 京公网安备12465789123号</p>
-              </div>
-              <div class="fr">
+            </div>
+            <div class="fr">
                 <p class="fSize14 W15 barcode-text">关注我们</p>
                 <div class="pic-wrapper maL16">
-                      <img src="images/barcode.png"/>
+                    <img src="images/barcode.png" />
                 </div>
-              </div>
-         </div>
+            </div>
+        </div>
     </div>
     <script src="js/jquery-3.1.0.min.js"></script>
     <script src="js/vue.js"></script>

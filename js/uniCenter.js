@@ -24,7 +24,7 @@ var appCont = new Vue({
                    {major:"艺术",submajor:["行为艺术","人体艺术"]},
                    {major:"信息技术",submajor:["计算机科学","通信工程"]},
                    {major:"经济",submajor:["国民经济","企业经济"]},
-              ]
+              ],
          },
          resume:{
               uni:"中国美术学院",
@@ -58,18 +58,44 @@ var appCont = new Vue({
                    {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"},
                    {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"}
               ],
+         },
+         message:{
+              combi:{
+                   state:"全部状态",
+                   items:[
+                        {code:"01",pos:"岗位名称",major:"专业",stuScale:"人数",uniLevel:"高校性质",uniApply:"高校需要提供的",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {code:"02",major:"专业名称",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00",applystate:"01"},
+                        {code:"02",major:"专业名称",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00",applystate:"03"},
+                   ]
+              },
+              recruit:{
+                   state:"全部状态",
+                   items:[
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"} 
+                   ]
+              }
          }
     },
     watch:{
       "require.state":function(curval,oldval){
            if(curval=="全部状态"){
-                $(".info-items li").show();
+                $(".requireBox .info-items li").show();
            }else if(curval=="校企合作"){
-                $(".info-items li[name='校企合作']").show();
-                $(".info-items li[name='招聘会']").hide();
+                $(".requireBox .info-items li[name='校企合作']").show();
+                $(".requireBox .info-items li[name='招聘会']").hide();
            }else if(curval=="招聘会"){
-                $(".info-items li[name='校企合作']").hide();
-                $(".info-items li[name='招聘会']").show();
+                $(".requireBox .info-items li[name='校企合作']").hide();
+                $(".requireBox .info-items li[name='招聘会']").show();
+           }
+      },
+      "collect.state":function(curval,oldval){
+           var mydate = new Date();
+           if(curval=="全部状态"){
+                $(".collectBox .info-items li").show();
+           }else if(curval=="近一个星期"){
+
            }
       }
     },
@@ -119,6 +145,15 @@ var appCont = new Vue({
          },
          wordscal:function(){
               return (1000-this.resume.intro.length);
+         },
+         combimsg:function(){
+              var total=0;
+              for(var i=0; i<this.message.combi.items.length;i++){
+                   if(this.message.combi.items[i].code==01){
+                        total++;
+                   }
+              };
+              return total;
          }
     },
     updated:function(){
@@ -133,7 +168,8 @@ function init_center(){
     selectEventBind();
   //  editEventBind();
    // init_paneAdd();
- //   navEventBind();
+   navEventBind();
+   showContact();
  //   modalEventBind();
 }
 init_center();
@@ -177,10 +213,6 @@ function selectEventBind(){
         $(".selectee ul").hide();
     })
 }
-function _init() {
-     navEventBind();
-}
-_init();
 function navEventBind(){
     $(".sideBox>li").bind("click",function(){
         $(".sideBox").children("li.on").removeClass("on");
@@ -199,4 +231,28 @@ function navEventBind(){
         $(".content").children().hide();
         $(".content").children("."+$(this).attr("paneid")).show();
     });
+}
+function showContact(){
+     $(".message-btn .to-contact").bind({
+          "mouseover":function(){
+               $(this).siblings(".contact-box").show();
+          },
+          "mouseout":function(){
+               $(this).siblings(".contact-box").hide();
+          }
+     });
+     $(".state-line .to-contact").bind({
+          "mouseover":function(){
+               if($(this).hasClass("on")){
+                    $(this).parent().siblings(".contact-box").show();
+               }
+
+          },
+          "mouseout":function(){
+               if($(this).hasClass("on")){
+                    $(this).parent().siblings(".contact-box").hide();
+               }
+
+          }
+     })
 }
