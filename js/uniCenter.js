@@ -73,9 +73,18 @@ var appCont = new Vue({
                    items:[
                         {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
                         {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
-                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"} 
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"}
                    ]
               }
+         },
+         vip:{
+              records:[
+                 {date:"2017.01.01", action:"信息刷新：4条", price:0, state:"交易完成"},
+                 {date:"2017.01.01", action:"信息置顶：1次", price:0, state:"交易完成"},
+                 {date:"2017.01.01", action:"广告投放：1次", price:0, state:"交易完成"},
+                 {date:"2017.01.01", action:"信息匹配：4条", price:0, state:"交易完成"},
+                 {date:"2017.01.01", action:"账户充值", price:500.68, state:"交易完成"}
+              ]
          }
     },
     watch:{
@@ -132,6 +141,20 @@ var appCont = new Vue({
          },
          delItem:function(item){
               this.require.items.remove(item);
+         },
+         priceCal1:function(val){
+              var priceInt = parseInt(val);
+              if(priceInt==0){
+                   return "- "+priceInt;
+              }else if(priceInt>0){
+                   return "+ "+priceInt;
+              }
+         },
+         priceCal2:function(val){
+              var priceF=(parseFloat(val)*100-parseInt(val)*100)%100;
+          //    if(priceF*10%1==0) priceF+="0";
+          if(priceF<10) priceF+="0";
+              return ("."+priceF);
          }
 
     },

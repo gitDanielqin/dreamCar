@@ -294,7 +294,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="uni-message recruit-msg">
+            <div class="uni-message recruit-msg" style="display:none">
                 <div class="ListBox">
                     <div class="hd LH-H58 bg-white">
                         <dropdown classes="state" :options="['全部状态','发出的邀请','收到的邀请']" v-model="message.combi.state"></dropdown>
@@ -336,6 +336,67 @@
                         <li class="side-page last-page">尾页</li>
                     </ul>
                 </div>
+            </div>
+            <div class="vip-center">
+                 <ul class="vip-navs lis-inline LH-H37 fSize18 color-gray6 t-center">
+                      <li class="on">信息刷新<i class="nav-line"></i></li>
+                      <li>信息置顶<i class="nav-line"></i></li>
+                      <li>信息匹配<i class="nav-line"></i></li>
+                      <li>品牌推广<i class="nav-line"></i></li>
+                      <li>VIP中心<i class="nav-line"></i></li>
+                 </ul>
+                 <div class="vip-cont vip-service clearfix">
+                      <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic01.jpg"/></i>
+                      <div class="fl fSize14 vip-cont-text maL33">
+                           <h2 class="fSize18 LH-H45"><i class="pic-wrapper maR10"><img src="images/vip-icon01.png" /></i>刷新</h2>
+                           <p class="LH30 maB20">让老的信息重新往前排，同时可以突破橱窗的显示限制，让你的信息排名重新往前排。</p>
+                           <h2 class="fSize18 LH-H45"><i class="pic-wrapper maR10"><img src="images/vip-icon02.png" /></i>价格</h2>
+                           <p class="LH30">信息刷新校企每一个用户每一个类目有三次免费刷新机会。</p>
+                           <p class="LH30">单次购买刷新<span class="color-red">1</span>元/次，可在发布的信息页面进行操作刷新。</p>
+                           <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
+                      </div>
+                 </div>
+                 <div class="vip-cont vip-service clearfix">
+                      <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic02.jpg"/></i>
+                      <div class="fl fSize14 vip-cont-text maL33">
+                           <h2 class="fSize18 LH-H45"><i class="pic-wrapper maR10"><img src="images/vip-icon01.png" /></i>置顶</h2>
+                           <p class="LH30 maB20">让您的信息排在列表页最上方，比刷新信息还要靠前！更可点亮专属<span class="color-red">王冠图标</span>让信息更醒目，效果翻至3.5倍。</p>
+                           <h2 class="fSize18 LH-H45"><i class="pic-wrapper maR10"><img src="images/vip-icon02.png" /></i>价格</h2>
+                           <p class="LH30">单次购买置顶<span class="color-red">10</span>元/次，可在发布的信息息页面进行操作置顶。</p>
+                           <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
+                      </div>
+                 </div>
+                 <div class="vip-cont vip-service clearfix">
+                      <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic03.jpg"/></i>
+                      <div class="fl fSize14 vip-cont-text maL33">
+                           <h2 class="fSize18 LH-H45"><i class="pic-wrapper maR10"><img src="images/vip-icon03.png" /></i>信息匹配</h2>
+                           <p class="LH30 maB20">根据高校详细需求，平台为你第一时间进行配对，企业需求信息匹配，无需手动搜索，一键解决需求配对。</p>
+                           <h2 class="fSize18 LH-H45"><i class="pic-wrapper maR10"><img src="images/vip-icon02.png" /></i>价格</h2>
+                           <p class="LH30">单次购买匹配<span class="color-red">10</span>元/条，可在会员中心进行操作购买。</p>
+                           <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
+                      </div>
+                 </div>
+                 <div class="vip-cont vip-service clearfix">
+                      <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic04.jpg"/></i>
+                      <div class="fl fSize14 vip-cont-text maL33">
+                           <h2 class="fSize18 LH-H45"><i class="pic-wrapper maR10"><img src="images/vip-icon04.png" /></i>品牌推广</h2>
+                           <p class="LH30 maB20">根据高校详细需求，平台为你第一时间进行配对，企业需求信息匹配，无需手动搜索，一键解决需求配对。</p>
+                           <h2 class="fSize18 LH-H45"><i class="pic-wrapper maR10"><img src="images/vip-icon02.png" /></i>价格</h2>
+                           <p class="LH30">单次购买推广展位<span class="color-red">500</span>元/月，会员特权购买当中，会在每一个类目中展示。</p>
+                           <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
+                      </div>
+                 </div>
+                 <div class="vip-cont vip-recharge on">
+                    <p class="LH-H54"><span class="color-orange-f7">VIP</span>会员享受<span style="color:#d19100">信息刷新</span>优先展示，刷新置顶低至<span class="color-red">7</span>折，是各位小伙伴的首选，目前已有10W+伙伴享受VIP特权服务。</p>
+                    <p class="LH-H60 bg-gray-f7 paLeft20">VIP等级：<span class="color-orange-f7 fSize18 maR80">地主</span>账户余额：<b class="color-red"><span class="fSize18">0</span>.00</b>元<button class="recharge-btn">会员充值</button></p>
+                    <div class="bg-gray-f7 maT2">
+                         <h3 class="LH-H42 maL20 fSize16 vip-record-head">使用记录</h3>
+                         <ul class="vip-records">
+                              <li v-for="record in vip.records"><span class="W182">{{record.date}}</span><span class="W212">{{record.action}}</span><span class="W216"><b class="fSize14">{{priceCal1(record.price)}}</b>{{priceCal2(record.price)}}元</span><span class="">{{record.state}}</span></li>
+                         </ul>
+                         <p class="LH-H36 t-right maR40"><button class="more-records">查看更多使用记录</button></p>
+                    </div>
+                 </div>
             </div>
         </div>
 

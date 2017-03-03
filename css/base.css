@@ -112,6 +112,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .W170{width:170px;}
 .W172{width:172px;}
 .W178{width: 178px;}
+.W182{width: 182px;}
 .W188{width:188px;}
 .W194{width:194px;}
 .W196{width:196px;}
@@ -119,6 +120,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .W200{width:200px;}
 .W204{width:204px;}
 .W206{width:206px;}
+.W212{width:212px;}
 .W216{width:216px;}
 .W220{width:220px;}
 .W228{width:228px;}
@@ -170,6 +172,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 
 /*行高*/
 .LH-H47{line-height: 47px; height: 47px;}
+.LH-H45{line-height: 45px; height: 45px;}
 .LH-H40{line-height: 40px; height: 40px;}
 .LH-H42{line-height: 42px; height: 42px;}
 .LH-H37{line-height: 37px; height: 37px;}
@@ -291,6 +294,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .maR33{margin-right:33px;}
 .maR40{margin-right:40px;}
 .maR56{margin-right:56px;}
+.maR80{margin-right:80px;}
 .maR100{margin-right: 100px;}
 .maR128{margin-right: 128px;}
 .maR179{margin-right: 179px;}
@@ -310,6 +314,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .maL28{margin-left: 28px;}
 .maL29{margin-left: 29px;}
 .maL30{margin-left:30px;}
+.maL33{margin-left:33px;}
 .maL35{margin-left:35px;}
 .maL38{margin-left:38px;}
 .maL40{margin-left:40px;}
@@ -352,6 +357,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .maT6{margin-top:6px;}
 .maT5{margin-top:5px;}
 .maT3{margin-top:3px;}
+.maT2{margin-top:2px;}
 .maB2{margin-bottom: 2px;}
 .maB5{margin-bottom: 5px;}
 .maB7{margin-bottom: 7px;}
@@ -362,6 +368,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .maB17{margin-bottom: 17px;}
 .maB18{margin-bottom: 18px;}
 .maB19{margin-bottom: 19px;}
+.maB20{margin-bottom: 20px;}
 .maB22{margin-bottom: 22px;}
 .maB40{margin-bottom:40px;}
 .maB42{margin-bottom:42px;}

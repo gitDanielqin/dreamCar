@@ -20,6 +20,26 @@
 .progress-real{display: inline-block;background: #f7aa00; width: 87%; position: absolute; left: 0; top: 0;}
 .preview-btn{position: absolute; right:-97px;bottom:0; color:#f77b00; line-height: 25px; cursor: pointer;}
 
+/*VIP中心*/
+.vip-navs li{width: 100px; margin-left: 22px; position:relative;}
+.nav-line{display: none;width: 100px; height: 4px; background: #f7a14a; position: absolute;left: 0; bottom: 0;}
+.vip-navs li.on{color: #333;}
+.vip-navs li.on .nav-line{display: block;}
+.vip-cont{ border:1px solid #ccc; background: white; display: none;}
+.vip-service{padding: 30px 25px;}
+.vip-recharge{padding: 6px 25px; font-size: 14px;}
+.vip-cont.on{display: block;}
+.vip-cont-text{width: 273px;}
+.vip-cont-disp{width: 408px; height: 318px; line-height: 318px;}
+.recharge-btn{width: 100px; height: 36px; color: white; border-radius: 5px; margin-left: 80px; background: #f33;}
+.vip-records li{line-height: 34px; font-size: 12px; padding-left: 20px;}
+.vip-records li span{display: inline-block; vertical-align: middle;}
+.vip-records li:nth-child(2n){background: #e3e3e3;}
+.vip-records li:nth-child(2n+1){background: #eee;}
+.vip-record-head{background: url("../images/icon-up.jpg") no-repeat 26px 33px; }
+.more-records{background: none; font-size: 12px;}
+
+
 /*侧边栏导航*/
 .main .sideBox{border:1px solid #ccc;}
 .main .sideBox >li.on{background:#edeceb;}
