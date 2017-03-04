@@ -21,7 +21,7 @@
 .preview-btn{position: absolute; right:-97px;bottom:0; color:#f77b00; line-height: 25px; cursor: pointer;}
 
 /*VIP中心*/
-.vip-navs li{width: 100px; margin-left: 22px; position:relative;}
+.vip-navs li{width: 100px; margin-left: 22px; position:relative; cursor: pointer;}
 .nav-line{display: none;width: 100px; height: 4px; background: #f7a14a; position: absolute;left: 0; bottom: 0;}
 .vip-navs li.on{color: #333;}
 .vip-navs li.on .nav-line{display: block;}
@@ -38,6 +38,9 @@
 .vip-records li:nth-child(2n+1){background: #eee;}
 .vip-record-head{background: url("../images/icon-up.jpg") no-repeat 26px 33px; }
 .more-records{background: none; font-size: 12px;}
+.tarif-info li{padding: 4px 0; margin-bottom: 2px; background: #fafafa;}
+.tarif-buy{border-left: 2px solid white; height: 116px;}
+.tarif-btn{width: 80px; height: 30px; border-radius: 5px; background: #f7aa00; color: white; font-size: 14px;}
 
 
 /*侧边栏导航*/
@@ -48,7 +51,7 @@
 .main .sideBox li i{display: inline-block; width: 20px; height: 20px; line-height: 20px; text-align: center; font-size: 0; vertical-align: middle;margin-right: 5px;}
 .sub-li{display: none;}
 .sub-li .on{color:#f8a85c;}
-.sub-li p{padding-left: 16px;}
+.sub-li p{padding-left: 23px; font-size: 16px;}
 
 /*主要内容部分*/
 .resumeCont{padding:29px 73px 47px 53px; border: 1px solid #ccc;}
@@ -71,10 +74,17 @@
 .info-items{height:410px;}
 .info-items>li{height: 128px; margin-top: 10px; border: 1px solid #ccc; background: white;}
 .collectBox .info-items>li{height:148px;}
+.collectBox .logo-pic{margin-top: 34px;}
 .uni-message .info-items>li{height:148px;}
+.uni-message .logo-pic{margin-top: 34px;}
+.uni-coop .info-items>li{height:148px;}
+.uni-coop .logo-pic{margin-top: 34px;}
 .depart{margin:0 12px; }
-.info-items p{line-height: 28px; font-size: 14px;}
+.item-block-left p{line-height: 28px; font-size: 14px;}
 .item-block-right{padding: 18px; background: url("../images/dashline.png") no-repeat left 26px;}
+.uni-require .item-block-right{background: url("../images/dashline.png") no-repeat left 20px;}
+.uni-collect .item-block-right{background: url("../images/dashline.png") no-repeat left 20px;}
+.uni-message .uni-apply-message{background:none}
 .item-block-right p{color: #333;}
 .info-items .item-date{font-size: 12px; color: #666;}
 
@@ -95,6 +105,8 @@ position: absolute;  display:none;}
 .state-line li.on{color:#f7a14a;}
 .state-line li.on .state-icon{background-image: url("../images/icon-apply-state1.png");}
 .state-line{background: url("../images/msg-line.png") no-repeat 33px 8px;}
+.more-info{color:#999; background: none; font-size: 14px;}
+.more-info i{font-family: consolas; display: inline-block; vertical-align: top; margin-left: 2px;}
 
 .pageBot li{margin-left: 10px; background: #333; color: #fff;line-height: 30px; height: 30px; text-align: center;}
 .pageBot li.side-page{width:60px;}

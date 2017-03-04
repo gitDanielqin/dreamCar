@@ -45,16 +45,15 @@
         <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3 bg-white">
             <li class="on" paneid="resumeBox"><i><img src="images/icon-resume.png"/></i>高校简介</li>
             <li paneid="requireBox"><i><img src="images/icon-study.png"/></i>高校需求</li>
-            <li class="myCollect" paneid="collectBox"><i><img src="images/icon-collect.png"/></i>高校收藏
-            </li>
+            <li class="myCollect" paneid="collectBox"><i><img src="images/icon-collect.png"/></i>高校收藏</li>
             <li paneid="combi-msg"><i><img src="images/icon-apply.png"/></i>消息中心
                 <div class="sub-li LH37">
                     <p class="on" paneid="combi-msg">校企合作消息</p>
                     <p paneid="recruit-msg">招聘会合作消息</p>
                 </div>
             </li>
-            <li paneid="jobBox"><i><img src="images/icon-apply.png"/></i>VIP中心</li>
-            <li paneid="jobBox"><i><img src="images/icon-apply.png"/></i>校企合作</li>
+            <li paneid="vip-center"><i><img src="images/icon-apply.png"/></i>VIP中心</li>
+            <li paneid="uni-coop"><i><img src="images/icon-apply.png"/></i>校企合作</li>
             <li class="myConfig" paneid="conf-keyword"><i><img src="images/icon-config.png"/></i>设置
                 <div class="sub-li paTop2 paBot2 LH30">
                     <p class="on" paneid="conf-keyword">修改密码</p>
@@ -146,7 +145,7 @@
                                     <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
                                     <p>{{item.trainWay}}</p>
                                 </div>
-                                <div class="item-block-right fl fSize14 LH25">
+                                <div class="item-block-right fl fSize14 LH25 maT10">
                                     <p>{{item.uniname}}</p>
                                     <p>{{item.uniLevel}}</p>
                                     <p>{{item.date}}</p>
@@ -196,13 +195,13 @@
                         <li v-for="item in collect.items" :name="item.classic">
                             <div class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                <div class="item-block-left fl paTop22 W280 maL20">
+                                <div class="item-block-left fl paTop22 W328 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30">{{item.pos}}</h2>
                                     <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.uniLevel}}</p>
                                     <p>{{item.uniApply}}</p>
                                     <p class="item-date">{{item.date}}</span> {{item.time}}</p>
                                 </div>
-                                <div class="item-block-right fl fSize14 LH25">
+                                <div class="item-block-right fl fSize14 LH25 maT10">
                                     <p>{{item.IncName}}</p>
                                     <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
                                     <p class="pubdate">{{item.publicDate}}</p>
@@ -236,13 +235,13 @@
                             <template v-if="item.code=='01'">
                               <div class="paLeft29 clearfix H128 pRel">
                                    <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                   <div class="item-block-left fl paTop22 W280 maL20">
+                                   <div class="item-block-left fl paTop22 W328 maL20">
                                        <h2 class="color-blueL fSize18 LH-H30">{{item.pos}}</h2>
                                        <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.uniLevel}}</p>
                                        <p>{{item.uniApply}}</p>
                                        <p class="item-date">{{item.date}}</span> {{item.time}}</p>
                                    </div>
-                                   <div class="item-block-right fl fSize14 LH25">
+                                   <div class="item-block-right fl fSize14 LH30 maT10">
                                        <p>{{item.IncName}}</p>
                                        <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
                                        <div class="message-btn LH-H35 pRel">
@@ -260,13 +259,13 @@
                             <template v-else>
                               <div class="paLeft29 clearfix H128 pRel msg-apply">
                                    <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                   <div class="item-block-left fl paTop22 W280 maL20">
+                                   <div class="item-block-left fl paTop22 maL20 W312">
                                        <h2 class="color-blueL fSize18 LH-H30">{{item.major}}</h2>
                                        <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
                                        <p>{{item.trainWay}}</p>
                                        <p class="item-date">{{item.date}}</span> {{item.time}}</p>
                                    </div>
-                                   <div class="item-block-right fl fSize14 LH25 pRel">
+                                   <div class="item-block-right fl fSize14 LH30 pRel maT10 uni-apply-message">
                                        <p class="t-right">{{item.IncName}}</p>
                                        <ul class="state-line lis-inline maT3">
                                              <li :class="{on:item.applystate=='01'}"><i class="state-icon"></i>已发出</li>
@@ -304,13 +303,13 @@
                         <li v-for="item in message.recruit.items">
                             <div class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                <div class="item-block-left fl paTop22 W280 maL20">
+                                <div class="item-block-left fl paTop22 W328 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30">{{item.major}}</h2>
                                     <p>{{item.salary}}<i class="depart">|</i>{{item.posAmount}}<i class="depart">|</i>{{item.qualific}}</p>
                                     <p>公司地址：{{item.IncAddress.city}}{{item.IncAddress.district}}</p>
                                     <p class="item-date">{{item.date}}</span> {{item.time}}</p>
                                 </div>
-                                <div class="item-block-right fl fSize14 LH25">
+                                <div class="item-block-right fl fSize14 LH25 maT10">
                                     <p>{{item.IncName}}</p>
                                     <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
                                     <div class="message-btn LH-H35 pRel">
@@ -337,7 +336,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="vip-center">
+            <div class="vip-center" style="display:none">
                  <ul class="vip-navs lis-inline LH-H37 fSize18 color-gray6 t-center">
                       <li class="on">信息刷新<i class="nav-line"></i></li>
                       <li>信息置顶<i class="nav-line"></i></li>
@@ -345,7 +344,7 @@
                       <li>品牌推广<i class="nav-line"></i></li>
                       <li>VIP中心<i class="nav-line"></i></li>
                  </ul>
-                 <div class="vip-cont vip-service clearfix">
+                 <div class="vip-cont vip-service clearfix on">
                       <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic01.jpg"/></i>
                       <div class="fl fSize14 vip-cont-text maL33">
                            <h2 class="fSize18 LH-H45"><i class="pic-wrapper maR10"><img src="images/vip-icon01.png" /></i>刷新</h2>
@@ -386,7 +385,7 @@
                            <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
                       </div>
                  </div>
-                 <div class="vip-cont vip-recharge on">
+                 <div class="vip-cont vip-recharge">
                     <p class="LH-H54"><span class="color-orange-f7">VIP</span>会员享受<span style="color:#d19100">信息刷新</span>优先展示，刷新置顶低至<span class="color-red">7</span>折，是各位小伙伴的首选，目前已有10W+伙伴享受VIP特权服务。</p>
                     <p class="LH-H60 bg-gray-f7 paLeft20">VIP等级：<span class="color-orange-f7 fSize18 maR80">地主</span>账户余额：<b class="color-red"><span class="fSize18">0</span>.00</b>元<button class="recharge-btn">会员充值</button></p>
                     <div class="bg-gray-f7 maT2">
@@ -396,8 +395,65 @@
                          </ul>
                          <p class="LH-H36 t-right maR40"><button class="more-records">查看更多使用记录</button></p>
                     </div>
+                    <div class="maB38">
+                         <h3 class="LH-H50 fSize16 paLeft16">会员权限说明</h3>
+                         <ul class="tarif-info">
+                              <li v-for="item in vip.tarif" class="clearfix">
+                                   <div class="fl W160 t-center">
+                                        <i class="pic-wrapper maT32"><img :src="item.icon"/></i>
+                                        <p class="LH52">{{item.level}}</p>
+                                   </div>
+                                   <div class="fl LH30 fSize12 paLeft12">
+                                        <p>1.信息置顶（每周{{item.prior}}次）</p>
+                                        <p>2.刷新（每天{{item.refresh}}次）</p>
+                                        <p>3.广告投放（一个版面展示，每次5分钟，会员内每天展示）</p>
+                                        <p>4.高校匹配信息优先（每月{{item.mapping}}条）</p>
+                                   </div>
+                                   <div class="fr paTop5 t-center W185 tarif-buy">
+                                        <p class="LH56 fSize14">收费：{{item.price}}/月</p>
+                                        <button type="button" class="tarif-btn">购买</button>
+                                   </div>
+                              </li>
+                         </ul>
+                    </div>
                  </div>
             </div>
+            <div class="uni-coop">
+                <div class="ListBox">
+                    <div class="hd LH-H58 bg-white">
+                        <dropdown classes="state" :options="['全部状态','合作进行中','合作已完成','合作待开始']" v-model="coop.state"></dropdown>
+                        <p class="fr fSize14 maR30">我合作的企业<span class="color-orange2 maL10 maR10">{{coop.items.length}}</span>个</p>
+                    </div>
+                    <ul class="info-items">
+                        <li v-for="item in coop.items" :name="item.classic">
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                <div class="item-block-left fl paTop22 W390 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30">{{item.IncName}}</h2>
+                                    <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
+                                    <p>{{item.trainWay}}</p>
+                                    <p class="item-date">{{item.date}}</span> {{item.time}}</p>
+                                </div>
+                                <div class="item-block-right fl fSize14 LH28 maT10">
+                                    <p :style="coopStyle(item.coopState)">{{coopSt(item.coopState)}}</p>
+                                    <p>{{item.major}}</p>
+                                    <button class="more-info">了解更多<i>>></i></button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="pageBot lis-inline maT30 fr fSize14">
+                        <li class="side-page first-page">首页</li>
+                        <li class="prev side-page">上一页</li>
+                        <li class="page-index">1</li>
+                        <li class="page-index">2</li>
+                        <li class="page-index">3</li>
+                        <li class="next side-page">下一页</li>
+                        <li class="side-page last-page">尾页</li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
 
 

@@ -84,8 +84,21 @@ var appCont = new Vue({
                  {date:"2017.01.01", action:"广告投放：1次", price:0, state:"交易完成"},
                  {date:"2017.01.01", action:"信息匹配：4条", price:0, state:"交易完成"},
                  {date:"2017.01.01", action:"账户充值", price:500.68, state:"交易完成"}
-              ]
-         }
+            ],
+            tarif:[
+                 {level:"初级会员",prior:1,refresh:1,mapping:8,price:585,icon:"images/crown-junior.png"},
+                 {level:"中级会员",prior:2,refresh:4,mapping:12,price:1040,icon:"images/crown-middle.png"},
+                 {level:"初级会员",prior:4,refresh:8,mapping:16,price:1560,icon:"images/crown-senior.png"},
+            ]
+       },
+       coop:{
+            state:"全部状态",
+            items:[
+                 {IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",date:"2017.11.11",time:"24:00",coopState:"02",major:"公共管理专业"},
+                 {IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",date:"2017.11.11",time:"24:00",coopState:"03",major:"合作专业"},
+                 {IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",date:"2017.11.11",time:"24:00",coopState:"01",major:"公共管理专业"},
+            ]
+       }
     },
     watch:{
       "require.state":function(curval,oldval){
@@ -155,6 +168,21 @@ var appCont = new Vue({
           //    if(priceF*10%1==0) priceF+="0";
           if(priceF<10) priceF+="0";
               return ("."+priceF);
+         },
+         coopSt:function(state){
+              switch (state) {
+                   case "01":return "合作待开始";break;
+                   case "02":return "合作进行中";break;
+                   case "03":return "合作已完成";break;
+                   default:return "合作待开始"
+              }
+         },
+         coopStyle:function(state){
+              switch (state) {
+                   case "01":return {color:"#91daef"};break;
+                   case "02":return {color:"#f7aa00"};break;
+                   case "03":return {color:"#333"};break;
+              }
          }
 
     },
@@ -193,6 +221,7 @@ function init_center(){
    // init_paneAdd();
    navEventBind();
    showContact();
+   vipEventBind();
  //   modalEventBind();
 }
 init_center();
@@ -255,6 +284,19 @@ function navEventBind(){
         $(".content").children("."+$(this).attr("paneid")).show();
     });
 }
+function vipEventBind(){
+     $(".vip-navs li").each(function(index){
+          $(this).click(function(){
+               $(".vip-navs li.on").removeClass("on");
+               $(this).addClass("on");
+               $(".vip-cont").removeClass("on");
+               $($(".vip-cont")[index]).addClass("on");
+          });
+
+     })
+}
+
+
 function showContact(){
      $(".message-btn .to-contact").bind({
           "mouseover":function(){
