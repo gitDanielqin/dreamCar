@@ -298,7 +298,7 @@ var appModal = new Vue({
 });
 function init_center(){
      selectInitPos();
-    init_pos();
+    init_safepos();
     selectEventBind();
     editEventBind();
    // init_paneAdd();
@@ -369,7 +369,7 @@ function selectEventBind(){
         $(".selectee ul").hide();
     })
 }
-function init_pos(){
+function init_safepos(){
     var p_left= Math.floor($(".safe-range p").width()*$(".safe-range").width()/100)-16+"px";
     $(".r-pointer").css("left",p_left);
 }

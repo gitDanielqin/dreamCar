@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
-    <title>高校中心</title>
+    <title>企业中心</title>
     <link href="css/base.css" rel="stylesheet">
-    <link href="css/uniCenter.css" rel="stylesheet">
+    <link href="css/incCenter.css" rel="stylesheet">
 </head>
 
 <body class="bg-gray-f2">
@@ -13,7 +12,7 @@
         <div class="inner">
             <img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" />
             <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
-            <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">高校中心</h2>
+            <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">企业中心</h2>
             <div class="fr navs maT42">
                 <a href="index.html"><img src="images/icon-home.png" /></a>
                 <a href="#"><img src="images/icon-account.png" /></a>
@@ -27,9 +26,9 @@
                 <div class="porto-img W96 H96"></div>
                 <h3 class="LH-H58 fSize18 t-center color-gray3">编辑头像</h3>
             </div>
-            <div class="infoTxt maT24 maL54 fl color-gray6 W266" v-show="viewInfo">
-                <h3 class="LH-H47 fSize18 color-gray3">{{uni}}</h3>
-                <p><span class="maR33">学校性质</span>{{classic}}</p>
+            <div class="infoTxt maT24 maL54 fl color-gray6 W300" v-show="viewInfo">
+                <h3 class="LH-H47 fSize18 color-gray3">{{Inc}}</h3>
+                <p><span>企业性质：</span>{{IncProps}}<span class="maL20">企业规模：</span>{{IncScale}}</p>
                 <p><span class="maR33">所在地</span>{{address.province}}-{{address.city}}-{{address.district}}</p>
                 <p><span class="maR33">邮箱</span>{{email}}</p>
                 <p>简历完成度<span class="progress pRel W124 H7 b-Radius8"><span class="progress-real W124 H7 b-Radius8"></span></span><span class="fullgrad">87%</span></p>
@@ -43,13 +42,13 @@
             </div>
         </div>
         <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3 bg-white">
-            <li class="on" paneid="resumeBox"><i><img src="images/icon-resume.png"/></i>高校简介</li>
-            <li paneid="requireBox"><i><img src="images/icon-study.png"/></i>高校需求</li>
-            <li class="myCollect" paneid="collectBox"><i><img src="images/icon-collect.png"/></i>高校收藏</li>
+            <li class="on" paneid="resumeBox"><i><img src="images/icon-resume.png"/></i>企业简介</li>
+            <li paneid="requireBox"><i><img src="images/icon-study.png"/></i>企业需求</li>
+            <li class="myCollect" paneid="collectBox"><i><img src="images/icon-collect.png"/></i>企业收藏</li>
             <li paneid="combi-msg"><i><img src="images/icon-apply.png"/></i>消息中心
                 <div class="sub-li LH37">
-                    <p class="on" paneid="combi-msg">校企合作消息</p>
-                    <p paneid="recruit-msg">招聘会合作消息</p>
+                    <p class="on" paneid="combi-msg">校企合作</p>
+                    <p paneid="recruit-msg">招聘消息</p>
                 </div>
             </li>
             <li paneid="vip-center"><i><img src="images/icon-apply.png"/></i>VIP中心</li>
@@ -64,36 +63,24 @@
         <div class="content W770 fl maL10 maT20" id="app-content">
             <div class="resumeBox" style="display:block">
                 <div class="resumeCont bg-white" v-show="resume.edit">
-                    <p class="LH-H88 fSize18 color-gray3" v-show="resume.firstEdit">亲爱的校友，您需要完善高校简介</p>
-                    <h3 class="fSize18 LH-H30 maB17" v-show="!resume.firstEdit"><i class="pic-wrapper hd-icon"><img src="images/icon-resume.png"/></i>高校简介</h3>
-                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校名称</label><input type="text" v-model="resume.uni" class="W298" /></p>
-                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校类别</label>
-                        <dropdown placeholder="请选择高校类别" :options="database.classific" v-model="resume.classific" classes="W138"></dropdown>
+                    <p class="LH-H88 fSize18 color-gray3" v-show="resume.firstEdit">亲爱的校友，您需要完善企业简介</p>
+                    <h3 class="fSize18 LH-H30 maB17" v-show="!resume.firstEdit"><i class="pic-wrapper hd-icon"><img src="images/icon-resume.png"/></i>企业简介</h3>
+                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>企业名称</label><input type="text" v-model="resume.Inc" class="W298" /></p>
+                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>所属行业</label><span @click="popTrade"><input type="text" class="career-input"  disabled v-model="resume.trade" /></span>
                     </p>
-                    <p class="LH-H26 paLeft7 resume-item uni-level"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校性质</label>
-                        <dropdown placeholder="高校性质" :options="database.unilevel" v-model="resume.level" classes="W138"></dropdown><input type="radio" name="level" value="985" @click="checkExlv" />985<input type="radio" name="level" value="211" @click="checkExlv" />211</p>
-                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>在校人数</label>
-                        <dropdown placeholder="请选择在校人数" :options="database.amount" v-model="resume.amount" classes="W138"></dropdown>
+                    <p class="LH-H26 paLeft7 resume-item uni-level"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>企业性质</label>
+                        <dropdown placeholder="企业性质" :options="database.IncProps" v-model="resume.props" classes="W138"></dropdown><input type="radio" name="level" value="世界500强" @click="checkExlv" />世界500强<input type="radio" name="level" value="中国500强" @click="checkExlv" />中国500强</p>
+                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>企业规模</label>
+                        <dropdown placeholder="企业规模" :options="database.IncScale" v-model="resume.scale" classes="W138"></dropdown>
                     </p>
                     <div class="LH26 paLeft7 resume-item clearfix">
-                        <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>重点专业</label></p>
-                        <ul class="fl">
-                            <li v-for="spmajor in resume.specialmajor" class="maB14">
-                                <dropdown placeholder="一级学科" :options="majorArr" v-model="spmajor.major" classes="W138 maR10"></dropdown>
-                                <dropdown placeholder="二级学科" :options="submajors(spmajor.major)" v-model="spmajor.submajor" classes="W138"></dropdown>
-                            </li>
-                        </ul>
-                        <p class="fSize12 color-gray6"><button class="color-blueL maL20 btn-add-major" @click="addMajors">+ 添加</button>（最多可添加5个重点专业）</p>
-                    </div>
-                    <div class="LH26 paLeft7 resume-item clearfix">
-                        <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校认证</label></p>
+                        <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>企业认证</label></p>
                         <ul class="fl uni-valid-upload color-gray6 fSize12">
                             <li><span>重新上传营业执照<i class="pic-wrapper"><img src="images/icon-upload.png"/></i></span><button v-show="!resume.firstEdit">（查看之前上传的营业执照）</button></li>
-                            <li><span>重新上传办学许可证<i class="pic-wrapper"><img src="images/icon-upload.png"/></i></span><button v-show="!resume.firstEdit">（查看之前上传的办学许可证）</button></li>
                         </ul>
                     </div>
                     <div class="uni-intro LH26 paLeft7 resume-item clearfix">
-                        <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校简介</label></p>
+                        <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>企业简介</label></p>
                         <div class="fl">
                             <textarea class="fl" v-model="resume.intro"></textarea>
                             <p class="t-right">你还可以输入{{wordscal}}字</p>
@@ -104,28 +91,19 @@
                     </div>
                 </div>
                 <div class="resumeCont bg-white pRel" v-show="resume.view">
-                    <h3 class="fSize18 LH-H30 maB17"><i class="pic-wrapper hd-icon"><img src="images/icon-resume.png"/></i>高校简介</h3>
+                    <h3 class="fSize18 LH-H30 maB17"><i class="pic-wrapper hd-icon"><img src="images/icon-resume.png"/></i>企业简介</h3>
                     <div class="paLeft40 paRight40 LH33 fSize14">
-                        <p><label>高校名称：</label>{{resume.uni}}</p>
-                        <p><label>高校类别：</label>{{resume.classific}}</p>
-                        <p><label>高校性质：</label>{{resume.level}}<span v-if="resume.specialLv">（{{resume.specialLv}}）</span></p>
-                        <p><label>在校人数：</label>{{resume.amount}}</p>
+                        <p><label>企业名称：</label>{{resume.Inc}}</p>
+                        <p><label>所属行业：</label>{{resume.trade}}</p>
+                        <p><label>企业性质：</label>{{resume.props}}<span v-if="resume.specialLv">（{{resume.specialLv}}）</span></p>
+                        <p><label>企业规模：</label>{{resume.scale}}</p>
                         <div class="clearfix">
-                            <label class="fl">重点专业：</label>
-                            <ul class="fl LH25 paTop5">
-                                <li v-for="spmajor in resume.specialmajor">
-                                    <span v-if="spmajor!=''&&spmajor.submajor!=''">{{spmajor.major}}-{{spmajor.submajor}}</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="clearfix">
-                            <p class="fl"><label>高校认证：</label></p>
+                            <p class="fl"><label>企业认证：</label></p>
                             <ul class="fl uni-valid-upload color-gray6 fSize12 paTop5">
                                 <li><span>重新上传营业执照</span><button class="color-blueL">（查看之前上传的营业执照）</button></li>
-                                <li><span>重新上传办学许可证</span><button class="color-blueL">（查看之前上传的办学许可证）</button></li>
                             </ul>
                         </div>
-                        <p><label>高校简介：</label>{{resume.intro}}</p>
+                        <p><label>企业简介：</label>{{resume.intro}}</p>
                     </div>
                     <i class="LH-H30 W30 t-center btn-edit" @click="editSwipe"><img class="v-mid" src="images/icon-edit.png"/></i>
                 </div>
@@ -133,43 +111,58 @@
             <div class="uni-require requireBox">
                 <div class="ListBox">
                     <div class="hd LH-H58 bg-white">
-                        <dropdown classes="state" :options="['全部状态','校企合作','招聘会']" v-model="require.state"></dropdown>
-                        <p class="fr fSize14 maR30">我发布过的需求<span class="color-orange2 maL10 maR10">{{require.items.length}}</span>个</p>
+                        <dropdown classes="state" :options="['全部类型','校企合作','招聘会','企业直聘']" v-model="require.state"></dropdown>
+                        <p class="disInline fSize14 maL195">我发布过的需求<span class="color-orange2 maL10 maR10">{{require.items.length}}</span>个</p>
+                        <dropdown classes="state-right fr" :options="['全部状态','三天内','一周内','一月内']" v-model="require.period"></dropdown>
                     </div>
                     <ul class="info-items">
                         <li v-for="item in require.items" :name="item.classic">
                             <div v-if="item.classic=='校企合作'" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W280 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30">{{item.major}}</h2>
-                                    <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
-                                    <p>{{item.trainWay}}</p>
+                                    <h2 class="color-blueL fSize18 LH-H30">{{item.IncPos}}</h2>
+                                    <p>{{item.coMajor}}<i class="depart">|</i>{{item.coScale}}<i class="depart">|</i>{{item.uniLevel}}</p>
+                                    <p>联合培养方式：{{item.trainWay}}</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH25 maT10">
-                                    <p>{{item.uniname}}</p>
-                                    <p>{{item.uniLevel}}</p>
-                                    <p>{{item.date}}</p>
+                                    <p>{{item.IncName}}</p>
+                                    <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
+                                    <p>{{item.publicDate}} {{item.publicTime}}</p>
                                 </div>
                                 <div class="operations color-blueL">
-                                    <p><span>修改</span><span @click="delItem(item)">删除</span></p>
-                                    <p><span>刷新</span><span>置顶</span></p>
+                                    <p><span>修改</span><span @click="delItem(item)">删除</span><span>刷新</span><span>置顶</span></p>
                                 </div>
                             </div>
                             <div v-else-if="item.classic=='招聘会'" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                <div class="item-block-left fl paTop22 W280 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30">{{item.major}}</h2>
-                                    <p>{{item.major}}<i class="depart">|</i>{{item.majorScale}}<i class="depart">|</i>{{item.recruitAddr}}</p>
+                                <div class="item-block-left fl paTop22 W334 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30">{{item.IncPos}}</h2>
+                                    <p><span class="maR17 color-orange-f7">{{item.salary}}</span>{{item.major}}<i class="depart">|</i>{{item.exp}}<i class="depart">|</i>{{item.scolar}}</p>
                                     <p>招聘会时间：{{item.recruitDate}}</p>
                                 </div>
-                                <div class="item-block-right fl fSize14 LH25">
-                                    <p>高校对企要求</p>
-                                    <p>{{item.IncScale}}<i class="depart">|</i>{{item.IncProps}}<i class="depart">|</i>{{item.IncPos}}</p>
-                                    <p>{{item.date}}</p>
+                                <div class="item-block-right fl fSize14 LH25 maT10">
+                                    <p>{{item.IncName}}</p>
+                                    <p>{{item.IncProps}}<i class="depart">|</i>岗位数：{{item.posAmount}}人</p>
+                                    <p>{{item.publicDate}} {{item.publicTime}}</p>
                                 </div>
                                 <div class="operations color-blueL">
-                                    <p><span>修改</span><span @click="delItem(item)">删除</span></p>
-                                    <p><span>刷新</span><span>置顶</span></p>
+                                     <p><span>修改</span><span @click="delItem(item)">删除</span><span>刷新</span><span>置顶</span></p>
+                                </div>
+                            </div>
+                            <div v-else-if="item.classic=='企业直聘'" class="paLeft29 clearfix H128 pRel">
+                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                <div class="item-block-left fl paTop22 W334 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30">{{item.IncPos}}</h2>
+                                    <p><span class="maR17 color-orange-f7">{{item.salary}}</span>{{item.major}}<i class="depart">|</i>{{item.exp}}<i class="depart">|</i>{{item.scolar}}</p>
+                                    <p><span class="maR17">【{{item.IncAddr}}】</span>岗位数：{{item.posAmount}}人</p>
+                                </div>
+                                <div class="item-block-right fl fSize14 LH25 maT10">
+                                    <p>{{item.IncName}}</p>
+                                    <p>{{item.IncProps}}<i class="depart">|</i>岗位数：{{item.posAmount}}人</p>
+                                    <p>{{item.publicDate}} {{item.publicTime}}</p>
+                                </div>
+                                <div class="operations color-blueL">
+                                     <p><span>修改</span><span @click="delItem(item)">删除</span><span>刷新</span><span>置顶</span></p>
                                 </div>
                             </div>
                         </li>
@@ -534,6 +527,28 @@
 
 
      </div>
+     <div class="trade-box W770 H420 maCenter" v-show="showTrade" id="app-trade" @click="stayshow($event)">
+         <h3 class="bg-gray-e6 fSize14 LH-H36 paLeft30 paRight30 color-black">选择行业分类<i class="pic-wrapper W26 LH-H26 maT5 closer t-center fr cur-pointer" @click="closeTrade"><img src="images/icon-close3.png" /></i></h3>
+         <div class="H328 bg-white paLeft35 cont">
+              <h4 class="LH-H27 fSize12 color-gray9 paTop6">最多可以选择3项</h4>
+              <table class="fSize12">
+                   <tr v-for="trade in trades">
+                        <td class="W158 LH64 t-center">{{trade.title}}</td>
+                        <td class="W539">
+                             <ul class="lis-inline paTop5 paBot5">
+                                  <li v-for="item in trade.items" class="W246 maL12 LH-H27">
+                                       <input type="checkbox"  @click="checkfunc(item,$event.target)"/>{{item}}
+                                  </li>
+                             </ul>
+                        </td>
+                   </tr>
+              </table>
+         </div>
+         <div class="trade-bot LH-H56 bg-gray-e6 t-center">
+               <button @click="submitTrade">确定</button><button @click="cancelTrade">取消</button>
+         </div>
+    </div>
+
 </div>
     <div class="bot paTop8 t-center bot-account">
         <div class="inner clearfix">
@@ -564,7 +579,7 @@
     <script src="js/jquery-3.1.0.min.js"></script>
     <script src="js/vue.js"></script>
     <script src="js/components.js"></script>
-    <script src="js/uniCenter.js"></script>
+    <script src="js/incCenter.js"></script>
 </body>
 
 </html>

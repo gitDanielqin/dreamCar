@@ -15,10 +15,10 @@
 .porto-img{border: 2px dashed #999; background: url("../images/cross.png") no-repeat center center;}
 .main .infoTxt{position: relative;}
 .main .infoTxt p{line-height: 25px; font-size: 14px;}
-.main .infoTxt i{display: inline-block; position: absolute; right:-70px; top: 0; font-size: 0;}
+.main .infoTxt i{display: inline-block; position: absolute; right:-36px; top: 0; font-size: 0;}
 .progress{display: inline-block;background: #fcfbf9;  margin: 0 10px;}
 .progress-real{display: inline-block;background: #f7aa00; width: 87%; position: absolute; left: 0; top: 0;}
-.preview-btn{position: absolute; right:-97px;bottom:0; color:#f77b00; line-height: 25px; cursor: pointer;}
+.preview-btn{position: absolute; right:-63px;bottom:0; color:#f77b00; line-height: 25px; cursor: pointer;}
 
 /*VIP中心*/
 .vip-navs li{width: 100px; margin-left: 22px; position:relative; cursor: pointer;}
@@ -57,6 +57,7 @@
 .content > div{display: none;}
 .resumeCont{padding:29px 73px 47px 53px; border: 1px solid #ccc;}
 .hd-icon{width:30px; height:30px; line-height: 30px; margin-right: 10px;}
+.career-input{background: url("../images/icon-prop.jpg") no-repeat 277px center; padding-right: 23px; width:298px;}
 .resume-item{font-size: 14px; margin-bottom: 20px;}
 .resume-item label{margin-right: 10px;}
 .resumeCont input{border: 1px solid #ccc; height: 24px; line-height: 24px; padding-left: 10px; color: #999; box-sizing: border-box;}
@@ -70,7 +71,9 @@
 .resumeCont .btn-edit{position: absolute;right: 73px; top:29px; cursor: pointer;}
 
 .state{line-height: 38px;}
+.state-right{line-height: 38px;margin-top: 9px;}
 .state input{width:98px; margin-left: 29px; height: 38px; line-height: 38px;}
+.state-right input{width:98px;margin-right: 29px; height: 38px; line-height: 38px;}
 .ListBox .hd{border: 1px solid #ccc;}
 .info-items{height:410px;}
 .info-items>li{height: 128px; margin-top: 10px; border: 1px solid #ccc; background: white;}
@@ -89,8 +92,8 @@
 .item-block-right p{color: #333;}
 .info-items .item-date{font-size: 12px; color: #666;}
 
-.operations{position: absolute;top: 10px; right: 20px;}
-.operations p{line-height: 50px;}
+.operations{position: absolute;top:0; right: 20px;}
+.operations p{line-height: 30px;}
 .operations span{margin-left: 24px; cursor: pointer;}
 
 .collect-btn button{margin-right: 35px; background: none; font-size: 14px;}
@@ -157,6 +160,17 @@ position: absolute;  display:none;}
 /*微信弹框样式*/
 .wechat-bind{position: absolute; left:50%; top: 256px;margin-left: -250px;}
 .wechat-bind .close{position: absolute; right:10px; top:13px;}
+/*行业弹框*/
+.trade-box{margin-top:15%;}
+.trade-box .closer img{width:12px; height:12px;}
+.trade-box .closer:hover{ background: #d2d2d2;}
+.trade-box table tr:hover{background: #ddf8fe}
+.trade-box table td{border:1px solid #d2d2d2; border-collapse: collapse;}
+.trade-box table td input[type='checkbox']{background: white; width: 15px; height:15px; margin-right: 5px; vertical-align: middle;}
+.trade-box table td ul li:nth-child(2n+1) {margin-right: 23px;}
+.trade-box .cont{overflow: auto;}
+.trade-box .trade-bot button{width: 58px; height:28px; border:1px solid #2ea8e6; color:#2ea8e6; font-size: 14px; margin: 0 10px;}
+.trade-box .trade-bot button:hover{background: #2ea8e6; color: white;}
 
 /*底部样式，与首页基本*/
 .bot-nav{display: inline-block;}

@@ -116,10 +116,12 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .main .ListBox .contList .feedback .feedState li span{display: block; line-height: 30px;}
 /*修改密码*/
 .main .conf-keyword{border:1px solid #ccc; background: white;}
+.conf-keyword h2{border-bottom: 1px dashed #ccc;}
 .main .conf-keyword form div{margin-top: 20px;}
 .main .conf-keyword form label{width:118px; text-align: right; display: inline-block; margin-right: 30px;}
 .main .conf-keyword form input{width:290px; padding-left: 10px;background: #f2f0f0;height: 40px; line-height: 40px;}
 .conf-keyword .varify-code{display: inline-block;}
+.trigle-up{position: absolute; left: 50px; top: -14px;}
 .main .conf-account{border: 1px solid #ccc; background: white;}
 .safe-range{width:382px; height:10px; padding: 2px 1px;border: 1px solid #ccc; border-radius:8px; display: inline-block; vertical-align: middle;}
 .safe-range p{background: -webkit-linear-gradient(left,#f7524a,#f7a14a,#7ebe96);width:80%;height:10px;border-radius: 8px;}
@@ -128,6 +130,7 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .bind-acc li{ height:40px; line-height: 40px; vertical-align: middle; margin-bottom: 20px;}
 .bind-acc li img{margin-right: 20px;vertical-align: middle;}
 .bind-acc li button{font-size: 18px;background: none; color:#48c1e4;}
+
 .main .ListBox .pageBot li{margin-left: 10px; background: #333; color: #fff;line-height: 30px; height: 30px; text-align: center;}
 .main .ListBox .pageBot li.side-page{width:60px;}
 .main .ListBox .pageBot li.page-index{width:30px;}
@@ -164,13 +167,13 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .close{cursor: pointer;}
 .wechat-bind{position: absolute; left:50%; top: 256px;margin-left: -250px;}
 .wechat-bind .close{position: absolute; right:10px; top:13px;}
-.modal{}
     /*底部样式，与首页基本*/
 .bot-nav{display: inline-block;}
 .bot-nav a{color:#797979;}
 .bot-nav a:hover{color:#f00; cursor: pointer}
 .bot .barcode-text{display: inline-block; vertical-align: middle;}
 
+/*消息弹框样式*/
 .msg-box{margin-top:15%; border: 10px solid rgba(0,0,0,0.3)}
 .msg-box i.closer{display: inline-block; font-family: Consolas;}
 .msg-box .msg-date{font-size: 18px; padding-left:30px; }
@@ -183,11 +186,9 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .msg-body li:nth-child(2n){background: white;}
 .msg-body li:nth-child(2n+1){background: #fcf1e3;}
 .msg-body li:last-child{border-bottom: 1px solid #fbd0a4;}
-
 .msg-detail p{padding-left: 42px;}
-
-.pageBot{display: inline-block;}
-.pageBot li{margin: 0 10px;}
+.msg-bot .pageBot{display: inline-block;}
+.msg-bot .pageBot li{margin: 0 10px;}
 
 .progress{display: inline-block;background: #fcfbf9;  margin: 0 10px;}
 .progress-real{display: inline-block;background: #f7aa00; width: 87%; position: absolute; left: 0; top: 0;}
@@ -211,7 +212,7 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .btn-save:hover{background: #ff9933; color:white;}
 .btn-cancel{border:1px solid #82c4ea; color:#82c4ea;}
 .btn-cancel:hover{background: #82c4ea; color: white;}
-
+/*行业弹框*/
 .trade-box{margin-top:15%;}
 .trade-box .closer img{width:12px; height:12px;}
 .trade-box .closer:hover{ background: #d2d2d2;}
@@ -220,7 +221,6 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .trade-box table td input[type='checkbox']{background: white; width: 15px; height:15px; margin-right: 5px; vertical-align: middle;}
 .trade-box table td ul li:nth-child(2n+1) {margin-right: 23px;}
 .trade-box .cont{overflow: auto;}
-
 .trade-box .trade-bot button{width: 58px; height:28px; border:1px solid #2ea8e6; color:#2ea8e6; font-size: 14px; margin: 0 10px;}
 .trade-box .trade-bot button:hover{background: #2ea8e6; color: white;}
 

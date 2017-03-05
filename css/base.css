@@ -141,6 +141,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .W305{width:305px;}
 .W312{width:312px;}
 .W328{width:328px;}
+.W334{width:334px;}
 .W345{width:345px;}
 .W362{width:362px;}
 .W367{width:367px;}
@@ -154,6 +155,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .W454{width:454px;}
 .W480{width:480px;}
 .W500{width:500px;}
+.W510{width:510px;}
 .W534{width:534px;}
 .W539{width:539px;}
 .W560{width:560px;}
@@ -189,6 +191,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .LH-H27{line-height: 27px; height: 27px;}
 .LH-H28{line-height: 28px; height: 28px;}
 .LH-H60{line-height: 60px; height: 60px;}
+.LH-H63{line-height: 63px; height: 63px;}
 .LH-H64{line-height: 64px; height: 64px;}
 .LH-H66{line-height: 66px; height: 66px;}
 .LH-H68{line-height: 68px; height: 68px;}
@@ -328,9 +331,11 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .maL38{margin-left:38px;}
 .maL40{margin-left:40px;}
 .maL50{margin-left: 50px;}
+.maL52{margin-left: 52px;}
 .maL54{margin-left:54px;}
 .maL90{margin-left:90px;}
 .maL160{margin-left:160px;}
+.maL195{margin-left:195px;}
 .maL278{margin-left: 278px;}
 .maL243{margin-left: 243px;}
 .maT100{margin-top:100px;}

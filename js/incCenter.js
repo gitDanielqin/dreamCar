@@ -3,8 +3,9 @@ var appPorto = new Vue({
     el: "#app-porto",
     data: {
         viewInfo: true,
-        uni: "中国美术学院",
-        classic: "重点大学",
+        Inc: "企业名称",
+        IncProps: "民营企业",
+        IncScale:"600人以上",
         address: {
             province: "浙江",
             city: "杭州",
@@ -17,36 +18,27 @@ var appCont = new Vue({
     el: "#app-content",
     data:{
          database:{
-              classific:["综合类","理工类","师范类","艺术类","体育类","职业技术类"],
-              amount:["1-10000","10001-20000","20001-30000","30001-40000","40000以上",],
-              unilevel:["重点","本科","大专","高职"],
-              majors:[
-                   {major:"艺术",submajor:["行为艺术","人体艺术"]},
-                   {major:"信息技术",submajor:["计算机科学","通信工程"]},
-                   {major:"经济",submajor:["国民经济","企业经济"]},
-              ],
+              IncScale:["1~20","21~50","51~100","101~500","501~1000","1000人以上"],
+              IncProps:["内资","外资","农民专业合作社","合作企业","个人独资企业"],
          },
          resume:{
-              uni:"中国美术学院",
-              classific:"艺术类",
-              amount:"",
-              level:"重点",
+              Inc:"",
+              trade:"",
+              scale:"",
+              props:"民营企业",
               specialLv:"",
-              specialmajor:[
-                   {major:"艺术",submajor:"行为艺术"},
-                   {major:"艺术",submajor:"行为艺术"}
-              ],
-              intro:"世界一流的艺术大学",
+              intro:"国际领先的互联网科技公司",
               firstEdit:true,
               edit:true,
               view:false
          },
          require:{
-              state:"全部状态",
+              state:"全部类型",
+              period:"全部状态",
               items:[
-                   {classic:"校企合作",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11"},
-                   {classic:"校企合作",major:"通信工程",IncProps:"国有企业",IncScale:"600人以上",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11"},
-                   {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},
+                   {classic:"校企合作",coMajor:"合作专业",coScale:"合作人数",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",IncName:"企业名称",uniLevel:"高校性质",publicDate:"2017.11.11",publicTime:"24:00",IncPos:"岗位名称"},
+                   {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017.11.11",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
+                   {classic:"企业直聘",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"大专",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:2,publicDate:"2017.11.11",publicTime:"24:00",IncAddr:"滨江"},
               ],
               showCombi:true,
               showRecruit:true
@@ -102,14 +94,18 @@ var appCont = new Vue({
     },
     watch:{
       "require.state":function(curval,oldval){
-           if(curval=="全部状态"){
+           if(curval=="全部类型"){
                 $(".requireBox .info-items li").show();
            }else if(curval=="校企合作"){
+                $(".requireBox .info-items li").hide();
                 $(".requireBox .info-items li[name='校企合作']").show();
-                $(".requireBox .info-items li[name='招聘会']").hide();
+
            }else if(curval=="招聘会"){
-                $(".requireBox .info-items li[name='校企合作']").hide();
+                $(".requireBox .info-items li").hide();
                 $(".requireBox .info-items li[name='招聘会']").show();
+           }else if(curval=="企业直聘"){
+                $(".requireBox .info-items li").hide();
+                $(".requireBox .info-items li[name='企业直聘']").show();
            }
       },
       "collect.state":function(curval,oldval){
@@ -122,6 +118,10 @@ var appCont = new Vue({
       }
     },
     methods:{
+         popTrade:function(){
+              appModal.showModal=true;
+              appModal.showTrade=true;
+         },
          submajors:function(major){
               var arr =[];
               if(major){
@@ -245,7 +245,7 @@ var appModal = new Vue({
                }
           },
           submitTrade:function(){
-               appCont.resume.expect.tradeItems = this.checkedTrades.join();
+               appCont.resume.trade = this.checkedTrades.join();
                this.showTrade=false;
                this.showModal=false;
           },
