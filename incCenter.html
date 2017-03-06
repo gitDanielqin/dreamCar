@@ -116,7 +116,7 @@
                         <dropdown classes="state-right fr" :options="['全部状态','三天内','一周内','一月内']" v-model="require.period"></dropdown>
                     </div>
                     <ul class="info-items">
-                        <li v-for="item in require.items" :name="item.classic">
+                        <li v-for="item in require.items" :name="item.classic" :date="item.publicDate">
                             <div v-if="item.classic=='校企合作'" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W280 maL20">
@@ -181,28 +181,49 @@
             <div class="uni-collect collectBox">
                 <div class="ListBox">
                     <div class="hd LH-H58 bg-white">
-                        <dropdown classes="state" :options="['全部状态','近一个星期','近一个月','近三个月']" v-model="collect.state"></dropdown>
-                        <p class="fr fSize14 maR30">我发布过的需求<span class="color-orange2 maL10 maR10">{{collect.items.length}}</span>个</p>
+                        <dropdown classes="state" :options="['全部状态','校企合作','高校招聘会']" v-model="collect.state"></dropdown>
+                        <p class="fr fSize14 maR30">我收藏的高校<span class="color-orange2 maL10 maR10">{{collect.items.length}}</span>个</p>
                     </div>
                     <ul class="info-items">
                         <li v-for="item in collect.items" :name="item.classic">
-                            <div class="paLeft29 clearfix H128 pRel">
-                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                <div class="item-block-left fl paTop22 W328 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30">{{item.pos}}</h2>
-                                    <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.uniLevel}}</p>
-                                    <p>{{item.uniApply}}</p>
-                                    <p class="item-date">{{item.date}}</span> {{item.time}}</p>
-                                </div>
-                                <div class="item-block-right fl fSize14 LH25 maT10">
-                                    <p>{{item.IncName}}</p>
-                                    <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
-                                    <p class="pubdate">{{item.publicDate}}</p>
-                                    <div class="collect-btn">
-                                        <button class="color-blueL">取消收藏</button>
-                                        <button class="color-orange-f7">申请合作</button>
-                                    </div>
-                                </div>
+                            <div v-if="item.classic=='高校招聘会'">
+                                 <div class="paLeft29 clearfix H128 pRel">
+                                     <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                     <div class="item-block-left fl paTop22 W328 maL20">
+                                         <h2 class="color-blueL fSize18 LH-H30">{{item.major}}</h2>
+                                         <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.recruitAddr}}</p>
+                                         <p>招聘会时间：{{item.recruitDate}}</p>
+                                     </div>
+                                     <div class="item-block-right fl fSize14 LH25 maT10">
+                                         <p>高校对企业要求</p>
+                                         <p>{{item.IncScale}}<i class="depart">|</i>{{item.IncProps}}<i class="depart">|</i>{{item.pos}}</p>
+                                         <p class="pubdate">{{item.publicDate}} {{item.publicTime}}</p>
+                                         <div class="collect-btn">
+                                             <button class="color-blueL">取消收藏</button>
+                                             <button class="color-orange-f7">申请合作</button>
+                                         </div>
+                                     </div>
+                                 </div>
+                            </div>
+                            <div v-else-if="item.classic=='校企合作'">
+                                 <div class="paLeft29 clearfix H128 pRel">
+                                     <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                     <div class="item-block-left fl paTop22 W328 maL20">
+                                         <h2 class="color-blueL fSize18 LH-H30">{{item.major}}</h2>
+                                         <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
+                                         <p>{{item.trainway}}</p>
+                                         <p class="item-date">{{item.date}}</span> {{item.time}}</p>
+                                     </div>
+                                     <div class="item-block-right fl fSize14 LH25 maT10">
+                                         <p>{{item.uniname}}</p>
+                                         <p>{{item.uniLevel}}</p>
+                                         <p class="pubdate">{{item.publicDate}} {{item.publicTime}}</p>
+                                         <div class="collect-btn">
+                                             <button class="color-blueL">取消收藏</button>
+                                             <button class="color-orange-f7">申请合作</button>
+                                         </div>
+                                     </div>
+                                 </div>
                             </div>
                         </li>
                     </ul>
@@ -415,21 +436,21 @@
                 <div class="ListBox">
                     <div class="hd LH-H58 bg-white">
                         <dropdown classes="state" :options="['全部状态','合作进行中','合作已完成','合作待开始']" v-model="coop.state"></dropdown>
-                        <p class="fr fSize14 maR30">我合作的企业<span class="color-orange2 maL10 maR10">{{coop.items.length}}</span>个</p>
+                        <p class="fr fSize14 maR30">我合作的高校<span class="color-orange2 maL10 maR10">{{coop.items.length}}</span>个</p>
                     </div>
                     <ul class="info-items">
                         <li v-for="item in coop.items" :name="item.classic">
                             <div class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W390 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30">{{item.IncName}}</h2>
-                                    <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
-                                    <p>{{item.trainWay}}</p>
+                                    <h2 class="color-blueL fSize18 LH-H30">{{item.uniname}}</h2>
+                                    <p>{{item.uniLevel}}</p>
+                                    <p>{{item.uniApply}}</p>
                                     <p class="item-date">{{item.date}}</span> {{item.time}}</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH28 maT10">
                                     <p :style="coopStyle(item.coopState)">{{coopSt(item.coopState)}}</p>
-                                    <p>{{item.major}}</p>
+                                    <p>{{item.coPos}}</p>
                                     <button class="more-info">了解更多<i>>></i></button>
                                 </div>
                             </div>

@@ -54,6 +54,13 @@ function cloneObj(obj) {
     return o;
 };
 
+function diffDay(dateObj){
+     var nowDate = new Date();
+     aDate = dateObj.split("-");
+     var oldDate = new Date(aDate[1]+"-"+aDate[2]+"-"+aDate[0]);
+     var iDays = parseInt(Math.abs(nowDate-oldDate)/1000/60/60/24);
+     return iDays;
+}
 Array.prototype.indexOf = function(val) {
     for (var i = 0; i < this.length; i++) {
         if (this[i] == val) return i;

@@ -36,9 +36,9 @@ var appCont = new Vue({
               state:"全部类型",
               period:"全部状态",
               items:[
-                   {classic:"校企合作",coMajor:"合作专业",coScale:"合作人数",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",IncName:"企业名称",uniLevel:"高校性质",publicDate:"2017.11.11",publicTime:"24:00",IncPos:"岗位名称"},
-                   {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017.11.11",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
-                   {classic:"企业直聘",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"大专",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:2,publicDate:"2017.11.11",publicTime:"24:00",IncAddr:"滨江"},
+                   {classic:"校企合作",coMajor:"合作专业",coScale:"合作人数",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",IncName:"企业名称",uniLevel:"高校性质",publicDate:"2017-3-5",publicTime:"24:00",IncPos:"岗位名称"},
+                   {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
+                   {classic:"企业直聘",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"大专",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:2,publicDate:"2017-2-14",publicTime:"24:00",IncAddr:"滨江"},
               ],
               showCombi:true,
               showRecruit:true
@@ -46,9 +46,9 @@ var appCont = new Vue({
          collect:{
               state:"全部状态",
               items:[
-                   {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"},
-                   {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"},
-                   {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"}
+                   {classic:"高校招聘会",pos:"岗位名称",major:"专业名称",stuScale:"专业人数",IncName:"公司名称",recruitDate:"2017-01-30",recruitAddr:"地点",IncProps:"企业性质",IncScale:"企业规模",publicDate:"2017-11-11",publicTime:"24:00"},
+                   {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"企业需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
+                   {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"到校培训",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
               ],
          },
          message:{
@@ -86,9 +86,9 @@ var appCont = new Vue({
        coop:{
             state:"全部状态",
             items:[
-                 {IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",date:"2017.11.11",time:"24:00",coopState:"02",major:"公共管理专业"},
-                 {IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",date:"2017.11.11",time:"24:00",coopState:"03",major:"合作专业"},
-                 {IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",date:"2017.11.11",time:"24:00",coopState:"01",major:"公共管理专业"},
+                 {uniname:"高校名称",uniLevel:"高校性质",uniApply:"高校提供的培训方式",date:"2017-3-5",time:"24:00",coopState:"02",coPos:"合作岗位"},
+                 {uniname:"高校名称",uniLevel:"高校性质",uniApply:"高校提供的培训方式",date:"2017-3-5",time:"24:00",coopState:"03",coPos:"合作岗位"},
+                 {uniname:"高校名称",uniLevel:"高校性质",uniApply:"高校提供的培训方式",date:"2017-3-5",time:"24:00",coopState:"01",coPos:"合作岗位"}
             ]
        }
     },
@@ -108,12 +108,42 @@ var appCont = new Vue({
                 $(".requireBox .info-items li[name='企业直聘']").show();
            }
       },
+      "require.period":function(curval,oldval){
+           if(curval=="全部状态"){
+                $(".requireBox .info-items li").show();
+           }else if(curval=="三天内"){
+                $(".requireBox .info-items li").hide();
+                $(".requireBox .info-items li").each(function(index){
+                     if(diffDay($(this).attr("date"))<=3){
+                          $(this).show();
+                     };
+                })
+           }else if(curval=="一周内"){
+                $(".requireBox .info-items li").hide();
+                $(".requireBox .info-items li").each(function(index){
+                     if(diffDay($(this).attr("date"))<=7){
+                          $(this).show();
+                     };
+                })
+           }else if(curval=="一月内"){
+                $(".requireBox .info-items li").hide();
+                $(".requireBox .info-items li").each(function(index){
+                     if(diffDay($(this).attr("date"))<=30){
+                          $(this).show();
+                     };
+                })
+           }
+      },
       "collect.state":function(curval,oldval){
            var mydate = new Date();
            if(curval=="全部状态"){
                 $(".collectBox .info-items li").show();
-           }else if(curval=="近一个星期"){
-
+           }else if(curval=="高校招聘会"){
+                $(".collectBox .info-items li").hide();
+                $(".collectBox .info-items li[name='高校招聘会']").show();
+           }else if(curval=="校企合作"){
+                $(".collectBox .info-items li").hide();
+                $(".collectBox .info-items li[name='校企合作']").show();
            }
       }
     },
@@ -347,9 +377,8 @@ function vipEventBind(){
      })
 }
 function init_safepos(){
-     //console.log($(".safe-range p").width(),$(".safe-range").width());
-    var p_left= Math.floor($(".safe-range p").width())-16+"px";
-    console.log(p_left);
+     var p_left= Math.floor($(".safe-range p").width()*$(".safe-range").width()/100)-16+"px";
+    // var p_left= Math.floor($(".safe-range p").width())-16+"px";
     $(".r-pointer").css("left",p_left);
 }
 function modalEventBind(){
