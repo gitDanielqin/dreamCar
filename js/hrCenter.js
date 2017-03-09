@@ -6,22 +6,135 @@ var hrApp = new Vue({
                     "工业设计","UI设计","前端开发","全部职位"
                ]
           },
-          resumes:[
-               {type:"unchecked",name:"江玉海",uni:"中国美术学院",major:"工业设计",exp:"3年经验",scolar:"本科",applypos:"工业设计",applydate:"2017-01-30"},
-               {type:"unchecked",name:"江玉海",uni:"中国美术学院",major:"工业设计",exp:"3年经验",scolar:"本科",applypos:"工业设计",applydate:"2017-01-30"},
-               {type:"unchecked",name:"江玉海",uni:"中国美术学院",major:"工业设计",exp:"3年经验",scolar:"本科",applypos:"工业设计",applydate:"2017-01-30"},
-               {type:"unchecked",name:"江玉海",uni:"中国美术学院",major:"工业设计",exp:"3年经验",scolar:"本科",applypos:"工业设计",applydate:"2017-01-30"}
-          ],
-          resumeType:"全部类型",
-          resumePos:"全部职位"
-     }
+          resumes:{
+               show:true,
+               resumeType:"全部类型",
+               resumePos:"全部职位",
+               unchecked:[
+                    {type:"unchecked",source:"企业直聘",name:"江玉海",uni:"中国美术学院",major:"工业设计",exp:"3年经验",scolar:"本科",applypos:"工业设计",applydate:"2017-01-30"},
+                    {type:"unchecked",source:"招聘会",name:"江玉海",uni:"中国美术学院",major:"工业设计",exp:"3年经验",scolar:"本科",applypos:"工业设计",applydate:"2017-01-30"},
+                    {type:"unchecked",source:"企业直聘",name:"江玉海",uni:"中国美术学院",major:"工业设计",exp:"3年经验",scolar:"本科",applypos:"工业设计",applydate:"2017-01-30"},
+                    {type:"unchecked",source:"企业直聘",name:"江玉海",uni:"中国美术学院",major:"工业设计",exp:"3年经验",scolar:"本科",applypos:"UI设计",applydate:"2017-01-30"}
+               ],
+               checked:[
+                    {type:"checked",source:"企业直聘",name:"江玉海",uni:"中国美术学院",major:"工业设计",exp:"3年经验",scolar:"本科",applypos:"工业设计",applydate:"2017-01-30"},
+                    {type:"checked",source:"企业直聘",name:"江玉海",uni:"中国美术学院",major:"工业设计",exp:"3年经验",scolar:"本科",applypos:"UI设计",applydate:"2017-01-30"}
+               ],
+          },
+          interview:{
+               show:false,
+               interType:"全部类型",
+               interPos:"全部职位",
+               undecision:[
+                    {type:"unchecked",source:"招聘会",name:"江玉海",uni:"中国美术学院",major:"工业设计",exp:"3年经验",scolar:"本科",applypos:"工业设计",applydate:"2017-01-30"},
+                    {type:"unchecked",source:"企业直聘",name:"江玉海",uni:"中国美术学院",major:"工业设计",exp:"3年经验",scolar:"本科",applypos:"工业设计",applydate:"2017-01-30"},
+                    {type:"unchecked",source:"企业直聘",name:"江玉海",uni:"中国美术学院",major:"工业设计",exp:"3年经验",scolar:"本科",applypos:"UI设计",applydate:"2017-01-30"},
+                    {type:"unchecked",source:"企业直聘",name:"江玉海",uni:"中国美术学院",major:"工业设计",exp:"3年经验",scolar:"本科",applypos:"UI设计",applydate:"2017-01-30"}
+               ],
+               suitable:[
+                    {type:"suitable",source:"企业直聘",name:"江玉海",uni:"中国美术学院",major:"工业设计",exp:"3年经验",scolar:"本科",applypos:"UI设计",applydate:"2017-01-30"}
+               ],
+               unsuitable:[
+                    {type:"unsuitable",source:"企业直聘",name:"江玉海",uni:"中国美术学院",major:"工业设计",exp:"3年经验",scolar:"本科",applypos:"UI设计",applydate:"2017-01-30"},
+                    {type:"unsuitable",source:"企业直聘",name:"江玉海",uni:"中国美术学院",major:"工业设计",exp:"3年经验",scolar:"本科",applypos:"UI设计",applydate:"2017-01-30"},
+                    {type:"unsuitable",source:"企业直聘",name:"江玉海",uni:"中国美术学院",major:"工业设计",exp:"3年经验",scolar:"本科",applypos:"UI设计",applydate:"2017-01-30"}
+               ],
+          },
+          interItems:[],
+          resumeItems:[]
+
+     },
+     methods:{
+          pass:function(item){
+               item.type="suitable";
+               this.interview.undecision.remove(item);
+               this.interview.suitable.push(item);
+          },
+          interRefuse:function(item){
+               item.type="unsuitable";
+               this.interview.undecision.remove(item);
+               this.interview.unsuitable.push(item);
+          }
+     },
+     watch:{
+      "resumes.resumeType":function(curval,oldval){
+           if(curval=="全部类型"){
+                if(this.resumes.resumePos=="全部职位"){
+                     $(".resume-box .info-items li").show();
+                }else{
+                     $(".resume-box .info-items li").hide();
+                     $(".resume-box .info-items li[pos='"+this.resumes.resumePos+"']").show();
+                }
+           }else{
+                $(".resume-box .info-items li").hide();
+                if(this.resumes.resumePos=="全部职位"){
+                     $(".resume-box .info-items li[source='"+curval+"']").show();
+                }else{
+                    $(".resume-box .info-items li[source='"+curval+"'][pos='"+this.resumes.resumePos+"']").show();
+                }
+
+           }
+      },
+      "resumes.resumePos":function(curval,oldval){
+           if(curval=="全部职位"){
+                if(this.resumes.resumeType=="全部类型"){
+                     $(".resume-box .info-items li").show();
+                }else{
+                     $(".resume-box .info-items li").hide();
+                     $(".resume-box .info-items li[source='"+this.resumes.resumeType+"']").show();
+                }
+           }else{
+                $(".resume-box .info-items li").hide();
+                if(this.resumes.resumeType=="全部类型"){
+                     $(".resume-box .info-items li[pos='"+curval+"']").show();
+                }else{
+                    $(".resume-box .info-items li[pos='"+curval+"'][source='"+this.resumes.resumeType+"']").show();
+                }
+           }
+      },
+      "interview.interType":function(curval,oldval){
+           if(curval=="全部类型"){
+                if(this.interview.interPos=="全部职位"){
+                     $(".interview-box .info-items li").show();
+                }else{
+                     $(".interview-box .info-items li").hide();
+                     $(".interview-box .info-items li[pos='"+this.interview.interPos+"']").show();
+                }
+           }else{
+                $(".interview-box .info-items li").hide();
+                if(this.interview.interPos=="全部职位"){
+                     $(".interview-box .info-items li[source='"+curval+"']").show();
+                }else{
+                    $(".interview-box .info-items li[source='"+curval+"'][pos='"+this.interview.interPos+"']").show();
+                }
+
+           }
+      },
+      "interview.interPos":function(curval,oldval){
+           if(curval=="全部职位"){
+                if(this.interview.interType=="全部类型"){
+                     $(".interview-box .info-items li").show();
+                }else{
+                     $(".interview-box .info-items li").hide();
+                     $(".interview-box .info-items li[source='"+this.interview.interType+"']").show();
+                }
+           }else{
+                $(".interview-box .info-items li").hide();
+                if(this.interview.interType=="全部类型"){
+                     $(".interview-box .info-items li[pos='"+curval+"']").show();
+                }else{
+                    $(".interview-box .info-items li[pos='"+curval+"'][source='"+this.interview.interType+"']").show();
+                }
+           }
+      }
+    }
 })
 
 
 function init_center(){
      selectInitPos();
     selectEventBind();
-
+    navEventBind();
 }
 init_center();
 function selectInitPos(){
@@ -62,4 +175,50 @@ function selectEventBind(){
     $("body").bind("click",function(){
         $(".selectee ul").hide();
     })
+};
+function navEventBind(){
+     hrApp.resumeItems=hrApp.resumes.unchecked;
+     $(".sider dt").click(function(){
+          $(".sider dt.on").removeClass("on");
+          $(this).addClass("on");
+          if($(this).attr("paneid")=="resume-box"){
+               hrApp.interview.show=false;
+               hrApp.resumes.show=true;
+               hrApp.resumeItems=hrApp.resumes.unchecked;
+          }
+          if($(this).attr("paneid")=="interview-box"){
+               hrApp.resumes.show=false;
+               hrApp.interview.show=true;
+               hrApp.interItems=hrApp.interview.undecision;
+          }
+     });
+     $(".sider .resume-unview").click(function(){
+          $(".sider dd.on").removeClass("on");
+          $(this).addClass("on");
+          hrApp.interview.show=false;
+          hrApp.resumes.show=true;
+          hrApp.resumeItems=hrApp.resumes.unchecked;
+     });
+     $(".sider .resume-viewed").click(function(){
+          $(".sider dd.on").removeClass("on");
+          $(this).addClass("on");
+          hrApp.interview.show=false;
+          hrApp.resumes.show=true;
+          hrApp.resumeItems=hrApp.resumes.checked;
+     })
+     $(".sider .inter-unsuit").click(function(){
+          $(".sider dd.on").removeClass("on");
+          $(this).addClass("on");
+          hrApp.resumes.show=false;
+          hrApp.interview.show=true;
+          hrApp.interItems=hrApp.interview.unsuitable;
+     });
+     $(".sider .inter-suit").click(function(){
+          $(".sider dd.on").removeClass("on");
+          $(this).addClass("on");
+          hrApp.resumes.show=false;
+          hrApp.interview.show=true;
+          hrApp.interItems=hrApp.interview.suitable;
+     });
+
 }

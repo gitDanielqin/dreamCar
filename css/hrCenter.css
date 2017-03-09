@@ -12,6 +12,7 @@
 
 .hr-navs li{width: 100px; margin-right: 20px; text-align: center; color: #666;height: 46px; line-height: 46px;}
 .hr-navs li.on{border-bottom: 4px solid #f7b632; color: #333;}
+.pub-pos{float: right; margin-right: 30px; margin-top: 14px; background: none; font-size: 16px; color:#ff9900; }
 
 .sider{border: 1px solid #ccc; color: #666; background: white; text-align: right;}
 .sider dt{line-height: 47px; font-size: 18px;padding-right: 45px; cursor: pointer; position: relative;}
@@ -35,6 +36,7 @@ text-align: center;}
 .item-block-right p{color: #999;}
 .info-items .item-date{font-size: 12px; color: #666;}
 .item-block-right button{background: none; font-size: 16px; margin-top: 18px; margin-right: 50px;}
+
 
 .pageBot li{margin-left: 10px; background: #333; color: #fff;line-height: 30px; height: 30px; text-align: center;}
 .pageBot li.side-page{width:60px;}
