@@ -41,7 +41,40 @@ var hrApp = new Vue({
                ],
           },
           interItems:[],
-          resumeItems:[]
+          resumeItems:[],
+          direcPos:{
+               show:false,
+               posType:"全部类型",
+               pos:"全部职位",
+               items:[
+               {type:"招聘会",pos:"岗位名称",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,IncName:"杭州煌巢信息科技有限公司",IncProps:"民营",IncScale:"100-150人",publicDate:"2010-11-11",publicTime:"24:00"},
+               {type:"企业直聘",pos:"岗位名称",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,IncName:"杭州煌巢信息科技有限公司",IncProps:"民营",IncScale:"100-150人",publicDate:"2010-11-11",publicTime:"24:00"},
+               {type:"企业直聘",pos:"岗位名称",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,IncName:"杭州煌巢信息科技有限公司",IncProps:"民营",IncScale:"100-150人",publicDate:"2010-11-11",publicTime:"24:00"},
+               {type:"招聘会",pos:"岗位名称",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,IncName:"杭州煌巢信息科技有限公司",IncProps:"民营",IncScale:"100-150人",publicDate:"2010-11-11",publicTime:"24:00"},
+               ]
+          },
+          recruitMeeting:{
+               show:false,
+               state:"全部状态",
+               pos:"全部职位",
+               items:[
+                    {uniname:"浙江大学",major:"工业设计",stuScale:"50人",UniAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},date:"2017-01-28",IncScale:"50-100人",IncProps:"上市",pos:"岗位名称",publicDate:"2017-11-11",publicTime:"24:00",coState:"合作中"},
+                    {uniname:"武汉大学",major:"工业设计",stuScale:"50人",UniAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},date:"2017-01-28",IncScale:"50-100人",IncProps:"上市",pos:"岗位名称",publicDate:"2017-11-11",publicTime:"24:00",coState:"合作中"},
+                    {uniname:"浙江大学",major:"工业设计",stuScale:"50人",UniAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},date:"2017-01-28",IncScale:"50-100人",IncProps:"上市",pos:"岗位名称",publicDate:"2017-11-11",publicTime:"24:00",coState:"待反馈"},
+                    {uniname:"中国地质大学",major:"工业设计",stuScale:"50人",UniAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},date:"2017-01-28",IncScale:"50-100人",IncProps:"上市",pos:"岗位名称",publicDate:"2017-11-11",publicTime:"24:00",coState:"不符合"},
+               ]
+          },
+          combiPos:{
+               show:true,
+               state:"全部状态",
+               pos:"全部职位",
+               items:[
+                    {pos:"岗位名称",coMajor:"合作专业",stuScale:"合作人数",uniLevel:"高校性质",trainWay:"高管到校",IncName:"企业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",publicDate:"2017-1-1",publicTime:"24:00"},
+                    {pos:"岗位名称",coMajor:"合作专业",stuScale:"合作人数",uniLevel:"高校性质",trainWay:"高管到校",IncName:"企业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",publicDate:"2017-1-1",publicTime:"24:00"},
+                    {pos:"岗位名称",coMajor:"合作专业",stuScale:"合作人数",uniLevel:"高校性质",trainWay:"高管到校",IncName:"企业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",publicDate:"2017-1-1",publicTime:"24:00"},
+                    {pos:"岗位名称",coMajor:"合作专业",stuScale:"合作人数",uniLevel:"高校性质",trainWay:"高管到校",IncName:"企业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",publicDate:"2017-1-1",publicTime:"24:00"},
+               ]
+          }
 
      },
      methods:{
@@ -54,6 +87,15 @@ var hrApp = new Vue({
                item.type="unsuitable";
                this.interview.undecision.remove(item);
                this.interview.unsuitable.push(item);
+          },
+          colorState:function(state){
+               var mystyle;
+               switch (state) {
+                    case "合作中": mystyle={color:"#ff9933"}; break;
+                    case "待反馈": mystyle={color:"#59b7e9"}; break;
+                    case "不符合": mystyle={color:"#ff3333"}; break;
+               };
+               return mystyle;
           }
      },
      watch:{
@@ -126,6 +168,40 @@ var hrApp = new Vue({
                     $(".interview-box .info-items li[pos='"+curval+"'][source='"+this.interview.interType+"']").show();
                 }
            }
+      },
+      "direcPos.posType":function(curval,oldval){
+           if(curval=="全部类型"){
+                if(this.direcPos.pos=="全部职位"){
+                     $(".direcpos-box .info-items li").show();
+                }else{
+                     $(".direcpos-box .info-items li").hide();
+                     $(".direcpos-box .info-items li[pos='"+this.direcPos.pos+"']").show();
+                }
+           }else{
+                $(".direcpos-box .info-items li").hide();
+                if(this.direcPos.pos=="全部职位"){
+                     $(".direcpos-box .info-items li[type='"+curval+"']").show();
+                }else{
+                    $(".direcpos-box .info-items li[type='"+curval+"'][pos='"+this.direcPos.pos+"']").show();
+                }
+           }
+      },
+      "direcPos.pos":function(curval,oldval){
+           if(curval=="全部职位"){
+                if(this.direcPos.posType=="全部类型"){
+                     $(".direcpos-box .info-items li").show();
+                }else{
+                     $(".direcpos-box .info-items li").hide();
+                     $(".direcpos-box .info-items li[type='"+this.direcPos.posType+"']").show();
+                }
+           }else{
+                $(".direcpos-box .info-items li").hide();
+                if(this.direcPos.posType=="全部类型"){
+                     $(".direcpos-box .info-items li[pos='"+curval+"']").show();
+                }else{
+                    $(".direcpos-box .info-items li[pos='"+curval+"'][type='"+this.direcPos.posType+"']").show();
+                }
+           }
       }
     }
 })
@@ -178,6 +254,22 @@ function selectEventBind(){
 };
 function navEventBind(){
      hrApp.resumeItems=hrApp.resumes.unchecked;
+     $(".hr-navs li").each(function(index){
+          $(this).click(function(){
+               $(".hr-navs li.on").removeClass("on");
+               $(this).addClass("on");
+               $(".main .mainCont").hide();
+               $(".main .mainCont:nth-of-type("+(index+1)+")").show();
+          })
+     });
+     $(".pos-sider li").each(function(index){
+          $(this).click(function(){
+               $(".pos-sider li.on").removeClass("on");
+               $(this).addClass("on");
+               $(".pos-resume .ListBox").hide();
+               $(".pos-resume .ListBox:nth-of-type("+(index+1)+")").show();
+          })
+     });
      $(".sider dt").click(function(){
           $(".sider dt.on").removeClass("on");
           $(this).addClass("on");

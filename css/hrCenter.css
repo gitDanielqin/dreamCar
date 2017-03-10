@@ -10,7 +10,7 @@
 .selectee ul li.over{background: #9bcce5; color:#fff;}
 .selectee ul li.selected{background: #2ea8e6; color:#fff;}
 
-.hr-navs li{width: 100px; margin-right: 20px; text-align: center; color: #666;height: 46px; line-height: 46px;}
+.hr-navs li{width: 100px; margin-right: 20px; text-align: center; color: #666;height: 46px; line-height: 46px; cursor: pointer;}
 .hr-navs li.on{border-bottom: 4px solid #f7b632; color: #333;}
 .pub-pos{float: right; margin-right: 30px; margin-top: 14px; background: none; font-size: 16px; color:#ff9900; }
 
@@ -34,9 +34,21 @@ text-align: center;}
 .item-block-left p{line-height: 36px; font-size: 14px; color: #666;}
 .item-block-right{padding: 18px; background: url("../images/dashline.png") no-repeat left 26px; padding-left: 54px;}
 .item-block-right p{color: #999;}
+.posCont .item-block-left p{line-height: 27px;}
+.posCont .item-block-right{padding: 18px; background: url("../images/dashline.png") no-repeat left 20px;}
+.posCont .item-block-right p{color: #666;}
 .info-items .item-date{font-size: 12px; color: #666;}
 .item-block-right button{background: none; font-size: 16px; margin-top: 18px; margin-right: 50px;}
 
+.co-state{line-height: 128px;right:0; position: absolute; display: inline-block; width: 100px;}
+
+.operations{position: absolute;top:0; right: 20px;}
+.operations p{line-height: 30px;}
+.operations span{margin-left: 24px; cursor: pointer;}
+
+.pos-sider{border: 1px solid #ccc; background: white;}
+.pos-sider li{line-height: 47px; height: 47px; padding-left: 34px; cursor: pointer;}
+.pos-sider li.on{background-color: #f8f8f8; color: #ff9900;}
 
 .pageBot li{margin-left: 10px; background: #333; color: #fff;line-height: 30px; height: 30px; text-align: center;}
 .pageBot li.side-page{width:60px;}
