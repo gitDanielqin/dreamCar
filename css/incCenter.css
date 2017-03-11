@@ -91,6 +91,7 @@
 .uni-message .uni-apply-message{background:none}
 .item-block-right p{color: #333;}
 .info-items .item-date{font-size: 12px; color: #666;}
+.new-require{position: absolute; right: 70px;}
 
 .operations{position: absolute;top:0; right: 20px;}
 .operations p{line-height: 30px;}

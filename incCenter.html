@@ -110,10 +110,11 @@
             </div>
             <div class="uni-require requireBox">
                 <div class="ListBox">
-                    <div class="hd LH-H58 bg-white">
+                    <div class="hd LH-H58 bg-white pRel">
                         <dropdown classes="state" :options="['全部类型','校企合作','招聘会','企业直聘']" v-model="require.state"></dropdown>
                         <p class="disInline fSize14 maL195">我发布过的需求<span class="color-orange2 maL10 maR10">{{require.items.length}}</span>个</p>
                         <dropdown classes="state-right fr" :options="['全部状态','三天内','一周内','一月内']" v-model="require.period"></dropdown>
+                        <span class="new-require color-orange-f7 fSize16">发布需求</span>
                     </div>
                     <ul class="info-items">
                         <li v-for="item in require.items" :name="item.classic" :date="item.publicDate">

@@ -48,9 +48,9 @@ var hrApp = new Vue({
                pos:"全部职位",
                items:[
                {type:"招聘会",pos:"岗位名称",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,IncName:"杭州煌巢信息科技有限公司",IncProps:"民营",IncScale:"100-150人",publicDate:"2010-11-11",publicTime:"24:00"},
+               {type:"企业直聘",pos:"前端开发",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,IncName:"杭州煌巢信息科技有限公司",IncProps:"民营",IncScale:"100-150人",publicDate:"2010-11-11",publicTime:"24:00"},
                {type:"企业直聘",pos:"岗位名称",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,IncName:"杭州煌巢信息科技有限公司",IncProps:"民营",IncScale:"100-150人",publicDate:"2010-11-11",publicTime:"24:00"},
-               {type:"企业直聘",pos:"岗位名称",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,IncName:"杭州煌巢信息科技有限公司",IncProps:"民营",IncScale:"100-150人",publicDate:"2010-11-11",publicTime:"24:00"},
-               {type:"招聘会",pos:"岗位名称",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,IncName:"杭州煌巢信息科技有限公司",IncProps:"民营",IncScale:"100-150人",publicDate:"2010-11-11",publicTime:"24:00"},
+               {type:"招聘会",pos:"前端开发",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,IncName:"杭州煌巢信息科技有限公司",IncProps:"民营",IncScale:"100-150人",publicDate:"2010-11-11",publicTime:"24:00"},
                ]
           },
           recruitMeeting:{
@@ -59,9 +59,9 @@ var hrApp = new Vue({
                pos:"全部职位",
                items:[
                     {uniname:"浙江大学",major:"工业设计",stuScale:"50人",UniAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},date:"2017-01-28",IncScale:"50-100人",IncProps:"上市",pos:"岗位名称",publicDate:"2017-11-11",publicTime:"24:00",coState:"合作中"},
-                    {uniname:"武汉大学",major:"工业设计",stuScale:"50人",UniAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},date:"2017-01-28",IncScale:"50-100人",IncProps:"上市",pos:"岗位名称",publicDate:"2017-11-11",publicTime:"24:00",coState:"合作中"},
+                    {uniname:"武汉大学",major:"工业设计",stuScale:"50人",UniAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},date:"2017-01-28",IncScale:"50-100人",IncProps:"上市",pos:"前端开发",publicDate:"2017-11-11",publicTime:"24:00",coState:"合作中"},
                     {uniname:"浙江大学",major:"工业设计",stuScale:"50人",UniAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},date:"2017-01-28",IncScale:"50-100人",IncProps:"上市",pos:"岗位名称",publicDate:"2017-11-11",publicTime:"24:00",coState:"待反馈"},
-                    {uniname:"中国地质大学",major:"工业设计",stuScale:"50人",UniAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},date:"2017-01-28",IncScale:"50-100人",IncProps:"上市",pos:"岗位名称",publicDate:"2017-11-11",publicTime:"24:00",coState:"不符合"},
+                    {uniname:"中国地质大学",major:"工业设计",stuScale:"50人",UniAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},date:"2017-01-28",IncScale:"50-100人",IncProps:"上市",pos:"前端开发",publicDate:"2017-11-11",publicTime:"24:00",coState:"不符合"},
                ]
           },
           combiPos:{
@@ -200,6 +200,41 @@ var hrApp = new Vue({
                      $(".direcpos-box .info-items li[pos='"+curval+"']").show();
                 }else{
                     $(".direcpos-box .info-items li[pos='"+curval+"'][type='"+this.direcPos.posType+"']").show();
+                }
+           }
+      },
+      "recruitMeeting.state":function(curval,oldval){
+           if(curval=="全部状态"){
+                if(this.recruitMeeting.pos=="全部职位"){
+                     $(".recruit-box .info-items li").show();
+                }else{
+                     $(".recruit-box .info-items li").hide();
+                     $(".recruit-box .info-items li[pos='"+this.recruitMeeting.pos+"']").show();
+                }
+           }else{
+                $(".recruit-box .info-items li").hide();
+                if(this.recruitMeeting.pos=="全部职位"){
+                     $(".recruit-box .info-items li[state='"+curval+"']").show();
+                }else{
+                    $(".recruit-box .info-items li[state='"+curval+"'][pos='"+this.recruitMeeting.pos+"']").show();
+                }
+           }
+      },
+      "recruitMeeting.pos":function(curval,oldval){
+           console.log(curval);
+           if(curval=="全部职位"){
+                if(this.recruitMeeting.state=="全部状态"){
+                     $(".recruit-box .info-items li").show();
+                }else{
+                     $(".recruit-box .info-items li").hide();
+                     $(".recruit-box .info-items li[state='"+this.recruitMeeting.state+"']").show();
+                }
+           }else{
+                $(".recruit-box .info-items li").hide();
+                if(this.recruitMeeting.state=="全部状态"){
+                     $(".recruit-box .info-items li[pos='"+curval+"']").show();
+                }else{
+                    $(".recruit-box .info-items li[pos='"+curval+"'][type='"+this.recruitMeeting.state+"']").show();
                 }
            }
       }

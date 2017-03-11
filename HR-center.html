@@ -21,6 +21,7 @@
           </div>
           <div class="main inner paTop20" id="hr-app">
                <h2 class="LH-H50 bg-gray-e6 paLeft45 W915"><span class="fSize24 color-blueL">HR中心</span><ul class="lis-inline disInline v-top maL80 hr-navs"><li class="on">应聘管理</li><li>职位管理</li></ul><button class="pub-pos">发布职位</button></h2>
+<!--招聘管理内容 -->
                <div class="mainCont maT20 clearfix maB60">
                     <dl class="W178 sider fl">
                          <dt class="on" paneid="resume-box">待处理简历<span class="hint">{{resumes.unchecked.length+resumes.checked.length}}</span></dt>
@@ -97,6 +98,7 @@
                         </div>
                     </div>
                </div>
+<!--职位管理内容  -->
                <div class="mainCont maT20 clearfix maB60 posCont disNo">
                     <ul class="W178 pos-sider fSize18 fl">
                          <li class="on">直聘职位</li>
@@ -104,6 +106,7 @@
                          <li>校企合作职位</li>
                     </ul>
                     <div class="resumeBox pos-resume fl maL10 W770">
+                         <!-- 企业直聘 -->
                         <div class="ListBox direcpos-box">
                             <div class="hd LH-H58 bg-white">
                                  <dropdown classes="state" :options="['全部类型','招聘会','企业直聘']" v-model="direcPos.posType"></dropdown>
@@ -140,14 +143,15 @@
                                 <li class="side-page last-page">尾页</li>
                             </ul>
                         </div>
+                         <!-- 招聘会 -->
                         <div class="ListBox recruit-box disNo">
                             <div class="hd LH-H58 bg-white">
                                 <dropdown classes="state" :options="['全部状态','合作中','不符合','待反馈']" v-model="recruitMeeting.state"></dropdown>
                                 <p class="disInline fSize14 maL195">我合作的专业<span class="color-orange2 maL10 maR10">{{recruitMeeting.items.length}}</span>个</p>
-                                <dropdown classes="state-right fr" :options="database.posList" v-model="interview.interPos"></dropdown>
+                                <dropdown classes="state-right fr" :options="database.posList" v-model="recruitMeeting.pos"></dropdown>
                             </div>
                             <ul class="info-items">
-                                <li v-for="item in recruitMeeting.items" :state="item.state" :pos="item.applypos">
+                                <li v-for="item in recruitMeeting.items" :state="item.coState" :pos="item.pos">
                                     <div class="paLeft29 clearfix H128 pRel">
                                         <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                         <div class="item-block-left fl paTop22 W254 maL20">
@@ -174,6 +178,7 @@
                                 <li class="side-page last-page">尾页</li>
                             </ul>
                         </div>
+                         <!-- 校企合作岗位 -->
                         <div class="ListBox combipos-box disNo">
                             <div class="hd LH-H58 bg-white">
                                  <dropdown classes="state" :options="['全部类型','招聘会','企业直聘']" v-model="direcPos.posType"></dropdown>

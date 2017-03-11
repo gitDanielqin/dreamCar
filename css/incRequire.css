@@ -1,0 +1,7 @@
+.selectee{position: relative; display: inline-block; margin:10px; }
+.selectee input{background: url("../images/icon-select.png") no-repeat right 10px; border:1px solid #ccc; padding-left: 10px; width: 100%;}
+.selectee ul{position: absolute; left: 0; top:36px;border: 1px solid #d2d2d2;
+    font-size: 12px; height: 149px; overflow: auto;background: #fff; display: none; z-index: 10;}
+.selectee ul li{line-height: 24px; height: 24px; cursor: pointer;padding-left: 10px;}
+.selectee ul li.over{background: #9bcce5; color:#fff;}
+.selectee ul li.selected{background: #2ea8e6; color:#fff;}
