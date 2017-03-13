@@ -7,9 +7,69 @@
           <link href="css/incRequire.css" rel="stylesheet">
      </head>
      <body>
-     <div class="box" id="app">
-          <addr-select :addrdata="addrData" class="sel-addr"></addr-select>
-     </div>
+     <div class="top bg-gray3 H100 color-white">
+        <div class="inner">
+            <img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" />
+            <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
+            <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">企业中心</h2>
+            <div class="fr navs maT42">
+                <a href="index.html"><img src="images/icon-home.png" /></a>
+                <a href="#"><img src="images/icon-account.png" /></a>
+                <a class="msg-center pRel" href="#"><img src="images/icon-msg.png" /><i class="msg-info">99</i></a>
+            </div>
+        </div>
+    </div>
+    <div class="main" id="app-main">
+         <div class="inner W960">
+              <div class="req-progress bg-gray-ef maT20 color-gray6">
+                  <ul class="lis-inline steps">
+                       <li class="on"><span>1</span><p>选择信息</p><i class="bind-line"></i></li>
+                       <li><span>2</span><p>填写信息</p><i class="bind-line"></i></li>
+                       <li><span>3</span><p>完成发布</p></li>
+                  </ul>
+                  <i class="pic-wrapper progress-txt"><img src="images/require-txt.png" /></i>
+             </div>
+             <div class="navs clearfix">
+                  <ul class="lis-inline fl">
+                       <li class="on">校企合作</li><li>招聘会</li><li>直聘</li>
+                  </ul>
+                  <p class="W740 bg-gray-ef fl H32"></p>
+             </div>
+             <div class="nav-cont">
+                  <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写校企合作信息</h2>
+                  <div class="form-cont paLeft68">
+                       <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="combiData.header"/></p>
+                       <h3 class="LH-H75 fSize18 maT11">我对高校的要求</h3>
+                       <p class="form-item"><label>专业名称</label><major-select :majordata="database.uni.majors" class="disInline"></major-select>
+                       </p>
+                       <p class="form-item"><label>专业人数</label><dropdown :options="database.uni.amount" placeholder="" v-model="combiData.incReq.stuScale"></dropdown></p>
+                       <p class="form-item"><label>高校性质</label><dropdown :options="database.uni.unilevel" placeholder="" v-model="combiData.incReq.uniLevel"></dropdown></p>
+                       <p class="form-item"><label>高校类型</label><dropdown :options="database.uni.classific" placeholder="" v-model="combiData.incReq.uniClassific"></dropdown></p>
+                       <p class="form-item"><label>所在地</label><addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select></p>
+                       <h3 class="LH-H75 fSize18 maT11">我可以提供</h3>
+                       <p class="form-item"><label>岗位名称</label><major-select :majordata="database.uni.majors" class="disInline"></major-select>
+                       </p>
+                       <p class="form-item"><label>岗位数</label><input type="text" v-model="combiData.incApply.posAmount" />人</p>
+                       <p class="form-item"><label>联合培养方式</label><dropdown :options="database.trainway" placeholder="" v-model="combiData.incApply.trainWay"></dropdown></p>
+                       <div class="form-item clearfix"><label class="fl">培养时间</label>
+                         <table class="fl time-table">
+                              <tr><td></td><td>周一</td><td>周二</td><td>周三</td><td>周四</td><td>周五</td><td>周六</td><td>周日</td></tr>
+                              <tr><td>上午</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                              <tr><td>下午</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                              <tr><td>晚上</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                         </table>
+                      </div>
+                       <p class="form-item"><label>需求描述</label><textarea v-model="combiData.requireDesc" class="form-desc"></textarea></p>
+                       <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
+                       <p class="form-item"><label>联系人</label><input type="text" v-model="combiData.contact.person"/></p>
+                       <p class="form-item"><label>联系电话</label><input type="text" v-model="combiData.contact.phone"/></p>
+                       <p class="form-item inc-addr"><label>公司地址</label><input type="text" v-model="combiData.contact.address" disabled/><span class="color-red maL18">请完善地址</span></p>
+
+                  </div>
+             </div>
+         </div>
+    </div>
+
 
      <script src="js/jquery-3.1.0.min.js"></script>
      <script src="js/vue.js"></script>

@@ -1,4 +1,4 @@
-var tempDrop = '<div :class="classStyle" @click="clickEv($event.target)"><input class="text" :placeholder="placeholder" :value="value"><ul v-show="showOps">' +
+var tempDrop = '<div :class="classStyle" @click.stop="clickEv($event.target)"><input class="text" :placeholder="placeholder" :value="value"><ul>' +
     '<li v-for="option in options" @click="selectItem(option,$event.target)" @mouseover="overItem($event.target)" @mouseout="outItem($event.target)">{{option}}</li>' +
     '</ul></div>'
 Vue.component("dropdown", {
@@ -12,7 +12,7 @@ Vue.component("dropdown", {
              classStyle="selectee";
         };
         return {
-             showOps:false,
+             showOps:true,
              classStyle:classStyle
         }
     },
@@ -32,8 +32,8 @@ Vue.component("dropdown", {
             $(obj).removeClass("over");
        },
        clickEv: function(obj){
-           $(".selectee ul").hide();
-           this.showOps=true;
+          $(".selectee ul").hide();
+          $(obj).siblings("ul").show();
            return false;
        }
     }
@@ -102,7 +102,40 @@ Vue.component("addr-select",{
                // selectEventBind();
           }
      }
-
+});
+var templMajor='<div>\
+     <dropdown placeholder="一级学科" :options="major" v-model="selMajor"></dropdown>\
+     <dropdown placeholder="二级学科" :options="submajor" v-model="selsubMajor"></dropdown>\
+</div>';
+Vue.component("major-select",{
+     template:templMajor,
+     props:["majordata"],
+     data:function(){
+          var major=[];
+          var submajor=[];
+          for(var i=0; i<this.majordata.length;i++){
+               major.push(this.majordata[i].major);
+          };
+          submajor= this.majordata[0].submajor;
+          var dataBase={
+               major:major,
+               submajor:submajor,
+               selMajor:"",
+               selsubMajor:""
+          };
+          return dataBase;
+     },
+     watch:{
+          "selMajor":function(curval){
+               for(var i=0; i<this.majordata.length;i++){
+                    if(this.majordata[i].major==curval){
+                         this.submajor=this.majordata[i].submajor;
+                         this.selsubMajor=this.submajor[0];
+                         break;
+                    }
+               }
+          }
+     }
 })
 
 
@@ -119,31 +152,6 @@ function selectInitPos(){
             top:sibInput.height()
         })
     });
-}
-function selectEventBind(){
-    $(".selectee ul li").bind({
-        "mouseover":function(){
-            $(this).addClass("over");
-        },
-       "mouseout":function(){
-           $(this).removeClass("over");
-       },
-       "click":function(){
-           $(this).siblings(".selected").removeClass("selected");
-           $(this).addClass("selected");
-           $(this).parent().siblings("input").val($(this).text());
-           $(this).parent().hide();
-           return false;
-       }
-     });
-    $(".selectee").bind("click",function(){
-        $(".selectee ul").hide();
-        $(this).children("ul").show();
-        return false;
-    });
-    $("body").bind("click",function(){
-        $(".selectee ul").hide();
-    })
 }
 function cloneObj(obj) {
     var o;

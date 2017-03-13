@@ -410,13 +410,56 @@ var addrData =`[
 
 var addArray = JSON.parse(addrData);
 
-var myapp = new Vue({
-     el:"#app",
+var appMain = new Vue({
+     el:"#app-main",
      data:{
-          addrData:addArray
+          database:{
+               addrData:addArray,
+               uni:{
+                    classific:["综合类","理工类","师范类","艺术类","体育类","职业技术类"],
+                    amount:["1-10000","10001-20000","20001-30000","30001-40000","40000以上",],
+                    unilevel:["重点","本科","大专","高职"],
+                    majors:[
+                         {major:"艺术",submajor:["行为艺术","人体艺术"]},
+                         {major:"信息技术",submajor:["计算机科学","通信工程"]},
+                         {major:"经济",submajor:["国民经济","企业经济"]},
+                    ]
+               },
+               trainway:["企业高管到校","学生入企","面议"]
+
+          },
+          combiData:{
+               header:"",
+               incReq:{
+                    major:{major_1:"",major_2:""},
+                    stuScale:"",
+                    uniLevel:"",
+                    uniClassific:"",
+               },
+               incApply:{
+                    pos:{
+                         pos_1:"",
+                         pos_2:"",
+                         pos_3:""
+                    },
+                    posAmount:"",
+                    trainWay:"",
+                    traintime:[],
+               },
+               requireDesc:"",
+               contact:{
+                    person:"",
+                    phone:"",
+                    address:""
+               }
+          }
      }
 })
- selectInitPos();
+
+function _init(){
+     selectInitPos();
+}
+_init();
 // selectEventBind();
 function selectInitPos(){
      $(".selectee input").each(function(){
@@ -431,29 +474,8 @@ function selectInitPos(){
             top:sibInput.height()
         })
     });
-}
-function selectEventBind(){
-    $(".selectee ul li").bind({
-        "mouseover":function(){
-            $(this).addClass("over");
-        },
-       "mouseout":function(){
-           $(this).removeClass("over");
-       },
-       "click":function(){
-           $(this).siblings(".selected").removeClass("selected");
-           $(this).addClass("selected");
-           $(this).parent().siblings("input").val($(this).text());
-           $(this).parent().hide();
-           return false;
-       }
-     });
-    $(".selectee").bind("click",function(){
-        $(".selectee ul").hide();
-        $(this).children("ul").show();
-        return false;
-    });
     $("body").bind("click",function(){
-        $(".selectee ul").hide();
+       $(".selectee ul").hide();
     })
+
 }
