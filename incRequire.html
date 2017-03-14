@@ -47,29 +47,59 @@
                        <p class="form-item"><label>高校类型</label><dropdown :options="database.uni.classific" placeholder="" v-model="combiData.incReq.uniClassific"></dropdown></p>
                        <p class="form-item"><label>所在地</label><addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select></p>
                        <h3 class="LH-H75 fSize18 maT11">我可以提供</h3>
-                       <p class="form-item"><label>岗位名称</label><major-select :majordata="database.uni.majors" class="disInline"></major-select>
+                       <p class="form-item"><label>岗位名称</label><dropdown :options="['IT/互联网/通信','销售/客服/市场']" placeholder="" v-model="combiData.incApply.pos.pos_1"></dropdown>
+                            <dropdown :options="['软件/互联网开发/系统集成','互联网产品/运营管理']" placeholder="" v-model="combiData.incApply.pos.pos_2"></dropdown>
+                            <dropdown :options="['互联网产品经理/主管','运营总监']" placeholder="" v-model="combiData.incApply.pos.pos_3"></dropdown>
                        </p>
                        <p class="form-item"><label>岗位数</label><input type="text" v-model="combiData.incApply.posAmount" />人</p>
                        <p class="form-item"><label>联合培养方式</label><dropdown :options="database.trainway" placeholder="" v-model="combiData.incApply.trainWay"></dropdown></p>
                        <div class="form-item clearfix"><label class="fl">培养时间</label>
                          <table class="fl time-table">
                               <tr><td></td><td>周一</td><td>周二</td><td>周三</td><td>周四</td><td>周五</td><td>周六</td><td>周日</td></tr>
-                              <tr><td>上午</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                              <tr><td>下午</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                              <tr><td>晚上</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                              <tr class="time-tr"><td>上午</td><td class="t-cell on"></td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td></tr>
+                              <tr class="time-tr"><td>下午</td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td></tr>
+                              <tr class="time-tr"><td>晚上</td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td></tr>
                          </table>
                       </div>
-                       <p class="form-item"><label>需求描述</label><textarea v-model="combiData.requireDesc" class="form-desc"></textarea></p>
+                       <p class="form-item pRel"><label>需求描述</label><textarea v-model="combiData.requireDesc" class="form-desc"></textarea><span class="fSize14 LH40 color-gray-c desc-hint">你还可以输入{{fontCal(combiData.requireDesc)}} 字</span></p>
                        <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
                        <p class="form-item"><label>联系人</label><input type="text" v-model="combiData.contact.person"/></p>
                        <p class="form-item"><label>联系电话</label><input type="text" v-model="combiData.contact.phone"/></p>
-                       <p class="form-item inc-addr"><label>公司地址</label><input type="text" v-model="combiData.contact.address" disabled/><span class="color-red maL18">请完善地址</span></p>
-
+                       <div class="form-item inc-addr pRel"><label>公司地址</label><input type="text" v-model="combiData.contact.address" class="dis-Addr" disabled/><span class="color-red maL18 cur-pointer" @click="combiData.showIncAddr=true">请完善地址</span>
+                         <div class="addr-box" v-show="combiData.showIncAddr">
+                              <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
+                              <input type="text" class="maT20 addr-ex" placeholder="请输入详细地址" />
+                              <p><button class="confirm-btn" @click="confirmIncAddr">确认</button></p>
+                         </div>
+                      </div>
+                      <button class="confirm-publish-btn">确认发布</button>
                   </div>
              </div>
          </div>
     </div>
-
+    <div class="bot paTop6 t-center bg-gray3 H110">
+       <div class="inner pRel">
+           <div class=" W920 color-white fSize12">
+               <ul class="lis-inline bot-nav LH-H34">
+                   <li><a href="footer-page.html?descript">关于校企</a>-</li>
+                   <li><a href="footer-page.html?coop">网站合作</a>-</li>
+                   <li><a href="footer-page.html?help">帮助中心</a>-</li>
+                   <li><a href="footer-page.html?employ">招贤纳士</a>-</li>
+                   <li><a href="footer-page.html">友情链接</a>-</li>
+                   <li><a href="footer-page.html">教育网</a></li>
+               </ul>
+               <ul class="lis-inline">
+                   <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-phone-w.png"/></i>电话：152 6706 8921</li>
+                   <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-gps-w.png"/></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
+                   <li><i class="pic-wrapper maR15"><img src="images/icon-mail-w.png"/></i>邮箱：xiaoqiztc@yeah.net</li>
+               </ul>
+               <p class="fSize12 t-center LH-H40 color-gray79">©2016 XxiaoQi 京ICP备456123789号-2 京公网安备12465789123号</p>
+           </div>
+           <div class="pic-wrapper pic-barcode">
+               <img src="images/barcode.png"/>
+           </div>
+       </div>
+   </div>
 
      <script src="js/jquery-3.1.0.min.js"></script>
      <script src="js/vue.js"></script>

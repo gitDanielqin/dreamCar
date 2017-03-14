@@ -429,6 +429,7 @@ var appMain = new Vue({
 
           },
           combiData:{
+               showIncAddr:false,
                header:"",
                incReq:{
                     major:{major_1:"",major_2:""},
@@ -453,11 +454,32 @@ var appMain = new Vue({
                     address:""
                }
           }
+     },
+     methods:{
+          fontCal:function(str){
+               if(str.length<=1000){
+                    return (1000-str.length);
+               }else{
+                    alert("已超出最大可输入字数！");
+                    this.combiData.requireDesc=this.combiData.requireDesc.substr(0,1000);
+                    return (1000-str.length);
+               }
+          },
+          confirmIncAddr:function(){
+               var incAddress="";
+               $(".addr-box .sel-addr input").each(function(){
+                    incAddress+=$(this).val()+"-";
+               });
+               incAddress+=$(".addr-box .addr-ex").val();
+               this.combiData.contact.address=incAddress;
+               this.combiData.showIncAddr=false;
+          }
      }
 })
 
 function _init(){
      selectInitPos();
+     selectTime();
 }
 _init();
 // selectEventBind();
@@ -477,5 +499,14 @@ function selectInitPos(){
     $("body").bind("click",function(){
        $(".selectee ul").hide();
     })
+}
 
+function selectTime(){
+     $(".time-table .t-cell").click(function(){
+          if($(this).hasClass("on")){
+               $(this).removeClass("on");
+          }else{
+               $(this).addClass("on");
+          }
+     })
 }

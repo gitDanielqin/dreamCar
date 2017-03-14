@@ -46,6 +46,11 @@ function loginEventBind(){
          $(".login").fadeOut();
          $(".regis").fadeIn("slow");
      });
+     $("#logBtn").click(function(){
+          window.location.href="vCards.html";
+          console.log(1);
+     });
+
 }
 //注册框事件绑定
 function regisEventBind(){

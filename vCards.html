@@ -16,7 +16,7 @@
 </div>
 <div class="container paTop30">
     <div class="main H500 inner bg-white maB42 clearfix">
-        <form class="personCard maL70 card W510 fl"  style="display:none;">
+        <form class="personCard maL70 card W510 fl"  style="display:block;">
             <h2 class="LH-H104 fSize30 color-gray3 maB5">创建个人名片</h2>
                 <input type="text" class="info01" placeholder="姓名" />
                 <div class="sel-birthyear birthday selectee">
@@ -71,7 +71,7 @@
             </div>
 
             <input type="text" class="W288 maT30" placeholder="请输入常用邮箱" />
-            <button class="LH-H40 W140 maT40 bg-orange2 save fSize18 color-white">保存名片</button>
+            <button type="button" class="LH-H40 W140 maT40 bg-orange2 save fSize18 color-white" onclick="window.location.href='pCenter.html'">保存名片</button>
         </form>
         <form class="uniCard maL70 card W510 fl" style="display:none;">
             <h2 class="LH-H104 fSize36 color-gray3 maB5">创建高校名片</h2>
@@ -105,9 +105,9 @@
             </div>
             <input type="text" class="W188" placeholder="学校联系人" /><input type="text" class="W188 paLeft20" placeholder="联系人手机号" />
             <input class="w188" type="text" placeholder="请输入验证码" style="margin-bottom: 0"><button type="button" class="W120 LH-H40 fSize14 color-white">获取验证码</button>
-            <button class="LH-H40 W140 maT40 bg-orange2 save fSize18 color-white">保存名片</button>
+            <button type="button" class="LH-H40 W140 maT40 bg-orange2 save fSize18 color-white" onclick="window.location.href='pCenter.html'">保存名片</button>
         </form>
-        <form class="bsCard maL70 card W510 fl" style="display:block;">
+        <form class="bsCard maL70 card W510 fl" style="display:none;">
             <h2 class="LH-H104 fSize36 color-gray3 maB5">创建企业名片</h2>
             <input type="text" class="W228" placeholder="企业名称" /><div class="selectee">
             <input type="text" class="W108" placeholder="公司性质" />

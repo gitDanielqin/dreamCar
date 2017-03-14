@@ -29,14 +29,34 @@ background: linear-gradient(left,#f7b633,#ccc);
 .navs p{margin-bottom: 10px; }
 
 /*内容部分*/
-.form-cont input{border: 1px solid #ccc; padding-left: 10px; line-height: 24px; margin-right: 16px; width: 162px;}
+.form-cont{border: 2px solid #f7d58f; margin-bottom: 40px;}
+.form-cont input{border: 1px solid #ccc;padding-left: 10px;line-height: 24px; margin-right: 16px; width: 162px; overflow: hidden;}
 .form-cont label{line-height: 26px; font-size: 14px; width: 90px; text-align: right; display: inline-block; margin-right: 18px;}
 /*.form-cont .selectee{width: 162px;}*/
 .head-input label{line-height: 33px; font-size: 18px; text-align: left;}
 .form-cont .head-input input{line-height: 31px; width: 432px;}
 .form-item {margin-bottom: 27px;}
+.t-cell{cursor: pointer;}
+.time-tr .on{background: url("../images/icon-checktime.png") no-repeat center center;}
 
 .time-table{border-collapse: collapse;}
 .time-table td{border: 1px solid #ccc; width: 74px; height: 41px; text-align: center;}
-.form-desc{width: 638px; height: 364px; border: 1px solid #ccc; padding: 10px; vertical-align: top}
-.inc-addr input{width: 390px;}
+.form-desc{width: 638px; height: 334px; border: 1px solid #ccc; padding: 10px; vertical-align: top; padding-bottom: 40px;}
+.desc-hint{position: absolute; right: 162px; bottom: 0;}
+input.dis-Addr{width: 390px;}
+.addr-box{width: 560px; height: 162px; padding-left: 20px; background: #def1f6; position: absolute; left: 108px; top:26px;}
+.addr-box .sel-addr{margin-top: 25px;}
+.addr-box .sel-addr input{margin-right: 9px;background: url("../images/icon-select.png") no-repeat right 10px white;}
+.addr-box .addr-ex{width: 346px;}
+.confirm-btn{width: 80px; height: 30px; background: #49c1e4; color: white; margin-top: 18px; margin-left: 230px;}
+.inc-addr{margin-bottom: 48px;}
+.dis-Addr{background: white;}
+.confirm-publish-btn{width: 150px; height: 50px; background: #f7b632; color: white; font-size: 18px; margin-left: 108px; margin-bottom: 57px;}
+
+/*底部样式*/
+.bot-nav li a{color: white;}
+.bot-nav li a:hover{color:#f7a14a; cursor: pointer}
+.bot-nav{display: inline-block;}
+.bot .barcode-text{display: inline-block; vertical-align: middle;}
+.pic-barcode{position: absolute; right:-7px; top: 12px; width: 83px; height:83px;}
+.pic-barcode img{width: 100%}
