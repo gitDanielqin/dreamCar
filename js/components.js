@@ -1,4 +1,4 @@
-var tempDrop = '<div :class="classStyle" @click.stop="clickEv($event.target)"><input class="text" :placeholder="placeholder" :value="value"><ul>' +
+var tempDrop = '<div :class="classStyle" @click.stop="clickEv($event.target)"><input type="text" :placeholder="placeholder" :value="value"><ul>' +
     '<li v-for="option in options" @click="selectItem(option,$event.target)" @mouseover="overItem($event.target)" @mouseout="outItem($event.target)">{{option}}</li>' +
     '</ul></div>'
 Vue.component("dropdown", {

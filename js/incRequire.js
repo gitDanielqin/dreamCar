@@ -419,16 +419,19 @@ var appMain = new Vue({
                     classific:["综合类","理工类","师范类","艺术类","体育类","职业技术类"],
                     amount:["1-10000","10001-20000","20001-30000","30001-40000","40000以上",],
                     unilevel:["重点","本科","大专","高职"],
+                    scolars:["博士","硕士","本科","大专","高中","EMBA","其他"],
                     majors:[
                          {major:"艺术",submajor:["行为艺术","人体艺术"]},
                          {major:"信息技术",submajor:["计算机科学","通信工程"]},
                          {major:"经济",submajor:["国民经济","企业经济"]},
                     ]
                },
-               trainway:["企业高管到校","学生入企","面议"]
-
+               trainway:["企业高管到校","学生入企","面议"],
+               postype:["电气信息类","电子信息科学类","仪器仪表类","工商管理类","管理科学与工程类","金融类","其他"],
+               welfares:["五险一金","包住","包吃","年底双薪","双休","交通补助","加班补助","话补","房补","全选"]
           },
           combiData:{
+               datatype:"combi",
                showIncAddr:false,
                header:"",
                incReq:{
@@ -453,33 +456,92 @@ var appMain = new Vue({
                     phone:"",
                     address:""
                }
+          },
+          recruitData:{
+               datatype:"recruit",
+               showAddr:false,
+               header:"",
+               postype:{
+                    postype_1:"",
+                    postype_2:""
+               },
+               amount:"",
+               scolar:"",
+               gender:"",
+               worksexp:"",
+               salary:"",
+               date:"",
+               desc:"",
+               contact:{
+                    person:"",
+                    phone:"",
+                    address:""
+               }
+          },
+          directData:{
+               datatype:"direct",
+               showAddr:false,
+               header:"",
+               postype:{
+                    postype_1:"",
+                    postype_2:""
+               },
+               amount:"",
+               scolar:"",
+               gender:"",
+               worksexp:"",
+               salary:"",
+               desc:"",
+               contact:{
+                    person:"",
+                    phone:"",
+                    address:""
+               }
           }
      },
      methods:{
-          fontCal:function(str){
+          fontCal:function(str,type){
                if(str.length<=1000){
                     return (1000-str.length);
                }else{
                     alert("已超出最大可输入字数！");
-                    this.combiData.requireDesc=this.combiData.requireDesc.substr(0,1000);
+                    if(type=="combi"){
+                         this.combiData.requireDesc=this.combiData.requireDesc.substr(0,1000);
+                    }else if(type=="recruit"){
+                         this.recruitData.desc=this.recruitData.desc.substr(0,1000);
+                    }else if(type=="direct"){
+                         this.directData.desc=this.directData.desc.substr(0,1000);
+                    }
                     return (1000-str.length);
                }
           },
-          confirmIncAddr:function(){
+          confirmIncAddr:function(target,type){
                var incAddress="";
-               $(".addr-box .sel-addr input").each(function(){
+               var addBox = $(target).closest(".addr-box");
+               addBox.find(".sel-addr input").each(function(){
                     incAddress+=$(this).val()+"-";
                });
-               incAddress+=$(".addr-box .addr-ex").val();
-               this.combiData.contact.address=incAddress;
-               this.combiData.showIncAddr=false;
+               incAddress+=addBox.find(".addr-ex").val();
+               if(type=="combi"){
+                    this.combiData.contact.address=incAddress;
+                    this.combiData.showIncAddr=false;
+               }else if(type=="recruit"){
+                    this.recruitData.contact.address=incAddress;
+                    this.recruitData.showAddr=false;
+               }else if(type=="direct"){
+                    this.directData.contact.address=incAddress;
+                    this.directData.showAddr=false;
+               }
+
           }
      }
 })
 
 function _init(){
      selectInitPos();
+     navEventBind();
      selectTime();
+     selectWelfare();
 }
 _init();
 // selectEventBind();
@@ -508,5 +570,24 @@ function selectTime(){
           }else{
                $(this).addClass("on");
           }
+     })
+}
+function selectWelfare(){
+     $(".welfare-lis .check-box").click(function(){
+          if($(this).hasClass("on")){
+               $(this).removeClass("on");
+          }else{
+               $(this).addClass("on");
+          }
+     })
+}
+function navEventBind(){
+     $(".navs ul li").each(function(index){
+          $(this).click(function(){
+               $(".navs ul li.on").removeClass("on");
+               $(this).addClass("on");
+               $(".main .nav-cont").hide();
+               $($(".main .nav-cont")[index]).show();
+          })
      })
 }

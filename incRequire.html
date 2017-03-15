@@ -61,7 +61,7 @@
                               <tr class="time-tr"><td>晚上</td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td><td class="t-cell"></td></tr>
                          </table>
                       </div>
-                       <p class="form-item pRel"><label>需求描述</label><textarea v-model="combiData.requireDesc" class="form-desc"></textarea><span class="fSize14 LH40 color-gray-c desc-hint">你还可以输入{{fontCal(combiData.requireDesc)}} 字</span></p>
+                       <p class="form-item pRel"><label>需求描述</label><textarea v-model="combiData.requireDesc" class="form-desc"></textarea><span class="fSize14 LH40 color-gray-c desc-hint">你还可以输入{{fontCal(combiData.requireDesc,combiData.datatype)}} 字</span></p>
                        <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
                        <p class="form-item"><label>联系人</label><input type="text" v-model="combiData.contact.person"/></p>
                        <p class="form-item"><label>联系电话</label><input type="text" v-model="combiData.contact.phone"/></p>
@@ -69,12 +69,79 @@
                          <div class="addr-box" v-show="combiData.showIncAddr">
                               <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
                               <input type="text" class="maT20 addr-ex" placeholder="请输入详细地址" />
-                              <p><button class="confirm-btn" @click="confirmIncAddr">确认</button></p>
+                              <p><button class="confirm-btn" @click="confirmIncAddr($event.target,combiData.datatype)">确认</button></p>
                          </div>
                       </div>
                       <button class="confirm-publish-btn">确认发布</button>
                   </div>
              </div>
+             <div class="nav-cont disNo">
+                 <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写招聘会信息</h2>
+                 <div class="form-cont paLeft68">
+                      <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="recruitData.header"/></p>
+                      <p class="form-item maT28"><label>职位类别</label><dropdown :options="database.postype" placeholder="" v-model="recruitData.postype.postype_1"></dropdown>
+                           <dropdown :options="database.postype" placeholder="" v-model="recruitData.postype.postype_2"></dropdown>
+                      </p>
+                      <p class="form-item"><label>招聘人数</label><input type="text" v-model="recruitData.amount" /></p>
+                      <p class="form-item"><label>学历要求</label><dropdown :options="database.uni.scolars" placeholder="" v-model="recruitData.scolar"></dropdown></p>
+                      <p class="form-item"><label>性别</label><dropdown :options="['男','女','不限']" placeholder="" v-model="recruitData.gender"></dropdown></p>
+                      <p class="form-item"><label>工作经验</label><dropdown :options="['1年以下','1-3年','3-5年','5-10年','10年以上','不限']" placeholder="" v-model="recruitData.worksexp"></dropdown></p>
+                      <p class="form-item"><label>薪资待遇</label><dropdown :options="['3k-5k','5k-8k','8k-10k','10k-15k','15k以上']" placeholder="" v-model="recruitData.salary"></dropdown></p>
+                      <div class="form-item">
+                         <label>福利待遇</label><ul class="lis-inline disInline W660 welfare-lis">
+                              <li v-for="welfare in database.welfares">
+                                   <i class="check-box"></i><span>{{welfare}}</span>
+                              </li>
+                         </ul>
+                      </div>
+                      <p class="form-item"><label>举办时间</label><input type="text" placeholder="2017-01-30格式" v-model="recruitData.date"/></p>
+                      <p class="form-item pRel"><label>招聘会描述</label><textarea v-model="recruitData.desc" class="form-desc"></textarea><span class="fSize14 LH40 color-gray-c desc-hint">你还可以输入{{fontCal(recruitData.desc,recruitData.datatype)}} 字</span></p>
+                      <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
+                      <p class="form-item"><label>联系人</label><input type="text" v-model="recruitData.contact.person"/></p>
+                      <p class="form-item"><label>联系电话</label><input type="text" v-model="recruitData.contact.phone"/></p>
+                      <div class="form-item inc-addr pRel"><label>招聘会地点</label><input type="text" v-model="recruitData.contact.address" class="dis-Addr" disabled/><span class="color-red maL18 cur-pointer" @click="recruitData.showAddr=true">请完善地址</span>
+                        <div class="addr-box" v-show="recruitData.showAddr">
+                             <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
+                             <input type="text" class="maT20 addr-ex" placeholder="请输入详细地址" />
+                             <p><button class="confirm-btn" @click="confirmIncAddr($event.target,recruitData.datatype)">确认</button></p>
+                        </div>
+                    </div>
+                    <button class="confirm-publish-btn">确认发布</button>
+                 </div>
+            </div>
+             <div class="nav-cont disNo">
+                   <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写直聘信息</h2>
+                   <div class="form-cont paLeft68">
+                        <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="directData.header"/></p>
+                        <p class="form-item maT28"><label>职位类别</label><dropdown :options="database.postype" placeholder="" v-model="directData.postype.postype_1"></dropdown>
+                             <dropdown :options="database.postype" placeholder="" v-model="directData.postype.postype_2"></dropdown>
+                        </p>
+                        <p class="form-item"><label>招聘人数</label><input type="text" v-model="directData.amount" /></p>
+                        <p class="form-item"><label>学历要求</label><dropdown :options="database.uni.scolars" placeholder="" v-model="directData.scolar"></dropdown></p>
+                        <p class="form-item"><label>性别</label><dropdown :options="['男','女','不限']" placeholder="" v-model="directData.gender"></dropdown></p>
+                        <p class="form-item"><label>工作经验</label><dropdown :options="['1年以下','1-3年','3-5年','5-10年','10年以上','不限']" placeholder="" v-model="directData.worksexp"></dropdown></p>
+                        <p class="form-item"><label>薪资待遇</label><dropdown :options="['3k-5k','5k-8k','8k-10k','10k-15k','15k以上']" placeholder="" v-model="directData.salary"></dropdown></p>
+                        <div class="form-item">
+                           <label>福利待遇</label><ul class="lis-inline disInline W660 welfare-lis">
+                                <li v-for="welfare in database.welfares">
+                                     <i class="check-box"></i><span>{{welfare}}</span>
+                                </li>
+                           </ul>
+                        </div>
+                        <p class="form-item pRel"><label>职位描述</label><textarea v-model="directData.desc" class="form-desc"></textarea><span class="fSize14 LH40 color-gray-c desc-hint">你还可以输入{{fontCal(directData.desc,directData.datatype)}} 字</span></p>
+                        <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
+                        <p class="form-item"><label>联系人</label><input type="text" v-model="directData.contact.person"/></p>
+                        <p class="form-item"><label>联系电话</label><input type="text" v-model="directData.contact.phone"/></p>
+                        <div class="form-item inc-addr pRel"><label>工作地点</label><input type="text" v-model="directData.contact.address" class="dis-Addr" disabled/><span class="color-red maL18 cur-pointer" @click="directData.showAddr=true">请完善地址</span>
+                          <div class="addr-box" v-show="directData.showAddr">
+                               <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
+                               <input type="text" class="maT20 addr-ex" placeholder="请输入详细地址" />
+                               <p><button class="confirm-btn" @click="confirmIncAddr($event.target,directData.datatype)">确认</button></p>
+                          </div>
+                      </div>
+                      <button class="confirm-publish-btn">确认发布</button>
+                   </div>
+              </div>
          </div>
     </div>
     <div class="bot paTop6 t-center bg-gray3 H110">
