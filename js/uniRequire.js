@@ -426,6 +426,11 @@ var appMain = new Vue({
                          {major:"经济",submajor:["国民经济","企业经济"]},
                     ]
                },
+               inc:{
+                    props:["国营","民营","合资","外商独资","服从制企业","国家单位","其他"],
+                    scale:["0-20人","20-50人","50-100人","100-500人","500人以上"],
+                    areas:["IT/通信/电子/互联网","房地产/建筑业","保险","银行","信托/担保/拍卖/典当","其他"]
+               },
                trainway:["企业高管到校","学生入企","面议"],
                postype:["电气信息类","电子信息科学类","仪器仪表类","工商管理类","管理科学与工程类","金融类","其他"],
                welfares:["五险一金","包住","包吃","年底双薪","双休","交通补助","加班补助","话补","房补","全选"]
@@ -434,11 +439,11 @@ var appMain = new Vue({
                datatype:"combi",
                showIncAddr:false,
                header:"",
-               incReq:{
+               uniApply:{
                     major:{major_1:"",major_2:""},
                     stuScale:"",
-                    uniLevel:"",
-                    uniClassific:"",
+                    trainWay:"",
+                    traintime:[],
                },
                incApply:{
                     pos:{
@@ -447,8 +452,12 @@ var appMain = new Vue({
                          pos_3:""
                     },
                     posAmount:"",
-                    trainWay:"",
-                    traintime:[],
+                    incProps:"",
+                    incScale:"",
+                    incArea:{
+                         incarea_1:"",
+                         incarea_2:""
+                    }
                },
                requireDesc:"",
                contact:{
@@ -461,36 +470,25 @@ var appMain = new Vue({
                datatype:"recruit",
                showAddr:false,
                header:"",
-               postype:{
-                    postype_1:"",
-                    postype_2:""
+               incReq:{
+                    incArea:{
+                         incarea_1:"",
+                         incarea_2:""
+                    },
+                    incScale:"",
+                    incProps:"",
+                    pos:{
+                         pos_1:"",
+                         pos_2:"",
+                         pos_3:""
+                    },
+                    posAmount:"",
                },
-               amount:"",
-               scolar:"",
-               gender:"",
-               worksexp:"",
-               salary:"",
+               uniApply:{
+                    major:{major_1:"",major_2:""},
+                    stuScale:""
+               },
                date:"",
-               desc:"",
-               contact:{
-                    person:"",
-                    phone:"",
-                    address:""
-               }
-          },
-          directData:{
-               datatype:"direct",
-               showAddr:false,
-               header:"",
-               postype:{
-                    postype_1:"",
-                    postype_2:""
-               },
-               amount:"",
-               scolar:"",
-               gender:"",
-               worksexp:"",
-               salary:"",
                desc:"",
                contact:{
                     person:"",
@@ -509,8 +507,6 @@ var appMain = new Vue({
                          this.combiData.requireDesc=this.combiData.requireDesc.substr(0,1000);
                     }else if(type=="recruit"){
                          this.recruitData.desc=this.recruitData.desc.substr(0,1000);
-                    }else if(type=="direct"){
-                         this.directData.desc=this.directData.desc.substr(0,1000);
                     }
                     return (1000-str.length);
                }
@@ -528,11 +524,20 @@ var appMain = new Vue({
                }else if(type=="recruit"){
                     this.recruitData.contact.address=incAddress;
                     this.recruitData.showAddr=false;
-               }else if(type=="direct"){
-                    this.directData.contact.address=incAddress;
-                    this.directData.showAddr=false;
                }
 
+          }
+     },
+     watch:{
+          "combiData.showIncAddr":function(curval){
+               if(curval==true){
+                    selectInitPos();
+               }
+          },
+          "recruitData.showAddr":function(curval){
+               if(curval==true){
+                    selectInitPos();
+               }
           }
      }
 })
@@ -558,7 +563,7 @@ function selectInitPos(){
             top:sibInput.height()
         })
     });
-    $("body").bind("click",function(){
+    $("body").unbind("click").bind("click",function(){
        $(".selectee ul").hide();
     })
 }
