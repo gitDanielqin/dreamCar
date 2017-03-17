@@ -432,7 +432,6 @@ var appMain = new Vue({
           },
           combiData:{
                datatype:"combi",
-               showIncAddr:false,
                header:"",
                incReq:{
                     major:{major_1:"",major_2:""},
@@ -459,7 +458,6 @@ var appMain = new Vue({
           },
           recruitData:{
                datatype:"recruit",
-               showAddr:false,
                header:"",
                postype:{
                     postype_1:"",
@@ -480,7 +478,6 @@ var appMain = new Vue({
           },
           directData:{
                datatype:"direct",
-               showAddr:false,
                header:"",
                postype:{
                     postype_1:"",
@@ -515,6 +512,10 @@ var appMain = new Vue({
                     return (1000-str.length);
                }
           },
+          popAddrBox:function(obj){
+               $(obj).siblings(".addr-box").show();
+               selectInitPos();
+          },
           confirmIncAddr:function(target,type){
                var incAddress="";
                var addBox = $(target).closest(".addr-box");
@@ -524,15 +525,12 @@ var appMain = new Vue({
                incAddress+=addBox.find(".addr-ex").val();
                if(type=="combi"){
                     this.combiData.contact.address=incAddress;
-                    this.combiData.showIncAddr=false;
                }else if(type=="recruit"){
                     this.recruitData.contact.address=incAddress;
-                    this.recruitData.showAddr=false;
                }else if(type=="direct"){
                     this.directData.contact.address=incAddress;
-                    this.directData.showAddr=false;
                }
-
+               addBox.hide();
           }
      }
 })

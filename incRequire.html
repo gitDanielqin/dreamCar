@@ -65,8 +65,8 @@
                        <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
                        <p class="form-item"><label>联系人</label><input type="text" v-model="combiData.contact.person"/></p>
                        <p class="form-item"><label>联系电话</label><input type="text" v-model="combiData.contact.phone"/></p>
-                       <div class="form-item inc-addr pRel"><label>公司地址</label><input type="text" v-model="combiData.contact.address" class="dis-Addr" disabled/><span class="color-red maL18 cur-pointer" @click="combiData.showIncAddr=true">请完善地址</span>
-                         <div class="addr-box" v-show="combiData.showIncAddr">
+                       <div class="form-item inc-addr pRel"><label>公司地址</label><input type="text" v-model="combiData.contact.address" class="dis-Addr" disabled/><span class="color-red maL18 cur-pointer" @click="popAddrBox($event.target)">请完善地址</span>
+                         <div class="addr-box disNo">
                               <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
                               <input type="text" class="maT20 addr-ex" placeholder="请输入详细地址" />
                               <p><button class="confirm-btn" @click="confirmIncAddr($event.target,combiData.datatype)">确认</button></p>
@@ -99,8 +99,8 @@
                       <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
                       <p class="form-item"><label>联系人</label><input type="text" v-model="recruitData.contact.person"/></p>
                       <p class="form-item"><label>联系电话</label><input type="text" v-model="recruitData.contact.phone"/></p>
-                      <div class="form-item inc-addr pRel"><label>招聘会地点</label><input type="text" v-model="recruitData.contact.address" class="dis-Addr" disabled/><span class="color-red maL18 cur-pointer" @click="recruitData.showAddr=true">请完善地址</span>
-                        <div class="addr-box" v-show="recruitData.showAddr">
+                      <div class="form-item inc-addr pRel"><label>招聘会地点</label><input type="text" v-model="recruitData.contact.address" class="dis-Addr" disabled/><span class="color-red maL18 cur-pointer" @click="popAddrBox($event.target)">请完善地址</span>
+                        <div class="addr-box disNo">
                              <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
                              <input type="text" class="maT20 addr-ex" placeholder="请输入详细地址" />
                              <p><button class="confirm-btn" @click="confirmIncAddr($event.target,recruitData.datatype)">确认</button></p>
@@ -132,8 +132,8 @@
                         <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
                         <p class="form-item"><label>联系人</label><input type="text" v-model="directData.contact.person"/></p>
                         <p class="form-item"><label>联系电话</label><input type="text" v-model="directData.contact.phone"/></p>
-                        <div class="form-item inc-addr pRel"><label>工作地点</label><input type="text" v-model="directData.contact.address" class="dis-Addr" disabled/><span class="color-red maL18 cur-pointer" @click="directData.showAddr=true">请完善地址</span>
-                          <div class="addr-box" v-show="directData.showAddr">
+                        <div class="form-item inc-addr pRel"><label>工作地点</label><input type="text" v-model="directData.contact.address" class="dis-Addr" disabled/><span class="color-red maL18 cur-pointer" @click="popAddrBox($event.target)">请完善地址</span>
+                          <div class="addr-box disNo">
                                <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
                                <input type="text" class="maT20 addr-ex" placeholder="请输入详细地址" />
                                <p><button class="confirm-btn" @click="confirmIncAddr($event.target,directData.datatype)">确认</button></p>

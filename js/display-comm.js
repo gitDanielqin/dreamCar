@@ -1,6 +1,10 @@
 /**
  * Created by xuanyuan on 2016/12/31.
  */
+
+ var appQuery = new Vue({
+      el:"#app-query"
+})
 $(function(){
     commWidget.buildSelect();
 
@@ -85,5 +89,4 @@ $(function(){
         })
     }
     _initEventBind();
-
 })

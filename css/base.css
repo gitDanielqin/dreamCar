@@ -65,6 +65,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .H100{height:100px;}
 .H80{height:80px;}
 .H38{height:38px;}
+.H39{height:39px;}
 .H40{height:40px;}
 .H47{height:47px;}
 .H50{height:50px;}
@@ -105,6 +106,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .W138{width:138px;}
 .W140{width: 140px;}
 .W142{width: 142px;}
+.W145{width: 145px;}
 .W148{width: 148px;}
 .W150{width: 150px;}
 .W158{width: 158px;}
@@ -173,6 +175,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .W792{width:792px;}
 .W796{width:796px;}
 .W800{width:800px;}
+.W810{width:810px;}
 .W828{width:828px;}
 .W888{width:888px;}
 .W898{width:898px;}
@@ -377,6 +380,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .maT20{margin-top:20px;}
 .maT17{margin-top: 17px;}
 .maT16{margin-top:16px;}
+.maT15{margin-top:15px;}
 .maT13{margin-top:13px;}
 .maT11{margin-top:11px;}
 .maT14{margin-top:14px;}

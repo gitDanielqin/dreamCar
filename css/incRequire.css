@@ -47,7 +47,7 @@ input.dis-Addr{width: 390px;}
 .addr-box{width: 560px; height: 162px; padding-left: 20px; background: #def1f6; position: absolute; left: 108px; top:26px;}
 .addr-box .sel-addr{margin-top: 25px;}
 .addr-box .sel-addr input{margin-right: 9px;background: url("../images/icon-select.png") no-repeat right 10px white;}
-.addr-box .addr-ex{width: 346px;}
+.addr-box input.addr-ex{width: 346px;}
 .confirm-btn{width: 80px; height: 30px; background: #49c1e4; color: white; margin-top: 18px; margin-left: 230px;}
 .inc-addr{margin-bottom: 48px;}
 .inc-addr input.dis-Addr{background: white; width: 388px;}
