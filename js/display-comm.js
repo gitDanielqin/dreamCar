@@ -3,42 +3,85 @@
  */
 
  var appQuery = new Vue({
-      el:"#app-query"
+      el:"#app-query",
+      data:{
+           database:{
+                uni:{
+                     majors:[
+                          {major:"艺术",submajor:["行为艺术","人体艺术"]},
+                          {major:"信息技术",submajor:["计算机科学","通信工程"]},
+                          {major:"经济",submajor:["国民经济","企业经济"]},
+                     ],
+                     majorAmount:["1-20","20-100","100-200","200-500"],
+                },
+                inc:{
+                     IncScale:["1~20","21~50","51~100","101~500","501~1000","1000人以上"],
+                     IncProps:["内资","外资","农民专业合作社","合作企业","个人独资企业"],
+                     posAmount:["1-20","20-100","100-200","200-500"]
+                }
+           },
+           uniQuery:{
+                major:"",
+                majorsum:"",
+                majorEx:false,
+                incReq:{
+                    areas:{
+                         area_1:"",
+                         area_2:""
+                    },
+                    incProps:"",
+                    IncScale:"",
+                    pos:{
+                         pos_1:"",
+                         pos_2:""
+                    },
+                    posAmount:"",
+               },
+               publicTime:"",
+               trainway:""
+           },
+
+      }
+});
+
+var appResult = new Vue({
+     el:"#app-result",
+     data:{
+          uniList:[
+               {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"企业需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
+               {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"到校培训",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
+               {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"到校培训",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
+               {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"到校培训",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
+               {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"到校培训",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
+          ]
+     }
 })
-$(function(){
-    commWidget.buildSelect();
+
+function _init(){
+     selectInitPos();
+      _initEventBind();
+}
+_init();
+function selectInitPos(){
+     $(".selectee input").each(function(){
+        var bgPos=$(this).width()-10+"px center";
+        $(this).attr("disabled","true").css("background-position",bgPos);
+    });
+    $(".selectee ul").each(function(){
+        var sibInput=$(this).siblings("input")
+        $(this).width(sibInput.width()+10);
+        $(this).css({
+            left:sibInput.css("margin-left"),
+            top:sibInput.height()
+        })
+    });
+    $("body").bind("click",function(){
+       $(".selectee ul").hide();
+    })
+}
 
 
-    function selectEventBind(){
-        $(".selectLi dl.sel-lis dd").bind(
-            {"mouseover":function(){
-                $(this).addClass("over");
-            },
-            "mouseout":function(){
-                $(this).removeClass("over");
-            },
-            "click":function(){
-                $(this).siblings(".selected").removeClass("selected");
-                $(this).addClass("selected");
-                $(this).parent().siblings("input").val($(this).text());
-                $(this).parent().hide();
-                return false;
-            }
-            });
-        $(".selectee").bind("click",function(){
-            $(".selectLi dl").hide();
-        })
-        $(".selectLi").bind("click",function(){
-            $(".selectLi dl").hide();
-            $(".selectee ul").hide();
-            $(this).children("dl.sel-lis").show();
-            return false;
-        });
-        $("body").bind("click",function(){
-            $(".selectee ul").hide();
-            $(".selectLi dl").hide();
-        })
-    }
+
     function _initEventBind(){
         var isLogin=true;
         $(".co-apply").bind("click",function(){
@@ -88,5 +131,3 @@ $(function(){
             nextContent:'下页'
         })
     }
-    _initEventBind();
-})

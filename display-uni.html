@@ -10,8 +10,8 @@
 <body>
 <div class="top bg-dunkel">
     <div class="inner clearfix">
-        <h3 class="fl LH-H35 fSize14 color-white">您好，欢迎来到校企职通车</h3>
-        <div class="top-right fr LH-H35 fSize14 color-white">
+        <h3 class="fl LH-H30 fSize14 color-white">您好，欢迎来到校企职通车</h3>
+        <div class="top-right fr LH-H30 fSize14 color-white">
             <p class="login fl">
                 <span>【登录】</span><span>|</span><span style="color: red">【注册】</span>
             </p>
@@ -38,14 +38,14 @@
     </div>
 </div>
 <div class="main-top inner" id="app-query">
-    <h2 class="maT30 fSize30 LH47 color-grayH"><img class="W60 H57 maR17 v-mid" src="images/logo.png"/>校企职通车</h2>
+    <h2 class="maT30 fSize30 LH47 color-grayH"><img class="H47 maR17 v-mid" src="images/logo.png"/>校企职通车</h2>
     <div class="search maT15 t-center">
         <input class="LH-H37 v-mid paLeft50 fSize18" type="text" placeholder="请在此输入搜索关键词"><button class="fSize18 color-white v-mid H39 W145 bg-orange4">搜索</button>
     </div>
     <div class="queryform clearfix maT37 paTop10 paBot4 bg-gray-f7 color-gray79">
         <div class="clearfix">
             <label>所在城市：</label>
-            <ul class="lis-inline label-val LH34 address">
+            <ul class="lis-inline label-val LH24 address">
                 <li class="on">杭州<span style="display: block;"></span></li>
                 <li>上海<span></span></li>
                 <li>北京<span></span></li>
@@ -53,186 +53,58 @@
                 <li>广州<span></span></li>
                 <li>深圳<span></span></li>
             </ul>
-            <ul class="district lis-inline LH-H34 t-center fSize14 bg-white"><li class="fSize16 dis-label">分区：</li><li class="on">西湖区</li><li>滨江区</li><li>拱墅区</li><li>下沙区</li></ul>
+            <ul class="district lis-inline LH-H24 t-center fSize12 bg-white"><li class="fSize12 dis-label">分区：</li><li class="on">西湖区</li><li>滨江区</li><li>拱墅区</li><li>下沙区</li></ul>
         </div>
-        <div class="clearfix maB19">
+        <div class="clearfix maB16">
             <label>高校提供：</label>
-            <ul class="label-val lis-inline">
-                <li><select class="selFlex"><option>院系</option><option>应用数学系</option><option>工商管理系</option></select></li>
-                <li><select class="selFlex"><option>专业</option><option>通信工程</option><option>电子技术</option></select></li>
-                <li><select class="selFlex"><option>专业人数</option><option>0-20</option></select></li>
-            </ul>
+            <major-select class="uni-major lang-select" :majordata="database.uni.majors"></major-select><input type="text" v-show="uniQuery.majorEx"/>
+            <dropdown :options="database.uni.majorAmount" placeholder="专业人数" v-model="uniQuery.majorsum"></dropdown>
         </div>
-        <div class="clearfix maB19">
-            <label>对企要求：</label>
-            <ul class="label-val lis-inline">
-                <li class="selectLi"><input class="fSize14 sel-input paLeft20 maR20 LH-H34 W158 bg-white" disabled type="text" value="需求行业"/>
-                <dl class="sel-lis W720 clearfix fSize14 disNo LH30">
-                    <dd>林业</dd><dd>畜牧业</dd><dd>采矿业</dd><dd>纺织</dd>
-                    <dd>林业</dd><dd>畜牧业</dd><dd>采矿业</dd><dd>纺织</dd>
-                    <dd>林业</dd><dd>畜牧业</dd><dd>采矿业</dd><dd>纺织</dd>
-                    <dd>煤炭开采和洗涤业</dd><dd>煤炭开采和洗涤业</dd><dd>煤炭开采和洗涤业</dd><dd>煤炭开采和洗涤业</dd>
-                </dl>
-                </li>
-                <li><select class="selFlex"><option>企业性质</option><option>企业性质</option></select></li>
-                <li><select class="selFlex"><option>企业规模</option><option>0-20</option></select></li>
-                <li><select class="selFlex"><option>岗位名称</option><option>WEB前端</option></select></li>
-                <li><select class="selFlex"><option>岗位数量</option><option>0-5</option></select></li>
-            </ul>
+        <div class="clearfix maB16">
+            <label>对企要求：</label><div class="selectee lang-select"><input type="text" placeholder="需求行业" disabled /></div>
+            <dropdown :options="database.inc.IncProps" placeholder="企业性质" v-model="uniQuery.incReq.IncProps" class="lang-select"></dropdown>
+            <dropdown :options="database.inc.IncScale" placeholder="企业规模" v-model="uniQuery.incReq.IncScale"></dropdown>
+            <div class="selectee lang-select"><input type="text" placeholder="岗位名称" disabled /></div>
+            <dropdown :options="database.inc.posAmount" placeholder="企业规模" v-model="uniQuery.incReq.posAmount"></dropdown>
         </div>
-        <div class="clearfix maB19">
+        <div class="clearfix maB16">
             <label>其他：</label>
-            <ul class="label-val lis-inline">
-                <li><select class="selFlex"><option>发布时间</option><option>发布时间</option></select></li>
-                <li><select class="selFlex"><option>联合培养方式</option><option>到校培训</option></select></li>
-            </ul>
+               <dropdown :options="['三天内','一周内','一月内']" placeholder="发布时间" v-model="uniQuery.publicTime"></dropdown>
+               <dropdown :options="['高管到校培训','入企培训','面议']" placeholder="联合培养方式" v-model="uniQuery.trainway" class="lang-select"></dropdown>
         </div>
-
-
     </div>
 </div>
-<div class="main-result">
+<div class="main-result" id="app-result">
     <div class="title maT35">
-        <div class="wrapper">
-            <h2 class="W150 LH-H50 t-center color-white bg-orange4 fSize18">筛选结果</h2>
+        <div class="inner">
+            <h2 class="W150 LH-H40 t-center color-white bg-orange4 fSize18">筛选结果</h2>
         </div>
     </div>
     <div class="bg-gray-f7">
-        <div class="wrapper clearfix">
-            <ul class="results paTop10 fl">
-                <li>
-                    <div class="logo-pic W88 H78 fl maL28 maT24">
-                        <img src="images/coLogo01.jpg"/>
-                    </div>
-                    <div class="fl paTop23 W388 maL30">
-                        <h2 class="fSize18 LH-H30 color-blueL">艺术设计</h2>
-                        <p>企业性质<i>|</i>企业规模<i>|</i>企业所属行业</p>
-                        <p>企业提供的培训方式：企业高管到校培训</p>
-                    </div>
-                    <div class="institute W216 H70 fl fSize14 paLeft20 maT28">
-                        <h3 class="fSize18 LH-H23">中国美术学院</h3>
-                        <p class="LH-H28">本科</p>
-                        <p class="LH-H19">2016-12-10</p>
-                    </div>
-                    <button class="fSize18 color-white maT39 co-apply">申请合作<img class="maL4" src="images/handshake.png"/></button>
+        <div class="inner clearfix">
+           <ul class="results paTop10 fl">
+                <li v-for="item in uniList">
+                     <div class="paLeft29 clearfix H128 pRel">
+                         <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                         <div class="item-block-left fl paTop22 W321 maL25">
+                             <h2 class="color-blueL fSize16 LH-H30">{{item.major}}</h2>
+                             <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
+                             <p>企业提供的培训方式：{{item.trainway}}</p>
+                             <p class="item-date">{{item.date}}</span> {{item.time}}</p>
+                         </div>
+                         <div class="item-block-right fl fSize14 LH25 maT10">
+                             <p class="fSize16">{{item.uniname}}</p>
+                             <p class="fSize12">{{item.uniLevel}}</p>
+                             <p class="fSize12 pubdate">{{item.publicDate}} {{item.publicTime}}</p>
+                         </div>
+                         <button class="btn-apply color-blueL">申请合作<img src="images/handshake.png" class="v-mid maL6"/></button>
+                     </div>
                 </li>
-                <li>
-                    <div class="logo-pic W88 H78 fl maL28 maT24">
-                        <img src="images/coLogo01.jpg"/>
-                    </div>
-                    <div class="fl paTop23 W388 maL30">
-                        <h2 class="fSize18 LH-H30 color-blueL">艺术设计</h2>
-                        <p>企业性质<i>|</i>企业规模<i>|</i>企业所属行业</p>
-                        <p>企业提供的培训方式：企业高管到校培训</p>
-                    </div>
-                    <div class="institute W216 H70 fl fSize14 paLeft20 maT28">
-                        <h3 class="fSize18 LH-H23">中国美术学院</h3>
-                        <p class="LH-H28">本科</p>
-                        <p class="LH-H19">2016-12-10</p>
-                    </div>
-                    <button class="fSize18 color-white maT39 co-apply">申请合作<img class="maL4" src="images/handshake.png"/></button>
-                </li>
-                <li>
-                    <div class="logo-pic W88 H78 fl maL28 maT24">
-                        <img src="images/coLogo01.jpg"/>
-                    </div>
-                    <div class="fl paTop23 W388 maL30">
-                        <h2 class="fSize18 LH-H30 color-blueL">艺术设计</h2>
-                        <p>企业性质<i>|</i>企业规模<i>|</i>企业所属行业</p>
-                        <p>企业提供的培训方式：企业高管到校培训</p>
-                    </div>
-                    <div class="institute W216 H70 fl fSize14 paLeft20 maT28">
-                        <h3 class="fSize18 LH-H23">中国美术学院</h3>
-                        <p class="LH-H28">本科</p>
-                        <p class="LH-H19">2016-12-10</p>
-                    </div>
-                    <button class="fSize18 color-white maT39 co-apply">申请合作<img class="maL4" src="images/handshake.png"/></button>
-                </li>
-                <li>
-                    <div class="logo-pic W88 H78 fl maL28 maT24">
-                        <img src="images/coLogo01.jpg"/>
-                    </div>
-                    <div class="fl paTop23 W388 maL30">
-                        <h2 class="fSize18 LH-H30 color-blueL">艺术设计</h2>
-                        <p>企业性质<i>|</i>企业规模<i>|</i>企业所属行业</p>
-                        <p>企业提供的培训方式：企业高管到校培训</p>
-                    </div>
-                    <div class="institute W216 H70 fl fSize14 paLeft20 maT28">
-                        <h3 class="fSize18 LH-H23">中国美术学院</h3>
-                        <p class="LH-H28">本科</p>
-                        <p class="LH-H19">2016-12-10</p>
-                    </div>
-                    <button class="fSize18 color-white maT39 co-apply">申请合作<img class="maL4" src="images/handshake.png"/></button>
-                </li>
-                <li>
-                    <div class="logo-pic W88 H78 fl maL28 maT24">
-                        <img src="images/coLogo01.jpg"/>
-                    </div>
-                    <div class="fl paTop23 W388 maL30">
-                        <h2 class="fSize18 LH-H30 color-blueL">艺术设计</h2>
-                        <p>企业性质<i>|</i>企业规模<i>|</i>企业所属行业</p>
-                        <p>企业提供的培训方式：企业高管到校培训</p>
-                    </div>
-                    <div class="institute W216 H70 fl fSize14 paLeft20 maT28">
-                        <h3 class="fSize18 LH-H23">中国美术学院</h3>
-                        <p class="LH-H28">本科</p>
-                        <p class="LH-H19">2016-12-10</p>
-                    </div>
-                    <button class="fSize18 color-white maT39 co-apply">申请合作<img class="maL4" src="images/handshake.png"/></button>
-                </li>
-                <li>
-                    <div class="logo-pic W88 H78 fl maL28 maT24">
-                        <img src="images/coLogo01.jpg"/>
-                    </div>
-                    <div class="fl paTop23 W388 maL30">
-                        <h2 class="fSize18 LH-H30 color-blueL">艺术设计</h2>
-                        <p>企业性质<i>|</i>企业规模<i>|</i>企业所属行业</p>
-                        <p>企业提供的培训方式：企业高管到校培训</p>
-                    </div>
-                    <div class="institute W216 H70 fl fSize14 paLeft20 maT28">
-                        <h3 class="fSize18 LH-H23">中国美术学院</h3>
-                        <p class="LH-H28">本科</p>
-                        <p class="LH-H19">2016-12-10</p>
-                    </div>
-                    <button class="fSize18 color-white maT39 co-apply">申请合作<img class="maL4" src="images/handshake.png"/></button>
-                </li>
-                <li>
-                    <div class="logo-pic W88 H78 fl maL28 maT24">
-                        <img src="images/coLogo01.jpg"/>
-                    </div>
-                    <div class="fl paTop23 W388 maL30">
-                        <h2 class="fSize18 LH-H30 color-blueL">艺术设计</h2>
-                        <p>企业性质<i>|</i>企业规模<i>|</i>企业所属行业</p>
-                        <p>企业提供的培训方式：企业高管到校培训</p>
-                    </div>
-                    <div class="institute W216 H70 fl fSize14 paLeft20 maT28">
-                        <h3 class="fSize18 LH-H23">中国美术学院</h3>
-                        <p class="LH-H28">本科</p>
-                        <p class="LH-H19">2016-12-10</p>
-                    </div>
-                    <button class="fSize18 color-white maT39 co-apply">申请合作<img class="maL4" src="images/handshake.png"/></button>
-                </li>
-                <li>
-                    <div class="logo-pic W88 H78 fl maL28 maT24">
-                        <img src="images/coLogo01.jpg"/>
-                    </div>
-                    <div class="fl paTop23 W388 maL30">
-                        <h2 class="fSize18 LH-H30 color-blueL">艺术设计</h2>
-                        <p>企业性质<i>|</i>企业规模<i>|</i>企业所属行业</p>
-                        <p>企业提供的培训方式：企业高管到校培训</p>
-                    </div>
-                    <div class="institute W216 H70 fl fSize14 paLeft20 maT28">
-                        <h3 class="fSize18 LH-H23">中国美术学院</h3>
-                        <p class="LH-H28">本科</p>
-                        <p class="LH-H19">2016-12-10</p>
-                    </div>
-                    <button class="fSize18 color-white maT39 co-apply">申请合作<img class="maL4" src="images/handshake.png"/></button>
-                </li>
-            </ul>
-            <div class="ads W198 H431 fr maT28 bg-white">
-                <h3 class="LH-H30 fSize18 maL20">广告推广</h3>
-                <div class="ad-pic H159 W158"><img src="images/ads-pic01.png"/></div>
-                <div class="ad-pic H159 W158"><img src="images/ads-pic02.png"/></div>
+           </ul>
+            <div class="ads W164 H359 fl maT28 bg-white maL15">
+                <h3 class="LH-H25 fSize14 maL20 color-gray79">广告推广</h3>
+                <div class="ad-pic"><img src="images/ads-pic01.png"/></div>
+                <div class="ad-pic"><img src="images/ads-pic02.png"/></div>
             </div>
         </div>
         <div class="wrapper paBot33">
