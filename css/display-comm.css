@@ -3,8 +3,8 @@
 .selectee ul{position: absolute; left: 0; top:36px;border: 1px solid #d2d2d2;
     font-size: 12px; height: 149px; overflow: auto;background: #fff; display: none; z-index: 10;}
 .selectee ul li{line-height: 24px; height: 24px; cursor: pointer;padding-left: 10px;}
-.selectee ul li.over{background: #eee;}
-.selectee ul li.selected{background: #dcdcdc;}
+.selectee ul li.over{background: #9bcce5; color:#fff;}
+.selectee ul li.selected{background: #2ea8e6; color:#fff;}
 
 
 .login  span{margin-left: 15px;}
@@ -21,6 +21,14 @@ color:#000; }
 .queryform input{width: 106px; margin-right: 16px;}
 .uni-major{display: inline-block;}
 .lang-select input{width: 138px;}
+.popBox{width:453px; height: 211px; border: 1px solid #a6a6a6; position: absolute; right: 0; top: 50px; background: white; z-index: 10}
+.posLis{margin-top: 8px;}
+.posLis li{width:150px;cursor: pointer;}
+.posLis li:hover{background: #f5f5f5; color: #ffb842;}
+.popBox .selectee{margin-left: 15px; margin-top: 8px;vertical-align: bottom;}
+.popBox .selectee input{width: 225px;  margin-right: 0; background: url("../images/icon-select-1.png") no-repeat right 10px #f1f1f1;}
+.area-box{left: 80px; top:170px;}
+.pos-box{right: 0;top:170px;}
 /*.sel-input{ border:1px solid #d2d2d2; background: url("../images/icon-select-1.png") no-repeat 155px center #fff; }
 .sel-lis dd:hover{background: #f5f5f5; color:#fcc067;}*/
 .item-block-right{padding: 18px; background: url("../images/dashline.png") no-repeat left 26px;}
@@ -42,7 +50,6 @@ color:#000; }
 .queryform .district li.dis-label{width: 48px;padding-left: 5px;}
 .queryform .district li.dis-label:hover{color:#797979;}
 
-
 .main-result .title{border-bottom: 1px solid #f7b632; }
 .main-result .results li{width:808px; margin-top: 19px; background: #fff; border: 1px solid #ccc;}
 .main-result .results .logo-pic{ background: #2ea8e6; border: 1px solid #959595;}
@@ -60,11 +67,13 @@ color:#000; }
 .pageBot a.next:hover{background: #333;}
 
 
-.bot-nav li:hover{color:#f00; cursor: pointer}
+/*底部样式，与首页基本*/
 .bot-nav{display: inline-block;}
+.bot-nav a{color:#797979;}
+.bot-nav a:hover{color:#f00; cursor: pointer}
 .bot .barcode-text{display: inline-block; vertical-align: middle;}
+.bot-account{border-top:2px solid #9d9d9d;}
 
-.sel-lis{display: none;}
 .company-name{overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
 .label-val .job-pos{height:252px;}
 .label-val .job-pos dd{font-size: 14px;}
@@ -74,9 +83,8 @@ color:#000; }
 .sel-lis .selectee ul li.over{background: #f9c560; color: white;}
 
 /*申请成功对话框样式*/
-.modal{display: none;}
-.dlg-success{position: absolute; top:580px; left: 50%; transform: translateX(-50%); background: #fcb62e; display: none;}
-.dlg-login{position: absolute; top:580px; left: 50%; transform: translateX(-50%); background: #fcb62e; display: none;}
+.dlg-success{position: absolute; top:580px; left: 50%; transform: translateX(-50%); background: #fcb62e; }
+.dlg-login{position: absolute; top:580px; left: 50%; transform: translateX(-50%); background: #fcb62e; }
 .confirm{background: url("../images/icon-sure.png") no-repeat 86% center #fcb62e;}
 .stamp{position: absolute; left: -48px; top:-42px;}
 .login-form input{width: 436px; height:66px; padding-left: 30px; font-size: 24px; border: 2px solid #e5e5e5; color:#a1a1a1;

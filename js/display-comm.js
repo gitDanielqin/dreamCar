@@ -1,7 +1,7 @@
 /**
  * Created by xuanyuan on 2016/12/31.
  */
-
+var isLogin=false;
  var appQuery = new Vue({
       el:"#app-query",
       data:{
@@ -17,7 +17,11 @@
                 inc:{
                      IncScale:["1~20","21~50","51~100","101~500","501~1000","1000人以上"],
                      IncProps:["内资","外资","农民专业合作社","合作企业","个人独资企业"],
-                     posAmount:["1-20","20-100","100-200","200-500"]
+                     posAmount:["1-20","20-100","100-200","200-500"],
+                     pos1:["客服/售前/售后技术支持","客服/售前/售后技术支持","客服/售前/售后技术支持","客服/售前/售后技术支持"],
+                     pos2:["平面设计师","动效设计师","游戏设计师","UI设计师","平面设计师","动效设计师","游戏设计师","UI设计师","平面设计师","动效设计师","游戏设计师","UI设计师","平面设计师","动效设计师","游戏设计师","UI设计师"],
+                     area1:["IT/通信/电子/互联网","房地产/建筑业","保险","银行","信托/担保/拍卖/典当","其他"],
+                     area2:["IT/通信/电子/互联网","房地产/建筑业","保险","银行","信托/担保/拍卖/典当","其他"]
                 }
            },
            uniQuery:{
@@ -40,7 +44,24 @@
                publicTime:"",
                trainway:""
            },
-
+           showPosBox:false,
+           showAreaBox:false
+      },
+      methods:{
+           selPos:function(pos){
+                this.uniQuery.incReq.pos.pos_2 = pos;
+                this.showPosBox=false;
+           },
+           clickPos:function(){
+                this.showPosBox=true;
+           },
+           selArea:function(area){
+                this.uniQuery.incReq.areas.area_2 = area;
+                this.showAreaBox=false;
+           },
+           clickArea:function(){
+                this.showAreaBox=true;
+           }
       }
 });
 
@@ -54,9 +75,45 @@ var appResult = new Vue({
                {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"到校培训",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
                {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"到校培训",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
           ]
+     },
+     methods:{
+          coApply:function(){
+               if(isLogin){
+                   appModal.showModal=true;
+                   appModal.showLogin=false;
+                   appModal.showSucc=true;
+               }else{
+                    appModal.showModal=true;
+                    appModal.showLogin=true;
+                    appModal.showSucc=false;
+               }
+          },
+
      }
 })
 
+var appModal = new Vue({
+     el:"#app-modal",
+     data:{
+          showModal:false,
+          showSucc:false,
+          showLogin:false
+     },
+     methods:{
+          confirmSuc:function(){
+               this.showSucc=false;
+               this.showModal=false;
+          },
+          closeSuc:function(){
+               this.showSucc=false;
+               this.showModal=false;
+          },
+          closeLog:function(){
+               this.showLogin=false;
+               this.showModal=false;
+          }
+     }
+})
 function _init(){
      selectInitPos();
       _initEventBind();
@@ -83,18 +140,7 @@ function selectInitPos(){
 
 
     function _initEventBind(){
-        var isLogin=true;
-        $(".co-apply").bind("click",function(){
-            if(isLogin){
-                $(".modal").show();
-                $(".dlg").hide();
-                $(".dlg-success").show();
-            }else{
-                $(".modal").show();
-                $(".dlg").hide();
-                $(".dlg-login").show();
-            }
-        });
+
         $(".account li").hover(function(){
             $(this).find("dl").slideDown(300);
         },function(){
@@ -112,15 +158,6 @@ function selectInitPos(){
             $(this).find("span").show();
         });
         //申请合作对话框事件绑定
-        $(".dlg .closer").bind("click",function(){
-            $(".dlg-success").hide();
-            $(".modal").hide();
-        });
-        $(".dlg-success .confirm").bind("click",function(){
-            $(".dlg-success").hide();
-            $(".modal").hide();
-        });
-        selectEventBind();
         $(".pageBot").pagination({
             totalData:37,
             showData:8,
