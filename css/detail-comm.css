@@ -8,15 +8,15 @@
 .btn-collec{ border: 2px solid #ffa800; color:#ffa800; }
 .btn-collec span{letter-spacing: 1em;}
 .collected{background: #48c1e4; color: white; border: 2px solid #48c1e4;}
-.share i.pic-wrapper{margin-left: 22px;}
+.share i.pic-wrapper{margin-left: 22px; vertical-align: middle;}
 
-.descript h3{padding-left: 25px; color: white; line-height: 50px; height:50px; font-size: 30px; border-bottom: 1px solid #dcdcdc;}
+.descript h3{padding-left: 25px; color: white; line-height: 40px; height:40px; font-size: 20px; border-bottom: 1px solid #dcdcdc;}
 .descript h3:first-child{background: url("../images/head-bg.png") no-repeat 0 0;}
 .descript h3:nth-of-type(2){background: url("../images/head-bg2.png") no-repeat 0 0;}
 .descript h3:nth-of-type(3){background: url("../images/head-bg3.png") no-repeat 0 0;}
-.descript ul{margin-top: 11px; margin-bottom: 21px; line-height: 67px; }
-.descript li{font-size: 20px; padding-left: 50px; width: 370px;}
-.descript label{font-size: 24px; color: #989898; margin-right: 15px;}
+.descript ul{margin-top: 8px; margin-bottom: 11px; line-height: 58px; }
+.descript li{font-size: 14px; padding-left: 50px; width: 370px;}
+.descript label{font-size: 16px; color: #989898; margin-right: 15px;}
 
 .date-table{border-collapse: collapse;}
 .date-table th{border: 2px solid #dcdcdc; line-height: 46px; height:46px;width: 107px;margin: 0}

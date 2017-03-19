@@ -1,7 +1,7 @@
 /**
  * Created by xuanyuan on 2016/12/31.
  */
-var isLogin=false;
+var isLogin=true;
  var appQuery = new Vue({
       el:"#app-query",
       data:{
@@ -79,17 +79,23 @@ var appResult = new Vue({
      methods:{
           coApply:function(){
                if(isLogin){
+                    $(".dlg-success").css({
+                         top: Math.floor(($(window).height()-412)/2+document.body.scrollTop)
+                    })
                    appModal.showModal=true;
                    appModal.showLogin=false;
                    appModal.showSucc=true;
                }else{
+                    $(".dlg-login").css({
+                         top: Math.floor(($(window).height()-412)/2+document.body.scrollTop)
+                    })
                     appModal.showModal=true;
                     appModal.showLogin=true;
                     appModal.showSucc=false;
                }
           },
 
-     }
+     },
 })
 
 var appModal = new Vue({

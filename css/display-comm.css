@@ -86,12 +86,13 @@ color:#000; }
 .dlg-success{position: absolute; top:580px; left: 50%; transform: translateX(-50%); background: #fcb62e; }
 .dlg-login{position: absolute; top:580px; left: 50%; transform: translateX(-50%); background: #fcb62e; }
 .confirm{background: url("../images/icon-sure.png") no-repeat 86% center #fcb62e;}
-.stamp{position: absolute; left: -48px; top:-42px;}
-.login-form input{width: 436px; height:66px; padding-left: 30px; font-size: 24px; border: 2px solid #e5e5e5; color:#a1a1a1;
-background: #f8f8f8; margin-top: 30px; margin-left: 31px;}
+.stamp{position: absolute; left: -35px; top:-29px;}
+.login-form input{width: 363px; height:55px; padding-left: 25px; font-size: 16px; border: 2px solid #e5e5e5; color:#a1a1a1;
+background: #f8f8f8; margin-top: 30px; margin-left: 25px;}
 .dlg-login .regis{border-left: 1px dashed #eee;}
-.fast-login i{margin-right:44px;}
+.fast-login i{margin-right:35px;}
 a.login-link{display: block; color:#fcb62e;}
+.succ-msg{background: #f7eec9;}
 
 .account .pic-wrapper{margin-left:9px;}
 .account li{cursor: pointer; position: relative;}
