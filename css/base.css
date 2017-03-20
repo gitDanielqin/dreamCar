@@ -48,6 +48,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .H431{height: 431px;}
 .H420{height: 420px;}
 .H418{height: 418px;}
+.H315{height: 315px;}
 .H328{height: 328px;}
 .H348{height: 348px;}
 .H352{height: 352px;}
@@ -120,6 +121,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .W158{width: 158px;}
 .W160{width: 160px;}
 .W164{width: 164px;}
+.W166{width: 166px;}
 .W168{width: 168px;}
 .W170{width:170px;}
 .W172{width:172px;}
@@ -139,6 +141,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .W220{width:220px;}
 .W226{width:226px;}
 .W228{width:228px;}
+.W232{width:232px;}
 .W236{width:236px;}
 .W242{width: 242px;}
 .W246{width: 246px;}
@@ -202,8 +205,10 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 
 
 /*行高*/
+.LH-H48{line-height: 48px; height: 48px;}
 .LH-H47{line-height: 47px; height: 47px;}
 .LH-H45{line-height: 45px; height: 45px;}
+.LH-H44{line-height: 44px; height: 44px;}
 .LH-H40{line-height: 40px; height: 40px;}
 .LH-H42{line-height: 42px; height: 42px;}
 .LH-H37{line-height: 37px; height: 37px;}
@@ -218,6 +223,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .LH-H27{line-height: 27px; height: 27px;}
 .LH-H28{line-height: 28px; height: 28px;}
 .LH-H60{line-height: 60px; height: 60px;}
+.LH-H62{line-height: 62px; height: 62px;}
 .LH-H63{line-height: 63px; height: 63px;}
 .LH-H64{line-height: 64px; height: 64px;}
 .LH-H66{line-height: 66px; height: 66px;}
@@ -254,6 +260,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .LH-H23{line-height: 23px; height: 23px;}
 .LH34{line-height: 34px;}
 .LH37{line-height: 37px;}
+.LH38{line-height: 38px;}
 .LH30{line-height: 30px;}
 .LH31{line-height: 31px;}
 .LH32{line-height: 32px;}
@@ -344,6 +351,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .maR30{margin-right: 30px;}
 .maR33{margin-right:33px;}
 .maR40{margin-right:40px;}
+.maT45{margin-top: 45px;}
 .maR56{margin-right:56px;}
 .maR80{margin-right:80px;}
 .maR100{margin-right: 100px;}
