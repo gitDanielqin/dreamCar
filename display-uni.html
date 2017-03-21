@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>高校需求</title>
     <link href="css/base.css" rel="stylesheet">
-    <link href="css/widget_style.css" rel="stylesheet">
     <link href="css/display-comm.css" rel="stylesheet">
 </head>
 <body>
@@ -61,10 +60,10 @@
             <dropdown :options="database.uni.majorAmount" placeholder="专业人数" v-model="uniQuery.majorsum"></dropdown>
         </div>
         <div class="clearfix maB16">
-            <label>对企要求：</label><div class="selectee lang-select" @click="clickArea"><input type="text" placeholder="需求行业" disabled v-model="uniQuery.incReq.areas.area_2"/></div>
+            <label>对企要求：</label><div class="selectee lang-select" @click.stop="clickArea"><input type="text" placeholder="需求行业" disabled v-model="uniQuery.incReq.areas.area_2"/></div>
             <dropdown :options="database.inc.IncProps" placeholder="企业性质" v-model="uniQuery.incReq.IncProps" class="lang-select"></dropdown>
             <dropdown :options="database.inc.IncScale" placeholder="企业规模" v-model="uniQuery.incReq.IncScale"></dropdown>
-            <div class="selectee lang-select" @click="clickPos"><input type="text" placeholder="岗位名称" disabled v-model="uniQuery.incReq.pos.pos_2"/></div>
+            <div class="selectee lang-select" @click.stop="clickPos"><input type="text" placeholder="岗位名称" disabled v-model="uniQuery.incReq.pos.pos_2"/></div>
             <dropdown :options="database.inc.posAmount" placeholder="企业规模" v-model="uniQuery.incReq.posAmount"></dropdown>
         </div>
         <div class="clearfix maB16">
@@ -85,7 +84,7 @@
                <dropdown :options="database.inc.pos1" placeholder="客服/售前/售后技术支持" v-model="uniQuery.incReq.pos.pos_1"></dropdown>（选择此类将包含下方所有小类）
            </div>
            <ul class="posLis lis-inline t-center LH-H25">
-                <li v-for="pos in database.inc.pos2" @click="selPos(pos)">{{pos}}</li>
+                <li v-for="pos in database.inc.pos2" @click="selPos(pos,'uni')">{{pos}}</li>
            </ul>
         </div>
     </div>
@@ -109,7 +108,7 @@
                              <p class="item-date">{{item.date}}</span> {{item.time}}</p>
                          </div>
                          <div class="item-block-right fl fSize14 LH25 maT10">
-                             <p class="fSize16">{{item.uniname}}</p>
+                             <p class="fSize16 item-name" :title="item.uniname">{{item.uniname}}</p>
                              <p class="fSize12">{{item.uniLevel}}</p>
                              <p class="fSize12 pubdate">{{item.publicDate}} {{item.publicTime}}</p>
                          </div>

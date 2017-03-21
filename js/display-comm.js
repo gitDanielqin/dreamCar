@@ -13,6 +13,7 @@ var isLogin=true;
                           {major:"经济",submajor:["国民经济","企业经济"]},
                      ],
                      majorAmount:["1-20","20-100","100-200","200-500"],
+                     props:["重点","本科","专科","高职","民营"]
                 },
                 inc:{
                      IncScale:["1~20","21~50","51~100","101~500","501~1000","1000人以上"],
@@ -44,12 +45,31 @@ var isLogin=true;
                publicTime:"",
                trainway:""
            },
+           incQuery:{
+               uniReq:{
+                    uniprops:"",
+                    major:"",
+                    majorsum:"",
+                    majorEx:false,
+               },
+               pos:{
+                    pos_1:"",
+                    pos_2:""
+               },
+               posAmount:"",
+               publicTime:"",
+               trainway:""
+           },
            showPosBox:false,
            showAreaBox:false
       },
       methods:{
-           selPos:function(pos){
-                this.uniQuery.incReq.pos.pos_2 = pos;
+           selPos:function(pos,type){
+                if(type=="uni"){
+                     this.uniQuery.incReq.pos.pos_2 = pos;
+                }else if(type=="inc"){
+                      this.incQuery.pos.pos_2 = pos;
+                }
                 this.showPosBox=false;
            },
            clickPos:function(){
@@ -74,6 +94,13 @@ var appResult = new Vue({
                {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"到校培训",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
                {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"到校培训",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
                {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"到校培训",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
+          ],
+          incList:[
+               {pos:"艺术设计",uniProps:"高校性质",major:"专业名称",stuScale:"专业人数",trainway:"到校培训",inc:"杭州煌巢信息科技有限公司",IncProps:"国企",posAmount:"20人",publicDate:"2017-11-11"},
+               {pos:"艺术设计",uniProps:"高校性质",major:"专业名称",stuScale:"专业人数",trainway:"到校培训",inc:"杭州煌巢信息科技有限公司",IncProps:"国企",posAmount:"20人",publicDate:"2017-11-11"},
+               {pos:"艺术设计",uniProps:"高校性质",major:"专业名称",stuScale:"专业人数",trainway:"到校培训",inc:"杭州煌巢信息科技有限公司",IncProps:"国企",posAmount:"20人",publicDate:"2017-11-11"},
+               {pos:"艺术设计",uniProps:"高校性质",major:"专业名称",stuScale:"专业人数",trainway:"到校培训",inc:"杭州煌巢信息科技有限公司",IncProps:"国企",posAmount:"20人",publicDate:"2017-11-11"},
+               {pos:"艺术设计",uniProps:"高校性质",major:"专业名称",stuScale:"专业人数",trainway:"到校培训",inc:"杭州煌巢信息科技有限公司",IncProps:"国企",posAmount:"20人",publicDate:"2017-11-11"}
           ]
      },
      methods:{
@@ -140,6 +167,8 @@ function selectInitPos(){
     });
     $("body").bind("click",function(){
        $(".selectee ul").hide();
+      appQuery.showPosBox=false;
+      appQuery.showAreaBox=false;
     })
 }
 
