@@ -14,9 +14,15 @@
 .descript h3:first-child{background: url("../images/head-bg.png") no-repeat 0 0;}
 .descript h3:nth-of-type(2){background: url("../images/head-bg2.png") no-repeat 0 0;}
 .descript h3:nth-of-type(3){background: url("../images/head-bg3.png") no-repeat 0 0;}
-.descript ul{margin-top: 8px; margin-bottom: 8px; line-height: 58px; }
+.descript ul{margin:8px 0; line-height: 58px; }
+.descript.pos-descript ul{line-height: 40px;}
 .descript li{font-size: 14px; padding-left: 43px; width: 333px;}
 .descript label{font-size: 16px; color: #989898; margin-right: 15px;}
+.descript.pos-descript label{font-size: 14px;}
+.descript.pos-descript li{padding-left: 0;}
+.descript.pos-descript .pos-welfares{line-height: 30px; margin: 0;}
+.descript .pos-welfares li{width: auto; padding: 0;}
+.contact-btn{background: #f6f6f6; border: 2px solid #e8e8e8; width: 148px; height: 38px; font-size: 12px; margin-left: 60px;}
 
 .date-table{border-collapse: collapse;}
 .date-table th{border: 2px solid #dcdcdc; line-height: 54px; height:54px;width: 88px;margin: 0}
@@ -26,6 +32,8 @@
 .uni-porto{ border-left:1px solid #c4c4c4; border-bottom: 1px solid #c4c4c4;}
 
 .basic-info li{line-height: 32px; margin-bottom: 6px; padding-left: 37px;}
+.basic-info.pos-basic li{margin: 0;}
+.basic-info.inc-basic li{margin: 0;}
 .basic-info i{margin-right: 20px;}
 
 .ads{border:1px solid #c9c9c9; margin-left: 65px;}
@@ -42,8 +50,9 @@ background: url("../images/icon-total.png") no-repeat 0 0; left: 84%; top:-15px;
 .result-table th{border:1px solid #919191; font-weight: normal;}
 .result-table td{border:1px solid #919191; color: #5d5d5d; text-align: center;}
 .result-table .viewed{color:#ff8a00;}
+.result-table .interview{color:#5cc3ff;}
 .tab-cont label{color:#606060}
-.tab-cont {height: 771px; margin-top:11px; display: none; width: 808px;}
+.tab-cont {height: 750px; margin-top:11px; display: none; width: 784px;border:1px solid #ff8a00; padding: 10px; margin-bottom: 10px;}
 .cont-comment li{height:146px; border-bottom: 1px dashed #e5e5e5; position: relative; }
 .porto img{margin-top:24px; border-radius:50%; width: 83px;}
 .time{line-height: 25px; height: 25px; font-size: 12px; color: #868686; position: absolute;right: 12px; bottom:0;}

@@ -8,29 +8,24 @@
     <link href="css/display-comm.css" rel="stylesheet">
 </head>
 <body>
-     <div class="top bg-dunkel">
+     <div class="top bg-dunkel" id="app-top">
          <div class="inner clearfix">
              <h3 class="fl LH-H30 fSize14 color-white">您好，欢迎来到校企职通车</h3>
-             <div class="top-right fr LH-H30 fSize14 color-white">
+             <div class="top-right fr LH-H30 fSize14 color-white" v-show="!isLogin">
                  <p class="login fl">
                      <span>【登录】</span><span>|</span><span style="color: red">【注册】</span>
                  </p>
                  <div class="fl fSize14 top-acc color-white"><img class="v-mid" src="images/icon-account1.png">个人中心</div>
              </div>
-             <ul class="account fr lis-inline color-white fSize14 LH-H35 disNo">
-                 <li style="margin-right: 14px;">免费发布</li>
-                 <li><span style="margin-right:14px;">|</span>网站合作<i class="pic-wrapper maR10"><img src="images/icon-dropdown-white.png"/></i>
+             <ul class="account fr lis-inline color-white fSize12 LH-H30" v-show="isLogin">
+                 <li>我的简历</li>
+                 <li><span style="margin:0 12px">|</span>投递箱</li>
+                 <li><span style="margin:0 12px">|</span>收藏夹<span style="margin-left:12px">|</span></li>
+                 <li style="padding-left:12px;">江玉海<i class="pic-wrapper"><img src="images/icon-dropdown-white.png"/></i>
                      <dl>
-                         <dd>校企合作</dd>
-                         <dd>校园推广</dd>
-                         <dd>VIP中心</dd>
-                     </dl>
-                 </li>
-                 <li><span style="margin-right:14px">|</span>中国美术学院<i class="pic-wrapper"><img src="images/icon-dropdown-white.png"/></i>
-                     <dl>
-                         <dd>我的发布</dd>
-                         <dd>我的合作</dd>
-                         <dd>我的收藏</dd>
+                         <dd>我的VIP</dd>
+                         <dd>我的邮箱</dd>
+                         <dd>账号设置</dd>
                          <dd>退出</dd>
                      </dl>
                  </li>
@@ -40,7 +35,7 @@
      <div class="main-top inner" id="app-query">
          <h2 class="maT30 fSize30 LH47 color-grayH"><img class="H47 maR17 v-mid" src="images/logo.png"/>校企职通车</h2>
          <div class="search maT15 t-center">
-             <input class="LH-H37 v-mid paLeft50 fSize18" type="text" placeholder="请在此输入搜索关键词"><button class="fSize18 color-white v-mid H39 W145 bg-orange4">搜索</button>
+             <input class="LH-H37 v-mid paLeft50 fSize18" type="text" placeholder="请在此输入搜索关键词"><button class="fSize18 color-white v-mid H39 bg-orange4">搜索</button>
          </div>
          <div class="queryform clearfix maT37 paTop10 paBot4 bg-gray-f7 color-gray79 pRel">
              <div class="clearfix">
@@ -104,21 +99,20 @@
          <div class="bg-gray-f7">
              <div class="inner clearfix">
                 <ul class="results paTop10 fl">
-                     <li v-for="item in incList">
+                     <li v-for="item in posList">
                           <div class="paLeft29 clearfix H128 pRel">
                               <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                               <div class="item-block-left fl paTop22 W321 maL25">
                                   <h2 class="color-blueL fSize16 LH-H30">{{item.pos}}</h2>
-                                  <p>{{item.uniProps}}<i class="depart">|</i>{{item.major}}<i class="depart">|</i>{{item.stuScale}}</p>
-                                  <p class="f-bold fSize14"><span>企业提供的培训方式：</span>{{item.trainway}}</p>
-                                  <p class="item-date">{{item.date}}</span> {{item.time}}</p>
+                                  <p><span class="fSize16 maR24 color-orange-f7">{{item.salary}}</span>{{item.major}}<i class="depart">|</i>{{item.worksexp}}<i class="depart">|</i>{{item.scolar}}</p>
+                                  <p class="fSize14"><span class="maR15">【{{item.address.district}}】</span>岗位数：{{item.posAmount}}人</p>
                               </div>
                               <div class="item-block-right fl fSize14 LH25 maT10">
                                   <p class="fSize16 item-name" :title="item.inc">{{item.inc}}</p>
-                                  <p class="fSize12">{{item.IncProps}}<span class="maL16">岗位数：{{item.posAmount}}</span></p>
+                                  <p class="fSize12">{{item.IncProps}}<span class="maL16">{{item.IncScale}}</span></p>
                                   <p class="fSize12 pubdate">{{item.publicDate}}</p>
                               </div>
-                              <button class="btn-apply color-blueL" @click="coApply">申请合作<img src="images/handshake.png" class="v-mid maL6"/></button>
+                              <button class="btn-apply color-blueL" @click="coApply">投个简历</button>
                           </div>
                      </li>
                 </ul>
@@ -164,7 +158,7 @@
          <div class="dlg-success dlg W670 paBot4  b-Radius5" v-show="showSucc">
              <h2 class="LH-H54 fSize20 color-white paLeft62">申请状态<i class="pic-wrapper fr maR17 cur-pointer closer" @click="closeSuc"><img src="images/icon-close2.png" class="W30"/> </i></h2>
              <div class="H348 W660 bg-white maCenter t-center succ-msg">
-                 <p class="LH-H66 maT6 fSize24">合作已发出，请静候佳音</p>
+                 <p class="LH-H66 maT6 fSize24">简历已发出，请静候佳音</p>
                  <button class="W182 H48 color-white fSize20 b-Radius8 confirm" @click="confirmSuc">确 定</button>
                  <div class="maT28">
                      <img src="images/pic-success_03.jpg" height="175"/>

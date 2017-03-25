@@ -4,7 +4,14 @@
  var isLogin=false;
  var appBanner = new Vue({
       el:"#app-banner",
-      data:{},
+      data:{
+           posdata:{
+                pos:"UI设计师",
+                viewed:30,
+                applied:15,
+                publicDate:"2016-12-11"
+           }
+      },
       methods:{
            coApply:function(){
                 if(isLogin){
@@ -28,6 +35,22 @@
  var appMain = new Vue({
       el:"#app-main",
       data:{
+           posdata:{
+                pos:"UI设计师",
+                salary:"6K-8K",
+                posType:"全职",
+                scolar:"大专以上",
+                gender:"不限",
+                worksexp:"1-3年经验",
+                posAmount:1,
+                contact:"18845696321",
+                address:"杭州市滨江区六合路368号一幢(北)三楼B3077室-4",
+                welfare:["五险一金","带薪年假","加班补助","双休","朝九晚五","运营大咖","美酒零食"],
+                inc:"杭州煌巢科技有限公司分公司",
+                incProps:"国企",
+                incScale:20000,
+                incArea:"互联网"
+           },
            applyRec:[
                 {inc:"宁波市xx有限公司",date:"2016-12-11 20:56:10",state:"查看"},
                 {inc:"宁波市xx有限公司",date:"2016-12-11 20:56:10",state:"未查看"},
@@ -43,6 +66,21 @@
                 {inc:"宁波市xx有限公司",date:"2016-12-11 20:56:10",state:"查看"},
                 {inc:"宁波市xx有限公司",date:"2016-12-11 20:56:10",state:"查看"},
            ],
+           posApplyRec:[
+                {name:"杨xx",date:"2016-12-11 20:56:10",state:"查看"},
+                {name:"江xx",date:"2016-12-11 20:56:10",state:"未查看"},
+                {name:"杨xx",date:"2016-12-11 20:56:10",state:"预约面试"},
+                {name:"江xx",date:"2016-12-11 20:56:10",state:"未查看"},
+                {name:"杨xx",date:"2016-12-11 20:56:10",state:"查看"},
+                {name:"江xx",date:"2016-12-11 20:56:10",state:"未查看"},
+                {name:"杨xx",date:"2016-12-11 20:56:10",state:"未查看"},
+                {name:"江xx",date:"2016-12-11 20:56:10",state:"查看"},
+                {name:"杨xx",date:"2016-12-11 20:56:10",state:"预约面试"},
+                {name:"江xx",date:"2016-12-11 20:56:10",state:"查看"},
+                {name:"杨xx",date:"2016-12-11 20:56:10",state:"未查看"},
+                {name:"江xx",date:"2016-12-11 20:56:10",state:"查看"},
+                {name:"杨xx",date:"2016-12-11 20:56:10",state:"查看"},
+           ],
            uniComment:[
                 {portUrl:"images/porto01.jpg",cont:"挺好的，还不错，恩，呵呵",date:"2016-12-11 22:33"},
                 {portUrl:"images/porto02.jpg",cont:"挺好的，还不错，恩，呵呵",date:"2016-12-11 22:33"},
@@ -52,8 +90,12 @@
       },
       methods:{
            viewCss:function(state){
-                if(state=="查看")
-                return "viewed";
+                if(state=="查看"){
+                     return "viewed";
+                }else if(state=="预约面试"){
+                     return "interview";
+                }
+
            }
       }
 });

@@ -8,25 +8,25 @@
     <link href="css/display-comm.css" rel="stylesheet">
 </head>
 <body>
-     <div class="top bg-dunkel">
+     <div class="top bg-dunkel" id="app-top">
          <div class="inner clearfix">
              <h3 class="fl LH-H30 fSize14 color-white">您好，欢迎来到校企职通车</h3>
-             <div class="top-right fr LH-H30 fSize14 color-white">
+             <div class="top-right fr LH-H30 fSize14 color-white" v-show="!isLogin">
                  <p class="login fl">
                      <span>【登录】</span><span>|</span><span style="color: red">【注册】</span>
                  </p>
                  <div class="fl fSize14 top-acc color-white"><img class="v-mid" src="images/icon-account1.png">个人中心</div>
              </div>
-             <ul class="account fr lis-inline color-white fSize14 LH-H35 disNo">
-                 <li style="margin-right: 14px;">免费发布</li>
-                 <li><span style="margin-right:14px;">|</span>网站合作<i class="pic-wrapper maR10"><img src="images/icon-dropdown-white.png"/></i>
+             <ul class="account fr lis-inline color-white fSize14 LH-H30" v-show="isLogin">
+                 <li style="margin-right: 12px;">免费发布</li>
+                 <li><span style="margin-right:12px;">|</span>网站合作<i class="pic-wrapper maR10"><img src="images/icon-dropdown-white.png"/></i>
                      <dl>
                          <dd>校企合作</dd>
                          <dd>校园推广</dd>
                          <dd>VIP中心</dd>
                      </dl>
                  </li>
-                 <li><span style="margin-right:14px">|</span>中国美术学院<i class="pic-wrapper"><img src="images/icon-dropdown-white.png"/></i>
+                 <li><span style="margin-right:12px">|</span>中国美术学院<i class="pic-wrapper"><img src="images/icon-dropdown-white.png"/></i>
                      <dl>
                          <dd>我的发布</dd>
                          <dd>我的合作</dd>

@@ -2,6 +2,13 @@
  * Created by xuanyuan on 2016/12/31.
  */
 var isLogin=true;
+
+var appTop = new Vue({
+     el:"#app-top",
+     data:{
+          isLogin:isLogin
+     }
+})
  var appQuery = new Vue({
       el:"#app-query",
       data:{
@@ -37,7 +44,7 @@ var isLogin=true;
                          area_1:"",
                          area_2:""
                     },
-                    incProps:"",
+                    IncProps:"",
                     IncScale:"",
                     pos:{
                          pos_1:"",
@@ -78,6 +85,26 @@ var isLogin=true;
                 welfare:"",
                 publicTime:""
            },
+           uniRecruit:{
+                major:"",
+                majorsum:"",
+                majorEx:false,
+                incReq:{
+                    areas:{
+                         area_1:"",
+                         area_2:""
+                    },
+                    IncProps:"",
+                    IncScale:"",
+                    pos:{
+                         pos_1:"",
+                         pos_2:""
+                    },
+                    posAmount:"",
+               },
+               publicTime:"",
+               trainway:""
+          },
            showPosBox:false,
            showAreaBox:false,
            showWelBox:false
@@ -90,6 +117,8 @@ var isLogin=true;
                       this.incQuery.pos.pos_2 = pos;
                 }else if(type=="pos"){
                      this.posQuery.pos.pos_2 = pos;
+                }else if(type=="unirecruit"){
+                     this.uniRecruit.incReq.pos.pos_2=pos;
                 }
                 this.showPosBox=false;
            },
@@ -101,6 +130,8 @@ var isLogin=true;
                     this.uniQuery.incReq.areas.area_2 = area;
                 }else if(type=="pos"){
                      this.posQuery.areas.area_2 = area;
+                }else if(type=="unirecruit"){
+                     this.uniRecruit.incReq.areas.area_2=area;
                 }
 
                 this.showAreaBox=false;
@@ -124,7 +155,7 @@ var isLogin=true;
                 var selWelfare="";
                 $(".welfare-lis li").each(function(){
                      if($(this).hasClass("on")){
-                          selWelfare+=$(this).text();
+                          selWelfare+=$(this).text()+",";
                      }
                 });
                 this.posQuery.welfare=selWelfare;
@@ -149,6 +180,17 @@ var appResult = new Vue({
                {pos:"艺术设计",uniProps:"高校性质",major:"专业名称",stuScale:"专业人数",trainway:"到校培训",inc:"杭州煌巢信息科技有限公司",IncProps:"国企",posAmount:"20人",publicDate:"2017-11-11"},
                {pos:"艺术设计",uniProps:"高校性质",major:"专业名称",stuScale:"专业人数",trainway:"到校培训",inc:"杭州煌巢信息科技有限公司",IncProps:"国企",posAmount:"20人",publicDate:"2017-11-11"},
                {pos:"艺术设计",uniProps:"高校性质",major:"专业名称",stuScale:"专业人数",trainway:"到校培训",inc:"杭州煌巢信息科技有限公司",IncProps:"国企",posAmount:"20人",publicDate:"2017-11-11"}
+          ],
+          posList:[
+               {pos:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",IncScale:"20-99人",publicDate:"2017-11-11"},
+               {pos:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",IncScale:"20-99人",publicDate:"2017-11-11"},
+               {pos:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",IncScale:"20-99人",publicDate:"2017-11-11"},
+               {pos:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",IncScale:"20-99人",publicDate:"2017-11-11"},
+               {pos:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",IncScale:"20-99人",publicDate:"2017-11-11"},
+               {pos:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",IncScale:"20-99人",publicDate:"2017-11-11"}
+          ],
+          unirecruitList:[
+               {title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"招聘会时间",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
           ]
      },
      methods:{
@@ -197,22 +239,23 @@ var appModal = new Vue({
 })
 function _init(){
      selectInitPos();
-      _initEventBind();
+     _initEventBind();
 }
 _init();
 function selectInitPos(){
      $(".selectee input").each(function(){
-        var bgPos=$(this).width()-10+"px center";
+        var bgPos=$(this).width()+10+"px center";
         $(this).attr("disabled","true").css("background-position",bgPos);
     });
     $(".selectee ul").each(function(){
         var sibInput=$(this).siblings("input")
-        $(this).width(sibInput.width()+10);
+        $(this).width(sibInput.width()+30);
         $(this).css({
             left:sibInput.css("margin-left"),
             top:sibInput.height()
         })
     });
+    $(".popBox .selectee ul").css("top","25px");
     $("body").bind("click",function(){
        $(".selectee ul").hide();
       appQuery.showPosBox=false;
