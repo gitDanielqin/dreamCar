@@ -51,6 +51,7 @@ background: url("../images/icon-total.png") no-repeat 0 0; left: 84%; top:-15px;
 .result-table td{border:1px solid #919191; color: #5d5d5d; text-align: center;}
 .result-table .viewed{color:#ff8a00;}
 .result-table .interview{color:#5cc3ff;}
+.result-table .coop{color:#5cc3ff;}
 .tab-cont label{color:#606060}
 .tab-cont {height: 750px; margin-top:11px; display: none; width: 784px;border:1px solid #ff8a00; padding: 10px; margin-bottom: 10px;}
 .cont-comment li{height:146px; border-bottom: 1px dashed #e5e5e5; position: relative; }

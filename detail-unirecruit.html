@@ -82,9 +82,9 @@
                     <li><label>专业人数 :</label>{{unirecdata.stuScale}}</li>
                 </ul>
                 <h3>其他</h3>
-                <p class="fSize14 paLeft50 W370 LH-H62 maT3"><label>招聘会时间 ：</label>{{unirecdata.recruitDate}} {{unirecdata.recruitTime}}</p>
-                <p class="fSize14 paLeft50 W370 LH-H44"><label>详细地址 ：</label>{{unirecdata.recruitAddr}}</p>
-                <p class="LH40"><label>联系电话：</label><span class="fSize24 color-orange-f7 v-mid">{{showContact(unirecdata.contact)}}</span><button class="contact-btn">点击查看完整号码</button></p>
+                <p class="fSize14 paLeft50 LH-H62 maT3"><label>招聘会时间 ：</label>{{unirecdata.recruitDate}} {{unirecdata.recruitTime}}</p>
+                <p class="fSize14 paLeft50 LH-H44"><label>详细地址 ：</label>{{unirecdata.recruitAddr}}</p>
+                <p class="LH40 paLeft50"><label>联系电话：</label><span class="fSize24 color-orange-f7 v-mid contact-phone">{{showContact(unirecdata.contact)}}</span><button class="contact-btn" @click="showAllContact(unirecdata.contact)">点击查看完整号码</button></p>
                 <p class="fSize14 paLeft50 W370 LH-H44"><label>联系人 ：</label>{{unirecdata.contactP}}</p>
             </div>
             <div class="fl">
@@ -105,7 +105,7 @@
             </div>
         </div>
         <ul class="result-tabs lis-inline LH-H54 t-center color-gray79 fSize16 maT45">
-            <li cont="cont-demand" class="on">需求描述</li>
+            <li cont="cont-demand" class="on">招聘会描述</li>
             <li cont="cont-desc">高校简介</li>
             <li cont="cont-apply" >申请记录<i class="msg-info">10</i></li>
             <li cont="cont-comment">学校评价<i class="msg-info">11</i></li>
@@ -124,7 +124,7 @@
         <div class="cont-apply tab-cont">
             <table class="LH48 fSize12 result-table">
                 <tr class="bg-gray-f2 color-gray79 fSize14"><th class="W200">申请企业</th><th class="W400">申请时间</th><th class="W200">状态</th></tr>
-                <tr v-for="item in applyRec">
+                <tr v-for="item in uniRecruitRec">
                      <td>{{item.inc}}</td>
                      <td>{{item.date}}</td>
                      <td :class="viewCss(item.state)">{{item.state}}</td>

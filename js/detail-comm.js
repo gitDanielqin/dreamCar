@@ -102,6 +102,21 @@
                 {name:"江xx",date:"2016-12-11 20:56:10",state:"查看"},
                 {name:"杨xx",date:"2016-12-11 20:56:10",state:"查看"},
            ],
+           uniRecruitRec:[
+                {inc:"宁波市xx有限公司",date:"2016-12-11 20:56:10",state:"查看"},
+                {inc:"宁波市xx有限公司",date:"2016-12-11 20:56:10",state:"未查看"},
+                {inc:"宁波市xx有限公司",date:"2016-12-11 20:56:10",state:"查看"},
+                {inc:"宁波市xx有限公司",date:"2016-12-11 20:56:10",state:"未查看"},
+                {inc:"宁波市xx有限公司",date:"2016-12-11 20:56:10",state:"查看"},
+                {inc:"宁波市xx有限公司",date:"2016-12-11 20:56:10",state:"邀请合作"},
+                {inc:"宁波市xx有限公司",date:"2016-12-11 20:56:10",state:"未查看"},
+                {inc:"宁波市xx有限公司",date:"2016-12-11 20:56:10",state:"查看"},
+                {inc:"宁波市xx有限公司",date:"2016-12-11 20:56:10",state:"邀请合作"},
+                {inc:"宁波市xx有限公司",date:"2016-12-11 20:56:10",state:"查看"},
+                {inc:"宁波市xx有限公司",date:"2016-12-11 20:56:10",state:"邀请合作"},
+                {inc:"宁波市xx有限公司",date:"2016-12-11 20:56:10",state:"查看"},
+                {inc:"宁波市xx有限公司",date:"2016-12-11 20:56:10",state:"查看"},
+           ],
            uniComment:[
                 {portUrl:"images/porto01.jpg",cont:"挺好的，还不错，恩，呵呵",date:"2016-12-11 22:33"},
                 {portUrl:"images/porto02.jpg",cont:"挺好的，还不错，恩，呵呵",date:"2016-12-11 22:33"},
@@ -115,11 +130,22 @@
                      return "viewed";
                 }else if(state=="预约面试"){
                      return "interview";
+                }else if(state=="邀请合作"){
+                     return "coop";
                 }
 
            },
-           showContact:function(){
-                
+           showContact:function(contact){
+                if(isLogin){
+                     return contact;
+                }else{
+                     var cont_h = contact.slice(0,3);
+                     var cont_e = contact.slice(7);
+                     return (cont_h+"****"+cont_e);
+                }
+           },
+           showAllContact:function(contact){
+                $(".descript .contact-phone").text(contact);
            }
       }
 });
