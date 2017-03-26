@@ -10,6 +10,12 @@
                 viewed:30,
                 applied:15,
                 publicDate:"2016-12-11"
+           },
+           unirecdata:{
+                title:"UI设计师",
+                viewed:30,
+                applied:15,
+                publicDate:"2016-12-11"
            }
       },
       methods:{
@@ -49,7 +55,22 @@
                 inc:"杭州煌巢科技有限公司分公司",
                 incProps:"国企",
                 incScale:20000,
-                incArea:"互联网"
+                incArea:"互联网",
+           },
+           unirecdata:{
+                IncCity:"杭州",
+                IncArea:"互联网",
+                IncProps:"国企",
+                IncPos:"UI设计师",
+                IncScale:"1000-9000人",
+                posAmount:50,
+                major:"影视多媒体",
+                stuScale:"50-100",
+                recruitDate:"2017-12-13",
+                recruitTime:"14:00",
+                recruitAddr:"杭州市滨江区六合路368号一幢(北)三楼B3077",
+                contact:"18845696321",
+                contactP:"江老师"
            },
            applyRec:[
                 {inc:"宁波市xx有限公司",date:"2016-12-11 20:56:10",state:"查看"},
@@ -96,6 +117,9 @@
                      return "interview";
                 }
 
+           },
+           showContact:function(){
+                
            }
       }
 });

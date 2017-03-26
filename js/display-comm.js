@@ -190,7 +190,13 @@ var appResult = new Vue({
                {pos:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",IncScale:"20-99人",publicDate:"2017-11-11"}
           ],
           unirecruitList:[
-               {title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"招聘会时间",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
+               {title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"2016-12-11",IncProps:"性质",IncScale:"规模",IncPos:"岗位名称",publicDate:"2017-11-11"},
+               {title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"2016-12-11",IncProps:"性质",IncScale:"规模",IncPos:"岗位名称",publicDate:"2017-11-11"},
+               {title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"2016-12-11",IncProps:"性质",IncScale:"规模",IncPos:"岗位名称",publicDate:"2017-11-11"},
+               {title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"2016-12-11",IncProps:"性质",IncScale:"规模",IncPos:"岗位名称",publicDate:"2017-11-11"},
+               {title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"2016-12-11",IncProps:"性质",IncScale:"规模",IncPos:"岗位名称",publicDate:"2017-11-11"},
+               {title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"2016-12-11",IncProps:"性质",IncScale:"规模",IncPos:"岗位名称",publicDate:"2017-11-11"},
+               {title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"2016-12-11",IncProps:"性质",IncScale:"规模",IncPos:"岗位名称",publicDate:"2017-11-11"},
           ]
      },
      methods:{

@@ -64,7 +64,7 @@
             <dropdown :options="database.inc.IncProps" placeholder="企业性质" v-model="uniRecruit.incReq.IncProps" class="lang-select"></dropdown>
             <dropdown :options="database.inc.IncScale" placeholder="企业规模" v-model="uniRecruit.incReq.IncScale"></dropdown>
             <div class="selectee lang-select" @click.stop="clickPos"><input type="text" placeholder="岗位名称" disabled v-model="uniRecruit.incReq.pos.pos_2"/></div>
-            <dropdown :options="database.inc.posAmount" placeholder="企业规模" v-model="uniRecruit.incReq.posAmount"></dropdown>
+            <dropdown :options="database.inc.posAmount" placeholder="岗位数量" v-model="uniRecruit.incReq.posAmount"></dropdown>
         </div>
         <div class="clearfix maB16">
             <label>其他：</label>
@@ -97,21 +97,20 @@
     <div class="bg-gray-f7">
         <div class="inner clearfix">
            <ul class="results paTop10 fl">
-                <li v-for="item in uniList">
+                <li v-for="item in unirecruitList">
                      <div class="paLeft29 clearfix H128 pRel">
                          <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                          <div class="item-block-left fl paTop22 W321 maL25">
-                             <h2 class="color-blueL fSize16 LH-H30">{{item.major}}</h2>
-                             <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
-                             <p class="f-bold fSize14"><span>企业提供的培训方式：</span>{{item.trainway}}</p>
-                             <p class="item-date">{{item.date}}</span> {{item.time}}</p>
+                             <h2 class="color-blueL fSize16 LH-H30">{{item.title}}</h2>
+                             <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.addr.city}}-{{item.addr.district}}</p>
+                             <p class="f-bold fSize14"><span>招聘会时间：</span>{{item.recruitDate}}</p>
                          </div>
                          <div class="item-block-right fl fSize14 LH25 maT10">
-                             <p class="fSize16 item-name" :title="item.uniname">{{item.uniname}}</p>
-                             <p class="fSize12">{{item.uniLevel}}</p>
-                             <p class="fSize12 pubdate">{{item.publicDate}} {{item.publicTime}}</p>
+                             <p class="fSize16 item-name">高校对企业要求</p>
+                             <p class="fSize12">{{item.IncScale}}<i class="depart">|</i>{{item.IncProps}}<i class="depart">|</i>{{item.IncPos}}</p>
+                             <p class="fSize12 pubdate">{{item.publicDate}}</p>
                          </div>
-                         <button class="btn-apply color-blueL" @click="coApply">申请合作<img src="images/handshake.png" class="v-mid maL6"/></button>
+                         <button class="btn-apply color-blueL" @click="coApply">申请招聘<img src="images/handshake.png" class="v-mid maL6"/></button>
                      </div>
                 </li>
            </ul>
