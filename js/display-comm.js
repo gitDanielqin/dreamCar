@@ -105,6 +105,18 @@ var appTop = new Vue({
                publicTime:"",
                trainway:""
           },
+          incRecruit:{
+               scolar:"",
+               majorEx:false,
+               worksexp:"",
+               pos:{
+                    pos_1:"",
+                    pos_2:""
+               },
+               posAmount:"",
+               salary:"",
+               publicTime:""
+          },
            showPosBox:false,
            showAreaBox:false,
            showWelBox:false
@@ -119,6 +131,8 @@ var appTop = new Vue({
                      this.posQuery.pos.pos_2 = pos;
                 }else if(type=="unirecruit"){
                      this.uniRecruit.incReq.pos.pos_2=pos;
+                }else if(type=="increcruit"){
+                     this.incRecruit.pos.pos_2=pos
                 }
                 this.showPosBox=false;
            },
@@ -197,6 +211,14 @@ var appResult = new Vue({
                {title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"2016-12-11",IncProps:"性质",IncScale:"规模",IncPos:"岗位名称",publicDate:"2017-11-11"},
                {title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"2016-12-11",IncProps:"性质",IncScale:"规模",IncPos:"岗位名称",publicDate:"2017-11-11"},
                {title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"2016-12-11",IncProps:"性质",IncScale:"规模",IncPos:"岗位名称",publicDate:"2017-11-11"},
+          ],
+          increcruitList:[
+               {title:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},recruitDate:"2016-12-11",posAmount:20,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",publicDate:"2017-11-11"},
+               {title:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},recruitDate:"2016-12-11",posAmount:20,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",publicDate:"2017-11-11"},
+               {title:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},recruitDate:"2016-12-11",posAmount:20,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",publicDate:"2017-11-11"},
+               {title:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},recruitDate:"2016-12-11",posAmount:20,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",publicDate:"2017-11-11"},
+               {title:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},recruitDate:"2016-12-11",posAmount:20,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",publicDate:"2017-11-11"},
+               {title:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},recruitDate:"2016-12-11",posAmount:20,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",publicDate:"2017-11-11"}
           ]
      },
      methods:{

@@ -31,7 +31,9 @@ color:#000; }
 .pos-box{right: 0;top:170px;}
 .pos-box.inc-pos{left: 105px; top:170px;}
 .pos-box.pos-pos{left: 274px; top:126px;}
+.pos-box.pos-increc{left: 105px;top: 170px;}
 .area-box.pos-pos{left:105px; top:126px;}
+
 
 .welfare-box{padding: 5px 10px; top: 167px; left: 274px;}
 .check-box{width: 20px; height: 20px; border: 1px solid #ccc; display: inline-block; vertical-align: middle; margin-right: 12px; cursor: pointer;}
