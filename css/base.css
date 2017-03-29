@@ -10,6 +10,7 @@ select{-webkit-appearance: none; -moz-appearance: none; appearance: none; outlin
 select::-ms-expand { display: none; }
 body{font-family:"微软雅黑",Arial; font-size: 12px; position: relative;}
 table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
+a{color: inherit;}
 .inner{width:1003px; margin: 0 auto;}
 .wrapper{width:1200px; margin: 0 auto;}
 .clearfix:after{content: ""; display: block;clear: both;*zoom:1;}
@@ -36,12 +37,14 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .blackStyle{font-family: "黑体";}
 
 /*宽度和高度*/
+.H880{height:880px;}
 .H800{height:800px;}
 .H700{height:700px;}
 .H764{height:764px;}
 .H668{height:668px;}
 .H515{height:515px;}
 .H572{height: 572px;}
+.H570{height: 570px;}
 .H500{height:500px;}
 .H480{height: 480px;}
 .H478{height: 478px;}

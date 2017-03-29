@@ -1,0 +1,20 @@
+
+/*主体样式*/
+.main{background: url("../images/bg-recruit.jpg") no-repeat center center; background-size: cover;}
+.entry-box{width: 50%; height: 100%;}
+.entry-porto{height: 20%; margin-top: 60px;}
+.entry-porto img{height: 100%;}
+.uni-entry{background: rgba(0,0,0,0.5)}
+.inc-entry{background: rgba(185,117,21,0.5);}
+.entry-btn{height: 67px; width: 226px; border-radius: 5px; color: white; font-size: 20px; margin-top: 40px; box-shadow:0 0 20px white;
+     position: relative; }
+.uni-entry .entry-btn{ background: url("../images/icon-entry.png") no-repeat 175px 19px #303030; background-size: 38px;}
+.inc-entry .entry-btn{ background: url("../images/icon-entry.png") no-repeat 175px 19px #d6891b; background-size: 38px;}
+.icon-entry{font-family: consolas; text-shadow: 0 0 5px white; position: absolute; right: 15px; top:20px;font-size: 24px;}
+/*底部样式*/
+.bot-nav li a{color: white;}
+.bot-nav li a:hover{color:#f7a14a; cursor: pointer}
+.bot-nav{display: inline-block;}
+.bot .barcode-text{display: inline-block; vertical-align: middle;}
+.pic-barcode{position: absolute; right:-7px; top: 12px; width: 83px; height:83px;}
+.pic-barcode img{width: 100%}

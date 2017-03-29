@@ -72,11 +72,13 @@ color:#000; }
 .ads{border:1px solid #c9c9c9;}
 .ad-pic{overflow: hidden; margin-bottom: 24px; margin-left: 19px; width: 132px; height: 132px;}
 
-.pageBot .active{ background: #333;}
-.pageBot a, .pageBot span{display:inline-block; width:30px;margin-left: 10px; background: #999; color: #fff;line-height: 30px; height: 30px; text-align: center;}
-.pageBot a.prev,.pageBot a.next{width:60px;}
-.pageBot a.prev:hover{background: #333;}
-.pageBot a.next:hover{background: #333;}
+.pagination ul{overflow: hidden;}
+.pagination ul li{float: left;margin-left: 10px; cursor: pointer;}
+.pagination a{display:inline-block;background: #999; color: #fff;line-height: 30px; height: 30px; text-align: center;}
+.pagination a:hover{background: #333;}
+.pagination .lastPage{width: 60px;}
+.pagination .nextPage{width: 60px;}
+.pagination .page{ width:30px;}
 
 
 /*底部样式，与首页基本*/

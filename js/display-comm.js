@@ -241,6 +241,9 @@ var appResult = new Vue({
           },
 
      },
+     components:{
+          'pagination':pagination
+     }
 })
 
 var appModal = new Vue({
@@ -319,7 +322,7 @@ function selectInitPos(){
         $(".pageBot").pagination({
             totalData:37,
             showData:8,
-            coping:true,
+            coping:false,
             homePage:'首页',
             endPage:'末页',
             prevContent:'上页',
