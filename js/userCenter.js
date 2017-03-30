@@ -139,7 +139,54 @@ var appCont = new Vue({
                selfEval:"我是一个好人",
                psInfo:"我真的是一个好人",
                skills:"前端各种技术"
+          },
+          courses:{
+               curpage:1,
+               results:[
+                    {name:"课程名称",score:"4.5分",Institute:"开课学院名称",content:"web前端",duration:"学习周期",fee:"学习费用",addr:"学习地点",state:"已开课",comment:"教师评语"},
+                    {name:"课程名称",score:"4.5分",Institute:"开课学院名称",content:"web前端",duration:"学习周期",fee:"学习费用",addr:"学习地点",state:"课程结束",comment:"教师评语"},
+                    {name:"课程名称",score:"4.5分",Institute:"开课学院名称",content:"web前端",duration:"学习周期",fee:"学习费用",addr:"学习地点",state:"未开课",comment:"教师评语"},
+                    {name:"课程名称",score:"4.5分",Institute:"开课学院名称",content:"web前端",duration:"学习周期",fee:"学习费用",addr:"学习地点",state:"已开课",comment:"教师评语"},
+                    {name:"课程名称",score:"4.5分",Institute:"开课学院名称",content:"web前端",duration:"学习周期",fee:"学习费用",addr:"学习地点",state:"已开课",comment:"教师评语"},
+                    {name:"课程名称",score:"4.5分",Institute:"开课学院名称",content:"web前端",duration:"学习周期",fee:"学习费用",addr:"学习地点",state:"已开课",comment:"教师评语"},
+                    {name:"课程名称",score:"4.5分",Institute:"开课学院名称",content:"web前端",duration:"学习周期",fee:"学习费用",addr:"学习地点",state:"已开课",comment:"教师评语"},
+               ]
+          },
+          colStuList:{
+               curpage:1,
+               results:[
+                    {name:"课程名称",score:"4.5分",Institute:"开课学院名称",content:"web前端",duration:"学习周期",fee:"学习费用",addr:"学习地点",InScale:5000},
+                    {name:"课程名称",score:"4.5分",Institute:"开课学院名称",content:"web前端",duration:"学习周期",fee:"学习费用",addr:"杭州-滨江",InScale:5000},
+                    {name:"课程名称",score:"4.5分",Institute:"开课学院名称",content:"web前端",duration:"学习周期",fee:"学习费用",addr:"学习地点",InScale:5000},
+                    {name:"课程名称",score:"4.5分",Institute:"开课学院名称",content:"web前端",duration:"学习周期",fee:"学习费用",addr:"学习地点",InScale:5000},
+                    {name:"课程名称",score:"4.5分",Institute:"开课学院名称",content:"web前端",duration:"学习周期",fee:"学习费用",addr:"学习地点",InScale:5000},
+                    {name:"课程名称",score:"4.5分",Institute:"开课学院名称",content:"web前端",duration:"学习周期",fee:"学习费用",addr:"学习地点",InScale:5000},
+               ]
+          },
+          colPosList:{
+               curpage:1,
+               results:[
+                    {pos:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",IncScale:"20-99人",publicDate:"2017-11-11"},
+                    {pos:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",IncScale:"20-99人",publicDate:"2017-11-11"},
+                    {pos:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",IncScale:"20-99人",publicDate:"2017-11-11"},
+                    {pos:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",IncScale:"20-99人",publicDate:"2017-11-11"},
+                    {pos:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",IncScale:"20-99人",publicDate:"2017-11-11"},
+                    {pos:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",IncScale:"20-99人",publicDate:"2017-11-11"},
+                    {pos:"UI设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",IncScale:"20-99人",publicDate:"2017-11-11"}
+               ]
+          },
+          colRecList:{
+               curpage:1,
+               results:[
+                    {title:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},recruitDate:"2016-12-11",posAmount:20,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",publicDate:"2017-11-11"},
+                    {title:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},recruitDate:"2016-12-11",posAmount:20,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",publicDate:"2017-11-11"},
+                    {title:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},recruitDate:"2016-12-11",posAmount:20,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",publicDate:"2017-11-11"},
+                    {title:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},recruitDate:"2016-12-11",posAmount:20,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",publicDate:"2017-11-11"},
+                    {title:"UI设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},recruitDate:"2016-12-11",posAmount:20,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",publicDate:"2017-11-11"},
+                    {title:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},recruitDate:"2016-12-11",posAmount:20,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",publicDate:"2017-11-11"}
+               ]
           }
+
      },
      methods:{
           popTrade:function(){
@@ -236,11 +283,63 @@ var appCont = new Vue({
           submit:function(){
                $(".edit").hide();
                $(".view").show();
+          },
+          stateCss:function(state){
+               if(state=="已开课"){
+                    return "begin";
+               }else if(state=="课程结束"){
+                    return "after";
+               }else{
+                    return "before";
+               }
+          },
+          showResult:function(index,curpage,itemsnum){
+               if(index>=(parseInt(curpage)-1)*parseInt(itemsnum)&&index<parseInt(curpage)*parseInt(itemsnum)){
+                    return true;
+               }else{
+                    return false;
+               }
+          },
+          pagesum:function(totalitems){
+               var totalpage =1;
+               if(totalitems%3==0){
+                    totalpage = totalitems/3
+               }else{
+                    totalpage = Math.floor(totalitems/3)+1;
+               }
+               return totalpage;
+          },
+          showpage:function(totalitems){
+               var totalpage =1;
+               if(totalitems%3==0){
+                    totalpage = totalitems/3
+               }else{
+                    totalpage = Math.floor(totalitems/3)+1;
+               }
+               if(totalpage<3){
+                    return totalpage;
+               }else{
+                    return 3;
+               }
+          },
+          topage:function(page,type){
+               if(type=="course"){
+                    this.courses.curpage=page;
+               }else if(type=="col-study"){
+                    this.colStuList.curpage=page;
+               }else if(type=="col-pos"){
+                    this.colPosList.curpage=page;
+               }else if(type=="col-rec"){
+                    this.colRecList.curpage=page;
+               }
           }
      },
      updated:function(){
           window.selectInitPos();
           window.selectEventBind();
+     },
+     components:{
+          'pagination':pagination
      }
 });
 

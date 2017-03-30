@@ -319,13 +319,4 @@ function selectInitPos(){
              return false;
         })
         //申请合作对话框事件绑定
-        $(".pageBot").pagination({
-            totalData:37,
-            showData:8,
-            coping:false,
-            homePage:'首页',
-            endPage:'末页',
-            prevContent:'上页',
-            nextContent:'下页'
-        })
     }

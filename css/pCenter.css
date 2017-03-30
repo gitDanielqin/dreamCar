@@ -230,3 +230,14 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .edit .buttons button:first-child{background: #48c1e4;}
 .edit .buttons button:last-child{background: #e69545;}
 .msg-info{display: inline-block; width: 24px; height: 24px; background: #ef3e3e; line-height: 24px; color: white; position: absolute; right: 1px; top: 3px; border-radius: 50%;}
+
+.depart{margin: 0 8px;}
+.eval-btn{font-size: 14px; color:#2ea8e6;}
+.pagination ul{overflow: hidden;}
+.pagination ul li{float: left;margin-left: 10px; cursor: pointer;}
+.pagination a{display:inline-block;background: #999; color: #fff;line-height: 30px; height: 30px; text-align: center;}
+.pagination a.highLight{background: #333;}
+.pagination a:hover{background: #333;}
+.pagination .lastPage{width: 60px;}
+.pagination .nextPage{width: 60px;}
+.pagination .page{ width:30px;}

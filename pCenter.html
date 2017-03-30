@@ -352,58 +352,24 @@
                              <li>未开课</li><li>已结束</li>
                          </ul>
                      </div>
-                     <p class="fr fSize14 maR30">我学习过的课程<span class="color-orange2 maL10 maR10">1</span>个</p>
+                     <p class="fr fSize14 maR30">我学习过的课程<span class="color-orange2 maL10 maR10">{{courses.results.length}}</span>个</p>
                  </div>
-                 <ul class="classList contList">
-                     <li>
+                 <ul class="classList contList H410">
+                     <li v-for="(item,index) in courses.results" v-show="showResult(index,courses.curpage,3)">
                          <div class="class-pic logo-pic"></div>
                          <div class="class-txt fl paTop20 W328">
-                             <h2 class="class-name"><b>课程名称</b><span class="LH-H20 score">4.5分</span></h2>
-                             <p>开课学院名称</p>
-                             <p>课程内容：带你进入一片知识的海洋</p>
+                             <h2 class="class-name"><b>{{item.name}}</b><span class="LH-H20 score">{{item.score}}</span></h2>
+                             <p>{{item.duration}}<span class="depart">|</span>{{item.fee}}<span class="depart">|</span>{{item.addr}}</p>
+                             <p><button class="eval-btn">学院评价</button></p>
                          </div>
                          <div class="class-info fl fSize14">
-                             <p>课程时间</p>
-                             <p class="begin">已开课</p>
-                             <p>教师评语</p>
-                         </div>
-                     </li>
-                     <li>
-                         <div class="class-pic logo-pic"></div>
-                         <div class="class-txt fl paTop20 W328">
-                             <h2 class="class-name"><b>课程名称</b><span class="LH-H20 score">4.5分</span></h2>
-                             <p>开课学院名称</p>
-                             <p>课程内容：带你进入一片知识的海洋</p>
-                         </div>
-                         <div class="class-info fl fSize14">
-                             <p>课程时间</p>
-                             <p class="after">课程结束</p>
-                             <p>教师评语</p>
-                         </div>
-                     </li>
-                     <li>
-                         <div class="class-pic logo-pic"></div>
-                         <div class="class-txt fl paTop20 W328">
-                             <h2 class="class-name"><b>课程名称</b><span class="LH-H20 score">4.5分</span></h2>
-                             <p>开课学院名称</p>
-                             <p>课程内容：带你进入一片知识的海洋</p>
-                         </div>
-                         <div class="class-info fl fSize14">
-                             <p>课程时间</p>
-                             <p class="before">未开课</p>
-                             <p>教师评语</p>
+                             <p><button class="color-orange2">去评价课程</button></p>
+                             <p :class="stateCss(item.state)">{{item.state}}</p>
+                             <p>{{item.comment}}</p>
                          </div>
                      </li>
                  </ul>
-                 <ul class="pageBot lis-inline maT30 fr fSize14">
-                     <li class="side-page first-page">首页</li>
-                     <li class="prev side-page">上一页</li>
-                     <li class="page-index">1</li>
-                     <li class="page-index">2</li>
-                     <li class="page-index">3</li>
-                     <li class="next side-page">下一页</li>
-                     <li class="side-page last-page">尾页</li>
-                 </ul>
+                 <pagination :showpages="showpage(courses.results.length)" :totalpages="pagesum(courses.results.length)" type="course" @topage="topage" class="maT28 fSize14 fr"></pagination>
              </div>
              <div class="collec-study ListBox">
                  <div class="hd LH-H58">
@@ -414,58 +380,24 @@
                              <li>未开课</li><li>已结束</li>
                          </ul>
                      </div>
-                     <p class="fr fSize14 maR30">我收藏过的课程<span class="color-orange2 maL10 maR10">1</span>个</p>
+                     <p class="fr fSize14 maR30">我收藏过的课程<span class="color-orange2 maL10 maR10">{{colStuList.results.length}}</span>个</p>
                  </div>
-                 <ul class="colStudyList contList">
-                     <li>
+                 <ul class="colStudyList contList H470">
+                     <li v-for="(item,index) in colStuList.results" v-show="showResult(index,colStuList.curpage,3)">
                          <div class="logo-pic"></div>
                          <div class="class-txt fl paTop20 W328">
-                             <h2 class="class-name"><b>课程名称</b></h2>
-                             <p>开课学院名称</p>
-                             <p class="teacher">讲课老师<span>|</span>性别<span>|</span>年龄<span>|</span>教学经验</p>
+                             <h2 class="class-name"><b>{{item.name}}</b></h2>
+                             <p>{{item.duration}}<span class="depart">|</span>{{item.fee}}<span class="depart">|</span>{{item.addr}}</p>
+                             <p><button class="eval-btn">学院评价</button></p>
                          </div>
                          <div class="col-class-info fl fSize18">
-                             <p>学习时间</p>
-                             <p class="price">15000元</p>
-                             <div class="action"><span>取消收藏</span><span>报名学习</span></div>
-                         </div>
-                     </li>
-                     <li>
-                         <div class="logo-pic"></div>
-                         <div class="class-txt fl paTop20 W328">
-                             <h2 class="class-name"><b>课程名称</b></h2>
-                             <p>开课学院名称</p>
-                             <p class="teacher">讲课老师<span>|</span>性别<span>|</span>年龄<span>|</span>教学经验</p>
-                         </div>
-                         <div class="col-class-info fl fSize18">
-                             <p>学习时间</p>
-                             <p class="price">15000元</p>
-                             <div class="action"><span>取消收藏</span><span>报名学习</span></div>
-                         </div>
-                     </li>
-                     <li>
-                         <div class="logo-pic"></div>
-                         <div class="class-txt fl paTop20 W328">
-                             <h2 class="class-name"><b>课程名称</b></h2>
-                             <p>开课学院名称</p>
-                             <p class="teacher">讲课老师<span>|</span>性别<span>|</span>年龄<span>|</span>教学经验</p>
-                         </div>
-                         <div class="col-class-info fl fSize18">
-                             <p>学习时间</p>
-                             <p class="price">15000元</p>
+                             <p>{{item.Institute}}</p>
+                             <p class="fSize16">学院规模：{{item.InScale}}人</p>
                              <div class="action"><span>取消收藏</span><span>报名学习</span></div>
                          </div>
                      </li>
                  </ul>
-                 <ul class="pageBot lis-inline maT30 fr fSize14">
-                     <li class="side-page first-page">首页</li>
-                     <li class="prev side-page">上一页</li>
-                     <li class="page-index">1</li>
-                     <li class="page-index">2</li>
-                     <li class="page-index">3</li>
-                     <li class="next side-page">下一页</li>
-                     <li class="side-page last-page">尾页</li>
-                 </ul>
+                 <pagination :showpages="showpage(colStuList.results.length)" :totalpages="pagesum(colStuList.results.length)" type="col-study" @topage="topage" class="maT28 fSize14 fr"></pagination>
              </div>
              <div class="collec-job ListBox">
                  <div class="hd LH-H58">
@@ -476,61 +408,25 @@
                              <li>未开课</li><li>已结束</li>
                          </ul>
                      </div>
-                     <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">1</span>个</p>
+                     <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">{{colPosList.results.length}}</span>个</p>
                  </div>
-                 <ul class="colCompanyList contList">
-                     <li>
+                 <ul class="colCompanyList contList H470">
+                     <li v-for="(item,index) in colPosList.results" v-show="showResult(index,colPosList.curpage,3)">
                          <div class="logo-pic"></div>
                          <div class="class-txt fl paTop20 W328">
-                             <h2 class="class-name"><b>工业设计</b></h2>
-                             <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
-                             <p><span class="maR20">【滨江区】</span>岗位数:<span>2人</span></p>
+                             <h2 class="class-name"><b>{{item.pos}}</b></h2>
+                             <p class="demand"><span class="color-orange-f7">{{item.salary}}</span><i>|</i>{{item.major}}<i>|</i>{{item.scolar}}<i>|</i>{{item.worksexp}}</p>
+                             <p><span class="maR20">【{{item.address.district}}】</span>岗位数:<span>{{item.posAmount}}人</span></p>
                          </div>
                          <div class="col-company-info fl fSize18">
-                             <p>杭州煌巢信息科技有限公司</p>
-                             <p>国企<i>|</i>20-100人</p>
-                             <p>2017-1-30</p>
-                             <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
-                         </div>
-                     </li>
-                     <li>
-                         <div class="logo-pic"></div>
-                         <div class="class-txt fl paTop20 W328">
-                             <h2 class="class-name"><b>工业设计</b></h2>
-                             <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
-                             <p><span class="maR20">【滨江区】</span>岗位数:<span>2人</span></p>
-                         </div>
-                         <div class="col-company-info fl fSize18">
-                             <p>杭州煌巢信息科技有限公司</p>
-                             <p>国企<i>|</i>20-100人</p>
-                             <p>2017-1-30</p>
-                             <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
-                         </div>
-                     </li>
-                     <li>
-                         <div class="logo-pic"></div>
-                         <div class="class-txt fl paTop20 W328">
-                             <h2 class="class-name"><b>工业设计</b></h2>
-                             <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
-                             <p><span class="maR20">【滨江区】</span>岗位数:<span>2人</span></p>
-                         </div>
-                         <div class="col-company-info fl fSize18">
-                             <p>杭州煌巢信息科技有限公司</p>
-                             <p>国企<i>|</i>20-100人</p>
-                             <p>2017-1-30</p>
+                             <p>{{item.inc}}</p>
+                             <p>{{item.IncProps}}<i>|</i>{{item.IncScale}}</p>
+                             <p>{{item.publicDate}}</p>
                              <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
                          </div>
                      </li>
                  </ul>
-                 <ul class="pageBot lis-inline maT30 fr fSize14">
-                     <li class="side-page first-page">首页</li>
-                     <li class="prev side-page">上一页</li>
-                     <li class="page-index">1</li>
-                     <li class="page-index">2</li>
-                     <li class="page-index">3</li>
-                     <li class="next side-page">下一页</li>
-                     <li class="side-page last-page">尾页</li>
-                 </ul>
+                 <pagination :showpages="showpage(colPosList.results.length)" :totalpages="pagesum(colPosList.results.length)" type="col-pos" @topage="topage" class="maT28 fSize14 fr"></pagination>
              </div>
              <div class="collec-recruitment ListBox">
                  <div class="hd LH-H58">
@@ -541,61 +437,25 @@
                              <li>未开课</li><li>已结束</li>
                          </ul>
                      </div>
-                     <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">1</span>个</p>
+                     <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">{{colRecList.results.length}}</span>个</p>
                  </div>
                  <ul class="colCompanyList contList">
-                     <li>
+                     <li v-for="(item,index) in colRecList.results" v-show="showResult(index,colRecList.curpage,3)">
                          <div class="logo-pic"></div>
                          <div class="class-txt fl paTop20 W328">
-                             <h2 class="class-name"><b>工业设计</b></h2>
-                             <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
-                             <p><span>招聘会时间：</span>2017-01-30</p>
+                             <h2 class="class-name"><b>{{item.title}}</b></h2>
+                             <p class="demand"><span class="color-orange-f7">{{item.salary}}</span><i>|</i>{{item.major}}<i>|</i>{{item.scolar}}<i>|</i>{{item.worksexp}}</p>
+                             <p><span>招聘会时间：</span>{{item.recruitDate}}</p>
                          </div>
                          <div class="col-company-info fl fSize18">
-                             <p>杭州煌巢信息科技有限公司</p>
-                             <p>国企<i>|</i>20-100人</p>
-                             <p>2017-1-30</p>
-                             <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
-                         </div>
-                     </li>
-                     <li>
-                         <div class="logo-pic"></div>
-                         <div class="class-txt fl paTop20 W328">
-                             <h2 class="class-name"><b>工业设计</b></h2>
-                             <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
-                             <p><span>招聘会时间：</span>2017-01-30</p>
-                         </div>
-                         <div class="col-company-info fl fSize18">
-                             <p>杭州煌巢信息科技有限公司</p>
-                             <p>国企<i>|</i>20-100人</p>
-                             <p>2017-1-30</p>
-                             <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
-                         </div>
-                     </li>
-                     <li>
-                         <div class="logo-pic"></div>
-                         <div class="class-txt fl paTop20 W328">
-                             <h2 class="class-name"><b>工业设计</b></h2>
-                             <p class="demand"><span class="color-orange-f7">7k-8k</span><i>|</i>设计相关专业<i>|</i>本科<i>|</i>3-5年</p>
-                             <p><span>招聘会时间：</span>2017-01-30</p>
-                         </div>
-                         <div class="col-company-info fl fSize18">
-                             <p>杭州煌巢信息科技有限公司</p>
-                             <p>国企<i>|</i>20-100人</p>
-                             <p>2017-1-30</p>
+                             <p>{{item.inc}}</p>
+                             <p>{{item.IncProps}}<i>|</i>岗位数：{{item.posAmount}}人</p>
+                             <p>{{item.publicDate}}</p>
                              <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
                          </div>
                      </li>
                  </ul>
-                 <ul class="pageBot lis-inline maT30 fr fSize14">
-                     <li class="side-page first-page">首页</li>
-                     <li class="prev side-page">上一页</li>
-                     <li class="page-index">1</li>
-                     <li class="page-index">2</li>
-                     <li class="page-index">3</li>
-                     <li class="next side-page">下一页</li>
-                     <li class="side-page last-page">尾页</li>
-                 </ul>
+                 <pagination :showpages="showpage(colRecList.results.length)" :totalpages="pagesum(colRecList.results.length)" type="col-rec" @topage="topage" class="maT28 fSize14 fr"></pagination>
              </div>
              <div class="jobBox ListBox">
                  <div class="hd LH-H58">
@@ -883,6 +743,7 @@
 </div>
 <script src="js/jquery-3.1.0.min.js"></script>
 <script src="js/vue.js"></script>
+<script src="js/components/pagination.js"></script>
 <script src="js/components.js"></script>
 <script src="js/userCenter.js"></script>
 </body>

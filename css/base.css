@@ -5,7 +5,7 @@ a{text-decoration: none;}
 i{font-style: normal;}
 input,textarea,button{border: none; outline: none; font-family: "微软雅黑", Arial;}
 textarea{resize: none;}
-button{cursor: pointer;}
+button{cursor: pointer; background: none;}
 select{-webkit-appearance: none; -moz-appearance: none; appearance: none; outline: none; font-family: "微软雅黑", Arial}
 select::-ms-expand { display: none; }
 body{font-family:"微软雅黑",Arial; font-size: 12px; position: relative;}
@@ -48,9 +48,11 @@ a{color: inherit;}
 .H500{height:500px;}
 .H480{height: 480px;}
 .H478{height: 478px;}
+.H470{height: 470px;}
 .H431{height: 431px;}
 .H420{height: 420px;}
 .H418{height: 418px;}
+.H410{height: 410px;}
 .H315{height: 315px;}
 .H318{height: 318px;}
 .H328{height: 328px;}
