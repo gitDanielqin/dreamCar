@@ -116,8 +116,8 @@
                         <dropdown classes="state-right fr" :options="['全部状态','三天内','一周内','一月内']" v-model="require.period"></dropdown>
                         <span class="new-require color-orange-f7 fSize16">发布需求</span>
                     </div>
-                    <ul class="info-items">
-                        <li v-for="item in require.items" :name="item.classic" :date="item.publicDate">
+                    <ul class="info-items H410">
+                        <li v-for="(item,index) in require.results" :name="item.classic" :date="item.publicDate" v-show="showResult(index,require.curpage,3)">
                             <div v-if="item.classic=='校企合作'" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W280 maL20">
@@ -168,15 +168,7 @@
                             </div>
                         </li>
                     </ul>
-                    <ul class="pageBot lis-inline maT30 fr fSize14">
-                        <li class="side-page first-page">首页</li>
-                        <li class="prev side-page">上一页</li>
-                        <li class="page-index">1</li>
-                        <li class="page-index">2</li>
-                        <li class="page-index">3</li>
-                        <li class="next side-page">下一页</li>
-                        <li class="side-page last-page">尾页</li>
-                    </ul>
+                    <pagination :showpages="showpage(require.results.length)" :totalpages="pagesum(require.results.length)" type="require" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
             </div>
             <div class="uni-collect collectBox">
@@ -185,8 +177,8 @@
                         <dropdown classes="state" :options="['全部状态','校企合作','高校招聘会']" v-model="collect.state"></dropdown>
                         <p class="fr fSize14 maR30">我收藏的高校<span class="color-orange2 maL10 maR10">{{collect.items.length}}</span>个</p>
                     </div>
-                    <ul class="info-items">
-                        <li v-for="item in collect.items" :name="item.classic">
+                    <ul class="info-items H470">
+                        <li v-for="(item,index) in collect.results" :name="item.classic" v-show="showResult(index,collect.curpage,3)">
                             <div v-if="item.classic=='高校招聘会'">
                                  <div class="paLeft29 clearfix H128 pRel">
                                      <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
@@ -228,15 +220,7 @@
                             </div>
                         </li>
                     </ul>
-                    <ul class="pageBot lis-inline maT30 fr fSize14">
-                        <li class="side-page first-page">首页</li>
-                        <li class="prev side-page">上一页</li>
-                        <li class="page-index">1</li>
-                        <li class="page-index">2</li>
-                        <li class="page-index">3</li>
-                        <li class="next side-page">下一页</li>
-                        <li class="side-page last-page">尾页</li>
-                    </ul>
+                    <pagination :showpages="showpage(collect.results.length)" :totalpages="pagesum(collect.results.length)" type="collect" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
             </div>
             <div class="uni-message combi-msg">
@@ -245,8 +229,8 @@
                         <dropdown classes="state" :options="['全部状态','发出的邀请','收到的邀请']" v-model="message.combi.state"></dropdown>
                         <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{combimsg}}</span>个</p>
                     </div>
-                    <ul class="info-items">
-                        <li v-for="item in message.combi.items" :name="item.code">
+                    <ul class="info-items H470">
+                        <li v-for="(item,index) in message.combi.results" :name="item.code" v-show="showResult(index,message.combi.curpage,3)">
                             <template v-if="item.code=='01'">
                               <div class="paLeft29 clearfix H128 pRel">
                                    <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
@@ -297,15 +281,7 @@
                          </template>
                         </li>
                     </ul>
-                    <ul class="pageBot lis-inline maT30 fr fSize14">
-                        <li class="side-page first-page">首页</li>
-                        <li class="prev side-page">上一页</li>
-                        <li class="page-index">1</li>
-                        <li class="page-index">2</li>
-                        <li class="page-index">3</li>
-                        <li class="next side-page">下一页</li>
-                        <li class="side-page last-page">尾页</li>
-                    </ul>
+                    <pagination :showpages="showpage(message.combi.results.length)" :totalpages="pagesum(message.combi.results.length)" type="msg-combi" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
             </div>
             <div class="uni-message recruit-msg">
@@ -314,8 +290,8 @@
                         <dropdown classes="state" :options="['全部状态','发出的邀请','收到的邀请']" v-model="message.combi.state"></dropdown>
                         <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{message.recruit.items.length}}</span>个</p>
                     </div>
-                    <ul class="info-items">
-                        <li v-for="item in message.recruit.items">
+                    <ul class="info-items H470">
+                        <li v-for="(item,index) in message.recruit.results" v-show="showResult(index,message.recruit.curpage,3)">
                             <div class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W328 maL20">
@@ -340,15 +316,7 @@
                             </div>
                         </li>
                     </ul>
-                    <ul class="pageBot lis-inline maT30 fr fSize14">
-                        <li class="side-page first-page">首页</li>
-                        <li class="prev side-page">上一页</li>
-                        <li class="page-index">1</li>
-                        <li class="page-index">2</li>
-                        <li class="page-index">3</li>
-                        <li class="next side-page">下一页</li>
-                        <li class="side-page last-page">尾页</li>
-                    </ul>
+                    <pagination :showpages="showpage(message.recruit.results.length)" :totalpages="pagesum(message.recruit.results.length)" type="msg-recruit" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
             </div>
             <div class="vip-center">
@@ -439,8 +407,8 @@
                         <dropdown classes="state" :options="['全部状态','合作进行中','合作已完成','合作待开始']" v-model="coop.state"></dropdown>
                         <p class="fr fSize14 maR30">我合作的高校<span class="color-orange2 maL10 maR10">{{coop.items.length}}</span>个</p>
                     </div>
-                    <ul class="info-items">
-                        <li v-for="item in coop.items" :name="item.classic">
+                    <ul class="info-items H470">
+                        <li v-for="(item,index) in coop.results" :name="item.classic" v-show="showResult(index,coop.curpage,3)">
                             <div class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W390 maL20">
@@ -457,15 +425,7 @@
                             </div>
                         </li>
                     </ul>
-                    <ul class="pageBot lis-inline maT30 fr fSize14">
-                        <li class="side-page first-page">首页</li>
-                        <li class="prev side-page">上一页</li>
-                        <li class="page-index">1</li>
-                        <li class="page-index">2</li>
-                        <li class="page-index">3</li>
-                        <li class="next side-page">下一页</li>
-                        <li class="side-page last-page">尾页</li>
-                    </ul>
+                    <pagination :showpages="showpage(coop.results.length)" :totalpages="pagesum(coop.results.length)" type="coop" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
             </div>
             <div class="conf-keyword ListBox">
@@ -600,6 +560,7 @@
     </div>
     <script src="js/jquery-3.1.0.min.js"></script>
     <script src="js/vue.js"></script>
+    <script src="js/components/pagination.js"></script>
     <script src="js/components.js"></script>
     <script src="js/incCenter.js"></script>
 </body>

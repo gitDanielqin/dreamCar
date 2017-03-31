@@ -35,9 +35,25 @@ var appCont = new Vue({
          require:{
               state:"全部类型",
               period:"全部状态",
+              curpage:1,
               items:[
                    {classic:"校企合作",coMajor:"合作专业",coScale:"合作人数",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",IncName:"企业名称",uniLevel:"高校性质",publicDate:"2017-3-5",publicTime:"24:00",IncPos:"岗位名称"},
                    {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
+                   {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
+                   {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
+                   {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
+                   {classic:"企业直聘",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"大专",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:2,publicDate:"2017-2-14",publicTime:"24:00",IncAddr:"滨江"},
+                   {classic:"企业直聘",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"大专",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:2,publicDate:"2017-2-14",publicTime:"24:00",IncAddr:"滨江"},
+                   {classic:"企业直聘",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"大专",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:2,publicDate:"2017-2-14",publicTime:"24:00",IncAddr:"滨江"},
+              ],
+              results:[
+                   {classic:"校企合作",coMajor:"合作专业",coScale:"合作人数",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",IncName:"企业名称",uniLevel:"高校性质",publicDate:"2017-3-5",publicTime:"24:00",IncPos:"岗位名称"},
+                   {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
+                   {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
+                   {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
+                   {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
+                   {classic:"企业直聘",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"大专",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:2,publicDate:"2017-2-14",publicTime:"24:00",IncAddr:"滨江"},
+                   {classic:"企业直聘",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"大专",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:2,publicDate:"2017-2-14",publicTime:"24:00",IncAddr:"滨江"},
                    {classic:"企业直聘",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"大专",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:2,publicDate:"2017-2-14",publicTime:"24:00",IncAddr:"滨江"},
               ],
               showCombi:true,
@@ -45,16 +61,40 @@ var appCont = new Vue({
          },
          collect:{
               state:"全部状态",
+              curpage:1,
               items:[
                    {classic:"高校招聘会",pos:"岗位名称",major:"专业名称",stuScale:"专业人数",IncName:"公司名称",recruitDate:"2017-01-30",recruitAddr:"地点",IncProps:"企业性质",IncScale:"企业规模",publicDate:"2017-11-11",publicTime:"24:00"},
+                   {classic:"高校招聘会",pos:"岗位名称",major:"专业名称",stuScale:"专业人数",IncName:"公司名称",recruitDate:"2017-01-30",recruitAddr:"地点",IncProps:"企业性质",IncScale:"企业规模",publicDate:"2017-11-11",publicTime:"24:00"},
+                   {classic:"高校招聘会",pos:"岗位名称",major:"专业名称",stuScale:"专业人数",IncName:"公司名称",recruitDate:"2017-01-30",recruitAddr:"地点",IncProps:"企业性质",IncScale:"企业规模",publicDate:"2017-11-11",publicTime:"24:00"},
+                   {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"企业需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
+                   {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"企业需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
                    {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"企业需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
                    {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"到校培训",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
               ],
+              results:[
+                   {classic:"高校招聘会",pos:"岗位名称",major:"专业名称",stuScale:"专业人数",IncName:"公司名称",recruitDate:"2017-01-30",recruitAddr:"地点",IncProps:"企业性质",IncScale:"企业规模",publicDate:"2017-11-11",publicTime:"24:00"},
+                   {classic:"高校招聘会",pos:"岗位名称",major:"专业名称",stuScale:"专业人数",IncName:"公司名称",recruitDate:"2017-01-30",recruitAddr:"地点",IncProps:"企业性质",IncScale:"企业规模",publicDate:"2017-11-11",publicTime:"24:00"},
+                   {classic:"高校招聘会",pos:"岗位名称",major:"专业名称",stuScale:"专业人数",IncName:"公司名称",recruitDate:"2017-01-30",recruitAddr:"地点",IncProps:"企业性质",IncScale:"企业规模",publicDate:"2017-11-11",publicTime:"24:00"},
+                   {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"企业需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
+                   {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"企业需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
+                   {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"企业需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
+                   {classic:"校企合作",major:"专业名称",publicDate:"发布时间",IncProps:"企业性质",trainway:"到校培训",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",publicDate:"2017-11-11",publicTime:"24:00"},
+              ]
          },
          message:{
               combi:{
                    state:"全部状态",
+                   curpage:1,
                    items:[
+                        {code:"01",pos:"岗位名称",major:"专业",stuScale:"人数",uniLevel:"高校性质",uniApply:"高校需要提供的",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {code:"01",pos:"岗位名称",major:"专业",stuScale:"人数",uniLevel:"高校性质",uniApply:"高校需要提供的",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {code:"01",pos:"岗位名称",major:"专业",stuScale:"人数",uniLevel:"高校性质",uniApply:"高校需要提供的",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {code:"02",major:"专业名称",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00",applystate:"01"},
+                        {code:"02",major:"专业名称",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00",applystate:"03"},
+                   ],
+                   results:[
+                        {code:"01",pos:"岗位名称",major:"专业",stuScale:"人数",uniLevel:"高校性质",uniApply:"高校需要提供的",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {code:"01",pos:"岗位名称",major:"专业",stuScale:"人数",uniLevel:"高校性质",uniApply:"高校需要提供的",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
                         {code:"01",pos:"岗位名称",major:"专业",stuScale:"人数",uniLevel:"高校性质",uniApply:"高校需要提供的",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
                         {code:"02",major:"专业名称",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00",applystate:"01"},
                         {code:"02",major:"专业名称",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00",applystate:"03"},
@@ -62,7 +102,17 @@ var appCont = new Vue({
               },
               recruit:{
                    state:"全部状态",
+                   curpage:1,
                    items:[
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"}
+                   ],
+                   results:[
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
                         {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
                         {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
                         {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"}
@@ -85,7 +135,17 @@ var appCont = new Vue({
        },
        coop:{
             state:"全部状态",
+            curpage:1,
             items:[
+                 {uniname:"高校名称",uniLevel:"高校性质",uniApply:"高校提供的培训方式",date:"2017-3-5",time:"24:00",coopState:"02",coPos:"合作岗位"},
+                 {uniname:"高校名称",uniLevel:"高校性质",uniApply:"高校提供的培训方式",date:"2017-3-5",time:"24:00",coopState:"02",coPos:"合作岗位"},
+                 {uniname:"高校名称",uniLevel:"高校性质",uniApply:"高校提供的培训方式",date:"2017-3-5",time:"24:00",coopState:"02",coPos:"合作岗位"},
+                 {uniname:"高校名称",uniLevel:"高校性质",uniApply:"高校提供的培训方式",date:"2017-3-5",time:"24:00",coopState:"03",coPos:"合作岗位"},
+                 {uniname:"高校名称",uniLevel:"高校性质",uniApply:"高校提供的培训方式",date:"2017-3-5",time:"24:00",coopState:"01",coPos:"合作岗位"}
+            ],
+            results:[
+                 {uniname:"高校名称",uniLevel:"高校性质",uniApply:"高校提供的培训方式",date:"2017-3-5",time:"24:00",coopState:"02",coPos:"合作岗位"},
+                 {uniname:"高校名称",uniLevel:"高校性质",uniApply:"高校提供的培训方式",date:"2017-3-5",time:"24:00",coopState:"02",coPos:"合作岗位"},
                  {uniname:"高校名称",uniLevel:"高校性质",uniApply:"高校提供的培训方式",date:"2017-3-5",time:"24:00",coopState:"02",coPos:"合作岗位"},
                  {uniname:"高校名称",uniLevel:"高校性质",uniApply:"高校提供的培训方式",date:"2017-3-5",time:"24:00",coopState:"03",coPos:"合作岗位"},
                  {uniname:"高校名称",uniLevel:"高校性质",uniApply:"高校提供的培训方式",date:"2017-3-5",time:"24:00",coopState:"01",coPos:"合作岗位"}
@@ -93,58 +153,73 @@ var appCont = new Vue({
        }
     },
     watch:{
-      "require.state":function(curval,oldval){
-           if(curval=="全部类型"){
-                $(".requireBox .info-items li").show();
-           }else if(curval=="校企合作"){
-                $(".requireBox .info-items li").hide();
-                $(".requireBox .info-items li[name='校企合作']").show();
-
-           }else if(curval=="招聘会"){
-                $(".requireBox .info-items li").hide();
-                $(".requireBox .info-items li[name='招聘会']").show();
-           }else if(curval=="企业直聘"){
-                $(".requireBox .info-items li").hide();
-                $(".requireBox .info-items li[name='企业直聘']").show();
-           }
+      "require.state":function(curval){
+           this.require.results=reqFilter(curval,this.require.period);
+           this.require.curpage=1;
       },
-      "require.period":function(curval,oldval){
-           if(curval=="全部状态"){
-                $(".requireBox .info-items li").show();
-           }else if(curval=="三天内"){
-                $(".requireBox .info-items li").hide();
-                $(".requireBox .info-items li").each(function(index){
-                     if(diffDay($(this).attr("date"))<=3){
-                          $(this).show();
-                     };
-                })
-           }else if(curval=="一周内"){
-                $(".requireBox .info-items li").hide();
-                $(".requireBox .info-items li").each(function(index){
-                     if(diffDay($(this).attr("date"))<=7){
-                          $(this).show();
-                     };
-                })
-           }else if(curval=="一月内"){
-                $(".requireBox .info-items li").hide();
-                $(".requireBox .info-items li").each(function(index){
-                     if(diffDay($(this).attr("date"))<=30){
-                          $(this).show();
-                     };
-                })
-           }
+      "require.period":function(curval){
+           this.require.results=reqFilter(this.require.state,curval);
+           this.require.curpage=1;
       },
       "collect.state":function(curval,oldval){
-           var mydate = new Date();
            if(curval=="全部状态"){
-                $(".collectBox .info-items li").show();
-           }else if(curval=="高校招聘会"){
-                $(".collectBox .info-items li").hide();
-                $(".collectBox .info-items li[name='高校招聘会']").show();
-           }else if(curval=="校企合作"){
-                $(".collectBox .info-items li").hide();
-                $(".collectBox .info-items li[name='校企合作']").show();
+                this.collect.results= cloneObj(this.collect.items);
+           }else{
+                this.collect.results = [];
+                for(var i=0;i<this.collect.items.length;i++){
+                     if(this.collect.items[i].classic==curval){
+                          this.collect.results.push(this.collect.items[i]);
+                     }
+                }
            }
+           this.collect.curpage=1;
+      },
+      "message.combi.state":function(curval){
+           if(curval=="全部状态"){
+                this.message.combi.results = cloneObj(this.message.combi.items);
+           }else if(curval=="发出的邀请"){
+                this.message.combi.results=[];
+                for(var i=0;i<this.message.combi.items.length;i++){
+                     if(this.message.combi.items[i].code=="02"){
+                          this.message.combi.results.push(this.message.combi.items[i]);
+                     }
+                }
+           }else if(curval=="收到的邀请"){
+                this.message.combi.results=[];
+                for(var i=0;i<this.message.combi.items.length;i++){
+                     if(this.message.combi.items[i].code=="01"){
+                          this.message.combi.results.push(this.message.combi.items[i]);
+                     }
+                }
+           };
+           this.message.combi.curpage=1;
+      },
+      "coop.state":function(curval){
+           if(curval=="全部状态"){
+                this.coop.results = cloneObj(this.coop.items);
+           }else if(curval=="合作进行中"){
+                this.coop.results=[];
+                for(var i=0 ; i<this.coop.items.length; i++){
+                     if(this.coop.items[i].coopState=="02"){
+                          this.coop.results.push(this.coop.items[i]);
+                     }
+                }
+           }else if(curval=="合作已完成"){
+                this.coop.results=[];
+                for(var i=0 ; i<this.coop.items.length; i++){
+                     if(this.coop.items[i].coopState=="03"){
+                          this.coop.results.push(this.coop.items[i]);
+                     }
+                }
+           }else if(curval=="合作待开始"){
+                this.coop.results=[];
+                for(var i=0 ; i<this.coop.items.length; i++){
+                     if(this.coop.items[i].coopState=="01"){
+                          this.coop.results.push(this.coop.items[i]);
+                     }
+                }
+           }
+           this.coop.curpage=1;
       }
     },
     methods:{
@@ -213,7 +288,49 @@ var appCont = new Vue({
                    case "02":return {color:"#f7aa00"};break;
                    case "03":return {color:"#333"};break;
               }
-         }
+         },
+         showResult:function(index,curpage,itemsnum){
+            if(index>=(parseInt(curpage)-1)*parseInt(itemsnum)&&index<parseInt(curpage)*parseInt(itemsnum)){
+                  return true;
+            }else{
+                  return false;
+            }
+        },
+        pagesum:function(totalitems){
+            var totalpage =1;
+            if(totalitems%3==0){
+                  totalpage = totalitems/3
+            }else{
+                  totalpage = Math.floor(totalitems/3)+1;
+            }
+            return totalpage;
+        },
+        showpage:function(totalitems){
+            var totalpage =1;
+            if(totalitems%3==0){
+                  totalpage = totalitems/3
+            }else{
+                  totalpage = Math.floor(totalitems/3)+1;
+            }
+            if(totalpage<3){
+                  return totalpage;
+            }else{
+                  return 3;
+            }
+        },
+        topage:function(page,type){
+            if(type=="require"){
+                  this.require.curpage=page;
+            }else if(type=="collect"){
+                  this.collect.curpage=page;
+            }else if(type=="msg-combi"){
+                  this.message.combi.curpage=page;
+            }else if(type=="msg-recruit"){
+                  this.message.recruit.curpage=page;
+          }else if(type=="coop"){
+                  this.coop.curpage=page;
+            }
+        }
 
     },
     computed:{
@@ -240,6 +357,9 @@ var appCont = new Vue({
     updated:function(){
          selectInitPos();
          selectEventBind();
+    },
+    components:{
+         'pagination':pagination
     }
 });
 var appModal = new Vue({
@@ -307,6 +427,47 @@ function init_center(){
 }
 init_center();
 
+function reqFilter(type,state){
+     var filterArray = [];
+     var diff_day=0;
+     switch (state) {
+          case "三天内":
+               diff_day=3;
+               break;
+          case "一周内":
+               diff_day=7;
+               break;
+          case "一月内":
+               diff_day=30;
+               break;
+     };
+     if(type=="全部类型"){
+          if(state=="全部状态"){
+               filterArray = cloneObj(appCont.require.items);
+          }else{
+               for(var i=0; i<appCont.require.items.length;i++){
+                    if(diffDay(appCont.require.items[i].publicDate)<=diff_day){
+                         filterArray.push(appCont.require.items[i]);
+                    }
+               }
+          }
+     }else{
+          if(state=="全部状态"){
+               for(var i=0;i<appCont.require.items.length; i++){
+                    if(appCont.require.items[i].classic==type){
+                         filterArray.push(appCont.require.items[i]);
+                    }
+               }
+          }else{
+               for(var i=0;i<appCont.require.items.length; i++){
+                    if(appCont.require.items[i].classic==type&&diffDay(appCont.require.items[i].publicDate)<=diff_day){
+                         filterArray.push(appCont.require.items[i]);
+                    }
+               }
+          }
+     };
+     return filterArray;
+}
 function selectInitPos(){
      $(".selectee input").each(function(){
         var bgPos=$(this).width()-10+"px center";

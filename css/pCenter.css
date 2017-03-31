@@ -233,6 +233,7 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 
 .depart{margin: 0 8px;}
 .eval-btn{font-size: 14px; color:#2ea8e6;}
+/*页码样式*/
 .pagination ul{overflow: hidden;}
 .pagination ul li{float: left;margin-left: 10px; cursor: pointer;}
 .pagination a{display:inline-block;background: #999; color: #fff;line-height: 30px; height: 30px; text-align: center;}

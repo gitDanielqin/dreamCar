@@ -466,67 +466,27 @@
                              <li>未开课</li><li>已结束</li>
                          </ul>
                      </div>
-                     <p class="fr fSize14 maR30">已投递简历<span class="color-orange2 maL10 maR10">20</span>份</p>
+                     <p class="fr fSize14 maR30">已投递简历<span class="color-orange2 maL10 maR10">{{myPosList.results.length}}</span>份</p>
                  </div>
-                 <ul class="collectList contList">
-                     <li>
+                 <ul class="collectList contList H410">
+                     <li v-for="(item,index) in myPosList.results" v-show="showResult(index,myPosList.curpage,3)">
                          <div class="logo-pic"></div>
                          <div class="class-txt fl paTop20 W328">
-                             <h2 class="class-name"><b>职位名称</b></h2>
-                             <p class="teacher">年薪<span>|</span>地区<span>|</span>学历要求<span>|</span>经验要求</p>
-                             <p>投递于： 2016-10-25</p>
+                             <h2 class="class-name"><b>{{item.title}}</b></h2>
+                             <p class="teacher">{{item.salary}}<span>|</span>{{item.addr}}<span>|</span>{{item.scolar}}<span>|</span>{{item.worksexp}}</p>
+                             <p>投递于： {{item.postdate}}</p>
                          </div>
                          <div class="feedback fr fSize18">
-                             <h3>公司名称</h3>
+                             <h3>{{item.inc}}</h3>
                              <ul class="lis-inline feedState">
-                                 <li class="on"><i><img src="images/icon-feedback.png"/></i><span>已投递</span></li>
-                                 <li><i><img src="images/icon-feedback.png"/></i><span>已查看</span></li>
-                                 <li><i><img src="images/icon-feedback.png"/></i><span>已反馈</span></li>
-                             </ul>
-                         </div>
-                     </li>
-                     <li>
-                         <div class="logo-pic"></div>
-                         <div class="class-txt fl paTop20 W328">
-                             <h2 class="class-name"><b>职位名称</b></h2>
-                             <p class="teacher">年薪<span>|</span>地区<span>|</span>学历要求<span>|</span>经验要求</p>
-                             <p>投递于： 2016-10-25</p>
-                         </div>
-                         <div class="feedback fr fSize18">
-                             <h3>公司名称</h3>
-                             <ul class="lis-inline feedState">
-                                 <li><i><img src="images/icon-feedback.png"/></i><span>已投递</span></li>
-                                 <li class="on"><i><img src="images/icon-feedback.png"/></i><span>已查看</span></li>
-                                 <li><i><img src="images/icon-feedback.png"/></i><span>已反馈</span></li>
-                             </ul>
-                         </div>
-                     </li>
-                     <li>
-                         <div class="logo-pic"></div>
-                         <div class="class-txt fl paTop20 W328">
-                             <h2 class="class-name"><b>职位名称</b></h2>
-                             <p class="teacher">年薪<span>|</span>地区<span>|</span>学历要求<span>|</span>经验要求</p>
-                             <p>投递于： 2016-10-25</p>
-                         </div>
-                         <div class="feedback fr fSize18">
-                             <h3>公司名称</h3>
-                             <ul class="lis-inline feedState">
-                                 <li><i><img src="images/icon-feedback.png"/></i><span>已投递</span></li>
-                                 <li><i><img src="images/icon-feedback.png"/></i><span>已查看</span></li>
-                                 <li class="on"><i><img src="images/icon-feedback.png"/></i><span>已反馈</span></li>
+                                 <li :class="{on:item.state==0}"><i><img src="images/icon-feedback.png"/></i><span>已投递</span></li>
+                                 <li :class="{on:item.state==1}"><i><img src="images/icon-feedback.png"/></i><span>已查看</span></li>
+                                 <li :class="{on:item.state==2}"><i><img src="images/icon-feedback.png"/></i><span>已反馈</span></li>
                              </ul>
                          </div>
                      </li>
                  </ul>
-                 <ul class="pageBot lis-inline maT30 fr fSize14">
-                     <li class="side-page first-page">首页</li>
-                     <li class="prev side-page">上一页</li>
-                     <li class="page-index">1</li>
-                     <li class="page-index">2</li>
-                     <li class="page-index">3</li>
-                     <li class="next side-page">下一页</li>
-                     <li class="side-page last-page">尾页</li>
-                 </ul>
+                 <pagination :showpages="showpage(myPosList.results.length)" :totalpages="pagesum(myPosList.results.length)" type="my-pos" @topage="topage" class="maT28 fSize14 fr"></pagination>
              </div>
              <div class="conf-keyword ListBox">
                  <h2 class="paTop14 LH-H52 fSize24 paLeft40">修改密码</h2>

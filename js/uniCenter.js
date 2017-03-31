@@ -43,9 +43,25 @@ var appCont = new Vue({
          },
          require:{
               state:"全部状态",
+              curpage:1,
               items:[
                    {classic:"校企合作",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11"},
                    {classic:"校企合作",major:"通信工程",IncProps:"国有企业",IncScale:"600人以上",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11"},
+                   {classic:"校企合作",major:"通信工程",IncProps:"国有企业",IncScale:"600人以上",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11"},
+                   {classic:"校企合作",major:"通信工程",IncProps:"国有企业",IncScale:"600人以上",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11"},
+                   {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},
+                   {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},
+                   {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},
+                   {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},
+              ],
+              results:[
+                   {classic:"校企合作",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11"},
+                   {classic:"校企合作",major:"通信工程",IncProps:"国有企业",IncScale:"600人以上",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11"},
+                   {classic:"校企合作",major:"通信工程",IncProps:"国有企业",IncScale:"600人以上",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11"},
+                   {classic:"校企合作",major:"通信工程",IncProps:"国有企业",IncScale:"600人以上",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11"},
+                   {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},
+                   {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},
+                   {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},
                    {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},
               ],
               showCombi:true,
@@ -53,27 +69,63 @@ var appCont = new Vue({
          },
          collect:{
               state:"全部状态",
+              curpage:1,
               items:[
                    {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"},
+                   {pos:"岗位名称",major:"通信工程",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"},
                    {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"},
-                   {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"}
+                   {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"},
+                   {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"},
+                   {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"},
               ],
+              results:[
+                   {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"},
+                   {pos:"岗位名称",major:"通信工程",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"},
+                   {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"},
+                   {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"},
+                   {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"},
+                   {pos:"岗位名称",major:"专业",stuScale:"人数",IncName:"公司名称",publicDate:"发布时间",IncProps:"企业性质",uniApply:"高校需要提供的",IncScale:"企业规模",IncArea:"企业所属行业",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11",time:"24:00"},
+              ]
          },
          message:{
               combi:{
                    state:"全部状态",
+                   curpage:1,
                    items:[
                         {code:"01",pos:"岗位名称",major:"专业",stuScale:"人数",uniLevel:"高校性质",uniApply:"高校需要提供的",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {code:"01",pos:"岗位名称",major:"专业",stuScale:"人数",uniLevel:"高校性质",uniApply:"高校需要提供的",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {code:"01",pos:"岗位名称",major:"专业",stuScale:"人数",uniLevel:"高校性质",uniApply:"高校需要提供的",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {code:"02",major:"专业名称",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00",applystate:"01"},
+                        {code:"02",major:"专业名称",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00",applystate:"01"},
+                        {code:"02",major:"专业名称",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00",applystate:"01"},
+                        {code:"02",major:"专业名称",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00",applystate:"03"},
+                   ],
+                   results:[
+                        {code:"01",pos:"岗位名称",major:"专业",stuScale:"人数",uniLevel:"高校性质",uniApply:"高校需要提供的",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {code:"01",pos:"岗位名称",major:"专业",stuScale:"人数",uniLevel:"高校性质",uniApply:"高校需要提供的",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {code:"01",pos:"岗位名称",major:"专业",stuScale:"人数",uniLevel:"高校性质",uniApply:"高校需要提供的",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {code:"02",major:"专业名称",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00",applystate:"01"},
+                        {code:"02",major:"专业名称",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00",applystate:"01"},
                         {code:"02",major:"专业名称",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00",applystate:"01"},
                         {code:"02",major:"专业名称",IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00",applystate:"03"},
                    ]
               },
               recruit:{
                    state:"全部状态",
+                   curpage:1,
                    items:[
                         {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
                         {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
-                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"}
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                   ],
+                   results:[
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
+                        {major:"工业设计",salary:"7K-9K",posAmount:"20人",qualific:"本科",IncAddress:{province:"浙江省",city:"杭州市",district:"滨江区"},IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",contactpep:"郑先生",contactway:"18984565569",date:"2017.11.11",time:"24:00"},
                    ]
               }
          },
@@ -93,8 +145,18 @@ var appCont = new Vue({
        },
        coop:{
             state:"全部状态",
+            curpage:1,
             items:[
                  {IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",date:"2017.11.11",time:"24:00",coopState:"02",major:"公共管理专业"},
+                 {IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",date:"2017.11.11",time:"24:00",coopState:"03",major:"合作专业"},
+                 {IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",date:"2017.11.11",time:"24:00",coopState:"03",major:"合作专业"},
+                 {IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",date:"2017.11.11",time:"24:00",coopState:"03",major:"合作专业"},
+                 {IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",date:"2017.11.11",time:"24:00",coopState:"01",major:"公共管理专业"},
+            ],
+            results:[
+                 {IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",date:"2017.11.11",time:"24:00",coopState:"02",major:"公共管理专业"},
+                 {IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",date:"2017.11.11",time:"24:00",coopState:"03",major:"合作专业"},
+                 {IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",date:"2017.11.11",time:"24:00",coopState:"03",major:"合作专业"},
                  {IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",date:"2017.11.11",time:"24:00",coopState:"03",major:"合作专业"},
                  {IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",date:"2017.11.11",time:"24:00",coopState:"01",major:"公共管理专业"},
             ]
@@ -103,14 +165,23 @@ var appCont = new Vue({
     watch:{
       "require.state":function(curval,oldval){
            if(curval=="全部状态"){
-                $(".requireBox .info-items li").show();
+                this.require.results = cloneObj(this.require.items);
            }else if(curval=="校企合作"){
-                $(".requireBox .info-items li[name='校企合作']").show();
-                $(".requireBox .info-items li[name='招聘会']").hide();
+                 this.require.results=[];
+                for(var i=0; i<this.require.items.length; i++){
+                     if(this.require.items[i].classic=="校企合作"){
+                          this.require.results.push(this.require.items[i]);
+                     }
+                }
            }else if(curval=="招聘会"){
-                $(".requireBox .info-items li[name='校企合作']").hide();
-                $(".requireBox .info-items li[name='招聘会']").show();
-           }
+                 this.require.results=[];
+                for(var i=0; i<this.require.items.length; i++){
+                     if(this.require.items[i].classic=="招聘会"){
+                          this.require.results.push(this.require.items[i]);
+                     }
+                }
+           };
+           this.require.curpage=1;
       },
       "collect.state":function(curval,oldval){
            var mydate = new Date();
@@ -119,6 +190,53 @@ var appCont = new Vue({
            }else if(curval=="近一个星期"){
 
            }
+      },
+      "message.combi.state":function(curval){
+           if(curval=="全部状态"){
+                this.message.combi.results = cloneObj(this.message.combi.items);
+           }else if(curval=="发出的邀请"){
+                this.message.combi.results=[];
+                for(var i=0;i<this.message.combi.items.length;i++){
+                     if(this.message.combi.items[i].code=="02"){
+                          this.message.combi.results.push(this.message.combi.items[i]);
+                     }
+                }
+           }else if(curval=="收到的邀请"){
+                this.message.combi.results=[];
+                for(var i=0;i<this.message.combi.items.length;i++){
+                     if(this.message.combi.items[i].code=="01"){
+                          this.message.combi.results.push(this.message.combi.items[i]);
+                     }
+                }
+           };
+           this.message.combi.curpage=1;
+      },
+      "coop.state":function(curval){
+           if(curval=="全部状态"){
+                this.coop.results = cloneObj(this.coop.items);
+           }else if(curval=="合作进行中"){
+                this.coop.results=[];
+                for(var i=0 ; i<this.coop.items.length; i++){
+                     if(this.coop.items[i].coopState=="02"){
+                          this.coop.results.push(this.coop.items[i]);
+                     }
+                }
+           }else if(curval=="合作已完成"){
+                this.coop.results=[];
+                for(var i=0 ; i<this.coop.items.length; i++){
+                     if(this.coop.items[i].coopState=="03"){
+                          this.coop.results.push(this.coop.items[i]);
+                     }
+                }
+           }else if(curval=="合作待开始"){
+                this.coop.results=[];
+                for(var i=0 ; i<this.coop.items.length; i++){
+                     if(this.coop.items[i].coopState=="01"){
+                          this.coop.results.push(this.coop.items[i]);
+                     }
+                }
+           }
+           this.coop.curpage=1;
       }
     },
     methods:{
@@ -183,6 +301,48 @@ var appCont = new Vue({
                    case "02":return {color:"#f7aa00"};break;
                    case "03":return {color:"#333"};break;
               }
+         },
+         showResult:function(index,curpage,itemsnum){
+              if(index>=(parseInt(curpage)-1)*parseInt(itemsnum)&&index<parseInt(curpage)*parseInt(itemsnum)){
+                   return true;
+              }else{
+                   return false;
+              }
+         },
+         pagesum:function(totalitems){
+              var totalpage =1;
+              if(totalitems%3==0){
+                   totalpage = totalitems/3
+              }else{
+                   totalpage = Math.floor(totalitems/3)+1;
+              }
+              return totalpage;
+         },
+         showpage:function(totalitems){
+              var totalpage =1;
+              if(totalitems%3==0){
+                   totalpage = totalitems/3
+              }else{
+                   totalpage = Math.floor(totalitems/3)+1;
+              }
+              if(totalpage<3){
+                   return totalpage;
+              }else{
+                   return 3;
+              }
+         },
+         topage:function(page,type){
+              if(type=="require"){
+                   this.require.curpage=page;
+              }else if(type=="collect"){
+                   this.collect.curpage=page;
+              }else if(type=="msg-combi"){
+                   this.message.combi.curpage=page;
+              }else if(type=="msg-recruit"){
+                   this.message.recruit.curpage=page;
+           }else if(type=="coop"){
+                   this.coop.curpage=page;
+              }
          }
 
     },
@@ -210,6 +370,9 @@ var appCont = new Vue({
     updated:function(){
          selectInitPos();
          selectEventBind();
+    },
+    components:{
+         'pagination':pagination
     }
 });
 var appModal = new Vue({
@@ -349,7 +512,6 @@ function vipEventBind(){
 function init_safepos(){
      //console.log($(".safe-range p").width(),$(".safe-range").width());
     var p_left= Math.floor($(".safe-range p").width())-16+"px";
-    console.log(p_left);
     $(".r-pointer").css("left",p_left);
 }
 function modalEventBind(){

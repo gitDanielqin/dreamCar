@@ -72,7 +72,6 @@
 .state{line-height: 38px;}
 .state input{width:98px; margin-left: 29px; height: 38px; line-height: 38px;}
 .ListBox .hd{border: 1px solid #ccc;}
-.info-items{height:410px;}
 .info-items>li{height: 128px; margin-top: 10px; border: 1px solid #ccc; background: white;}
 .collectBox .info-items>li{height:148px;}
 .collectBox .logo-pic{margin-top: 34px;}
@@ -164,3 +163,13 @@ position: absolute;  display:none;}
 .bot-nav a:hover{color:#f00; cursor: pointer}
 .bot .barcode-text{display: inline-block; vertical-align: middle;}
 .bot-account{border-top:2px solid #9d9d9d;}
+
+/*页码样式*/
+.pagination ul{overflow: hidden;}
+.pagination ul li{float: left;margin-left: 10px; cursor: pointer;}
+.pagination a{display:inline-block;background: #999; color: #fff;line-height: 30px; height: 30px; text-align: center;}
+.pagination a.highLight{background: #333;}
+.pagination a:hover{background: #333;}
+.pagination .lastPage{width: 60px;}
+.pagination .nextPage{width: 60px;}
+.pagination .page{ width:30px;}

@@ -185,6 +185,16 @@ var appCont = new Vue({
                     {title:"UI设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},recruitDate:"2016-12-11",posAmount:20,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",publicDate:"2017-11-11"},
                     {title:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},recruitDate:"2016-12-11",posAmount:20,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",publicDate:"2017-11-11"}
                ]
+          },
+          myPosList:{
+               curpage:1,
+               results:[
+                    {title:"职位名称",salary:"年薪",addr:"地区",scolar:'学历要求',worksexp:"经验要求",postdate:"2016-10-25",inc:"公司名称",state:0},
+                    {title:"职位名称",salary:"年薪",addr:"地区",scolar:'学历要求',worksexp:"经验要求",postdate:"2016-10-25",inc:"杭州煌巢科技技术有限公司",state:1},
+                    {title:"职位名称",salary:"年薪",addr:"地区",scolar:'学历要求',worksexp:"经验要求",postdate:"2016-10-25",inc:"公司名称",state:0},
+                    {title:"职位名称",salary:"年薪",addr:"地区",scolar:'学历要求',worksexp:"经验要求",postdate:"2016-10-25",inc:"公司名称",state:2},
+                    {title:"职位名称",salary:"年薪",addr:"地区",scolar:'学历要求',worksexp:"经验要求",postdate:"2016-10-25",inc:"公司名称",state:0},
+               ]
           }
 
      },
@@ -331,6 +341,8 @@ var appCont = new Vue({
                     this.colPosList.curpage=page;
                }else if(type=="col-rec"){
                     this.colRecList.curpage=page;
+               }else if(type=="my-pos"){
+                    this.myPosList.curpage=page;
                }
           }
      },
