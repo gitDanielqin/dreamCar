@@ -6,6 +6,7 @@
 .search{border-top-left-radius: 5px; border-bottom-left-radius: 5px;padding-left: 30px;width: 284px;}
 .search-btn{width: 130px; height: 48px; background: #ffa800; font-size: 20px;}
 
+.center-teil{margin-top: 13.5%;}
 .module-entry li{width: 150px; height: 150px; border-radius: 50%; text-align: center; margin-right: 20px; cursor: pointer;transition: all 0.5s;}
 .module-entry li:first-child{background: url("../images/mIcon01.png") no-repeat center 35px rgba(0,0,0,0.5);}
 .module-entry li:nth-child(2){background: url("../images/mIcon02.png") no-repeat center 23px rgba(0,0,0,0.5);}
@@ -13,5 +14,9 @@
 .module-entry li:nth-child(4){background: url("../images/mIcon04.png") no-repeat center 36px rgba(0,0,0,0.5);}
 .module-entry li:nth-child(5){background: url("../images/mIcon05.png") no-repeat center 28px rgba(0,0,0,0.5);}
 .module-entry li:last-child{background: url("../images/mIcon06.png") no-repeat center 34px rgba(0,0,0,0.5);margin-right: 0;}
-.module-entry li a{margin-top: 97px; display: inline-block; vertical-align: middle; line-height: 32px; font-size: 18px;}
+.module-entry li a{margin-top: 97px; display: inline-block; vertical-align: middle; line-height: 32px; font-size: 18px; color: white;}
 .module-entry li:hover{background-color: rgba(255,168,0,0.8);}
+
+.weiter{position: absolute; left: 50%; bottom:50px; transform: translateX(-50%); cursor: pointer;}
+.p-title{ font-size: 42px; font-weight: bold; }
+.p-subtitle{font-weight: normal;}

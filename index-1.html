@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html style="height:100%">
      <head>
           <meta charset="utf-8">
           <title>首页-1</title>
           <link href="css/base.css" rel="stylesheet" />
           <link href="css/index-1.css" rel="stylesheet" />
      </head>
-     <body>
-          <div class="front-page H800">
+     <body style="height:100%;">
+          <div class="front-page H800 pRel mod-page" style="height:100%">
                <div class="inner">
                     <div class="header paTop24 clearfix color-white">
                         <div class="logo fl clearfix">
@@ -24,20 +24,27 @@
                             <h2 class="fl maL50 fSize18">市<input id="sel-city" value="北京市" readonly /><ul id="city"></ul></h2>
                             <p class="maL50 fl LH-H50 paTop10 fSize14"><span class="color-yellow">热门城市：</span>北京 上海 杭州 广州 深圳</p>
                         </div>
-                        <div class="center-teil maT120 t-center">
-                              <p class="subtitle fSize16 W260 LH-H35 t-center">加强大学生实践学习经验</p>
-                              <h2 class="maT28 fSize0"><img src="images/title-txt.png" /></h2>
-                              <p class="maT38"><input type="text" placeholder="岗位名称/学校名称/企业名称" class="search LH-H48 v-top"/><button class="search-btn">搜索</button></p>
-                        </div>
-                        <ul class="lis-inline module-entry maT80">
-                             <li><a href="#">高校需求</a></li><li><a href="#">企业需求</a></li><li><a href="#">充电站</a></li>
-                             <li><a href="#">招聘会</a></li><li><a href="#">校企岗位</a></li><li><a href="#">职业规划</a></li>
-                        </ul>
                     </div>
+                    <div class="center-teil t-center">
+                          <p class="subtitle fSize16 W260 LH-H35 t-center">加强大学生实践学习经验</p>
+                          <h2 class="maT28 fSize0"><img src="images/title-txt.png" /></h2>
+                          <p class="maT38"><input type="text" placeholder="岗位名称/学校名称/企业名称" class="search LH-H48 v-top"/><button class="search-btn">搜索</button></p>
+                    </div>
+                    <ul class="lis-inline module-entry maT80">
+                         <li><a href="#">高校需求</a></li><li><a href="#">企业需求</a></li><li><a href="#">充电站</a></li>
+                         <li><a href="#">招聘会</a></li><li><a href="#">校企岗位</a></li><li><a href="#">职业规划</a></li>
+                    </ul>
+                    <i class="pic-wrapper weiter"><img src="images/icon-weiter.png" /></i>
                </div>
           </div>
-          <div class="H515">
-               safasdfsad
+          <div class="mod-page">
+               <h2 class="t-center p-title maT69 LH-H56">课堂展示<br /><span class="p-subtitle LH-H37 fSize24">CLASSROOM</span></h2>
           </div>
+          <script>
+               window.onload=function(){
+                    
+                    console.log(window.innerHeight);
+               }
+          </script>
      </body>
 </html>
