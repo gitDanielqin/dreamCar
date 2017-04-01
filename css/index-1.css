@@ -1,0 +1,17 @@
+.front-page{background: url("../images/bg-2.jpg") no-repeat center 0; background-size: cover;}
+.login a{width:90px; height: 38px;border: 2px solid #f7b632;text-align: center;font-size: 16px;
+  line-height: 38px;margin-left: 15px; display: inline-block; transition: all 0.5s; cursor: pointer; color:#f7b632}
+.login a:hover{background: #f7b632; color: white;}
+.subtitle{margin: 0 auto; background: rgba(0,0,0,0.3); border-radius: 5px;}
+.search{border-top-left-radius: 5px; border-bottom-left-radius: 5px;padding-left: 30px;width: 284px;}
+.search-btn{width: 130px; height: 48px; background: #ffa800; font-size: 20px;}
+
+.module-entry li{width: 150px; height: 150px; border-radius: 50%; text-align: center; margin-right: 20px; cursor: pointer;transition: all 0.5s;}
+.module-entry li:first-child{background: url("../images/mIcon01.png") no-repeat center 35px rgba(0,0,0,0.5);}
+.module-entry li:nth-child(2){background: url("../images/mIcon02.png") no-repeat center 23px rgba(0,0,0,0.5);}
+.module-entry li:nth-child(3){background: url("../images/mIcon03.png") no-repeat center 28px rgba(0,0,0,0.5);}
+.module-entry li:nth-child(4){background: url("../images/mIcon04.png") no-repeat center 36px rgba(0,0,0,0.5);}
+.module-entry li:nth-child(5){background: url("../images/mIcon05.png") no-repeat center 28px rgba(0,0,0,0.5);}
+.module-entry li:last-child{background: url("../images/mIcon06.png") no-repeat center 34px rgba(0,0,0,0.5);margin-right: 0;}
+.module-entry li a{margin-top: 97px; display: inline-block; vertical-align: middle; line-height: 32px; font-size: 18px;}
+.module-entry li:hover{background-color: rgba(255,168,0,0.8);}

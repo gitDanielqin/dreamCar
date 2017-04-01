@@ -42,8 +42,8 @@ color:#000; }
 .welfare-box .confirm{position: absolute; bottom: 10px; right: 10px; background: none; }
 /*.sel-input{ border:1px solid #d2d2d2; background: url("../images/icon-select-1.png") no-repeat 155px center #fff; }
 .sel-lis dd:hover{background: #f5f5f5; color:#fcc067;}*/
-.item-block-right{padding: 18px; background: url("../images/dashline.png") no-repeat left 26px;}
-.btn-apply{position: absolute; right: 38px; top: 45px; color: white; font-size: 14px; width: 125px; height: 40px; background: #ffa800;}
+.item-block-right{padding: 18px; background: url("../images/dashline.png") no-repeat left center;}
+.btn-apply{position: absolute; right: 38px; top: 34px; color: white; font-size: 14px; width: 125px; height: 40px; background: #ffa800;}
 .btn-apply:hover{background: #48c1e4;}
 .item-name{width: 136px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
 
@@ -63,18 +63,20 @@ color:#000; }
 .queryform .district li.dis-label:hover{color:#797979;}
 
 .main-result .title{border-bottom: 1px solid #f7b632; }
-.main-result .results li{width:808px; margin-top: 19px; background: #fff; border: 1px solid #ccc;}
+.main-result .results li{width:808px; margin-top: 15px; background: #fff; border: 1px solid #ccc;}
 .main-result .results .logo-pic{ background: #2ea8e6; border: 1px solid #959595;}
 .main-result .results .logo-pic img{width: 100%; }
-.main-result .results li p{line-height: 28px;height:28px;}
+.main-result .results li p{line-height: 23px;height:23px;}
 .main-result .results li p i{margin:0 8px;}
 .main-result .results .institute{border-left:1px dashed #cecece;}
 .ads{border:1px solid #c9c9c9;}
 .ad-pic{overflow: hidden; margin-bottom: 24px; margin-left: 19px; width: 132px; height: 132px;}
 
+/*页码样式*/
 .pagination ul{overflow: hidden;}
 .pagination ul li{float: left;margin-left: 10px; cursor: pointer;}
 .pagination a{display:inline-block;background: #999; color: #fff;line-height: 30px; height: 30px; text-align: center;}
+.pagination a.highLight{background: #333;}
 .pagination a:hover{background: #333;}
 .pagination .lastPage{width: 60px;}
 .pagination .nextPage{width: 60px;}

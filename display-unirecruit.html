@@ -52,7 +52,7 @@
                 <li>广州<span></span></li>
                 <li>深圳<span></span></li>
             </ul>
-            <ul class="district lis-inline LH-H24 t-center fSize12 bg-white"><li class="fSize12 dis-label">分区：</li><li class="on">西湖区</li><li>滨江区</li><li>拱墅区</li><li>下沙区</li></ul>
+            <ul class="district lis-inline LH24 t-center fSize12 bg-white"><li class="fSize12 dis-label">分区：</li><li class="on">西湖区</li><li>滨江区</li><li>拱墅区</li><li>下沙区</li></ul>
         </div>
         <div class="clearfix maB16">
             <label>高校提供：</label>
@@ -96,16 +96,16 @@
     </div>
     <div class="bg-gray-f7">
         <div class="inner clearfix">
-           <ul class="results paTop10 fl">
-                <li v-for="item in unirecruitList">
-                     <div class="paLeft29 clearfix H128 pRel">
-                         <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                         <div class="item-block-left fl paTop22 W321 maL25">
-                             <h2 class="color-blueL fSize16 LH-H30">{{item.title}}</h2>
+           <ul class="results paTop10 fl H635">
+                <li v-for="(item,index) in unirecruitList.results" v-show="showResult(index,unirecruitList.curpage,5)">
+                     <div class="paLeft29 clearfix H108 pRel">
+                         <div class="W78 H70 logo-pic bg-brown disInline v-mid fl maT20"></div>
+                         <div class="item-block-left fl paTop20 W321 maL25">
+                             <h2 class="color-blueL fSize16 LH-H24">{{item.title}}</h2>
                              <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.addr.city}}-{{item.addr.district}}</p>
                              <p class="f-bold fSize14"><span>招聘会时间：</span>{{item.recruitDate}}</p>
                          </div>
-                         <div class="item-block-right fl fSize14 LH25 maT10">
+                         <div class="item-block-right fl fSize14 maT4">
                              <p class="fSize16 item-name">高校对企业要求</p>
                              <p class="fSize12">{{item.IncScale}}<i class="depart">|</i>{{item.IncProps}}<i class="depart">|</i>{{item.IncPos}}</p>
                              <p class="fSize12 pubdate">{{item.publicDate}}</p>
@@ -114,14 +114,14 @@
                      </div>
                 </li>
            </ul>
-            <div class="ads W164 H359 fl maT28 bg-white maL15">
+            <div class="ads W164 H359 fl maT25 bg-white maL15">
                 <h3 class="LH-H25 fSize14 maL20 color-gray79">广告推广</h3>
                 <div class="ad-pic"><img src="images/ads-pic01.png"/></div>
                 <div class="ad-pic"><img src="images/ads-pic02.png"/></div>
             </div>
         </div>
         <div class="wrapper paBot33">
-            <div class="pageBot lis-inline maT28 fSize14 maL278"></div>
+             <pagination :showpages="showpage(unirecruitList.results.length)" :totalpages="pagesum(unirecruitList.results.length)" type="uni-rec" @topage="topage" class="maT28 fSize14 maL278"></pagination>
         </div>
     </div>
     </div>
@@ -184,8 +184,8 @@
 </div>
 <script src="js/jquery-3.1.0.min.js"></script>
 <script src="js/vue.js"></script>
+<script src="js/components/pagination.js"></script>
 <script src="js/components.js"></script>
-<script src="js/jquery.pagination.min.js"></script>
 <script src="js/display-comm.js"></script>
 </body>
 </html>

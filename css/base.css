@@ -42,6 +42,7 @@ a{color: inherit;}
 .H700{height:700px;}
 .H764{height:764px;}
 .H668{height:668px;}
+.H635{height:635px;}
 .H515{height:515px;}
 .H572{height: 572px;}
 .H570{height: 570px;}
@@ -91,6 +92,7 @@ a{color: inherit;}
 .H96{height:96px;}
 .H97{height:97px;}
 .H57{height:57px;}
+.H35{height:35px;}
 .H32{height:32px;}
 .H26{height:26px;}
 .H7{height:7px;}
@@ -101,6 +103,7 @@ a{color: inherit;}
 .W100{width:100px;}
 .W86{width:86px;}
 .W88{width:88px;}
+.W78{width:78px;}
 .W90{width:90px;}
 .W96{width:96px;}
 .W98{width:98px;}
@@ -153,6 +156,7 @@ a{color: inherit;}
 .W246{width: 246px;}
 .W250{width: 250px;}
 .W254{width: 254px;}
+.W260{width: 260px;}
 .W266{width: 266px;}
 .W272{width: 272px;}
 .W278{width: 278px;}
@@ -164,6 +168,7 @@ a{color: inherit;}
 .W300{width:300px;}
 .W305{width:305px;}
 .W312{width:312px;}
+.W314{width:314px;}
 .W315{width:315px;}
 .W321{width:321px;}
 .W328{width:328px;}
@@ -224,6 +229,7 @@ a{color: inherit;}
 .LH-H33{line-height: 33px; height: 33px;}
 .LH-H38{line-height: 38px; height: 38px;}
 .LH-H35{line-height: 35px; height: 35px;}
+.LH-H24{line-height: 24px; height: 24px;}
 .LH-H25{line-height: 25px; height: 25px;}
 .LH-H26{line-height: 26px; height: 26px;}
 .LH-H27{line-height: 27px; height: 27px;}
@@ -358,7 +364,9 @@ a{color: inherit;}
 .maR30{margin-right: 30px;}
 .maR33{margin-right:33px;}
 .maR40{margin-right:40px;}
+.maT4{margin-top: 4px;}
 .maT45{margin-top: 45px;}
+.maT80{margin-top: 80px;}
 .maR56{margin-right:56px;}
 .maR80{margin-right:80px;}
 .maR100{margin-right: 100px;}
@@ -400,6 +408,7 @@ a{color: inherit;}
 .maT100{margin-top:100px;}
 .maT110{margin-top:110px;}
 .maT106{margin-top:106px;}
+.maT120{margin-top:120px;}
 .maT130{margin-top:130px;}
 .maT87{margin-top: 87px;}
 .maT69{margin-top: 69px;}
@@ -409,6 +418,7 @@ a{color: inherit;}
 .maT40{margin-top: 40px;}
 .maT42{margin-top:42px;}
 .maT39{margin-top: 39px;}
+.maT38{margin-top: 38px;}
 .maT37{margin-top:37px;}
 .maT35{margin-top: 35px;}
 .maT32{margin-top:32px;}
@@ -417,6 +427,7 @@ a{color: inherit;}
 .maT34{margin-top:34px;}
 .maT28{margin-top:28px;}
 .maT26{margin-top:26px;}
+.maT25{margin-top:25px;}
 .maT24{margin-top:24px;}
 .maT22{margin-top:22px;}
 .maT20{margin-top:20px;}
@@ -487,6 +498,7 @@ a{color: inherit;}
 .fSize20{font-size: 20px;}
 .fSize18{font-size: 18px;}
 .fSize16{font-size: 16px;}
+.fSize15{font-size: 15px;}
 .fSize14{font-size: 14px;}
 .fSize12{font-size: 12px;}
 .fSize0{font-size:0;}
