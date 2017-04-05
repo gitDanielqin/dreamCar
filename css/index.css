@@ -17,7 +17,7 @@ position: absolute; left: 29px; top:46px; border-top: none; font-size: 14px; dis
 .banner .search input{box-sizing: border-box; }
 .banner .search button{cursor: pointer;}
 .banner .servs{ width:840px; margin:100px 0 0 105px;}
-.banner .servs li{margin:0 65px 40px 0; width: 212px; height:160px; text-align: center;background:rgba(0,0,0,0.5); position: relative; overflow: hidden;}
+.banner .servs li{margin:0 65px 40px 0; width: 212px; height:160px; text-align: center;background:rgba(0,0,0,0.5); position: relative; overflow: hidden; cursor: pointer;}
 .banner .servs li i{display:block; height:85px;}
 .banner .servs li i img{vertical-align: bottom;}
 .banner .servs li h3{line-height: 68px;}

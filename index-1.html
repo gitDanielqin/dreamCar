@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html style="height:100%">
+<html>
      <head>
           <meta charset="utf-8">
           <title>首页-1</title>
           <link href="css/base.css" rel="stylesheet" />
           <link href="css/index-1.css" rel="stylesheet" />
      </head>
-     <body style="height:100%;">
-          <div class="front-page H800 pRel mod-page" style="height:100%">
-               <div class="inner">
-                    <div class="header paTop24 clearfix color-white">
+     <body>
+          <div class="front-page pRel mod-page">
+               <div class="inner" style="height:770px">
+                    <div class="header clearfix color-white">
                         <div class="logo fl clearfix">
                             <img src="images/logo.png" class="fl maR21"/>
                             <h2 class="fl LH-H63 fSize30">校企职通车</h2>
@@ -30,21 +30,25 @@
                           <h2 class="maT28 fSize0"><img src="images/title-txt.png" /></h2>
                           <p class="maT38"><input type="text" placeholder="岗位名称/学校名称/企业名称" class="search LH-H48 v-top"/><button class="search-btn">搜索</button></p>
                     </div>
-                    <ul class="lis-inline module-entry maT80">
+                    <ul class="lis-inline module-entry">
                          <li><a href="#">高校需求</a></li><li><a href="#">企业需求</a></li><li><a href="#">充电站</a></li>
                          <li><a href="#">招聘会</a></li><li><a href="#">校企岗位</a></li><li><a href="#">职业规划</a></li>
                     </ul>
                     <i class="pic-wrapper weiter"><img src="images/icon-weiter.png" /></i>
                </div>
           </div>
-          <div class="mod-page">
-               <h2 class="t-center p-title maT69 LH-H56">课堂展示<br /><span class="p-subtitle LH-H37 fSize24">CLASSROOM</span></h2>
+          <div class="mod-page bg-blueL class-show" id="app-show">
+               <h2 class="t-center p-title LH56">课堂展示</h2>
+               <h3 class="p-subtitle LH37 fSize24 t-center">CLASSROOM</h3>
+               <ul class="lis-inline">
+                    <li class="pic-box t-center" v-for="(item,index) in showInfos" :class="cssrotate(index)" :style="zStyle(index)">
+                         <i class="pic-wrapper show-frame"><img :src="item.imgsrc" /></i>
+                         <p class="fSize18">{{item.txt}}</p>
+                    </li>
+               </ul>
           </div>
-          <script>
-               window.onload=function(){
-                    
-                    console.log(window.innerHeight);
-               }
-          </script>
+          <script src="js/jquery-3.1.0.min.js"></script>
+          <script src="js/vue.js"></script>
+          <script src="js/index-1.js"></script>
      </body>
 </html>
