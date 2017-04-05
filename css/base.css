@@ -40,6 +40,7 @@ a{color: inherit;}
 .H880{height:880px;}
 .H800{height:800px;}
 .H700{height:700px;}
+.H742{height:742px;}
 .H764{height:764px;}
 .H668{height:668px;}
 .H635{height:635px;}
@@ -50,6 +51,7 @@ a{color: inherit;}
 .H480{height: 480px;}
 .H478{height: 478px;}
 .H470{height: 470px;}
+.H433{height: 433px;}
 .H431{height: 431px;}
 .H420{height: 420px;}
 .H418{height: 418px;}
@@ -67,6 +69,7 @@ a{color: inherit;}
 .H266{height:266px;}
 .H252{height:252px;}
 .H248{height:248px;}
+.H238{height:238px;}
 .H231{height:231px;}
 .H200{height:200px;}
 .H198{height:198px;}
@@ -111,6 +114,7 @@ a{color: inherit;}
 .W26{width:26px;}
 .W30{width:30px;}
 .W40{width:40px;}
+.W43{width:43px;}
 .W46{width:46px;}
 .W60{width:60px;}
 .W58{width:58px;}
@@ -283,6 +287,7 @@ a{color: inherit;}
 .LH25{line-height: 25px;}
 .LH40{line-height: 40px;}
 .LH42{line-height: 42px;}
+.LH43{line-height: 43px;}
 .LH46{line-height: 46px;}
 .LH48{line-height: 48px;}
 .LH50{line-height: 50px;}
@@ -291,6 +296,7 @@ a{color: inherit;}
 .LH56{line-height: 56px;}
 .LH57{line-height: 57px;}
 .LH64{line-height: 64px;}
+.LH66{line-height: 66px;}
 
 
 /*边距和填充*/
@@ -308,9 +314,16 @@ a{color: inherit;}
 .paTop23{padding-top: 23px;}
 .paTop24{padding-top: 24px;}
 .paTop25{padding-top: 25px;}
+.paTop28{padding-top: 28px;}
 .paTop30{padding-top: 30px;}
 .paTop35{padding-top: 35px;}
+.paTop40{padding-top: 40px;}
+.paTop52{padding-top: 52px;}
+.paTop54{padding-top: 54px;}
 .paTop60{padding-top: 60px;}
+.paTop64{padding-top: 64px;}
+.paTop76{padding-top: 76px;}
+.paTop100{padding-top: 100px;}
 .paLeft7{padding-left: 7px;}
 .paLeft20{padding-left: 20px;}
 .paLeft30{padding-left: 30px;}
@@ -366,6 +379,7 @@ a{color: inherit;}
 .maR40{margin-right:40px;}
 .maT4{margin-top: 4px;}
 .maT45{margin-top: 45px;}
+.maT48{margin-top: 48px;}
 .maT80{margin-top: 80px;}
 .maR56{margin-right:56px;}
 .maR80{margin-right:80px;}
@@ -411,6 +425,7 @@ a{color: inherit;}
 .maT120{margin-top:120px;}
 .maT130{margin-top:130px;}
 .maT87{margin-top: 87px;}
+.maT70{margin-top: 70px;}
 .maT69{margin-top: 69px;}
 .maT65{margin-top: 65px;}
 .maT60{margin-top:60px;}
