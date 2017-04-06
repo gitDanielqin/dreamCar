@@ -167,6 +167,24 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .close{cursor: pointer;}
 .wechat-bind{position: absolute; left:50%; top: 256px;margin-left: -250px;}
 .wechat-bind .close{position: absolute; right:10px; top:13px;}
+
+/*头像编辑弹框样式*/
+.porto-upload{position: absolute; left:50%; top: 256px;margin-left: -250px;}
+.porto-upload .close{position: absolute; right:10px; top:13px;}
+.zoom{width: 20px; height: 20px; background: #a7d7ef; color: white; font-size: 16px; line-height: 20px; text-align: center; border-radius: 50%;}
+.imgBox{background: #fcfcfc; margin: 12px 0 0 20px; position: relative; overflow: hidden;}
+.imgBox .spinner {position: absolute;top: 0;left: 0; width: 100%;text-align: center; line-height: 280px;height: 280px;background: rgba(0,0,0,0.7); color: white;}
+.thumbBox{width: 198px; height: 198px; border: 1px solid #ffb265; margin:23px auto 0; box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);}
+.upload-block{width: 140px; padding: 90px 27px 0; text-align: center;}
+.upload-img{width: 114px; height: 32px; line-height: 32px; border: 1px solid #ffb265; font-size: 18px; display: inline-block;border-radius: 5px; cursor: pointer;}
+.upload-img span{color:#ffb265; font-weight: bold; margin-right: 5px;}
+.upload-input{position: absolute; top: 0; left: 0; height: 34px; width: 100%; opacity: 0; cursor: pointer;}
+.submit-btns button{width: 120px; height: 40px; font-size: 18px; color: white; margin: 0 16px;}
+.scrollbar{ width: 140px; height: 5px; border-radius: 3px; background: #999; position: relative; display: inline-block; vertical-align: middle;}
+.scroll-btn{ width: 16px; height: 16px; border-radius: 50%; background: orange; display: inline-block;
+     position: absolute; left: 0; top: -6px; cursor: pointer;
+}
+
     /*底部样式，与首页基本*/
 .bot-nav{display: inline-block;}
 .bot-nav a{color:#797979;}

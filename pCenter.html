@@ -518,6 +518,36 @@
      </div>
 </div>
 <div class="modal" id="app-modal" v-show="showModal" @click="hidemodal">
+    <div class="porto-upload W500" v-show="showUpload" @click="stayshow($event)">
+           <h2 class="LH-H60 fSize24 color-white t-left bg-blueM paLeft30">编辑头像<i class="pic-wrapper LH-H40 W40 close"><img src="images/icon-close-1.png"/></i></h2>
+           <div class="edit-area H407 bg-white">
+                <div class="clearfix">
+                     <div class="fl">
+                          <div class="imgBox W240 H248">
+                              <div class="thumbBox">
+
+                              </div>
+                              <div class="spinner disNo">Loading...</div>
+                         </div>
+                         <div class="img-handle t-center LH-H36 maT8">
+                              <button class="zoom zoom-out">-</button>
+                              <scrollbar :percent="zoomPercent" @scrollev="resizeImg"></scrollbar>
+                              <button class="zoom zoom-in">+</button>
+                         </div>
+                     </div>
+                     <div class="fl upload-block">
+                          <div class="pRel">
+                            <a href="javascript:void(0)" class="upload-img">
+                               <label for="upload-file"><span>+</span>选择照片</label>
+                            </a>
+                            <input type="file" class="upload-input" name="upload-file" id="upload-file" />
+                          </div>
+                          <p class="maT13 LH30 fSize16 color-gray6">支持jpg、gif、png格式，文件小于5M</p>
+                     </div>
+                </div>
+               <div class="submit-btns t-center maT28"><button class="bg-blueL">确定</button><button class="bg-orange2">取消</button></div>
+          </div>
+    </div>
     <div class="preView W800 bg-white" v-show="showPreview" @click="stayshow($event)">
         <div class="H200 baseInfo bg-white-ec paLeft80">
             <div class="paTop60">
@@ -704,7 +734,9 @@
 <script src="js/jquery-3.1.0.min.js"></script>
 <script src="js/vue.js"></script>
 <script src="js/components/pagination.js"></script>
+<script src="js/components/scrollbar.js"></script>
 <script src="js/components.js"></script>
+<script src="js/common/cropbox.js"></script>
 <script src="js/userCenter.js"></script>
 </body>
 </html>

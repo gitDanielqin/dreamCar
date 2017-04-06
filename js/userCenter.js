@@ -359,9 +359,10 @@ var appModal = new Vue({
      el:"#app-modal",
      data:{
           checkedTrades:[],
-          showModal:false,
+          showModal:true,
           showTrade:false,
           showPreview:false,
+          showUpload:true,
           trades:[
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
@@ -370,7 +371,8 @@ var appModal = new Vue({
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]}
           ],
           baseInfo:appPorto.oldInfo,
-          resumeInfo:appCont.resume
+          resumeInfo:appCont.resume,
+          zoomPercent:20
      },
      methods:{
           closeTrade:function(){
@@ -404,6 +406,16 @@ var appModal = new Vue({
           stayshow:function(ev){
                ev.stopPropagation();
                return false;
+          },
+          resizeImg:function(value){
+               this.zoomPercent=value;     
+          }
+     },
+     watch:{
+          "this.showUpload":function(curval){
+               if(curval){
+
+               }
           }
      }
 });
@@ -415,11 +427,35 @@ function init_center(){
    // init_paneAdd();
     navEventBind();
     modalEventBind();
+    uploadEventBind();
 }
 init_center();
 
+function uploadEventBind(){
+     var options = {
+         thumbBox: '.thumbBox',
+	    spinner: '.spinner',
+	    imgSrc: 'images/avatar.png'
+    };
+    var cropper = $('.imgBox').cropbox(options);
+      $('#upload-file').on('change', function () {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+              options.imgSrc = e.target.result;
+              cropper = $('.imgBox').cropbox(options);
+          }
+          reader.readAsDataURL(this.files[0]);
+          this.files = [];
+     });
+     $('.zoom-in').on('click', function () {
+          cropper.zoomIn();
+      })
+     $('.zoom-out').on('click', function () {
+           cropper.zoomOut();
+      })
+}
+
 function editEventBind(){
-//     $(".resumeBox .btn-edit").each(function(index){
      var oldResume = cloneObj(appCont.resume);
 
           $(".resumeBox .btn-edit").click(function(){
