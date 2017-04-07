@@ -244,15 +244,6 @@ function selectInitPos(){
             $("."+$(this).attr("cont")).show();
         });
 
-        $(".pageBot").pagination({
-            totalData:37,
-            showData:8,
-            coping:true,
-            homePage:'首页',
-            endPage:'末页',
-            prevContent:'上页',
-            nextContent:'下页'
-        });
 
         //收藏按钮
         $(".btn-collec").bind("click",function(){

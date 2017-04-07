@@ -53,6 +53,10 @@ var appPorto = new Vue({
           showPre:function(){
                appModal.showModal=true;
                appModal.showPreview=true;
+          },
+          uploading:function(){
+               appModal.showModal=true;
+               appModal.showUpload=true;
           }
      },
      updated:function(){
@@ -359,10 +363,10 @@ var appModal = new Vue({
      el:"#app-modal",
      data:{
           checkedTrades:[],
-          showModal:true,
+          showModal:false,
           showTrade:false,
           showPreview:false,
-          showUpload:true,
+          showUpload:false,
           trades:[
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
@@ -372,9 +376,12 @@ var appModal = new Vue({
           ],
           baseInfo:appPorto.oldInfo,
           resumeInfo:appCont.resume,
-          zoomPercent:20
      },
      methods:{
+          closePorto:function(){
+               this.showUpload=false;
+               this.showModal=false;
+          },
           closeTrade:function(){
                this.showTrade=false;
                this.showModal=false;
@@ -407,9 +414,6 @@ var appModal = new Vue({
                ev.stopPropagation();
                return false;
           },
-          resizeImg:function(value){
-               this.zoomPercent=value;     
-          }
      },
      watch:{
           "this.showUpload":function(curval){
@@ -449,10 +453,39 @@ function uploadEventBind(){
      });
      $('.zoom-in').on('click', function () {
           cropper.zoomIn();
-      })
+     });
      $('.zoom-out').on('click', function () {
            cropper.zoomOut();
-      })
+      });
+
+      $('#btnSubmit').on('click', function () {
+          //      var img = cropper.getDataURL().replace('data:image/png;base64,', '');
+               //  var url = 'AvatarHandler.ashx';
+               //  var data = {
+               //      action: "add",
+               //      picStr: img
+               //  };
+               //  $.ajax(url, {
+               //      type: 'post',
+               //      data: data,
+               //      success: function (data) {
+               //
+               //      },
+               //      error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //
+               //      }
+               //  });
+               // $('.cropped').append('<img src="' + img + '" align="absmiddle" style="width:64px;margin-top:4px;border-radius:64px;box-shadow:0px 0px 12px #7E7E7E;" ><p>64px*64px</p>');
+               var imgsrc= cropper.getDataURL();
+               //console.log(imgsrc);
+               //$("#porto-img").html('');
+               //console.log($("#porto-img").length);
+               $(".porto-img").html("<img src='"+ imgsrc +"' />");
+               appModal.showUpload=false;
+               appModal.showModal=false;
+          //     css("src",cropper.getDataURL());
+
+            })
 }
 
 function editEventBind(){

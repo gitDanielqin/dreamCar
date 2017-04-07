@@ -13,6 +13,7 @@
 .sel-add input{width:58px;}
 .main .sInfo{ border: 1px solid #ccc;}
 .porto-img{border: 2px dashed #999; background: url("../images/cross.png") no-repeat center center;}
+.porto-img img{width: 100%;}
 .main .infoTxt{position: relative;}
 .main .infoTxt p{line-height: 25px; font-size: 14px;}
 .main .infoTxt i{display: inline-block; position: absolute; right:-70px; top: 0; font-size: 0;}
@@ -62,10 +63,11 @@
 .resumeCont input{border: 1px solid #ccc; height: 24px; line-height: 24px; padding-left: 10px; color: #999; box-sizing: border-box;}
 .uni-level input[type="radio"]{margin-left: 20px; margin-right: 7px; vertical-align: middle;}
 .btn-add-major{background: none;}
-.uni-valid-upload li{height: 20px; line-height: 20px; margin-bottom: 14px; }
-.uni-valid-upload span{position: relative;display: inline-block; border-radius: 5px; background: #e4e6e7;padding-left: 10px; vertical-align: middle; margin-right: 20px; width: 140px; cursor: pointer;}
-.uni-valid-upload span i{position: absolute;right: 5px; }
+.uni-valid-upload li{height: 20px; line-height: 20px; margin-bottom: 14px; position: relative;}
+.uni-valid-upload a{position: relative;display: inline-block; border-radius: 5px; background: #e4e6e7;padding-left: 10px; vertical-align: middle; margin-right: 20px; width: 140px; cursor: pointer;}
+.uni-valid-upload a i{position: absolute;right: 5px; }
 .uni-valid-upload button{font-size: 12px; background: none; vertical-align: middle;}
+.uni-valid-upload input[type='file']{position: absolute; left: 0; top: 0; opacity: 0;}
 .uni-intro textarea{width: 498px; height: 198px; box-sizing: border-box; border: 1px solid #ccc; padding: 5px 10px; line-height: 26px;}
 .resumeCont .btn-edit{position: absolute;right: 73px; top:29px; cursor: pointer;}
 
@@ -87,6 +89,8 @@
 .uni-message .uni-apply-message{background:none}
 .item-block-right p{color: #333;}
 .info-items .item-date{font-size: 12px; color: #666;}
+.new-require a{display: inline-block;}
+.new-require img{width: 92%;}
 
 .operations{position: absolute;top: 10px; right: 20px;}
 .operations p{line-height: 50px;}
@@ -156,6 +160,23 @@ position: absolute;  display:none;}
 /*微信弹框样式*/
 .wechat-bind{position: absolute; left:50%; top: 256px;margin-left: -250px;}
 .wechat-bind .close{position: absolute; right:10px; top:13px;}
+
+/*头像编辑弹框样式*/
+.porto-upload{position: absolute; left:50%; top: 256px;margin-left: -250px;}
+.porto-upload .close{position: absolute; right:10px; top:13px;}
+.zoom{width: 50px; height: 25px; background: #ffb265; color: white; font-size: 16px; line-height: 25px; margin:0 10px; border-radius: 5px;text-align: center;}
+.imgBox{background: #fcfcfc; margin: 12px 0 0 20px; position: relative; overflow: hidden;}
+.imgBox .spinner {position: absolute;top: 0;left: 0; width: 100%;text-align: center; line-height: 280px;height: 280px;background: rgba(0,0,0,0.7); color: white;}
+.thumbBox{width: 198px; height: 198px; border: 1px solid #ffb265; margin:23px auto 0; box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);}
+.upload-block{width: 140px; padding: 90px 27px 0; text-align: center;}
+.upload-img{width: 114px; height: 32px; line-height: 32px; border: 1px solid #ffb265; font-size: 18px; display: inline-block;border-radius: 5px; cursor: pointer;}
+.upload-img span{color:#ffb265; font-weight: bold; margin-right: 5px;}
+.upload-input{position: absolute; top: 0; left: 0; height: 34px; width: 100%; opacity: 0; cursor: pointer;}
+.submit-btns button{width: 120px; height: 40px; font-size: 18px; color: white; margin: 0 16px;}
+.scrollbar{ width: 140px; height: 5px; border-radius: 3px; background: #999; position: relative; display: inline-block; vertical-align: middle;}
+.scroll-btn{ width: 16px; height: 16px; border-radius: 50%; background: orange; display: inline-block;
+     position: absolute; left: 0; top: -6px; cursor: pointer;
+}
 
 /*底部样式，与首页基本*/
 .bot-nav{display: inline-block;}

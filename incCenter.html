@@ -6,7 +6,6 @@
     <link href="css/base.css" rel="stylesheet">
     <link href="css/incCenter.css" rel="stylesheet">
 </head>
-
 <body class="bg-gray-f2">
     <div class="top bg-gray3 H100 color-white">
         <div class="inner">
@@ -23,7 +22,7 @@
     <div class="main inner paTop20 clearfix maB60">
         <div class="W958 H198 sInfo maCenter bg-white" id="app-porto">
             <div class="porto fl maL60 maT30">
-                <div class="porto-img W96 H96"></div>
+                <div class="porto-img W96 H96" id="avatar-box" @click="uploading"></div>
                 <h3 class="LH-H58 fSize18 t-center color-gray3">编辑头像</h3>
             </div>
             <div class="infoTxt maT24 maL54 fl color-gray6 W300" v-show="viewInfo">
@@ -31,8 +30,6 @@
                 <p><span>企业性质：</span>{{IncProps}}<span class="maL20">企业规模：</span>{{IncScale}}</p>
                 <p><span class="maR33">所在地</span>{{address.province}}-{{address.city}}-{{address.district}}</p>
                 <p><span class="maR33">邮箱</span>{{email}}</p>
-                <p>简历完成度<span class="progress pRel W124 H7 b-Radius8"><span class="progress-real W124 H7 b-Radius8"></span></span><span class="fullgrad">87%</span></p>
-                <span class="preview-btn">预览简历</span>
                 <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
             </div>
             <div class="barCodeBox maT14 W168 fr color-gray6 fSize14">
@@ -76,7 +73,11 @@
                     <div class="LH26 paLeft7 resume-item clearfix">
                         <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>企业认证</label></p>
                         <ul class="fl uni-valid-upload color-gray6 fSize12">
-                            <li><span>重新上传营业执照<i class="pic-wrapper"><img src="images/icon-upload.png"/></i></span><button v-show="!resume.firstEdit">（查看之前上传的营业执照）</button></li>
+                             <li><a href="javascript:void(0)"><label for="comlicense">重新上传营业执照</label><i class="pic-wrapper"><img src="images/icon-upload.png"/></i></a>
+                                  <button v-show="!resume.firstEdit">（查看之前上传的营业执照）</button>
+                                  <span v-show="resume.firstEdit">{{resume.comLicense}}</span>
+                                  <input type="file" name="comlicense" @change="changeFile($event.target,'commence')" />
+                             </li>
                         </ul>
                     </div>
                     <div class="uni-intro LH26 paLeft7 resume-item clearfix">
@@ -459,6 +460,35 @@
 
     </div>
 <div class="modal" id="app-modal" v-show="showModal" @click="hidemodal">
+     <div class="porto-upload W500" v-show="showUpload" @click="stayshow($event)">
+           <h2 class="LH-H60 fSize24 color-white t-left bg-blueM paLeft30">编辑头像<i class="pic-wrapper LH-H40 W40 close" @click="closePorto"><img src="images/icon-close-1.png"/></i></h2>
+           <div class="edit-area H407 bg-white">
+                <div class="clearfix">
+                     <div class="fl">
+                          <div class="imgBox W240 H248">
+                              <div class="thumbBox">
+
+                              </div>
+                              <div class="spinner disNo">Loading...</div>
+                         </div>
+                         <div class="img-handle t-center LH-H36 maT8 paLeft20">
+                              <button class="zoom zoom-out">-</button>
+                              <button class="zoom zoom-in">+</button>
+                         </div>
+                     </div>
+                     <div class="fl upload-block">
+                          <div class="pRel">
+                            <a href="javascript:void(0)" class="upload-img">
+                               <label for="upload-file"><span>+</span>选择照片</label>
+                            </a>
+                            <input type="file" class="upload-input" name="upload-file" id="upload-file" />
+                          </div>
+                          <p class="maT13 LH30 fSize16 color-gray6">支持jpg、gif、png格式，文件小于5M</p>
+                     </div>
+                </div>
+               <div class="submit-btns t-center maT28"><button class="bg-blueL" id="btnSubmit">确定</button><button class="bg-orange2" @click="closePorto">取消</button></div>
+          </div>
+    </div>
      <div class="phone-change W500 disNo" >
          <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换手机号<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13"><img src="images/icon-close.png"/></i></h2>
          <div class="bg-white paTop8 paBot60">
@@ -558,11 +588,13 @@
             </div>
         </div>
     </div>
-    <script src="js/jquery-3.1.0.min.js"></script>
-    <script src="js/vue.js"></script>
+    <script src="js/libs/jquery-3.1.0.min.js"></script>
+    <script src="js/libs/vue.js"></script>
+    <script src="js/common/common.js"></script>
+    <script src="js/common/cropbox.js"></script>
     <script src="js/components/pagination.js"></script>
-    <script src="js/components.js"></script>
-    <script src="js/incCenter.js"></script>
+    <script src="js/components/dropdown.js"></script>
+    <script src="js/pages/incCenter.js"></script>
 </body>
 
 </html>

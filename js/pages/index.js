@@ -116,3 +116,4 @@ $(".servs li").each(function(){
         $(this).find(".desc").addClass("slide-down").removeClass("slide-up")
     })
 })
+

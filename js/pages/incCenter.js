@@ -12,7 +12,13 @@ var appPorto = new Vue({
             district: "滨江"
         },
         email: "xqztc@qq.com"
-    }
+   },
+   methods:{
+        uploading:function(){
+             appModal.showModal=true;
+             appModal.showUpload=true;
+        }
+   }
 });
 var appCont = new Vue({
     el: "#app-content",
@@ -28,6 +34,7 @@ var appCont = new Vue({
               props:"民营企业",
               specialLv:"",
               intro:"国际领先的互联网科技公司",
+              comLicense:"",
               firstEdit:true,
               edit:true,
               view:false
@@ -330,7 +337,12 @@ var appCont = new Vue({
           }else if(type=="coop"){
                   this.coop.curpage=page;
             }
-        }
+       },
+       changeFile:function(obj,type){
+           if(type=="commence"){
+                this.resume.comLicense=$(obj).val();
+           }
+       }
 
     },
     computed:{
@@ -369,6 +381,7 @@ var appModal = new Vue({
           showModal:false,
           showTrade:false,
           showPreview:false,
+          showUpload:false,
           trades:[
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
@@ -411,6 +424,10 @@ var appModal = new Vue({
           stayshow:function(ev){
                ev.stopPropagation();
                return false;
+          },
+          closePorto:function(){
+               this.showUpload=false;
+               this.showModal=false;
           }
      }
 });
@@ -424,8 +441,63 @@ function init_center(){
    showContact();
    vipEventBind();
    modalEventBind();
+   uploadEventBind();
 }
 init_center();
+
+function uploadEventBind(){
+     var options = {
+         thumbBox: '.thumbBox',
+	    spinner: '.spinner',
+	    imgSrc: 'images/avatar.png'
+    };
+    var cropper = $('.imgBox').cropbox(options);
+      $('#upload-file').on('change', function () {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+              options.imgSrc = e.target.result;
+              cropper = $('.imgBox').cropbox(options);
+          }
+          reader.readAsDataURL(this.files[0]);
+          this.files = [];
+     });
+     $('.zoom-in').on('click', function () {
+          cropper.zoomIn();
+     });
+     $('.zoom-out').on('click', function () {
+           cropper.zoomOut();
+      });
+
+      $('#btnSubmit').on('click', function () {
+          //      var img = cropper.getDataURL().replace('data:image/png;base64,', '');
+               //  var url = 'AvatarHandler.ashx';
+               //  var data = {
+               //      action: "add",
+               //      picStr: img
+               //  };
+               //  $.ajax(url, {
+               //      type: 'post',
+               //      data: data,
+               //      success: function (data) {
+               //
+               //      },
+               //      error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //
+               //      }
+               //  });
+               // $('.cropped').append('<img src="' + img + '" align="absmiddle" style="width:64px;margin-top:4px;border-radius:64px;box-shadow:0px 0px 12px #7E7E7E;" ><p>64px*64px</p>');
+               var imgsrc= cropper.getDataURL();
+               //console.log(imgsrc);
+               //$("#porto-img").html('');
+               //console.log($("#porto-img").length);
+
+               $("#avatar-box").html("<img src='"+ imgsrc +"' />");
+               appModal.showUpload=false;
+               appModal.showModal=false;
+          //     css("src",cropper.getDataURL());
+
+            })
+}
 
 function reqFilter(type,state){
      var filterArray = [];

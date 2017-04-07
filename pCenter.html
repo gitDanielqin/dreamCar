@@ -23,7 +23,7 @@
      <div class="inner">
           <div class="W958 H198 sInfo maCenter bg-white" id="app-porto">
              <div class="porto fl maL60 maT30">
-                 <div class="porto-img W96 H96"></div>
+                 <div class="porto-img W96 H96" id="avatar-box" @click="uploading"></div>
                  <h3 class="LH-H58 fSize18 t-center color-gray3">编辑头像</h3>
              </div>
              <div class="infoTxt maT24 maL54 fl color-gray6 W266" v-show="viewInfo">
@@ -519,7 +519,7 @@
 </div>
 <div class="modal" id="app-modal" v-show="showModal" @click="hidemodal">
     <div class="porto-upload W500" v-show="showUpload" @click="stayshow($event)">
-           <h2 class="LH-H60 fSize24 color-white t-left bg-blueM paLeft30">编辑头像<i class="pic-wrapper LH-H40 W40 close"><img src="images/icon-close-1.png"/></i></h2>
+           <h2 class="LH-H60 fSize24 color-white t-left bg-blueM paLeft30">编辑头像<i class="pic-wrapper LH-H40 W40 close" @click="closePorto"><img src="images/icon-close-1.png"/></i></h2>
            <div class="edit-area H407 bg-white">
                 <div class="clearfix">
                      <div class="fl">
@@ -529,9 +529,8 @@
                               </div>
                               <div class="spinner disNo">Loading...</div>
                          </div>
-                         <div class="img-handle t-center LH-H36 maT8">
+                         <div class="img-handle t-center LH-H36 maT8 paLeft20">
                               <button class="zoom zoom-out">-</button>
-                              <scrollbar :percent="zoomPercent" @scrollev="resizeImg"></scrollbar>
                               <button class="zoom zoom-in">+</button>
                          </div>
                      </div>
@@ -545,7 +544,7 @@
                           <p class="maT13 LH30 fSize16 color-gray6">支持jpg、gif、png格式，文件小于5M</p>
                      </div>
                 </div>
-               <div class="submit-btns t-center maT28"><button class="bg-blueL">确定</button><button class="bg-orange2">取消</button></div>
+               <div class="submit-btns t-center maT28"><button class="bg-blueL" id="btnSubmit">确定</button><button class="bg-orange2" @click="closePorto">取消</button></div>
           </div>
     </div>
     <div class="preView W800 bg-white" v-show="showPreview" @click="stayshow($event)">
@@ -731,12 +730,12 @@
           </div>
      </div>
 </div>
-<script src="js/jquery-3.1.0.min.js"></script>
-<script src="js/vue.js"></script>
-<script src="js/components/pagination.js"></script>
-<script src="js/components/scrollbar.js"></script>
-<script src="js/components.js"></script>
+<script src="js/libs/jquery-3.1.0.min.js"></script>
+<script src="js/libs/vue.js"></script>
+<script src="js/common/common.js"></script>
 <script src="js/common/cropbox.js"></script>
-<script src="js/userCenter.js"></script>
+<script src="js/components/pagination.js"></script>
+<script src="js/components/dropdown.js"></script>
+<script src="js/pages/userCenter.js"></script>
 </body>
 </html>
