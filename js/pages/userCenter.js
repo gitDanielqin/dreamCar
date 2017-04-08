@@ -1,11 +1,30 @@
 /**
  * Created by xuanyuan on 2016/11/27.
  */
+var salaryItems=[
+     "<1000",
+     "1000-2000",
+     "2000-4000",
+     "4000-6000",
+     "6000-8000",
+     "8000-10000",
+     "10000-15000",
+     "15000-25000",
+     "25000-35000",
+     "35000-50000",
+     "50000-75000",
+     "75000-100000",
+     ">100000"
+]
 
 var objMe=this;
 var appPorto = new Vue({
      el:"#app-porto",
      data:{
+          database:{
+               date:date,
+               addrData:addArray
+          },
           viewInfo:true,
           newInfo:{
                gender:"男",
@@ -36,6 +55,9 @@ var appPorto = new Vue({
      },
      methods:{
           save:function(){
+               this.newInfo.address.province=$("#app-porto .address .sel-province input").val();
+               this.newInfo.address.city=$("#app-porto .address .sel-city input").val();
+               this.newInfo.address.district=$("#app-porto .address .sel-district input").val();
                this.oldInfo=cloneObj(this.newInfo);
                this.viewInfo=true;
           },
@@ -65,19 +87,26 @@ var appPorto = new Vue({
      }
 })
 
+var provinceArray = [];
+for(var i=0; i<addArray.length;i++){
+     provinceArray.push(addArray[i].name);
+}
+
 var appCont = new Vue({
      el:"#app-content",
      data:{
-          data:{
+          database:{
+               date:date,
                years:[1988,1989,1990,1991,1992],
                months:[1,2,3,4,5,6,7,8,9,10,11,12],
                address:{
-                    province:["浙江","河南","安徽"],
+                    province:provinceArray,
                     city:["杭州","新乡"],
                     district:["滨江区","红旗区"]
                },
-               nations:["汉族","回族","维吾尔族"],
-               salary:["4000-6000","6000-8000","8000-10000"],
+               addrData:addArray,
+               nations:nations,
+               salary:salaryItems,
                major:{
                     main:["信息技术","数学系"],
                     sub:["计算机科学","通信工程","应用数学"]
@@ -94,7 +123,7 @@ var appCont = new Vue({
                phone:"15264598745",
                email:"xqztc@163.com",
                province:"安徽",
-               nation:"汉",
+               nation:"汉族",
                expect:{
                     tradeItems:"互联网",
                     posItems:"IT工程师",
@@ -367,13 +396,7 @@ var appModal = new Vue({
           showTrade:false,
           showPreview:false,
           showUpload:false,
-          trades:[
-               {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
-               {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
-               {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
-               {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
-               {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]}
-          ],
+          trades:workareas,
           baseInfo:appPorto.oldInfo,
           resumeInfo:appCont.resume,
      },
@@ -488,6 +511,7 @@ function uploadEventBind(){
             })
 }
 
+// 页面编辑事件绑定
 function editEventBind(){
      var oldResume = cloneObj(appCont.resume);
 
@@ -499,8 +523,14 @@ function editEventBind(){
           //     console.log(appCont.resume.birthmonth);
           });
           $(".resumeBox .edit-item .buttons button:nth-of-type(1)").click(function(){
-               var viewName =  $(this).closest(".edit-item").attr("name");
-               $(this).closest(".edit-item").hide();
+               var editBlock = $(this).closest(".edit-item");
+               var viewName =  editBlock.attr("name");
+               if(viewName=="trade"){
+                    appCont.resume.expect.province=editBlock.find(".sel-province input").val();
+                    appCont.resume.expect.city=editBlock.find(".sel-city input").val();
+                    appCont.resume.expect.district=editBlock.find(".sel-district input").val();
+               }
+               editBlock.hide();
                $(".resumeBox .view-item[name="+viewName+"]").show();
           });
           $(".resumeBox .edit-item .buttons button:nth-of-type(2)").click(function(){

@@ -14,140 +14,49 @@
         <h3 id="sel-add" class="city fl LH-H80 fSize18 maT16 maL60"><b>北京市<img src="images/trigle01.png" class="v-mid maL10" /></b></h3>
     </div>
 </div>
-<div class="container paTop30">
+<div class="container paTop30" id="app-content">
     <div class="main H500 inner bg-white maB42 clearfix">
-        <form class="personCard maL70 card W510 fl"  style="display:block;">
+        <form class="personCard maL70 card W510 fl" v-show="showPerson">
             <h2 class="LH-H104 fSize30 color-gray3 maB5">创建个人名片</h2>
                 <input type="text" class="info01" placeholder="姓名" />
-                <div class="sel-birthyear birthday selectee">
-                    <input type="text" placeholder="出生年">
-                    <ul>
-                        <li>2016</li>
-                        <li>2015</li>
-                        <li>2014</li>
-                        <li>2013</li>
-                    </ul>
-                    <i></i>
-                </div>
-                <div class="sel-birthmonth birthday selectee">
-                    <input type="text" placeholder="出生月">
-                    <ul>
-                        <li>1月</li>
-                        <li>2月</li>
-                        <li>3月</li>
-                        <li>4月</li>
-                    </ul>
-                </div>
-            <div class="career selectee">
-                <input type="text" class="info01" placeholder="工作状态"/>
-                <ul>
-                    <li>在职，打算换个新环境</li>
-                    <li>离职，可立即到岗工作</li>
-                    <li>在校学生</li>
-                    <li>应届毕业生</li>
-                    <li>暂时不想找工作</li>
-                </ul>
-            </div><p class="gender maL10"><span class="on">男</span><span>女</span></p>
+                <dropdown classes="sel-birthyear birthday" placeholder="出生年" :options="database.date.year" v-model="birth.year"></dropdown>
+                <i class="bind"></i>
+                <dropdown classes="sel-birthmonth birthday" placeholder="出生月" v-bind:options="database.date.month" v-model="birth.month"></dropdown>
+          <div class="fSize0">
+               <dropdown classes="career" placeholder="工作状态" :options="database.workstates" v-model="workstate"></dropdown>
+               <p class="gender maL10"><span class="on" @click="selectGender($event.target)">男</span><span @click="selectGender($event.target)">女</span></p>
+          </div>
             <div class="address">
-                <div class="selectee">
-                    <input type="text" class="W108" placeholder="省份" />
-                    <ul>
-                        <li>浙江</li>
-                        <li>河南</li>
-                    </ul>
-                </div><div class="selectee">
-                <input type="text" class="W108" placeholder="城市" />
-                <ul>
-                    <li>杭州</li>
-                    <li>新乡</li>
-                </ul>
-            </div><div class="selectee">
-                <input type="text" class="W108" placeholder="区/县" />
-                <ul>
-                    <li>滨江区</li>
-                    <li>红旗区</li>
-                </ul>
-            </div>
+                <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
             </div>
 
             <input type="text" class="W288 maT30" placeholder="请输入常用邮箱" />
-            <button type="button" class="LH-H40 W140 maT40 bg-orange2 save fSize18 color-white" onclick="window.location.href='pCenter.html'">保存名片</button>
+            <button type="button" class="LH-H40 W140 maT40 bg-orange2 save fSize18 color-white" @click.prevent="submitCard('person')">保存名片</button>
         </form>
-        <form class="uniCard maL70 card W510 fl" style="display:none;">
+        <form class="uniCard maL70 card W510 fl" v-show="showUni">
             <h2 class="LH-H104 fSize36 color-gray3 maB5">创建高校名片</h2>
             <input type="text" class="W288 fl" placeholder="学校名称" />
-            <div class="selectee">
-                <input type="text" class="W108 sel-input" placeholder="学校性质" />
-                <ul>
-                    <li>重点</li><li>一本</li><li>二本</li>
-                </ul>
-            </div>
+            <dropdown class="select-short" placeholder="学校性质" :options="database.uniLevel" v-model="uniLevel"></dropdown>
             <div class="address">
-                <div class="selectee">
-                    <input type="text" class="W108" placeholder="省份" />
-                    <ul>
-                        <li>浙江</li>
-                        <li>河南</li>
-                    </ul>
-                </div><div class="selectee">
-                <input type="text" class="W108" placeholder="城市" />
-                <ul>
-                    <li>杭州</li>
-                    <li>新乡</li>
-                </ul>
-            </div><div class="selectee">
-                <input type="text" class="W108" placeholder="区/县" />
-                <ul>
-                    <li>滨江区</li>
-                    <li>红旗区</li>
-                </ul>
-            </div>
+                <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
             </div>
             <input type="text" class="W188" placeholder="学校联系人" /><input type="text" class="W188 paLeft20" placeholder="联系人手机号" />
-            <input class="w188" type="text" placeholder="请输入验证码" style="margin-bottom: 0"><button type="button" class="W120 LH-H40 fSize14 color-white">获取验证码</button>
-            <button type="button" class="LH-H40 W140 maT40 bg-orange2 save fSize18 color-white" onclick="window.location.href='pCenter.html'">保存名片</button>
+            <input class="w188" type="text" placeholder="请输入验证码" style="margin-bottom: 0"><button type="button" class="W120 LH-H40 fSize14 color-white bg-grayC">获取验证码</button>
+            <button type="button" class="LH-H40 W140 maT40 bg-orange2 save fSize18 color-white" @click.prevent="submitCard('uni')">保存名片</button>
         </form>
-        <form class="bsCard maL70 card W510 fl" style="display:none;">
+        <form class="bsCard maL70 card W510 fl" v-show="showInc">
             <h2 class="LH-H104 fSize36 color-gray3 maB5">创建企业名片</h2>
-            <input type="text" class="W228" placeholder="企业名称" /><div class="selectee">
-            <input type="text" class="W108" placeholder="公司性质" />
-            <ul>
-                <li>国企</li>
-                <li>民营</li>
-                <li>合资</li>
-            </ul>
-        </div><div class="selectee">
-                <input type="text" class="W108" placeholder="公司规模"/>
-                <ul>
-                    <li>0-99</li>
-                    <li>100-499</li>
-                    <li>>=500</li>
-                </ul>
+            <div class="fSize0">
+                 <input type="text" class="W228" placeholder="企业名称" />
+                 <dropdown class="select-short" placeholder="公司性质" :options="database.incProps" v-model="incProp"></dropdown>
+                 <dropdown class="select-short" placeholder="公司规模" :options="database.incScales" v-model="incScale"></dropdown>
             </div>
             <div class="address">
-                <div class="selectee">
-                    <input type="text" class="W108" placeholder="省份" />
-                    <ul>
-                        <li>浙江</li>
-                        <li>河南</li>
-                    </ul>
-                </div><div class="selectee">
-                <input type="text" class="W108" placeholder="城市" />
-                <ul>
-                    <li>杭州</li>
-                    <li>新乡</li>
-                </ul>
-            </div><div class="selectee">
-                <input type="text" class="W108" placeholder="区/县" />
-                <ul>
-                    <li>滨江区</li>
-                    <li>红旗区</li>
-                </ul>
-            </div>
+                 <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
             </div>
             <input type="text" class="W188" placeholder="企业联系人" /><input type="text" class="W188 paLeft20" placeholder="联系人手机号" />
-            <input class="w188" type="text" placeholder="请输入验证码" style="margin-bottom: 0"><button type="button" class="W120 LH-H40 fSize14 color-white">获取验证码</button>
-            <button class="LH-H40 W140 maT40 bg-orange2 save fSize18 color-white">保存名片</button>
+            <input class="w188" type="text" placeholder="请输入验证码" style="margin-bottom: 0"/><button type="button" class="W120 LH-H40 fSize14 color-white bg-grayC">获取验证码</button>
+            <button class="LH-H40 W140 maT40 bg-orange2 save fSize18 color-white" @click.prevent="submitCard('inc')">保存名片</button>
         </form>
         <img src="images/cardtxt.png" class="fl maL52 maT148"/>
     </div>
@@ -176,6 +85,10 @@
     </div>
 </div>
 <script src="js/libs/jquery-3.1.0.min.js"></script>
+<script src="js/libs/vue.js"></script>
+<script src="js/components/dropdown.js"></script>
+<script src="data/address.js"></script>
+<script src="data/date.js"></script>
 <script src="js/pages/vCards.js"></script>
 </body>
 </html>

@@ -37,14 +37,19 @@
                $(obj).siblings("ul").show();
                 return false;
             }
-         }
+       },
+       mounted:function(){
+            $("body").click(function(){
+                 $(".selectee ul").hide();
+            })
+       }
      });
 
      // 地址选择
      var templAddr ='<div>\
-          <dropdown placeholder="省份" :options="province" v-model="selProvince"></dropdown>\
-          <dropdown placeholder="城市" :options="city" v-model="selCity"></dropdown>\
-          <dropdown placeholder="区/县" :options="district" v-model="selDistrict"></dropdown>\
+          <dropdown placeholder="省份" :options="province" v-model="selProvince" class="sel-province"></dropdown>\
+          <dropdown placeholder="城市" :options="city" v-model="selCity" class="sel-city"></dropdown>\
+          <dropdown placeholder="区/县" :options="district" v-model="selDistrict" class="sel-district"></dropdown>\
      </div>';
      Vue.component("addr-select",{
           template: templAddr,
@@ -156,4 +161,5 @@
              })
          });
      }
+     window.selectInitPos = selectInitPos;
 })()

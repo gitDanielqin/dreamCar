@@ -37,24 +37,21 @@
              </div>
              <div class="edit-brief maT24 maL54 fl color-gray6 pRel" v-show="!viewInfo">
                 <h3 class="LH-H47 fSize18 color-gray3">江玉海</h3>
-                <div class="fSize14">
-                     生　　日
-                     <dropdown classes="sel-birthyear birthday" placeholder="出生年" v-bind:options="[2000,2001,2002]" v-model="newInfo.birthyear"></dropdown>
-                     <dropdown classes="sel-birthmonth birthday" placeholder="出生月" v-bind:options="[1,2,3]" v-model="newInfo.birthmonth"></dropdown>
-                     <dropdown classes="sel-birthday birthday" placeholder="出生日" v-bind:options="[1,2,3,4]" v-model="newInfo.birthday"></dropdown>
-                  <span class="maL35">性别</span><dropdown classes="sel-gender maL10" placeholder="性别" v-bind:options="['男','女']" v-model="newInfo.gender"></dropdown>
+                <div class="fSize0">
+                     <label class="fSize14">生　　日</label>
+                     <dropdown classes="sel-birthyear birthday maL13" placeholder="出生年" v-bind:options="database.date.year" v-model="newInfo.birthyear"></dropdown>
+                     <dropdown classes="sel-birthmonth birthday" placeholder="出生月" v-bind:options="database.date.month" v-model="newInfo.birthmonth"></dropdown>
+                     <dropdown classes="sel-birthday birthday" placeholder="出生日" v-bind:options="database.date.day" v-model="newInfo.birthday"></dropdown>
+                  <span class="maL35 fSize14">性别</span><dropdown classes="sel-gender maL10" placeholder="性别" v-bind:options="['男','女']" v-model="newInfo.gender"></dropdown>
                 </div>
                 <div class="fSize14 maT10">
                      <label>工作状态</label><dropdown class="sel-career maL13" placeholder="工作状态" v-model="newInfo.state" v-bind:options="['在职，打算换个新环境','离职，可立即到岗工作','在校学生','应届毕业生','暂时不想找工作']"></dropdown>
-                     <span class="maL19">所在地</span>
-                     <dropdown classes="maL12 sel-province sel-add" placeholder="省份" v-bind:options="['浙江','河南']" v-model="newInfo.address.province"></dropdown>
-                     <dropdown classes="maL10 sel-city sel-add" placeholder="城市" v-bind:options="['杭州','新乡']" v-model="newInfo.address.city"></dropdown>
-                     <dropdown classes="maL10 sel-district sel-add" placeholder="区/县" v-bind:options="['滨江区','红旗区']" v-model="newInfo.address.district"></dropdown>
+                     <label class="maL44">手机号</label><input type="text" class="maL18 paLeft10 edit-phone" v-model="newInfo.phone"/>
                 </div>
-                <div class="fSize14 edit-phone maT10">
-                     手 机 号<input type="text" class="maL18 paLeft10" v-model="newInfo.phone"/>
+                <div class="fSize14 address maT10">
+                     <span>所 在 地</span><addr-select :addrdata="database.addrData" class="sel-addr disInline maL19"></addr-select>
                 </div>
-                <div class="edit-opera">
+                <div class="edit-opera fSize0">
                      <button class="maR15 btn-save" @click="save">保存</button>
                      <button class="btn-cancel" @click="cancel">取消</button>
                 </div>
@@ -92,8 +89,8 @@
                      <div class="item-row">
                          <div class="item-left fSize0">
                              <label class="laLeft">出生年月</label>
-                             <dropdown classes="birthday" placeholder="出生年" v-bind:options="data.years" v-model="resume.birthyear"></dropdown><i class="bind-line"></i>
-                             <dropdown classes="birthday birthmonth" placeholder="出生月" v-bind:options="data.months" v-model="resume.birthmonth"></dropdown>
+                             <dropdown classes="birthday" placeholder="出生年" v-bind:options="database.date.year" v-model="resume.birthyear"></dropdown><i class="bind-line"></i>
+                             <dropdown classes="birthday birthmonth" placeholder="出生月" v-bind:options="database.date.month" v-model="resume.birthmonth"></dropdown>
                              </div>
                              <label class="laRight">婚姻状况</label>
                              <dropdown v-bind:options="['已婚','未婚','离异']" v-model="resume.family"></dropdown>
@@ -106,9 +103,9 @@
                      <div class="item-row">
                          <div class="item-left">
                              <label class="laLeft">籍贯</label>
-                             <dropdown :options="data.address.province" v-model="resume.province"></dropdown>
+                             <dropdown :options="database.address.province" v-model="resume.province"></dropdown>
                          </div><label class="laRight">民族</label>
-                               <dropdown :options="data.nations" v-model="resume.nation"></dropdown>
+                              <dropdown :options="database.nations" v-model="resume.nation"></dropdown>
                      </div>
                      <div class="buttons">
                           <button>保存</button><button>取消</button>
@@ -134,14 +131,12 @@
                      <div class="item-row">
                          <label>期望地点</label>
                          <div class="address">
-                          <dropdown placeholder="省份" :options="data.address.province" v-model="resume.expect.province"></dropdown>
-                          <dropdown placeholder="城市" :options="data.address.city" v-model="resume.expect.city"></dropdown>
-                          <dropdown placeholder="区/县" :options="data.address.district" v-model="resume.expect.district"></dropdown>
+                         <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
                          </div>
                      </div>
                      <div class="item-row">
                          <label>期望月薪</label>
-                          <dropdown classes="sel-salary" :options="data.salary" v-model="resume.expect.salary"></dropdown>
+                          <dropdown classes="sel-salary" :options="database.salary" v-model="resume.expect.salary"></dropdown>
                           <span class="maL13 fSize14 color-gray3">元 / 月</span>
                      </div>
                      <div class="buttons">
@@ -178,10 +173,10 @@
                          </div>
                          <div class="item-row time-interval">
                              <label>任职时间</label>
-                               <dropdown :options="data.years" v-model="worksExp.startyear"></dropdown>
-                               <dropdown :options="data.months" v-model="worksExp.startmonth"></dropdown><i class="bind-line"></i
-                               <dropdown :options="data.years" v-model="worksExp.endyear" classes="endyear"></dropdown>
-                               <dropdown :options="data.months" v-model="worksExp.endmonth"></dropdown>
+                               <dropdown :options="database.years" v-model="worksExp.startyear"></dropdown>
+                               <dropdown :options="database.months" v-model="worksExp.startmonth"></dropdown><i class="bind-line"></i
+                               <dropdown :options="database.years" v-model="worksExp.endyear" classes="endyear"></dropdown>
+                               <dropdown :options="database.months" v-model="worksExp.endmonth"></dropdown>
                          </div>
                          <div class="item-row work-resp">
                              <label>工作职责</label><textarea placeholder="描述你的工作内容和工作业绩" v-model="worksExp.resp"></textarea>
@@ -211,20 +206,20 @@
                          </div>
                          <div class="item-row">
                              <label>专业名称</label>
-                               <dropdown :options="data.major.main" placeholder="选择/修改" v-model="edu.major" classes="major-name"></dropdown>
-                               <dropdown :options="data.major.sub" placeholder="选择/修改" v-model="edu.submajor" classes="major-name"></dropdown>
+                               <dropdown :options="database.major.main" placeholder="选择/修改" v-model="edu.major" classes="major-name"></dropdown>
+                               <dropdown :options="database.major.sub" placeholder="选择/修改" v-model="edu.submajor" classes="major-name"></dropdown>
                              <input type="text" class="exmajor" v-model="edu.exmajor"/>
                          </div>
                          <div class="item-row time-interval">
                              <label>就读时间</label>
-                             <dropdown :options="data.years" v-model="edu.startyear"></dropdown>
-                             <dropdown :options="data.months" v-model="edu.startmonth"></dropdown><i class="bind-line"></i>
-                             <dropdown :options="data.years" v-model="edu.endyear" classes="endyear"></dropdown>
-                             <dropdown :options="data.months" v-model="edu.endmonth"></dropdown>
+                             <dropdown :options="database.years" v-model="edu.startyear"></dropdown>
+                             <dropdown :options="database.months" v-model="edu.startmonth"></dropdown><i class="bind-line"></i>
+                             <dropdown :options="database.years" v-model="edu.endyear" classes="endyear"></dropdown>
+                             <dropdown :options="database.months" v-model="edu.endmonth"></dropdown>
                          </div>
                          <div class="item-row">
                              <label>学历</label>
-                               <dropdown :options="data.qualification" v-model="edu.qualification" classes="qualific"></dropdown>
+                               <dropdown :options="database.qualification" v-model="edu.qualification" classes="qualific"></dropdown>
                          </div>
                      </div>
                      <div class="addItem color-gray6" @click="addEdu"><i class="maR5"><img src="images/cross-add.png"/></i>添加教育经历</div>
@@ -243,7 +238,7 @@
                  <div class="itemBox edit edit-item" name="speech">
                      <h3 class="title works-title"><i><img src="images/icon-language.png"/></i>语言能力</h3>
                      <form class="language-skills maL30 fSize14 W620">
-                         <label v-for="language in data.languages"><input type="checkbox" @click="checkLan($event.target,language)">{{language}}</label>
+                         <label v-for="language in database.languages"><input type="checkbox" @click="checkLan($event.target,language)">{{language}}</label>
                      </form>
                      <div class="buttons">
                           <button>保存</button><button>取消</button>
@@ -265,10 +260,10 @@
                          </div>
                          <div class="item-row time-interval">
                              <label>项目时间</label>
-                             <dropdown :options="data.years" v-model="project.startyear"></dropdown>
-                             <dropdown :options="data.months" v-model="project.startmonth"></dropdown><i class="bind-line"></i>
-                             <dropdown :options="data.years" v-model="project.endyear" classes="endyear"></dropdown>
-                             <dropdown :options="data.months" v-model="project.endmonth"></dropdown>
+                             <dropdown :options="database.years" v-model="project.startyear"></dropdown>
+                             <dropdown :options="database.months" v-model="project.startmonth"></dropdown><i class="bind-line"></i>
+                             <dropdown :options="database.years" v-model="project.endyear" classes="endyear"></dropdown>
+                             <dropdown :options="database.months" v-model="project.endmonth"></dropdown>
                          </div>
                          <div class="item-row project-area">
                              <label>项目描述</label><textarea placeholder="请详细描述项目内容，填写文字限制1000字以内" v-model="project.desc"></textarea>
@@ -691,7 +686,7 @@
                         <td class="W158 LH64 t-center">{{trade.title}}</td>
                         <td class="W539">
                              <ul class="lis-inline paTop5 paBot5">
-                                  <li v-for="item in trade.items" class="W246 maL12 LH-H27">
+                                  <li v-for="item in trade.subareas" class="W246 maL12 LH-H27">
                                        <input type="checkbox"  @click="checkfunc(item,$event.target)"/>{{item}}
                                   </li>
                              </ul>
@@ -736,6 +731,10 @@
 <script src="js/common/cropbox.js"></script>
 <script src="js/components/pagination.js"></script>
 <script src="js/components/dropdown.js"></script>
+<script src="data/address.js"></script>
+<script src="data/date.js"></script>
+<script src="data/nations.js"></script>
+<script src="data/workareas.js"></script>
 <script src="js/pages/userCenter.js"></script>
 </body>
 </html>

@@ -9,6 +9,8 @@
 .main .selectee ul li.over{background: #9bcce5; color:#fff;}
 .main .selectee ul li.selected{background: #2ea8e6; color:#fff;}
 
+.sel-addr input{width: 78px;}
+
 .sel-add input{width:58px;}
 .main .sInfo{ border: 1px solid #ccc;}
 .porto-img{border: 2px dashed #999; background: url("../images/cross.png") no-repeat center center;}
@@ -38,7 +40,7 @@ padding-left: 10px; width:448px; overflow: hidden;}
 .main .itemBox .address{display: inline-block;}
 .main .itemBox .address input{width:108px;}
 .main .itemBox .career-input{background: url("../images/icon-prop.jpg") no-repeat 438px center; padding-right: 23px; width:425px;}
-.main .itemBox .sel-salary input{width:98px;}
+.main .itemBox .sel-salary input{width:130px;}
 .main .itemBox{margin-bottom:35px;}
 .main .item-basic .laLeft{width:135px;}
 .main .item-basic .item-left{width:354px; display: inline-block;}
@@ -47,7 +49,7 @@ padding-left: 10px; width:448px; overflow: hidden;}
 .main .item-basic .birthday{position: relative;}
 .main .item-basic .birthday i{display: inline-block; position: absolute; right: -26px; top:50%; border-top:1px solid #d2d2d2;
     height: 0; width: 20px;}
-.main .item-basic .birthday input{width:78px;}
+.main .item-basic .birthday input{width:60px;}
 .bind-line{display: inline-block; border-top: 1px solid #d2d2d2;width: 19px; vertical-align: top;height:0; margin:13px 5px 0;}
 .main .itemBox .birthmonth input{margin-left: 0;}
 .itemBox .title{height:30px; line-height: 30px; font-size: 18px; margin-bottom: 33px;}
@@ -221,10 +223,10 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .edit-brief input{line-height: 24px; height: 24px;}
 .edit-brief .birthday{margin-right: 10px;}
 .edit-brief .birthday input{width: 77px;　}
-.edit-brief .sel-gender input{width:77px; }
+.sel-gender input{width:50px; }
 .edit-brief .sel-career{ width: 160px; }
 
-.edit-phone input{border: 1px solid #b5b5b5; color:#848484;}
+input.edit-phone {border: 1px solid #b5b5b5; color:#848484;}
 .edit-opera{position: absolute;right: 0; bottom: 0;}
 .edit-opera button{width: 58px; height: 24px; border-radius: 5px; font-size: 14px; background: none;}
 .btn-save{border:1px solid #ff9933; color:#ff9933;}
@@ -243,8 +245,8 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .trade-box .trade-bot button{width: 58px; height:28px; border:1px solid #2ea8e6; color:#2ea8e6; font-size: 14px; margin: 0 10px;}
 .trade-box .trade-bot button:hover{background: #2ea8e6; color: white;}
 
-.edit{display: none; position: relative;}
-.edit .buttons{position: absolute;right: 32px;top:8px; }
+.edit{display: none; position: relative; padding-top: 10px;}
+.edit .buttons{position: absolute;right: 32px;top:16px; }
 .edit .buttons button{width:54px;height: 20px; line-height: 20px;color:white;margin-left: 12px; font-size: 12px;}
 .edit .buttons button:first-child{background: #48c1e4;}
 .edit .buttons button:last-child{background: #e69545;}
