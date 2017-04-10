@@ -97,8 +97,6 @@ var appCont = new Vue({
      data:{
           database:{
                date:date,
-               years:[1988,1989,1990,1991,1992],
-               months:[1,2,3,4,5,6,7,8,9,10,11,12],
                address:{
                     province:provinceArray,
                     city:["杭州","新乡"],
@@ -107,10 +105,7 @@ var appCont = new Vue({
                addrData:addArray,
                nations:nations,
                salary:salaryItems,
-               major:{
-                    main:["信息技术","数学系"],
-                    sub:["计算机科学","通信工程","应用数学"]
-               },
+               major:majorArray,
                qualification:["专科","本科","硕士","博士"],
                languages:[
                     "英语","法语","日语","韩语","德语","俄语","西班牙语","葡萄牙语","阿拉伯语","其他"
@@ -124,6 +119,7 @@ var appCont = new Vue({
                email:"xqztc@163.com",
                province:"安徽",
                nation:"汉族",
+               curWorksIndex:1,
                expect:{
                     tradeItems:"互联网",
                     posItems:"IT工程师",
@@ -137,6 +133,10 @@ var appCont = new Vue({
                     firma:"阿里巴巴",
                     trade:"互联网",
                     pos:"Web前端工程师",
+                    province:"浙江",
+                    city:"杭州",
+                    district:"滨江",
+                    salary:1000,
                     startyear:2010,
                     startmonth:2,
                     endyear:2016,
@@ -232,9 +232,15 @@ var appCont = new Vue({
 
      },
      methods:{
-          popTrade:function(){
+          popTrade:function(type){
                appModal.showModal=true;
                appModal.showTrade=true;
+          },
+          popTradeSingle:function(index){
+               appModal.showModal=true;
+               this.resume.curWorksIndex=index;
+               appModal.showTradeSingle=true;
+
           },
           showPre:function(){
                appModal.showModal=true;
@@ -253,16 +259,11 @@ var appCont = new Vue({
                for(var i=0; i<this.resume.worksExps.length; i++){
                     this.resume.worksExps[i].show=false;
                }
-               var worksexp ={
-                    show:true,
-                    firma:"",
-                    trade:"",
-                    pos:"",
-                    startyear:2010,
-                    startmonth:2,
-                    endyear:2016,
-                    endmonth:10,
-                    resp:""}
+               var worksexp = cloneObj(this.resume.worksExps[0]);
+               for(var key in worksexp){
+                    worksexp[key] = "";
+               }
+               worksexp.show = true;
                this.resume.worksExps.push(worksexp);
           },
           workSwipe:function(index){
@@ -326,6 +327,11 @@ var appCont = new Vue({
           submit:function(){
                $(".edit").hide();
                $(".view").show();
+          },
+          deleteItem:function(type,index){
+               if(type=="worksexp"){
+                    this.resume.worksExps.splice(index,1);
+               }
           },
           stateCss:function(state){
                if(state=="已开课"){
@@ -394,6 +400,7 @@ var appModal = new Vue({
           checkedTrades:[],
           showModal:false,
           showTrade:false,
+          showTradeSingle:false,
           showPreview:false,
           showUpload:false,
           trades:workareas,
@@ -407,6 +414,7 @@ var appModal = new Vue({
           },
           closeTrade:function(){
                this.showTrade=false;
+               this.showTradeSingle=false;
                this.showModal=false;
           },
           checkfunc:function(item,target){
@@ -419,13 +427,20 @@ var appModal = new Vue({
                     this.checkedTrades.push(item);
                }
           },
-          submitTrade:function(){
-               appCont.resume.expect.tradeItems = this.checkedTrades.join();
-               this.showTrade=false;
+          submitTrade:function(type){
+               if(type=="expect"){
+                    appCont.resume.expect.tradeItems = this.checkedTrades.join();
+                    this.showTrade=false;
+               }else if(type=="worksexp"){
+                    var index = appCont.resume.curWorksIndex;
+                    appCont.resume.worksExps[index].trade = $(".trade-single-table input[type='radio']:checked").val();
+                    this.showTradeSingle=false;
+               }
                this.showModal=false;
           },
           cancelTrade:function(){
                this.showTrade=false;
+               this.showTradeSingle=false;
                this.showModal=false;
           },
           hidemodal:function(){
@@ -442,6 +457,18 @@ var appModal = new Vue({
           "this.showUpload":function(curval){
                if(curval){
 
+               }
+          },
+          'showTradeSingle':function(curval){
+               if(curval){
+                    var top = Math.floor($(window).height()*0.15+$("body").scrollTop())+"px";
+                    $(".trade-box-single").css("margin-top",top);
+               }
+          },
+          'showTrade':function(curval){
+               if(curval){
+                    var top = Math.floor($(window).height()*0.15+$("body").scrollTop())+"px";
+                    $(".trade-box-multi").css("margin-top",top);
                }
           }
      }
@@ -529,6 +556,12 @@ function editEventBind(){
                     appCont.resume.expect.province=editBlock.find(".sel-province input").val();
                     appCont.resume.expect.city=editBlock.find(".sel-city input").val();
                     appCont.resume.expect.district=editBlock.find(".sel-district input").val();
+               }else if(viewName=="work"){
+                    editBlock.find(".pane").each(function(index){
+                         appCont.resume.worksExps[index].province=$(this).find(".address .sel-province input").val();
+                         appCont.resume.worksExps[index].city=$(this).find(".address .sel-city input").val();
+                         appCont.resume.worksExps[index].district=$(this).find(".address .sel-district input").val();
+                    })
                }
                editBlock.hide();
                $(".resumeBox .view-item[name="+viewName+"]").show();

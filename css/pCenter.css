@@ -4,7 +4,7 @@
 .main .selectee{position: relative; display: inline-block;}
 .main .selectee input{background: url("../images/icon-select.png") no-repeat right 10px; border:1px solid #ccc; padding-left: 10px;}
 .main .selectee ul{position: absolute; left: 0; top:36px;border: 1px solid #d2d2d2;
-    font-size: 12px; height: 149px; overflow: auto;background: #fff; display: none; z-index: 10;}
+    font-size: 12px; height: 149px; overflow: auto; overflow-x: auto;background: #fff; display: none; z-index: 10;}
 .main .selectee ul li{line-height: 24px; height: 24px; cursor: pointer;padding-left: 10px;}
 .main .selectee ul li.over{background: #9bcce5; color:#fff;}
 .main .selectee ul li.selected{background: #2ea8e6; color:#fff;}
@@ -28,19 +28,24 @@
 .sub-li .on{color:#f8a85c;}
 .sub-li p{padding-left: 30px;}
 
+.infopane{padding-bottom: 5px;}
+.delItem{font-size: 12px; margin-right: 5px; color: red; cursor: pointer;}
+.require-label{font-size: 12px; color: red; margin-left: 5px;}
 .main .content > div{display: none;}
 .main .resumeBox{border:1px solid #ccc;}
 .main .itemBox input{line-height: 24px; height: 24px; font-size: 14px; color: #666; border: 1px solid #ccc;margin-left: 10px;
 padding-left: 10px; width:448px; overflow: hidden;}
 .main .itemBox label{ width:143px; color:#333; font-size: 14px; text-align: right; display: inline-block; line-height: 26px; height:26px;}
 .main .itemBox .item-row{margin-bottom: 20px; font-size: 0;}
-.main .major-name input{width:118px; margin-right: 10px;}
+.main .major-name{margin-left: 10px;}
+.main .major-name input{width:118px; margin-right: 10px; margin-left: 0;}
 .main .itemBox input.exmajor{width:148px;}
 .main .itemBox .qualific input{width:88px;}
 .main .itemBox .address{display: inline-block;}
 .main .itemBox .address input{width:108px;}
 .main .itemBox .career-input{background: url("../images/icon-prop.jpg") no-repeat 438px center; padding-right: 23px; width:425px;}
 .main .itemBox .sel-salary input{width:130px;}
+.main .itemBox .input-salary{width: 130px; padding-left: 10px;}
 .main .itemBox{margin-bottom:35px;}
 .main .item-basic .laLeft{width:135px;}
 .main .item-basic .item-left{width:354px; display: inline-block;}
@@ -151,7 +156,7 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .headmark{position: absolute; left: 0; top:0; display: inline-block; height: 100%; width: 4px; background-color: #f7a14a;}
 .preView .infopane p{line-height: 27px; height:27px; padding-left: 40px;}
 
-.main .resumeBox .view{position: relative;}
+.main .resumeBox .view{position: relative; padding-bottom: 12px; padding-top:30px;border-bottom: 1px dotted #ccc; margin-bottom: 0;}
 .main .resumeBox .view .title{margin-bottom: 6px;}
 .main .resumeBox .view .btn-edit{position: absolute; right: 0; top: 30px; cursor: pointer;}
 .main .resumeBox .view .item-row{ height:26px; line-height: 26px; margin-bottom: 0; font-size: 12px;}
@@ -159,7 +164,6 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .main .resumeBox .view table .la-l{width:100px; text-align: right; padding-right: 5px;}
 .main .resumeBox .view table .val-l{width:230px;}
 .main .resumeBox .view table .la-r{width:76px; text-align: right; padding-right: 5px;}
-.main .resumeBox .view {padding-bottom: 17px; padding-top:30px;border-bottom: 1px dotted #ccc; margin-bottom: 0;}
 .main .resumeBox .view.item-basic{padding-top: 16px;}
 .main .resumeBox .view p{line-height: 27px; height:27px; padding-left: 40px; text-align: left;}
 
@@ -244,6 +248,8 @@ input.edit-phone {border: 1px solid #b5b5b5; color:#848484;}
 .trade-box .cont{overflow: auto;}
 .trade-box .trade-bot button{width: 58px; height:28px; border:1px solid #2ea8e6; color:#2ea8e6; font-size: 14px; margin: 0 10px;}
 .trade-box .trade-bot button:hover{background: #2ea8e6; color: white;}
+.trade-single-table input[type="radio"] {vertical-align: middle; margin-right: 5px;}
+
 
 .edit{display: none; position: relative; padding-top: 10px;}
 .edit .buttons{position: absolute;right: 32px;top:16px; }
