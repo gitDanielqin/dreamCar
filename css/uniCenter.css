@@ -10,13 +10,25 @@
 .selectee ul li.over{background: #9bcce5; color:#fff;}
 .selectee ul li.selected{background: #2ea8e6; color:#fff;}
 
-.sel-add input{width:58px;}
+.sel-addr input{width:100px;}
 .main .sInfo{ border: 1px solid #ccc;}
 .porto-img{border: 2px dashed #999; background: url("../images/cross.png") no-repeat center center;}
 .porto-img img{width: 100%;}
 .main .infoTxt{position: relative;}
 .main .infoTxt p{line-height: 25px; font-size: 14px;}
-.main .infoTxt i{display: inline-block; position: absolute; right:-70px; top: 0; font-size: 0;}
+.infoTxt label{width: 72px; text-align: right; display: inline-block; vertical-align: top; margin-right: 15px;}
+.edit-brief p{line-height: 25px; font-size: 14px; margin-top: 5px;}
+.edit-brief label{width: 60px; text-align: right; display: inline-block; vertical-align: top; margin-right: 15px;}
+.edit-brief input{height: 25px; line-height: 25px; border: 1px solid #ccc; padding-left: 10px;}
+.edit-opera{position: absolute;right: 0; bottom: 0; margin-right: 92px;}
+.edit-opera button{width: 58px; height: 24px; border-radius: 5px; font-size: 14px; background: none;}
+.btn-save{border:1px solid #ff9933; color:#ff9933;}
+.btn-save:hover{background: #ff9933; color:white;}
+.btn-cancel{border:1px solid #82c4ea; color:#82c4ea;}
+.btn-cancel:hover{background: #82c4ea; color: white;}
+.brief-unilevel input{width: 100px;}
+
+.main .infoTxt i{display: inline-block; position: absolute; right:305px; top: 10px; font-size: 0; cursor: pointer;}
 .progress{display: inline-block;background: #fcfbf9;  margin: 0 10px;}
 .progress-real{display: inline-block;background: #f7aa00; width: 87%; position: absolute; left: 0; top: 0;}
 .preview-btn{position: absolute; right:-97px;bottom:0; color:#f77b00; line-height: 25px; cursor: pointer;}

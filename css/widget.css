@@ -1,5 +1,5 @@
 /*下拉框select默认样式*/
-.selectee{position: relative; display: inline-block; vertical-align: bottom;}
+.selectee{position: relative; display: inline-block; }
 .selectee input{background: url("../images/icon-select.png") no-repeat right 10px; border:1px solid #ccc; padding-left: 10px;}
 .selectee ul{position: absolute; left: 0; top:36px;border: 1px solid #d2d2d2;
     font-size: 12px; height: 149px; overflow: auto;background: #fff; display: none; z-index: 10;}
@@ -12,12 +12,12 @@
 .major-input{display: inline-block; margin-right: 10px;}
 .major-input input{background: url("../images/icon-select.png") no-repeat right 10px white; border:1px solid #ccc; padding-left: 10px;height: 24px; line-height: 24px;
 white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-.pop-major-1{left: 0; width: 475px;}
+.pop-major-1{left: 0; }
 .pop-major table{padding: 5px; }
-.pop-major td{padding:5px 10px; cursor: pointer; }
+.pop-major td{padding:5px 10px; cursor: pointer; word-break: keep-all;}
 .pop-major td:hover{ background: #e6e6e6}
-.pop-major-2{left: 220px; width: 530px;}
+.pop-major-2{left: 220px;}
 .pop-major-title{background: #e6e6e6; height: 30px; line-height: 30px; font-size: 14px; font-weight: normal; padding-left: 14px;}
 .major-closer{height: 26px; line-height: 26px; margin: 2px 5px 0 0; width: 26px; display: inline-block; text-align: center; cursor: pointer; float: right;}
-.major-closer:hover{ background:#d2d2d2; }
+.major-closer:hover{ background:#d2d2d2;}
 .table-box{height: 200px; overflow: auto;}

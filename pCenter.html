@@ -106,7 +106,7 @@
                              <label class="laLeft">籍贯</label>
                              <dropdown :options="database.address.province" v-model="resume.province"></dropdown>
                          </div><label class="laRight">民族</label>
-                              <dropdown :options="database.nations" v-model="resume.nation"></dropdown>
+                             <dropdown :options="database.nations" v-model="resume.nation"></dropdown>
                      </div>
                      <div class="buttons">
                           <button>保存</button><button>取消</button>
@@ -190,7 +190,8 @@
                                <dropdown :options="database.date.month" v-model="worksExp.endmonth" placeholder="结束月份"></dropdown>
                          </div>
                          <div class="item-row work-resp">
-                             <label>工作职责</label><textarea placeholder="描述你的工作内容和工作业绩" v-model="worksExp.resp"></textarea>
+                             <label>工作职责</label><textarea placeholder="描述你的工作内容和工作业绩,文字限制1000字以内" v-model="worksExp.resp" @input="checkText('worksresp',index)"></textarea>
+                             <p>你还可以输入<span>{{remainText(worksExp.resp)}}</span>字</p>
                          </div>
                      </div>
                      <div class="addItem color-gray6" @click="addWorksexp"><i class="maR5"><img src="images/cross-add.png"/></i>添加工作经历</div>
@@ -218,14 +219,13 @@
                          <div class="item-row">
                              <label>专业名称</label>
                              <major-pop :majordata="database.major" class="major-name disInline"></major-pop>
-                             <input type="text" class="exmajor" v-model="edu.exmajor"/>
                          </div>
                          <div class="item-row time-interval">
                              <label>就读时间</label>
-                             <dropdown :options="database.years" v-model="edu.startyear"></dropdown>
-                             <dropdown :options="database.months" v-model="edu.startmonth"></dropdown><i class="bind-line"></i>
-                             <dropdown :options="database.years" v-model="edu.endyear" classes="endyear"></dropdown>
-                             <dropdown :options="database.months" v-model="edu.endmonth"></dropdown>
+                             <dropdown :options="database.date.year" v-model="edu.startyear"></dropdown>
+                             <dropdown :options="database.date.month" v-model="edu.startmonth"></dropdown><i class="bind-line"></i>
+                             <dropdown :options="database.date.year" v-model="edu.endyear" classes="endyear"></dropdown>
+                             <dropdown :options="database.date.month" v-model="edu.endmonth"></dropdown>
                          </div>
                          <div class="item-row">
                              <label>学历</label>
@@ -239,8 +239,8 @@
                  </div>
                  <div class="itemBox view view-item" name="edu">
                      <h3 class="title works-title"><i><img src="images/icon-college.png"/></i>教育经历<span class="require-label">（必填）</span><ul class="lis-inline pane-tabs"><li v-for="(edu,index) in resume.edus">经历{{index+1}}</li></ul></h3>
-                     <div class="infopane" v-for="edu in resume.edus">
-                          <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB12"><span class="maR24">{{edu.startyear}}.{{edu.startmonth}}--{{edu.endyear}}.{{edu.endmonth}}</span>{{edu.uni}}<i class="headmark"></i></h4>
+                     <div class="infopane" v-for="(edu,index) in resume.edus">
+                          <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB12"><span class="maR24">{{edu.startyear}}.{{edu.startmonth}}--{{edu.endyear}}.{{edu.endmonth}}</span>{{edu.uni}}<span class="fr delItem" @click="deleteItem('edu',index)">删除</span><i class="headmark"></i></h4>
                           <p class="LH-H25"><span class="W250 disInline">专业名称：{{edu.submajor}}</span><span>学历：{{edu.qualification}}</span></p>
                      </div>
                      <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
@@ -261,7 +261,7 @@
                  </div>
                  <div class="itemBox edit edit-item" name="project">
                      <h3 class="title works-title"><i><img src="images/icon-project.png"/></i>项目经历<ul class="lis-inline pane-tabs"><li v-for="(project,index) in resume.projects" @click="projectSwipe(index)">经历{{index+1}}</li></ul></h3>
-                     <div class="pane" v-for="project in resume.projects" v-show="project.show">
+                     <div class="pane" v-for="(project,index) in resume.projects" v-show="project.show">
                          <div class="item-row">
                              <label>项目名称</label><input type="text" v-model="project.name"/>
                          </div>
@@ -270,22 +270,22 @@
                          </div>
                          <div class="item-row time-interval">
                              <label>项目时间</label>
-                             <dropdown :options="database.years" v-model="project.startyear"></dropdown>
-                             <dropdown :options="database.months" v-model="project.startmonth"></dropdown><i class="bind-line"></i>
-                             <dropdown :options="database.years" v-model="project.endyear" classes="endyear"></dropdown>
-                             <dropdown :options="database.months" v-model="project.endmonth"></dropdown>
+                             <dropdown :options="database.date.year" v-model="project.startyear"></dropdown>
+                             <dropdown :options="database.date.month" v-model="project.startmonth"></dropdown><i class="bind-line"></i>
+                             <dropdown :options="database.date.year" v-model="project.endyear" classes="endyear"></dropdown>
+                             <dropdown :options="database.date.month" v-model="project.endmonth"></dropdown>
                          </div>
                          <div class="item-row project-area">
-                             <label>项目描述</label><textarea placeholder="请详细描述项目内容，填写文字限制1000字以内" v-model="project.desc"></textarea>
-                             <p>你还可以输入<span>1000</span>字</p>
+                             <label>项目描述</label><textarea placeholder="请详细描述项目内容，填写文字限制1000字以内" v-model="project.desc" @input="checkText('prodesc',index)"></textarea>
+                             <p>你还可以输入<span>{{remainText(project.desc)}}</span>字</p>
                          </div>
                          <div class="item-row project-area">
-                             <label>项目职责</label><textarea placeholder="请详细描述您的职责范围及工作任务，填写文字限制1000字以内" v-model="project.resp"></textarea>
-                             <p>你还可以输入<span>1000</span>字</p>
+                             <label>项目职责</label><textarea placeholder="请详细描述您的职责范围及工作任务，填写文字限制1000字以内" v-model="project.resp" @input="checkText('proresp',index)"></textarea>
+                             <p>你还可以输入<span>{{remainText(project.resp)}}</span>字</p>
                          </div>
                          <div class="item-row project-area">
-                             <label>项目业绩</label><textarea placeholder="请详细描述您在项目中取得的业绩，填写文字限制1000字以内" v-model="project.achiev"></textarea>
-                             <p>你还可以输入<span>1000</span>字</p>
+                             <label>项目业绩</label><textarea placeholder="请详细描述您在项目中取得的业绩，填写文字限制1000字以内" v-model="project.achiev" @input="checkText('proachiev',index)"></textarea>
+                             <p>你还可以输入<span>{{remainText(project.achiev)}}</span>字</p>
                          </div>
                      </div>
                      <div class="addItem color-gray6" @click="addProject"><i class="maR5"><img src="images/cross-add.png"/></i>添加项目经历</div>
@@ -306,41 +306,41 @@
                  </div>
                  <div class="itemBox text-box edit edit-item" name="selfeval">
                      <h3 class="title"><i><img src="images/icon-comment.png"/></i>自我评价</h3>
-                     <textarea placeholder="建议您对自己做一个简短的评价" v-model="resume.selfEval"></textarea>
-                     <p>你还可以输入<span>1000</span>字</p>
+                     <textarea placeholder="建议您对自己做一个简短的评价" v-model="resume.selfEval" @input="checkText('selfeval')"></textarea>
+                     <p>你还可以输入<span>{{remainText(resume.selfEval)}}</span>字</p>
                      <div class="buttons">
                           <button>保存</button><button>取消</button>
                      </div>
                  </div>
-                 <div class="itemBox text-box view view-item" name="selfeval">
+                 <div class="itemBox view view-item view-paragraph" name="selfeval">
                      <h3 class="title"><i><img src="images/icon-comment.png"/></i>自我评价</h3>
-                     <p class="LH-H20 maT9 paLeft40">{{resume.selfEval}}</p>
+                     <p class="LH20 maT9 paLeft40">{{resume.selfEval}}</p>
                      <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
                  </div>
                  <div class="itemBox text-box edit edit-item" name="psinfo">
                      <h3 class="title"><i><img src="images/icon-attachment.png"/></i>附加信息</h3>
-                     <textarea placeholder="如：获奖、技能资格证书、专利等" v-model="resume.psInfo"></textarea>
-                     <p>你还可以输入<span>1000</span>字</p>
+                     <textarea placeholder="如：获奖、技能资格证书、专利等" v-model="resume.psInfo" @input="checkText('psinfo')"></textarea>
+                     <p>你还可以输入<span>{{remainText(resume.psInfo)}}</span>字</p>
                      <div class="buttons">
                           <button>保存</button><button>取消</button>
                      </div>
                  </div>
-                 <div class="itemBox text-box view view-item" name="psinfo">
+                 <div class="itemBox view view-item view-paragraph" name="psinfo">
                      <h3 class="title"><i><img src="images/icon-attachment.png"/></i>附加信息</h3>
-                     <p class="LH-H20 maT9 paLeft40">{{resume.psInfo}}</p>
+                     <p class="LH20 maT9 paLeft40">{{resume.psInfo}}</p>
                      <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
                  </div>
                  <div class="itemBox text-box edit edit-item" name="skill">
                      <h3 class="title"><i><img src="images/icon-skills.png"/></i>擅长技能</h3>
-                     <textarea placeholder="在此添加您擅长的技能" v-model="resume.skills"></textarea>
-                     <p>你还可以输入<span>1000</span>字</p>
+                     <textarea placeholder="在此添加您擅长的技能" v-model="resume.skills" @input="checkText('skill')"></textarea>
+                     <p>你还可以输入<span>{{remainText(resume.skills)}}</span>字</p>
                      <div class="buttons">
                           <button>保存</button><button>取消</button>
                      </div>
                  </div>
-                 <div class="itemBox text-box view view-item" name="skill" style="border-bottom:none">
+                 <div class="itemBox view view-item view-paragraph" name="skill" style="border-bottom:none">
                      <h3 class="title"><i><img src="images/icon-skills.png"/></i>擅长技能</h3>
-                     <p class="LH-H20 maT9 paLeft40">{{resume.skills}}</p>
+                     <p class="LH20 maT9 paLeft40">{{resume.skills}}</p>
                      <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
                  </div>
              </div>
@@ -765,8 +765,7 @@
 <script src="js/components/dropdown.js"></script>
 <script src="js/components/major-pop.js"></script>
 <script src="data/address.js"></script>
-<script src="data/date.js"></script>
-<script src="data/nations.js"></script>
+<script src="data/commondata.js"></script>
 <script src="data/workareas.js"></script>
 <script src="data/major.js"></script>
 <script src="js/pages/userCenter.js"></script>

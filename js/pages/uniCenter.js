@@ -1,20 +1,41 @@
 var appPorto = new Vue({
     el: "#app-porto",
     data: {
+         database:{
+            unilevel:["重点","本科","大专","高职"],
+            addrData:addArray
+         },
         viewInfo: true,
         uni: "中国美术学院",
-        classic: "重点大学",
-        address: {
-            province: "浙江",
-            city: "杭州",
-            district: "滨江"
-        },
-        email: "xqztc@qq.com"
+        briefInfo:{
+            level: "重点大学",
+            address: {
+                province: "浙江",
+                city: "杭州",
+                district: "滨江"
+            },
+            email: "xqztc@qq.com"
+       },
+       cloneInfo:{}
    },
    methods:{
         uploading:function(){
              appModal.showModal=true;
              appModal.showUpload=true;
+        },
+        save:function(){
+             this.briefInfo.address.province = $(".edit-brief .sel-province input").val();
+             this.briefInfo.address.city = $(".edit-brief .sel-city input").val();
+             this.briefInfo.address.district = $(".edit-brief .sel-district input").val();
+             this.viewInfo=true;
+        },
+        cancel:function(){
+             this.briefInfo = cloneObj(this.cloneInfo);
+             this.viewInfo=true;
+        },
+        edit:function(){
+             this.cloneInfo = cloneObj(this.briefInfo);
+             this.viewInfo=false;
         }
    }
 });
@@ -449,7 +470,7 @@ var appModal = new Vue({
 function init_center(){
      selectInitPos();
    init_safepos();
-    selectEventBind();
+//    selectEventBind();
   //  editEventBind();
    // init_paneAdd();
    navEventBind();
@@ -527,31 +548,7 @@ function selectInitPos(){
         })
     });
 }
-function selectEventBind(){
-    $(".selectee ul li").bind({
-        "mouseover":function(){
-            $(this).addClass("over");
-        },
-       "mouseout":function(){
-           $(this).removeClass("over");
-       },
-       "click":function(){
-           $(this).siblings(".selected").removeClass("selected");
-           $(this).addClass("selected");
-           $(this).parent().siblings("input").val($(this).text());
-           $(this).parent().hide();
-           return false;
-       }
-     });
-    $(".selectee").bind("click",function(){
-        $(".selectee ul").hide();
-        $(this).children("ul").show();
-        return false;
-    });
-    $("body").bind("click",function(){
-        $(".selectee ul").hide();
-    })
-}
+
 function navEventBind(){
     $(".sideBox>li").bind("click",function(){
         $(".sideBox").children("li.on").removeClass("on");

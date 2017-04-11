@@ -2,6 +2,7 @@
      var templMajor= '<div style="position:relative">\
           <span @click="pop(\'major\')" class="major-input major-input-1"><input placeholder="一级学科" disabled v-model="selMajor" ></span>\
           <span @click="pop(\'submajor\')" class="major-input major-input-2"><input placeholder="二级学科" disabled v-model="selSubMajor"></span>\
+          <input type="text" class="ex-major" placeholder="请输入专业名称" v-model="exMajor" v-show="showExMajor"/>\
           <div class="pop-major-1 pop-major" v-show="showMajor1">\
                <h3 class="pop-major-title">专业名称<i class="pic-wrapper major-closer" @click=closePop><img src="images/icon-close3.png" /></i></h3>\
                <div class="table-box">\
@@ -20,10 +21,9 @@
                <div class="table-box">\
                     <table>\
                          <tr v-for="tr in submajor.trs">\
-                              <td @click="clickSubMajor($event.target)">{{submajor.dataArray[tr*4]}}</td>\
-                              <td @click="clickSubMajor($event.target)">{{submajor.dataArray[tr*4+1]}}</td>\
-                              <td @click="clickSubMajor($event.target)">{{submajor.dataArray[tr*4+2]}}</td>\
-                              <td @click="clickSubMajor($event.target)">{{submajor.dataArray[tr*4+3]}}</td>\
+                              <td @click="clickSubMajor($event.target)">{{submajor.dataArray[tr*3]}}</td>\
+                              <td @click="clickSubMajor($event.target)">{{submajor.dataArray[tr*3+1]}}</td>\
+                              <td @click="clickSubMajor($event.target)">{{submajor.dataArray[tr*3+2]}}</td>\
                          </tr>\
                     </table>\
                </div>\
@@ -50,17 +50,19 @@
                };
                submajor.dataArray= this.majordata[0].submajor;
                for(var j=0; j<submajor.dataArray.length;j++){
-                    if(j%4==0){
-                         submajor.trs.push(Math.floor(j/4));
+                    if(j%3==0){
+                         submajor.trs.push(Math.floor(j/3));
                     }
                }
                var dataBase={
                     showMajor1:false,
                     showMajor2:false,
+                    showExMajor:false,
                     major:major,
                     submajor:submajor,
                     selMajor:"",
-                    selSubMajor:""
+                    selSubMajor:"",
+                    exMajor:""
                };
                return dataBase;
           },
@@ -109,6 +111,12 @@
                          if(this.majordata[i].major==curval){
                               this.submajor.dataArray=this.majordata[i].submajor;
                               this.selSubMajor=this.submajor.dataArray[0];
+                              this.submajor.trs=[];
+                              for(var j=0; j<this.submajor.dataArray.length;j++){
+                                   if(j%3==0){
+                                        this.submajor.trs.push(Math.floor(j/3));
+                                   }
+                              }
                               break;
                          }
                     }
@@ -121,28 +129,27 @@
                                    "top":$(this).siblings(".major-input-1").height()-1+"px"
                               })
                          })
+                    }
+               },
+               "showMajor2":function(curval){
+                    if(curval){
                          $(".pop-major-2").each(function(){
+                              var left = $(this).siblings(".major-input-2").position().left;
+                              if(left + $(this).width()>$(window).width()){
+                                   left = $(window).width()-$(this).width();
+                              }
                               $(this).css({
-                                   "left":$(this).siblings(".major-input-2").position().left+"px",
+                                   "left":left+"px",
                                    "top":$(this).siblings(".major-input-2").height()-1+"px"
                               })
                          });
                     }
                },
-               "showMajor2":function(curval){
-                    if(curval){
-                         $(".pop-major-1").each(function(){
-                              $(this).css({
-                                   "left":$(this).siblings(".major-input-1").position().left+"px",
-                                   "top":$(this).siblings(".major-input-1").height()-1+"px"
-                              })
-                         })
-                         $(".pop-major-2").each(function(){
-                              $(this).css({
-                                   "left":$(this).siblings(".major-input-2").position().left+"px",
-                                   "top":$(this).siblings(".major-input-2").height()-1+"px"
-                              })
-                         });
+               "selSubMajor":function(curval){
+                    if(curval=="其他"){
+                         this.showExMajor=true;
+                    }else{
+                         this.showExMajor=false;
                     }
                }
           }

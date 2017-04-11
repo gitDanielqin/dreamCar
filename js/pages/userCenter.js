@@ -1,21 +1,6 @@
 /**
  * Created by xuanyuan on 2016/11/27.
  */
-var salaryItems=[
-     "<1000",
-     "1000-2000",
-     "2000-4000",
-     "4000-6000",
-     "6000-8000",
-     "8000-10000",
-     "10000-15000",
-     "15000-25000",
-     "25000-35000",
-     "35000-50000",
-     "50000-75000",
-     "75000-100000",
-     ">100000"
-]
 
 var objMe=this;
 var appPorto = new Vue({
@@ -106,7 +91,7 @@ var appCont = new Vue({
                nations:nations,
                salary:salaryItems,
                major:majorArray,
-               qualification:["专科","本科","硕士","博士"],
+               qualification:scolarship,
                languages:[
                     "英语","法语","日语","韩语","德语","俄语","西班牙语","葡萄牙语","阿拉伯语","其他"
                ]
@@ -232,6 +217,57 @@ var appCont = new Vue({
 
      },
      methods:{
+          remainText:function(text){
+               if(1000-text.length<0){
+                    return 0;
+               }
+               return (1000-text.length)
+          },
+          checkText:function(type,index){
+               if(type=="worksresp"){
+                    var len = this.resume.worksExps[index].resp.length;
+                    if(len>1000){
+                         alert("最多只能输入1000字！");
+                         this.resume.worksExps[index].resp=this.resume.worksExps[index].resp.slice(0,1000);
+                    }
+               }else if(type=="prodesc"){
+                    var len = this.resume.projects[index].desc.length;
+                    if(len>1000){
+                         alert("最多只能输入1000字！");
+                         this.resume.projects[index].desc=this.resume.projects[index].desc.slice(0,1000);
+                    }
+               }else if(type=="proresp"){
+                    var len = this.resume.projects[index].resp.length;
+                    if(len>1000){
+                         alert("最多只能输入1000字！");
+                         this.resume.projects[index].resp=this.resume.projects[index].resp.slice(0,1000);
+                    }
+               }else if(type=="proachiev"){
+                    var len = this.resume.projects[index].achiev.length;
+                    if(len>1000){
+                         alert("最多只能输入1000字！");
+                         this.resume.projects[index].achiev=this.resume.projects[index].achiev.slice(0,1000);
+                    }
+               }else if(type=="selfeval"){
+                    var len = this.resume.selfEval.length;
+                    if(len>1000){
+                         alert("最多只能输入1000字！");
+                         this.resume.selfEval=this.resume.selfEval.slice(0,1000);
+                    }
+               }else if(type=="psinfo"){
+                    var len = this.resume.psInfo.length;
+                    if(len>1000){
+                         alert("最多只能输入1000字！");
+                         this.resume.psInfo=this.resume.psInfo.slice(0,1000);
+                    }
+               }else if(type=="skill"){
+                    var len = this.resume.skills.length;
+                    if(len>1000){
+                         alert("最多只能输入1000字！");
+                         this.resume.skills=this.resume.skills.slice(0,1000);
+                    }
+               }
+          },
           popTrade:function(type){
                appModal.showModal=true;
                appModal.showTrade=true;
@@ -315,7 +351,7 @@ var appCont = new Vue({
                this.resume.projects.push(project);
           },
           projectSwipe:function(index){
-               for(var i=0; i<this.resume.edus.length; i++){
+               for(var i=0; i<this.resume.projects.length; i++){
                     this.resume.projects[i].show=false;
                }
                this.resume.projects[index].show=true;
@@ -331,6 +367,8 @@ var appCont = new Vue({
           deleteItem:function(type,index){
                if(type=="worksexp"){
                     this.resume.worksExps.splice(index,1);
+               }else if(type=="edu"){
+                    this.resume.edus.splice(index,1)
                }
           },
           stateCss:function(state){
@@ -547,7 +585,6 @@ function editEventBind(){
                $(this).closest(".view-item").hide();
                $(".resumeBox .edit-item[name="+editName+"]").show();
                oldResume = cloneObj(appCont.resume);
-          //     console.log(appCont.resume.birthmonth);
           });
           $(".resumeBox .edit-item .buttons button:nth-of-type(1)").click(function(){
                var editBlock = $(this).closest(".edit-item");
@@ -561,6 +598,12 @@ function editEventBind(){
                          appCont.resume.worksExps[index].province=$(this).find(".address .sel-province input").val();
                          appCont.resume.worksExps[index].city=$(this).find(".address .sel-city input").val();
                          appCont.resume.worksExps[index].district=$(this).find(".address .sel-district input").val();
+                    })
+               }else if(viewName=="edu"){
+                    editBlock.find(".pane").each(function(index){
+                         appCont.resume.edus[index].major = $(this).find(".major-input-1 input").val();
+                         appCont.resume.edus[index].submajor = $(this).find(".major-input-2 input").val();
+                         appCont.resume.edus[index].exmajor = $(this).find(".ex-major").val();
                     })
                }
                editBlock.hide();

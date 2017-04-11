@@ -27,13 +27,13 @@
 .rotate-left p{padding-left: 10px;text-align: left;}
 .rotate-right{transform: perspective(600px) rotateY(-20deg) scale(0.7,0.7);margin-right: -448px;}
 .rotate-right p{padding-right: 10px; text-align: right;}
-.rotate-center{z-index: 10; margin-left: 90px; margin-right: -360px; transition: all 0.5s;}
+.rotate-center{z-index: 10; margin-left: 90px; margin-right: -360px; transition: all 0.3s;}
 .show-frame{border: 6px solid #cdcbcc; width: 500px; }
 .show-frame img{width: 100%;}
 .show-pics li:first-child{margin-left: -58px; margin-top: 12px; z-index: 1;}
 .show-pics li:nth-child(2){margin-top: 32px; z-index: 2;}
-.show-pics li:nth-child(3){z-index: 3; transition: all 0.5s;}
-.show-pics li:nth-child(5){z-index: 3; transition: all 0.5s;}
+.show-pics li:nth-child(3){z-index: 3; transition: all 0.3s;}
+.show-pics li:nth-child(5){z-index: 3; transition: all 0.3s;}
 .show-pics li:nth-child(6){margin-top: 32px; z-index:2;}
 .show-pics li:nth-child(7){margin-top: 12px; z-index: 1;}
 .rotate-center .show-frame{border-color: #ffbc3b}

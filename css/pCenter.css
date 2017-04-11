@@ -76,9 +76,12 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .main .itemBox .project-area p{line-height: 34px; height:34px; text-align: right;padding-right: 104px; font-size: 14px; color: #333;}
 .main .itemBox .project-area p span{margin:0 2px;}
 .main .itemBox .project-area{margin-bottom: 10px;}
+.main .itemBox .work-resp p{line-height: 34px; height:34px; text-align: right;padding-right: 104px; font-size: 14px; color: #333;}
+.main .itemBox .work-resp p span{margin:0 2px;}
+.main .itemBox .work-resp{margin-bottom: 10px;}
 .main .text-box{margin-bottom: 42px;}
 .main .text-box textarea{width:538px; height:88px; padding: 5px 10px; border: 1px solid #ccc; margin-left: 68px; font-size: 14px;}
-.main .text-box p{width:627px; text-align: right; line-height: 34px; height: 34px; font-size: 14px;}
+.main .text-box p{width:627px; text-align: right; line-height: 34px; font-size: 14px;}
 .main .text-box p span{margin:0 2px;}
 .main .buttons-commit button{width:150px; height:50px; line-height: 50px; color: #fff; font-size: 18px; text-align: center; margin: 0 10px;cursor: pointer;}
 
@@ -165,7 +168,8 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .main .resumeBox .view table .val-l{width:230px;}
 .main .resumeBox .view table .la-r{width:76px; text-align: right; padding-right: 5px;}
 .main .resumeBox .view.item-basic{padding-top: 16px;}
-.main .resumeBox .view p{line-height: 27px; height:27px; padding-left: 40px; text-align: left;}
+.main .resumeBox .view p{line-height: 27px; padding-left: 40px; text-align: left;}
+.main .resumeBox .view.view-paragraph p{line-height: 20px;}
 
 .phone-change{position: absolute; left:50%; top: 256px;margin-left: -250px;  }
 .phone-change input{height:44px; background: #f3f3f3; font-size: 14px; padding-left: 10px;}
