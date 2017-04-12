@@ -1,11 +1,11 @@
 (function(){
-     var templMajor= '<div style="position:relative">\
+     var templMajor= '<div style="position:relative" class="pop-major-box">\
           <span @click="pop(\'major\')" class="major-input major-input-1"><input placeholder="一级学科" disabled v-model="selMajor" ></span>\
           <span @click="pop(\'submajor\')" class="major-input major-input-2"><input placeholder="二级学科" disabled v-model="selSubMajor"></span>\
           <input type="text" class="ex-major" placeholder="请输入专业名称" v-model="exMajor" v-show="showExMajor"/>\
           <div class="pop-major-1 pop-major" v-show="showMajor1">\
                <h3 class="pop-major-title">专业名称<i class="pic-wrapper major-closer" @click=closePop><img src="images/icon-close3.png" /></i></h3>\
-               <div class="table-box">\
+               <div class="major-table-box">\
                     <table>\
                          <tr v-for="tr in major.trs">\
                               <td @click="clickMajor($event.target)">{{major.dataArray[tr*4]}}</td>\
@@ -18,7 +18,7 @@
           </div>\
           <div class="pop-major-2 pop-major" v-show="showMajor2">\
                <h3 class="pop-major-title">专业名称<i class="pic-wrapper major-closer" @click=closePop><img src="images/icon-close3.png" /></i></h3>\
-               <div class="table-box">\
+               <div class="major-table-box">\
                     <table>\
                          <tr v-for="tr in submajor.trs">\
                               <td @click="clickSubMajor($event.target)">{{submajor.dataArray[tr*3]}}</td>\

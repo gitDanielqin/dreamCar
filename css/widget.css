@@ -20,4 +20,4 @@ white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
 .pop-major-title{background: #e6e6e6; height: 30px; line-height: 30px; font-size: 14px; font-weight: normal; padding-left: 14px;}
 .major-closer{height: 26px; line-height: 26px; margin: 2px 5px 0 0; width: 26px; display: inline-block; text-align: center; cursor: pointer; float: right;}
 .major-closer:hover{ background:#d2d2d2;}
-.table-box{height: 200px; overflow: auto;}
+.major-table-box{height: 200px; overflow: auto; line-height: 20px;}

@@ -113,5 +113,11 @@ var workareas = [
                "跨领域经营",
                "其他"
           ]
+     },
+     {
+          title:"不限",
+          subareas:[
+               "不限"
+          ]
      }
 ]

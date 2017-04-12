@@ -22,7 +22,7 @@
                 this.$emit('input', item);
                 $(obj).siblings(".selected").removeClass("selected");
                 $(obj).addClass("selected");
-                $(obj).parent().siblings("input").val($(this).text());
+                $(obj).parent().siblings("input").val($(obj).text());
                 $(obj).parent().hide();
                 return false;
             },
@@ -43,6 +43,72 @@
                  $(".selectee ul").hide();
             })
        }
+     });
+
+     //岗位选择
+     var templPos = '<div class="sel-position" style="display:inline-block;">\
+          <dropdown placeholder="一级岗位" :options="posArray1" v-model="selpos1" class="sel-pos-1"></dropdown>\
+          <dropdown placeholder="二级岗位" :options="posArray2" v-model="selpos2" class="sel-pos-2"></dropdown>\
+          <dropdown placeholder="三级岗位" :options="posArray3" v-model="selpos3" class="sel-pos-3"></dropdown>\
+     </div>';
+
+     Vue.component("pos-select",{
+          template: templPos,
+          props:["posdata"],
+          data:function(){
+               var posArray1=[];
+               var posArray2=[];
+               var posArray3=[];
+               for(var i=0; i<this.posdata.length; i++){
+                    posArray1.push(this.posdata[i].name);
+               }
+               for(var j=0;j<this.posdata[0].subpos.length;j++){
+                    posArray2.push(this.posdata[0].subpos[j].name);
+               };
+               posArray3 = this.posdata[0].subpos[0].subpos;
+               var dataBase={
+                    posArray1:posArray1,
+                    posArray2:posArray2,
+                    posArray3:posArray3,
+                    selpos1:"",
+                    selpos2:"",
+                    selpos3:"",
+                    selPos2Array:[]
+               };
+               return dataBase;
+          },
+          watch:{
+               "selpos1":function(curval){
+                    var posArray2=[];
+                    var posArray3=[];
+
+                    for(var i=0; i<this.posdata.length; i++){
+                         if(this.posdata[i].name==curval){
+                              this.selPos2Array = this.posdata[i].subpos;
+                              for(var j=0; j<this.posdata[i].subpos.length; j++){
+                                   posArray2.push(this.posdata[i].subpos[j].name);
+                              };
+                              posArray3= this.posdata[i].subpos[0].subpos;
+                              break;
+                         }
+                    }
+                    this.posArray2= posArray2;
+                    this.selpos2 = posArray2[0];
+                    this.posArray3= posArray3;
+                    this.selpos3= posArray3[0];
+               },
+               "selpos2":function(curval){
+                    var posArray3=[];
+                    for(var i=0; i<this.selPos2Array.length; i++){
+                         if(this.selPos2Array[i].name==curval){
+                              posArray3 = this.selPos2Array[i].subpos;
+                              break;
+                         }
+                    }
+                    this.posArray3=posArray3;
+                    this.selpos3=posArray3[0];
+               }
+          }
      });
 
      // 地址选择

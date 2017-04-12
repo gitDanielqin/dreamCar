@@ -814,5 +814,9 @@ var majorArray = [
      {
           major:"其他",
           submajor:["其他"]
+     },
+     {
+          major:"不限",
+          submajor:["不限"]
      }
 ]

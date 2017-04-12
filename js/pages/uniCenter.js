@@ -43,14 +43,10 @@ var appCont = new Vue({
     el: "#app-content",
     data:{
          database:{
-              classific:["综合类","理工类","师范类","艺术类","体育类","职业技术类"],
+              classific:uniclassific,
               amount:["1-10000","10001-20000","20001-30000","30001-40000","40000以上",],
               unilevel:["重点","本科","大专","高职"],
-              majors:[
-                   {major:"艺术",submajor:["行为艺术","人体艺术"]},
-                   {major:"信息技术",submajor:["计算机科学","通信工程"]},
-                   {major:"经济",submajor:["国民经济","企业经济"]},
-              ],
+              majors:majorArray,
          },
          resume:{
               uni:"中国美术学院",
@@ -292,6 +288,10 @@ var appCont = new Vue({
               this.resume.view=false;
          },
          saveResume:function(){
+              $(".pop-major-box").each(function(index){
+                   appCont.resume.specialmajor[index].major = $(this).find(".major-input-1 input").val();
+                   appCont.resume.specialmajor[index].submajor = $(this).find(".major-input-2 input").val();
+              })
               this.resume.edit=false;
               this.resume.view=true;
          },
@@ -378,8 +378,22 @@ var appCont = new Vue({
               }else if(type=="uni"){
                     this.resume.uniLicense=$(obj).val();
               }
+         },
+         remainText:function(text){
+              if(1000-text.length<0){
+                   return 0;
+              }
+              return (1000-text.length)
+         },
+         checkText:function(type){
+              if(type=="resumeintro"){
+                   var len = this.resume.intro.length;
+                   if(1000-len<0){
+                        alert("最多只能输入1000字！");
+                        this.resume.intro = this.resume.intro.slice(0,1000);
+                   }
+              }
          }
-
     },
     computed:{
          majorArr:function(){
@@ -404,7 +418,7 @@ var appCont = new Vue({
     },
     updated:function(){
          selectInitPos();
-         selectEventBind();
+       //  selectEventBind();
     },
     components:{
          'pagination':pagination

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>高校中心</title>
     <link href="css/base.css" rel="stylesheet">
+    <link href="css/widget.css" rel="stylesheet">
     <link href="css/uniCenter.css" rel="stylesheet">
 </head>
 <body class="bg-gray-f2">
@@ -83,13 +84,12 @@
                     </p>
                     <div class="LH26 paLeft7 resume-item clearfix">
                         <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>重点专业</label></p>
-                        <ul class="fl">
+                        <ul class="fl maL4">
                             <li v-for="spmajor in resume.specialmajor" class="maB14">
-                                <dropdown placeholder="一级学科" :options="majorArr" v-model="spmajor.major" classes="W138 maR10"></dropdown>
-                                <dropdown placeholder="二级学科" :options="submajors(spmajor.major)" v-model="spmajor.submajor" classes="W138"></dropdown>
+                                <major-pop :majordata="database.majors"></major-pop>
                             </li>
                         </ul>
-                        <p class="fSize12 color-gray6"><button class="color-blueL maL20 btn-add-major" @click="addMajors">+ 添加</button>（最多可添加5个重点专业）</p>
+                        <p class="fSize12 color-gray6"><button class="color-blueL btn-add-major" @click="addMajors">+ 添加</button>（最多可添加5个重点专业）</p>
                     </div>
                     <div class="LH26 paLeft7 resume-item clearfix">
                         <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校认证</label></p>
@@ -109,8 +109,8 @@
                     <div class="uni-intro LH26 paLeft7 resume-item clearfix">
                         <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校简介</label></p>
                         <div class="fl">
-                            <textarea class="fl" v-model="resume.intro"></textarea>
-                            <p class="t-right">你还可以输入{{wordscal}}字</p>
+                            <textarea class="fl" v-model="resume.intro" @input="checkText('resumeintro')"></textarea>
+                            <p class="t-right">你还可以输入{{remainText(resume.intro)}}字</p>
                         </div>
                     </div>
                     <div class="t-center">
@@ -123,7 +123,7 @@
                         <p><label>高校名称：</label>{{resume.uni}}</p>
                         <p><label>高校类别：</label>{{resume.classific}}</p>
                         <p><label>高校性质：</label>{{resume.level}}<span v-if="resume.specialLv">（{{resume.specialLv}}）</span></p>
-                        <p><label>在校人数：</label>{{resume.amount}}</p>
+                        <p><label>在校人数：</label>{{resume.amount}}人</p>
                         <div class="clearfix">
                             <label class="fl">重点专业：</label>
                             <ul class="fl LH25 paTop5">
@@ -135,11 +135,22 @@
                         <div class="clearfix">
                             <p class="fl"><label>高校认证：</label></p>
                             <ul class="fl uni-valid-upload color-gray6 fSize12 paTop5">
-                                <li><span>重新上传营业执照</span><button class="color-blueL">（查看之前上传的营业执照）</button></li>
-                                <li><span>重新上传办学许可证</span><button class="color-blueL">（查看之前上传的办学许可证）</button></li>
+                                <li><span v-show="resume.comLicense" class="view-valid-label">已上传营业执照</span><span v-show="!resume.comLicense" class="view-valid-label color-gray9">未上传营业执照</span>
+                                   <p class="disInline pRel">
+                                       <button class="color-blueL" v-show="resume.comLicense">（查看之前上传的营业执照）</button>
+                                       <button class="color-orange-fc" v-show="!resume.comLicense">（点击此处上传营业执照）</button>
+                                       <input type="file" @change="changeFile($event.target,'uni')"/>
+                                  </p>
+                                </li>
+                                <li><span v-show="resume.uniLicense" class="view-valid-label">已上传办学许可证</span><span v-show="!resume.uniLicense" class="view-valid-label color-gray9">未上传办学许可证</span>
+                                   <p class="disInline pRel">
+                                     <button class="color-blueL" v-show="resume.uniLicense">（查看之前上传的办学许可证）</button>
+                                     <button class="color-orange-fc" v-show="!resume.uniLicense">（点击此处上传办学许可证）</button>
+                                   </p>
+                                </li>
                             </ul>
                         </div>
-                        <p><label>高校简介：</label>{{resume.intro}}</p>
+                        <p class="LH22"><label>高校简介：</label>{{resume.intro}}</p>
                     </div>
                     <i class="LH-H30 W30 t-center btn-edit" @click="editSwipe"><img class="v-mid" src="images/icon-edit.png"/></i>
                 </div>
@@ -571,8 +582,10 @@
     <script src="js/common/common.js"></script>
     <script src="js/common/cropbox.js"></script>
     <script src="js/components/pagination.js"></script>
+    <script src="js/components/major-pop.js"></script>
     <script src="js/components/dropdown.js"></script>
     <script src="data/address.js"></script>
+    <script src="data/major.js"></script>
     <script src="data/commondata.js"></script>
     <script src="js/pages/uniCenter.js"></script>
 </body>

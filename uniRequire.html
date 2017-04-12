@@ -4,6 +4,7 @@
           <meta charset="utf-8">
           <title>发布需求</title>
           <link href="css/base.css" rel="stylesheet">
+          <link href="css/widget.css" rel="stylesheet">
           <link href="css/require.css" rel="stylesheet">
      </head>
      <body>
@@ -40,11 +41,9 @@
                        <div class="form-cont paLeft68">
                             <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="combiData.header"/></p>
                             <h3 class="LH-H75 fSize18 maT11">我对企业的要求</h3>
-                            <p class="form-item"><label>提供岗位名称</label><dropdown :options="['IT/互联网/通信','销售/客服/市场']" placeholder="" v-model="combiData.incApply.pos.pos_1"></dropdown>
-                                 <dropdown :options="['软件/互联网开发/系统集成','互联网产品/运营管理']" placeholder="" v-model="combiData.incApply.pos.pos_2"></dropdown>
-                                 <dropdown :options="['互联网产品经理/主管','运营总监']" placeholder="" v-model="combiData.incApply.pos.pos_3"></dropdown>
+                            <p class="form-item"><label>提供岗位名称</label><pos-select :posdata="database.inc.posData"></pos-select>
                             </p>
-                            <p class="form-item"><label>岗位人数</label><dropdown :options="['0-20人','20-50人','50-100人','100-200人']" placeholder="" v-model="combiData.incApply.posAmount"></dropdown></p>
+                            <p class="form-item"><label>岗位人数</label><dropdown :options="database.inc.posAmount" placeholder="" v-model="combiData.incApply.posAmount"></dropdown></p>
                             <p class="form-item"><label>企业性质</label><dropdown :options="database.inc.props" placeholder="" v-model="combiData.incApply.incProps"></p>
                             <p class="form-item"><label>企业规模</label><dropdown :options="database.inc.scale" placeholder="" v-model="combiData.incApply.incScale"></p>
                             <p class="form-item"><label>企业行业</label><dropdown :options="database.inc.areas" placeholder="" v-model="combiData.incApply.incArea.incarea_1"></dropdown>
@@ -52,7 +51,7 @@
                             </p>
                             <p class="form-item"><label>所在地</label><addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select></p>
                             <h3 class="LH-H75 fSize18 maT11">我可以提供</h3>
-                            <p class="form-item"><label>专业名称</label><major-select :majordata="database.uni.majors" class="disInline"></major-select></p>
+                            <p class="form-item"><label>专业名称</label><major-pop :majordata="database.uni.majors" class="disInline"></major-pop></p>
                             <p class="form-item"><label>专业人数</label><dropdown :options="database.uni.amount" placeholder="" v-model="combiData.uniApply.stuScale"></dropdown></p>
                             <p class="form-item"><label>联合培养方式</label><dropdown :options="database.trainway" placeholder="" v-model="combiData.uniApply.trainWay"></dropdown></p>
                             <div class="form-item clearfix"><label class="fl">培养时间</label>
@@ -91,7 +90,7 @@
                                 <dropdown :options="['软件/互联网开发/系统集成','互联网产品/运营管理']" placeholder="" v-model="recruitData.incReq.pos_2"></dropdown>
                                 <dropdown :options="['互联网产品经理/主管','运营总监']" placeholder="" v-model="recruitData.incReq.pos.pos_3"></dropdown>
                            </p>
-                           <p class="form-item"><label>岗位数</label><dropdown :options="['0-20人','20-50人','50-100人','100-200人']" placeholder="" v-model="recruitData.incReq.posAmount"></dropdown></p>
+                           <p class="form-item"><label>岗位数</label><dropdown :options="database.inc.posAmount" placeholder="" v-model="recruitData.incReq.posAmount"></dropdown></p>
                            <p class="form-item"><label>所在地</label><addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select></p>
                            <h3 class="LH-H75 fSize18 maT11">高校参与应聘专业</h3>
                            <p class="form-item"><label>专业名称</label><major-select :majordata="database.uni.majors" class="disInline"></major-select></p>
@@ -141,6 +140,11 @@
           <script src="js/libs/vue.js"></script>
           <script src="js/common/common.js"></script>
           <script src="js/components/dropdown.js"></script>
+          <script src="js/components/major-pop.js"></script>
+          <script src="data/address.js"></script>
+          <script src="data/position.js"></script>
+          <script src="data/major.js"></script>
+          <script src="data/commondata.js"></script>
           <script src="js/pages/uniRequire.js"></script>
      </body>
 </html>
