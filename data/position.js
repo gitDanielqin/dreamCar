@@ -772,8 +772,21 @@ var posArray = [
                     subpos:["其他"]
                }
           ]
-     },
-     {
+     }
+];
+
+(function(){
+     for(var i=0; i<posArray.length;i++){
+          for(var j=0; j<posArray[i].subpos.length;j++){
+               posArray[i].subpos[j].subpos.push("不限");
+          }
+          var expos2={
+               name:"不限",
+               subpos:["不限"]
+          }
+          posArray[i].subpos.push(expos2);
+     };
+     var expos1= {
           name:"不限",
           subpos:[
                {
@@ -781,5 +794,6 @@ var posArray = [
                     subpos:["不限"]
                }
           ]
-     }
-]
+     };
+     posArray.push(expos1);
+})()

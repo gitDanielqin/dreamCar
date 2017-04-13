@@ -59,12 +59,14 @@
                var posArray1=[];
                var posArray2=[];
                var posArray3=[];
+               var selPos2Array=[];
                for(var i=0; i<this.posdata.length; i++){
                     posArray1.push(this.posdata[i].name);
                }
                for(var j=0;j<this.posdata[0].subpos.length;j++){
                     posArray2.push(this.posdata[0].subpos[j].name);
                };
+               selPos2Array = this.posdata[0].subpos;
                posArray3 = this.posdata[0].subpos[0].subpos;
                var dataBase={
                     posArray1:posArray1,
@@ -73,7 +75,7 @@
                     selpos1:"",
                     selpos2:"",
                     selpos3:"",
-                    selPos2Array:[]
+                    selPos2Array:selPos2Array
                };
                return dataBase;
           },
@@ -81,7 +83,6 @@
                "selpos1":function(curval){
                     var posArray2=[];
                     var posArray3=[];
-
                     for(var i=0; i<this.posdata.length; i++){
                          if(this.posdata[i].name==curval){
                               this.selPos2Array = this.posdata[i].subpos;
@@ -124,9 +125,11 @@
                var province=[];
                var city=[];
                var district=[];
+               var selCityArray=[];
                for(var i=0; i<this.addrdata.length; i++){
                     province.push(this.addrdata[i].name);
                }
+               selCityArray = this.addrdata[0].citys;
                for(var j=0;j<this.addrdata[0].citys.length;j++){
                     city.push(this.addrdata[0].citys[j].city);
                };
@@ -138,7 +141,7 @@
                     selProvince:"",
                     selCity:"",
                     selDistrict:"",
-                    selCityArray:[]
+                    selCityArray:selCityArray
                };
                return dataBase;
           },
@@ -176,7 +179,41 @@
                }
           }
      });
-
+     //行业选择
+     var templArea='<div style="display:inline-block" class="select-area">\
+          <dropdown placeholder="一级行业" :options="workarea" v-model="selArea" class="input-area-1"></dropdown>\
+          <dropdown placeholder="二级行业" :options="subarea" v-model="selsubArea" class="input-area-2"></dropdown>\
+     </div>';
+     Vue.component("area-select",{
+          template:templArea,
+          props:["areadata"],
+          data:function(){
+               var workarea=[];
+               var subarea=[];
+               for(var i=0; i<this.areadata.length;i++){
+                    workarea.push(this.areadata[i].title);
+               };
+               subarea= this.areadata[0].subareas;
+               var dataBase={
+                    workarea:workarea,
+                    subarea:subarea,
+                    selArea:"",
+                    selsubArea:""
+               };
+               return dataBase;
+          },
+          watch:{
+               "selArea":function(curval){
+                    for(var i=0; i<this.areadata.length;i++){
+                         if(this.areadata[i].title==curval){
+                              this.subarea=this.areadata[i].subareas;
+                              this.selsubArea=this.subarea[0];
+                              break;
+                         }
+                    }
+               }
+          }
+     })
      // 学科选择
      var templMajor='<div>\
           <dropdown placeholder="一级学科" :options="major" v-model="selMajor"></dropdown>\

@@ -1,10 +1,11 @@
-
-
-
+// 获取字段判断是否为首次发布还是修改
+var urlStr= window.location.search.substr(1);
 
 var appMain = new Vue({
      el:"#app-main",
      data:{
+          newRequire:(urlStr==null),
+          showCombi:true,
           database:{
                addrData:addArray,
                uni:{
@@ -17,7 +18,7 @@ var appMain = new Vue({
                inc:{
                     props:incProps,
                     scale:incScale,
-                    areas:["IT/通信/电子/互联网","房地产/建筑业","保险","银行","信托/担保/拍卖/典当","其他"],
+                    areas:workareas,
                     posAmount:positionsum,
                     posData:posArray
                },
@@ -86,6 +87,18 @@ var appMain = new Vue({
           }
      },
      methods:{
+          clickNav:function(type,obj){
+               $(".navs ul li.on").removeClass("on");
+               $(obj).addClass("on");
+               if(type=="combi"){
+                    this.showCombi=true;
+               }else{
+                    this.showCombi=false;
+               }
+               $(".steps li:nth-of-type(1)").removeClass("past");
+               $(".steps li:nth-of-type(2)").removeClass("on");
+               selectInitPos();
+          },
           fontCal:function(str,type){
                if(str.length<=1000){
                     return (1000-str.length);
@@ -120,11 +133,14 @@ var appMain = new Vue({
 
           }
      },
-     mouted:function(){
-          this.database.addrData.push({name:"不限",citys:[{city:"不限",conts:["不限"]}]});
-          for(var key in this.database.uni){
-               this.database.uni[key].push
-          }
+     mounted:function(){
+          $(".selectee input").val("不限");
+          $(".major-input input").val("不限");
+          $(".form-cont input").focus(function(){
+               $(".steps li:nth-of-type(1)").addClass("past");
+               $(".steps li:nth-of-type(2)").addClass("on");
+          })
+
      },
      watch:{
           "combiData.showIncAddr":function(curval){
@@ -142,12 +158,11 @@ var appMain = new Vue({
 
 function _init(){
      selectInitPos();
-     navEventBind();
+//     navEventBind();
      selectTime();
-     selectWelfare();
 }
 _init();
-// selectEventBind();
+// 初始化下拉框的位置
 function selectInitPos(){
      $(".selectee input").each(function(){
         var bgPos=$(this).width()-10+"px center";
@@ -161,11 +176,8 @@ function selectInitPos(){
             top:sibInput.height()
         })
     });
-    $("body").unbind("click").bind("click",function(){
-       $(".selectee ul").hide();
-    })
 }
-
+// 选择时间表事件
 function selectTime(){
      $(".time-table .t-cell").click(function(){
           if($(this).hasClass("on")){
@@ -175,15 +187,8 @@ function selectTime(){
           }
      })
 }
-function selectWelfare(){
-     $(".welfare-lis .check-box").click(function(){
-          if($(this).hasClass("on")){
-               $(this).removeClass("on");
-          }else{
-               $(this).addClass("on");
-          }
-     })
-}
+
+// 表头导航栏的事件绑定
 function navEventBind(){
      $(".navs ul li").each(function(index){
           $(this).click(function(){
@@ -191,6 +196,8 @@ function navEventBind(){
                $(this).addClass("on");
                $(".main .nav-cont").hide();
                $($(".main .nav-cont")[index]).show();
+               $(".steps li:nth-of-type(1)").removeClass("past");
+               $(".steps li:nth-of-type(2)").removeClass("on");
                selectInitPos();
           })
      })

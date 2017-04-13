@@ -407,3 +407,23 @@ var addArray =[
 {"city":"丽水市","conts":["市辖区", "缙云县", "景宁畲族自治县", "莲都区", "龙泉市", "青田县", "庆元县", "松阳县", "遂昌县", "云和县"]}
 ]}
 ];
+
+(function(){
+     for(var i=0; i<addArray.length;i++){
+          for(var j=0;j<addArray[i].citys.length;j++){
+               addArray[i].citys[j].conts.push("不限");
+          }
+          var exCity = {
+               city:"不限",
+               conts:["不限"]
+          }
+          addArray[i].citys.push(exCity);
+     }
+     var exProvince = {
+          name:"不限",
+          citys:[
+               {city:"不限",conts:["不限"]}
+          ]
+     };
+     addArray.push(exProvince);
+})()

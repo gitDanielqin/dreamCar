@@ -127,7 +127,7 @@
                          <label>期望行业</label><span @click="popTrade"><input type="text" class="career-input"  disabled v-model="resume.expect.tradeItems" /></span>
                      </div>
                      <div class="item-row">
-                         <label>期望职能</label><input type="text" class="career-input" val="UI设计师" v-model="resume.expect.posItems">
+                         <label>期望职能</label><pos-select :posdata="database.posData"></pos-select>
                      </div>
                      <div class="item-row">
                          <label>期望地点</label>
@@ -766,6 +766,7 @@
 <script src="js/components/major-pop.js"></script>
 <script src="data/address.js"></script>
 <script src="data/commondata.js"></script>
+<script src="data/position.js"></script>
 <script src="data/workareas.js"></script>
 <script src="data/major.js"></script>
 <script src="js/pages/userCenter.js"></script>

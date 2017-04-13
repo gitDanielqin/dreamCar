@@ -810,13 +810,16 @@ var majorArray = [
                "运用康复与健康",
                "其他",
                ]
-     },
-     {
-          major:"其他",
-          submajor:["其他"]
-     },
-     {
+     }
+];
+
+(function(){
+     for(var i=0;i<majorArray.length;i++){
+          majorArray[i].submajor.push("不限");
+     };
+     exMajor = {
           major:"不限",
           submajor:["不限"]
-     }
-]
+     };
+     majorArray.push(exMajor);
+})()

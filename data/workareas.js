@@ -113,11 +113,16 @@ var workareas = [
                "跨领域经营",
                "其他"
           ]
-     },
-     {
-          title:"不限",
-          subareas:[
-               "不限"
-          ]
      }
-]
+];
+
+(function(){
+     for(var i=0;i<workareas.length;i++){
+          workareas[i].subareas.push("不限");
+     }
+     var exArea = {
+          title:"不限",
+          subareas:["不限"]
+     };
+     workareas.push(exArea);
+})()

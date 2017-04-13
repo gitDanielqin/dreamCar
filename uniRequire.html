@@ -30,25 +30,24 @@
                        </ul>
                        <i class="pic-wrapper progress-txt"><img src="images/require-txt.png" /></i>
                   </div>
-                  <div class="navs clearfix">
+                  <div class="navs clearfix" v-show="newRequire">
                        <ul class="lis-inline fl">
-                            <li class="on">校企合作</li><li>招聘会</li>
+                            <li class="on" @click="clickNav('combi',$event.target)">校企合作</li>
+                            <li @click="clickNav('recruit',$event.target)">招聘会</li>
                        </ul>
                        <p class="W810 bg-gray-ef fl H32"></p>
                   </div>
-                  <div class="nav-cont">
+                  <div class="navs maT20" v-show="!newRequire"></div>
+                  <div class="nav-cont" v-show="showCombi">
                        <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写校企合作信息</h2>
                        <div class="form-cont paLeft68">
                             <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="combiData.header"/></p>
                             <h3 class="LH-H75 fSize18 maT11">我对企业的要求</h3>
-                            <p class="form-item"><label>提供岗位名称</label><pos-select :posdata="database.inc.posData"></pos-select>
-                            </p>
+                            <p class="form-item"><label>提供岗位名称</label><pos-select :posdata="database.inc.posData"></pos-select></p>
                             <p class="form-item"><label>岗位人数</label><dropdown :options="database.inc.posAmount" placeholder="" v-model="combiData.incApply.posAmount"></dropdown></p>
                             <p class="form-item"><label>企业性质</label><dropdown :options="database.inc.props" placeholder="" v-model="combiData.incApply.incProps"></p>
                             <p class="form-item"><label>企业规模</label><dropdown :options="database.inc.scale" placeholder="" v-model="combiData.incApply.incScale"></p>
-                            <p class="form-item"><label>企业行业</label><dropdown :options="database.inc.areas" placeholder="" v-model="combiData.incApply.incArea.incarea_1"></dropdown>
-                              <dropdown :options="database.inc.areas" placeholder="" v-model="combiData.incApply.incArea.incarea_2"></dropdown>
-                            </p>
+                            <p class="form-item"><label>企业行业</label><area-select :areadata="database.inc.areas"></area-select></p>
                             <p class="form-item"><label>所在地</label><addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select></p>
                             <h3 class="LH-H75 fSize18 maT11">我可以提供</h3>
                             <p class="form-item"><label>专业名称</label><major-pop :majordata="database.uni.majors" class="disInline"></major-pop></p>
@@ -76,26 +75,21 @@
                            <button class="confirm-publish-btn">确认发布</button>
                        </div>
                   </div>
-                  <div class="nav-cont disNo">
+                  <div class="nav-cont" v-show="!showCombi">
                       <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写招聘会信息</h2>
                       <div class="form-cont paLeft68">
                            <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="recruitData.header"/></p>
                            <h3 class="LH-H75 fSize18 maT11">对参聘企业的要求</h3>
-                           <p class="form-item"><label>企业行业</label><dropdown :options="database.inc.areas" placeholder="" v-model="recruitData.incReq.incArea.incarea_1"></dropdown>
-                             <dropdown :options="database.inc.areas" placeholder="" v-model="recruitData.incReq.incArea.incarea_2"></dropdown>
-                           </p>
+                           <p class="form-item"><label>企业行业</label><area-select :areadata="database.inc.areas"></area-select></p>
                            <p class="form-item"><label>企业规模</label><dropdown :options="database.inc.scale" placeholder="" v-model="recruitData.incReq.incScale"></p>
                            <p class="form-item"><label>企业性质</label><dropdown :options="database.inc.props" placeholder="" v-model="recruitData.incReq.incProps"></p>
-                           <p class="form-item"><label>岗位名称</label><dropdown :options="['IT/互联网/通信','销售/客服/市场']" placeholder="" v-model="recruitData.incReq.pos.pos_1"></dropdown>
-                                <dropdown :options="['软件/互联网开发/系统集成','互联网产品/运营管理']" placeholder="" v-model="recruitData.incReq.pos_2"></dropdown>
-                                <dropdown :options="['互联网产品经理/主管','运营总监']" placeholder="" v-model="recruitData.incReq.pos.pos_3"></dropdown>
-                           </p>
+                           <p class="form-item"><label>岗位名称</label><pos-select :posdata="database.inc.posData"></pos-select></p>
                            <p class="form-item"><label>岗位数</label><dropdown :options="database.inc.posAmount" placeholder="" v-model="recruitData.incReq.posAmount"></dropdown></p>
                            <p class="form-item"><label>所在地</label><addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select></p>
                            <h3 class="LH-H75 fSize18 maT11">高校参与应聘专业</h3>
-                           <p class="form-item"><label>专业名称</label><major-select :majordata="database.uni.majors" class="disInline"></major-select></p>
+                           <p class="form-item"><label>专业名称</label><major-pop :majordata="database.uni.majors" class="disInline"></major-pop></p>
                            <p class="form-item"><label>专业人数</label><dropdown :options="database.uni.amount" placeholder="" v-model="recruitData.uniApply.stuScale"></dropdown></p>
-                           <p class="form-item"><label>举办时间</label><input type="text" placeholder="2017-01-30格式" v-model="recruitData.date"/></p>
+                           <p class="form-item"><label>举办时间</label><input type="text" placeholder="格式：2017-01-30" v-model="recruitData.date"/></p>
                            <p class="form-item pRel"><label>招聘会描述</label><textarea v-model="recruitData.desc" class="form-desc"></textarea><span class="fSize14 LH40 color-gray-c desc-hint">你还可以输入{{fontCal(recruitData.desc,recruitData.datatype)}} 字</span></p>
                            <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
                            <p class="form-item"><label>联系人</label><input type="text" v-model="recruitData.contact.person"/></p>
@@ -144,6 +138,7 @@
           <script src="data/address.js"></script>
           <script src="data/position.js"></script>
           <script src="data/major.js"></script>
+          <script src="data/workareas.js"></script>
           <script src="data/commondata.js"></script>
           <script src="js/pages/uniRequire.js"></script>
      </body>

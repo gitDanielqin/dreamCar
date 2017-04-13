@@ -5,6 +5,8 @@
 .selectee ul li{line-height: 24px; height: 24px; cursor: pointer;padding-left: 10px;}
 .selectee ul li.over{background: #eee;}
 .selectee ul li.selected{background: #dcdcdc;}
+
+
 /*头部*/
 .top .navs a{display: inline-block; width: 50px; height: 50px; line-height: 50px; text-align: center;margin-left: 20px;}
 .top .navs a img{vertical-align: middle;}
@@ -20,6 +22,7 @@ background: -moz-linear-gradient(left,#f7b633,#ccc);
 background: -o-linear-gradient(left,#f7b633,#ccc);
 background: linear-gradient(left,#f7b633,#ccc);
 }
+.steps li.past .bind-line{background: #f7b633;}
 .steps li p{line-height: 50px; margin-top: 3px;}
 .progress-txt{position: absolute; top: 54px; right: 28px;}
 

@@ -92,6 +92,7 @@ var appCont = new Vue({
                salary:salaryItems,
                major:majorArray,
                qualification:scolarship,
+               posData:posArray,
                languages:[
                     "英语","法语","日语","韩语","德语","俄语","西班牙语","葡萄牙语","阿拉伯语","其他"
                ]

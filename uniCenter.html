@@ -156,12 +156,11 @@
                 </div>
             </div>
             <div class="uni-require requireBox">
-                <div class="ListBox">
+                <div class="ListBox pRel">
+                    <span class="new-require color-orange-f7 fSize16"><a href="uniRequire.html"><img src="images/icon-require.png" /></a></span>
                     <div class="hd LH-H58 bg-white">
                         <dropdown classes="state" :options="['全部状态','校企合作','招聘会']" v-model="require.state"></dropdown>
-                        <span class="new-require color-orange-f7 fSize16 fr"><a href="uniRequire.html"><img src="images/icon-require.png" /></a></span>
-                        <p class="fr fSize14 maR30">我发布过的需求<span class="color-orange2 maL10 maR10">{{require.items.length}}</span>个</p>
-
+                        <p class="fr fSize14 maR120">我发布过的需求<span class="color-orange2 maL10 maR10">{{require.items.length}}</span>个</p>
                     </div>
                     <ul class="info-items H410">
                         <li v-for="(item,index) in require.results" :name="item.classic" v-show="showResult(index,require.curpage,3)" onclick="window.open('detail-uni.html')">
@@ -177,8 +176,8 @@
                                     <p>{{item.uniLevel}}</p>
                                     <p>{{item.date}}</p>
                                 </div>
-                                <div class="operations color-blueL">
-                                    <p><span>修改</span><span @click="delItem(item)">删除</span></p>
+                                <div class="operations color-blueL fr">
+                                    <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>
                                     <p><span>刷新</span><span>置顶</span></p>
                                 </div>
                             </div>

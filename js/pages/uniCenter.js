@@ -298,6 +298,9 @@ var appCont = new Vue({
          checkExlv:function(){
               this.resume.specialLv=$(".uni-level input[type='radio']:checked").val();
          },
+         modItem:function(item){
+              window.open("uniRequire.html?modify","_blank")
+         },
          delItem:function(item){
               this.require.items.remove(item);
          },
