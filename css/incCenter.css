@@ -1,3 +1,5 @@
+.hd-navs li{font-size: 14px; margin-right: 10px; padding: 0 5px;}
+
 .top .navs a{display: inline-block; width: 50px; height: 50px; line-height: 50px; text-align: center;margin-left: 20px;}
 .top .navs a img{vertical-align: middle;}
 .msg-info{display: inline-block; width: 24px; height: 24px; background: #ef3e3e; line-height: 24px; color: white; position: absolute; right: 1px; top: 3px; border-radius: 50%;}
@@ -11,15 +13,24 @@
 .selectee ul li.selected{background: #2ea8e6; color:#fff;}
 
 .sel-add input{width:58px;}
+.sel-addr input{width: 100px;}
 .main .sInfo{ border: 1px solid #ccc;}
 .porto-img{border: 2px dashed #999; background: url("../images/cross.png") no-repeat center center;}
 .porto-img img{width: 100%;}
 .main .infoTxt{position: relative;}
 .main .infoTxt p{line-height: 25px; font-size: 14px;}
+.infoTxt label{width: 72px; text-align: right; display: inline-block; vertical-align: top; margin-right: 15px;}
 .main .infoTxt i{display: inline-block; position: absolute; right:-36px; top: 0; font-size: 0;}
-.progress{display: inline-block;background: #fcfbf9;  margin: 0 10px;}
-.progress-real{display: inline-block;background: #f7aa00; width: 87%; position: absolute; left: 0; top: 0;}
-.preview-btn{position: absolute; right:-63px;bottom:0; color:#f77b00; line-height: 25px; cursor: pointer;}
+.edit-brief p{line-height: 25px; font-size: 14px; margin-top: 5px;}
+.edit-brief label{width: 60px; text-align: right; display: inline-block; vertical-align: top; margin-right: 15px;}
+.edit-brief input{height: 25px; line-height: 25px; border: 1px solid #ccc; padding-left: 10px;}
+.edit-opera{position: absolute;right: 0; bottom: 0; margin-right: 92px;}
+.edit-opera button{width: 58px; height: 24px; border-radius: 5px; font-size: 14px; background: none;}
+.btn-save{border:1px solid #ff9933; color:#ff9933;}
+.btn-save:hover{background: #ff9933; color:white;}
+.btn-cancel{border:1px solid #82c4ea; color:#82c4ea;}
+.btn-cancel:hover{background: #82c4ea; color: white;}
+.brief-unilevel input{width: 100px;}
 
 /*VIP中心*/
 .vip-navs li{width: 100px; margin-left: 22px; position:relative; cursor: pointer;}
@@ -56,7 +67,7 @@
 
 /*主要内容部分*/
 .content > div{display: none;}
-.resumeCont{padding:29px 73px 47px 53px; border: 1px solid #ccc;}
+.resumeCont{padding:29px 73px 47px 53px; border: 1px solid #ccc; min-height: 500px;}
 .hd-icon{width:30px; height:30px; line-height: 30px; margin-right: 10px;}
 .career-input{background: url("../images/icon-prop.jpg") no-repeat 277px center; padding-right: 23px; width:298px;}
 .resume-item{font-size: 14px; margin-bottom: 20px;}
@@ -71,6 +82,9 @@
 .uni-valid-upload input[type='file']{position: absolute; left: 0; top: 0; opacity: 0;}
 .uni-intro textarea{width: 498px; height: 198px; box-sizing: border-box; border: 1px solid #ccc; padding: 5px 10px; line-height: 26px;}
 .resumeCont .btn-edit{position: absolute;right: 73px; top:29px; cursor: pointer;}
+/*左右信息超出部分出现省略号*/
+.item-block-left p{width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.item-block-right p{width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
 
 .state{line-height: 38px;}
 .state-right{line-height: 38px;margin-top: 9px;}
@@ -84,7 +98,7 @@
 .uni-message .logo-pic{margin-top: 34px;}
 .uni-coop .info-items>li{height:148px;}
 .uni-coop .logo-pic{margin-top: 34px;}
-.depart{margin:0 12px; }
+.depart{margin:0 8px;}
 .item-block-left p{line-height: 28px; font-size: 14px;}
 .item-block-right{padding: 18px; background: url("../images/dashline.png") no-repeat left 26px;}
 .uni-require .item-block-right{background: url("../images/dashline.png") no-repeat left 20px;}
@@ -92,10 +106,13 @@
 .uni-message .uni-apply-message{background:none}
 .item-block-right p{color: #333;}
 .info-items .item-date{font-size: 12px; color: #666;}
-.new-require{position: absolute; right: 70px;}
+/*发布按钮样式*/
+.new-require{position: absolute; right: 10px; top: 10px; z-index: 10;}
+.new-require a{display: inline-block;}
+.new-require img{width: 92%;}
 
-.operations{position: absolute;top:0; right: 20px;}
-.operations p{line-height: 30px;}
+.operations{position: absolute;top:10px; right: 20px;}
+.operations p{line-height: 50px;}
 .operations span{margin-left: 24px; cursor: pointer;}
 
 .collect-btn button{margin-right: 35px; background: none; font-size: 14px;}
@@ -173,6 +190,7 @@ position: absolute;  display:none;}
 .trade-box .cont{overflow: auto;}
 .trade-box .trade-bot button{width: 58px; height:28px; border:1px solid #2ea8e6; color:#2ea8e6; font-size: 14px; margin: 0 10px;}
 .trade-box .trade-bot button:hover{background: #2ea8e6; color: white;}
+.trade-single-table input[type="radio"] {vertical-align: middle; margin-right: 5px;}
 
 /*头像编辑弹框样式*/
 .porto-upload{position: absolute; left:50%; top: 256px;margin-left: -250px;}

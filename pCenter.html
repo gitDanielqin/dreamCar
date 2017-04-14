@@ -127,7 +127,7 @@
                          <label>期望行业</label><span @click="popTrade"><input type="text" class="career-input"  disabled v-model="resume.expect.tradeItems" /></span>
                      </div>
                      <div class="item-row">
-                         <label>期望职能</label><pos-select :posdata="database.posData"></pos-select>
+                         <label>期望职能</label><span @click="popPosition"><input type="text" class="career-input"  disabled v-model="resume.expect.posItems" /></span>
                      </div>
                      <div class="item-row">
                          <label>期望地点</label>
@@ -730,6 +730,8 @@
                <button @click="submitTrade('worksexp')">确定</button><button @click="cancelTrade">取消</button>
          </div>
     </div>
+    <!-- 期望职能选择弹框 -->
+    <pop-position :posdata="database.posdata" class="maCenter" v-show="showPosition" @confirm="submitPos" @cancel="cancelPos"></pop-position>
 </div>
 <div class="bot paTop8 t-center bot-account">
      <div class="inner clearfix">
@@ -764,6 +766,7 @@
 <script src="js/components/pagination.js"></script>
 <script src="js/components/dropdown.js"></script>
 <script src="js/components/major-pop.js"></script>
+<script src="js/components/pos-pop.js"></script>
 <script src="data/address.js"></script>
 <script src="data/commondata.js"></script>
 <script src="data/position.js"></script>

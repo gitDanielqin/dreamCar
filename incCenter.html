@@ -27,10 +27,22 @@
             </div>
             <div class="infoTxt maT24 maL54 fl color-gray6 W300" v-show="viewInfo">
                 <h3 class="LH-H47 fSize18 color-gray3">{{Inc}}</h3>
-                <p><span>企业性质：</span>{{IncProps}}<span class="maL20">企业规模：</span>{{IncScale}}</p>
-                <p><span class="maR33">所在地</span>{{address.province}}-{{address.city}}-{{address.district}}</p>
-                <p><span class="maR33">邮箱</span>{{email}}</p>
-                <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                <p><label>企业性质：</label>{{briefInfo.IncProps}}<span class="maL20">企业规模：</span>{{briefInfo.IncScale}}</p>
+                <p><label>所在地：</label>{{briefInfo.address.province}}-{{briefInfo.address.city}}-{{briefInfo.address.district}}</p>
+                <p><label>邮箱：</label>{{briefInfo.email}}</p>
+                <i class="LH-H30 W30 t-center btn-edit" @click="edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+            </div>
+            <div class="edit-brief maT24 maL54 fl color-gray6 W530 pRel" v-show="!viewInfo">
+                 <h3 class="LH-H47 fSize18 color-gray3">{{Inc}}</h3>
+                 <p><label>企业性质</label><dropdown :options="database.incprops" v-model="briefInfo.IncProps" class="brief-unilevel"></dropdown>
+                    <label class="maL20">企业规模</label><dropdown :options="database.incscale" v-model="briefInfo.IncScale" class="brief-unilevel"></dropdown>
+                 </p>
+                 <p><label>所在地</label><addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select></p>
+                 <p><label class="brief-email">邮箱</label><input type="email" v-model="briefInfo.email" /></p>
+                 <div class="edit-opera fSize0">
+                     <button class="maR15 btn-save" @click="save">保存</button>
+                     <button class="btn-cancel" @click="cancel">取消</button>
+                </div>
             </div>
             <div class="barCodeBox maT14 W168 fr color-gray6 fSize14">
                 <p class="LH-H37">扫一扫微信公众号</p>
@@ -101,8 +113,12 @@
                         <div class="clearfix">
                             <p class="fl"><label>企业认证：</label></p>
                             <ul class="fl uni-valid-upload color-gray6 fSize12 paTop5">
-                                <li><span>重新上传营业执照</span><button class="color-blueL">（查看之前上传的营业执照）</button></li>
-                            </ul>
+                                 <li><a href="javascript:void(0)"><label for="comlicense">重新上传营业执照</label><i class="pic-wrapper"><img src="images/icon-upload.png"/></i></a>
+                                     <button v-show="!resume.firstEdit">（查看之前上传的营业执照）</button>
+                                     <span v-show="resume.firstEdit">{{resume.comLicense}}</span>
+                                     <input type="file" name="comlicense" @change="changeFile($event.target,'commence')" />
+                                </li>
+                           </ul>
                         </div>
                         <p><label>企业简介：</label>{{resume.intro}}</p>
                     </div>
@@ -110,34 +126,35 @@
                 </div>
             </div>
             <div class="uni-require requireBox">
-                <div class="ListBox">
+                <div class="ListBox pRel">
+                    <span class="new-require color-orange-f7 fSize16"><a href="incRequire.html"><img src="images/icon-require.png" /></a></span>
                     <div class="hd LH-H58 bg-white pRel">
                         <dropdown classes="state" :options="['全部类型','校企合作','招聘会','企业直聘']" v-model="require.state"></dropdown>
+                        <dropdown classes="state" :options="['全部状态','三天内','一周内','一月内']" v-model="require.period"></dropdown>
                         <p class="disInline fSize14 maL195">我发布过的需求<span class="color-orange2 maL10 maR10">{{require.items.length}}</span>个</p>
-                        <dropdown classes="state-right fl" :options="['全部状态','三天内','一周内','一月内']" v-model="require.period"></dropdown>
-                        <span class="new-require color-orange-f7 fSize16"><a href="incRequire.html">发布需求</a></span>
                     </div>
                     <ul class="info-items H410">
                         <li v-for="(item,index) in require.results" :name="item.classic" :date="item.publicDate" v-show="showResult(index,require.curpage,3)">
                             <div v-if="item.classic=='校企合作'" class="paLeft29 clearfix H128 pRel" onclick="window.open('detail-company.html')">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                <div class="item-block-left fl paTop22 W280 maL20">
+                                <div class="item-block-left fl paTop22 W250 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30">{{item.IncPos}}</h2>
                                     <p>{{item.coMajor}}<i class="depart">|</i>{{item.coScale}}<i class="depart">|</i>{{item.uniLevel}}</p>
                                     <p>联合培养方式：{{item.trainWay}}</p>
                                 </div>
-                                <div class="item-block-right fl fSize14 LH25 maT10">
+                                <div class="item-block-right fl fSize14 LH25 maT10 W242">
                                     <p>{{item.IncName}}</p>
                                     <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
                                     <p>{{item.publicDate}} {{item.publicTime}}</p>
                                 </div>
-                                <div class="operations color-blueL">
-                                    <p><span>修改</span><span @click="delItem(item)">删除</span><span>刷新</span><span>置顶</span></p>
+                                <div class="operations color-blueL fr">
+                                    <p><span>修改</span><span @click="delItem(item)">删除</span></p>
+                                    <p><span>刷新</span><span>置顶</span></p>
                                 </div>
                             </div>
                             <div v-else-if="item.classic=='招聘会'" class="paLeft29 clearfix H128 pRel" onclick="window.open('detail-increcruit.html')">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                <div class="item-block-left fl paTop22 W334 maL20">
+                                <div class="item-block-left fl paTop22 W300 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30">{{item.IncPos}}</h2>
                                     <p><span class="maR17 color-orange-f7">{{item.salary}}</span>{{item.major}}<i class="depart">|</i>{{item.exp}}<i class="depart">|</i>{{item.scolar}}</p>
                                     <p>招聘会时间：{{item.recruitDate}}</p>
@@ -148,12 +165,13 @@
                                     <p>{{item.publicDate}} {{item.publicTime}}</p>
                                 </div>
                                 <div class="operations color-blueL">
-                                     <p><span>修改</span><span @click="delItem(item)">删除</span><span>刷新</span><span>置顶</span></p>
+                                     <p><span>修改</span><span @click="delItem(item)">删除</span></p>
+                                     <p><span>刷新</span><span>置顶</span></p>
                                 </div>
                             </div>
                             <div v-else-if="item.classic=='企业直聘'" class="paLeft29 clearfix H128 pRel" onclick="window.open('detail-position.html')">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                <div class="item-block-left fl paTop22 W334 maL20">
+                                <div class="item-block-left fl paTop22 W300 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30">{{item.IncPos}}</h2>
                                     <p><span class="maR17 color-orange-f7">{{item.salary}}</span>{{item.major}}<i class="depart">|</i>{{item.exp}}<i class="depart">|</i>{{item.scolar}}</p>
                                     <p><span class="maR17">【{{item.IncAddr}}】</span>岗位数：{{item.posAmount}}人</p>
@@ -164,7 +182,8 @@
                                     <p>{{item.publicDate}} {{item.publicTime}}</p>
                                 </div>
                                 <div class="operations color-blueL">
-                                     <p><span>修改</span><span @click="delItem(item)">删除</span><span>刷新</span><span>置顶</span></p>
+                                     <p><span>修改</span><span @click="delItem(item)">删除</span></p>
+                                     <p><span>刷新</span><span>置顶</span></p>
                                 </div>
                             </div>
                         </li>
@@ -177,6 +196,10 @@
                     <div class="hd LH-H58 bg-white">
                         <dropdown classes="state" :options="['全部状态','校企合作','高校招聘会']" v-model="collect.state"></dropdown>
                         <p class="fr fSize14 maR30">我收藏的高校<span class="color-orange2 maL10 maR10">{{collect.items.length}}</span>个</p>
+                        <!-- <ul class="lis-inline hd-navs maL10 fl">
+                             <li>校企合作<span class="color-orange2 maL10 maR10">{{collect.items.length}}</span></li>
+                             <li>高校招聘会<span class="color-orange2 maL10 maR10">{{collect.items.length}}</span></li>
+                        </ul> -->
                     </div>
                     <ul class="info-items H470">
                         <li v-for="(item,index) in collect.results" :name="item.classic" v-show="showResult(index,collect.curpage,3)">
@@ -193,8 +216,8 @@
                                          <p>{{item.IncScale}}<i class="depart">|</i>{{item.IncProps}}<i class="depart">|</i>{{item.pos}}</p>
                                          <p class="pubdate">{{item.publicDate}} {{item.publicTime}}</p>
                                          <div class="collect-btn">
-                                             <button class="color-blueL">取消收藏</button>
-                                             <button class="color-orange-f7">申请合作</button>
+                                             <button class="color-blueL" @click.stop="cancel('collec-recruit',index)">取消收藏</button>
+                                             <button class="color-orange-f7" @click.stop="apply('collec-recruit',index)">申请合作</button>
                                          </div>
                                      </div>
                                  </div>
@@ -213,8 +236,8 @@
                                          <p>{{item.uniLevel}}</p>
                                          <p class="pubdate">{{item.publicDate}} {{item.publicTime}}</p>
                                          <div class="collect-btn">
-                                             <button class="color-blueL">取消收藏</button>
-                                             <button class="color-orange-f7">申请合作</button>
+                                             <button class="color-blueL" @click.stop="cancel('collec-combi',index)">取消收藏</button>
+                                             <button class="color-orange-f7" @click.stop="apply('collec-combi',index)">申请合作</button>
                                          </div>
                                      </div>
                                  </div>
@@ -539,17 +562,17 @@
 
 
      </div>
-     <div class="trade-box W770 H420 maCenter" v-show="showTrade" id="app-trade" @click="stayshow($event)">
+     <!--工作经历行业选择框单选  -->
+    <div class="trade-box W770 H420 maCenter trade-box-single" v-show="showTrade" @click="stayshow($event)">
          <h3 class="bg-gray-e6 fSize14 LH-H36 paLeft30 paRight30 color-black">选择行业分类<i class="pic-wrapper W26 LH-H26 maT5 closer t-center fr cur-pointer" @click="closeTrade"><img src="images/icon-close3.png" /></i></h3>
-         <div class="H328 bg-white paLeft35 cont">
-              <h4 class="LH-H27 fSize12 color-gray9 paTop6">最多可以选择3项</h4>
-              <table class="fSize12">
+         <div class="H328 bg-white paLeft35 cont paTop14">
+              <table class="fSize12 trade-single-table">
                    <tr v-for="trade in trades">
                         <td class="W158 LH64 t-center">{{trade.title}}</td>
                         <td class="W539">
                              <ul class="lis-inline paTop5 paBot5">
-                                  <li v-for="item in trade.items" class="W246 maL12 LH-H27">
-                                       <input type="checkbox"  @click="checkfunc(item,$event.target)"/>{{item}}
+                                  <li v-for="item in trade.subareas" class="W246 maL12 LH-H27">
+                                       <input type="radio"  name="workstrade" :value="item" />{{item}}
                                   </li>
                              </ul>
                         </td>
@@ -560,7 +583,6 @@
                <button @click="submitTrade">确定</button><button @click="cancelTrade">取消</button>
          </div>
     </div>
-
 </div>
     <div class="bot paTop8 t-center bot-account">
         <div class="inner clearfix">
@@ -590,6 +612,9 @@
     </div>
     <script src="js/libs/jquery-3.1.0.min.js"></script>
     <script src="js/libs/vue.js"></script>
+    <script src="data/commondata.js"></script>
+    <script src="data/address.js"></script>
+    <script src="data/workareas.js"></script>
     <script src="js/common/common.js"></script>
     <script src="js/common/cropbox.js"></script>
     <script src="js/components/pagination.js"></script>

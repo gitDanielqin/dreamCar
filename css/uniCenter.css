@@ -32,9 +32,6 @@
 .brief-unilevel input{width: 100px;}
 
 .main .infoTxt i{display: inline-block; position: absolute; right:305px; top: 10px; font-size: 0; cursor: pointer;}
-.progress{display: inline-block;background: #fcfbf9;  margin: 0 10px;}
-.progress-real{display: inline-block;background: #f7aa00; width: 87%; position: absolute; left: 0; top: 0;}
-.preview-btn{position: absolute; right:-97px;bottom:0; color:#f77b00; line-height: 25px; cursor: pointer;}
 
 /*VIP中心*/
 .vip-navs li{width: 100px; margin-left: 22px; position:relative; cursor: pointer;}

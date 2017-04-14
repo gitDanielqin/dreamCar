@@ -139,8 +139,9 @@ var appMain = new Vue({
           $(".form-cont input").focus(function(){
                $(".steps li:nth-of-type(1)").addClass("past");
                $(".steps li:nth-of-type(2)").addClass("on");
-          })
-
+          });
+          selectInitPos();
+          selectTime();
      },
      watch:{
           "combiData.showIncAddr":function(curval){
@@ -156,12 +157,6 @@ var appMain = new Vue({
      }
 })
 
-function _init(){
-     selectInitPos();
-//     navEventBind();
-     selectTime();
-}
-_init();
 // 初始化下拉框的位置
 function selectInitPos(){
      $(".selectee input").each(function(){
@@ -185,20 +180,5 @@ function selectTime(){
           }else{
                $(this).addClass("on");
           }
-     })
-}
-
-// 表头导航栏的事件绑定
-function navEventBind(){
-     $(".navs ul li").each(function(index){
-          $(this).click(function(){
-               $(".navs ul li.on").removeClass("on");
-               $(this).addClass("on");
-               $(".main .nav-cont").hide();
-               $($(".main .nav-cont")[index]).show();
-               $(".steps li:nth-of-type(1)").removeClass("past");
-               $(".steps li:nth-of-type(2)").removeClass("on");
-               selectInitPos();
-          })
      })
 }

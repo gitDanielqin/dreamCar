@@ -4,28 +4,53 @@ var appPorto = new Vue({
     data: {
         viewInfo: true,
         Inc: "企业名称",
-        IncProps: "民营企业",
-        IncScale:"600人以上",
-        address: {
-            province: "浙江",
-            city: "杭州",
-            district: "滨江"
+        database:{
+             incprops:incProps,
+             incscale:incScale,
+             addrData:addArray
         },
-        email: "xqztc@qq.com"
+        briefInfo:{
+             IncProps: "民营企业",
+             IncScale:"600人以上",
+             address: {
+                 province: "浙江",
+                 city: "杭州",
+                 district: "滨江"
+             },
+             email: "xqztc@qq.com"
+        },
+        cloneInfo:{}
    },
    methods:{
         uploading:function(){
              appModal.showModal=true;
              appModal.showUpload=true;
+        },
+        save:function(){
+             this.briefInfo.address.province = $(".edit-brief .sel-province input").val();
+             this.briefInfo.address.city = $(".edit-brief .sel-city input").val();
+             this.briefInfo.address.district = $(".edit-brief .sel-district input").val();
+             this.viewInfo=true;
+        },
+        cancel:function(){
+             this.briefInfo = cloneObj(this.cloneInfo);
+             this.viewInfo=true;
+        },
+        edit:function(){
+             this.cloneInfo = cloneObj(this.briefInfo);
+             this.viewInfo=false;
         }
    }
 });
+// 移除多余的两项
+incProps.remove("中国500强");
+incProps.remove("世界500强");
 var appCont = new Vue({
     el: "#app-content",
     data:{
          database:{
-              IncScale:["1~20","21~50","51~100","101~500","501~1000","1000人以上"],
-              IncProps:["内资","外资","农民专业合作社","合作企业","个人独资企业"],
+              IncScale:incScale,
+              IncProps:incProps,
          },
          resume:{
               Inc:"",
@@ -54,7 +79,7 @@ var appCont = new Vue({
                    {classic:"企业直聘",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"大专",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:2,publicDate:"2017-2-14",publicTime:"24:00",IncAddr:"滨江"},
               ],
               results:[
-                   {classic:"校企合作",coMajor:"合作专业",coScale:"合作人数",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",IncName:"企业名称",uniLevel:"高校性质",publicDate:"2017-3-5",publicTime:"24:00",IncPos:"岗位名称"},
+                   {classic:"校企合作",coMajor:"合作专业",coScale:"合作人数",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业业所属行业所属行业所属行",trainWay:"企业提供的培训方式",IncName:"企业名称",uniLevel:"高校性质",publicDate:"2017-3-5",publicTime:"24:00",IncPos:"岗位名称"},
                    {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
                    {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
                    {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
@@ -342,8 +367,16 @@ var appCont = new Vue({
            if(type=="commence"){
                 this.resume.comLicense=$(obj).val();
            }
-       }
+      },
+      apply:function(type,index){
 
+      },
+      cancel:function(type,index){
+           if(type=="collec-recruit"){
+                this.collect.results.splice(index,1);
+                this.collect.items = cloneObj(this.collect.results);
+           }
+      }
     },
     computed:{
          majorArr:function(){
@@ -382,13 +415,7 @@ var appModal = new Vue({
           showTrade:false,
           showPreview:false,
           showUpload:false,
-          trades:[
-               {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
-               {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
-               {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
-               {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
-               {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]}
-          ],
+          trades:workareas,
           baseInfo:appPorto.oldInfo,
           resumeInfo:appCont.resume
      },
@@ -408,7 +435,7 @@ var appModal = new Vue({
                }
           },
           submitTrade:function(){
-               appCont.resume.trade = this.checkedTrades.join();
+               appCont.resume.trade = $(".trade-single-table input[type='radio']:checked").val();
                this.showTrade=false;
                this.showModal=false;
           },
@@ -428,6 +455,14 @@ var appModal = new Vue({
           closePorto:function(){
                this.showUpload=false;
                this.showModal=false;
+          }
+     },
+     watch:{
+          'showTrade':function(curval){
+               if(curval){
+                    var top = Math.floor($(window).height()*0.15+$("body").scrollTop())+"px";
+                    $(".trade-box-single").css("margin-top",top);
+               }
           }
      }
 });

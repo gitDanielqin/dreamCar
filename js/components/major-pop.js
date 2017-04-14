@@ -1,7 +1,7 @@
 (function(){
      var templMajor= '<div style="position:relative" class="pop-major-box">\
-          <span @click="pop(\'major\')" class="major-input major-input-1"><input placeholder="一级学科" disabled v-model="selMajor" ></span>\
-          <span @click="pop(\'submajor\')" class="major-input major-input-2"><input placeholder="二级学科" disabled v-model="selSubMajor"></span>\
+          <span @click="pop(\'major\')" class="major-input major-input-1"><input type="text" placeholder="一级学科" disabled v-model="selMajor" ></span>\
+          <span @click="pop(\'submajor\')" class="major-input major-input-2"><input type="text" placeholder="二级学科" disabled v-model="selSubMajor"></span>\
           <input type="text" class="ex-major" placeholder="请输入专业名称" v-model="exMajor" v-show="showExMajor"/>\
           <div class="pop-major-1 pop-major" v-show="showMajor1">\
                <h3 class="pop-major-title">专业名称<i class="pic-wrapper major-closer" @click=closePop><img src="images/icon-close3.png" /></i></h3>\

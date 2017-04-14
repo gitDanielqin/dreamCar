@@ -4,6 +4,7 @@
           <meta charset="utf-8">
           <title>发布需求</title>
           <link href="css/base.css" rel="stylesheet">
+          <link href="css/widget.css" rel="stylesheet">
           <link href="css/require.css" rel="stylesheet">
      </head>
      <body>
@@ -31,26 +32,24 @@
              </div>
              <div class="navs clearfix">
                   <ul class="lis-inline fl">
-                       <li class="on">校企合作</li><li>招聘会</li><li>直聘</li>
+                       <li class="on" @click="clickNav('combi',$event.target)">校企合作</li>
+                       <li @click="clickNav('recruit',$event.target)">招聘会</li>
+                       <li @click="clickNav('direct',$event.target)">直聘</li>
                   </ul>
                   <p class="W740 bg-gray-ef fl H32"></p>
              </div>
-             <div class="nav-cont">
+             <div class="nav-cont" v-show="showpage.page1">
                   <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写校企合作信息</h2>
                   <div class="form-cont paLeft68">
                        <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="combiData.header"/></p>
                        <h3 class="LH-H75 fSize18 maT11">我对高校的要求</h3>
-                       <p class="form-item"><label>专业名称</label><major-select :majordata="database.uni.majors" class="disInline"></major-select>
-                       </p>
+                       <p class="form-item"><label>专业名称</label><major-pop :majordata="database.uni.majors" class="disInline"></major-pop></p>
                        <p class="form-item"><label>专业人数</label><dropdown :options="database.uni.amount" placeholder="" v-model="combiData.incReq.stuScale"></dropdown></p>
                        <p class="form-item"><label>高校性质</label><dropdown :options="database.uni.unilevel" placeholder="" v-model="combiData.incReq.uniLevel"></dropdown></p>
                        <p class="form-item"><label>高校类型</label><dropdown :options="database.uni.classific" placeholder="" v-model="combiData.incReq.uniClassific"></dropdown></p>
                        <p class="form-item"><label>所在地</label><addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select></p>
                        <h3 class="LH-H75 fSize18 maT11">我可以提供</h3>
-                       <p class="form-item"><label>岗位名称</label><dropdown :options="['IT/互联网/通信','销售/客服/市场']" placeholder="" v-model="combiData.incApply.pos.pos_1"></dropdown>
-                            <dropdown :options="['软件/互联网开发/系统集成','互联网产品/运营管理']" placeholder="" v-model="combiData.incApply.pos.pos_2"></dropdown>
-                            <dropdown :options="['互联网产品经理/主管','运营总监']" placeholder="" v-model="combiData.incApply.pos.pos_3"></dropdown>
-                       </p>
+                       <p class="form-item"><label>岗位名称</label><pos-select :posdata="database.posdata"></pos-select></p>
                        <p class="form-item"><label>岗位数</label><input type="text" v-model="combiData.incApply.posAmount" />人</p>
                        <p class="form-item"><label>联合培养方式</label><dropdown :options="database.trainway" placeholder="" v-model="combiData.incApply.trainWay"></dropdown></p>
                        <div class="form-item clearfix"><label class="fl">培养时间</label>
@@ -75,18 +74,16 @@
                       <button class="confirm-publish-btn">确认发布</button>
                   </div>
              </div>
-             <div class="nav-cont disNo">
+             <div class="nav-cont" v-show="showpage.page2">
                  <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写招聘会信息</h2>
                  <div class="form-cont paLeft68">
                       <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="recruitData.header"/></p>
-                      <p class="form-item maT28"><label>职位类别</label><dropdown :options="database.postype" placeholder="" v-model="recruitData.postype.postype_1"></dropdown>
-                           <dropdown :options="database.postype" placeholder="" v-model="recruitData.postype.postype_2"></dropdown>
-                      </p>
-                      <p class="form-item"><label>招聘人数</label><input type="text" v-model="recruitData.amount" /></p>
+                      <p class="form-item maT28"><label>职位类别</label><pos-select :posdata="database.posdata"></pos-select></p>
+                      <p class="form-item"><label>招聘人数</label><input type="text" v-model="recruitData.amount" />人</p>
                       <p class="form-item"><label>学历要求</label><dropdown :options="database.uni.scolars" placeholder="" v-model="recruitData.scolar"></dropdown></p>
                       <p class="form-item"><label>性别</label><dropdown :options="['男','女','不限']" placeholder="" v-model="recruitData.gender"></dropdown></p>
-                      <p class="form-item"><label>工作经验</label><dropdown :options="['1年以下','1-3年','3-5年','5-10年','10年以上','不限']" placeholder="" v-model="recruitData.worksexp"></dropdown></p>
-                      <p class="form-item"><label>薪资待遇</label><dropdown :options="['3k-5k','5k-8k','8k-10k','10k-15k','15k以上']" placeholder="" v-model="recruitData.salary"></dropdown></p>
+                      <p class="form-item"><label>工作经验</label><dropdown :options="database.inc.worksexp" placeholder="" v-model="recruitData.worksexp"></dropdown></p>
+                      <p class="form-item"><label>薪资待遇</label><dropdown :options="database.inc.salary" placeholder="" v-model="recruitData.salary"></dropdown>元 / 月</p>
                       <div class="form-item">
                          <label>福利待遇</label><ul class="lis-inline disInline W660 welfare-lis">
                               <li v-for="welfare in database.welfares">
@@ -94,7 +91,7 @@
                               </li>
                          </ul>
                       </div>
-                      <p class="form-item"><label>举办时间</label><input type="text" placeholder="2017-01-30格式" v-model="recruitData.date"/></p>
+                      <p class="form-item"><label>举办时间</label><input type="text" placeholder="格式：2017-01-30" v-model="recruitData.date"/></p>
                       <p class="form-item pRel"><label>招聘会描述</label><textarea v-model="recruitData.desc" class="form-desc"></textarea><span class="fSize14 LH40 color-gray-c desc-hint">你还可以输入{{fontCal(recruitData.desc,recruitData.datatype)}} 字</span></p>
                       <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
                       <p class="form-item"><label>联系人</label><input type="text" v-model="recruitData.contact.person"/></p>
@@ -109,18 +106,16 @@
                     <button class="confirm-publish-btn">确认发布</button>
                  </div>
             </div>
-             <div class="nav-cont disNo">
+             <div class="nav-cont" v-show="showpage.page3">
                    <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写直聘信息</h2>
                    <div class="form-cont paLeft68">
                         <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="directData.header"/></p>
-                        <p class="form-item maT28"><label>职位类别</label><dropdown :options="database.postype" placeholder="" v-model="directData.postype.postype_1"></dropdown>
-                             <dropdown :options="database.postype" placeholder="" v-model="directData.postype.postype_2"></dropdown>
-                        </p>
-                        <p class="form-item"><label>招聘人数</label><input type="text" v-model="directData.amount" /></p>
+                        <p class="form-item maT28"><label>职位类别</label><pos-select :posdata="database.posdata"></pos-select></p>
+                        <p class="form-item"><label>招聘人数</label><input type="text" v-model="directData.amount" />人</p>
                         <p class="form-item"><label>学历要求</label><dropdown :options="database.uni.scolars" placeholder="" v-model="directData.scolar"></dropdown></p>
                         <p class="form-item"><label>性别</label><dropdown :options="['男','女','不限']" placeholder="" v-model="directData.gender"></dropdown></p>
-                        <p class="form-item"><label>工作经验</label><dropdown :options="['1年以下','1-3年','3-5年','5-10年','10年以上','不限']" placeholder="" v-model="directData.worksexp"></dropdown></p>
-                        <p class="form-item"><label>薪资待遇</label><dropdown :options="['3k-5k','5k-8k','8k-10k','10k-15k','15k以上']" placeholder="" v-model="directData.salary"></dropdown></p>
+                        <p class="form-item"><label>工作经验</label><dropdown :options="database.inc.worksexp" placeholder="" v-model="directData.worksexp"></dropdown></p>
+                        <p class="form-item"><label>薪资待遇</label><dropdown :options="database.inc.salary" placeholder="" v-model="directData.salary"></dropdown>元 / 月</p>
                         <div class="form-item">
                            <label>福利待遇</label><ul class="lis-inline disInline W660 welfare-lis">
                                 <li v-for="welfare in database.welfares">
@@ -172,6 +167,12 @@
      <script src="js/libs/vue.js"></script>
      <script src="js/common/common.js"></script>
      <script src="js/components/dropdown.js"></script>
+     <script src="js/components/major-pop.js"></script>
+     <script src="data/address.js"></script>
+     <script src="data/major.js"></script>
+     <script src="data/position.js"></script>
+     <script src="data/workareas.js"></script>
+     <script src="data/commondata.js"></script>
      <script src="js/pages/incRequire.js"></script>
      </body>
 </html>

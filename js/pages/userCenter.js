@@ -107,8 +107,8 @@ var appCont = new Vue({
                nation:"汉族",
                curWorksIndex:1,
                expect:{
-                    tradeItems:"互联网",
-                    posItems:"IT工程师",
+                    tradeItems:"",
+                    posItems:"",
                     province:"浙江",
                     city:"杭州",
                     district:"滨江",
@@ -279,6 +279,10 @@ var appCont = new Vue({
                appModal.showTradeSingle=true;
 
           },
+          popPosition:function(){
+               appModal.showModal=true;
+               appModal.showPosition=true;
+          },
           showPre:function(){
                appModal.showModal=true;
                appModal.showPreview=true;
@@ -442,9 +446,13 @@ var appModal = new Vue({
           showTradeSingle:false,
           showPreview:false,
           showUpload:false,
+          showPosition:false,
           trades:workareas,
           baseInfo:appPorto.oldInfo,
           resumeInfo:appCont.resume,
+          database:{
+               posdata:posArray
+          }
      },
      methods:{
           closePorto:function(){
@@ -482,6 +490,15 @@ var appModal = new Vue({
                this.showTradeSingle=false;
                this.showModal=false;
           },
+          submitPos:function(array){
+               appCont.resume.expect.posItems = array.join();
+               this.showPosition = false;
+               this.showModal=false;
+          },
+          cancelPos:function(){
+               this.showPosition=false;
+               this.showModal=false;
+          },
           hidemodal:function(){
                this.showModal=false;
                this.showTrade=false;
@@ -493,7 +510,7 @@ var appModal = new Vue({
           },
      },
      watch:{
-          "this.showUpload":function(curval){
+          "showUpload":function(curval){
                if(curval){
 
                }
@@ -508,6 +525,12 @@ var appModal = new Vue({
                if(curval){
                     var top = Math.floor($(window).height()*0.15+$("body").scrollTop())+"px";
                     $(".trade-box-multi").css("margin-top",top);
+               }
+          },
+          'showPosition':function(curval){
+               if(curval){
+                    var top = Math.floor($(window).height()*0.15+$("body").scrollTop())+"px";
+                    $(".pos-pop-box").css("margin-top",top);
                }
           }
      }
