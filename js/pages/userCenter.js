@@ -373,7 +373,9 @@ var appCont = new Vue({
                if(type=="worksexp"){
                     this.resume.worksExps.splice(index,1);
                }else if(type=="edu"){
-                    this.resume.edus.splice(index,1)
+                    this.resume.edus.splice(index,1);
+               }else if(type=="project"){
+                    this.resume.projects.splice(index,1);
                }
           },
           stateCss:function(state){

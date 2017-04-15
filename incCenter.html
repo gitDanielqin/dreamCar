@@ -135,10 +135,10 @@
                     </div>
                     <ul class="info-items H410">
                         <li v-for="(item,index) in require.results" :name="item.classic" :date="item.publicDate" v-show="showResult(index,require.curpage,3)">
-                            <div v-if="item.classic=='校企合作'" class="paLeft29 clearfix H128 pRel" onclick="window.open('detail-company.html')">
+                            <div v-if="item.classic=='校企合作'" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W250 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30">{{item.IncPos}}</h2>
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-company.html">{{item.IncPos}}</a></h2>
                                     <p>{{item.coMajor}}<i class="depart">|</i>{{item.coScale}}<i class="depart">|</i>{{item.uniLevel}}</p>
                                     <p>联合培养方式：{{item.trainWay}}</p>
                                 </div>
@@ -152,10 +152,10 @@
                                     <p><span>刷新</span><span>置顶</span></p>
                                 </div>
                             </div>
-                            <div v-else-if="item.classic=='招聘会'" class="paLeft29 clearfix H128 pRel" onclick="window.open('detail-increcruit.html')">
+                            <div v-else-if="item.classic=='招聘会'" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W300 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30">{{item.IncPos}}</h2>
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-increcruit.html">{{item.IncPos}}</a></h2>
                                     <p><span class="maR17 color-orange-f7">{{item.salary}}</span>{{item.major}}<i class="depart">|</i>{{item.exp}}<i class="depart">|</i>{{item.scolar}}</p>
                                     <p>招聘会时间：{{item.recruitDate}}</p>
                                 </div>
@@ -169,10 +169,10 @@
                                      <p><span>刷新</span><span>置顶</span></p>
                                 </div>
                             </div>
-                            <div v-else-if="item.classic=='企业直聘'" class="paLeft29 clearfix H128 pRel" onclick="window.open('detail-position.html')">
+                            <div v-else-if="item.classic=='企业直聘'" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W300 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30">{{item.IncPos}}</h2>
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-position.html">{{item.IncPos}}</a></h2>
                                     <p><span class="maR17 color-orange-f7">{{item.salary}}</span>{{item.major}}<i class="depart">|</i>{{item.exp}}<i class="depart">|</i>{{item.scolar}}</p>
                                     <p><span class="maR17">【{{item.IncAddr}}】</span>岗位数：{{item.posAmount}}人</p>
                                 </div>
@@ -203,11 +203,11 @@
                     </div>
                     <ul class="info-items H470">
                         <li v-for="(item,index) in collect.results" :name="item.classic" v-show="showResult(index,collect.curpage,3)">
-                            <div v-if="item.classic=='高校招聘会'" onclick="window.open('detail-unirecruit.html')">
+                            <div v-if="item.classic=='高校招聘会'">
                                  <div class="paLeft29 clearfix H128 pRel">
                                      <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                      <div class="item-block-left fl paTop22 W328 maL20">
-                                         <h2 class="color-blueL fSize18 LH-H30">{{item.major}}</h2>
+                                         <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-unirecruit.html">{{item.major}}</a></h2>
                                          <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.recruitAddr}}</p>
                                          <p>招聘会时间：{{item.recruitDate}}</p>
                                      </div>
@@ -222,11 +222,11 @@
                                      </div>
                                  </div>
                             </div>
-                            <div v-else-if="item.classic=='校企合作'" onclick="window.open('detail-uni.html')">
+                            <div v-else-if="item.classic=='校企合作'">
                                  <div class="paLeft29 clearfix H128 pRel">
                                      <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                      <div class="item-block-left fl paTop22 W328 maL20">
-                                         <h2 class="color-blueL fSize18 LH-H30">{{item.major}}</h2>
+                                         <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-uni.html">{{item.major}}</a></h2>
                                          <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
                                          <p>{{item.trainway}}</p>
                                          <p class="item-date">{{item.date}}</span> {{item.time}}</p>
@@ -256,10 +256,10 @@
                     <ul class="info-items H470">
                         <li v-for="(item,index) in message.combi.results" :name="item.code" v-show="showResult(index,message.combi.curpage,3)">
                             <template v-if="item.code=='01'">
-                              <div class="paLeft29 clearfix H128 pRel" onclick="window.open('detail-company.html')">
+                              <div class="paLeft29 clearfix H128 pRel">
                                    <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                    <div class="item-block-left fl paTop22 W328 maL20">
-                                       <h2 class="color-blueL fSize18 LH-H30">{{item.pos}}</h2>
+                                       <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-company.html">{{item.pos}}</a></h2>
                                        <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.uniLevel}}</p>
                                        <p>{{item.uniApply}}</p>
                                        <p class="item-date">{{item.date}}</span> {{item.time}}</p>
@@ -280,10 +280,10 @@
                               </div>
                          </template>
                             <template v-else>
-                              <div class="paLeft29 clearfix H128 pRel msg-apply" onclick="window.open('detail-uni.html')">
+                              <div class="paLeft29 clearfix H128 pRel msg-apply">
                                    <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                    <div class="item-block-left fl paTop22 maL20 W312">
-                                       <h2 class="color-blueL fSize18 LH-H30">{{item.major}}</h2>
+                                       <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-uni.html">{{item.major}}</a></h2>
                                        <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
                                        <p>{{item.trainWay}}</p>
                                        <p class="item-date">{{item.date}}</span> {{item.time}}</p>
@@ -315,11 +315,11 @@
                         <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{message.recruit.items.length}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
-                        <li v-for="(item,index) in message.recruit.results" v-show="showResult(index,message.recruit.curpage,3)" onclick="window.open('detail-position.html')">
+                        <li v-for="(item,index) in message.recruit.results" v-show="showResult(index,message.recruit.curpage,3)">
                             <div class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W328 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30">{{item.major}}</h2>
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-position.html">{{item.major}}</a></h2>
                                     <p>{{item.salary}}<i class="depart">|</i>{{item.posAmount}}<i class="depart">|</i>{{item.qualific}}</p>
                                     <p>公司地址：{{item.IncAddress.city}}{{item.IncAddress.district}}</p>
                                     <p class="item-date">{{item.date}}</span> {{item.time}}</p>
@@ -436,7 +436,7 @@
                             <div class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W390 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30">{{item.uniname}}</h2>
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="#">{{item.uniname}}</a></h2>
                                     <p>{{item.uniLevel}}</p>
                                     <p>{{item.uniApply}}</p>
                                     <p class="item-date">{{item.date}}</span> {{item.time}}</p>

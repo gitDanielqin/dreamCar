@@ -7,10 +7,17 @@ function _init(){
      loginEventBind();
      regisEventBind();
      agreementEventBind();
-     pdjuge();
+//     pdjuge();
      validEventBind();
+     initSize();
 }
 _init();
+
+// 初始化页面元素大小
+function initSize(){
+     var contHeight = window.innerHeight - $(".top").outerHeight(true) - $(".bot").outerHeight(true);
+     $(".banner").height(contHeight);
+}
 //协议事件绑定
 function agreementEventBind(){
      $(".regis .agreement").click(function(){
@@ -48,9 +55,10 @@ function loginEventBind(){
      });
      $("#logBtn").click(function(){
           window.location.href="vCards.html";
-          console.log(1);
      });
-
+     $(".check-box").click(function(){
+          $(this).toggleClass("selected")
+     })
 }
 //注册框事件绑定
 function regisEventBind(){

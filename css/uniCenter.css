@@ -10,6 +10,7 @@
 .selectee ul li.over{background: #9bcce5; color:#fff;}
 .selectee ul li.selected{background: #2ea8e6; color:#fff;}
 
+.class-name a:hover{ text-decoration: underline;}
 /*专业弹出样式*/
 .major-input input{width: 142px;}
 

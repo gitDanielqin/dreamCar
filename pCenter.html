@@ -296,7 +296,7 @@
                  <div class="itemBox view view-item" name="project">
                      <h3 class="title works-title"><i><img src="images/icon-project.png"/></i>项目经历<ul class="lis-inline pane-tabs"><li v-for="(project,index) in resume.projects">经历{{index+1}}</li></ul></h3>
                      <div class="infopane" v-for="project in resume.projects">
-                          <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{project.startyear}}.{{project.startmonth}}--{{project.endyear}}.{{project.endmonth}}</span>校企职通车<i class="headmark"></i></h4>
+                          <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{project.startyear}}.{{project.startmonth}}--{{project.endyear}}.{{project.endmonth}}</span>校企职通车<span class="fr delItem" @click="deleteItem('project',index)">删除</span><i class="headmark"></i></h4>
                           <p>{{project.firma}}</p>
                           <p><span>项目描述：</span>{{project.desc}}</p>
                           <p><span>项目职责：</span>{{project.resp}}</p>
@@ -416,10 +416,10 @@
                      <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">{{colPosList.results.length}}</span>个</p>
                  </div>
                  <ul class="colCompanyList contList H470">
-                     <li v-for="(item,index) in colPosList.results" v-show="showResult(index,colPosList.curpage,3)" onclick="window.open('detail-position.html')">
+                     <li v-for="(item,index) in colPosList.results" v-show="showResult(index,colPosList.curpage,3)">
                          <div class="logo-pic"></div>
                          <div class="class-txt fl paTop20 W328">
-                             <h2 class="class-name"><b>{{item.pos}}</b></h2>
+                             <h2 class="class-name"><a href="detail-position.html">{{item.pos}}</a></h2>
                              <p class="demand"><span class="color-orange-f7">{{item.salary}}</span><i>|</i>{{item.major}}<i>|</i>{{item.scolar}}<i>|</i>{{item.worksexp}}</p>
                              <p><span class="maR20">【{{item.address.district}}】</span>岗位数:<span>{{item.posAmount}}人</span></p>
                          </div>
@@ -445,10 +445,10 @@
                      <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">{{colRecList.results.length}}</span>个</p>
                  </div>
                  <ul class="colCompanyList contList">
-                     <li v-for="(item,index) in colRecList.results" v-show="showResult(index,colRecList.curpage,3)" onclick="window.open('detail-increcruit.html')">
+                     <li v-for="(item,index) in colRecList.results" v-show="showResult(index,colRecList.curpage,3)">
                          <div class="logo-pic"></div>
                          <div class="class-txt fl paTop20 W328">
-                             <h2 class="class-name"><b>{{item.title}}</b></h2>
+                             <h2 class="class-name"><a href="detail-increcruit.html">{{item.title}}</a></h2>
                              <p class="demand"><span class="color-orange-f7">{{item.salary}}</span><i>|</i>{{item.major}}<i>|</i>{{item.scolar}}<i>|</i>{{item.worksexp}}</p>
                              <p><span>招聘会时间：</span>{{item.recruitDate}}</p>
                          </div>
@@ -477,7 +477,7 @@
                      <li v-for="(item,index) in myPosList.results" v-show="showResult(index,myPosList.curpage,3)">
                          <div class="logo-pic"></div>
                          <div class="class-txt fl paTop20 W328">
-                             <h2 class="class-name"><b>{{item.title}}</b></h2>
+                             <h2 class="class-name"><a href="detail-position.html">{{item.title}}</a></h2>
                              <p class="teacher">{{item.salary}}<span>|</span>{{item.addr}}<span>|</span>{{item.scolar}}<span>|</span>{{item.worksexp}}</p>
                              <p>投递于： {{item.postdate}}</p>
                          </div>

@@ -88,7 +88,8 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .main .ListBox .hd{border:1px solid #ccc; background: white;}
 .main .ListBox .hd input{width:88px; background: url("../images/icon-select-b.png") no-repeat center right;}
 .main .ListBox .contList .logo-pic{width:90px;height:80px; background: #5c3333; margin:24px 20px 0 30px;float: left;}
-.main .ListBox .contList .class-txt .class-name b{color:#46afe8; font-size: 18px; line-height: 32px; height:32px; display: inline-block; vertical-align: bottom}
+.main .ListBox .contList .class-txt .class-name a{color:#46afe8; font-size: 18px; line-height: 32px; height:32px; display: inline-block; vertical-align: bottom;}
+.main .ListBox .contList .class-txt .class-name a:hover{text-decoration: underline;}
 .main .ListBox .contList .class-txt .class-name span.score{color:#ec7d0e;height:20px; line-height: 20px; font-size: 12px; display: inline-block;vertical-align: bottom;
     margin-left: 10px;  }
 .main .ListBox .contList .class-txt p{line-height: 26px; height:26px; color:#333; font-size: 14px; width: 275px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}

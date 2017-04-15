@@ -43,7 +43,7 @@
                 }
            }
       }
-})
+});
  var appMain = new Vue({
       el:"#app-main",
       data:{
@@ -185,8 +185,14 @@
            },
            showAllContact:function(contact){
                 $(".descript .contact-phone").text(contact);
+           },
+           topage:function(){
+               //console.log(1);
            }
-      }
+      },
+      components:{
+          'pagination':pagination
+     }
 });
 var appModal = new Vue({
      el:"#app-modal",
@@ -247,9 +253,7 @@ function selectInitPos(){
 
         //收藏按钮
         $(".btn-collec").bind("click",function(){
-            $(this).css("letter-spacing","0.2em");
-            $(this).children("span").html("已收藏").css("letter-spacing","0.2em");
-            $(this).children("img").attr("src","images/icon-star-white.png");
+             $(this).find("span").text("已收藏");
             $(this).addClass("collected");
         })
     };

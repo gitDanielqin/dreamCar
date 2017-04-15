@@ -12,6 +12,7 @@
 .selectee ul li.over{background: #9bcce5; color:#fff;}
 .selectee ul li.selected{background: #2ea8e6; color:#fff;}
 
+.class-name a:hover{text-decoration: underline;}
 .sel-add input{width:58px;}
 .sel-addr input{width: 100px;}
 .main .sInfo{ border: 1px solid #ccc;}
