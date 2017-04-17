@@ -4,6 +4,7 @@
           <meta charset="utf-8">
           <title>HR中心</title>
           <link href="css/base.css" rel="stylesheet" />
+          <link href="css/widget.css" rel="stylesheet" />
           <link href="css/hrCenter.css" rel="stylesheet" />
      </head>
      <body class="bg-gray-f2">
@@ -52,15 +53,7 @@
                                     </div>
                                 </li>
                             </ul>
-                            <ul class="pageBot lis-inline maT30 fr fSize14">
-                                <li class="side-page first-page">首页</li>
-                                <li class="prev side-page">上一页</li>
-                                <li class="page-index">1</li>
-                                <li class="page-index">2</li>
-                                <li class="page-index">3</li>
-                                <li class="next side-page">下一页</li>
-                                <li class="side-page last-page">尾页</li>
-                            </ul>
+                            <pagination :showpages="3" :totalpages="6" type="course" @topage="topage" class="maT28 fSize14 fr"></pagination>
                         </div>
                         <div class="ListBox interview-box" v-show="interview.show">
                             <div class="hd LH-H58 bg-white">
@@ -86,15 +79,7 @@
                                     </div>
                                 </li>
                             </ul>
-                            <ul class="pageBot lis-inline maT30 fr fSize14">
-                                <li class="side-page first-page">首页</li>
-                                <li class="prev side-page">上一页</li>
-                                <li class="page-index">1</li>
-                                <li class="page-index">2</li>
-                                <li class="page-index">3</li>
-                                <li class="next side-page">下一页</li>
-                                <li class="side-page last-page">尾页</li>
-                            </ul>
+                            <pagination :showpages="3" :totalpages="6" type="course" @topage="topage" class="maT28 fSize14 fr"></pagination>
                         </div>
                     </div>
                </div>
@@ -128,20 +113,13 @@
                                             <p class="fSize12">{{item.publicDate}} {{item.publicTime}}</p>
                                         </div>
                                         <div class="operations color-blueL">
-                                           <p><span>修改</span><span @click="delItem(item)">删除</span><span>刷新</span><span>置顶</span></p>
+                                           <p><span>修改</span><span @click="delItem(item)">删除</span></p>
+                                           <p><span>刷新</span><span>置顶</span></p>
                                        </div>
                                     </div>
                                 </li>
                             </ul>
-                            <ul class="pageBot lis-inline maT30 fr fSize14">
-                                <li class="side-page first-page">首页</li>
-                                <li class="prev side-page">上一页</li>
-                                <li class="page-index">1</li>
-                                <li class="page-index">2</li>
-                                <li class="page-index">3</li>
-                                <li class="next side-page">下一页</li>
-                                <li class="side-page last-page">尾页</li>
-                            </ul>
+                            <pagination :showpages="3" :totalpages="6" type="course" @topage="topage" class="maT28 fSize14 fr"></pagination>
                         </div>
                          <!-- 招聘会 -->
                         <div class="ListBox recruit-box disNo">
@@ -168,15 +146,7 @@
                                     </div>
                                 </li>
                             </ul>
-                            <ul class="pageBot lis-inline maT30 fr fSize14">
-                                <li class="side-page first-page">首页</li>
-                                <li class="prev side-page">上一页</li>
-                                <li class="page-index">1</li>
-                                <li class="page-index">2</li>
-                                <li class="page-index">3</li>
-                                <li class="next side-page">下一页</li>
-                                <li class="side-page last-page">尾页</li>
-                            </ul>
+                            <pagination :showpages="3" :totalpages="6" type="course" @topage="topage" class="maT28 fSize14 fr"></pagination>
                         </div>
                          <!-- 校企合作岗位 -->
                         <div class="ListBox combipos-box disNo">
@@ -189,31 +159,24 @@
                                <li v-for="item in combiPos.items" :pos="item.pos" :state="item.state">
                                     <div class="paLeft29 clearfix H128 pRel">
                                         <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                        <div class="item-block-left fl paTop22 W315 maL20">
+                                        <div class="item-block-left fl paTop22 W250 maL20">
                                            <h2 class="color-blueL fSize18 LH-H32">{{item.pos}}</h2>
                                            <p>{{item.coMajor}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.uniLevel}}</p>
                                            <p>联合培养方式：{{item.trainway}}</p>
                                         </div>
-                                        <div class="item-block-right fl fSize14 LH25 maT11">
+                                        <div class="item-block-right fl fSize14 LH25 maT11 W242">
                                            <p>{{item.IncName}}</p>
                                            <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
                                            <p class="fSize12">{{item.publicDate}} {{item.publicTime}}</p>
                                         </div>
                                         <div class="operations color-blueL">
-                                           <p><span>修改</span><span @click="delItem(item)">删除</span><span>刷新</span><span>置顶</span></p>
+                                           <p><span>修改</span><span @click="delItem(item)">删除</span></p>
+                                           <p><span>刷新</span><span>置顶</span></p>
                                       </div>
                                     </div>
                                </li>
                             </ul>
-                            <ul class="pageBot lis-inline maT30 fr fSize14">
-                               <li class="side-page first-page">首页</li>
-                               <li class="prev side-page">上一页</li>
-                               <li class="page-index">1</li>
-                               <li class="page-index">2</li>
-                               <li class="page-index">3</li>
-                               <li class="next side-page">下一页</li>
-                               <li class="side-page last-page">尾页</li>
-                            </ul>
+                            <pagination :showpages="3" :totalpages="6" type="course" @topage="topage" class="maT28 fSize14 fr"></pagination>
                         </div>
                     </div>
                </div>
@@ -234,7 +197,7 @@
                           <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-gps.png"/></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
                           <li><i class="pic-wrapper maR15"><img src="images/icon-email2.png"/></i>邮箱：xiaoqiztc@yeah.net</li>
                       </ul>
-                      <p class="fSize14 t-center LH-H40 color-gray79">©2016 XxiaoQi 京ICP备456123789号-2 京公网安备12465789123号</p>
+                      <p class="fSize12 t-center LH-H40 color-gray79">©2016 XxiaoQi 京ICP备456123789号-2 京公网安备12465789123号</p>
                   </div>
                   <div class="fr">
                       <p class="fSize14 W15 barcode-text">关注我们</p>
@@ -248,6 +211,7 @@
           <script src="js/libs/vue.js"></script>
           <script src="js/common/common.js"></script>
           <script src="js/components/dropdown.js"></script>
+          <script src="js/components/pagination.js"></script>
           <script src="js/pages/hrCenter.js"></script>
      </body>
 </html>

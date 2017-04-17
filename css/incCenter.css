@@ -57,6 +57,7 @@
 
 
 /*侧边栏导航*/
+.hr-entry-btn{height: 58px;text-align: center; width: 100%; background: #48c1e4; color: white; border:1px solid #ccc; border-bottom: none; font-size: 24px;}
 .main .sideBox{border:1px solid #ccc;}
 .main .sideBox >li.on{background:#edeceb;}
 .main .sideBox li{line-height: 40px;margin-bottom: 7px;padding-left: 30px; cursor:pointer}

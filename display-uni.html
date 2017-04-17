@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>高校需求</title>
     <link href="css/base.css" rel="stylesheet">
+    <link href="css/widget.css" rel="stylesheet">
     <link href="css/display-comm.css" rel="stylesheet">
 </head>
 <body>
@@ -44,15 +45,15 @@
     <div class="queryform clearfix maT37 paTop10 paBot4 bg-gray-f7 color-gray79 pRel">
         <div class="clearfix">
             <label>所在城市：</label>
-            <ul class="lis-inline label-val LH24 address">
-                <li class="on">杭州<span style="display: block;"></span></li>
-                <li>上海<span></span></li>
-                <li>北京<span></span></li>
-                <li>武汉<span></span></li>
-                <li>广州<span></span></li>
-                <li>深圳<span></span></li>
-            </ul>
-            <ul class="district lis-inline LH24 t-center fSize12 bg-white"><li class="fSize12 dis-label">分区：</li><li class="on">西湖区</li><li>滨江区</li><li>拱墅区</li><li>下沙区</li></ul>
+            <div class="label-val maB14">
+                 <ul class="lis-inline address">
+                    <li :class="{'on':index==0}" v-for="(item,index) in database.navcitys" @click="selCity(index,$event.target)">{{item.city}}<span></span></li>
+                 </ul>
+                 <ul class="district lis-inline LH24 t-center fSize12 bg-white">
+                      <li class="fSize12 dis-label">分区：</li>
+                      <li v-for="cont in database.conts" @click="selDistict($event.target)">{{cont}}</li>
+                 </ul>
+            </div>
         </div>
         <div class="clearfix maB16">
             <label>高校提供：</label>
@@ -60,10 +61,10 @@
             <dropdown :options="database.uni.majorAmount" placeholder="专业人数" v-model="uniQuery.majorsum"></dropdown>
         </div>
         <div class="clearfix maB16">
-            <label>对企要求：</label><div class="selectee lang-select" @click.stop="clickArea"><input type="text" placeholder="需求行业" disabled v-model="uniQuery.incReq.areas.area_2"/></div>
+            <label>对企要求：</label><div class="selectee lang-select area-input" @click.stop="clickArea"><input type="text" placeholder="需求行业" disabled v-model="uniQuery.incReq.areas.area_2"/></div>
             <dropdown :options="database.inc.IncProps" placeholder="企业性质" v-model="uniQuery.incReq.IncProps" class="lang-select"></dropdown>
             <dropdown :options="database.inc.IncScale" placeholder="企业规模" v-model="uniQuery.incReq.IncScale"></dropdown>
-            <div class="selectee lang-select" @click.stop="clickPos"><input type="text" placeholder="岗位名称" disabled v-model="uniQuery.incReq.pos.pos_2"/></div>
+            <div class="selectee lang-select pos-input" @click.stop="clickPos"><input type="text" placeholder="岗位名称" disabled v-model="uniQuery.incReq.pos.pos_2"/></div>
             <dropdown :options="database.inc.posAmount" placeholder="企业规模" v-model="uniQuery.incReq.posAmount"></dropdown>
         </div>
         <div class="clearfix maB16">
@@ -142,7 +143,7 @@
                     <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-gps.png"/></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
                     <li><i class="pic-wrapper maR15"><img src="images/icon-email2.png"/></i>邮箱：xiaoqiztc@yeah.net</li>
                 </ul>
-                <p class="fSize14 t-center LH-H40 color-gray79">©2016 XxiaoQi 京ICP备456123789号-2 京公网安备12465789123号</p>
+                <p class="fSize12 t-center LH-H40 color-gray79">©2016 XxiaoQi 京ICP备456123789号-2 京公网安备12465789123号</p>
            </div>
            <div class="fr">
                 <p class="fSize14 W15 barcode-text">关注我们</p>
@@ -188,6 +189,10 @@
 <script src="js/common/common.js"></script>
 <script src="js/components/pagination.js"></script>
 <script src="js/components/dropdown.js"></script>
+<script src="data/commondata.js"></script>
+<script src="data/major.js"></script>
+<script src="data/position.js"></script>
+<script src="data/workareas.js"></script>
 <script src="js/pages/display-common.js"></script>
 </body>
 </html>

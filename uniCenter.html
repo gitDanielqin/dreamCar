@@ -82,14 +82,14 @@
                     <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>在校人数</label>
                         <dropdown placeholder="请选择在校人数" :options="database.amount" v-model="resume.amount" classes="W138"></dropdown>
                     </p>
-                    <div class="LH26 paLeft7 resume-item clearfix">
+                    <div class="LH26 paLeft7 resume-item clearfix pRel">
                         <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>重点专业</label></p>
-                        <ul class="fl maL4">
-                            <li v-for="spmajor in resume.specialmajor" class="maB14">
-                                <major-pop :majordata="database.majors"></major-pop>
+                        <ul class="fl maL4 edit-major-list W534">
+                            <li v-for="(spmajor,index) in resume.specialmajor" class="maB14">
+                                <major-pop :majordata="database.majors" class="disInline"></major-pop><button class="btn-del-major" v-show="index<resume.specialmajor.length-1" @click="delMajor(index)">- 删除</button>
+                                <p class="fSize12 color-gray6 block-add-major disInline" :style="{top:(resume.specialmajor.length-1)*40+'px'}" v-show="index==resume.specialmajor.length-1"><button class="color-blueL btn-add-major" @click="addMajors">+ 添加</button>（最多可添加5个重点专业）</p>
                             </li>
                         </ul>
-                        <p class="fSize12 color-gray6"><button class="color-blueL btn-add-major" @click="addMajors">+ 添加</button>（最多可添加5个重点专业）</p>
                     </div>
                     <div class="LH26 paLeft7 resume-item clearfix">
                         <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校认证</label></p>
@@ -433,6 +433,7 @@
                                     <p>{{item.major}}</p>
                                     <button class="more-info">了解更多<i>>></i></button>
                                 </div>
+                                <button class="btn-comment" @click="popComment(index)">评价</button>
                             </div>
                         </li>
                     </ul>
@@ -548,6 +549,14 @@
          </div>
 
 
+     </div>
+     <div class="comment-box pRel" v-show="showComment" @click="stayshow($event)">
+          <h2 class="comment-header">评价</h2>
+          <textarea class="comment-cont" v-model="comment.text" placeholder="请输入400字以内的评价" @input="checkText('comment')"></textarea>
+          <p class="LH30 t-right paRight20 fSize14">您还可以输入 {{remainText(comment.text)}} 字</p>
+          <div class="comment-operation">
+               <button class="bg-orange2" @click="confirmComment">确定</button><button class="bg-gray-ae" @click="cancelComment">取消</button>
+          </div>
      </div>
 </div>
     <div class="bot paTop8 t-center bot-account">

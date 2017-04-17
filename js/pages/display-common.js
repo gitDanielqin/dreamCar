@@ -3,6 +3,20 @@
  */
 var isLogin=true;
 
+var subposArray = [];
+
+(function(){
+     for(var i=0; i<posArray.length;i++){
+          for(var j=0;j<posArray[i].subpos.length;j++){
+               if(posArray[i].subpos[j].name!="不限"){
+                    subposArray.push(posArray[i].subpos[j]);
+               }
+          }
+     };
+     subposArray.push({name:"不限",subpos:["不限"]});
+})()
+
+
 var appTop = new Vue({
      el:"#app-top",
      data:{
@@ -14,26 +28,31 @@ var appTop = new Vue({
       data:{
            database:{
                 uni:{
-                     majors:[
-                          {major:"艺术",submajor:["行为艺术","人体艺术"]},
-                          {major:"信息技术",submajor:["计算机科学","通信工程"]},
-                          {major:"经济",submajor:["国民经济","企业经济"]},
-                     ],
-                     majorAmount:["1-20","20-100","100-200","200-500"],
-                     props:["重点","本科","专科","高职","民营"],
-                     scolars:["博士","硕士","本科","大专"]
+                     majors:majorArray,
+                     majorAmount:majorSum,
+                     props:unilevel,
+                     scolars:scolarship
                 },
                 inc:{
-                     IncScale:["1~20","21~50","51~100","101~500","501~1000","1000人以上"],
-                     IncProps:["内资","外资","农民专业合作社","合作企业","个人独资企业"],
-                     posAmount:["1-20","20-100","100-200","200-500"],
-                     pos1:["客服/售前/售后技术支持","客服/售前/售后技术支持","客服/售前/售后技术支持","客服/售前/售后技术支持"],
-                     pos2:["平面设计师","动效设计师","游戏设计师","UI设计师","平面设计师","动效设计师","游戏设计师","UI设计师","平面设计师","动效设计师","游戏设计师","UI设计师","平面设计师","动效设计师","游戏设计师","UI设计师"],
-                     area1:["IT/通信/电子/互联网","房地产/建筑业","保险","银行","信托/担保/拍卖/典当","其他"],
-                     area2:["IT/通信/电子/互联网","房地产/建筑业","保险","银行","信托/担保/拍卖/典当","其他"],
-                     salary:["1k-3k","3k-5k","5k-8k","8k-12k","12k+"],
+                     IncScale:incScale,
+                     IncProps:incProps,
+                     posAmount:incScale,
+                     pos1:[],
+                     pos2:[],
+                     area1:[],
+                     area2:[],
+                     salary:salaryItems,
                      welfare:["五险一金","双休","餐补","交通补","带薪年假","节日聚餐"]
-                }
+                },
+                navcitys:[
+                     {"city":"杭州","conts":["滨江区", "淳安县", "富阳市", "拱墅区", "江干区", "建德市", "临安市", "上城区", "桐庐县", "西湖区", "下城区", "萧山区", "余杭区"]},
+                     {"city":"上海","conts":["宝山区", "长宁区", "奉贤区", "虹口区", "黄浦区", "嘉定区", "金山区", "静安区", "卢湾区", "闵行区", "南汇区", "普陀区", "浦东新区", "青浦区", "松江区", "徐汇区", "杨浦区", "闸北区"]},
+                     {"city":"北京","conts":["昌平区", "朝阳区", "崇文区", "大兴区", "东城区", "房山区", "丰台区", "海淀区", "怀柔区", "门头沟区", "平谷区", "石景山区", "顺义区", "通州区", "西城区", "宣武区"]},
+                     {"city":"武汉","conts":["蔡甸区", "东西湖区", "汉阳区", "汉南区", "洪山区", "黄陂区", "江岸区", "江汉区", "江夏区", "乔口区", "青山区", "武昌区", "新洲区"]},
+                     {"city":"广州","conts":["宝山区", "长宁区", "奉贤区", "虹口区", "黄浦区", "嘉定区", "金山区", "静安区", "卢湾区", "闵行区", "南汇区", "普陀区", "浦东新区", "青浦区", "松江区", "徐汇区", "杨浦区", "闸北区"]},
+                     {"city":"深圳","conts":["宝安区", "福田区", "龙岗区", "罗湖区", "南山区", "盐田区"]}
+                ],
+                conts:["滨江区", "淳安县", "富阳市", "拱墅区", "江干区", "建德市", "临安市", "上城区", "桐庐县", "西湖区", "下城区", "萧山区", "余杭区"]
            },
            uniQuery:{
                 major:"",
@@ -56,6 +75,7 @@ var appTop = new Vue({
                trainway:""
            },
            incQuery:{
+               address:"",
                uniReq:{
                     uniprops:"",
                     major:"",
@@ -122,6 +142,15 @@ var appTop = new Vue({
            showWelBox:false
       },
       methods:{
+           selCity:function(index,obj){
+                $(".address .on").removeClass("on");
+                $(obj).addClass("on");
+               this.database.conts= this.database.navcitys[index].conts;
+           },
+           selDistict:function(obj){
+                $(".queryform .district .on").removeClass("on");
+                $(obj).addClass("on");
+           },
            selPos:function(pos,type){
                 if(type=="uni"){
                      this.uniQuery.incReq.pos.pos_2 = pos;
@@ -174,6 +203,48 @@ var appTop = new Vue({
                 });
                 this.posQuery.welfare=selWelfare;
                 this.showWelBox=false;
+           }
+      },
+      mounted:function(){
+           this.database.inc.pos1=[];
+           this.database.inc.area1=[];
+           for(var i=0;i<subposArray.length;i++){
+                this.database.inc.pos1.push(subposArray[i].name);
+           };
+           this.database.inc.pos2 = subposArray[0].subpos;
+           for(var j=0;j<workareas.length;j++){
+                this.database.inc.area1.push(workareas[j].title);
+           };
+           this.database.inc.area2 = workareas[0].subareas;
+      },
+      watch:{
+           'incQuery.pos.pos_1':function(curval){
+                for(var i=0;i<subposArray.length;i++){
+                     if(subposArray[i].name==curval){
+                         this.database.inc.pos2=subposArray[i].subpos;
+                         break;
+                     }
+                }
+           },
+           'uniQuery.incReq.areas.area_1':function(curval){
+                for(var i=0; i<workareas.length;i++){
+                     if(workareas[i].title==curval){
+                          this.database.inc.area2 = workareas[i].subareas;
+                          break;
+                     }
+                }
+           },
+           'showPosBox':function(curval){
+                if(curval){
+                     var top = $(".pos-input").offset().top-$(".queryform").offset().top+30;
+                     $(".pos-box").css("top",top);
+                }
+           },
+           'showAreaBox':function(curval){
+                if(curval){
+                     var top = $(".area-input").offset().top-$(".queryform").offset().top+30;
+                     $(".area-box").css("top",top);
+                }
            }
       }
 });
@@ -409,26 +480,12 @@ function selectInitPos(){
     })
 }
 
-
-
     function _initEventBind(){
-
         $(".account li").hover(function(){
             $(this).find("dl").slideDown(300);
         },function(){
             $(this).find("dl").slideUp(200);
         })
-        $(".district li").bind("click",function(){
-            $(".district .on").removeClass("on");
-            $(this).addClass("on");
-        });
-        $(".district li.dis-label").unbind("click");
-        $(".address li").bind("click",function(){
-            $(".address .on").removeClass("on");
-            $(".address span").hide();
-            $(this).addClass("on");
-            $(this).find("span").show();
-        });
         $(".popBox").click(function(){
              return false;
         })

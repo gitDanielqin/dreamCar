@@ -69,9 +69,13 @@
           methods:{
                pop:function(type){
                     if(type=="major"){
+                         $(".pop-major-1").hide();
+                         $(".pop-major-2").hide();
                          this.showMajor2=false;
                          this.showMajor1 = true;
                     }else if(type=="submajor"){
+                         $(".pop-major-1").hide();
+                         $(".pop-major-2").hide();
                          this.showMajor1=false;
                          this.showMajor2 = true;
                     }

@@ -69,10 +69,10 @@ var hrApp = new Vue({
                state:"全部状态",
                pos:"全部职位",
                items:[
-                    {pos:"岗位名称",coMajor:"合作专业",stuScale:"合作人数",uniLevel:"高校性质",trainWay:"高管到校",IncName:"企业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",publicDate:"2017-1-1",publicTime:"24:00"},
-                    {pos:"岗位名称",coMajor:"合作专业",stuScale:"合作人数",uniLevel:"高校性质",trainWay:"高管到校",IncName:"企业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",publicDate:"2017-1-1",publicTime:"24:00"},
-                    {pos:"岗位名称",coMajor:"合作专业",stuScale:"合作人数",uniLevel:"高校性质",trainWay:"高管到校",IncName:"企业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",publicDate:"2017-1-1",publicTime:"24:00"},
-                    {pos:"岗位名称",coMajor:"合作专业",stuScale:"合作人数",uniLevel:"高校性质",trainWay:"高管到校",IncName:"企业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",publicDate:"2017-1-1",publicTime:"24:00"},
+                    {pos:"岗位名称",coMajor:"合作专业",stuScale:"合作人数",uniLevel:"高校性质",trainway:"高管到校",IncName:"企业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",publicDate:"2017-1-1",publicTime:"24:00"},
+                    {pos:"岗位名称",coMajor:"合作专业",stuScale:"合作人数",uniLevel:"高校性质",trainway:"高管到校",IncName:"企业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业企业所属行业",publicDate:"2017-1-1",publicTime:"24:00"},
+                    {pos:"岗位名称",coMajor:"合作专业",stuScale:"合作人数",uniLevel:"高校性质",trainway:"高管到校",IncName:"企业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",publicDate:"2017-1-1",publicTime:"24:00"},
+                    {pos:"岗位名称",coMajor:"合作专业",stuScale:"合作人数",uniLevel:"高校性质",trainway:"高管到校",IncName:"企业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",publicDate:"2017-1-1",publicTime:"24:00"},
                ]
           }
 
@@ -96,6 +96,9 @@ var hrApp = new Vue({
                     case "不符合": mystyle={color:"#ff3333"}; break;
                };
                return mystyle;
+          },
+          topage:function(index){
+
           }
      },
      watch:{
@@ -221,7 +224,6 @@ var hrApp = new Vue({
            }
       },
       "recruitMeeting.pos":function(curval,oldval){
-           console.log(curval);
            if(curval=="全部职位"){
                 if(this.recruitMeeting.state=="全部状态"){
                      $(".recruit-box .info-items li").show();
@@ -238,7 +240,10 @@ var hrApp = new Vue({
                 }
            }
       }
-    }
+},
+     components:{
+     'pagination':pagination
+     }
 })
 
 

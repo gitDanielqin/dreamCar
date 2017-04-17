@@ -280,7 +280,17 @@ var appCont = new Vue({
               }else{
                    return false;
               }
-
+         },
+         delMajor:function(index){
+               $(".pop-major-box").each(function(index){
+                    appCont.resume.specialmajor[index].major = $(this).find(".major-input-1 input").val();
+                    appCont.resume.specialmajor[index].submajor = $(this).find(".major-input-2 input").val();
+               });
+              this.resume.specialmajor.splice(index,1);
+              for(var i=0; i<this.resume.specialmajor.length;i++){
+                   $(".pop-major-box").eq(i).find(".major-input-1 input").val(appCont.resume.specialmajor[i].major);
+                   $(".pop-major-box").eq(i).find(".major-input-2 input").val(appCont.resume.specialmajor[i].submajor);
+              }
          },
          editSwipe:function(){
               this.resume.firstEdit=false;
@@ -290,7 +300,11 @@ var appCont = new Vue({
          saveResume:function(){
               $(".pop-major-box").each(function(index){
                    appCont.resume.specialmajor[index].major = $(this).find(".major-input-1 input").val();
-                   appCont.resume.specialmajor[index].submajor = $(this).find(".major-input-2 input").val();
+                   if($(this).find(".ex-major").val()){
+                        appCont.resume.specialmajor[index].submajor = $(this).find(".ex-major").val();
+                   }else{
+                        appCont.resume.specialmajor[index].submajor = $(this).find(".major-input-2 input").val();
+                   }
               })
               this.resume.edit=false;
               this.resume.view=true;
@@ -396,6 +410,11 @@ var appCont = new Vue({
                         this.resume.intro = this.resume.intro.slice(0,1000);
                    }
               }
+         },
+         popComment:function(index){
+              appModal.comment.index=index;
+              appModal.showModal=true;
+              appModal.showComment=true;
          }
     },
     computed:{
@@ -435,6 +454,7 @@ var appModal = new Vue({
           showTrade:false,
           showPreview:false,
           showUpload:false,
+          showComment:false,
           trades:[
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
@@ -442,6 +462,10 @@ var appModal = new Vue({
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]}
           ],
+          comment:{
+               index:0,
+               text:""
+          },
           baseInfo:appPorto.oldInfo,
           resumeInfo:appCont.resume
      },
@@ -481,6 +505,37 @@ var appModal = new Vue({
           closePorto:function(){
                this.showUpload=false;
                this.showModal=false;
+          },
+          remainText:function(text){
+               if(400-text.length<0){
+                    return 0;
+               }
+               return (400-text.length);
+          },
+          checkText:function(type){
+               if(type=="comment"){
+                    var len = this.comment.text.length;
+                    if(len>400){
+                         alert("最多只能输入400字！");
+                         this.comment.text= this.comment.text.slice(0,400);
+                    }
+               }
+          },
+          confirmComment:function(){
+               this.showComment=false;
+               this.showModal=false;
+          },
+          cancelComment:function(){
+               this.showComment=false;
+               this.showModal=false;
+          }
+     },
+     watch:{
+          "showComment":function(curval){
+               if(curval){
+                    var top = Math.floor($(window).height()*0.15+$("body").scrollTop())+"px";
+                    $("#app-modal .comment-box").css("margin-top",top);
+               }
           }
      }
 });

@@ -50,25 +50,28 @@
                 <p class="LH-H25">实时了解最新动态</p>
             </div>
         </div>
-        <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3 bg-white">
-            <li class="on" paneid="resumeBox"><i><img src="images/icon-resume.png"/></i>企业简介</li>
-            <li paneid="requireBox"><i><img src="images/icon-study.png"/></i>企业需求</li>
-            <li class="myCollect" paneid="collectBox"><i><img src="images/icon-collect.png"/></i>企业收藏</li>
-            <li paneid="combi-msg"><i><img src="images/icon-apply.png"/></i>消息中心
-                <div class="sub-li LH37">
-                    <p class="on" paneid="combi-msg">校企合作</p>
-                    <p paneid="recruit-msg">招聘消息</p>
-                </div>
-            </li>
-            <li paneid="vip-center"><i><img src="images/icon-apply.png"/></i>VIP中心</li>
-            <li paneid="uni-coop"><i><img src="images/icon-apply.png"/></i>校企合作</li>
-            <li class="myConfig" paneid="conf-keyword"><i><img src="images/icon-config.png"/></i>设置
-                <div class="sub-li paTop2 paBot2 LH30">
-                    <p class="on" paneid="conf-keyword">修改密码</p>
-                    <p paneid="conf-account">绑定账号</p>
-                </div>
-            </li>
-        </ul>
+        <div class="fl W178 maL20 maT20">
+            <button class="hr-entry-btn" onclick="window.open('HR-center.html')">HR中心</button>
+            <ul class="sideBox paTop20 fSize18 color-gray3 bg-white">
+                <li class="on" paneid="resumeBox"><i><img src="images/icon-resume.png"/></i>企业简介</li>
+                <li paneid="requireBox"><i><img src="images/icon-study.png"/></i>企业需求</li>
+                <li class="myCollect" paneid="collectBox"><i><img src="images/icon-collect.png"/></i>企业收藏</li>
+                <li paneid="combi-msg"><i><img src="images/icon-apply.png"/></i>消息中心
+                    <div class="sub-li LH37">
+                        <p class="on" paneid="combi-msg">校企合作</p>
+                        <p paneid="recruit-msg">招聘消息</p>
+                    </div>
+                </li>
+                <li paneid="vip-center"><i><img src="images/icon-apply.png"/></i>VIP中心</li>
+                <li paneid="uni-coop"><i><img src="images/icon-apply.png"/></i>校企合作</li>
+                <li class="myConfig" paneid="conf-keyword"><i><img src="images/icon-config.png"/></i>设置
+                    <div class="sub-li paTop2 paBot2 LH30">
+                        <p class="on" paneid="conf-keyword">修改密码</p>
+                        <p paneid="conf-account">绑定账号</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
         <div class="content W770 fl maL10 maT20" id="app-content">
             <div class="resumeBox" style="display:block">
                 <div class="resumeCont bg-white" v-show="resume.edit">

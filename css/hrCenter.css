@@ -42,9 +42,12 @@ text-align: center;}
 
 .co-state{line-height: 128px;right:0; position: absolute; display: inline-block; width: 100px;}
 
-.operations{position: absolute;top:0; right: 20px;}
-.operations p{line-height: 30px;}
+.operations{position: absolute;top:10px; right: 20px;}
+.operations p{line-height: 50px;}
 .operations span{margin-left: 24px; cursor: pointer;}
+/*左右信息超出部分出现省略号*/
+.item-block-left p{width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.item-block-right p{width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
 
 .pos-sider{border: 1px solid #ccc; background: white;}
 .pos-sider li{line-height: 47px; height: 47px; padding-left: 34px; cursor: pointer;}

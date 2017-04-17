@@ -76,6 +76,8 @@
 .resumeCont input{border: 1px solid #ccc; height: 24px; line-height: 24px; padding-left: 10px; color: #999; box-sizing: border-box;}
 .uni-level input[type="radio"]{margin-left: 20px; margin-right: 7px; vertical-align: middle;}
 .btn-add-major{background: none;}
+.btn-del-major{background: none; color: red;}
+/*.block-add-major{position: absolute; left: 414px; top: 0;}*/
 .uni-valid-upload li{height: 20px; line-height: 20px; margin-bottom: 14px; position: relative;}
 .uni-valid-upload a{position: relative;display: inline-block; border-radius: 5px; background: #e4e6e7;padding-left: 10px; vertical-align: middle; margin-right: 20px; width: 140px; cursor: pointer;}
 .uni-valid-upload a i{position: absolute;right: 5px; }
@@ -127,6 +129,7 @@ position: absolute;  display:none;}
 .state-line{background: url("../images/msg-line.png") no-repeat 33px 8px;}
 .more-info{color:#999; background: none; font-size: 14px;}
 .more-info i{font-family: consolas; display: inline-block; vertical-align: top; margin-left: 2px;}
+.btn-comment{width: 72px; height: 30px; border-radius: 5px; color: white; font-size: 14px; position: absolute; right: 35px; top: 60px; background: #f7a14a;}
 
 /*个人设置*/
 .conf-keyword{border:1px solid #ccc; background: white;}
@@ -167,6 +170,13 @@ position: absolute;  display:none;}
 .msg-bot .page-bot{display: inline-block;}
 .msg-bot .page-bot li{margin: 0 10px;}
 .close{cursor: pointer;}
+
+/*评价弹框样式*/
+.comment-box{width: 765px; margin: 15% auto 0; background: white; }
+.comment-header{height: 66px; background: #f7a14a; color: white; font-size: 24px; line-height: 66px; text-align: center; letter-spacing: 1em;}
+.comment-cont{width: 705px; height: 280px; margin: 18px auto 0; border: 1px solid #cbcbcb; display: block; font-size: 14px; line-height: 30px; padding: 10px;}
+.comment-operation{padding: 18px 0; text-align: center;}
+.comment-operation button{width: 120px; height: 40px; color: white; margin: 0 16px; font-size: 18px;}
 
 /*手机弹框样式*/
 .phone-change{position: absolute; left:50%; top: 256px;margin-left: -250px;  }
