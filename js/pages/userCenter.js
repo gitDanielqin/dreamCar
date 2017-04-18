@@ -144,7 +144,7 @@ var appCont = new Vue({
                }],
                projects:[{
                     show:true,
-                    name:"",
+                    name:"校企职通车",
                     firma:"杭州黄巢信息科技有限公司",
                     startyear:2010,
                     startmonth:2,

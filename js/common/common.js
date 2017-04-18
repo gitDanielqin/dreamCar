@@ -46,6 +46,20 @@ function diffDay(dateObj){
      return iDays;
 }
 
+//取得屏幕高度
+function getViewport(){
+     if(document.compatMode == 'BackCompat'){
+          return {
+               width:document.body.clientWidth,
+               height:document.body.clientHeight
+          };
+     }else {
+          return {
+               width: document.documentElement.clientWidth,
+               height:document.documentElement.clientHeight
+          }
+     }
+}
 // 数组对象功能扩充
 Array.prototype.indexOf = function(val) {
     for (var i = 0; i < this.length; i++) {

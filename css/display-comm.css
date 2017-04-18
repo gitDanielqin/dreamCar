@@ -20,7 +20,7 @@
 color:#000; }
 .queryform input{width: 86px; margin-right: 16px;}
 .uni-major{display: inline-block;}
-.lang-select input{width: 118px;}
+.lang-select input{width: 138px;}
 .popBox{width:490px; height: 211px; border: 1px solid #a6a6a6; position: absolute; right: 0; top: 50px; background: white; z-index: 10}
 .posLis{margin-top: 8px; height: 168px; overflow: auto;}
 .posLis li{width:150px;cursor: pointer;}

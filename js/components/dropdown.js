@@ -1,5 +1,5 @@
 (function(){
-     var tempDrop = '<div :class="classStyle" @click.stop="clickEv($event.target)"><input type="text" :placeholder="placeholder" :value="value"><ul>' +
+     var tempDrop = '<div :class="classStyle" @click.stop="clickEv($event.target)" style="display:inline-block"><input type="text" :placeholder="placeholder" :value="value" disabled><ul>' +
          '<li v-for="option in options" @click="selectItem(option,$event.target)" @mouseover="overItem($event.target)" @mouseout="outItem($event.target)">{{option}}</li>' +
          '</ul></div>'
      Vue.component("dropdown", {
@@ -24,6 +24,7 @@
                 $(obj).addClass("selected");
                 $(obj).parent().siblings("input").val($(obj).text());
                 $(obj).parent().hide();
+                this.$emit('callback');
                 return false;
             },
             overItem: function(obj){
@@ -41,7 +42,8 @@
        mounted:function(){
             $("body").click(function(){
                  $(".selectee ul").hide();
-            })
+            });
+            $(".selectee ul").width($(".selectee input").outerWidth()-2);
        }
      });
 

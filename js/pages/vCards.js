@@ -47,8 +47,8 @@
            uniLevel:"",
            incProp:"",
            incScale:"",
-           showPerson:true,
-           showUni:false,
+           showPerson:false,
+           showUni:true,
            showInc:false
       },
       methods:{

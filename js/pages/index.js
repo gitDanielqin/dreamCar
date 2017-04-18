@@ -1,119 +1,226 @@
-/**
- * Created by xuanyuan on 2016/11/4.
- */
-/*城市选择*/
-var provinces=null;
-$.getJSON("data/address.json",function(result){
-    provinces=result;
-})
-/*为下拉框的每一个选项添加点击事件*/
-function optEventBind(){
-    $("#province li").click(function(index){
-        $("#sel-pro").val($(this).text());
-        var index= $("#province li").index(this);
-        var optionCity="";
-        for(var i=0; i<provinces[index].citys.length;i++){
-            optionCity+="<li>"+provinces[index].citys[i].city+"</li>"
-        }
-        $("#city").html(optionCity);
-        $("#sel-add b").text($("#city li:first").text());
-        $("#city li").click(function(){
-            $("#sel-city").val($(this).text());
-            $("#sel-add b").text($(this).text());
-            $("#sel-city").css("background-image","url('images/trigle02.png')");
-            $("#city").hide();
-            isShow_city=false;
-            $("#address").hide();
-        });
-        $("#sel-city").val($("#city li:first").text());
-        //关闭省份选项开关
-        $("#sel-pro").css("background-image","url('images/trigle02.png')");
-        $("#province").hide();
-        isShow_pro=false;
-    })
-}
-/*为省份和城市选择绑定点击事件*/
-function selectEventBind(){
-    var isShow_pro=false;
-    var isShow_city=false;
-    $("#sel-pro").click(function(){
-        if(!isShow_pro){
-            $(this).css("background-image","url('images/trigle-up.png')");
-            if($("#province").children("li").length==0){
-                var optionPro="";
-                for(var i=0; i<provinces.length;i++){
-                    optionPro+="<li>"+provinces[i].name+"</li>";
-                }
-                $("#province").html(optionPro);
-                $("#province").show();
-                optEventBind();
-            }else{
-                $("#province").show();
-            }
-            isShow_pro=true;
-        }else{
-            $(this).css("background-image","url('images/trigle02.png')");
-            $("#province").hide();
-            isShow_pro=false;
-        }
-
-    });
-    $("#sel-city").click(function(){
-        if(!isShow_city){
-            $(this).css("background-image","url('images/trigle-up.png')");
-            $("#city").show();
-            isShow_city=true;
-        }else{
-            $(this).css("background-image","url('images/trigle02.png')");
-            $("#city").hide();
-            isShow_city=false;
-        }
-    });
+//初始化首屏的尺寸和元素位置
+function init_pos(){
+     var winH = getViewport().height;
+     $(".mod-page").height($(window).height());
+     $(".center-teil").css({
+          "margin-top": Math.floor(winH * 0.135) + "px"
+     });
+     $(".module-entry").css({
+          "margin-top": Math.floor(winH * 0.09) + "px"
+     });
+     $(".weiter").height(Math.floor(winH*0.065));
+     $(".class-show .p-title").css({
+          "padding-top": Math.floor(winH * 0.079) + "px"
+     })
 }
 
-$("#sel-add").click(function(){
-    $("#address").show();
-    selectEventBind();
-    return false;
-})
+function showEventBind(){
+     $(".show-pics li").mouseover(function(){
+          if($(this).hasClass("rotate-left")){
+               $(this).removeClass("rotate-left");
+               $(".show-pics .rotate-center").removeClass("rotate-center").addClass("rotate-left");
+               $(this).addClass("rotate-center");
+          }else if($(this).hasClass("rotate-right")){
+               $(this).removeClass("rotate-right");
+               $(".show-pics .rotate-center").removeClass("rotate-center").addClass("rotate-right");
+               $(this).addClass("rotate-center");
+          }
+     })
+}
 
-//点击网页上除了地址和切换地址其他区域选项框消失
-$("body").click(function(){
-    $("#sel-add b").text($("#sel-city").val());
-    $("#address").hide();
+function turnEventBind(){
+     $(".class-show .turn-left").click(function(){
+          $(".show-pics li:first-child").removeClass("rotate-left").addClass("rotate-right");
+          $(".show-pics").append($(".show-pics li:first-child"));
+          $(".show-pics .rotate-center").removeClass("rotate-center").addClass("rotate-left");
+          $(".show-pics .rotate-right:nth-child(4)").removeClass("rotate-right").addClass("rotate-center");
+     })
+};
+
+
+var appFront = new Vue({
+     el:"#app-front",
+     data:{
+          database:{
+               address:{
+                    provinces:[],
+                    citys:[],
+                    hotcitys:["北京","上海","杭州","广州","深圳"]
+               }
+          },
+          showAddr:false,
+          address:{
+               selProvince:"",
+               selCity:"",
+               displayCity:"北京市",
+          }
+     },
+     methods:{
+          selhotcity:function(city){
+               this.address.displayCity = city+"市";
+               this.showAddr=false;
+          },
+          downwards:function(){
+               $("body").animate({
+                    scrollTop:getViewport().height
+               },1000)
+          }
+     },
+     mounted:function(){
+          init_pos();
+          for(var i=0; i<addArray.length; i++){
+               this.database.address.provinces.push(addArray[i].name);
+          };
+          this.address.selProvince=addArray[0].name;
+          for(var j=0; j<addArray[0].citys.length;j++){
+               this.database.address.citys.push(addArray[0].citys[j].city);
+          };
+          this.address.selCity=addArray[0].citys[0].city;
+          $("body").click(function(){
+               appFront.showAddr=false;
+          })
+     },
+     watch:{
+          "address.selProvince":function(curval){
+               this.database.address.citys=[];
+               for(var i=0; i<addArray.length;i++){
+                    if(addArray[i].name==curval){
+                         for(var j=0;j<addArray[i].citys.length;j++){
+                              this.database.address.citys.push(addArray[i].citys[j].city);
+                         };
+                         break;
+                    }
+               }
+               this.address.selCity=this.database.address.citys[0];
+          },
+          "address.selCity":function(curval){
+               if(curval.indexOf("北京")>=0){
+                    this.address.displayCity = "北京市";
+               }else if(curval.indexOf("上海")>=0){
+                    this.address.displayCity = "上海市";
+               }else if(curval.indexOf("天津")>=0){
+                    this.address.displayCity = "天津市";
+               }else if(curval.indexOf("重庆")>=0){
+                    this.address.displayCity = "重庆市";
+               }else{
+                    this.address.displayCity = curval;
+               }
+          }
+     }
+})
+var appShow =  new Vue({
+     el:"#app-show",
+     data:{
+          showInfos:[
+               {imgsrc:"images/pic-class1.jpg",txt:"解决大学生从学习到就业的信息"},
+               {imgsrc:"images/photo05.jpg",txt:"解决大学生从学习到就业的信息"},
+               {imgsrc:"images/pic-class1.jpg",txt:"解决大学生从学习到就业的信息"},
+               {imgsrc:"images/photo05.jpg",txt:"解决大学生从学习到就业的信息"},
+               {imgsrc:"images/pic-class1.jpg",txt:"解决大学生从学习到就业的信息"},
+               {imgsrc:"images/photo05.jpg",txt:"解决大学生从学习到就业的信息"},
+               {imgsrc:"images/pic-class1.jpg",txt:"解决大学生从学习到就业的信息"},
+          ]
+     },
+     methods:{
+          cssrotate:function(index){
+               if(index<3){
+                    return "rotate-left";
+               }else if(index>3){
+                    return "rotate-right";
+               }else if(index==3){
+                    return "rotate-center"
+               }
+          },
+          showSwitch:function(index){
+               if(index!=3){
+                    var activeItem = cloneObj(this.showInfos[index]);
+                    this.showInfos.splice(index,1);
+                    this.showInfos.splice(3,0,activeItem);
+               }
+          }
+     },
+     mounted:function(){
+          $("#app-show").height(getViewport().height);
+          turnEventBind();
+          //showEventBind();
+     }
 });
-$("#address").click(function(){
-    return false;
+
+var appAbout = new Vue({
+     el:"#app-about",
+     mounted:function(){
+          $("#app-about").height(getViewport().height);
+     }
+})
+var appCoop =  new Vue({
+     el:"#app-coop",
+     data:{
+          coopInc:[
+               {imgsrc:"images/coLogo02.jpg"},
+               {imgsrc:"images/coLogo03.jpg"},
+               {imgsrc:"images/coLogo04.jpg"},
+               {imgsrc:"images/coLogo02.jpg"},
+               {imgsrc:"images/coLogo03.jpg"},
+               {imgsrc:"images/coLogo03.jpg"},
+               {imgsrc:"images/coLogo03.jpg"},
+          ]
+     },
+     methods:{
+               incLeft:function(){
+                    if($(".coop-inc").position().left>740-$(".coop-inc").width())
+                    $(".coop-inc").animate({
+                         left:"-="+$(".coop-inc").children("li:first-child").outerWidth(true)+"px"
+                    },500)
+               },
+               incRight:function(){
+                    if($(".coop-inc").position().left<0)
+                    $(".coop-inc").animate({
+                         left:"+="+$(".coop-inc").children("li:first-child").outerWidth(true)+"px"
+                    },500)
+               },
+               uniLeft:function(){
+                    if($(".coop-uni").position().left>740-$(".coop-uni").width())
+                    $(".coop-uni").animate({
+                         left:"-="+$(".coop-uni").children("li:first-child").outerWidth(true)+"px"
+                    },500);
+               },
+               uniRight:function(){
+                    if($(".coop-uni").position().left<0)
+                    $(".coop-uni").animate({
+                         left:"+="+$(".coop-uni").children("li:first-child").outerWidth(true)+"px"
+                    },500);
+               }
+     },
+     mounted:function(){
+          $(".coop-lis").each(function(index){
+               var lisWidth = $(this).children("li").length * $(this).children("li:first-child").outerWidth(true);
+               $(this).width(lisWidth);
+          })
+          $("#app-coop").height(getViewport().height-288);
+     }
 });
 
-//图片展示选项卡
-$(".pics .pics-nav span").click(function(){
-    $(".pics .showBox").hide().fadeIn();
-    $(".pics .pics-nav span").removeClass("on");
-    $(this).addClass("on");
-    var aImg = $(".pics .showBox img");
-    if($(this).text()=="课堂"){
-        $(aImg[0]).attr("src","images/photo01.jpg");
-        $(aImg[1]).attr("src","images/photo04.jpg");
-        $(aImg[4]).attr("src","images/photo03.jpg");
-        $(aImg[5]).attr("src","images/photo06.jpg");
-    }else if($(this).text()=="案例"){
-        $(aImg[0]).attr("src","images/photo03.jpg");
-        $(aImg[1]).attr("src","images/photo06.jpg");
-        $(aImg[4]).attr("src","images/photo01.jpg");
-        $(aImg[5]).attr("src","images/photo04.jpg");
-    }
+var appFooter =  new Vue({
+     el:"#app-footer",
+     data:{
+          fBlocks:[
+               {title:"关于我们",sublis:["企业文化","企业简介"]},
+               {title:"联系我们",sublis:["公司地址","联系方式"]},
+               {title:"网站合作",sublis:["合作条件","合作内容"]},
+               {title:"帮助中心",sublis:["客服中心","常见问题","售后服务"]},
+               {title:"招聘中心",sublis:["UI设计","WEB前端","后端人员","更多招聘"]},
+          ]
+     },
+     methods:{
+          linkFoo:function(item){
+               switch (item) {
+                    case "关于我们":window.open("footer-page.html?descript");break;
+                    case "联系我们":window.open("footer-page.html?contact");break;
+                    case "网站合作":window.open("footer-page.html?coop");break;
+                    case "帮助中心":window.open("footer-page.html?help");break;
+                    case "招聘中心":window.open("footer-page.html?employ");break;
+                    default:window.open("footer-page.html?descript");
+               }
+          }
+     }
 })
-
-//六大板块上滑动事件
-
-$(".servs li").each(function(){
-    this.addEventListener("mouseover",function(){
-        $(this).find(".desc").addClass("slide-up").removeClass("slide-down");
-        return false;
-    });
-    this.addEventListener("mouseout",function(){
-        $(this).find(".desc").addClass("slide-down").removeClass("slide-up")
-    })
-})
-

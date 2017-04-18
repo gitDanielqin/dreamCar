@@ -36,7 +36,8 @@ var appTop = new Vue({
                 inc:{
                      IncScale:incScale,
                      IncProps:incProps,
-                     posAmount:incScale,
+                     posAmount:positionsum,
+                     worksExp:worksexp,
                      pos1:[],
                      pos2:[],
                      area1:[],
@@ -231,6 +232,38 @@ var appTop = new Vue({
                      if(workareas[i].title==curval){
                           this.database.inc.area2 = workareas[i].subareas;
                           break;
+                     }
+                }
+           },
+           'posQuery.areas.area_1':function(curval){
+                for(var i=0; i<workareas.length;i++){
+                     if(workareas[i].title==curval){
+                          this.database.inc.area2 = workareas[i].subareas;
+                          break;
+                     }
+                }
+           },
+           'posQuery.pos.pos_1':function(curval){
+                for(var i=0;i<subposArray.length;i++){
+                     if(subposArray[i].name==curval){
+                         this.database.inc.pos2=subposArray[i].subpos;
+                         break;
+                     }
+                }
+           },
+           'uniRecruit.incReq.areas.area_1':function(curval){
+                for(var i=0; i<workareas.length;i++){
+                     if(workareas[i].title==curval){
+                          this.database.inc.area2 = workareas[i].subareas;
+                          break;
+                     }
+                }
+           },
+           'incRecruit.pos.pos_1':function(curval){
+                for(var i=0;i<subposArray.length;i++){
+                     if(subposArray[i].name==curval){
+                         this.database.inc.pos2=subposArray[i].subpos;
+                         break;
                      }
                 }
            },

@@ -160,6 +160,7 @@ background: url("../images/bg-work.png") no-repeat right center; color:#fff; fon
 .headmark{position: absolute; left: 0; top:0; display: inline-block; height: 100%; width: 4px; background-color: #f7a14a;}
 .preView .infopane p{line-height: 27px; height:27px; padding-left: 40px;}
 
+.btn-edit{cursor: pointer;}
 .main .resumeBox .view{position: relative; padding-bottom: 12px; padding-top:30px;border-bottom: 1px dotted #ccc; margin-bottom: 0;}
 .main .resumeBox .view .title{margin-bottom: 6px;}
 .main .resumeBox .view .btn-edit{position: absolute; right: 0; top: 30px; cursor: pointer;}

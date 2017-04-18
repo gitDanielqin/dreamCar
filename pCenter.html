@@ -296,7 +296,7 @@
                  <div class="itemBox view view-item" name="project">
                      <h3 class="title works-title"><i><img src="images/icon-project.png"/></i>项目经历<ul class="lis-inline pane-tabs"><li v-for="(project,index) in resume.projects">经历{{index+1}}</li></ul></h3>
                      <div class="infopane" v-for="project in resume.projects">
-                          <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{project.startyear}}.{{project.startmonth}}--{{project.endyear}}.{{project.endmonth}}</span>校企职通车<span class="fr delItem" @click="deleteItem('project',index)">删除</span><i class="headmark"></i></h4>
+                          <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{project.startyear}}.{{project.startmonth}}--{{project.endyear}}.{{project.endmonth}}</span>{{project.name}}<span class="fr delItem" @click="deleteItem('project',index)">删除</span><i class="headmark"></i></h4>
                           <p>{{project.firma}}</p>
                           <p><span>项目描述：</span>{{project.desc}}</p>
                           <p><span>项目职责：</span>{{project.resp}}</p>
@@ -597,14 +597,14 @@
                      <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{worksExp.startyear}}.{{worksExp.startmonth}}--{{worksExp.endyear}}.{{worksExp.endmonth}}</span>{{worksExp.firma}}<i class="headmark"></i></h4>
                      <p>{{worksExp.trade}}</p>
                      <p><span>工作职能：</span>{{worksExp.pos}}</p>
-                     <p><span>工作地点：</span>杭州-滨江</p>
-                     <p><span>工作职责：</span>负责产品视觉所有设计与呈现</p>
+                     <p><span>工作地点：</span>{{worksExp.city}}-{{worksExp.district}}</p>
+                     <p><span>工作职责：</span>{{worksExp.resp}}</p>
                 </div>
             </div>
             <div class="itemBox">
                 <h3 class="title works-title"><i><img src="images/icon-college.png"/></i>教育经历<ul class="lis-inline pane-tabs"><li v-for="(edu,index) in resumeInfo.edus">经历{{index+1}}</li></ul></h3>
                 <div class="infopane maT13 maB16" v-for="edu in resumeInfo.edus">
-                     <h4 class="fSize14 LH-H30 paLeft40">中国美术学院（{{edu.startyear}}/{{edu.startmonth}}-{{edu.endyear}}/{{edu.endmonth}}）</h4>
+                     <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{edu.startyear}}.{{edu.startmonth}}--{{edu.endyear}}.{{edu.endmonth}}</span>{{edu.uni}}<i class="headmark"></i></h4>
                      <p class="LH-H25"><span class="W250 disInline">专业名称：{{edu.submajor}}</span><span>学历：{{edu.qualification}}</span></p>
                 </div>
             </div>
@@ -615,7 +615,7 @@
             <div class="itemBox">
                 <h3 class="title works-title"><i><img src="images/icon-project.png"/></i>项目经历<ul class="lis-inline pane-tabs"><li v-for="(project,index) in resumeInfo.projects">经历{{index+1}}</li></ul></h3>
                 <div class="infopane maB22" v-for="project in resumeInfo.projects">
-                     <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{project.startyear}}.{{project.startmonth}}--{{project.endyear}}.{{project.endmonth}}</span>校企职通车<i class="headmark"></i></h4>
+                     <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{project.startyear}}.{{project.startmonth}}--{{project.endyear}}.{{project.endmonth}}</span>{{project.name}}<i class="headmark"></i></h4>
                      <p>{{project.firma}}</p>
                      <p><span>项目描述：</span>{{project.desc}}</p>
                      <p><span>项目职责：</span>{{project.resp}}</p>
