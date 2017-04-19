@@ -248,7 +248,7 @@
                  <div class="itemBox edit edit-item" name="speech">
                      <h3 class="title works-title"><i><img src="images/icon-language.png"/></i>语言能力</h3>
                      <form class="language-skills maL30 fSize14 W620">
-                         <label v-for="language in database.languages"><input type="checkbox" @click="checkLan($event.target,language)">{{language}}</label>
+                         <label v-for="language in database.languages"><input type="checkbox" :value="language">{{language}}</label>
                      </form>
                      <div class="buttons">
                           <button>保存</button><button>取消</button>
@@ -406,13 +406,7 @@
              </div>
              <div class="collec-job ListBox">
                  <div class="hd LH-H58">
-                     <div class="selectee ">
-                         <input type="text" value="全部状态" class="H38 maL30"/>
-                         <ul>
-                             <li>全部状态</li><li>已开课</li>
-                             <li>未开课</li><li>已结束</li>
-                         </ul>
-                     </div>
+                     <dropdown :options="colPosList.states" v-model="colPosList.curstate" class="collec-job-state"></dropdown>
                      <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">{{colPosList.results.length}}</span>个</p>
                  </div>
                  <ul class="colCompanyList contList H470">
@@ -435,13 +429,7 @@
              </div>
              <div class="collec-recruitment ListBox">
                  <div class="hd LH-H58">
-                     <div class="selectee ">
-                         <input type="text" value="全部状态" class="H38 maL30"/>
-                         <ul>
-                             <li>全部状态</li><li>已开课</li>
-                             <li>未开课</li><li>已结束</li>
-                         </ul>
-                     </div>
+                     <dropdown :options="colRecList.states" v-model="colRecList.curstate" class="collec-job-state"></dropdown>
                      <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">{{colRecList.results.length}}</span>个</p>
                  </div>
                  <ul class="colCompanyList contList">
@@ -464,13 +452,7 @@
              </div>
              <div class="jobBox ListBox">
                  <div class="hd LH-H58">
-                     <div class="selectee ">
-                         <input type="text" value="全部状态" class="H38 maL30"/>
-                         <ul>
-                             <li>全部状态</li><li>已开课</li>
-                             <li>未开课</li><li>已结束</li>
-                         </ul>
-                     </div>
+                     <dropdown :options="myPosList.states" v-model="colRecList.curstate" class="collec-job-state"></dropdown>
                      <p class="fr fSize14 maR30">已投递简历<span class="color-orange2 maL10 maR10">{{myPosList.results.length}}</span>份</p>
                  </div>
                  <ul class="collectList contList H410">
@@ -484,9 +466,11 @@
                          <div class="feedback fr fSize18">
                              <h3>{{item.inc}}</h3>
                              <ul class="lis-inline feedState">
-                                 <li :class="{on:item.state==0}"><i><img src="images/icon-feedback.png"/></i><span>已投递</span></li>
-                                 <li :class="{on:item.state==1}"><i><img src="images/icon-feedback.png"/></i><span>已查看</span></li>
-                                 <li :class="{on:item.state==2}"><i><img src="images/icon-feedback.png"/></i><span>已反馈</span></li>
+                                 <li :class="{on:item.state>=0}"><i class="feedstate-icon"></i><span>已投递</span><i :class="{on:item.state>0}" class="feed-icon-bind"></i></li>
+                                 <li :class="{on:item.state>=1}"><i class="feedstate-icon"></i><span>已查看</span><i :class="{on:item.state>1}" class="feed-icon-bind"></i></li>
+                                 <li :class="{on:item.state>=2}"><i class="feedstate-icon" @mouseover="feedRes('over',$event.target)" @mouseout="feedRes('out',$event.target)"></i><span>已反馈</span>
+                                   <p class="feedback-result">{{item.feedresult}}</p>
+                                 </li>
                              </ul>
                          </div>
                      </li>

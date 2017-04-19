@@ -66,10 +66,6 @@ var appPorto = new Vue({
                appModal.showUpload=true;
           }
      },
-     updated:function(){
-          window.selectInitPos();
-          window.selectEventBind();
-     }
 })
 
 var provinceArray = [];
@@ -184,6 +180,8 @@ var appCont = new Vue({
           },
           colPosList:{
                curpage:1,
+               states:['全部状态','未投递','已投递','已下线'],
+               curstate:"全部状态",
                results:[
                     {pos:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",IncScale:"20-99人",publicDate:"2017-11-11"},
                     {pos:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},posAmount:2,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",IncScale:"20-99人",publicDate:"2017-11-11"},
@@ -196,6 +194,8 @@ var appCont = new Vue({
           },
           colRecList:{
                curpage:1,
+               states:['全部状态','未投递','已投递','已下线'],
+               curstate:"全部状态",
                results:[
                     {title:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},recruitDate:"2016-12-11",posAmount:20,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",publicDate:"2017-11-11"},
                     {title:"艺术设计",salary:"7k-9k",major:"设计相关专业",worksexp:"1-3年经验",scolar:"大专",address:{province:"浙江省",city:"杭州市",district:"滨江区"},recruitDate:"2016-12-11",posAmount:20,inc:"杭州煌巢信息科技有限公司",IncProps:"国企",publicDate:"2017-11-11"},
@@ -207,17 +207,28 @@ var appCont = new Vue({
           },
           myPosList:{
                curpage:1,
+               states:['全部状态','未查看','已查看','已反馈'],
+               curstate:"全部状态",
                results:[
-                    {title:"职位名称",salary:"年薪",addr:"地区",scolar:'学历要求',worksexp:"经验要求",postdate:"2016-10-25",inc:"公司名称",state:0},
-                    {title:"职位名称",salary:"年薪",addr:"地区",scolar:'学历要求',worksexp:"经验要求",postdate:"2016-10-25",inc:"杭州煌巢科技技术有限公司",state:1},
-                    {title:"职位名称",salary:"年薪",addr:"地区",scolar:'学历要求',worksexp:"经验要求",postdate:"2016-10-25",inc:"公司名称",state:0},
-                    {title:"职位名称",salary:"年薪",addr:"地区",scolar:'学历要求',worksexp:"经验要求",postdate:"2016-10-25",inc:"公司名称",state:2},
-                    {title:"职位名称",salary:"年薪",addr:"地区",scolar:'学历要求',worksexp:"经验要求",postdate:"2016-10-25",inc:"公司名称",state:0},
+                    {title:"职位名称",salary:"年薪",addr:"地区",scolar:'学历要求',worksexp:"经验要求",postdate:"2016-10-25",inc:"公司名称",state:0,feedresult:""},
+                    {title:"职位名称",salary:"年薪",addr:"地区",scolar:'学历要求',worksexp:"经验要求",postdate:"2016-10-25",inc:"杭州煌巢科技技术有限公司",state:1,feedresult:""},
+                    {title:"职位名称",salary:"年薪",addr:"地区",scolar:'学历要求',worksexp:"经验要求",postdate:"2016-10-25",inc:"公司名称",state:0,feedresult:""},
+                    {title:"职位名称",salary:"年薪",addr:"地区",scolar:'学历要求',worksexp:"经验要求",postdate:"2016-10-25",inc:"公司名称",state:2,feedresult:"不合适"},
+                    {title:"职位名称",salary:"年薪",addr:"地区",scolar:'学历要求',worksexp:"经验要求",postdate:"2016-10-25",inc:"公司名称",state:0,feedresult:""},
                ]
           }
 
      },
      methods:{
+          feedRes:function(action,obj){
+               if($(obj).parent("li").hasClass("on")){
+                    if(action=="over"){
+                         $(obj).siblings(".feedback-result").show();
+                    }else{
+                         $(obj).siblings(".feedback-result").hide();
+                    }
+               }
+          },
           remainText:function(text){
                if(1000-text.length<0){
                     return 0;
@@ -430,10 +441,6 @@ var appCont = new Vue({
                }
           }
      },
-     updated:function(){
-          window.selectInitPos();
-          window.selectEventBind();
-     },
      components:{
           'pagination':pagination
      }
@@ -539,10 +546,10 @@ var appModal = new Vue({
 });
 function init_center(){
      selectInitPos();
-    init_safepos();
+     selectInit();
     selectEventBind();
+    init_safepos();
     editEventBind();
-   // init_paneAdd();
     navEventBind();
     modalEventBind();
     uploadEventBind();
@@ -631,6 +638,13 @@ function editEventBind(){
                          appCont.resume.edus[index].submajor = $(this).find(".major-input-2 input").val();
                          appCont.resume.edus[index].exmajor = $(this).find(".ex-major").val();
                     })
+               }else if(viewName=="speech"){
+                    appCont.resume.laSkills=[];
+                    editBlock.find(".language-skills input[type='checkbox']").each(function(){
+                         if(this.checked){
+                              appCont.resume.laSkills.push(this.value);
+                         }
+                    })
                }
                editBlock.hide();
                $(".resumeBox .view-item[name="+viewName+"]").show();
@@ -642,20 +656,6 @@ function editEventBind(){
                $(".resumeBox .view-item[name="+viewName+"]").show();
           })
 }
-function selectInitPos(){
-     $(".selectee input").each(function(){
-        var bgPos=$(this).width()-10+"px center";
-        $(this).attr("disabled","true").css("background-position",bgPos);
-    });
-    $(".selectee ul").each(function(){
-        var sibInput=$(this).siblings("input")
-        $(this).width(sibInput.width()+10);
-        $(this).css({
-            left:sibInput.css("margin-left"),
-            top:sibInput.height()
-        })
-    });
-}
 function selectEventBind(){
     $(".selectee ul li").bind({
         "mouseover":function(){
@@ -663,27 +663,20 @@ function selectEventBind(){
         },
        "mouseout":function(){
            $(this).removeClass("over");
-       },
-       "click":function(){
-           $(this).siblings(".selected").removeClass("selected");
-           $(this).addClass("selected");
-           $(this).parent().siblings("input").val($(this).text());
-           $(this).parent().hide();
-           return false;
        }
      });
-    $(".selectee").bind("click",function(){
-        $(".selectee ul").hide();
-        $(this).children("ul").show();
-        return false;
-    });
-    $("body").bind("click",function(){
-        $(".selectee ul").hide();
-    })
 }
 function init_safepos(){
     var p_left= Math.floor($(".safe-range p").width()*$(".safe-range").width()/100)-16+"px";
     $(".r-pointer").css("left",p_left);
+}
+function selectInit(){
+     $(".major-input input").each(function(index){
+          $(this).width($(this).width()-20);
+          $(this).css("padding-right",20+"px");
+          var bgPos=$(this).width()+10+"px center";
+          $(this).attr("disabled","true").css("background-position",bgPos);
+     })
 }
 function navEventBind(){
     $(".sideBox>li").bind("click",function(){

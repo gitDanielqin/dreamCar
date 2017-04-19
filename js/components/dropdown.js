@@ -22,8 +22,8 @@
                 this.$emit('input', item);
                 $(obj).siblings(".selected").removeClass("selected");
                 $(obj).addClass("selected");
-                $(obj).parent().siblings("input").val($(obj).text());
-                $(obj).parent().hide();
+                $(obj).parent("ul").siblings("input").val($(obj).text());
+                $(obj).parent("ul").hide();
                 this.$emit('callback');
                 return false;
             },
@@ -43,7 +43,6 @@
             $("body").click(function(){
                  $(".selectee ul").hide();
             });
-            $(".selectee ul").width($(".selectee input").outerWidth()-2);
        }
      });
 
@@ -254,16 +253,22 @@
      // 选择下拉框定位
      function selectInitPos(){
           $(".selectee input").each(function(){
-             var bgPos=$(this).width()-10+"px center";
+               $(this).width($(this).width()-20);
+               $(this).css("padding-right",20+"px");
+             var bgPos=$(this).width()+10+"px center";
              $(this).attr("disabled","true").css("background-position",bgPos);
          });
          $(".selectee ul").each(function(){
-             var sibInput=$(this).siblings("input")
-             $(this).width(sibInput.width()+10);
+               var sibInput=$(this).siblings("input");
+             // console.log(sibInput.height());
+             $(this).width(sibInput.outerWidth()-2);
              $(this).css({
-                 left:sibInput.css("margin-left"),
-                 top:sibInput.height()
+                 left:sibInput.css("margin-left")+"px",
+                 top:sibInput.height()+"px"
              })
+         });
+         $("body").click(function(){
+              $(".selectee ul").hide();
          });
      }
      window.selectInitPos = selectInitPos;

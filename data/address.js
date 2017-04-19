@@ -408,6 +408,21 @@ var addArray =[
 ]}
 ];
 
+// var maxlen = 1;
+// for(var i=0; i<addArray.length;i++){
+//      for(var j=0; j<addArray[i].citys.length;j++){
+//           if(addArray[i].citys[j].city.length>maxlen){
+//                maxlen=addArray[i].citys[j].city.length;
+//           }
+//           for(k=0;k<addArray[i].citys[j].conts.length;k++){
+//                if(addArray[i].citys[j].conts[k].length>maxlen){
+//                     maxlen=addArray[i].citys[j].conts[k].length;
+//                }
+//           }
+//      }
+// }
+// console.log(maxlen);
+
 (function(){
      for(var i=0; i<addArray.length;i++){
           for(var j=0;j<addArray[i].citys.length;j++){

@@ -108,7 +108,7 @@ var appMain = new Vue({
                }
                $(".steps li:nth-of-type(1)").removeClass("past");
                $(".steps li:nth-of-type(2)").removeClass("on");
-               selectInitPos();
+            // selectInitPos();
           },
           fontCal:function(str,type){
                if(str.length<=1000){
@@ -127,7 +127,7 @@ var appMain = new Vue({
           },
           popAddrBox:function(obj){
                $(obj).siblings(".addr-box").show();
-               selectInitPos();
+          //     selectInitPos();
           },
           confirmIncAddr:function(target,type){
                var incAddress="";
@@ -154,27 +154,31 @@ var appMain = new Vue({
                $(".steps li:nth-of-type(2)").addClass("on");
           });
           selectInitPos();
+          selectRepos()
+          selectInit();
           selectTime();
           selectWelfare();
      }
 })
-// 下拉框位置选择
-function selectInitPos(){
-     $(".selectee input").each(function(){
-        var bgPos=$(this).width()-10+"px center";
-        $(this).attr("disabled","true").css("background-position",bgPos);
-    });
-    $(".selectee ul").each(function(){
-        var sibInput=$(this).siblings("input")
-        $(this).width(sibInput.width()+10);
-        $(this).css({
-            left:sibInput.css("margin-left"),
-            top:sibInput.height()
-        })
-    });
-    $("body").bind("click",function(){
-       $(".selectee ul").hide();
-    })
+
+function selectRepos(){
+     $(".selectee ul").each(function(){
+           var sibInput=$(this).siblings("input");
+          //console.log(sibInput.height());
+         $(this).width(sibInput.outerWidth()-2);
+         $(this).css({
+            left:sibInput.css("margin-left")+"px",
+            top:25+"px"
+         })
+     });
+}
+function selectInit(){
+     $(".major-input input").each(function(index){
+          $(this).width($(this).width()-20);
+          $(this).css("padding-right",20+"px");
+          var bgPos=$(this).width()+10+"px center";
+          $(this).attr("disabled","true").css("background-position",bgPos);
+     })
 }
 //时间表选择事件
 function selectTime(){

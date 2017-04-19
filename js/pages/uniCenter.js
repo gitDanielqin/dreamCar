@@ -438,10 +438,6 @@ var appCont = new Vue({
               return total;
          }
     },
-    updated:function(){
-         selectInitPos();
-       //  selectEventBind();
-    },
     components:{
          'pagination':pagination
     }
@@ -541,10 +537,8 @@ var appModal = new Vue({
 });
 function init_center(){
      selectInitPos();
+     selectInit();
    init_safepos();
-//    selectEventBind();
-  //  editEventBind();
-   // init_paneAdd();
    navEventBind();
    showContact();
    vipEventBind();
@@ -606,20 +600,6 @@ function uploadEventBind(){
             })
 }
 
-function selectInitPos(){
-     $(".selectee input").each(function(){
-        var bgPos=$(this).width()-10+"px center";
-        $(this).attr("disabled","true").css("background-position",bgPos);
-    });
-    $(".selectee ul").each(function(){
-        var sibInput=$(this).siblings("input")
-        $(this).width(sibInput.width()+10);
-        $(this).css({
-            left:sibInput.css("margin-left"),
-            top:sibInput.height()
-        })
-    });
-}
 
 function navEventBind(){
     $(".sideBox>li").bind("click",function(){
@@ -639,7 +619,16 @@ function navEventBind(){
         $(".content").children().hide();
         $(".content").children("."+$(this).attr("paneid")).show();
     });
+};
+function selectInit(){
+     $(".major-input input").each(function(index){
+          $(this).width($(this).width()-20);
+          $(this).css("padding-right",20+"px");
+          var bgPos=$(this).width()+10+"px center";
+          $(this).attr("disabled","true").css("background-position",bgPos);
+     })
 }
+
 function vipEventBind(){
      $(".vip-navs li").each(function(index){
           $(this).click(function(){

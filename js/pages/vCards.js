@@ -48,8 +48,8 @@
            incProp:"",
            incScale:"",
            showPerson:false,
-           showUni:true,
-           showInc:false
+           showUni:false,
+           showInc:true
       },
       methods:{
            selectGender:function(obj){
@@ -69,5 +69,6 @@
       },
       mounted:function(){
            selectInitPos();
+           $(".main").css("margin-bottom",getViewport().height-746+"px");
       }
 })

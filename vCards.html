@@ -15,7 +15,7 @@
     </div>
 </div>
 <div class="container paTop30" id="app-content">
-    <div class="main H500 inner bg-white maB42 clearfix">
+    <div class="main H500 inner bg-white clearfix">
         <form class="personCard maL70 card W510 fl" v-show="showPerson">
             <h2 class="LH-H104 fSize30 color-gray3 maB5">创建个人名片</h2>
                 <input type="text" class="info01" placeholder="姓名" />
@@ -35,7 +35,7 @@
         </form>
         <form class="uniCard maL70 card W510 fl" v-show="showUni">
             <h2 class="LH-H104 fSize36 color-gray3 maB5">创建高校名片</h2>
-            <input type="text" class="W288 fl" placeholder="学校名称" />
+            <input type="text" class="W262 fl uni-input" placeholder="学校名称" />
             <dropdown class="select-short" placeholder="学校性质" :options="database.uniLevel" v-model="uniLevel"></dropdown>
             <div class="address">
                 <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
@@ -47,7 +47,7 @@
         <form class="bsCard maL70 card W510 fl" v-show="showInc">
             <h2 class="LH-H104 fSize36 color-gray3 maB5">创建企业名片</h2>
             <div class="fSize0">
-                 <input type="text" class="W228" placeholder="企业名称" />
+                 <input type="text" class="W206" placeholder="企业名称" />
                  <dropdown class="select-short" placeholder="公司性质" :options="database.incProps" v-model="incProp"></dropdown>
                  <dropdown class="select-short" placeholder="公司规模" :options="database.incScales" v-model="incScale"></dropdown>
             </div>
@@ -86,6 +86,7 @@
 </div>
 <script src="js/libs/jquery-3.1.0.min.js"></script>
 <script src="js/libs/vue.js"></script>
+<script src="js/common/common.js"></script>
 <script src="js/components/dropdown.js"></script>
 <script src="data/address.js"></script>
 <script src="data/date.js"></script>

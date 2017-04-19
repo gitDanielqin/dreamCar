@@ -399,10 +399,6 @@ var appCont = new Vue({
               return total;
          }
     },
-    updated:function(){
-         selectInitPos();
-         selectEventBind();
-    },
     components:{
          'pagination':pagination
     }
@@ -468,6 +464,7 @@ var appModal = new Vue({
 });
 function init_center(){
      selectInitPos();
+     selectInit();
    init_safepos();
     selectEventBind();
   //  editEventBind();
@@ -480,6 +477,14 @@ function init_center(){
 }
 init_center();
 
+function selectInit(){
+     $(".major-input input").each(function(index){
+          $(this).width($(this).width()-20);
+          $(this).css("padding-right",20+"px");
+          var bgPos=$(this).width()+10+"px center";
+          $(this).attr("disabled","true").css("background-position",bgPos);
+     })
+}
 function uploadEventBind(){
      var options = {
          thumbBox: '.thumbBox',
@@ -575,20 +580,7 @@ function reqFilter(type,state){
      };
      return filterArray;
 }
-function selectInitPos(){
-     $(".selectee input").each(function(){
-        var bgPos=$(this).width()-10+"px center";
-        $(this).attr("disabled","true").css("background-position",bgPos);
-    });
-    $(".selectee ul").each(function(){
-        var sibInput=$(this).siblings("input")
-        $(this).width(sibInput.width()+10);
-        $(this).css({
-            left:sibInput.css("margin-left"),
-            top:sibInput.height()
-        })
-    });
-}
+
 function selectEventBind(){
     $(".selectee ul li").bind({
         "mouseover":function(){

@@ -99,13 +99,13 @@
                $(".pop-major-1").each(function(){
                     $(this).css({
                          "left":0,
-                         "top":$(this).siblings(".major-input-1").height()-1+"px"
+                         "top":$(this).siblings(".major-input-1").height()-2+"px"
                     })
                })
                $(".pop-major-2").each(function(){
                     $(this).css({
                          "left":$(this).siblings(".major-input-2").position().left+"px",
-                         "top":$(this).siblings(".major-input-2").height()-1+"px"
+                         "top":$(this).siblings(".major-input-2").height()-2+"px"
                     })
                });
           },
@@ -130,7 +130,7 @@
                          $(".pop-major-1").each(function(){
                               $(this).css({
                                    "left":$(this).siblings(".major-input-1").position().left+"px",
-                                   "top":$(this).siblings(".major-input-1").height()-1+"px"
+                                   "top":$(this).siblings(".major-input-1").height()-2+"px"
                               })
                          })
                     }
@@ -144,7 +144,7 @@
                               }
                               $(this).css({
                                    "left":left+"px",
-                                   "top":$(this).siblings(".major-input-2").height()-1+"px"
+                                   "top":$(this).siblings(".major-input-2").height()-2+"px"
                               })
                          });
                     }
