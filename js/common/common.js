@@ -60,6 +60,19 @@ function getViewport(){
           }
      }
 }
+
+var eventUtils = {
+     urlExtrac:function(url){
+          var paraStr = url.search.substr(1);
+          var paraArray = paraStr.split("&");
+          var paraObj={};
+          for(var i=0; i<paraArray.length; i++){
+               var pars = paraArray[i].split("=");
+               paraObj[pars[0]]=pars[1];
+          };
+          return paraObj;
+     }
+}
 // 数组对象功能扩充
 Array.prototype.indexOf = function(val) {
     for (var i = 0; i < this.length; i++) {

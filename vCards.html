@@ -35,21 +35,21 @@
         </form>
         <form class="uniCard maL70 card W510 fl" v-show="showUni">
             <h2 class="LH-H104 fSize36 color-gray3 maB5">创建高校名片</h2>
-            <input type="text" class="W262 fl uni-input" placeholder="学校名称" />
-            <dropdown class="select-short" placeholder="学校性质" :options="database.uniLevel" v-model="uniLevel"></dropdown>
+            <input type="text" class="W262 fl uni-input" placeholder="学校名称" v-model="uniInfo.name"/>
+            <dropdown class="select-short" placeholder="学校性质" :options="database.uniLevel" v-model="uniInfo.props"></dropdown>
             <div class="address">
                 <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
             </div>
-            <input type="text" class="W188" placeholder="学校联系人" /><input type="text" class="W188 paLeft20" placeholder="联系人手机号" />
-            <input class="w188" type="text" placeholder="请输入验证码" style="margin-bottom: 0"><button type="button" class="W120 LH-H40 fSize14 color-white bg-grayC">获取验证码</button>
+            <input type="text" class="W188" placeholder="学校联系人" v-model="uniInfo.linkMan"/><input type="text" class="W188 paLeft20" placeholder="联系人手机号" v-model="uniInfo.mobile"/>
+            <input class="w188" type="text" placeholder="请输入验证码" style="margin-bottom: 0" v-model="uniInfo.validCode"><button type="button" class="W120 LH-H40 fSize14 color-white bg-grayC">获取验证码</button>
             <button type="button" class="LH-H40 W140 maT40 bg-orange2 save fSize18 color-white" @click.prevent="submitCard('uni')">保存名片</button>
         </form>
         <form class="bsCard maL70 card W510 fl" v-show="showInc">
             <h2 class="LH-H104 fSize36 color-gray3 maB5">创建企业名片</h2>
             <div class="fSize0">
-                 <input type="text" class="W206" placeholder="企业名称" />
-                 <dropdown class="select-short" placeholder="公司性质" :options="database.incProps" v-model="incProp"></dropdown>
-                 <dropdown class="select-short" placeholder="公司规模" :options="database.incScales" v-model="incScale"></dropdown>
+                 <input type="text" class="W206" placeholder="企业名称" v-model="incInfo.name"/>
+                 <dropdown class="select-short" placeholder="公司性质" :options="database.incProps" v-model="incInfo.props"></dropdown>
+                 <dropdown class="select-short" placeholder="公司规模" :options="database.incScales" v-model="incInfo.scale"></dropdown>
             </div>
             <div class="address">
                  <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>

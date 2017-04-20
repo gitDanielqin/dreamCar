@@ -2,6 +2,8 @@
  * Created by xuanyuan on 2016/11/7.
  */
 
+
+var userType = eventUtils.urlExtrac(window.location).userType;
  var appCont =  new Vue({
       el:"#app-content",
       data:{
@@ -43,28 +45,69 @@
                 year:"",
                 month:"",
            },
+           uniInfo:{
+                name:"",
+                props:"",
+                linkMan:"",
+                mobile:"",
+                validCode:""
+           },
+           incInfo:{
+
+           },
            workstate:"",
            uniLevel:"",
            incProp:"",
            incScale:"",
-           showPerson:false,
-           showUni:false,
-           showInc:true
+           showPerson:userType=="0",
+           showUni:userType=="1",
+           showInc:userType=="2"
       },
       methods:{
+
            selectGender:function(obj){
                 $(".gender .on").removeClass("on");
                 $(obj).addClass("on");
            },
            submitCard:function(type){
-
+                var posturl="";
+                var postdata={};
                 if(type=="person"){
+                     posturl = "http://www.xiaoqiztc.com/easily_xq_WebApi/user/school/createCard"
                     window.location.href="pCenter.html"
                 }else if(type=="uni"){
+                     posturl = "http://www.xiaoqiztc.com/easily_xq_WebApi/user/school/createCard";
+                     postdata={
+                         userId: eventUtils.urlExtrac(window.location).userid,
+                         name: this.uniInfo.name,
+                         property:this.uniInfo.props,
+                         province:$(".unicard .sel-province input").val(),
+                         city:$(".unicard .sel-city input").val(),
+                         area:$(".unicard .sel-district input").val(),
+                         linkMan:this.uniInfo.linkMan,
+                         mobile:this.uniInfo.mobile,
+                         code:this.uniInfo.validCode
+                    };
                     window.location.href="uniCenter.html"
                }else if(type=="inc"){
                     window.location.href="incCenter.html"
                }
+
+               $.ajax({
+                    url:posturl,
+                    type:"post",
+                    data:postdata,
+                    success:function(data,status){
+                         clearInterval(timer);
+                         $(obj).html("获取验证码");
+                         $(obj).attr("disabled",false);
+                         alert(data.info);
+                    },
+                    error:function(data,status){
+                         alert("获取验证码失败！"+data.info);
+                    },
+                    timeout:5000
+               })
            }
       },
       mounted:function(){

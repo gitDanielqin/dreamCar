@@ -14,7 +14,7 @@
                   <h3 class="city fl LH-H80 fSize18 maT16 maL60"><b>北京市<img src="images/trigle01.png" class="v-mid maL10" /></b></h3>
               </div>
           </div>
-          <div class="main H570 clearfix">
+          <div class="main H570 clearfix" id="main-content">
                <div class="fl entry-box uni-entry t-center">
                     <i class="pic-wrapper entry-porto"><img src="images/porto-uni-recruit.png" /></i>
                     <p class="t-center color-white fSize16 LH32 maT37">校园招聘会<br />为企业招聘主开通具针对性的<br />应届毕业生招聘通道，<br />在这里，<br />集结了全中国各个学院的优秀的人才，<br />各位企业招聘主可以尽情挑选！
@@ -51,5 +51,9 @@
                   </div>
               </div>
           </div>
+          <script src="js/common/common.js"></script>
+          <script>
+               document.getElementById("main-content").style.height = getViewport().height-216+"px";
+          </script>
      </body>
 </html>

@@ -14,22 +14,22 @@
         <h3 id="sel-add" class="city fl LH-H80 fSize18 maT16 maL60"><b>北京市<img src="images/trigle01.png" class="v-mid maL10" /></b></h3>
     </div>
 </div>
-<div class="banner H764 bg-purpleL">
+<div class="banner H764 bg-purpleL" id="app-content">
     <div class="inner pRel">
         <i class="pic-wrapper loginImg"><img src="images/login-pic.jpg"/></i>
         <div class="logBox regis" id="app-regis">
             <ul class="pRel log-nav LH-H40 fSize24 color-gray6">
-                <li class="on">个人</li>
-                <li>高校</li>
-                <li>企业</li>
+                <li class="on" @click="register.userType=0">个人</li>
+                <li @click="register.userType=1">高校</li>
+                <li @click="register.userType=2">企业</li>
             </ul>
             <form class="W350 bg-white t-center">
-                <input class="maT34 account" type="text" placeholder="手机号/邮箱" />
-                <input class="maT22" type="password" placeholder="密码 (6-16字母、数字、无空格)"/>
+                <input class="maT34 account" type="text" :placeholder="accontType(register.userType)" v-model="register.account"/>
+                <input class="maT22" type="password" placeholder="密码 (6-16字母、数字、无空格)" v-model="register.password"/>
                 <div class="valid maT28">
-                    <input class="v-mid" type="text" placeholder="验证码"><button type="button" class="W108 LH-H42 maL20 v-mid fSize18 color-white codeReq" disabled="disabled">获取验证码</button>
+                    <input class="v-mid" type="text" placeholder="验证码" v-model="register.validcode"><button type="button" class="W108 LH-H42 maL20 v-mid fSize14 color-white codeReq" disabled="disabled" @click="reqValidCode($event.target)">获取验证码</button>
                 </div>
-                <button id="regBtn" class="LH-H50 W305 bg-orange fSize24 color-white maT24" disabled="disabled">免费注册</button>
+                <button id="regBtn" class="LH-H50 W305 bg-orange fSize24 color-white maT24" @click.prevent="regisEv">免费注册</button>
                 <p class="LH-H62 fSize14 t-left W400 maL24"><label><i class="check-box selected"></i>我已阅读并同意《 <a href="#javascript:;" class="agreement">用户服务协议</a> 》</label></p>
             </form>
             <p class="login-footer LH-H50 fSize20 t-center bg-grayC color-gray3">已有账号，直接登录</p>

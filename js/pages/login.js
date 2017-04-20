@@ -2,6 +2,97 @@
  * Created by xuanyuan on 2016/11/6.
  */
 
+var appCont =  new Vue({
+     el:"#app-content",
+     data:{
+          register:{
+               account:"",
+               password:"",
+               validcode:"",
+               userType:2
+          }
+     },
+     methods:{
+          accontType:function(index){
+               if(index==0){
+                    return "手机号"
+               }else{
+                    return "邮箱"
+               }
+          },
+          regisEv:function(){
+               //alert(1);
+               var postdata = {
+                    loginName:this.register.account,
+                    password:this.register.password,
+                    code:this.register.validcode,
+                    userType:this.register.userType
+               };
+               window.location.href="vCards.html?userType="+appCont.register.userType+"&userid=1";
+          //     window.location.href="vCards.html";
+               //console.log(postdata);
+               // $.ajax({
+               //      url:"http://www.xiaoqiztc.com/easily_xq_WebApi/center/user/register?",
+               //      type:"post",
+               //      data:postdata,
+               //      success:function(resp,status){
+               //           alert(resp.info);
+               //           window.location.href="/vCards.html?userType="+appCont.register.userType+"&userid="+resp.data.userId;
+               //      },
+               //      error:function(data,status){
+               //           console.log(status)
+               //           alert("注册失败！"+data.info);
+               //      },
+               //      timeout:5000
+               // })
+          },
+          reqValidCode:function(obj){
+               $(obj).attr("disabled",true);
+               var start=0;
+               var timer = setInterval(function(){
+                    start++;
+                    if(start==60){
+                         $(obj).html("获取验证码");
+                         $(obj).attr("disabled",false);
+                         clearInterval(timer);
+                    }
+                    $(obj).html("重新获取 ("+(60-start)+"s)");
+               },1000);
+               var postdata;
+               var posturl;
+               if(this.register.userType==0){
+                    postdata = {
+                         mobile:this.register.account,
+                         type:0
+                    };
+                    posturl = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/mobileCode?";
+               }else{
+                    postdata = {
+                         email:this.register.account,
+                         type:0
+                    };
+                    posturl = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/emailCode?";
+               }
+
+               $.ajax({
+                    url:posturl,
+                    type:"post",
+                    data:postdata,
+                    success:function(data,status){
+                         clearInterval(timer);
+                         $(obj).html("获取验证码");
+                         $(obj).attr("disabled",false);
+                         alert(data.info);
+                    },
+                    error:function(data,status){
+                         alert("获取验证码失败！"+data.info);
+                    },
+                    timeout:5000
+               })
+
+          }
+     }
+})
 
 function _init(){
      loginEventBind();
@@ -44,9 +135,6 @@ function agreementEventBind(){
     }
 
 
-
-
-
 //登录框事件绑定
 function loginEventBind(){
      $(".login .login-footer").click(function(){
@@ -70,30 +158,7 @@ function regisEventBind(){
         $(".regis").fadeOut();
         $(".login").fadeIn("slow");
     });
-    $(".codeReq").click(function(){
-          var objMe=this;
-         $(this).attr("disabled",true);
-         var start=0;
-         var timer = setInterval(function(){
-              start++;
-              if(start==60){
-                   $(objMe).html("获取验证码");
-                   $(objMe).attr("disabled",false);
-                   clearInterval(timer);
-              }
-              $(objMe).html("重新获取 ("+(60-start)+"s)");
-         },1000);
-         var emailStr = $(".regis .account").val();
 
-         $.post("http://101.37.31.30/easily_xq_WebApi/sys/emailCode?",{"email":emailStr,"type":0},function(data){
-           //   var data = JSON.parse(data);
-           clearInterval(timer);
-           $(objMe).html("获取验证码");
-               $(objMe).attr("disabled",false);
-              alert(data.info);
-         });
-
-    })
 }
 /*登录输入验证*/
 function validEventBind(){

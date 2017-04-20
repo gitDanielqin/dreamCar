@@ -2,7 +2,7 @@
 <html>
      <head>
           <meta charset="utf-8">
-          <title>首页-1</title>
+          <title>首页</title>
           <link href="css/base.css" rel="stylesheet" />
           <link href="css/index.css" rel="stylesheet" />
      </head>
@@ -33,8 +33,8 @@
                           <p class="maT38"><input type="text" placeholder="岗位名称/学校名称/企业名称" class="search LH-H48 v-top"/><button class="search-btn">搜索</button></p>
                     </div>
                     <ul class="lis-inline module-entry">
-                         <li><a href="#">高校需求</a></li><li><a href="#">企业需求</a></li><li><a href="#">充电站</a></li>
-                         <li><a href="#">招聘会</a></li><li><a href="#">校企岗位</a></li><li><a href="#">职业规划</a></li>
+                         <li><a href="display-uni.html">高校需求</a></li><li><a href="display-company.html">企业需求</a></li><li><a href="#">充电站</a></li>
+                         <li><a href="v-recruit.html">招聘会</a></li><li><a href="display-position.html">校企岗位</a></li><li><a href="#">职业规划</a></li>
                     </ul>
                     <i class="pic-wrapper weiter" @click="downwards"><img src="images/icon-weiter.png" /></i>
                </div>
@@ -64,8 +64,17 @@
                </div>
           </div>
           <div class="coop H433" id="app-coop">
-               <div class="inner paTop76">
-                    <div class="clearfix">
+               <div class="inner paTop58 t-center">
+                    <ul class="coop-navs LH66 fSize22 lis-inline disInline">
+                         <li :class="{'on':showinc}" @click="showinc=true">合作企业</li><li :class="{'on':!showinc}" @click="showinc=false">合作高校</li>
+                    </ul>
+                    <ul class="lis-inline coop-lis coop-inc" v-show="showinc">
+                         <li v-for="item in coopInc"><a class="pic-wrapper"><img :src="item.imgsrc" /></a></li>
+                    </ul>
+                    <ul class="lis-inline coop-lis" v-show="!showinc">
+                         <li v-for="item in coopUni"><a class="pic-wrapper"><img :src="item.imgsrc" /></a></li>
+                    </ul>
+                    <!-- <div class="clearfix">
                          <h3 class="fl fSize22 LH40 paTop40 t-center">合作企业<span class="LH30 fSize14 color-gray-c coop-sub">COOPERATION</span></h3>
                          <i class="pic-wrapper fl maT34 maL22" @click.stop="incLeft"><img src="images/left-arrow.png" /></i>
                          <div class="fl coop-frame">
@@ -84,7 +93,7 @@
                               </ul>
                          </div>
                          <i class="pic-wrapper fl maT34" @click.stop="uniRight"><img src="images/right-arrow.png" /></i>
-                    </div>
+                    </div> -->
                </div>
           </div>
           <div class="footer H238" id="app-footer">

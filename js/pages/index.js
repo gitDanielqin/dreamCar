@@ -37,6 +37,53 @@ function turnEventBind(){
      })
 };
 
+function wheelEventBind(element,index){
+     var oEl = document.getElementById(element);
+     if(oEl.onwheel){
+          oEl.onwheel = function(ev){
+               var ev = ev || window.event;
+               var wheelValue;
+               if(ev.wheelDelta){
+                    wheelValue = ev.wheelDelta
+               }else{
+                    wheelValue = ev.detail
+               };
+               if(wheelValue<0){
+                    if(document.body.scrollTop<getViewport().height*(index-1)){
+                         $("body").animate({
+                              scrollTop:getViewport().height*(index-1)
+                         },500)
+                    }else{
+                         $("body").animate({
+                              scrollTop:getViewport().height*index
+                         },500)
+                    }
+               }
+          }
+     }else{
+          oEl.addEventListener("wheel",function(ev){
+               var ev = ev || window.event;
+               var wheelValue;
+               if(ev.wheelDelta){
+                    wheelValue = ev.wheelDelta
+               }else{
+                    wheelValue = ev.detail
+               };
+               if(wheelValue<0){
+                    if(document.body.scrollTop<getViewport().height*(index-1)){
+                         $("body").animate({
+                              scrollTop:getViewport().height*(index-1)
+                         },500)
+                    }else{
+                         $("body").animate({
+                              scrollTop:getViewport().height*index
+                         },500)
+                    }
+               }
+          });
+     }
+
+}
 
 var appFront = new Vue({
      el:"#app-front",
@@ -63,7 +110,7 @@ var appFront = new Vue({
           downwards:function(){
                $("body").animate({
                     scrollTop:getViewport().height
-               },1000)
+               },500)
           }
      },
      mounted:function(){
@@ -141,6 +188,7 @@ var appShow =  new Vue({
      },
      mounted:function(){
           $("#app-show").height(getViewport().height);
+     //     wheelEventBind("app-show",2);
           turnEventBind();
           //showEventBind();
      }
@@ -150,6 +198,7 @@ var appAbout = new Vue({
      el:"#app-about",
      mounted:function(){
           $("#app-about").height(getViewport().height);
+     //     wheelEventBind("app-about",3);
      }
 })
 var appCoop =  new Vue({
@@ -163,7 +212,19 @@ var appCoop =  new Vue({
                {imgsrc:"images/coLogo03.jpg"},
                {imgsrc:"images/coLogo03.jpg"},
                {imgsrc:"images/coLogo03.jpg"},
-          ]
+          ],
+          coopUni:[
+               {imgsrc:"images/coLogo02.jpg"},
+               {imgsrc:"images/coLogo03.jpg"},
+               {imgsrc:"images/coLogo04.jpg"},
+               {imgsrc:"images/coLogo02.jpg"},
+               {imgsrc:"images/coLogo03.jpg"},
+               {imgsrc:"images/coLogo04.jpg"},
+               {imgsrc:"images/coLogo02.jpg"},
+               {imgsrc:"images/coLogo03.jpg"},
+               {imgsrc:"images/coLogo04.jpg"},
+          ],
+          showinc:true
      },
      methods:{
                incLeft:function(){
@@ -192,10 +253,6 @@ var appCoop =  new Vue({
                }
      },
      mounted:function(){
-          $(".coop-lis").each(function(index){
-               var lisWidth = $(this).children("li").length * $(this).children("li:first-child").outerWidth(true);
-               $(this).width(lisWidth);
-          })
           $("#app-coop").height(getViewport().height-288);
      }
 });
