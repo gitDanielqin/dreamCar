@@ -1,16 +1,25 @@
 .login  span{margin-left: 15px;}
 .top-acc{margin-left: 47px; margin-right: 15px;}
-.top-acc img{margin-right: 6px;}
 .detail-header img{vertical-align: middle;}
+.top-acc .pic-icon{width: 17px; height: 20px; background: url("../images/sprite.png") no-repeat -113px -177px;margin-right: 6px;}
 
-.brief-info .pic-wrapper{margin-right: 17px;}
+.brief-info .pic-icon{margin-right: 17px;}
+.brief-info .icon-eye{background: url("../images/sprite.png") no-repeat -147px -61px; width: 29px; height: 16px;}
+.brief-info .icon-apply{background: url("../images/sprite.png") no-repeat -300px -85px; width: 30px; height: 30px;}
+.brief-info .icon-post{background: url("../images/sprite.png") no-repeat -242px -54px; width: 28px; height: 28px;}
 .banner{border-top:1px solid #d5d5d5;}
-.banner-btns button{width: 108px; height: 46px; font-size: 14px; }
-.btn-collec{ border: 2px solid #ffa800; color:#ffa800; background: url("../images/icon-star.png") no-repeat 10px center; text-align: right;}
-.btn-collec.collected{background: url("../images/icon-star-white.png") no-repeat 10px center #48c1e4;color: white; border-color: #48c1e4}
+.banner-btns button{width: 108px; height: 46px; font-size: 14px; position: relative;}
+.btn-collec{ border: 2px solid #ffa800; color:#ffa800;  text-align: right;}
+.btn-collec .pic-icon{background: url("../images/sprite.png") no-repeat -192px -38px; width: 30px; height: 30px; position: absolute; left: 10px; top: 6px;}
+.btn-collec.collected {background:#48c1e4;color: white; border-color: #48c1e4}
+.btn-collec.collected .pic-icon{background: url("../images/sprite.png") no-repeat -103px -265px;}
 .btn-collec span{letter-spacing: 0.2em;}
-.share i.pic-wrapper{margin-left: 14px; vertical-align: middle; }
-.share i.pic-wrapper img{height:22px;}
+.btn-apply .pic-icon{ background: url("../images/sprite.png") no-repeat -89px -133px; width: 23px; height: 16px; position: absolute;right: 10px; top: 17px;}
+.share i.pic-icon{margin-left: 14px; cursor: pointer;}
+.share i.pic-icon:nth-child(2){background: url("../images/sprite.png") no-repeat -192px -77px; width:34px;height: 27px;}
+.share i.pic-icon:nth-child(3){background: url("../images/sprite.png") no-repeat -192px -112px; width: 26px;height: 29px;}
+.share i.pic-icon:nth-child(4){background: url("../images/sprite.png") no-repeat -190px -152px; width: 32px;height: 26px;}
+
 
 .descript h3{padding-left: 25px; color: white; line-height: 40px; height:40px; font-size: 18px; border-bottom: 1px solid #dcdcdc;}
 .descript h3:first-child{background: url("../images/head-bg.png") no-repeat 0 0;}
@@ -36,7 +45,10 @@
 .basic-info li{line-height: 40px; margin-bottom: 6px; padding-left: 18px;}
 .basic-info.pos-basic li{margin: 0;}
 .basic-info.inc-basic li{margin: 0;}
-.basic-info i{margin-right:15px;}
+.basic-info i.pic-icon{margin-right:15px;}
+.basic-info .icon-incprops{background: url("../images/sprite.png") no-repeat -3px -106px; width: 18px; height: 18px;}
+.basic-info .icon-people{background: url("../images/sprite.png") no-repeat -61px -129px; width: 20px; height: 18px;}
+.basic-info .icon-map{background: url("../images/sprite.png") no-repeat -32px -127px; width: 20px; height: 20px;}
 
 .ads{border:1px solid #c9c9c9;}
 .ad-pic{overflow: hidden; margin-bottom: 30px; margin-left: 19px;}
@@ -46,7 +58,7 @@
 .result-tabs li:first-child{border-left: 2px solid #bfbfbf;}
 .result-tabs li.on{background: #ff8a00; color: white; border-color:#ff8a00 }
 .result-tabs .msg-info{width:30px; line-height:24px; height:30px; font-size: 14px; position: absolute; display: inline-block;color:white;
-background: url("../images/icon-total.png") no-repeat 0 0; left: 84%; top:-15px;}
+background: url("../images/sprite.png") no-repeat -254px -222px; left: 84%; top:-15px;}
 
 .result-table{border-collapse: collapse;}
 .result-table th{border:1px solid #919191; font-weight: normal;}
@@ -88,16 +100,21 @@ a.login-link{display: block; color:#fcb62e;}*/
 /*申请成功对话框样式*/
 .dlg-success{position: absolute; top:580px; left: 50%; transform: translateX(-50%); background: #fcb62e; }
 .dlg-login{position: absolute; top:580px; left: 50%; transform: translateX(-50%); background: #fcb62e; }
-.confirm{background: url("../images/icon-sure.png") no-repeat 86% center #fcb62e;}
+.confirm{background:#fcb62e; position: relative;}
+.confirm .pic-icon{position: absolute; width: 27px; height: 27px; background: url("../images/sprite.png") no-repeat -256px -178px;right: 30px;}
 .stamp{position: absolute; left: -35px; top:-29px;}
 .login-form input{width: 363px; height:55px; padding-left: 25px; font-size: 16px; border: 2px solid #e5e5e5; color:#a1a1a1;
 background: #f8f8f8; margin-top: 30px; margin-left: 25px;}
 .dlg-login .regis{border-left: 1px dashed #eee;}
-.fast-login i{margin-right:35px;}
+.fast-login i.pic-icon{margin-right:35px;}
 a.login-link{display: block; color:#fcb62e;}
+.fast-login .icon-wechat{background: url("../images/sprite.png") no-repeat -192px -77px; width:34px;height: 27px;}
+.fast-login .icon-qq{background: url("../images/sprite.png") no-repeat -192px -112px; width: 26px;height: 29px;}
+.fast-login .icon-weibo{background: url("../images/sprite.png") no-repeat -190px -152px; width: 32px;height: 26px;}
+.login-link .pic-icon{width: 28px; height: 28px; background: url("../images/sprite.png") no-repeat -361px -267px;}
 .succ-msg{background: #f7eec9;}
 /*账户头部样式*/
-.account .pic-wrapper{margin-left:9px;}
+.account .pic-icon{margin-left:9px; background: url("../images/sprite.png") no-repeat -122px -85px; width: 16px; height: 12px;}
 .account li{cursor: pointer; position: relative;}
 .account dl{position: absolute; left: 0; top:35px; background: #313131; width: 100%; display: none;}
 .account dl dd{padding-left: 14px;}

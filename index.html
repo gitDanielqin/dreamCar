@@ -18,7 +18,7 @@
                         <div class="login fr paTop10">
                             <a href="login.html?newAcc=1" class="b-Radius5">注册</a>
                             <a href="login.html?newAcc=0" class="b-Radius5">登录</a>
-                        </div>
+                       </div>
                         <div id="address" class="banner-address LH-H60 v-mid clearfix" v-show="showAddr" @click.stop="">
                             <h2 class="fl maL50 fSize18">省<dropdown :options="database.address.provinces" v-model="address.selProvince"></dropdown></h2>
                             <h2 class="fl maL40 fSize18">市<dropdown :options="database.address.citys" v-model="address.selCity" @callback="showAddr=false"></dropdown></h2>

@@ -41,9 +41,14 @@ var userType = eventUtils.urlExtrac(window.location).userType;
                ],
                date:date
            },
-           birth:{
-                year:"",
-                month:"",
+           pInfo:{
+                name:"",
+                birth:{
+                     year:"",
+                     month:"",
+                },
+                workstate:"",
+                email:""
            },
            uniInfo:{
                 name:"",
@@ -53,7 +58,12 @@ var userType = eventUtils.urlExtrac(window.location).userType;
                 validCode:""
            },
            incInfo:{
-
+                name:"",
+                props:"",
+                scale:"",
+                linkMan:"",
+                mobile:"",
+                validCode:""
            },
            workstate:"",
            uniLevel:"",
@@ -61,10 +71,9 @@ var userType = eventUtils.urlExtrac(window.location).userType;
            incScale:"",
            showPerson:userType=="0",
            showUni:userType=="1",
-           showInc:userType=="2"
+           showInc:userType=="2"||window.location.search==""
       },
       methods:{
-
            selectGender:function(obj){
                 $(".gender .on").removeClass("on");
                 $(obj).addClass("on");

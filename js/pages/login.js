@@ -28,23 +28,24 @@ var appCont =  new Vue({
                     code:this.register.validcode,
                     userType:this.register.userType
                };
-               window.location.href="vCards.html?userType="+appCont.register.userType+"&userid=1";
+          //     window.location.href="vCards.html?userType="+appCont.register.userType+"&userid=1";
           //     window.location.href="vCards.html";
-               //console.log(postdata);
-               // $.ajax({
-               //      url:"http://www.xiaoqiztc.com/easily_xq_WebApi/center/user/register?",
-               //      type:"post",
-               //      data:postdata,
-               //      success:function(resp,status){
-               //           alert(resp.info);
-               //           window.location.href="/vCards.html?userType="+appCont.register.userType+"&userid="+resp.data.userId;
-               //      },
-               //      error:function(data,status){
-               //           console.log(status)
-               //           alert("注册失败！"+data.info);
-               //      },
-               //      timeout:5000
-               // })
+               console.log(postdata);
+               $.ajax({
+                    url:"http://www.xiaoqiztc.com/easily_xq_WebApi/center/user/register?",
+                    type:"post",
+                    data:postdata,
+                    success:function(resp,status){
+                         console.log(resp);
+                         if(resp.data){
+                              window.location.href="vCards.html?userType="+appCont.register.userType+"&userid="+resp.data.userId;
+                         }
+                    },
+                    error:function(data,status){
+                         alert("注册失败！"+data.info);
+                    },
+                    timeout:5000
+               })
           },
           reqValidCode:function(obj){
                $(obj).attr("disabled",true);

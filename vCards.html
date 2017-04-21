@@ -18,19 +18,19 @@
     <div class="main H500 inner bg-white clearfix">
         <form class="personCard maL70 card W510 fl" v-show="showPerson">
             <h2 class="LH-H104 fSize30 color-gray3 maB5">创建个人名片</h2>
-                <input type="text" class="info01" placeholder="姓名" />
-                <dropdown classes="sel-birthyear birthday" placeholder="出生年" :options="database.date.year" v-model="birth.year"></dropdown>
+                <input type="text" class="info01" placeholder="姓名" v-model="pInfo.name"/>
+                <dropdown classes="sel-birthyear birthday" placeholder="出生年" :options="database.date.year" v-model="pInfo.birth.year"></dropdown>
                 <i class="bind"></i>
-                <dropdown classes="sel-birthmonth birthday" placeholder="出生月" v-bind:options="database.date.month" v-model="birth.month"></dropdown>
+                <dropdown classes="sel-birthmonth birthday" placeholder="出生月" v-bind:options="database.date.month" v-model="pInfo.birth.month"></dropdown>
           <div class="fSize0">
-               <dropdown classes="career" placeholder="工作状态" :options="database.workstates" v-model="workstate"></dropdown>
+               <dropdown classes="career" placeholder="工作状态" :options="database.workstates" v-model="pInfo.workstate"></dropdown>
                <p class="gender maL10"><span class="on" @click="selectGender($event.target)">男</span><span @click="selectGender($event.target)">女</span></p>
           </div>
             <div class="address">
                 <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
             </div>
 
-            <input type="text" class="W288 maT30" placeholder="请输入常用邮箱" />
+            <input type="text" class="W288 maT30" placeholder="请输入常用邮箱" v-model="pInfo.email"/>
             <button type="button" class="LH-H40 W140 maT40 bg-orange2 save fSize18 color-white" @click.prevent="submitCard('person')">保存名片</button>
         </form>
         <form class="uniCard maL70 card W510 fl" v-show="showUni">
