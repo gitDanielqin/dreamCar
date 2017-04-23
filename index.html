@@ -13,7 +13,7 @@
                         <div class="logo fl clearfix">
                             <img src="images/logo.png" class="fl maR21"/>
                             <h2 class="fl LH-H63 fSize30">校企职通车</h2>
-                            <h3 id="sel-add" class="cur-pointer fl LH-H47 fSize14 paTop14 maL30" @click.stop="showAddr=true"><b>{{address.displayCity}}</b><span class="maL18">[切换城市]<img src="images/trigle01.png" class="v-mid maL6" /></span></h3>
+                            <h3 id="sel-add" class="cur-pointer fl LH-H47 fSize14 paTop14 maL30" @click.stop="showAddr=true"><b>{{address.displayCity}}</b><span class="maL18">[切换城市]<i class="pic-icon maL6"></i></span></h3>
                         </div>
                         <div class="login fr paTop10">
                             <a href="login.html?newAcc=1" class="b-Radius5">注册</a>
@@ -33,8 +33,12 @@
                           <p class="maT38"><input type="text" placeholder="岗位名称/学校名称/企业名称" class="search LH-H48 v-top"/><button class="search-btn">搜索</button></p>
                     </div>
                     <ul class="lis-inline module-entry">
-                         <li><a href="display-uni.html">高校需求</a></li><li><a href="display-company.html">企业需求</a></li><li><a href="#">充电站</a></li>
-                         <li><a href="v-recruit.html">招聘会</a></li><li><a href="display-position.html">校企岗位</a></li><li><a href="#">职业规划</a></li>
+                         <li><span class="pic-wrapper"><i class="pic-icon"></i></span><a href="display-uni.html">高校需求</a></li>
+                         <li><span class="pic-wrapper"><i class="pic-icon"></i></span><a href="display-company.html">企业需求</a></li>
+                         <li><span class="pic-wrapper"><i class="pic-icon"></i></span><a href="#">充电站</a></li>
+                         <li><span class="pic-wrapper"><i class="pic-icon"></i></span><a href="v-recruit.html">招聘会</a></li>
+                         <li><span class="pic-wrapper"><i class="pic-icon"></i></span><a href="display-position.html">校企岗位</a></li>
+                         <li><span class="pic-wrapper"><i class="pic-icon"></i></span><a href="#">职业规划</a></li>
                     </ul>
                     <i class="pic-wrapper weiter" @click="downwards"><img src="images/icon-weiter.png" /></i>
                </div>

@@ -61,7 +61,7 @@ function getViewport(){
      }
 }
 
-var eventUtils = {
+var EventUtils = {
      urlExtrac:function(url){
           var paraStr = url.search.substr(1);
           var paraArray = paraStr.split("&");
@@ -71,6 +71,18 @@ var eventUtils = {
                paraObj[pars[0]]=pars[1];
           };
           return paraObj;
+     },
+     ajaxReq:function(url,method,postdata,callback){
+          $.ajax({
+               url:"http://www.xiaoqiztc.com/easily_xq_WebApi"+url,
+               type:method,
+               data:postdata,
+               success:callback,
+               error:function(data,status){
+                    alert("获取验证码失败！"+data.info);
+               },
+               timeout:5000
+          })
      }
 }
 // 数组对象功能扩充

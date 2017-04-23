@@ -18,3 +18,9 @@
 .bot .barcode-text{display: inline-block; vertical-align: middle;}
 .pic-barcode{position: absolute; right:-7px; top: 12px; width: 83px; height:83px;}
 .pic-barcode img{width: 100%}
+/*图标样式*/
+.city .pic-icon{background: url("../images/sprite.png") no-repeat -143px -186px;width: 11px; height: 8px;}
+.bot-infos .pic-icon{margin-right: 15px;}
+.bot-infos .icon-phone{width: 17px; height: 12px; background: url("../images/sprite.png") no-repeat -153px -114px;}
+.bot-infos .icon-address{width: 17px; height: 17px; background: url("../images/sprite.png") no-repeat -121px -103px;}
+.bot-infos .icon-email{width: 17px; height: 12px; background: url("../images/sprite.png") no-repeat -93px -160px;}

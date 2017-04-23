@@ -14,9 +14,9 @@
         <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
         <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">个人中心</h2>
         <div class="fr navs maT42">
-            <a href="index.html"><img src="images/icon-home.png"/></a>
-            <a href="#"><img src="images/icon-account.png"/></a>
-            <a class="msg-center pRel" href="#"><img src="images/icon-msg.png"/><i class="msg-info">99</i></a>
+            <a href="index.html"><i class="pic-icon icon-home"></i></a>
+            <a href="#"><i class="pic-icon icon-account"></i></a>
+            <a class="msg-center pRel" href="#"><i class="pic-icon icon-msg"></i><i class="msg-info">99</i></a>
         </div>
     </div>
 </div>
@@ -34,7 +34,7 @@
                  <p class="phone">手机：{{oldInfo.phone}}</p>
                  <p>简历完成度<span class="progress pRel W124 H7 b-Radius8"><span class="progress-real W124 H7 b-Radius8"></span></span><span class="fullgrad">87%</span></p>
                  <span class="preview-btn" @click="showPre">预览简历</span>
-                 <i class="LH-H30 W30 t-center btn-edit" @click="edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                 <i class="LH30 t-center btn-edit pic-icon icon-edit" @click="edit"></i>
              </div>
              <div class="edit-brief maT24 maL54 fl color-gray6 pRel" v-show="!viewInfo">
                 <h3 class="LH-H47 fSize18 color-gray3">江玉海</h3>
@@ -64,17 +64,17 @@
              </div>
          </div>
          <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3 bg-white">
-             <li class="on" paneid="resumeBox"><i><img src="images/icon-resume.png"/></i>个人简历</li>
-             <li paneid="classBox"><i><img src="images/icon-study.png"/></i>我的学习</li>
-             <li class="myCollect" paneid="collec-study"><i><img src="images/icon-collect.png"/></i>我的收藏
+             <li class="on" paneid="resumeBox"><i class="pic-icon icon-resume"></i>个人简历</li>
+             <li paneid="classBox"><i class="pic-icon icon-study"></i>我的学习</li>
+             <li class="myCollect" paneid="collec-study"><i class="pic-icon icon-collect"></i>我的收藏
                  <div class="sub-li LH37">
                      <p class="on" paneid="collec-study">学习收藏</p>
                      <p paneid="collec-job">职位收藏</p>
                      <p paneid="collec-recruitment">招聘会收藏</p>
                  </div>
              </li>
-             <li paneid="jobBox"><i><img src="images/icon-apply.png"/></i>我的求职</li>
-             <li class="myConfig" paneid="conf-keyword"><i><img src="images/icon-config.png"/></i>设置
+             <li paneid="jobBox"><i class="pic-icon icon-apply"></i>我的求职</li>
+             <li class="myConfig" paneid="conf-keyword"><i class="pic-icon icon-config"></i>设置
                  <div class="sub-li paTop2 paBot2 LH30">
                      <p class="on" paneid="conf-keyword">修改密码</p>
                      <p paneid="conf-account">绑定账号</p>
@@ -83,18 +83,18 @@
          </ul>
          <div class="content W770 fl maL10 maT20" id="app-content">
              <div style="display: block;" class="resumeBox bg-white">
-                  <div class="paLeft52 paTop14 paRight73" >
+                 <div class="paLeft52 paTop14 paRight73" >
                  <p class="LH-H88 fSize18 color-gray3 edit">亲爱的校友，您的基本资料尚未填写</p>
                  <div class="itemBox item-basic edit edit-item" name="basic">
-                     <h3 class="title"><i><img src="images/icon-basic.png"/></i>基本资料<span class="require-label">（必填）</span></h3>
+                     <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-basic"></span></i>基本资料<span class="require-label">（必填）</span></h3>
                      <div class="item-row">
                          <div class="item-left fSize0">
                              <label class="laLeft">出生年月</label>
                              <dropdown classes="birthday" placeholder="出生年" v-bind:options="database.date.year" v-model="resume.birthyear"></dropdown><i class="bind-line"></i>
                              <dropdown classes="birthday birthmonth" placeholder="出生月" v-bind:options="database.date.month" v-model="resume.birthmonth"></dropdown>
-                             </div>
-                             <label class="laRight">婚姻状况</label>
-                             <dropdown v-bind:options="['已婚','未婚','离异']" v-model="resume.family"></dropdown>
+                         </div>
+                         <label class="laRight">婚姻状况</label>
+                         <dropdown v-bind:options="['已婚','未婚','离异']" v-model="resume.family"></dropdown>
                      </div>
                      <div class="item-row">
                          <div class="item-left">
@@ -113,16 +113,16 @@
                      </div>
                  </div>
                  <div class="itemBox item-basic view view-item" name="basic">
-                     <h3 class="title"><i><img src="images/icon-basic.png"/></i>基本资料<span class="require-label">（必填）</span></h3>
+                     <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-basic"></span></i>基本资料<span class="require-label">（必填）</span></h3>
                      <table class="fSize12 LH-H25">
                          <tr><td class="la-l">出生年月：</td><td class="val-l">{{resume.birthyear}}年{{resume.birthmonth}}月</td><td class="la-r">婚姻状况：</td><td>{{resume.family}}</td></tr>
                          <tr><td class="la-l">手机：</td><td class="val-l">{{resume.phone}}</td><td class="la-r">邮箱：</td><td>{{resume.email}}</td></tr>
                          <tr><td class="la-l">籍贯：</td><td class="val-l">{{resume.province}}</td><td class="la-r">民族：</td><td>{{resume.nation}}</td></tr>
                      </table>
-                     <i class="LH-H30 W30 t-center btn-edit" style="top:16px;"><img class="v-mid" src="images/icon-edit.png"/></i>
+                     <i class="LH-H30 W30 t-center btn-edit" style="top:16px;"><span class="pic-icon icon-edit"></span></i>
                  </div>
                  <div class="itemBox edit edit-item" name="trade">
-                     <h3 class="title"><i><img src="images/icon-career.png"/></i>职业意向<span class="require-label">（必填）</span></h3>
+                     <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-career"></span></i>职业意向<span class="require-label">（必填）</span></h3>
                      <div class="item-row">
                          <label>期望行业</label><span @click="popTrade"><input type="text" class="career-input"  disabled v-model="resume.expect.tradeItems" /></span>
                      </div>
@@ -145,7 +145,7 @@
                      </div>
                  </div>
                  <div class="itemBox view view-item" name="trade">
-                     <h3 class="title"><i><img src="images/icon-career.png"/></i>职业意向<span class="require-label">（必填）</span></h3>
+                     <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-career"></span></i>职业意向<span class="require-label">（必填）</span></h3>
                      <div class="item-row">
                      <p>期望行业：<span>{{resume.expect.tradeItems}}</span></p>
                      </div>
@@ -158,10 +158,10 @@
                      <div class="item-row">
                          <p>期望月薪：<span>{{resume.expect.salary}}</span></p>
                      </div>
-                     <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                     <i class="LH-H30 W30 t-center btn-edit"><span class="pic-icon icon-edit"></span></i>
                  </div>
                  <div class="itemBox edit edit-item" name="work">
-                     <h3 class="title works-title"><i><img src="images/icon-work.png"/></i>工作经历<ul class="lis-inline pane-tabs"><li v-for="(worksExp,index) in resume.worksExps" @click="workSwipe(index)">经历{{index+1}}</li></ul></h3>
+                     <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-work"></span></i>工作经历<ul class="lis-inline pane-tabs"><li v-for="(worksExp,index) in resume.worksExps" @click="workSwipe(index)">经历{{index+1}}</li></ul></h3>
                      <div class="pane" v-for="(worksExp,index) in resume.worksExps" v-show="worksExp.show">
                          <div class="item-row">
                              <label>公司名称</label><input type="text" v-model="worksExp.firma"/>
@@ -194,13 +194,13 @@
                              <p>你还可以输入<span>{{remainText(worksExp.resp)}}</span>字</p>
                          </div>
                      </div>
-                     <div class="addItem color-gray6" @click="addWorksexp"><i class="maR5"><img src="images/cross-add.png"/></i>添加工作经历</div>
+                     <div class="addItem color-gray6" @click="addWorksexp"><i class="maR5 pic-icon icon-cross-add"></i>添加工作经历</div>
                      <div class="buttons">
                           <button>保存</button><button>取消</button>
                      </div>
                  </div>
                  <div class="itemBox view view-item" name="work">
-                     <h3 class="title works-title"><i><img src="images/icon-work.png"/></i>工作经历<ul class="lis-inline pane-tabs"><li v-for="(worksExp,index) in resume.worksExps">经历{{index+1}}</li></ul></h3>
+                     <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-work"></span></i>工作经历<ul class="lis-inline pane-tabs"><li v-for="(worksExp,index) in resume.worksExps">经历{{index+1}}</li></ul></h3>
                      <div class="infopane" v-for="(worksExp,index) in resume.worksExps">
                           <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB12"><span class="maR24">{{worksExp.startyear}}.{{worksExp.startmonth}}--{{worksExp.endyear}}.{{worksExp.endmonth}}</span>{{worksExp.firma}}<span class="fr delItem" @click="deleteItem('worksexp',index)">删除</span><i class="headmark"></i></h4>
                           <p><span>公司行业：</span>{{worksExp.trade}}</p>
@@ -208,10 +208,10 @@
                           <p><span>工作地点：</span>{{worksExp.city}}-{{worksExp.district}}</p>
                           <p><span>工作职责：</span>{{worksExp.resp}}</p>
                      </div>
-                     <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                     <i class="LH-H30 W30 t-center btn-edit"><span class="pic-icon icon-edit"></span></i>
                  </div>
                  <div class="itemBox edit edit-item" name="edu">
-                     <h3 class="title works-title"><i><img src="images/icon-college.png"/></i>教育经历<span class="require-label">（必填）</span><ul class="lis-inline pane-tabs"><li v-for="(edu,index) in resume.edus" @click="eduSwipe(index)">经历{{index+1}}</li></ul></h3>
+                     <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-college"></span></i>教育经历<span class="require-label">（必填）</span><ul class="lis-inline pane-tabs"><li v-for="(edu,index) in resume.edus" @click="eduSwipe(index)">经历{{index+1}}</li></ul></h3>
                      <div class="pane" v-for="edu in resume.edus" v-show="edu.show">
                          <div class="item-row">
                              <label>学校名称</label><input type="text" v-model="edu.uni"/>
@@ -232,21 +232,21 @@
                                <dropdown :options="database.qualification" v-model="edu.qualification" classes="qualific"></dropdown>
                          </div>
                      </div>
-                     <div class="addItem color-gray6" @click="addEdu"><i class="maR5"><img src="images/cross-add.png"/></i>添加教育经历</div>
+                     <div class="addItem color-gray6" @click="addEdu"><i class="maR5 pic-icon icon-cross-add"></i>添加教育经历</div>
                      <div class="buttons">
                           <button>保存</button><button>取消</button>
                      </div>
                  </div>
                  <div class="itemBox view view-item" name="edu">
-                     <h3 class="title works-title"><i><img src="images/icon-college.png"/></i>教育经历<span class="require-label">（必填）</span><ul class="lis-inline pane-tabs"><li v-for="(edu,index) in resume.edus">经历{{index+1}}</li></ul></h3>
+                     <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-college"></span></i>教育经历<span class="require-label">（必填）</span><ul class="lis-inline pane-tabs"><li v-for="(edu,index) in resume.edus">经历{{index+1}}</li></ul></h3>
                      <div class="infopane" v-for="(edu,index) in resume.edus">
                           <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB12"><span class="maR24">{{edu.startyear}}.{{edu.startmonth}}--{{edu.endyear}}.{{edu.endmonth}}</span>{{edu.uni}}<span class="fr delItem" @click="deleteItem('edu',index)">删除</span><i class="headmark"></i></h4>
                           <p class="LH-H25"><span class="W250 disInline">专业名称：{{edu.submajor}}</span><span>学历：{{edu.qualification}}</span></p>
                      </div>
-                     <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                     <i class="LH-H30 W30 t-center btn-edit"><span class="pic-icon icon-edit"></span></i>
                  </div>
                  <div class="itemBox edit edit-item" name="speech">
-                     <h3 class="title works-title"><i><img src="images/icon-language.png"/></i>语言能力</h3>
+                     <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-language"></span></i>语言能力</h3>
                      <form class="language-skills maL30 fSize14 W620">
                          <label v-for="language in database.languages"><input type="checkbox" :value="language">{{language}}</label>
                      </form>
@@ -255,12 +255,12 @@
                      </div>
                  </div>
                  <div class="itemBox view view-item" name="speech">
-                     <h3 class="title works-title"><i><img src="images/icon-language.png"/></i>语言能力</h3>
+                     <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-language"></span></i>语言能力</h3>
                      <p class="LH-H32 paLeft40">{{resume.laSkills.join()}}</p>
-                     <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                     <i class="LH-H30 W30 t-center btn-edit"><span class="pic-icon icon-edit"></span></i>
                  </div>
                  <div class="itemBox edit edit-item" name="project">
-                     <h3 class="title works-title"><i><img src="images/icon-project.png"/></i>项目经历<ul class="lis-inline pane-tabs"><li v-for="(project,index) in resume.projects" @click="projectSwipe(index)">经历{{index+1}}</li></ul></h3>
+                     <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-project"></span></i>项目经历<ul class="lis-inline pane-tabs"><li v-for="(project,index) in resume.projects" @click="projectSwipe(index)">经历{{index+1}}</li></ul></h3>
                      <div class="pane" v-for="(project,index) in resume.projects" v-show="project.show">
                          <div class="item-row">
                              <label>项目名称</label><input type="text" v-model="project.name"/>
@@ -288,13 +288,13 @@
                              <p>你还可以输入<span>{{remainText(project.achiev)}}</span>字</p>
                          </div>
                      </div>
-                     <div class="addItem color-gray6" @click="addProject"><i class="maR5"><img src="images/cross-add.png"/></i>添加项目经历</div>
+                     <div class="addItem color-gray6" @click="addProject"><i class="maR5 pic-icon icon-cross-add"></i>添加项目经历</div>
                      <div class="buttons">
                           <button>保存</button><button>取消</button>
                      </div>
                  </div>
                  <div class="itemBox view view-item" name="project">
-                     <h3 class="title works-title"><i><img src="images/icon-project.png"/></i>项目经历<ul class="lis-inline pane-tabs"><li v-for="(project,index) in resume.projects">经历{{index+1}}</li></ul></h3>
+                     <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-project"></span></i>项目经历<ul class="lis-inline pane-tabs"><li v-for="(project,index) in resume.projects">经历{{index+1}}</li></ul></h3>
                      <div class="infopane" v-for="project in resume.projects">
                           <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{project.startyear}}.{{project.startmonth}}--{{project.endyear}}.{{project.endmonth}}</span>{{project.name}}<span class="fr delItem" @click="deleteItem('project',index)">删除</span><i class="headmark"></i></h4>
                           <p>{{project.firma}}</p>
@@ -302,10 +302,10 @@
                           <p><span>项目职责：</span>{{project.resp}}</p>
                           <p><span>项目业绩：</span>{{project.achiev}}</p>
                      </div>
-                     <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                     <i class="LH-H30 W30 t-center btn-edit"><span class="pic-icon icon-edit"></span></i>
                  </div>
                  <div class="itemBox text-box edit edit-item" name="selfeval">
-                     <h3 class="title"><i><img src="images/icon-comment.png"/></i>自我评价</h3>
+                     <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-comment"></span></i>自我评价</h3>
                      <textarea placeholder="建议您对自己做一个简短的评价" v-model="resume.selfEval" @input="checkText('selfeval')"></textarea>
                      <p>你还可以输入<span>{{remainText(resume.selfEval)}}</span>字</p>
                      <div class="buttons">
@@ -313,12 +313,12 @@
                      </div>
                  </div>
                  <div class="itemBox view view-item view-paragraph" name="selfeval">
-                     <h3 class="title"><i><img src="images/icon-comment.png"/></i>自我评价</h3>
+                     <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-comment"></span></i>自我评价</h3>
                      <p class="LH20 maT9 paLeft40">{{resume.selfEval}}</p>
-                     <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                     <i class="LH-H30 W30 t-center btn-edit"><span class="pic-icon icon-edit"></span></i>
                  </div>
                  <div class="itemBox text-box edit edit-item" name="psinfo">
-                     <h3 class="title"><i><img src="images/icon-attachment.png"/></i>附加信息</h3>
+                     <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-attach"></span></i>附加信息</h3>
                      <textarea placeholder="如：获奖、技能资格证书、专利等" v-model="resume.psInfo" @input="checkText('psinfo')"></textarea>
                      <p>你还可以输入<span>{{remainText(resume.psInfo)}}</span>字</p>
                      <div class="buttons">
@@ -326,12 +326,12 @@
                      </div>
                  </div>
                  <div class="itemBox view view-item view-paragraph" name="psinfo">
-                     <h3 class="title"><i><img src="images/icon-attachment.png"/></i>附加信息</h3>
+                     <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-attach"></span></i>附加信息</h3>
                      <p class="LH20 maT9 paLeft40">{{resume.psInfo}}</p>
-                     <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                     <i class="LH-H30 W30 t-center btn-edit"><span class="pic-icon icon-edit"></span></i>
                  </div>
                  <div class="itemBox text-box edit edit-item" name="skill">
-                     <h3 class="title"><i><img src="images/icon-skills.png"/></i>擅长技能</h3>
+                     <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-skills"></span></i>擅长技能</h3>
                      <textarea placeholder="在此添加您擅长的技能" v-model="resume.skills" @input="checkText('skill')"></textarea>
                      <p>你还可以输入<span>{{remainText(resume.skills)}}</span>字</p>
                      <div class="buttons">
@@ -339,9 +339,9 @@
                      </div>
                  </div>
                  <div class="itemBox view view-item view-paragraph" name="skill" style="border-bottom:none">
-                     <h3 class="title"><i><img src="images/icon-skills.png"/></i>擅长技能</h3>
+                     <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-skills"></span></i>擅长技能</h3>
                      <p class="LH20 maT9 paLeft40">{{resume.skills}}</p>
-                     <i class="LH-H30 W30 t-center btn-edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                     <i class="LH-H30 W30 t-center btn-edit"><span class="pic-icon icon-edit"></span></i>
                  </div>
              </div>
                   <div class="buttons-commit t-center maT55 maB108">
@@ -491,16 +491,16 @@
              <div class="conf-account paLeft40 paRight40">
                 <h2 class="fSize24 LH-H63 maT9">绑定账号</h2>
                 <div class="safeLevel maB12 H80 bg-gray-f7 pRel">
-                     <h3 class="paLeft40 fSize18 LH-H40"><i class="pic-wrapper W20 LH-H40 maR10"><img src="images/icon-safe.png"/></i>安全等级</h3>
+                     <h3 class="paLeft40 fSize18 LH-H40"><i class="pic-icon W20 maR10 icon-safe"></i>安全等级</h3>
                      <div class="LH-H30 paLeft80 fSize14"><span class="maR12 color-red2">危险</span><div class="safe-range pRel"><p></p><div class="r-pointer LH26 H40 t-center W46 color-white">80%</div></div><span class="maL12 color-green">安全</span></div>
                     <i class="pic-wrapper trigle-up"><img src="images/trigle-up02.jpg"/></i>
                 </div>
                 <p class="fSize14 LH-H35">登录账号：123456789</p>
                 <p class="fSize14 LH-H35 maB22">绑定后，你可以同时使用以下方式登录</p>
                 <ul class="bind-acc fSize18">
-                     <li><img src="images/icon-phone.png"/>已绑定手机号 12345678900<button class="maL20 chg-phone">更换手机号</button></li>
-                     <li><img src="images/icon-email.png"/><button>绑定邮箱</button></li>
-                     <li><img src="images/icon-weixin.png"/><button class="wechatBind">绑定微信账号</button></li>
+                     <li><i class="pic-icon icon-phone"></i>已绑定手机号 12345678900<button class="maL20 chg-phone">更换手机号</button></li>
+                     <li><i class="pic-icon icon-email"></i><button>绑定邮箱</button></li>
+                     <li><i class="pic-icon icon-wechat"></i><button class="wechatBind">绑定微信账号</button></li>
                 </ul>
              </div>
          </div>
@@ -508,7 +508,7 @@
 </div>
 <div class="modal" id="app-modal" v-show="showModal" @click="hidemodal">
     <div class="porto-upload W500" v-show="showUpload" @click="stayshow($event)">
-           <h2 class="LH-H60 fSize24 color-white t-left bg-blueM paLeft30">编辑头像<i class="pic-wrapper LH-H40 W40 close" @click="closePorto"><img src="images/icon-close-1.png"/></i></h2>
+           <h2 class="LH-H60 fSize24 color-white t-left bg-blueM paLeft30">编辑头像<i class="pic-wrapper LH-H40 W40 close" @click="closePorto"><i class="pic-icon icon-close"></i></i></h2>
            <div class="edit-area H407 bg-white">
                 <div class="clearfix">
                      <div class="fl">
@@ -553,7 +553,7 @@
         </div>
         <div class="alleInfo paLeft80 paRight80">
             <div class="itemBox item-basic">
-                <h3 class="title"><i><img src="images/icon-basic.png"/></i>基本资料</h3>
+                <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-basic"></span></i>基本资料</h3>
                 <table class="fSize12 LH-H25">
                     <tr><td class="la-l">出生年月:</td><td class="val-l">{{baseInfo.birthyear}}年{{baseInfo.birthmonth}}月{{baseInfo.birthday}}日</td><td class="la-r">婚姻状况:</td><td>未婚</td></tr>
                     <tr><td class="la-l">手机:</td><td class="val-l">{{baseInfo.phone}}</td><td class="la-r">邮箱:</td><td>{{resumeInfo.email}}</td></tr>
@@ -561,7 +561,7 @@
                 </table>
             </div>
             <div class="itemBox">
-                <h3 class="title"><i><img src="images/icon-career.png"/></i>职业意向</h3>
+                <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-career"></span></i>职业意向</h3>
                 <div class="item-row">
                     <label>期望行业：<span>{{resumeInfo.expect.tradeItems}}</span></label>
                 </div>
@@ -576,7 +576,7 @@
                 </div>
             </div>
             <div class="itemBox">
-                <h3 class="title works-title"><i><img src="images/icon-work.png"/></i>工作经历<ul class="lis-inline pane-tabs"><li v-for="(worksExp,index) in resumeInfo.worksExps">经历{{index+1}}</li></ul></h3>
+                <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-work"></span></i>工作经历<ul class="lis-inline pane-tabs"><li v-for="(worksExp,index) in resumeInfo.worksExps">经历{{index+1}}</li></ul></h3>
                 <div class="infopane maB22" v-for="worksExp in resumeInfo.worksExps">
                      <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{worksExp.startyear}}.{{worksExp.startmonth}}--{{worksExp.endyear}}.{{worksExp.endmonth}}</span>{{worksExp.firma}}<i class="headmark"></i></h4>
                      <p>{{worksExp.trade}}</p>
@@ -586,18 +586,18 @@
                 </div>
             </div>
             <div class="itemBox">
-                <h3 class="title works-title"><i><img src="images/icon-college.png"/></i>教育经历<ul class="lis-inline pane-tabs"><li v-for="(edu,index) in resumeInfo.edus">经历{{index+1}}</li></ul></h3>
+                <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-college"></span></i>教育经历<ul class="lis-inline pane-tabs"><li v-for="(edu,index) in resumeInfo.edus">经历{{index+1}}</li></ul></h3>
                 <div class="infopane maT13 maB16" v-for="edu in resumeInfo.edus">
                      <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{edu.startyear}}.{{edu.startmonth}}--{{edu.endyear}}.{{edu.endmonth}}</span>{{edu.uni}}<i class="headmark"></i></h4>
                      <p class="LH-H25"><span class="W250 disInline">专业名称：{{edu.submajor}}</span><span>学历：{{edu.qualification}}</span></p>
                 </div>
             </div>
             <div class="itemBox">
-                <h3 class="title works-title"><i><img src="images/icon-language.png"/></i>语言能力</h3>
+                <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-language"></span></i>语言能力</h3>
                 <p class="LH-H32 paLeft40">{{resumeInfo.laSkills.join()}}</p>
             </div>
             <div class="itemBox">
-                <h3 class="title works-title"><i><img src="images/icon-project.png"/></i>项目经历<ul class="lis-inline pane-tabs"><li v-for="(project,index) in resumeInfo.projects">经历{{index+1}}</li></ul></h3>
+                <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-project"></span></i>项目经历<ul class="lis-inline pane-tabs"><li v-for="(project,index) in resumeInfo.projects">经历{{index+1}}</li></ul></h3>
                 <div class="infopane maB22" v-for="project in resumeInfo.projects">
                      <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{project.startyear}}.{{project.startmonth}}--{{project.endyear}}.{{project.endmonth}}</span>{{project.name}}<i class="headmark"></i></h4>
                      <p>{{project.firma}}</p>
@@ -607,22 +607,22 @@
                 </div>
             </div>
             <div class="itemBox text-box">
-                <h3 class="title"><i><img src="images/icon-comment.png"/></i>自我评价</h3>
+                <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-comment"></span></i>自我评价</h3>
                 <p class="LH-H20 maT9 paLeft40">{{resumeInfo.selfEval}}</p>
             </div>
             <div class="itemBox text-box">
-                <h3 class="title"><i><img src="images/icon-attachment.png"/></i>附加信息</h3>
+                <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-attach"></span></i>附加信息</h3>
                 <p class="LH-H20 maT9 paLeft40">{{resumeInfo.psInfo}}</p>
             </div>
             <div class="itemBox text-box" style="border-bottom:none">
-                <h3 class="title"><i><img src="images/icon-skills.png"/></i>擅长技能</h3>
+                <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-skills"></span></i>擅长技能</h3>
                 <p class="LH-H20 maT9 paLeft40">{{resumeInfo.skills}}</p>
             </div>
         </div>
         <div class="H26 bg-white-ec"></div>
     </div>
     <div class="phone-change W500 disNo" >
-        <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换手机号<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13"><img src="images/icon-close.png"/></i></h2>
+        <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换手机号<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13"><i class="pic-icon icon-close"></i></i></h2>
         <div class="bg-white paTop8 paBot60">
             <h3 class="LH-H83 fSize18 t-center">请输入新的手机号，完成手机号绑定</h3>
             <p><input type="text" placeholder="完成手机号" class="W290"></p>
@@ -632,16 +632,16 @@
         </div>
     </div>
     <div class="wechat-bind W500 disNo">
-        <h2 class="LH-H60 fSize24 color-white t-center bg-blueM">微信登录<i class="pic-wrapper LH-H40 W40 close"><img src="images/icon-close.png"/></i></h2>
+        <h2 class="LH-H60 fSize24 color-white t-center bg-blueM">微信登录<i class="pic-wrapper LH-H40 W40 close"><i class="pic-icon icon-close"></i></i></h2>
         <div class="bg-white paTop14 t-center paBot53">
             <i class="barCode pic-wrapper W284 LH-H284 bg-grayC maB22"></i>
             <p class="LH-H40 W220 t-center bg-orange2 color-white maCenter" style="border-radius: 20px;">请使用微信扫一扫二维码登录</p>
         </div>
     </div>
     <div class="msg-box  W888 maCenter disNo">
-        <h3 class="bg-orange4 LH-H86 fSize30 color-white t-center"><i class="pic-wrapper fl maL30 back show02 disNo"><img src="images/icon-return.png"/> </i><i class="pic-wrapper maR21 show01"><img src="images/icon-email4.png"/></i><span class="msg-head">消息提醒</span> <i class="close pic-wrapper fr maR10 LH-H86 W40"><img src="images/icon-close.png"/></i></h3>
+        <h3 class="bg-orange4 LH-H86 fSize30 color-white t-center msg-box-head"><i class="pic-icon fl maL30 back show02 disNo msg-back icon-return"></i><i class="pic-icon maR21 show01 icon-email"></i><span class="msg-head">消息提醒</span> <i class="close pic-icon fr maR10 LH-H86 W40 icon-close"></i></h3>
         <div class="msg-lis show01">
-            <ul class="msg-body ">
+           <ul class="msg-body ">
                 <li class="msg-date">今天</li>
                 <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
                 <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
@@ -650,9 +650,9 @@
                 <li class="msg-date">2016-6-1</li>
                 <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
                 <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-            </ul>
-            <div class="msg-bot LH-H70 fSize14 bg-white t-center">
-                <ul class="pageBot lis-inline fSize14">
+           </ul>
+           <div class="msg-bot LH-H70 fSize14 bg-white t-center">
+                <ul class="page-bot lis-inline fSize14">
                     <li class="side-page first-page">首页</li>
                     <li class="prev side-page">上一页</li>
                     <li class="page-index">1</li>
@@ -662,18 +662,16 @@
                     <li class="side-page last-page">尾页</li>
                 </ul>
                 <span class="fr maR40">全部清空</span>
-            </div>
+           </div>
         </div>
         <div class="msg-detail fSize14 disNo show02">
-            <p class="H266 bg-white paTop25 LH25">校企2.0上线啦上线啦上线啦</p>
-            <p class="bg-gray-e0 LH-H50 t-center"><span class="date">2016-12-17</span><span class="time">12:12</span></p>
+           <p class="H266 bg-white paTop25 LH25">校企2.0上线啦上线啦上线啦</p>
+           <p class="bg-gray-e0 LH-H50 t-center"><span class="date">2016-12-17</span><span class="time">12:12</span></p>
         </div>
-
-
     </div>
      <!--期望行业选择弹框  -->
     <div class="trade-box W770 H420 maCenter trade-box-multi" v-show="showTrade" @click="stayshow($event)">
-         <h3 class="bg-gray-e6 fSize14 LH-H36 paLeft30 paRight30 color-black">选择行业分类<i class="pic-wrapper W26 LH-H26 maT5 closer t-center fr cur-pointer" @click="closeTrade"><img src="images/icon-close3.png" /></i></h3>
+         <h3 class="bg-gray-e6 fSize14 LH-H36 paLeft30 paRight30 color-black">选择行业分类<i class="pic-wrapper W26 LH-H26 maT5 closer t-center fr cur-pointer" @click="closeTrade"><i class="pic-icon icon-close"></i></i></h3>
          <div class="H328 bg-white paLeft35 cont">
               <h4 class="LH-H27 fSize12 color-gray9 paTop6">最多可以选择3项</h4>
               <table class="fSize12">
@@ -695,7 +693,7 @@
     </div>
     <!--工作经历行业选择框单选  -->
     <div class="trade-box W770 H420 maCenter trade-box-single" v-show="showTradeSingle" @click="stayshow($event)">
-         <h3 class="bg-gray-e6 fSize14 LH-H36 paLeft30 paRight30 color-black">选择行业分类<i class="pic-wrapper W26 LH-H26 maT5 closer t-center fr cur-pointer" @click="closeTrade"><img src="images/icon-close3.png" /></i></h3>
+         <h3 class="bg-gray-e6 fSize14 LH-H36 paLeft30 paRight30 color-black">选择行业分类<i class="pic-wrapper W26 LH-H26 maT5 closer t-center fr cur-pointer" @click="closeTrade"><i class="pic-icon icon-close"></i></i></h3>
          <div class="H328 bg-white paLeft35 cont paTop14">
               <table class="fSize12 trade-single-table">
                    <tr v-for="trade in trades">
@@ -728,10 +726,10 @@
                  <li><a href="footer-page.html">友情链接</a>-</li>
                  <li><a href="footer-page.html">教育网</a></li>
             </ul>
-            <ul class="lis-inline fSize12">
-                  <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-phone2.png"/></i>电话：152 6706 8921</li>
-                  <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-gps.png"/></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
-                  <li><i class="pic-wrapper maR15"><img src="images/icon-email2.png"/></i>邮箱：xiaoqiztc@yeah.net</li>
+            <ul class="lis-inline fSize12 bot-infos">
+                  <li class="maR100"><i class="pic-icon icon-phone"></i>电话：152 6706 8921</li>
+                  <li class="maR100"><i class="pic-icon icon-address"></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
+                  <li><i class="pic-icon icon-email"></i>邮箱：xiaoqiztc@yeah.net</li>
             </ul>
             <p class="fSize14 t-center LH-H40 color-gray79">©2016 XxiaoQi 京ICP备456123789号-2 京公网安备12465789123号</p>
           </div>

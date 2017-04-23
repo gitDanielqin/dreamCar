@@ -49,6 +49,8 @@
 .basic-info .icon-incprops{background: url("../images/sprite.png") no-repeat -3px -106px; width: 18px; height: 18px;}
 .basic-info .icon-people{background: url("../images/sprite.png") no-repeat -61px -129px; width: 20px; height: 18px;}
 .basic-info .icon-map{background: url("../images/sprite.png") no-repeat -32px -127px; width: 20px; height: 20px;}
+.basic-info .icon-area{background: url("../images/sprite.png") no-repeat -32px -106px; width: 17px; height: 18px;}
+.basic-info .icon-college{background: url("../images/sprite.png") no-repeat 0 -77px; width: 18px; height: 16px;}
 
 .ads{border:1px solid #c9c9c9;}
 .ad-pic{overflow: hidden; margin-bottom: 30px; margin-left: 19px;}
@@ -113,6 +115,10 @@ a.login-link{display: block; color:#fcb62e;}
 .fast-login .icon-weibo{background: url("../images/sprite.png") no-repeat -190px -152px; width: 32px;height: 26px;}
 .login-link .pic-icon{width: 28px; height: 28px; background: url("../images/sprite.png") no-repeat -361px -267px;}
 .succ-msg{background: #f7eec9;}
+.bot-infos .pic-icon{margin-right: 15px;}
+.bot-infos .icon-phone{width:20px; height: 14px;background: url("../images/sprite.png") no-repeat -27px -3px;}
+.bot-infos .icon-address{width:20px; height: 20px;background: url("../images/sprite.png") no-repeat -89px -102px;}
+.bot-infos .icon-email{width:20px; height: 14px;background: url("../images/sprite.png") no-repeat -117px -34px;}
 /*账户头部样式*/
 .account .pic-icon{margin-left:9px; background: url("../images/sprite.png") no-repeat -122px -85px; width: 16px; height: 12px;}
 .account li{cursor: pointer; position: relative;}

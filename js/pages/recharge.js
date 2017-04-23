@@ -25,8 +25,10 @@ function initEventBind(){
         }else{
             alert("请选择至少一个支付平台！");
         }
-
-    })
+   });
+   $(".checked-agree").click(function(){
+        $(this).toggleClass("on");
+   })
 }
 
 initEventBind();

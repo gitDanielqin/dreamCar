@@ -11,7 +11,7 @@
     <div class="inner">
         <a href="index.html"><img src="images/logo.png" class="fl maR21 maT20"/></a>
         <h2 class="fl LH-H80 fSize30 maT17">校企职通车</h2>
-        <h3 id="sel-add" class="city fl LH-H80 fSize18 maT16 maL60"><b>北京市<img src="images/trigle01.png" class="v-mid maL10" /></b></h3>
+        <h3 id="sel-add" class="city fl LH-H80 fSize18 maT16 maL60"><b>北京市<i class="pic-icon maL6"></i></b></h3>
     </div>
 </div>
 <div class="banner H764 bg-purpleL" id="app-content">
@@ -37,16 +37,16 @@
         <div class="logBox login" style="display: none">
             <form class="W350 bg-white t-center paTop7">
                 <h2 class="log-header LH-H74 fSize24 t-center color-orange">欢迎登录校企职通车</h2>
-                <input class="account" type="text" placeholder="手机号/邮箱" />
-                <input class="maT22" type="password" placeholder="密码 (6-16字母、数字、无空格)"/>
-                <button id="logBtn" type="button" class="LH-H50 W305 bg-orange fSize24 color-white maT24 maB17" onclick="window.location.href='vCards.html'">登录</button>
+                <input class="account" type="text" placeholder="手机号/邮箱" v-model="login.account"/>
+                <input class="maT22" type="password" placeholder="密码 (6-16字母、数字、无空格)" v-model="login.password"/>
+                <button id="logBtn" type="button" class="LH-H50 W305 bg-orange fSize24 color-white maT24 maB17" @click.prevent="loginEv">登录</button>
                 <p class="LH-H30 fSize16 t-left W305 maCenter"><label class="color-gray6"><i class="check-box selected"></i>下次自动登录</label><span class="fr color-red">忘记密码？</span></p>
                 <div class="quicklogin">
                     <h3 class="LH-H30 fSize16 pRel color-gray6">快捷登录<span class="line-l"></span><span class="line-r"></span></h3>
                     <div class="quick-icon H45 maT7">
-                        <i><img src="images/icon-qq.png"/></i>
-                        <i><img src="images/icon-weibo.png"/></i>
-                        <i><img src="images/icon-wechat.png"/></i>
+                        <i class="pic-icon icon-qq"></i>
+                        <i class="pic-icon icon-weibo"></i>
+                        <i class="pic-icon icon-wechat"></i>
                     </div>
                 </div>
             </form>
@@ -120,6 +120,7 @@
 </div>
 <script src="js/libs/jquery-3.1.0.min.js"></script>
 <script src="js/libs/vue.js"></script>
+<script src="js/common/common.js"></script>
 <script src="js/pages/login.js"></script>
 </body>
 </html>

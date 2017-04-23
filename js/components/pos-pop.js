@@ -1,6 +1,6 @@
 (function(){
      var templpos =  '<div class="pos-pop-box W770">\
-          <h3 class="LH-H36 bg-gray-e6 fSize14 paLeft30">选择职能<i class="pic-wrapper pos-closer fr maR30"><img src="images/icon-close3.png" /></i></h3>\
+          <h3 class="LH-H36 bg-gray-e6 fSize14 paLeft30">选择职能<i class="pic-wrapper pos-closer fr maR30"><i class="pic-icon icon-close"></i></i></h3>\
           <div class="H330">\
                <div class="LH40 paLeft30">\
                     <label class="color-gray6">最多可以选择3项</label>\
@@ -9,9 +9,9 @@
                     </ul>\
                </div>\
                <ul class="pos-navs lis-inline LH28 paLeft30 maT8">\
-                    <li class="on" @click.stop="clickNav(1)">全部职能<img src="images/arrow-down.png" /><i class="blank-bot"></i></li>\
-                    <li v-show="posCont.cont2||posCont.cont3" @click.stop="clickNav(2)">{{selpos.pos1}}<img src="images/arrow-down.png" /><i class="blank-bot"></i></li>\
-                    <li v-show="posCont.cont3">{{selpos.pos2}}<img src="images/arrow-down.png" /><i class="blank-bot"></i></li>\
+                    <li class="on" @click.stop="clickNav(1)">全部职能<span class="pic-icon icon-arrow-down"></span><i class="blank-bot"></i></li>\
+                    <li v-show="posCont.cont2||posCont.cont3" @click.stop="clickNav(2)">{{selpos.pos1}}<span class="pic-icon icon-arrow-down"></span><i class="blank-bot"></i></li>\
+                    <li v-show="posCont.cont3">{{selpos.pos2}}<span class="pic-icon icon-arrow-down"></span><i class="blank-bot"></i></li>\
                </ul>\
                <ul class="pos-nav-cont lis-inline" v-show="posCont.cont1">\
                     <li v-for="item in posArray1"><span @click.stop="clickPos(1,item)">{{item}}</span></li>\

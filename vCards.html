@@ -11,7 +11,7 @@
     <div class="inner">
         <a href="index.html"><img src="images/logo.png" class="fl maR21 maT20"/></a>
         <h2 class="fl LH-H80 fSize30 maT17">校企职通车</h2>
-        <h3 id="sel-add" class="city fl LH-H80 fSize18 maT16 maL60"><b>北京市<img src="images/trigle01.png" class="v-mid maL10" /></b></h3>
+        <h3 id="sel-add" class="city fl LH-H80 fSize18 maT16 maL60"><b>北京市<i class="pic-icon maL6"></i></b></h3>
     </div>
 </div>
 <div class="container paTop30" id="app-content">
@@ -41,7 +41,7 @@
                 <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
             </div>
             <input type="text" class="W188" placeholder="学校联系人" v-model="uniInfo.linkMan"/><input type="text" class="W188 paLeft20" placeholder="联系人手机号" v-model="uniInfo.mobile"/>
-            <input class="w188" type="text" placeholder="请输入验证码" style="margin-bottom: 0" v-model="uniInfo.validCode"><button type="button" class="W120 LH-H40 fSize14 color-white bg-grayC">获取验证码</button>
+            <input class="w188" type="text" placeholder="请输入验证码" style="margin-bottom: 0" v-model="uniInfo.validCode"><button type="button" class="W120 LH-H40 fSize14 color-white bg-grayC" @click="codequery(uniInfo.mobile)">获取验证码</button>
             <button type="button" class="LH-H40 W140 maT40 bg-orange2 save fSize18 color-white" @click.prevent="submitCard('uni')">保存名片</button>
         </form>
         <form class="bsCard maL70 card W510 fl" v-show="showInc">
@@ -71,10 +71,10 @@
                     <li><a href="footer-page.html">友情链接</a>-</li>
                     <li><a href="footer-page.html">教育网</a></li>
                 </ul>
-                <ul class="lis-inline">
-                    <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-phone-w.png"/></i>电话：152 6706 8921</li>
-                    <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-gps-w.png"/></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
-                    <li><i class="pic-wrapper maR15"><img src="images/icon-mail-w.png"/></i>邮箱：xiaoqiztc@yeah.net</li>
+                <ul class="lis-inline bot-infos">
+                     <li class="maR100"><i class="pic-icon icon-phone"></i>电话：152 6706 8921</li>
+                     <li class="maR100"><i class="pic-icon icon-address"></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
+                     <li><i class="pic-icon icon-email"></i>邮箱：xiaoqiztc@yeah.net</li>
                 </ul>
                 <p class="fSize12 t-center LH-H40 color-gray79">©2016 XxiaoQi 京ICP备456123789号-2 京公网安备12465789123号</p>
             </div>

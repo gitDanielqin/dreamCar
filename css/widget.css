@@ -32,17 +32,18 @@ white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
 .major-closer{height: 26px; line-height: 26px; margin: 2px 5px 0 0; width: 26px; display: inline-block; text-align: center; cursor: pointer; float: right;}
 .major-closer:hover{ background:#d2d2d2;}
 .major-table-box{height: 200px; overflow: auto; line-height: 20px;}
+.major-closer .icon-close{width: 12px; height: 12px;}
 
 /*职能弹框样式*/
 .pos-pop-box{border: 1px solid #d2d2d2; background: white;}
 .pos-closer{width: 26px; height: 26px; line-height: 26px; margin-top: 5px; cursor: pointer;}
-.pos-closer img{width: 12px; height: 12px;}
+.pos-closer .icon-close{width: 12px; height: 12px;}
 .pos-closer:hover{background: #d2d2d2;}
 .selectItems li{padding:0 10px;height: 30px; border-radius: 15px; background: #f7a14a; color: white; line-height: 30px; margin-right: 10px;}
 .selectItems img{width: 14px; height: 14px; float: right; vertical-align: middle; margin:7px 0 0 9px; cursor: pointer;}
 .pos-navs{border-bottom: 1px solid #d2d2d2; color: #666;}
 .pos-navs li{padding: 0 12px; border: 1px solid #d2d2d2; border-bottom: none; margin-right: 10px; position: relative; background: #f8f8f8; cursor: pointer;}
-.pos-navs li img{ margin-left: 10px;}
+.pos-navs li .pic-icon{ margin-left: 10px;}
 .blank-bot{position: absolute; display: inline-block; width: 100%; height: 5px; left: 0; bottom: -3px; background: white; display: none;}
 .pos-navs li.on{background: white; }
 .pos-navs li.on .blank-bot{display: inline-block;}

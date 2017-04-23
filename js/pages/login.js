@@ -1,7 +1,6 @@
 /**
  * Created by xuanyuan on 2016/11/6.
  */
-
 var appCont =  new Vue({
      el:"#app-content",
      data:{
@@ -10,6 +9,10 @@ var appCont =  new Vue({
                password:"",
                validcode:"",
                userType:2
+          },
+          login:{
+               account:"",
+               password:""
           }
      },
      methods:{
@@ -28,17 +31,36 @@ var appCont =  new Vue({
                     code:this.register.validcode,
                     userType:this.register.userType
                };
-          //     window.location.href="vCards.html?userType="+appCont.register.userType+"&userid=1";
-          //     window.location.href="vCards.html";
+               EventUtils.ajaxReq()
+               $.ajax({
+                    url:"http://www.xiaoqiztc.com/easily_xq_WebApi/center/user/register",
+                    type:"post",
+                    data:postdata,
+                    success:function(resp,status){
+                         if(resp.data){
+                              window.location.href="vCards.html?userType="+appCont.register.userType+"&userid="+resp.data.userId;
+                         }
+                    },
+                    error:function(data,status){
+                         alert("注册失败！"+data.info);
+                    },
+                    timeout:5000
+               })
+          },
+          loginEv:function(){
+               var postdata={
+                    loginName:this.login.account,
+                    password:this.login.password
+               };
                console.log(postdata);
                $.ajax({
-                    url:"http://www.xiaoqiztc.com/easily_xq_WebApi/center/user/register?",
+                    url:"http://192.168.0.113:8000/easily_xq_WebApi/center/user/login",
                     type:"post",
                     data:postdata,
                     success:function(resp,status){
                          console.log(resp);
                          if(resp.data){
-                              window.location.href="vCards.html?userType="+appCont.register.userType+"&userid="+resp.data.userId;
+                              //window.location.href="vCards.html?userType="+appCont.register.userType+"&userid="+resp.data.userId;
                          }
                     },
                     error:function(data,status){
@@ -142,9 +164,9 @@ function loginEventBind(){
          $(".login").fadeOut();
          $(".regis").fadeIn("slow");
      });
-     $("#logBtn").click(function(){
-          window.location.href="vCards.html";
-     });
+     // $("#logBtn").click(function(){
+     //      window.location.href="vCards.html";
+     // });
      $(".check-box").click(function(){
           $(this).toggleClass("selected")
      })

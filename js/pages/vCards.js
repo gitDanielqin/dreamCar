@@ -2,7 +2,6 @@
  * Created by xuanyuan on 2016/11/7.
  */
 
-
 var userType = eventUtils.urlExtrac(window.location).userType;
  var appCont =  new Vue({
       el:"#app-content",
@@ -74,6 +73,29 @@ var userType = eventUtils.urlExtrac(window.location).userType;
            showInc:userType=="2"||window.location.search==""
       },
       methods:{
+           codequery:function(mobile){
+                var posturl = "http://192.168.0.113:8000/easily_xq_WebApi/sys/mobileCode?";
+                var postdata={
+                     mobile:mobile,
+                     type:3
+                };
+               // console.log(postdata);
+                $.ajax({
+                     url:posturl,
+                     type:"post",
+                     data:postdata,
+                     success:function(data,status){
+                         //  clearInterval(timer);
+                         //  $(obj).html("获取验证码");
+                         //  $(obj).attr("disabled",false);
+                          alert(data.info);
+                     },
+                     error:function(data,status){
+                          alert("获取验证码失败！"+data.info);
+                     },
+                     timeout:5000
+                })
+           },
            selectGender:function(obj){
                 $(".gender .on").removeClass("on");
                 $(obj).addClass("on");
@@ -85,31 +107,31 @@ var userType = eventUtils.urlExtrac(window.location).userType;
                      posturl = "http://www.xiaoqiztc.com/easily_xq_WebApi/user/school/createCard"
                     window.location.href="pCenter.html"
                 }else if(type=="uni"){
-                     posturl = "http://www.xiaoqiztc.com/easily_xq_WebApi/user/school/createCard";
+                     posturl = "http://192.168.0.113:8000/easily_xq_WebApi/user/school/createCard";
                      postdata={
                          userId: eventUtils.urlExtrac(window.location).userid,
                          name: this.uniInfo.name,
                          property:this.uniInfo.props,
-                         province:$(".unicard .sel-province input").val(),
-                         city:$(".unicard .sel-city input").val(),
-                         area:$(".unicard .sel-district input").val(),
+                         province:$(".uniCard .sel-province input").val(),
+                         city:$(".uniCard .sel-city input").val(),
+                         area:$(".uniCard .sel-district input").val(),
                          linkMan:this.uniInfo.linkMan,
                          mobile:this.uniInfo.mobile,
                          code:this.uniInfo.validCode
                     };
-                    window.location.href="uniCenter.html"
+                    //window.location.href="uniCenter.html"
                }else if(type=="inc"){
-                    window.location.href="incCenter.html"
+                    //window.location.href="incCenter.html"
                }
-
+               console.log(postdata)
                $.ajax({
                     url:posturl,
                     type:"post",
                     data:postdata,
                     success:function(data,status){
-                         clearInterval(timer);
-                         $(obj).html("获取验证码");
-                         $(obj).attr("disabled",false);
+                    //     clearInterval(timer);
+                    //     $(obj).html("获取验证码");
+                    //     $(obj).attr("disabled",false);
                          alert(data.info);
                     },
                     error:function(data,status){

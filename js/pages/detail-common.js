@@ -197,9 +197,9 @@
 var appModal = new Vue({
      el:"#app-modal",
      data:{
-          showModal:true,
+          showModal:false,
           showSucc:false,
-          showLogin:true
+          showLogin:false
      },
      methods:{
           confirmSuc:function(){

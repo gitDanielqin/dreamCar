@@ -14,9 +14,9 @@
             <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
             <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">高校中心</h2>
             <div class="fr navs maT42">
-                <a href="index.html"><img src="images/icon-home.png" /></a>
-                <a href="#"><img src="images/icon-account.png" /></a>
-                <a class="msg-center pRel" href="#"><img src="images/icon-msg.png" /><i class="msg-info">99</i></a>
+                 <a href="index.html"><i class="pic-icon icon-home"></i></a>
+                 <a href="#"><i class="pic-icon icon-account"></i></a>
+                 <a class="msg-center pRel" href="#"><i class="pic-icon icon-msg"></i><i class="msg-info">99</i></a>
             </div>
         </div>
     </div>
@@ -26,12 +26,12 @@
                 <div class="porto-img W96 H96" id="avatar-box" @click="uploading"></div>
                 <h3 class="LH-H58 fSize18 t-center color-gray3">编辑头像</h3>
             </div>
-            <div class="infoTxt maT24 maL54 fl color-gray6 W530" v-show="viewInfo">
+            <div class="infoTxt maT24 maL54 fl color-gray6 W300" v-show="viewInfo">
                 <h3 class="LH-H47 fSize18 color-gray3">{{uni}}</h3>
                 <p><label>学校性质：</label>{{briefInfo.level}}</p>
                 <p><label>所在地：</label>{{briefInfo.address.province}}-{{briefInfo.address.city}}-{{briefInfo.address.district}}</p>
                 <p><label>邮箱：</label>{{briefInfo.email}}</p>
-                <i class="LH-H30 W30 t-center btn-edit" @click="edit"><img class="v-mid" src="images/icon-edit.png"/></i>
+                <i class="LH30 t-center btn-edit pic-icon icon-edit" @click="edit"></i>
             </div>
             <div class="edit-brief maT24 maL54 fl color-gray6 W530 pRel" v-show="!viewInfo">
                  <h3 class="LH-H47 fSize18 color-gray3">{{uni}}</h3>
@@ -50,18 +50,18 @@
             </div>
         </div>
         <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3 bg-white">
-            <li class="on" paneid="resumeBox"><i><img src="images/icon-resume.png"/></i>高校简介</li>
-            <li paneid="requireBox"><i><img src="images/icon-study.png"/></i>高校需求</li>
-            <li class="myCollect" paneid="collectBox"><i><img src="images/icon-collect.png"/></i>高校收藏</li>
-            <li paneid="combi-msg"><i><img src="images/icon-apply.png"/></i>消息中心
+            <li class="on" paneid="resumeBox"><i class="pic-icon icon-resume"></i>高校简介</li>
+            <li paneid="requireBox"><i class="pic-icon icon-study"></i>高校需求</li>
+            <li class="myCollect" paneid="collectBox"><i class="pic-icon icon-collect"></i>高校收藏</li>
+            <li paneid="combi-msg"><i class="pic-icon icon-apply"></i>消息中心
                 <div class="sub-li LH37">
                     <p class="on" paneid="combi-msg">校企合作消息</p>
                     <p paneid="recruit-msg">招聘会合作消息</p>
                 </div>
             </li>
-            <li paneid="vip-center"><i><img src="images/icon-apply.png"/></i>VIP中心</li>
-            <li paneid="uni-coop"><i><img src="images/icon-apply.png"/></i>校企合作</li>
-            <li class="myConfig" paneid="conf-keyword"><i><img src="images/icon-config.png"/></i>设置
+            <li paneid="vip-center"><i class="pic-icon icon-apply"></i>VIP中心</li>
+            <li paneid="uni-coop"><i class="pic-icon icon-apply"></i>校企合作</li>
+            <li class="myConfig" paneid="conf-keyword"><i class="pic-icon icon-config"></i>设置
                 <div class="sub-li paTop2 paBot2 LH30">
                     <p class="on" paneid="conf-keyword">修改密码</p>
                     <p paneid="conf-account">绑定账号</p>
@@ -72,18 +72,18 @@
             <div class="resumeBox" style="display:block">
                 <div class="resumeCont bg-white" v-show="resume.edit">
                     <p class="LH-H88 fSize18 color-gray3" v-show="resume.firstEdit">亲爱的校友，您需要完善高校简介</p>
-                    <h3 class="fSize18 LH-H30 maB17" v-show="!resume.firstEdit"><i class="pic-wrapper hd-icon"><img src="images/icon-resume.png"/></i>高校简介</h3>
-                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校名称</label><input type="text" v-model="resume.uni" class="W298" /></p>
-                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校类别</label>
+                    <h3 class="fSize18 LH-H30 maB17" v-show="!resume.firstEdit"><i class="pic-icon icon-resume hd-icon"></i>高校简介</h3>
+                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-icon W30 icon-imp"></i><label>高校名称</label><input type="text" v-model="resume.uni" class="W298" /></p>
+                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-icon W30 icon-imp"></i><label>高校类别</label>
                         <dropdown placeholder="请选择高校类别" :options="database.classific" v-model="resume.classific" classes="W138"></dropdown>
                     </p>
-                    <p class="LH-H26 paLeft7 resume-item uni-level"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校性质</label>
+                    <p class="LH-H26 paLeft7 resume-item uni-level"><i class="pic-icon W30 icon-imp"></i><label>高校性质</label>
                         <dropdown placeholder="高校性质" :options="database.unilevel" v-model="resume.level" classes="W138"></dropdown><input type="radio" name="level" value="985" @click="checkExlv" />985<input type="radio" name="level" value="211" @click="checkExlv" />211</p>
-                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>在校人数</label>
+                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-icon W30 icon-imp"></i><label>在校人数</label>
                         <dropdown placeholder="请选择在校人数" :options="database.amount" v-model="resume.amount" classes="W138"></dropdown>
                     </p>
                     <div class="LH26 paLeft7 resume-item clearfix pRel">
-                        <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>重点专业</label></p>
+                        <p class="fl"><i class="pic-icon W30 icon-imp"></i><label>重点专业</label></p>
                         <ul class="fl maL4 edit-major-list W534">
                             <li v-for="(spmajor,index) in resume.specialmajor" class="maB14">
                                 <major-pop :majordata="database.majors" class="disInline"></major-pop><button class="btn-del-major" v-show="index<resume.specialmajor.length-1" @click="delMajor(index)">- 删除</button>
@@ -92,14 +92,14 @@
                         </ul>
                     </div>
                     <div class="LH26 paLeft7 resume-item clearfix">
-                        <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校认证</label></p>
-                        <ul class="fl uni-valid-upload color-gray6 fSize12">
-                            <li><a href="javascript:void(0)"><label for="comlicense">重新上传营业执照</label><i class="pic-wrapper"><img src="images/icon-upload.png"/></i></a>
+                        <p class="fl"><i class="pic-icon W30 icon-imp"></i><label>高校认证</label></p>
+                        <ul class="fl valid-upload color-gray6 fSize12">
+                            <li><a href="javascript:void(0)"><label for="comlicense">重新上传营业执照</label><i class="pic-icon icon-upload"></i></a>
                                  <button v-show="!resume.firstEdit">（查看之前上传的营业执照）</button>
                                  <span v-show="resume.firstEdit">{{resume.comLicense}}</span>
                                  <input type="file" name="comlicense" @change="changeFile($event.target,'commence')" />
                             </li>
-                            <li><a href="javascript:void(0)"><label for="unilicense">重新上传办学许可证</label><i class="pic-wrapper"><img src="images/icon-upload.png"/></i></a>
+                            <li><a href="javascript:void(0)"><label for="unilicense">重新上传办学许可证</label><i class="pic-icon icon-upload"></i></a>
                                  <button v-show="!resume.firstEdit">（查看之前上传的办学许可证）</button>
                                  <span v-show="resume.firstEdit">{{resume.uniLicense}}</span>
                                  <input type="file" name="unilicense" @change="changeFile($event.target,'uni')" />
@@ -107,7 +107,7 @@
                         </ul>
                     </div>
                     <div class="uni-intro LH26 paLeft7 resume-item clearfix">
-                        <p class="fl"><i class="pic-wrapper W30"><img src="images/icon-imp.png"></i><label>高校简介</label></p>
+                        <p class="fl"><i class="pic-icon W30 icon-imp"></i><label>高校简介</label></p>
                         <div class="fl">
                             <textarea class="fl" v-model="resume.intro" @input="checkText('resumeintro')"></textarea>
                             <p class="t-right">你还可以输入{{remainText(resume.intro)}}字</p>
@@ -118,7 +118,7 @@
                     </div>
                 </div>
                 <div class="resumeCont bg-white pRel" v-show="resume.view">
-                    <h3 class="fSize18 LH-H30 maB17"><i class="pic-wrapper hd-icon"><img src="images/icon-resume.png"/></i>高校简介</h3>
+                    <h3 class="fSize18 LH-H30 maB17"><i class="pic-icon icon-resume hd-icon"></i>高校简介</h3>
                     <div class="paLeft40 paRight40 LH33 fSize14">
                         <p><label>高校名称：</label>{{resume.uni}}</p>
                         <p><label>高校类别：</label>{{resume.classific}}</p>
@@ -134,7 +134,7 @@
                         </div>
                         <div class="clearfix">
                             <p class="fl"><label>高校认证：</label></p>
-                            <ul class="fl uni-valid-upload color-gray6 fSize12 paTop5">
+                            <ul class="fl valid-upload color-gray6 fSize12 paTop5">
                                 <li><span v-show="resume.comLicense" class="view-valid-label">已上传营业执照</span><span v-show="!resume.comLicense" class="view-valid-label color-gray9">未上传营业执照</span>
                                    <p class="disInline pRel">
                                        <button class="color-blueL" v-show="resume.comLicense">（查看之前上传的营业执照）</button>
@@ -152,7 +152,7 @@
                         </div>
                         <p class="LH22"><label>高校简介：</label>{{resume.intro}}</p>
                     </div>
-                    <i class="LH-H30 W30 t-center btn-edit" @click="editSwipe"><img class="v-mid" src="images/icon-edit.png"/></i>
+                    <i class="LH30 t-center btn-edit pic-icon icon-edit" @click="editSwipe"></i>
                 </div>
             </div>
             <div class="uni-require requireBox">
@@ -341,9 +341,9 @@
                  <div class="vip-cont vip-service clearfix on">
                       <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic01.jpg"/></i>
                       <div class="fl fSize14 vip-cont-text maL33">
-                           <h2 class="fSize18 LH-H45"><i class="pic-wrapper maR10"><img src="images/vip-icon01.png" /></i>刷新</h2>
+                           <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-1"></i>刷新</h2>
                            <p class="LH30 maB20">让老的信息重新往前排，同时可以突破橱窗的显示限制，让你的信息排名重新往前排。</p>
-                           <h2 class="fSize18 LH-H45"><i class="pic-wrapper maR10"><img src="images/vip-icon02.png" /></i>价格</h2>
+                           <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-2"></i>价格</h2>
                            <p class="LH30">信息刷新校企每一个用户每一个类目有三次免费刷新机会。</p>
                            <p class="LH30">单次购买刷新<span class="color-red">1</span>元/次，可在发布的信息页面进行操作刷新。</p>
                            <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
@@ -352,9 +352,9 @@
                  <div class="vip-cont vip-service clearfix">
                       <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic02.jpg"/></i>
                       <div class="fl fSize14 vip-cont-text maL33">
-                           <h2 class="fSize18 LH-H45"><i class="pic-wrapper maR10"><img src="images/vip-icon01.png" /></i>置顶</h2>
+                           <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-1"></i>置顶</h2>
                            <p class="LH30 maB20">让您的信息排在列表页最上方，比刷新信息还要靠前！更可点亮专属<span class="color-red">王冠图标</span>让信息更醒目，效果翻至3.5倍。</p>
-                           <h2 class="fSize18 LH-H45"><i class="pic-wrapper maR10"><img src="images/vip-icon02.png" /></i>价格</h2>
+                           <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-2"></i>价格</h2>
                            <p class="LH30">单次购买置顶<span class="color-red">10</span>元/次，可在发布的信息息页面进行操作置顶。</p>
                            <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
                       </div>
@@ -362,9 +362,9 @@
                  <div class="vip-cont vip-service clearfix">
                       <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic03.jpg"/></i>
                       <div class="fl fSize14 vip-cont-text maL33">
-                           <h2 class="fSize18 LH-H45"><i class="pic-wrapper maR10"><img src="images/vip-icon03.png" /></i>信息匹配</h2>
+                           <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-3"></i>信息匹配</h2>
                            <p class="LH30 maB20">根据高校详细需求，平台为你第一时间进行配对，企业需求信息匹配，无需手动搜索，一键解决需求配对。</p>
-                           <h2 class="fSize18 LH-H45"><i class="pic-wrapper maR10"><img src="images/vip-icon02.png" /></i>价格</h2>
+                           <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-2"></i>价格</h2>
                            <p class="LH30">单次购买匹配<span class="color-red">10</span>元/条，可在会员中心进行操作购买。</p>
                            <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
                       </div>
@@ -372,9 +372,9 @@
                  <div class="vip-cont vip-service clearfix">
                       <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic04.jpg"/></i>
                       <div class="fl fSize14 vip-cont-text maL33">
-                           <h2 class="fSize18 LH-H45"><i class="pic-wrapper maR10"><img src="images/vip-icon04.png" /></i>品牌推广</h2>
+                           <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-4"></i>品牌推广</h2>
                            <p class="LH30 maB20">根据高校详细需求，平台为你第一时间进行配对，企业需求信息匹配，无需手动搜索，一键解决需求配对。</p>
-                           <h2 class="fSize18 LH-H45"><i class="pic-wrapper maR10"><img src="images/vip-icon02.png" /></i>价格</h2>
+                           <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-2"></i>价格</h2>
                            <p class="LH30">单次购买推广展位<span class="color-red">500</span>元/月，会员特权购买当中，会在每一个类目中展示。</p>
                            <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
                       </div>
@@ -392,9 +392,9 @@
                     <div class="maB38">
                          <h3 class="LH-H50 fSize16 paLeft16">会员权限说明</h3>
                          <ul class="tarif-info">
-                              <li v-for="item in vip.tarif" class="clearfix">
+                              <li v-for="(item,index) in vip.tarif" class="clearfix">
                                    <div class="fl W160 t-center">
-                                        <i class="pic-wrapper maT32"><img :src="item.icon"/></i>
+                                        <i class="pic-icon maT32" :class="'icon-crown-'+(index+1)"></i>
                                         <p class="LH52">{{item.level}}</p>
                                    </div>
                                    <div class="fl LH30 fSize12 paLeft12">
@@ -454,16 +454,16 @@
             <div class="conf-account paLeft40 paRight40">
                <h2 class="fSize24 LH-H63 maT9">绑定账号</h2>
                <div class="safeLevel maB12 H80 bg-gray-f7 pRel">
-                    <h3 class="paLeft40 fSize18 LH-H40"><i class="pic-wrapper W20 LH-H40 maR10"><img src="images/icon-safe.png"/></i>安全等级</h3>
+                    <h3 class="paLeft40 fSize18 LH-H40"><i class="pic-icon W20 maR10 icon-safe"></i>安全等级</h3>
                     <div class="LH-H30 paLeft80 fSize14"><span class="maR12 color-red2">危险</span><div class="safe-range pRel"><p></p><div class="r-pointer LH26 H40 t-center W46 color-white">80%</div></div><span class="maL12 color-green">安全</span></div>
-                    <i class="pic-wrapper trigle-up"><img src="images/trigle-up02.jpg"/></i>
+                    <i class="trigle-up"><img src="images/trigle-up02.jpg"/></i>
                </div>
                <p class="fSize14 LH-H35">登录账号：123456789</p>
                <p class="fSize14 LH-H35 maB22">绑定后，你可以同时使用以下方式登录</p>
                <ul class="bind-acc fSize18">
-                    <li><img src="images/icon-phone.png"/>已绑定手机号 12345678900<button class="maL20 chg-phone">更换手机号</button></li>
-                    <li><img src="images/icon-email.png"/><button>绑定邮箱</button></li>
-                    <li><img src="images/icon-weixin.png"/><button class="wechatBind">绑定微信账号</button></li>
+                    <li><i class="pic-icon icon-phone"></i>已绑定手机号 12345678900<button class="maL20 chg-phone">更换手机号</button></li>
+                    <li><i class="pic-icon icon-email"></i><button>绑定邮箱</button></li>
+                    <li><i class="pic-icon icon-wechat"></i><button class="wechatBind">绑定微信账号</button></li>
                </ul>
             </div>
         </div>
@@ -472,7 +472,7 @@
     </div>
 <div class="modal" id="app-modal" v-show="showModal" @click="hidemodal">
      <div class="porto-upload W500" v-show="showUpload" @click="stayshow($event)">
-           <h2 class="LH-H60 fSize24 color-white t-left bg-blueM paLeft30">编辑头像<i class="pic-wrapper LH-H40 W40 close" @click="closePorto"><img src="images/icon-close-1.png"/></i></h2>
+           <h2 class="LH-H60 fSize24 color-white t-left bg-blueM paLeft30">编辑头像<i class="pic-wrapper LH-H40 W40 close" @click="closePorto"><i class="pic-icon icon-close"></i></i></h2>
            <div class="edit-area H407 bg-white">
                 <div class="clearfix">
                      <div class="fl">
@@ -501,7 +501,7 @@
           </div>
     </div>
      <div class="phone-change W500 disNo" >
-         <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换手机号<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13"><img src="images/icon-close.png"/></i></h2>
+         <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换手机号<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13"><i class="pic-icon icon-close"></i></i></h2>
          <div class="bg-white paTop8 paBot60">
             <h3 class="LH-H83 fSize18 t-center">请输入新的手机号，完成手机号绑定</h3>
             <p><input type="text" placeholder="完成手机号" class="W290"></p>
@@ -511,14 +511,14 @@
          </div>
      </div>
      <div class="wechat-bind W500 disNo">
-         <h2 class="LH-H60 fSize24 color-white t-center bg-blueM">微信登录<i class="pic-wrapper LH-H40 W40 close"><img src="images/icon-close.png"/></i></h2>
+         <h2 class="LH-H60 fSize24 color-white t-center bg-blueM">微信登录<i class="pic-wrapper LH-H40 W40 close"><i class="pic-icon icon-close"></i></i></h2>
          <div class="bg-white paTop14 t-center paBot53">
             <i class="barCode pic-wrapper W284 LH-H284 bg-grayC maB22"></i>
             <p class="LH-H40 W220 t-center bg-orange2 color-white maCenter" style="border-radius: 20px;">请使用微信扫一扫二维码登录</p>
          </div>
      </div>
      <div class="msg-box  W888 maCenter disNo">
-         <h3 class="bg-orange4 LH-H86 fSize30 color-white t-center"><i class="pic-wrapper fl maL30 back show02 disNo msg-back"><img src="images/icon-return.png"/> </i><i class="pic-wrapper maR21 show01"><img src="images/icon-email4.png"/></i><span class="msg-head">消息提醒</span> <i class="close pic-wrapper fr maR10 LH-H86 W40"><img src="images/icon-close.png"/></i></h3>
+         <h3 class="bg-orange4 LH-H86 fSize30 color-white t-center msg-box-head"><i class="pic-icon fl maL30 back show02 disNo msg-back icon-return"></i><i class="pic-icon maR21 show01 icon-email"></i><span class="msg-head">消息提醒</span> <i class="close pic-icon fr maR10 LH-H86 W40 icon-close"></i></h3>
          <div class="msg-lis show01">
             <ul class="msg-body ">
                  <li class="msg-date">今天</li>
@@ -547,8 +547,6 @@
             <p class="H266 bg-white paTop25 LH25">校企2.0上线啦上线啦上线啦</p>
             <p class="bg-gray-e0 LH-H50 t-center"><span class="date">2016-12-17</span><span class="time">12:12</span></p>
          </div>
-
-
      </div>
      <div class="comment-box pRel" v-show="showComment" @click="stayshow($event)">
           <h2 class="comment-header">评价</h2>
@@ -570,10 +568,10 @@
                     <li><a href="footer-page.html">友情链接</a>-</li>
                     <li><a href="footer-page.html">教育网</a></li>
                 </ul>
-                <ul class="lis-inline fSize12">
-                    <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-phone2.png"/></i>电话：152 6706 8921</li>
-                    <li class="maR100"><i class="pic-wrapper maR15"><img src="images/icon-gps.png"/></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
-                    <li><i class="pic-wrapper maR15"><img src="images/icon-email2.png"/></i>邮箱：xiaoqiztc@yeah.net</li>
+                <ul class="lis-inline fSize12 bot-infos">
+                    <li class="maR100"><i class="pic-icon icon-phone"></i>电话：152 6706 8921</li>
+                    <li class="maR100"><i class="pic-icon icon-address"></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
+                    <li><i class="pic-icon icon-email"></i>邮箱：xiaoqiztc@yeah.net</li>
                 </ul>
                 <p class="fSize14 t-center LH-H40 color-gray79">©2016 XxiaoQi 京ICP备456123789号-2 京公网安备12465789123号</p>
             </div>

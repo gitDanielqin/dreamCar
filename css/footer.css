@@ -37,8 +37,10 @@
 .us-model{margin-left: 70px; color: white;text-align: left;}
 .us-model h3{height:55px; line-height: 55px; font-size: 16px;}
 .contact p{line-height: 32px;}
-.contact i{width: 30px; height: 30px; margin-right: 5px;}
-.contact img{vertical-align: middle;}
+.contact i.pic-icon{margin-right:12px;}
+.contact .icon-phone{vertical-align: middle;width:22px; height: 18px; background: url("../images/sprite.png") no-repeat -119px -131px;}
+.contact .icon-email{vertical-align: middle;width:22px; height: 18px; background: url("../images/sprite.png") no-repeat -152px -132px;}
+.contact .icon-gps{vertical-align: middle;width:22px; height: 22px; background: url("../images/sprite.png") no-repeat -150px -32px;}
 
 .bot-nav{border-top: 1px solid #8e8e8e; }
 .site-nav{display: inline-block;}
