@@ -252,18 +252,13 @@
      })
      // 选择下拉框定位
      function selectInitPos(){
-          $(".selectee input").each(function(){
-               $(this).width($(this).width()-20);
-               $(this).css("padding-right",20+"px");
-             var bgPos=$(this).width()+10+"px center";
-             $(this).attr("disabled","true").css("background-position",bgPos);
-         });
          $(".selectee ul").each(function(){
                var sibInput=$(this).siblings("input");
+               var parentObj = $(this).parent(".selectee");
              // console.log(sibInput.height());
-             $(this).width(sibInput.outerWidth()-2);
+             $(this).width(sibInput.outerWidth()-2); //2 为边框
              $(this).css({
-                 left:sibInput.css("margin-left")+"px",
+                 left:sibInput.offset().left-parentObj.offset().left+"px",
                  top:sibInput.height()+"px"
              })
          });
@@ -271,5 +266,14 @@
               $(".selectee ul").hide();
          });
      }
+     function selectInitInput(){
+          $(".selectee input").each(function(){
+               $(this).width($(this).width()-20);
+               $(this).css("padding-right",20+"px");
+             var bgPos=$(this).width()+10+"px center";
+             $(this).attr("disabled","true").css("background-position",bgPos);
+         });
+     }
+     window.selectInitInput = selectInitInput;
      window.selectInitPos = selectInitPos;
 })()

@@ -545,8 +545,8 @@ var appModal = new Vue({
      }
 });
 function init_center(){
-     selectInitPos();
      selectInit();
+     selectInitPos();
     selectEventBind();
     init_safepos();
     editEventBind();
@@ -671,6 +671,12 @@ function init_safepos(){
     $(".r-pointer").css("left",p_left);
 }
 function selectInit(){
+     $(".selectee input").each(function(){
+          $(this).width($(this).width()-20);
+          $(this).css("padding-right",20+"px");
+        var bgPos=$(this).width()+10+"px center";
+        $(this).attr("disabled","true").css("background-position",bgPos);
+    });
      $(".major-input input").each(function(index){
           $(this).width($(this).width()-20);
           $(this).css("padding-right",20+"px");
@@ -690,11 +696,13 @@ function navEventBind(){
                 $(this).addClass("on");
                 $(".content").children().hide();
                 $(".content").children("."+$(this).attr("paneid")).show();
+                selectInitPos();
                 return false;
             });
         }
         $(".content").children().hide();
         $(".content").children("."+$(this).attr("paneid")).show();
+        selectInitPos();
     });
 }
 function modalEventBind(){

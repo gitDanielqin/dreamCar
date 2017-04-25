@@ -473,10 +473,10 @@ var appModal = new Vue({
      }
 });
 function init_center(){
-     selectInitPos();
      selectInit();
-   init_safepos();
-    selectEventBind();
+     selectInitPos();
+     init_safepos();
+  //  selectEventBind();
   //  editEventBind();
    // init_paneAdd();
    navEventBind();
@@ -488,6 +488,12 @@ function init_center(){
 init_center();
 
 function selectInit(){
+     $(".selectee input").each(function(){
+          $(this).width($(this).width()-20);
+          $(this).css("padding-right",20+"px");
+        var bgPos=$(this).width()+10+"px center";
+        $(this).attr("disabled","true").css("background-position",bgPos);
+    });
      $(".major-input input").each(function(index){
           $(this).width($(this).width()-20);
           $(this).css("padding-right",20+"px");
@@ -628,11 +634,13 @@ function navEventBind(){
                 $(this).addClass("on");
                 $(".content").children().hide();
                 $(".content").children("."+$(this).attr("paneid")).show();
+                selectInitPos();
                 return false;
             });
         }
         $(".content").children().hide();
         $(".content").children("."+$(this).attr("paneid")).show();
+        selectInitPos();
     });
 }
 function vipEventBind(){

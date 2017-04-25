@@ -2,31 +2,24 @@
 // var posturl="http://192.168.0.113:8000/easily_xq_WebApi/user/school/getInfo";
 
 var parObj = EventUtils.urlExtrac(window.location);
-var postdata={
-     userId:parObj.userId,
-     loginIdentifier:parObj.loginId
-};
-console.log(postdata);
-EventUtils.ajaxReq('/user/school/getInfo','get',postdata,function(data,status){
-     console.log(data);
-     alert(data.info);
-})
-// $.ajax({
-//      url:posturl,
-//      type:"get",
-//      data:postdata,
-//      success:function(data,status){
-//      //     clearInterval(timer);
-//      //     $(obj).html("获取验证码");
-//      //     $(obj).attr("disabled",false);
-//           console.log(data);
-//           alert(data.info);
-//      },
-//      error:function(data,status){
-//           alert("获取验证码失败！"+data.info);
-//      },
-//      timeout:5000
-// })
+var respObj={}; //请求的本页面的数据集合
+// 请求本页面数据
+(function(){
+     var postdata={
+          userId:parObj.userId,
+          loginIdentifier:parObj.loginId
+     };
+     EventUtils.ajaxReq('/user/school/getInfo','get',postdata,function(resp,status){
+          appPorto.uni = resp.data.name;
+          appPorto.briefInfo.level = resp.data.property;
+          appPorto.briefInfo.address.province = resp.data.province;
+          appPorto.briefInfo.address.city = resp.data.city;
+          appPorto.briefInfo.address.district = resp.data.area;
+          appPorto.briefInfo.email = resp.data.loginName;
+          //alert(resp.info);
+     })
+})()
+
 var appPorto = new Vue({
     el: "#app-porto",
     data: {
@@ -35,7 +28,7 @@ var appPorto = new Vue({
             addrData:addArray
          },
         viewInfo: true,
-        uni: "中国美术学院",
+        uni: "大学名称",
         briefInfo:{
             level: "重点大学",
             address: {
@@ -475,7 +468,7 @@ var appModal = new Vue({
      el:"#app-modal",
      data:{
           checkedTrades:[],
-          showModal:false,
+          showModal:true,
           showTrade:false,
           showPreview:false,
           showUpload:false,
@@ -487,6 +480,18 @@ var appModal = new Vue({
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]}
           ],
+          refresh:{
+               content:[
+                    {duration:"置顶1天",price:10,hint:"(无折扣仅10元/次)"},
+                    {duration:"置顶3天",price:27,hint:"(9折仅9元/次)"},
+                    {duration:"置顶5天",price:40,hint:"(8折仅8元/次)"},
+                    {duration:"置顶10天",price:70,hint:"(7折仅7元/次)"},
+               ],
+               sum:0,
+               presum:0,
+               discount:"9折",
+               sofortBtn:"立即充值"
+          },
           comment:{
                index:0,
                text:""
@@ -565,8 +570,8 @@ var appModal = new Vue({
      }
 });
 function init_center(){
-     selectInitPos();
      selectInit();
+     selectInitPos();
    init_safepos();
    navEventBind();
    showContact();
@@ -642,14 +647,22 @@ function navEventBind(){
                 $(this).addClass("on");
                 $(".content").children().hide();
                 $(".content").children("."+$(this).attr("paneid")).show();
+                selectInitPos();
                 return false;
             });
         }
         $(".content").children().hide();
         $(".content").children("."+$(this).attr("paneid")).show();
+        selectInitPos();
     });
 };
 function selectInit(){
+     $(".selectee input").each(function(){
+          $(this).width($(this).width()-20);
+          $(this).css("padding-right",20+"px");
+        var bgPos=$(this).width()+10+"px center";
+        $(this).attr("disabled","true").css("background-position",bgPos);
+    });
      $(".major-input input").each(function(index){
           $(this).width($(this).width()-20);
           $(this).css("padding-right",20+"px");

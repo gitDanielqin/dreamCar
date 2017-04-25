@@ -255,3 +255,23 @@ position: absolute;  display:none;}
 .msg-box-head .icon-return{background: url("../images/sprite.png") no-repeat -191px -2px; width: 32px;height: 29px; margin-top: 30px;}
 .msg-box-head .icon-email{background: url("../images/sprite.png") no-repeat -147px -5px; width: 28px;height: 20px;}
 .msg-box-head .icon-close{background: url("../images/sprite.png") no-repeat -289px -52px; width: 26px;height: 25px; margin-top: 32px;}
+
+.refresh-box{position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);}
+.refresh-hd{background: #f7a132;}
+.refresh-hd ul{vertical-align: top}
+.refresh-hd ul li{width: 120px; background: #ef8f30; color: white; position: relative; height: 60px;}
+.refresh-hd ul li span{display: inline-block; position: absolute; left: 0; bottom: 0; width: 100%; height: 100%;}
+.refresh-hd ul li.on span{height: 70px; line-height: 70px; background: white; color: #000; border-top-left-radius:5px;border-top-right-radius:5px; }
+.refresh-closer{width: 40px; height: 40px; line-height: 40px; text-align: center; margin-top: 10px; margin-right: 23px; cursor: pointer;}
+.refresh-closer:hover{ background: #ef8f30; }
+.refresh-closer .pic-icon{background: url("../images/icon-fresh-close.png") no-repeat center center; width: 27px; height: 27px;}
+.refresh-cont{background: white; }
+.icon-radio{width: 24px; height: 24px; display: inline-block; vertical-align: middle; background: #e5e4e4; border-radius: 50%;
+margin-right: 8px; line-height: 24px; text-align: center;}
+.icon-radio .pic-icon{width: 10px; height: 10px; border-radius: 50%; background: #f7a132; display: none;}
+.icon-radio.on .pic-icon{display: inline-block; margin-top: 7px; vertical-align: top;}
+.refresh-bot{background: #e6e6e6; position: relative;}
+.price-pre{color: #a2a2a2; text-decoration: line-through;}
+.icon-checkbox{width: 18px; height: 17px; border: 1px solid #000; margin-right: 12px;}
+.refresh-btn{width: 150px; height: 40px; color: white; font-size: 18px; position: absolute;top: 45px; right: 50px; background: #f7a132;
+box-shadow: 0 0 15px #f7a132;}

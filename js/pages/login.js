@@ -74,17 +74,22 @@ var appCont =  new Vue({
                //console.log(postdata);
                var callback = function(resp,status){
                     console.log(resp);
-                    switch (resp.data.userType) {
-                         case "0":
-                              window.location.href="pCenter.html?userId="+resp.data.userId+"&loginId="+resp.data.loginIdentifier;
-                              break;
-                         case "1":
-                              window.location.href="uniCenter.html?userId="+resp.data.userId+"&loginId="+resp.data.loginIdentifier;
-                              break;
-                         case "2":
-                              window.location.href="incCenter.html?userId="+resp.data.userId+"&loginId="+resp.data.loginIdentifier;
-                              break;
-                         default:
+                    if(resp.data.cardStatus=="0"){
+                         var parstring = "userType="+resp.data.userType+"&userid="+resp.data.userId+"&loginId="+resp.data.loginIdentifier;
+                         window.location.href="vCards.html?"+parstring;
+                    }else{
+                         switch (resp.data.userType) {
+                              case "0":
+                                   window.location.href="pCenter.html?userId="+resp.data.userId+"&loginId="+resp.data.loginIdentifier;
+                                   break;
+                              case "1":
+                                   window.location.href="uniCenter.html?userId="+resp.data.userId+"&loginId="+resp.data.loginIdentifier;
+                                   break;
+                              case "2":
+                                   window.location.href="incCenter.html?userId="+resp.data.userId+"&loginId="+resp.data.loginIdentifier;
+                                   break;
+                              default:
+                         }
                     }
                }
                EventUtils.ajaxReq('/center/user/login','post',postdata,callback);
