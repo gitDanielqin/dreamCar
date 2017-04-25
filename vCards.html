@@ -54,8 +54,8 @@
             <div class="address">
                  <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
             </div>
-            <input type="text" class="W188" placeholder="企业联系人" /><input type="text" class="W188 paLeft20" placeholder="联系人手机号" />
-            <input class="w188" type="text" placeholder="请输入验证码" style="margin-bottom: 0"/><button type="button" class="W120 LH-H40 fSize14 color-white bg-grayC">获取验证码</button>
+            <input type="text" class="W188" placeholder="企业联系人" v-model="incInfo.linkMan"/><input type="text" class="W188 paLeft20" placeholder="联系人手机号" v-model="incInfo.mobile"/>
+            <input class="w188" type="text" placeholder="请输入验证码" style="margin-bottom: 0" v-model="incInfo.validCode"/><button type="button" class="W120 LH-H40 fSize14 color-white bg-grayC" @click="codequery(incInfo.mobile)">获取验证码</button>
             <button class="LH-H40 W140 maT40 bg-orange2 save fSize18 color-white" @click.prevent="submitCard('inc')">保存名片</button>
         </form>
         <img src="images/cardtxt.png" class="fl maL52 maT148"/>

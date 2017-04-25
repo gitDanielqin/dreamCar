@@ -1,25 +1,32 @@
 
-var posturl="http://192.168.0.113:8000/easily_xq_WebApi/user/school/getInfo";
+// var posturl="http://192.168.0.113:8000/easily_xq_WebApi/user/school/getInfo";
+
+var parObj = EventUtils.urlExtrac(window.location);
 var postdata={
-     userId:"1",
-     loginIdentifier:"1492939992990"
-}
-$.ajax({
-     url:posturl,
-     type:"get",
-     data:postdata,
-     success:function(data,status){
-     //     clearInterval(timer);
-     //     $(obj).html("获取验证码");
-     //     $(obj).attr("disabled",false);
-          console.log(data);
-          alert(data.info);
-     },
-     error:function(data,status){
-          alert("获取验证码失败！"+data.info);
-     },
-     timeout:5000
+     userId:parObj.userId,
+     loginIdentifier:parObj.loginId
+};
+console.log(postdata);
+EventUtils.ajaxReq('/user/school/getInfo','get',postdata,function(data,status){
+     console.log(data);
+     alert(data.info);
 })
+// $.ajax({
+//      url:posturl,
+//      type:"get",
+//      data:postdata,
+//      success:function(data,status){
+//      //     clearInterval(timer);
+//      //     $(obj).html("获取验证码");
+//      //     $(obj).attr("disabled",false);
+//           console.log(data);
+//           alert(data.info);
+//      },
+//      error:function(data,status){
+//           alert("获取验证码失败！"+data.info);
+//      },
+//      timeout:5000
+// })
 var appPorto = new Vue({
     el: "#app-porto",
     data: {

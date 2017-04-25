@@ -17,7 +17,7 @@
 <div class="banner H764 bg-purpleL" id="app-content">
     <div class="inner pRel">
         <i class="pic-wrapper loginImg"><img src="images/login-pic.jpg"/></i>
-        <div class="logBox regis" id="app-regis">
+        <div class="logBox regis" id="app-regis" v-show="show.regis">
             <ul class="pRel log-nav LH-H40 fSize24 color-gray6">
                 <li class="on" @click="register.userType=0">个人</li>
                 <li @click="register.userType=1">高校</li>
@@ -27,14 +27,14 @@
                 <input class="maT34 account" type="text" :placeholder="accontType(register.userType)" v-model="register.account"/>
                 <input class="maT22" type="password" placeholder="密码 (6-16字母、数字、无空格)" v-model="register.password"/>
                 <div class="valid maT28">
-                    <input class="v-mid" type="text" placeholder="验证码" v-model="register.validcode"><button type="button" class="W108 LH-H42 maL20 v-mid fSize14 color-white codeReq" disabled="disabled" @click="reqValidCode($event.target)">获取验证码</button>
+                    <input class="v-mid" type="text" placeholder="验证码" v-model="register.validcode"><button type="button" class="W108 LH-H42 maL20 v-mid fSize14 color-white codeReq" :disabled="validUnable" @click="reqValidCode($event.target)">{{validText}}</button>
                 </div>
-                <button id="regBtn" class="LH-H50 W305 bg-orange fSize24 color-white maT24" @click.prevent="regisEv">免费注册</button>
-                <p class="LH-H62 fSize14 t-left W400 maL24"><label><i class="check-box selected"></i>我已阅读并同意《 <a href="#javascript:;" class="agreement">用户服务协议</a> 》</label></p>
+                <button id="regBtn" class="LH-H50 W305 bg-orange fSize24 color-white maT24" :disabled="regisUnable" @click.prevent="regisEv">免费注册</button>
+                <p class="LH-H62 fSize14 t-left W400 maL24"><label><i class="check-box selected"></i>我已阅读并同意《 <a href="#" class="agreement" @click.prevent="showAgreement">用户服务协议</a> 》</label></p>
             </form>
             <p class="login-footer LH-H50 fSize20 t-center bg-grayC color-gray3">已有账号，直接登录</p>
         </div>
-        <div class="logBox login" style="display: none">
+        <div class="logBox login" v-show="!show.regis">
             <form class="W350 bg-white t-center paTop7">
                 <h2 class="log-header LH-H74 fSize24 t-center color-orange">欢迎登录校企职通车</h2>
                 <input class="account" type="text" placeholder="手机号/邮箱" v-model="login.account"/>
@@ -54,8 +54,8 @@
         </div>
     </div>
 </div>
-<div class="agree-modal">
-    <div class="agreementBox W800 H700 bg-white">
+<div class="agree-modal" id="app-modal" v-show="showModal" @click="hideModal">
+    <div class="agreementBox W800 H700 bg-white" @click.stop="">
         <div class="H57 maB42" style="border-bottom: 2px solid #2ea8e6; position: relative;">
             <h2 class="title bg-white LH-H47 W242 t-center fSize18">校企职通车用户服务协议</h2>
         </div>

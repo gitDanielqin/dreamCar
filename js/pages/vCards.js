@@ -2,7 +2,7 @@
  * Created by xuanyuan on 2016/11/7.
  */
 
-var userType = eventUtils.urlExtrac(window.location).userType;
+var parObj = EventUtils.urlExtrac(window.location);
  var appCont =  new Vue({
       el:"#app-content",
       data:{
@@ -68,33 +68,21 @@ var userType = eventUtils.urlExtrac(window.location).userType;
            uniLevel:"",
            incProp:"",
            incScale:"",
-           showPerson:userType=="0",
-           showUni:userType=="1",
-           showInc:userType=="2"||window.location.search==""
+           showPerson:parObj.userType=="0",
+           showUni:parObj.userType=="1",
+           showInc:parObj.userType=="2"||window.location.search==""
       },
       methods:{
            codequery:function(mobile){
-                var posturl = "http://192.168.0.113:8000/easily_xq_WebApi/sys/mobileCode?";
                 var postdata={
                      mobile:mobile,
                      type:3
                 };
-               // console.log(postdata);
-                $.ajax({
-                     url:posturl,
-                     type:"post",
-                     data:postdata,
-                     success:function(data,status){
-                         //  clearInterval(timer);
-                         //  $(obj).html("获取验证码");
-                         //  $(obj).attr("disabled",false);
-                          alert(data.info);
-                     },
-                     error:function(data,status){
-                          alert("获取验证码失败！"+data.info);
-                     },
-                     timeout:5000
-                })
+                var callback= function(data,status){
+                     alert(data.info);
+                };
+               EventUtils.ajaxReq('/sys/mobileCode','post',postdata,callback);
+
            },
            selectGender:function(obj){
                 $(".gender .on").removeClass("on");
@@ -103,13 +91,14 @@ var userType = eventUtils.urlExtrac(window.location).userType;
            submitCard:function(type){
                 var posturl="";
                 var postdata={};
+                var domainUrl="";
                 if(type=="person"){
-                     posturl = "http://www.xiaoqiztc.com/easily_xq_WebApi/user/school/createCard"
-                    window.location.href="pCenter.html"
+                     posturl = "/user/school/createCard"
+                     domainUrl="pCenter.html?";
                 }else if(type=="uni"){
-                     posturl = "http://192.168.0.113:8000/easily_xq_WebApi/user/school/createCard";
+                     posturl = "/user/school/createCard";
                      postdata={
-                         userId: eventUtils.urlExtrac(window.location).userid,
+                         userId: parObj.userid,
                          name: this.uniInfo.name,
                          property:this.uniInfo.props,
                          province:$(".uniCard .sel-province input").val(),
@@ -119,26 +108,47 @@ var userType = eventUtils.urlExtrac(window.location).userType;
                          mobile:this.uniInfo.mobile,
                          code:this.uniInfo.validCode
                     };
+                    domainUrl="uniCenter.html?";
                     //window.location.href="uniCenter.html"
                }else if(type=="inc"){
+                    posturl = "/user/company/createCard";
+                    postdata={
+                         userId: parObj.userid,
+                         name: this.incInfo.name,
+                         property:this.incInfo.props,
+                         scale:this.incInfo.scale,
+                         province:$(".bsCard .sel-province input").val(),
+                         city:$(".bsCard .sel-city input").val(),
+                         area:$(".bsCard .sel-district input").val(),
+                         linkMan:this.incInfo.linkMan,
+                         mobile:this.incInfo.mobile,
+                         code:this.incInfo.validCode
+                    }
+                    domainUrl="incCenter.html?";
                     //window.location.href="incCenter.html"
                }
-               console.log(postdata)
-               $.ajax({
-                    url:posturl,
-                    type:"post",
-                    data:postdata,
-                    success:function(data,status){
-                    //     clearInterval(timer);
-                    //     $(obj).html("获取验证码");
-                    //     $(obj).attr("disabled",false);
-                         alert(data.info);
-                    },
-                    error:function(data,status){
-                         alert("获取验证码失败！"+data.info);
-                    },
-                    timeout:5000
-               })
+               console.log(postdata);
+
+               var callback = function(data,status){
+                    var parstring = "userId="+parObj.userid+"&loginIdentifier="+parObj.loginIdentifier;
+                    window.location.href = domainUrl+parstring;
+               }
+               EventUtils.ajaxReq(posturl,'post',postdata,callback)
+               // $.ajax({
+               //      url:posturl,
+               //      type:"post",
+               //      data:postdata,
+               //      success:function(data,status){
+               //      //     clearInterval(timer);
+               //      //     $(obj).html("获取验证码");
+               //      //     $(obj).attr("disabled",false);
+               //           alert(data.info);
+               //      },
+               //      error:function(data,status){
+               //           alert("获取验证码失败！"+data.info);
+               //      },
+               //      timeout:5000
+               // })
            }
       },
       mounted:function(){

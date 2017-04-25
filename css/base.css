@@ -47,6 +47,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .H600{height:600px;}
 .H572{height: 572px;}
 .H570{height: 570px;}
+.H540{height: 540px;}
 .H515{height:515px;}
 .H500{height:500px;}
 .H480{height: 480px;}
@@ -247,6 +248,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .LH-H106{line-height: 106px; height: 106px;}
 .LH-H104{line-height: 104px; height: 104px;}
 .LH-H102{line-height: 102px; height: 102px;}
+.LH-H98{line-height: 98px; height: 98px;}
 .LH-H96{line-height: 96px; height: 96px;}
 .LH-H92{line-height: 92px; height: 92px;}
 .LH-H90{line-height: 90px; height: 90px;}
@@ -331,6 +333,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .paTop8{padding-top: 8px;}
 .paTop10{padding-top: 10px;}
 .paTop14{padding-top: 14px;}
+.paTop16{padding-top: 16px;}
 .paTop18{padding-top: 18px;}
 .paTop20{padding-top: 20px;}
 .paTop22{padding-top: 22px;}
@@ -343,6 +346,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .paTop40{padding-top: 40px;}
 .paTop52{padding-top: 52px;}
 .paTop54{padding-top: 54px;}
+.paTop55{padding-top: 55px;}
 .paTop58{padding-top: 58px;}
 .paTop60{padding-top: 60px;}
 .paTop64{padding-top: 64px;}

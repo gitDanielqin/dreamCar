@@ -1,6 +1,13 @@
 /**
  * Created by xuanyuan on 2016/11/6.
  */
+
+var parObj = EventUtils.urlExtrac(window.location);
+var regExp = {
+     mobile:/^1[34578]\d{9}$/,
+     email:/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/,
+     password:/^[a-zA-Z0-9]{6,16}$/
+}
 var appCont =  new Vue({
      el:"#app-content",
      data:{
@@ -8,14 +15,23 @@ var appCont =  new Vue({
                account:"",
                password:"",
                validcode:"",
-               userType:2
+               userType:0,
+               isAccValid:false,
+               isPassValid:false
           },
           login:{
                account:"",
                password:""
-          }
+          },
+          show:{
+               regis:parObj.newAcc=="1",
+          },
+          validText:"获取验证码"
      },
      methods:{
+          showAgreement:function(){
+               appModal.showModal=true;
+          },
           accontType:function(index){
                if(index==0){
                     return "手机号"
@@ -31,43 +47,47 @@ var appCont =  new Vue({
                     code:this.register.validcode,
                     userType:this.register.userType
                };
-               EventUtils.ajaxReq()
-               $.ajax({
-                    url:"http://www.xiaoqiztc.com/easily_xq_WebApi/center/user/register",
-                    type:"post",
-                    data:postdata,
-                    success:function(resp,status){
-                         if(resp.data){
-                              window.location.href="vCards.html?userType="+appCont.register.userType+"&userid="+resp.data.userId;
-                         }
-                    },
-                    error:function(data,status){
-                         alert("注册失败！"+data.info);
-                    },
-                    timeout:5000
-               })
+               var callback = function(resp,status){
+                    console.log(resp);
+                    if(resp.data){
+                         var parstring = "userType="+appCont.register.userType+"&userid="+resp.data.userId+"&loginId="+resp.data.loginIdentifier;
+                         window.location.href="vCards.html?"+parstring;
+                    }
+               }
+               EventUtils.ajaxReq('/center/user/register','post',postdata,callback)
           },
           loginEv:function(){
+               if(this.login.account==""){
+                    alert("请输入用户名");
+                    return false;
+               }else if(!regExp.mobile.test(this.login.account)&&!regExp.email.test(this.login.account)){
+                    alert("用户名格式错误");
+                    return false;
+               }else if(this.login.password==""){
+                    alert("请输入密码");
+                    return false;
+               }
                var postdata={
                     loginName:this.login.account,
                     password:this.login.password
                };
-               console.log(postdata);
-               $.ajax({
-                    url:"http://192.168.0.113:8000/easily_xq_WebApi/center/user/login",
-                    type:"post",
-                    data:postdata,
-                    success:function(resp,status){
-                         console.log(resp);
-                         if(resp.data){
-                              //window.location.href="vCards.html?userType="+appCont.register.userType+"&userid="+resp.data.userId;
-                         }
-                    },
-                    error:function(data,status){
-                         alert("注册失败！"+data.info);
-                    },
-                    timeout:5000
-               })
+               //console.log(postdata);
+               var callback = function(resp,status){
+                    console.log(resp);
+                    switch (resp.data.userType) {
+                         case "0":
+                              window.location.href="pCenter.html?userId="+resp.data.userId+"&loginId="+resp.data.loginIdentifier;
+                              break;
+                         case "1":
+                              window.location.href="uniCenter.html?userId="+resp.data.userId+"&loginId="+resp.data.loginIdentifier;
+                              break;
+                         case "2":
+                              window.location.href="incCenter.html?userId="+resp.data.userId+"&loginId="+resp.data.loginIdentifier;
+                              break;
+                         default:
+                    }
+               }
+               EventUtils.ajaxReq('/center/user/login','post',postdata,callback);
           },
           reqValidCode:function(obj){
                $(obj).attr("disabled",true);
@@ -75,11 +95,12 @@ var appCont =  new Vue({
                var timer = setInterval(function(){
                     start++;
                     if(start==60){
-                         $(obj).html("获取验证码");
+                         appCont.validText="获取验证码";
                          $(obj).attr("disabled",false);
                          clearInterval(timer);
                     }
-                    $(obj).html("重新获取 ("+(60-start)+"s)");
+               //     $(obj).html("重新获取 ("+(60-start)+"s)");
+                    appCont.validText="重新获取 ("+(60-start)+"s)";
                },1000);
                var postdata;
                var posturl;
@@ -88,41 +109,77 @@ var appCont =  new Vue({
                          mobile:this.register.account,
                          type:0
                     };
-                    posturl = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/mobileCode?";
+                    posturl = "/sys/mobileCode?";
                }else{
                     postdata = {
                          email:this.register.account,
                          type:0
                     };
-                    posturl = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/emailCode?";
+                    posturl = "/sys/emailCode?";
+               };
+
+               var callback = function(data,status){
+                    clearInterval(timer);
+                    // $(obj).html("获取验证码");
+                    appCont.validText="获取验证码";
+                    $(obj).attr("disabled",false);
+                    alert(data.info);
                }
-
-               $.ajax({
-                    url:posturl,
-                    type:"post",
-                    data:postdata,
-                    success:function(data,status){
-                         clearInterval(timer);
-                         $(obj).html("获取验证码");
-                         $(obj).attr("disabled",false);
-                         alert(data.info);
-                    },
-                    error:function(data,status){
-                         alert("获取验证码失败！"+data.info);
-                    },
-                    timeout:5000
-               })
-
+               EventUtils.ajaxReq(posturl,'post',postdata,callback);
+          }
+     },
+     watch:{
+          "register.account":function(curval){
+               if(this.register.userType==0){
+                    if(regExp.mobile.test(curval)){
+                         this.register.isAccValid=true;
+                    }else{
+                         this.register.isAccValid=false;
+                    }
+               }else{
+                    if(regExp.email.test(curval)){
+                         this.register.isAccValid=true;
+                    }else{
+                         this.register.isAccValid=false;
+                    }
+               }
+          },
+          "register.password":function(curval){
+               if(regExp.password.test(curval)){
+                    this.register.isPassValid=true;
+               }else{
+                    this.register.isPassValid=false;
+               }
+          //     console.log(this.register.isAccValid,this.register.isPassValid);
+          }
+     },
+     computed:{
+          "validUnable": function(){
+               return !this.register.isAccValid||!this.register.isPassValid;
+          },
+          "regisUnable": function(){
+               return !this.register.isAccValid||!this.register.isPassValid||this.register.validcode=="";
           }
      }
 })
 
+var appModal = new Vue({
+     el:"#app-modal",
+     data:{
+          showModal:false,
+     },
+     methods:{
+          hideModal:function(){
+               this.showModal=false
+          },
+     }
+})
+
+
 function _init(){
      loginEventBind();
      regisEventBind();
-     agreementEventBind();
-//     pdjuge();
-     validEventBind();
+//     validEventBind();
      initSize();
 }
 _init();
@@ -132,30 +189,7 @@ function initSize(){
      var contHeight = window.innerHeight - $(".top").outerHeight(true) - $(".bot").outerHeight(true);
      $(".banner").height(contHeight);
 }
-//协议事件绑定
-function agreementEventBind(){
-     $(".regis .agreement").click(function(){
-             $(".agree-modal").show();
-     })
-     $(".agree-modal").bind("click",function(){
-         $(this).hide();
-     });
-     $(".agreementBox").bind("click",function(){
-         return false;
-     });
-};
-//页面登录判断
-    function pdjuge(){
-        $(".logBox").hide();
-        var urlStr= window.location.search.substr(1);
-        if(/=1/.test(urlStr)){
-            $(".regis").show();
-            $(".login").hide();
-        }else{
-            $(".regis").hide();
-            $(".login").show();
-        }
-    }
+
 
 
 //登录框事件绑定
@@ -164,9 +198,6 @@ function loginEventBind(){
          $(".login").fadeOut();
          $(".regis").fadeIn("slow");
      });
-     // $("#logBtn").click(function(){
-     //      window.location.href="vCards.html";
-     // });
      $(".check-box").click(function(){
           $(this).toggleClass("selected")
      })
@@ -182,42 +213,4 @@ function regisEventBind(){
         $(".login").fadeIn("slow");
     });
 
-}
-/*登录输入验证*/
-function validEventBind(){
-     var isAccValid=false;
-     var isPassValid=false;
-     function validation(){
-         if(isAccValid&&isPassValid){
-             $(".logBox button").removeAttr("disabled");
-         }else{
-             $(".logBox button").attr("disabled","disabled");
-         }
-     }
-     $(".logBox .account").change(function(){
-         var mobiReg=/^1[34578]\d{9}$/;
-         var mailReg=/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
-         if($(this).val()==""){
-             alert("该项不能为空！");
-             isAccValid=false;
-         }else if(!(mobiReg.test($(this).val()))&&!(mailReg.test($(this).val()))){
-             alert("请输入正确的手机号或邮箱！");
-             isAccValid=false;
-         }else{
-             isAccValid=true;
-         }
-         validation();
-     });
-     $(".logBox input[type='password']").change(function(){
-         if($(this).val()==""){
-             alert("该项不能为空！");
-             isPassValid=false;
-         }else if(!(/^[a-zA-Z0-9]{6,16}$/.test($(this).val()))){
-             alert("密码格式不正确！");
-             isPassValid=false;
-         }else{
-             isPassValid=true;
-         }
-         validation();
-     });
 }

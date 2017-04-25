@@ -1,4 +1,14 @@
 
+var parObj = EventUtils.urlExtrac(window.location);
+var postdata={
+     userId:parObj.userId,
+     loginIdentifier:parObj.loginId
+};
+EventUtils.ajaxReq('/user/company/getInfo','get',postdata,function(data,status){
+     console.log(data);
+     alert(data.info);
+})
+
 var appPorto = new Vue({
     el: "#app-porto",
     data: {
