@@ -340,6 +340,14 @@ var appCont = new Vue({
          delItem:function(item){
               this.require.items.remove(item);
          },
+         freshItem:function(item){
+              appModal.showModal=true;
+              appModal.show.freshbox=true;
+         },
+         stickItem:function(item){
+              appModal.showModal=true;
+              appModal.show.stickybox=true;
+         },
          priceCal1:function(val){
               var priceInt = parseInt(val);
               if(priceInt==0){
@@ -467,8 +475,18 @@ var appCont = new Vue({
 var appModal = new Vue({
      el:"#app-modal",
      data:{
+          account:{
+               money:0,
+               freeFreshTimes:1
+          },
           checkedTrades:[],
-          showModal:true,
+          show:{
+               stickybox:false,
+               stickyhintbox:false,
+               freshbox:false,
+               freshhintbox:false
+          },
+          showModal:false,
           showTrade:false,
           showPreview:false,
           showUpload:false,
@@ -480,17 +498,37 @@ var appModal = new Vue({
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]},
                {title:"互联网",items:["互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务","互联网/移动互联网/电子商务"]}
           ],
-          refresh:{
+          sticky:{
                content:[
-                    {duration:"置顶1天",price:10,hint:"(无折扣仅10元/次)"},
-                    {duration:"置顶3天",price:27,hint:"(9折仅9元/次)"},
-                    {duration:"置顶5天",price:40,hint:"(8折仅8元/次)"},
-                    {duration:"置顶10天",price:70,hint:"(7折仅7元/次)"},
+                    {duration:"置顶1天",price:10,hint:"(无折扣仅10元/天)"},
+                    {duration:"置顶3天",price:27,hint:"(9折仅9元/天)"},
+                    {duration:"置顶5天",price:40,hint:"(8折仅8元/天)"},
+                    {duration:"置顶10天",price:70,hint:"(7折仅7元/天)"},
                ],
-               sum:0,
-               presum:0,
+               sum:10,
+               presum:10,
+               date:"2016-12-30",
+               time:"16:08:02",
                discount:"9折",
-               sofortBtn:"立即充值"
+               sofortBtn:"立即充值",
+               planBtn:"立即置顶",
+               sofort:true
+          },
+          fresh:{
+               content:[
+                    {duration:"刷新4次（1天）",price:4,hint:"(无折扣仅1元/次)"},
+                    {duration:"刷新12次（3天）",price:10.8,hint:"(9折仅0.9元/次)"},
+                    {duration:"刷新20次（5天）",price:16,hint:"(8折仅0.8元/次)"},
+                    {duration:"刷新40次（10天）",price:28,hint:"(7折仅0.7元/次)"},
+               ],
+               sum:4,
+               presum:4,
+               date:"2016-12-30",
+               time:"16:08:02",
+               discount:"9折",
+               smartBtn:"立即充值",
+               sofortBtn:"立即刷新",
+               smart:true
           },
           comment:{
                index:0,
@@ -500,6 +538,100 @@ var appModal = new Vue({
           resumeInfo:appCont.resume
      },
      methods:{
+          toSmartFresh:function(){
+               this.show.freshhintbox=false;
+               this.show.freshbox=true;
+          },
+          toPlanSticky:function(){
+               this.show.stickyhintbox=false;
+               this.show.stickybox=true;
+          },
+          closeSticky:function(){
+               this.show.stickybox=false;
+               this.showModal=false;
+          },
+          closeHintSticky:function(){
+               this.show.stickyhintbox=false;
+               this.showModal=false;
+          },
+          closeFresh:function(){
+               this.show.freshbox=false;
+               this.showModal=false;
+          },
+          closeHintFresh:function(){
+               this.show.freshhintbox=false;
+               this.showModal=false;
+          },
+          checkAutopay:function(obj){
+               $(obj).toggleClass("on")
+          },
+          selectStickyItem:function(index,obj){
+               $(".sticky-sofort-list .icon-radio").removeClass("on");
+               $(obj).addClass("on");
+               switch (index) {
+                    case 0:this.sticky.presum = 10; this.sticky.sum = 10;break;
+                    case 1:this.sticky.presum = 10*3; this.sticky.sum = Math.floor(this.sticky.presum*0.9);break;
+                    case 2:this.sticky.presum = 10*5; this.sticky.sum = Math.floor(this.sticky.presum*0.8);break;
+                    case 3:this.sticky.presum = 10*10; this.sticky.sum = Math.floor(this.sticky.presum*0.7);break;
+                    default:
+               }
+          },
+          selectFreshItem:function(index,obj){
+               $(".fresh-smart-list .icon-radio").removeClass("on");
+               $(obj).addClass("on");
+               switch(index) {
+                    case 0:this.fresh.presum = 1*4;
+                         this.fresh.sum = 4;
+                         break;
+                    case 1:this.fresh.presum = 1*4*3;
+                         this.fresh.sum = this.fresh.presum*0.9.toFixed(1);
+                         break;
+                    case 2:this.fresh.presum = 1*4*5;
+                         this.fresh.sum = Math.floor(this.fresh.presum*0.8).toFixed(1);
+                         break;
+                    case 3:this.fresh.presum = 1*4*10;
+                         this.fresh.sum = Math.floor(this.fresh.presum*0.7).toFixed(1);
+                         break;
+                    default:
+               }
+          },
+          selectStickWay:function(way,obj){
+               $(".stick-navs .on").removeClass("on");
+               $(obj).addClass("on");
+               if(way=="sofort"){
+                    this.sticky.sofort=true;
+                    this.sticky.sum=4;
+                    this.sticky.presum=4;
+               }else{
+                    this.sticky.sofort=false;
+                    var summe = 0;
+                    $(".plan-sticky-table tr").each(function(index){
+                         if(index==1){
+                              summe += $(this).find("td.on").length*70;
+                         }else if(index==2){
+                              summe += $(this).find("td.on").length*50;
+                         };
+                    });
+                    this.sticky.sum =summe;
+               }
+          },
+          selectFreshWay:function(way,obj){
+               $(".fresh-navs .on").removeClass("on");
+               $(obj).addClass("on");
+               if(way=="smart"){
+                    this.fresh.smart=true;
+                    this.fresh.sum=4;
+                    this.fresh.presum=4;
+               }else{
+                    this.fresh.smart=false;
+                    if(this.account.freeFreshTimes>0){
+                         this.fresh.sum =0;
+                    }else{
+                         this.fresh.sum =1;
+                    }
+
+               }
+          },
           closeTrade:function(){
                this.showTrade=false;
                this.showModal=false;
@@ -566,7 +698,43 @@ var appModal = new Vue({
                     var top = Math.floor($(window).height()*0.15+$("body").scrollTop())+"px";
                     $("#app-modal .comment-box").css("margin-top",top);
                }
+          },
+          "show.stickybox":function(curval){
+               if(curval){
+                    var top = Math.floor($(window).height()*0.15+$("body").scrollTop())+"px";
+                    $("#app-modal .refresh-box").css("top",top);
+               }
+          },
+          "show.stickyhintbox":function(curval){
+               if(curval){
+                    var top = Math.floor($(window).height()*0.15+$("body").scrollTop())+"px";
+                    $("#app-modal .refresh-hint-box").css("top",top);
+               }
+          },
+          "show.freshbox":function(curval){
+               if(curval){
+                    var top = Math.floor($(window).height()*0.15+$("body").scrollTop())+"px";
+                    $("#app-modal .refresh-box").css("top",top);
+               }
+          },
+          "show.freshhintbox":function(curval){
+               if(curval){
+                    var top = Math.floor($(window).height()*0.15+$("body").scrollTop())+"px";
+                    $("#app-modal .refresh-hint-box").css("top",top);
+               }
+          },
+          "sticky.sum":function(curval){
+               this.sticky.sofortBtn = curval>this.account.money?"立即充值":"立即置顶";
+               this.sticky.planBtn = curval>this.account.money?"立即充值":"立即置顶";
+          },
+          "fresh.sum":function(curval){
+               this.fresh.sofortBtn = curval>this.account.money?"立即充值":"立即刷新";
+               this.fresh.smartBtn = curval>this.account.money?"立即充值":"立即刷新";
           }
+     },
+     mounted:function(){
+          this.sticky.sofortBtn = 10>this.account.money?"立即充值":"立即置顶";
+          this.fresh.smartBtn = 4>this.account.money?"立即充值":"立即刷新";
      }
 });
 function init_center(){
@@ -578,6 +746,7 @@ function init_center(){
    vipEventBind();
    modalEventBind();
    uploadEventBind();
+   refreshEventBind()
 }
 init_center();
 
@@ -746,6 +915,24 @@ function showContact(){
                     $(this).parent().siblings(".contact-box").hide();
                }
 
+          }
+     })
+}
+
+function refreshEventBind(){
+     $(".plan-sticky-table td").click(function(){
+          if(!$(this).hasClass("td-title")){
+               $(".plan-sticky-table td[name='"+$(this).attr("name")+"']").removeClass("on");
+               $(this).addClass("on");
+               var summe = 0;
+               $(".plan-sticky-table tr").each(function(index){
+                    if(index==1){
+                         summe += $(this).find("td.on").length*70;
+                    }else if(index==2){
+                         summe += $(this).find("td.on").length*50;
+                    };
+               });
+               appModal.sticky.sum =summe;
           }
      })
 }

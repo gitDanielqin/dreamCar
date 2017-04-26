@@ -178,7 +178,7 @@
                                 </div>
                                 <div class="operations color-blueL">
                                     <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>
-                                    <p><span>刷新</span><span>置顶</span></p>
+                                    <p><span @click="freshItem(item)">刷新</span><span @click="stickItem(item)">置顶</span></p>
                                 </div>
                             </div>
                             <div v-else-if="item.classic=='招聘会'" class="paLeft29 clearfix H128 pRel">
@@ -194,8 +194,8 @@
                                     <p>{{item.date}}</p>
                                 </div>
                                 <div class="operations color-blueL">
-                                    <p><span>修改</span><span @click="delItem(item)">删除</span></p>
-                                    <p><span>刷新</span><span>置顶</span></p>
+                                    <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>
+                                    <p><span @click="freshItem(item)">刷新</span><span @click="stickItem(item)">置顶</span></p>
                                 </div>
                             </div>
                         </li>
@@ -556,33 +556,136 @@
                <button class="bg-orange2" @click="confirmComment">确定</button><button class="bg-gray-ae" @click="cancelComment">取消</button>
           </div>
      </div>
-     <div class="refresh-box W700">
+     <div class="refresh-box W700" @click.stop="" v-show="show.stickybox">
           <h2 class="LH-H60 paLeft50 refresh-hd">
-               <span class="color-white fSize24 disInline maR23">在线推广</span>
-               <ul class="lis-inline disInline fSize20 t-center">
-                    <li class="on"><span>立即置顶</span></li>
-                    <li><span>计划置顶</span></li>
+               <span class="color-white fSize24 disInline maR23">置顶提示</span>
+               <ul class="lis-inline disInline fSize20 t-center stick-navs">
+                    <li><span class="on" @click.stop="selectStickWay('sofort',$event.target)">立即置顶</span></li>
+                    <li><span @click.stop="selectStickWay('plan',$event.target)">计划置顶</span></li>
                </ul>
-               <span class="pic-wrapper refresh-closer fr">
+               <span class="pic-wrapper refresh-closer fr" @click="closeSticky">
                     <i class="pic-icon"></i>
                </span>
           </h2>
-          <div class="refresh-cont paLeft50">
-               <p class="LH52 fSize14 color-orange2">信息置顶，排名提前到第一页，获得海量曝光，效果翻倍，赶快来试试吧！</p>
-               <table class="LH40 fSize18">
-                    <tr v-for="(item,index) in refresh.content">
-                         <td class="W210"><span class="icon-radio" :class="{'on':index==0}"><i class="pic-icon"></i></span>{{item.duration}}</td>
-                         <td class="W90"><span class="color-orange-fc">{{item.price}}</span>元</td>
-                         <td>{{item.hint}}</td>
-                    </tr>
-               </table>
-               <p class="LH40 color-gray79">注：每24小时执行一次，购买后立即执行。</p>
+          <div v-show="sticky.sofort">
+               <div class="refresh-cont paLeft50 H298">
+                    <p class="LH52 fSize14 color-orange2">信息置顶，排名提前到第一页，获得海量曝光，效果翻倍，赶快来试试吧！</p>
+                    <table class="LH40 fSize18 sticky-sofort-list">
+                         <tr v-for="(item,index) in sticky.content">
+                              <td class="W210"><span class="icon-radio" :class="{'on':index==0}" @click="selectStickyItem(index,$event.target)"><i class="pic-icon"></i></span>{{item.duration}}</td>
+                              <td class="W90"><span class="color-orange-fc">{{item.price}}</span>元</td>
+                              <td>{{item.hint}}</td>
+                         </tr>
+                    </table>
+                    <p class="LH40 color-gray79">注：每24小时执行一次，购买后立即执行。</p>
+               </div>
+               <div class="refresh-bot paLeft50 paTop10 fSize18">
+                    <p class="LH50">应付金额<span class="color-orange-fc">{{sticky.sum}}</span>元<span class="maL22 price-pre">原价：{{sticky.presum}}元</span></p>
+                    <p class="LH20"><i class="pic-icon icon-checkbox on" @click="checkAutopay($event.target)"></i>自动续费<span class="color-orange-fc">{{sticky.discount}}</span></p>
+                    <p class="LH36 color-gray79 fSize14">（系统将在智能置顶到期后自动帮您续费，可通过选中自动续费启用或取消）</p>
+                    <button type="button" class="refresh-btn">{{sticky.sofortBtn}}</button>
+               </div>
           </div>
-          <div class="refresh-bot paLeft50 paTop10 fSize18">
-               <p class="LH50">应付金额<span class="color-orange-fc">{{refresh.sum}}</span>元<span class="maL22 price-pre">原价：{{refresh.presum}}元</span></p>
-               <p class="LH20"><i class="pic-icon icon-checkbox"></i>自动续费{{refresh.discount}}</p>
-               <p class="LH36 color-gray79 fSize14">（系统将在智能刷新到期后自动帮您续费，可在帖子刷新提示页取消）</p>
-               <button type="button" class="refresh-btn">{{refresh.sofortBtn}}</button>
+          <div v-show="!sticky.sofort">
+               <div class="refresh-cont paLeft50 paBot20">
+                    <p class="LH52 fSize14 color-orange2">信息置顶，排名提前到第一页，获得海量曝光，效果翻倍，赶快来试试吧！</p>
+                    <p class="LH26 fSize16"><label class="plan-label">计划时间</label><input type="text" class="date-input" placeholder="2016-12-17"/>到<input type="text" class="date-input" placeholder="2016-12-17"/></p>
+                    <p class="maT11 LH34"><label class="plan-label">置顶时段</label></p>
+                    <table class="LH43 fSize14 t-center plan-sticky-table">
+                         <tr><th>时间</th><th>星期一</th><th>星期二</th><th>星期三</th><th>星期四</th><th>星期五</th><th>星期六</th><th>星期日</th></tr>
+                         <tr><td class="td-title">全天置顶</td><td name="1"></td><td name="2"></td><td name="3"></td><td name="4"></td><td name="5"></td><td name="6"></td><td name="7"></td></tr>
+                         <tr><td class="td-title">早8点-晚8点</td><td name="1"></td><td name="2"></td><td name="3"></td><td name="4"></td><td name="5"></td><td name="6"></td><td name="7"></td></tr>
+                         <tr><td class="td-title">不置顶</td><td name="1"></td><td name="2"></td><td name="3"></td><td name="4"></td><td name="5"></td><td name="6"></td><td name="7"></td></tr>
+                    </table>
+               </div>
+               <div class="refresh-bot paLeft50 paTop8 fSize18 paBot14">
+                    <ul class="LH36">
+                         <li>总计价格：<span class="color-orange-fc">{{sticky.sum}}</span>元</li>
+                         <li>账户余额：<span class="color-orange-fc">{{account.money}}</span>元</li>
+                    </ul>
+                    <button type="button" class="refresh-btn plan-btn">{{sticky.planBtn}}</button>
+               </div>
+          </div>
+     </div>
+     <div class="refresh-hint-box W700" @click.stop="" v-show="show.stickyhintbox">
+          <h2 class="LH-H60 t-center refresh-hint-hd fSize24 color-white">帖子置顶提示
+               <span class="pic-wrapper refresh-closer fr" @click="closeHintSticky">
+                    <i class="pic-icon"></i>
+               </span>
+          </h2>
+          <div class="refresh-hint-content paLeft50 paTop30 bg-white paBot50">
+               <p class="LH43 fSize18">成功置顶<span class="color-orange-fc">1</span>条信息，并从余额中扣除<span class="color-orange-fc">{{sticky.sum}}</span>元</p>
+               <p class="LH40 fSize14">同类别的信息有置顶间隔限制，必须等上一条信息置顶成功后，系统才能帮您执行置顶请求。</p>
+               <div class="refresh-text-box maT24 paBot10">
+                    <h3 class="LH-H60 fSize20 t-center">置顶内容</h3>
+                    <p class="fSize14 LH43"><span class="stick-name maR33">UI设计招聘</span>您的信息已<span class="color-orange-fc">置顶成功</span>，正在让更多的客户<span class="color-orange-fc">查看</span></p>
+                    <p class="LH30 t-center sticky-time fSize14">执行置顶时间： {{sticky.date}} {{sticky.time}}</p>
+                    <p class="LH58 t-center fSize14">计划置顶，低价获得更多展示，每次置顶<span class="color-orange-fc">7</span>元起<button class="color-blue" @click="toPlanSticky">立即使用</button></p>
+               </div>
+          </div>
+     </div>
+     <div class="refresh-box W700" @click.stop="" v-show="show.freshbox">
+          <h2 class="LH-H60 paLeft50 refresh-hd">
+               <span class="color-white fSize24 disInline maR23">刷新提示</span>
+               <ul class="lis-inline disInline fSize20 t-center fresh-navs">
+                    <li><span class="on" @click.stop="selectFreshWay('smart',$event.target)">智能刷新</span></li>
+                    <li><span @click.stop="selectFreshWay('sofort',$event.target)">普通刷新</span></li>
+               </ul>
+               <span class="pic-wrapper refresh-closer fr" @click="closeFresh">
+                    <i class="pic-icon"></i>
+               </span>
+          </h2>
+          <div v-show="fresh.smart">
+               <div class="refresh-cont paLeft50 H298">
+                    <p class="LH52 fSize14 color-orange2"><img src="images/fresh-title.png" /></p>
+                    <table class="LH40 fSize18 fresh-smart-list">
+                         <tr v-for="(item,index) in fresh.content">
+                              <td class="W210"><span class="icon-radio" :class="{'on':index==0}" @click="selectFreshItem(index,$event.target)"><i class="pic-icon"></i></span>{{item.duration}}</td>
+                              <td class="W90"><span class="color-orange-fc">{{item.price}}</span>元</td>
+                              <td>{{item.hint}}</td>
+                         </tr>
+                    </table>
+                    <p class="LH40 color-gray79">注：每6小时执行一次，购买后立即执行。</p>
+               </div>
+               <div class="refresh-bot paLeft50 paTop10 fSize18">
+                    <p class="LH50">应付金额<span class="color-orange-fc">{{fresh.sum}}</span>元<span class="maL22 price-pre">原价：{{fresh.presum}}元</span></p>
+                    <p class="LH20"><i class="pic-icon icon-checkbox on" @click="checkAutopay($event.target)"></i>自动续费<span class="color-orange-fc">{{fresh.discount}}</span></p>
+                    <p class="LH36 color-gray79 fSize14">（系统将在智能刷新到期后自动帮您续费，可通过选中自动续费启用或取消）</p>
+                    <button type="button" class="refresh-btn">{{fresh.smartBtn}}</button>
+               </div>
+          </div>
+          <div v-show="!fresh.smart">
+               <div class="refresh-cont paBot10 paTop54 t-center" v-show="account.freeFreshTimes>0">
+                    <p class="LH48 fSize16 color-orange2">信息刷新后：排名靠前，时间显示最新，能获得更多浏览机会</p>
+                    <p class="LH48 fSize16"><span class="color-orange-fc">智能刷新</span>，效果翻倍，每天仅需<span class="color-orange-fc">0.7</span>元</p>
+                    <p class="fSize18 LH123">本次刷新<span class="color-orange-fc">免费</span>，是否确定刷新？</p>
+               </div>
+               <div class="refresh-cont paBot45 paTop26 t-center" v-show="account.freeFreshTimes==0">
+                    <p class="LH50 fSize16 color-orange2">信息刷新后：排名靠前，时间显示最新，能获得更多浏览机会</p>
+                    <p class="LH50 fSize16"><span class="color-orange-fc">智能刷新</span>，效果翻倍，每天仅需<span class="color-orange-fc">0.7</span>元</p>
+                    <p class="fSize18 LH45 maT22 color-gray6">提示：免费刷新次数已经用完，不享有免费刷新。</p>
+                    <p class="fSize18 LH45">本次刷新需要扣除推广金 <span class="color-orange-fc">1.0</span>元，是否确定刷新？</p>
+               </div>
+               <div class="refresh-bot t-center paTop8 fSize18 paBot14 H108">
+                    <span class="maR176" v-show="account.freeFreshTimes==0">您的校企余额：<b class="color-orange-fc">{{account.money.toFixed(1)}}</b>元</span><button type="button" class="refresh-btn fresh-sofort-btn">{{fresh.sofortBtn}}</button>
+               </div>
+          </div>
+     </div>
+     <div class="refresh-hint-box W700" @click.stop="" v-show="show.freshhintbox">
+          <h2 class="LH-H60 t-center refresh-hint-hd fSize24 color-white">帖子刷新提示
+               <span class="pic-wrapper refresh-closer fr" @click="closeHintFresh">
+                    <i class="pic-icon"></i>
+               </span>
+          </h2>
+          <div class="refresh-hint-content paLeft50 paTop30 bg-white paBot50">
+               <p class="LH43 fSize18">成功刷新<span class="color-orange-fc">1</span>条信息，并从余额中扣除<span class="color-orange-fc">{{fresh.sum}}</span>元</p>
+               <p class="LH40 fSize14">同类别的信息有刷新间隔限制，必须等上一条信息刷新成功后，系统才能帮您执行刷新请求。</p>
+               <div class="refresh-text-box maT24 paBot10">
+                    <h3 class="LH-H60 fSize20 t-center">刷新内容</h3>
+                    <p class="fSize14 LH43"><span class="stick-name maR33">UI设计招聘</span>您的信息已<span class="color-orange-fc">刷新成功</span>，正在让更多的客户<span class="color-orange-fc">查看</span></p>
+                    <p class="LH30 t-center sticky-time fSize14">执行刷新时间： {{fresh.date}} {{fresh.time}}</p>
+                    <p class="LH58 t-center fSize14">智能刷新，低价获得更多展示，每次刷新<span class="color-orange-fc">0.7</span>元起<button class="color-blue" @click="toSmartFresh">立即使用</button></p>
+               </div>
           </div>
      </div>
 </div>

@@ -25,7 +25,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .t-left{text-align: left;}
 .t-right{text-align: right;}
 .pRel{position: relative;}
-.modal{position: absolute; left: 0;top: 0; background: rgba(0,0,0,0.5);width: 100%; height:100%; z-index: 5}
+.modal{position: absolute; left: 0;top: 0; background: rgba(0,0,0,0.3);width: 100%; height:100%; z-index: 5}
 .pic-wrapper{display: inline-block;vertical-align: middle; text-align: center; font-size: 0;}
 .pic-wrapper img{vertical-align: middle;}
 .pic-icon{display: inline-block; vertical-align: middle; overflow: hidden;}
@@ -316,6 +316,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .LH40{line-height: 40px;}
 .LH42{line-height: 42px;}
 .LH43{line-height: 43px;}
+.LH45{line-height: 45px;}
 .LH46{line-height: 46px;}
 .LH48{line-height: 48px;}
 .LH50{line-height: 50px;}
@@ -323,8 +324,10 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .LH55{line-height: 55px;}
 .LH56{line-height: 56px;}
 .LH57{line-height: 57px;}
+.LH58{line-height: 58px;}
 .LH64{line-height: 64px;}
 .LH66{line-height: 66px;}
+.LH123{line-height: 123px;}
 
 
 /*边距和填充*/
@@ -343,6 +346,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .paTop23{padding-top: 23px;}
 .paTop24{padding-top: 24px;}
 .paTop25{padding-top: 25px;}
+.paTop26{padding-top: 26px;}
 .paTop28{padding-top: 28px;}
 .paTop30{padding-top: 30px;}
 .paTop35{padding-top: 35px;}
@@ -395,9 +399,13 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .paBot2{padding-bottom: 2px;}
 .paBot4{padding-bottom: 4px;}
 .paBot5{padding-bottom: 5px;}
+.paBot10{padding-bottom: 10px;}
 .paBot14{padding-bottom: 14px;}
 .paBot16{padding-bottom: 16px;}
+.paBot20{padding-bottom: 20px;}
 .paBot33{padding-bottom: 33px;}
+.paBot45{padding-bottom: 45px;}
+.paBot50{padding-bottom: 50px;}
 .paBot53{padding-bottom: 53px;}
 .paBot57{padding-bottom: 57px;}
 .paBot60{padding-bottom: 60px;}
@@ -422,6 +430,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .maR100{margin-right: 100px;}
 .maR120{margin-right: 120px;}
 .maR128{margin-right: 128px;}
+.maR176{margin-right: 176px;}
 .maR179{margin-right: 179px;}
 
 .maL4{margin-left: 4px;}
