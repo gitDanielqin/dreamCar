@@ -72,7 +72,7 @@
                                    <p><button class="confirm-btn" @click="confirmIncAddr($event.target,combiData.datatype)">确认</button></p>
                               </div>
                            </div>
-                           <button class="confirm-publish-btn">确认发布</button>
+                           <button class="confirm-publish-btn" @click.prevent="publishReq">确认发布</button>
                        </div>
                   </div>
                   <div class="nav-cont" v-show="!showCombi">

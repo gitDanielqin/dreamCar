@@ -10,6 +10,8 @@ var respObj={}; //请求的本页面的数据集合
           loginIdentifier:parObj.loginId
      };
      EventUtils.ajaxReq('/user/school/getInfo','get',postdata,function(resp,status){
+          console.log(resp.data);
+          respObj = resp.data;
           appPorto.uni = resp.data.name;
           appPorto.briefInfo.level = resp.data.property;
           appPorto.briefInfo.address.province = resp.data.province;
@@ -24,7 +26,7 @@ var appPorto = new Vue({
     el: "#app-porto",
     data: {
          database:{
-            unilevel:["重点","本科","大专","高职"],
+            unilevel:unilevel,
             addrData:addArray
          },
         viewInfo: true,
@@ -50,6 +52,18 @@ var appPorto = new Vue({
              this.briefInfo.address.city = $(".edit-brief .sel-city input").val();
              this.briefInfo.address.district = $(".edit-brief .sel-district input").val();
              this.viewInfo=true;
+             var postdata={
+                  userId:parObj.userId,
+                  loginName:parObj.loginName,
+                  property: this.briefInfo.level,
+                  province: this.briefInfo.address.province,
+                  city: this.briefInfo.address.city,
+                  area: this.briefInfo.address.district,
+                  email: this.briefInfo.email
+             }
+             EventUtils.ajaxReq('/user/school/modifyInfo','post',postdata,function(resp,status){
+                  console.log(resp);
+             })
         },
         cancel:function(){
              this.briefInfo = cloneObj(this.cloneInfo);
@@ -57,6 +71,9 @@ var appPorto = new Vue({
         },
         edit:function(){
              this.cloneInfo = cloneObj(this.briefInfo);
+             $(".edit-brief .sel-province input").val(this.briefInfo.address.province);
+             $(".edit-brief .sel-city input").val(this.briefInfo.address.city);
+             $(".edit-brief .sel-district input").val(this.briefInfo.address.district);
              this.viewInfo=false;
         }
    }
@@ -67,7 +84,7 @@ var appCont = new Vue({
          database:{
               classific:uniclassific,
               amount:["1-10000","10001-20000","20001-30000","30001-40000","40000以上",],
-              unilevel:["重点","本科","大专","高职"],
+              unilevel:unilevel,
               majors:majorArray,
          },
          resume:{
@@ -327,9 +344,21 @@ var appCont = new Vue({
                    }else{
                         appCont.resume.specialmajor[index].submajor = $(this).find(".major-input-2 input").val();
                    }
-              })
+              });
               this.resume.edit=false;
               this.resume.view=true;
+              var postdata={
+                   userId:parObj.userId,
+                   name:this.resume.uni,
+                   type:this.resume.classific,
+                   property:this.resume.specialLv==""?this.resume.level:this.resume.specialLv,
+                   scale:this.resume.amount,
+                   discription:this.resume.intro
+              }
+              EventUtils.ajaxReq('/user/school/modifyInfo','post',postdata,function(resp,status){
+                  console.log(resp);
+             })
+
          },
          checkExlv:function(){
               this.resume.specialLv=$(".uni-level input[type='radio']:checked").val();

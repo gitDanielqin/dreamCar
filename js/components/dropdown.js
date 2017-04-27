@@ -178,6 +178,30 @@
                     this.selDistrict=district[0];
                     // selectEventBind();
                }
+          },
+          mounted:function(){
+               console.log(this.selProvince);
+               if(this.selProvince!=""){
+                    var city=[];
+                    var district=[];
+                    for(var i=0; i<this.addrdata.length; i++){
+                         if(this.addrdata[i].name==this.selProvince){
+                              this.selCityArray = this.addrdata[i].citys;
+                              for(var j=0; j<this.addrdata[i].citys.length; j++){
+                                   city.push(this.addrdata[i].citys[j].city);
+                              };
+                              if(this.selCity!=""){
+                                   var index = city.indexOf(this.selCity);
+                                   district = this.addrdata[i].citys[index].conts;
+                              }else{
+                                   district= this.addrdata[i].citys[0].conts;
+                              }
+                              break;
+                         }
+                    }
+                    this.city= city;
+                    this.district= district;
+               }
           }
      });
      //行业选择

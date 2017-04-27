@@ -131,7 +131,15 @@ var appMain = new Vue({
                     this.recruitData.contact.address=incAddress;
                     addBox.hide();
                }
+          },
+          publishReq:function(){
+               var postdata ={
 
+               }
+
+               EventUtils.ajaxReq('/demand/school/apply','post',postdata,function(resp,status){
+                   console.log(resp);
+              })
           }
      },
      mounted:function(){
