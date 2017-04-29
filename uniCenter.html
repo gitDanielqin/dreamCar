@@ -5,6 +5,7 @@
     <title>高校中心</title>
     <link href="css/base.css" rel="stylesheet">
     <link href="css/widget.css" rel="stylesheet">
+    <link href="css/foundation-datepicker.min.css" rel="stylesheet">
     <link href="css/uniCenter.css" rel="stylesheet">
 </head>
 <body class="bg-gray-f2">
@@ -589,13 +590,14 @@
           <div v-show="!sticky.sofort">
                <div class="refresh-cont paLeft50 paBot20">
                     <p class="LH52 fSize14 color-orange2">信息置顶，排名提前到第一页，获得海量曝光，效果翻倍，赶快来试试吧！</p>
-                    <p class="LH26 fSize16"><label class="plan-label">计划时间</label><input type="text" class="date-input" placeholder="2016-12-17"/>到<input type="text" class="date-input" placeholder="2016-12-17"/></p>
+                    <p class="LH26 fSize16"><label class="plan-label">计划时间</label>
+                      <input type="text" class="date-input" id="sticktime-from" placeholder="2016-12-17"/>到<input type="text" class="date-input" id="sticktime-to" placeholder="2016-12-17"/></p>
                     <p class="maT11 LH34"><label class="plan-label">置顶时段</label></p>
                     <table class="LH43 fSize14 t-center plan-sticky-table">
                          <tr><th>时间</th><th>星期一</th><th>星期二</th><th>星期三</th><th>星期四</th><th>星期五</th><th>星期六</th><th>星期日</th></tr>
-                         <tr><td class="td-title">全天置顶</td><td name="1"></td><td name="2"></td><td name="3"></td><td name="4"></td><td name="5"></td><td name="6"></td><td name="7"></td></tr>
-                         <tr><td class="td-title">早8点-晚8点</td><td name="1"></td><td name="2"></td><td name="3"></td><td name="4"></td><td name="5"></td><td name="6"></td><td name="7"></td></tr>
-                         <tr><td class="td-title">不置顶</td><td name="1"></td><td name="2"></td><td name="3"></td><td name="4"></td><td name="5"></td><td name="6"></td><td name="7"></td></tr>
+                         <tr><td class="td-title">全天置顶</td><td col="1" row="1" class="on"></td><td col="2" row="1" class="on"></td><td col="3" row="1" class="on"></td><td col="4" row="1" class="on"></td><td col="5" row="1" class="on"></td><td col="6" row="1" class="on"></td><td col="0" row="1" class="on"></td></tr>
+                         <tr><td class="td-title">早8点-晚8点</td><td col="1" row="2"></td><td col="2" row="2"></td><td col="3" row="2"></td><td col="4" row="2"></td><td col="5" row="2"></td><td col="6" row="2"></td><td col="0" row="2"></td></tr>
+                         <tr><td class="td-title">不置顶</td><td col="1"></td><td col="2"></td><td col="3"></td><td col="4"></td><td col="5"></td><td col="6"></td><td col="0"></td></tr>
                     </table>
                </div>
                <div class="refresh-bot paLeft50 paTop8 fSize18 paBot14">
@@ -722,6 +724,7 @@
     <script src="js/components/pagination.js"></script>
     <script src="js/components/major-pop.js"></script>
     <script src="js/components/dropdown.js"></script>
+    <script src="js/components/foundation-datepicker.js"></script>
     <script src="data/address.js"></script>
     <script src="data/major.js"></script>
     <script src="data/commondata.js"></script>

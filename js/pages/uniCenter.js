@@ -633,15 +633,7 @@ var appModal = new Vue({
                     this.sticky.presum=4;
                }else{
                     this.sticky.sofort=false;
-                    var summe = 0;
-                    $(".plan-sticky-table tr").each(function(index){
-                         if(index==1){
-                              summe += $(this).find("td.on").length*70;
-                         }else if(index==2){
-                              summe += $(this).find("td.on").length*50;
-                         };
-                    });
-                    this.sticky.sum =summe;
+                    this.sticky.sum = autoStickSum();
                }
           },
           selectFreshWay:function(way,obj){
@@ -775,7 +767,8 @@ function init_center(){
    vipEventBind();
    modalEventBind();
    uploadEventBind();
-   refreshEventBind()
+   refreshEventBind();
+   datepickEventBind()
 }
 init_center();
 
@@ -951,17 +944,73 @@ function showContact(){
 function refreshEventBind(){
      $(".plan-sticky-table td").click(function(){
           if(!$(this).hasClass("td-title")){
-               $(".plan-sticky-table td[name='"+$(this).attr("name")+"']").removeClass("on");
+               $(".plan-sticky-table td[col='"+$(this).attr("col")+"']").removeClass("on");
                $(this).addClass("on");
-               var summe = 0;
-               $(".plan-sticky-table tr").each(function(index){
-                    if(index==1){
-                         summe += $(this).find("td.on").length*70;
-                    }else if(index==2){
-                         summe += $(this).find("td.on").length*50;
-                    };
-               });
-               appModal.sticky.sum =summe;
+               appModal.sticky.sum =autoStickSum();
           }
      })
+};
+
+function datepickEventBind(){
+  var nowTemp = new Date();
+  var timediff = 6*24*3600*1000;
+  var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+  $('#sticktime-from').val(EventUtils.formatDate(nowTemp.getFullYear(),nowTemp.getMonth()+1,nowTemp.getDate()));
+    nowTemp.setDate(nowTemp.getDate()+6);
+  $('#sticktime-to').val(EventUtils.formatDate(nowTemp.getFullYear(),nowTemp.getMonth()+1,nowTemp.getDate()));
+  var checkin = $('#sticktime-from').fdatepicker({
+    format: 'yyyy-mm-dd',
+    onRender: function (date) {
+      return date.valueOf() < now.valueOf() ? 'disabled' : '';
+    }
+  }).on('changeDate', function (ev) {
+    if (ev.date.valueOf() > checkout.date.valueOf()-timediff) {
+      var newDate = new Date(ev.date)
+      newDate.setDate(newDate.getDate()+6);
+      checkout.update(newDate);
+    }
+    appModal.sticky.sum =autoStickSum();
+    checkin.hide();
+    $('#sticktime-to')[0].focus();
+  }).data('datepicker');
+  var checkout = $('#sticktime-to').fdatepicker({
+    format: 'yyyy-mm-dd',
+    onRender: function (date) {
+      return date.valueOf() < checkin.date.valueOf()+timediff ? 'disabled' : '';
+    }
+  }).on('changeDate', function (ev) {
+    appModal.sticky.sum =autoStickSum();
+    checkout.hide();
+  }).data('datepicker');
+}
+//根据计划置顶表单变化计算总价格
+function autoStickSum(){
+  var summe = 0;
+  var tempDate = new Date($("#sticktime-from").val());
+  var diffDays = Math.floor((new Date($("#sticktime-to").val())-tempDate)/1000/60/60/24);//计算起始和终点的日期差值
+  $(".plan-sticky-table tr").each(function(index){
+       if(index==1){
+            summe += $(this).find("td.on").length*70;
+       }else if(index==2){
+            summe += $(this).find("td.on").length*50;
+       };
+  });
+  summe = summe*Math.floor((diffDays+1)/7);
+  if((diffDays+1)%7!=0){
+      var startWeekday= tempDate.getDay();
+      for(var j=0;j<(diffDays+1)%7;j++){
+          var row_index = (j+startWeekday)%7;
+        //  console.log(row_index);
+          $(".plan-sticky-table td[col='"+row_index+"']").each(function(){
+              if($(this).hasClass("on")){
+        //        console.log($(this).attr("row"));
+                if($(this).attr("row")=="1"){
+                  summe +=70;
+                }else if($(this).attr("row")=="2")
+                  summe +=50;
+              }
+          })
+      }
+  };
+  return summe;
 }

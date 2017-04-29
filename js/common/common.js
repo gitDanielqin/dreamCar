@@ -83,7 +83,12 @@ var EventUtils = {
                },
                timeout:5000
           })
-     }
+     },
+     formatDate:function(year,month,day){
+       if(parseInt(month)<10){month="0"+month;}
+       if(parseInt(day)<10){day="0"+day;}
+       return year+"-"+month+"-"+day;
+     },
 }
 // 数组对象功能扩充
 Array.prototype.indexOf = function(val) {
