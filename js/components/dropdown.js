@@ -121,7 +121,7 @@
      </div>';
      Vue.component("addr-select",{
           template: templAddr,
-          props:["addrdata"],
+          props:["addrdata","initaddress"],
           data:function(){
                var province=[];
                var city=[];
@@ -142,12 +142,14 @@
                     selProvince:"",
                     selCity:"",
                     selDistrict:"",
-                    selCityArray:selCityArray
+                    selCityArray:selCityArray,
+                    initFlag:true
                };
                return dataBase;
           },
           watch:{
                "selProvince":function(curval){
+                //  console.log(1);
                     var city=[];
                     var district=[];
                     for(var i=0; i<this.addrdata.length; i++){
@@ -161,9 +163,16 @@
                          }
                     }
                     this.city= city;
-                    this.selCity = city[0];
-                    this.district= district;
-                    this.selDistrict= district[0];
+                    if(this.initaddress.city&&this.initFlag){
+                      this.selCity = this.initaddress.city;
+                      if(!this.initaddress.district){
+                        this.initFlag=false;
+                      }
+                    }else{
+                      this.selCity = city[0];
+                    }
+                    // this.district= district;
+                    // this.selDistrict= district[0];
                     // selectEventBind();
                },
                "selCity":function(curval){
@@ -175,32 +184,29 @@
                          }
                     }
                     this.district=district;
-                    this.selDistrict=district[0];
+                    if(this.initaddress.district&&this.initFlag){
+                      this.selDistrict=this.initaddress.district;
+                      this.initFlag=false;
+                    }else{
+                      this.selDistrict=district[0];
+                    }
+
                     // selectEventBind();
+               },
+               "initaddress":function(curval){
+                 console.log(2);
+                 this.initFlag=true;
+                  if(curval){
+                //    console.log(curval);
+                      this.selProvince = curval.province;
+                      // this.selCity = curval.city;
+                      // this.selDistrict = curval.district;
+                  }
                }
           },
           mounted:function(){
-               console.log(this.selProvince);
-               if(this.selProvince!=""){
-                    var city=[];
-                    var district=[];
-                    for(var i=0; i<this.addrdata.length; i++){
-                         if(this.addrdata[i].name==this.selProvince){
-                              this.selCityArray = this.addrdata[i].citys;
-                              for(var j=0; j<this.addrdata[i].citys.length; j++){
-                                   city.push(this.addrdata[i].citys[j].city);
-                              };
-                              if(this.selCity!=""){
-                                   var index = city.indexOf(this.selCity);
-                                   district = this.addrdata[i].citys[index].conts;
-                              }else{
-                                   district= this.addrdata[i].citys[0].conts;
-                              }
-                              break;
-                         }
-                    }
-                    this.city= city;
-                    this.district= district;
+               if(this.initaddress){
+                     this.selProvince = this.initaddress.province;
                }
           }
      });

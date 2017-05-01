@@ -40,7 +40,10 @@ var appCont =  new Vue({
                }
           },
           regisEv:function(){
-               //alert(1);
+               if(!$(".check-agreement .check-box").hasClass("selected")){
+                 alert("请接受我们的服务条款");
+                 return;
+               }
                var postdata = {
                     loginName:this.register.account,
                     password:this.register.password,
@@ -52,6 +55,11 @@ var appCont =  new Vue({
                     if(resp.data){
                          var parstring = "userType="+appCont.register.userType+"&userid="+resp.data.userId+"&loginId="+resp.data.loginIdentifier;
                          window.location.href="vCards.html?"+parstring;
+                    }else{
+                        alert(resp.info);
+                        appCont.register.account="";
+                        appCont.register.password="";
+                        appCont.register.validcode="";
                     }
                }
                EventUtils.ajaxReq('/center/user/register','post',postdata,callback)
@@ -128,7 +136,7 @@ var appCont =  new Vue({
                     // $(obj).html("获取验证码");
                     appCont.validText="获取验证码";
                     $(obj).attr("disabled",false);
-                    alert(data.info);
+                  //  alert(data.info);
                }
                EventUtils.ajaxReq(posturl,'post',postdata,callback);
           }
@@ -192,7 +200,7 @@ _init();
 // 初始化页面元素大小
 function initSize(){
      var contHeight = window.innerHeight - $(".top").outerHeight(true) - $(".bot").outerHeight(true);
-     $(".banner").height(contHeight);
+  //   $(".banner").height(contHeight);
 }
 
 

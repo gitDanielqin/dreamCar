@@ -37,7 +37,7 @@
             <div class="edit-brief maT24 maL54 fl color-gray6 W530 pRel" v-show="!viewInfo">
                  <h3 class="LH-H47 fSize18 color-gray3">{{uni}}</h3>
                  <p><label>学校性质</label><dropdown :options="database.unilevel" v-model="briefInfo.level" class="brief-unilevel"></dropdown></p>
-                 <p><label>所在地</label><addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select></p>
+                 <p><label>所在地</label><addr-select :addrdata="database.addrData" :initaddress="initAddress" class="sel-addr disInline"></addr-select></p>
                  <p><label class="brief-email">邮箱</label><input type="email" v-model="briefInfo.email" /></p>
                  <div class="edit-opera fSize0">
                      <button class="maR15 btn-save" @click="save">保存</button>
@@ -79,7 +79,7 @@
                         <dropdown placeholder="请选择高校类别" :options="database.classific" v-model="resume.classific" classes="W138"></dropdown>
                     </p>
                     <p class="LH-H26 paLeft7 resume-item uni-level"><i class="pic-icon W30 icon-imp"></i><label>高校性质</label>
-                        <dropdown placeholder="高校性质" :options="database.unilevel" v-model="resume.level" classes="W138"></dropdown><input type="radio" name="level" value="985" @click="checkExlv" />985<input type="radio" name="level" value="211" @click="checkExlv" />211</p>
+                        <dropdown placeholder="高校性质" :options="database.unilevel" v-model="resume.level" classes="W138"></dropdown><input type="radio" name="level" value="0" @click="checkExlv" />985<input type="radio" name="level" value="1" @click="checkExlv" />211</p>
                     <p class="LH-H26 paLeft7 resume-item"><i class="pic-icon W30 icon-imp"></i><label>在校人数</label>
                         <dropdown placeholder="请选择在校人数" :options="database.amount" v-model="resume.amount" classes="W138"></dropdown>
                     </p>

@@ -12,12 +12,48 @@ var respObj={}; //请求的本页面的数据集合
      EventUtils.ajaxReq('/user/school/getInfo','get',postdata,function(resp,status){
           console.log(resp.data);
           respObj = resp.data;
-          appPorto.uni = resp.data.name;
-          appPorto.briefInfo.level = resp.data.property;
-          appPorto.briefInfo.address.province = resp.data.province;
-          appPorto.briefInfo.address.city = resp.data.city;
-          appPorto.briefInfo.address.district = resp.data.area;
-          appPorto.briefInfo.email = resp.data.loginName;
+          var portobrief = {
+              level: respObj.property,
+              address: {
+                  province: respObj.province,
+                  city: respObj.city,
+                  district: respObj.area
+              },
+              email: respObj.loginName
+          }
+          appPorto.uni = respObj.name;
+          appPorto.briefInfo = portobrief;
+//   专业数据初始化
+          var majorStrArray = resp.data.profession.split(",");
+          var majorArray=[];
+          for(var i=0;i<majorStrArray.length;i++){
+              majorArray.push({major:majorStrArray[i].split(":")[0],submajor:majorStrArray[i].split(":")[1]});
+          }
+
+          var specialLevel="";
+          if(respObj.propertyType!=""){
+              $(".uni-level input[value='"+resp.data.propertyType+"']").attr("checked","true");
+              if(respObj.propertyType=="0"){
+                  specialLevel="985";
+              }else{
+                  specialLevel="211";
+              }
+          }
+          var resumedata = {
+              uni:respObj.name,
+              classific:respObj.type,
+              amount:respObj.scale,
+              level:respObj.property,
+              specialLv:specialLevel,
+              specialmajor:majorArray,
+              intro:respObj.discription,
+              comLicense:"",
+              uniLicense:"",
+              edit:false,
+              view:true
+          }
+
+          appCont.resume = resumedata;
           //alert(resp.info);
      })
 })()
@@ -34,11 +70,16 @@ var appPorto = new Vue({
         briefInfo:{
             level: "重点大学",
             address: {
-                province: "浙江",
-                city: "杭州",
-                district: "滨江"
+                province: "河南省",
+                city: "新乡市",
+                district: "红旗区"
             },
             email: "xqztc@qq.com"
+       },
+       initAddress:{
+         province:"",
+         city:"",
+         district:""
        },
        cloneInfo:{}
    },
@@ -54,6 +95,7 @@ var appPorto = new Vue({
              this.viewInfo=true;
              var postdata={
                   userId:parObj.userId,
+                  schoolId:respObj.schoolId,
                   loginName:parObj.loginName,
                   property: this.briefInfo.level,
                   province: this.briefInfo.address.province,
@@ -71,9 +113,7 @@ var appPorto = new Vue({
         },
         edit:function(){
              this.cloneInfo = cloneObj(this.briefInfo);
-             $(".edit-brief .sel-province input").val(this.briefInfo.address.province);
-             $(".edit-brief .sel-city input").val(this.briefInfo.address.city);
-             $(".edit-brief .sel-district input").val(this.briefInfo.address.district);
+             this.initAddress = cloneObj(this.briefInfo.address);
              this.viewInfo=false;
         }
    }
@@ -94,13 +134,12 @@ var appCont = new Vue({
               level:"重点",
               specialLv:"",
               specialmajor:[
-                   {major:"艺术",submajor:"行为艺术"},
-                   {major:"艺术",submajor:"行为艺术"}
+                   {major:"",submajor:""},
+                   {major:"",submajor:""}
               ],
               intro:"世界一流的艺术大学",
               comLicense:"",
               uniLicense:"",
-              firstEdit:true,
               edit:true,
               view:false
          },
@@ -332,7 +371,6 @@ var appCont = new Vue({
               }
          },
          editSwipe:function(){
-              this.resume.firstEdit=false;
               this.resume.edit=true;
               this.resume.view=false;
          },
@@ -347,12 +385,22 @@ var appCont = new Vue({
               });
               this.resume.edit=false;
               this.resume.view=true;
+              console.log(EventUtils.getFileUrl($("input[name='comlicense']")[0]));
+              console.log(EventUtils.getFileUrl($("input[name='unilicense']")[0]));
+              var majorstring = "";
+              for(var i=0; i< appCont.resume.specialmajor.length;i++){
+                majorstring+=appCont.resume.specialmajor[i].major+":"+appCont.resume.specialmajor[i].submajor+",";
+              }
+              majorstring= majorstring.slice(0,majorstring.length-1);
               var postdata={
                    userId:parObj.userId,
+                   schoolId:respObj.schoolId,
                    name:this.resume.uni,
                    type:this.resume.classific,
-                   property:this.resume.specialLv==""?this.resume.level:this.resume.specialLv,
+                   property:this.resume.level,
+                   propertyType:this.resume.specialLv,
                    scale:this.resume.amount,
+                   profession:majorstring,
                    discription:this.resume.intro
               }
               EventUtils.ajaxReq('/user/school/modifyInfo','post',postdata,function(resp,status){

@@ -1,7 +1,8 @@
 body{position: relative;}
-.loginImg{position: absolute;top: 5px; left: 0; width: 416px;}
+.loginImg{position: absolute;top: 50px; left: 0; width: 433px;}
 .loginImg img{width: 100%;}
 #sel-add .pic-icon{background: url("../images/sprite.png") no-repeat -143px -186px;width: 11px; height: 8px;}
+.banner{min-height: 573px;}
 .banner .logBox{position: absolute; top: 75px; right:0;}
 .banner .logBox .log-nav{box-shadow: 0 -4px 10px rgba(0,0,0,0.3); border-radius: 10px 10px 0 0;overflow: hidden;}
 .banner .logBox .log-nav li{width: 126px; border:1px solid #d6d6d6;background:#e6e6e6;position: absolute;  text-align: center;

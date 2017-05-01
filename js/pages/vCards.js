@@ -1,43 +1,16 @@
 /**
  * Created by xuanyuan on 2016/11/7.
  */
-
 var parObj = EventUtils.urlExtrac(window.location);
  var appCont =  new Vue({
       el:"#app-content",
       data:{
            database:{
-               workstates:[
-                    "在职，打算换个新环境",
-                    "离职，可立即到岗工作",
-                    "在校学生",
-                    "应届毕业生",
-                    "暂时不想找工作"
-               ],
+               workstates:workstates,
                addrData:addArray,
-               uniLevel:["重点","本科","大专","高职"],
-               incProps:[
-                    "国营",
-                    "民营",
-                    "合资",
-                    "外商独资",
-                    "股份制企业",
-                    "上市公司",
-                    "代表处",
-                    "国家机关",
-                    "事业单位",
-                    "世界500强",
-                    "中国500强",
-                    "其他"],
-               incScales:[
-                    "20人以内",
-                    "20-99",
-                    "100-199",
-                    "200-499",
-                    "500-999",
-                    "1000-9999",
-                    "10000人以上"
-               ],
+               uniLevel:unilevel,
+               incProps:incProps,
+               incScales:incScale,
                date:date
            },
            pInfo:{
@@ -172,7 +145,7 @@ var parObj = EventUtils.urlExtrac(window.location);
       },
       mounted:function(){
            selectInitInput();
-           selectInitPos();
-           $(".main").css("margin-bottom",getViewport().height-746+"px");
+           selectInitPos();   
+           $(".main").css("margin-bottom",getViewport().height-746>10?getViewport().height-746:10+"px");
       }
 })

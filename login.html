@@ -14,9 +14,9 @@
         <h3 id="sel-add" class="city fl LH-H80 fSize18 maT16 maL60"><b>北京市<i class="pic-icon maL6"></i></b></h3>
     </div>
 </div>
-<div class="banner H764 bg-purpleL" id="app-content">
+<div class="banner H573 bg-purpleL" id="app-content">
     <div class="inner pRel">
-        <i class="pic-wrapper loginImg"><img src="images/login-pic.jpg"/></i>
+        <i class="pic-wrapper loginImg"><img src="images/login-banner1.jpg"/></i>
         <div class="logBox regis" id="app-regis" v-show="show.regis">
             <ul class="pRel log-nav LH-H40 fSize24 color-gray6">
                 <li class="on" @click="register.userType=0">个人</li>
@@ -30,7 +30,7 @@
                     <input class="v-mid" type="text" placeholder="验证码" v-model="register.validcode"><button type="button" class="W108 LH-H42 maL20 v-mid fSize14 color-white codeReq" :disabled="validUnable" @click="reqValidCode($event.target)">{{validText}}</button>
                 </div>
                 <button id="regBtn" class="LH-H50 W305 bg-orange fSize24 color-white maT24" :disabled="regisUnable" @click.prevent="regisEv">免费注册</button>
-                <p class="LH-H62 fSize14 t-left W400 maL24"><label><i class="check-box selected"></i>我已阅读并同意《 <a href="#" class="agreement" @click.prevent="showAgreement">用户服务协议</a> 》</label></p>
+                <p class="LH-H62 fSize14 t-left W400 maL24 check-agreement"><label><i class="check-box selected"></i>我已阅读并同意《 <a href="#" class="agreement" @click.prevent="showAgreement">用户服务协议</a> 》</label></p>
             </form>
             <p class="login-footer LH-H50 fSize20 t-center bg-grayC color-gray3">已有账号，直接登录</p>
         </div>
@@ -40,7 +40,7 @@
                 <input class="account" type="text" placeholder="手机号/邮箱" v-model="login.account"/>
                 <input class="maT22" type="password" placeholder="密码 (6-16字母、数字、无空格)" v-model="login.password"/>
                 <button id="logBtn" type="button" class="LH-H50 W305 bg-orange fSize24 color-white maT24 maB17" @click.prevent="loginEv">登录</button>
-                <p class="LH-H30 fSize16 t-left W305 maCenter"><label class="color-gray6"><i class="check-box selected"></i>下次自动登录</label><span class="fr color-red">忘记密码？</span></p>
+                <p class="LH-H30 fSize16 t-left W305 maCenter"><label class="color-gray6"><i class="check-box selected"></i>下次自动登录</label><a class="fr color-red cur-pointer" href="password.html">忘记密码？</a></p>
                 <div class="quicklogin">
                     <h3 class="LH-H30 fSize16 pRel color-gray6">快捷登录<span class="line-l"></span><span class="line-r"></span></h3>
                     <div class="quick-icon H45 maT7">

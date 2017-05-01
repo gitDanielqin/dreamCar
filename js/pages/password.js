@@ -72,15 +72,19 @@ var appCont = new Vue({
           checkpass:function(type,obj){
                if(type=="new"){
                     if(regExp.password.test(this.userInfo.newPass)){
-                         $(obj).addClass("right");
+                         $(obj).removeClass("wrong").addClass("right");
+                    }else if(this.userInfo.newPass!=""){
+                         $(obj).removeClass("right").addClass("wrong");
                     }else{
-                         $(obj).removeClass("right");
+                          $(obj).removeClass("wrong");
                     }
                }else{
                     if(this.userInfo.repeatPass==this.userInfo.newPass){
-                         $(obj).addClass("right");
+                         $(obj).removeClass("wrong").addClass("right");
+                    }else if(this.userInfo.repeatPass!=""){
+                         $(obj).removeClass("right").addClass("wrong");
                     }else{
-                         $(obj).removeClass("right");
+                          $(obj).removeClass("wrong");
                     }
                }
           }
