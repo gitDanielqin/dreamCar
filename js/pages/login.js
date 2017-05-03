@@ -8,6 +8,13 @@ var regExp = {
      email:/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/,
      password:/^[a-zA-Z0-9]{6,16}$/
 }
+
+var appTop = new Vue({
+     el:"#app-top",
+     data:{
+          displayCity:decodeURI(parObj.address)
+     }
+})
 var appCont =  new Vue({
      el:"#app-content",
      data:{
@@ -53,7 +60,7 @@ var appCont =  new Vue({
                var callback = function(resp,status){
                     console.log(resp);
                     if(resp.data){
-                         var parstring = "userType="+appCont.register.userType+"&userid="+resp.data.userId+"&loginId="+resp.data.loginIdentifier;
+                         var parstring = "userType="+appCont.register.userType+"&userid="+resp.data.userId+"&loginId="+resp.data.loginIdentifier+"&addr="+parObj.address;
                          window.location.href="vCards.html?"+parstring;
                     }else{
                         alert(resp.info);
@@ -199,8 +206,8 @@ _init();
 
 // 初始化页面元素大小
 function initSize(){
-     var contHeight = window.innerHeight - $(".top").outerHeight(true) - $(".bot").outerHeight(true);
-  //   $(".banner").height(contHeight);
+     var contHeight = EventUtils.getViewport().height - $(".top").outerHeight(true) - $(".bot").outerHeight(true);
+    $(".banner").height(contHeight);
 }
 
 

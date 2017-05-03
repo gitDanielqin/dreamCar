@@ -16,8 +16,8 @@
                             <h3 id="sel-add" class="cur-pointer fl LH-H47 fSize14 paTop14 maL30" @click.stop="showAddr=true"><b>{{address.displayCity}}</b><span class="maL18">[切换城市]<i class="pic-icon maL6"></i></span></h3>
                         </div>
                         <div class="login fr paTop10">
-                            <a href="login.html?newAcc=1" class="b-Radius5">注册</a>
-                            <a href="login.html?newAcc=0" class="b-Radius5">登录</a>
+                            <a :href="encodeURI('login.html?newAcc=1&address='+address.displayCity)" class="b-Radius5">注册</a>
+                            <a :href="encodeURI('login.html?newAcc=0&address='+address.displayCity)" class="b-Radius5">登录</a>
                        </div>
                         <div id="address" class="banner-address LH-H60 v-mid clearfix" v-show="showAddr" @click.stop="">
                             <h2 class="fl maL50 fSize18">省<dropdown :options="database.address.provinces" v-model="address.selProvince"></dropdown></h2>

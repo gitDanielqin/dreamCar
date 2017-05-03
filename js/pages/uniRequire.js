@@ -1,9 +1,9 @@
 // 获取字段判断是否为首次发布还是修改
-var urlStr= window.location.search.substr(1);
+var parObj= EventUtils.urlExtrac(window.location);
 var isNewRequire = true;
-if(urlStr!=null&&urlStr!=""){
+if(parObj.new!="1"){
      isNewRequire=false;
-}
+};
 var appMain = new Vue({
      el:"#app-main",
      data:{
@@ -133,12 +133,61 @@ var appMain = new Vue({
                }
           },
           publishReq:function(){
-               var postdata ={
-
+               // 拼接二三级选项的字符串
+               // if($(".cont-combi .sel-pos-1 input").val()){
+               //      var jobstring = $(".cont-combi .sel-pos-1 input").val()+";"+$(".cont-combi .sel-pos-2 input").val()+";"+$(".cont-combi .sel-pos-3 input").val();
+               // }else{
+               //      var jobstring = "";
+               // }
+               // if($(".cont-combi .input-area-1 input").val()){
+               //      var areastring = $(".cont-combi .input-area-1 input").val()+";"+$(".cont-combi .input-area-2 input").val();
+               // }else{
+               //      var areastring="";
+               // }
+               // if($(".cont-combi .sel-province input").val()){
+               //      var incAddstring = $(".cont-combi .sel-province input").val()+";"+$(".cont-combi .sel-city input").val()+";"+$(".cont-combi .sel-district input").val();
+               // }else{
+               //      var incAddstring = "";
+               // }
+               // if($(".cont-combi .major-input-1 input").val()){
+               //      var prostring = $(".cont-combi .major-input-1 input").val()+";"+$(".cont-combi .major-input-2 input").val()
+               // }else{
+               //      var prostring = "";
+               // }
+               if($(".cont-combi .time-table").find("td.on").length>0){
+                    var timestring ="";
+                    $(".cont-combi .time-table .time-tr").each(function(){
+                         $(this).find("td.t-cell").each(function(){
+                              timestring+=$(this).hasClass("on")?"1":"0";
+                         });
+                         timestring+=";";
+                    });
+                    timestring= timestring.slice(0,timestring.length-1);
+               }else{
+                    var timestring ="";
                }
-
+               var postdata ={
+                    userId:parObj.userId,
+                    title:this.combiData.header,
+                    job:$(".cont-combi .sel-pos-1 input").val()+";"+$(".cont-combi .sel-pos-2 input").val()+";"+$(".cont-combi .sel-pos-3 input").val(),
+                    jobCount:this.combiData.incApply.posAmount,
+                    property:this.combiData.incApply.incProps,
+                    scale:this.combiData.incApply.incScale,
+                    type:$(".cont-combi .input-area-1 input").val()+";"+$(".cont-combi .input-area-2 input").val(),
+                    address:$(".cont-combi .sel-province input").val()+";"+$(".cont-combi .sel-city input").val()+";"+$(".cont-combi .sel-district input").val(),
+                    profession:$(".cont-combi .major-input-1 input").val()+";"+$(".cont-combi .major-input-2 input").val(),
+                    professionCount:this.combiData.uniApply.stuScale,
+                    trainType:this.combiData.uniApply.trainWay,
+                    trainTime:timestring,
+                    discription:this.combiData.requireDesc,
+                    linkMan:this.combiData.contact.person,
+                    mobile:this.combiData.contact.phone,
+                    schoolAddress:this.combiData.contact.address
+               }
+               console.log(postdata);
                EventUtils.ajaxReq('/demand/school/apply','post',postdata,function(resp,status){
                    console.log(resp);
+                   window.history.back();
               })
           }
      },
@@ -149,8 +198,9 @@ var appMain = new Vue({
                $(".steps li:nth-of-type(1)").addClass("past");
                $(".steps li:nth-of-type(2)").addClass("on");
           });
+          selectInitInput()
           selectInitPos();
-          selectRepos();
+          // selectRepos();
           selectInit();
           selectTime();
      },
@@ -168,17 +218,6 @@ var appMain = new Vue({
      }
 })
 
-function selectRepos(){
-     $(".selectee ul").each(function(){
-           var sibInput=$(this).siblings("input");
-          //console.log(sibInput.height());
-         $(this).width(sibInput.outerWidth()-2);
-         $(this).css({
-            left:sibInput.css("margin-left")+"px",
-            top:25+"px"
-         })
-     });
-}
 function selectInit(){
      $(".major-input input").each(function(index){
           $(this).width($(this).width()-20);

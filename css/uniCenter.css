@@ -85,7 +85,7 @@
 .valid-upload a{position: relative;display: inline-block; border-radius: 5px; background: #e4e6e7;padding-left: 10px; vertical-align: middle; margin-right: 20px; width: 140px; cursor: pointer;}
 .valid-upload a i.pic-icon{position: absolute;right: 5px;top:4px;  background: url("../images/sprite.png") no-repeat -89px -181px; height: 11px;width: 8px;}
 .valid-upload button{font-size: 12px; background: none; vertical-align: middle;}
-.valid-upload input[type='file']{position: absolute; left: 0; top: 0; opacity: 0;}
+.valid-upload input[type='file']{position: absolute; left: 0; top: 0; opacity: 0; width: 150px;}
 .view-valid-label{ display: inline-block; border-radius: 5px;background: #e4e6e7;padding-left: 10px;vertical-align: middle; margin-right: 20px; width: 120px;}
 .uni-intro textarea{width: 498px; height: 198px; box-sizing: border-box; border: 1px solid #ccc; padding: 5px 10px; line-height: 20px;}
 .resumeCont .btn-edit{position: absolute;right: 73px; top:29px; cursor: pointer; width: 17px; height: 18px;background: url("../images/sprite.png") no-repeat -119px -3px; }

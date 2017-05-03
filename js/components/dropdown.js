@@ -163,7 +163,7 @@
                          }
                     }
                     this.city= city;
-                    if(this.initaddress.city&&this.initFlag){
+                    if(this.initaddress&&this.initaddress.city&&this.initFlag){
                       this.selCity = this.initaddress.city;
                       if(!this.initaddress.district){
                         this.initFlag=false;
@@ -184,7 +184,7 @@
                          }
                     }
                     this.district=district;
-                    if(this.initaddress.district&&this.initFlag){
+                    if(this.initaddress&&this.initaddress.district&&this.initFlag){
                       this.selDistrict=this.initaddress.district;
                       this.initFlag=false;
                     }else{
@@ -194,7 +194,6 @@
                     // selectEventBind();
                },
                "initaddress":function(curval){
-                 console.log(2);
                  this.initFlag=true;
                   if(curval){
                 //    console.log(curval);

@@ -13,7 +13,7 @@
 	let pagination = Vue.extend({
 		template: tem,
 		props: {
-			showpages: {
+			showpages: {//要显示的页码数
 				type: Number,
 				default: 5,
 				required: true

@@ -96,14 +96,14 @@
                         <p class="fl"><i class="pic-icon W30 icon-imp"></i><label>高校认证</label></p>
                         <ul class="fl valid-upload color-gray6 fSize12">
                             <li><a href="javascript:void(0)"><label for="comlicense">重新上传营业执照</label><i class="pic-icon icon-upload"></i></a>
-                                 <button v-show="!resume.firstEdit">（查看之前上传的营业执照）</button>
-                                 <span v-show="resume.firstEdit">{{resume.comLicense}}</span>
-                                 <input type="file" name="comlicense" @change="changeFile($event.target,'commence')" />
+                                 <span>{{resume.comLicense}}</span>
+                                 <button v-show="resume.hasBusLicense">（查看之前上传的营业执照）</button>
+                                 <input type="file" name="image" id="file-commence" @change="changeFile($event.target,'commence')" />
                             </li>
                             <li><a href="javascript:void(0)"><label for="unilicense">重新上传办学许可证</label><i class="pic-icon icon-upload"></i></a>
-                                 <button v-show="!resume.firstEdit">（查看之前上传的办学许可证）</button>
-                                 <span v-show="resume.firstEdit">{{resume.uniLicense}}</span>
-                                 <input type="file" name="unilicense" @change="changeFile($event.target,'uni')" />
+                                 <span>{{resume.uniLicense}}</span>
+                                 <button v-show="resume.hasUniLicense">（查看之前上传的办学许可证）</button>
+                                 <input type="file" name="image" id="file-uni" @change="changeFile($event.target,'uni')" />
                             </li>
                         </ul>
                     </div>
@@ -129,7 +129,7 @@
                             <label class="fl">重点专业：</label>
                             <ul class="fl LH25 paTop5">
                                 <li v-for="spmajor in resume.specialmajor">
-                                    <span v-if="spmajor!=''&&spmajor.submajor!=''">{{spmajor.major}}-{{spmajor.submajor}}</span>
+                                    <span v-if="spmajor!=''&&spmajor.submajor!=''">{{spmajor.major}} - {{spmajor.submajor}}</span>
                                 </li>
                             </ul>
                         </div>
@@ -158,24 +158,24 @@
             </div>
             <div class="uni-require requireBox">
                 <div class="ListBox pRel">
-                    <span class="new-require color-orange-f7 fSize16"><a href="uniRequire.html"><img src="images/icon-require.png" /></a></span>
+                    <span class="new-require color-orange-f7 fSize16"><a :href="require.newLink"><img src="images/icon-require.png" /></a></span>
                     <div class="hd LH-H58 bg-white">
-                        <dropdown classes="state" :options="['全部状态','校企合作','招聘会']" v-model="require.state"></dropdown>
+                        <dropdown classes="state" :options="['校企合作','招聘会']" v-model="require.state"></dropdown>
                         <p class="fr fSize14 maR120">我发布过的需求<span class="color-orange2 maL10 maR10">{{require.items.length}}</span>个</p>
                     </div>
                     <ul class="info-items H410">
-                        <li v-for="(item,index) in require.results" :name="item.classic" v-show="showResult(index,require.curpage,3)">
-                            <div v-if="item.classic=='校企合作'" class="paLeft29 clearfix H128 pRel">
+                        <li v-for="(item,index) in require.results" :name="item.classic" >
+                            <div v-if="!item.classic" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W280 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-uni.html">{{item.major}}</a></h2>
-                                    <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
-                                    <p>{{item.trainWay}}</p>
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-uni.html">{{item.profession}}</a></h2>
+                                    <p>{{item.property}}<i class="depart">|</i>{{item.scale}}<i class="depart">|</i>{{item.type}}</p>
+                                    <p>{{item.trainType}}</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH25 maT10">
                                     <p>{{item.uniname}}</p>
                                     <p>{{item.uniLevel}}</p>
-                                    <p>{{item.date}}</p>
+                                    <p>{{item.updateTime}}</p>
                                 </div>
                                 <div class="operations color-blueL">
                                     <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>
@@ -201,7 +201,7 @@
                             </div>
                         </li>
                     </ul>
-                    <pagination :showpages="showpage(require.results.length)" :totalpages="pagesum(require.results.length)" type="require" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                    <pagination :showpages="showpage(require.totalpages)" :totalpages="require.totalpages" type="require" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
             </div>
             <div class="uni-collect collectBox">
@@ -211,7 +211,7 @@
                         <p class="fr fSize14 maR30">我发布过的需求<span class="color-orange2 maL10 maR10">{{collect.items.length}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
-                        <li v-for="(item,index) in collect.results" :name="item.classic" v-show="showResult(index,collect.curpage,3)">
+                        <li v-for="(item,index) in collect.results" :name="item.classic">
                             <div class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W328 maL20">
@@ -242,7 +242,7 @@
                         <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{combimsg}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
-                        <li v-for="(item,index) in message.combi.results" :name="item.code" v-show="showResult(index,message.combi.curpage,3)">
+                        <li v-for="(item,index) in message.combi.results" :name="item.code">
                             <template v-if="item.code=='01'">
                               <div class="paLeft29 clearfix H128 pRel">
                                    <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
@@ -303,7 +303,7 @@
                         <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{message.recruit.items.length}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
-                        <li v-for="(item,index) in message.recruit.results" v-show="showResult(index,message.recruit.curpage,3)">
+                        <li v-for="(item,index) in message.recruit.results">
                             <div class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W328 maL20">
@@ -420,7 +420,7 @@
                         <p class="fr fSize14 maR30">我合作的企业<span class="color-orange2 maL10 maR10">{{coop.items.length}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
-                        <li v-for="(item,index) in coop.results" :name="item.classic" v-show="showResult(index,coop.curpage,3)">
+                        <li v-for="(item,index) in coop.results" :name="item.classic">
                             <div class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W390 maL20">
@@ -717,9 +717,11 @@
             </div>
         </div>
     </div>
-    <script src="js/libs/jquery-3.1.0.min.js"></script>
+    <!-- <script src="js/libs/jquery-3.1.0.min.js"></script> -->
+    <script src="js/libs/jquery.min.js"></script>
     <script src="js/libs/vue.js"></script>
     <script src="js/common/common.js"></script>
+    <script src="js/common/ajaxfileupload.js"></script>
     <script src="js/common/cropbox.js"></script>
     <script src="js/components/pagination.js"></script>
     <script src="js/components/major-pop.js"></script>

@@ -24,20 +24,27 @@ var respObj={}; //请求的本页面的数据集合
           appPorto.uni = respObj.name;
           appPorto.briefInfo = portobrief;
 //   专业数据初始化
-          var majorStrArray = resp.data.profession.split(",");
-          var majorArray=[];
-          for(var i=0;i<majorStrArray.length;i++){
-              majorArray.push({major:majorStrArray[i].split(":")[0],submajor:majorStrArray[i].split(":")[1]});
+          if(resp.data.profession){
+               var majorStrArray = resp.data.profession.split(",");
+               var majorArray=[];
+               for(var i=0;i<majorStrArray.length;i++){
+                   majorArray.push({major:majorStrArray[i].split(":")[0],submajor:majorStrArray[i].split(":")[1]});
+               }
+          }else{
+               var majorArray=[];
+               majorArray.push({major:"",submajor:""});
           }
+
 
           var specialLevel="";
           if(respObj.propertyType!=""){
-              $(".uni-level input[value='"+resp.data.propertyType+"']").attr("checked","true");
+              $(".uni-level input[value='"+respObj.propertyType+"']").attr("checked","true");
               if(respObj.propertyType=="0"){
                   specialLevel="985";
               }else{
                   specialLevel="211";
               }
+
           }
           var resumedata = {
               uni:respObj.name,
@@ -140,12 +147,17 @@ var appCont = new Vue({
               intro:"世界一流的艺术大学",
               comLicense:"",
               uniLicense:"",
+              hasBusLicense:false,
+              hasUniLicense:false,
               edit:true,
               view:false
          },
          require:{
               state:"全部状态",
               curpage:1,
+              totalpages:1,
+              pagesize:3,
+              newLink:"uniRequire.html?new=1&userId="+parObj.userId,
               items:[
                    {classic:"校企合作",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11"},
                    {classic:"校企合作",major:"通信工程",IncProps:"国有企业",IncScale:"600人以上",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11"},
@@ -383,36 +395,86 @@ var appCont = new Vue({
                         appCont.resume.specialmajor[index].submajor = $(this).find(".major-input-2 input").val();
                    }
               });
+              this.resume.hasBusLicense=this.resume.comLicense==""?false:true;
+              this.resume.hasUniLicense=this.resume.uniLicense==""?false:true;
               this.resume.edit=false;
               this.resume.view=true;
-              console.log(EventUtils.getFileUrl($("input[name='comlicense']")[0]));
-              console.log(EventUtils.getFileUrl($("input[name='unilicense']")[0]));
+              //上传许可证等图片文件
+              if(this.resume.comLicense!=""){
+                   $.ajaxFileUpload({
+               		url : 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload',   //提交的路径
+               		secureuri : false, // 是否启用安全提交，默认为false
+               		fileElementId : 'file-commence', // file控件id
+               		dataType : 'json',
+               		data : {
+               			fileName : appCont.resume.comLicense   //传递参数，用于解析出文件名
+               		}, // 键:值，传递文件名
+               		success : function(data, status) {
+               			console.log(data.data);
+               		},
+               		error : function(data, status) {
+               			console.log(data,1);
+               		}
+               	});
+              };
+              console.log(appCont.resume.uniLicense);
+
+              if(this.resume.uniLicense!=""){
+                   $.ajaxFileUpload({
+               		url : 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload',   //提交的路径
+               		secureuri : false, // 是否启用安全提交，默认为false
+               		fileElementId : 'file-uni', // file控件id
+               		dataType : 'json',
+               		data : {
+               			fileName : appCont.resume.uniLicense   //传递参数，用于解析出文件名
+               		}, // 键:值，传递文件名
+               		success : function(data, status) {
+               			console.log(data.data);
+               		},
+               		error : function(data, status) {
+               			console.log(data,2);
+               		}
+               	});
+              };
+              console.log(3);
               var majorstring = "";
               for(var i=0; i< appCont.resume.specialmajor.length;i++){
-                majorstring+=appCont.resume.specialmajor[i].major+":"+appCont.resume.specialmajor[i].submajor+",";
+                   if(appCont.resume.specialmajor[i].major!=""){
+                        if(appCont.resume.specialmajor[i].submajor!=""){
+                             majorstring+=appCont.resume.specialmajor[i].major+":"+appCont.resume.specialmajor[i].submajor+",";
+                        }else{
+                             majorstring+=appCont.resume.specialmajor[i].major+",";
+                        }
+                   }
               }
-              majorstring= majorstring.slice(0,majorstring.length-1);
+              if(majorstring.length>0){
+                  majorstring= majorstring.slice(0,majorstring.length-1);
+              }
               var postdata={
                    userId:parObj.userId,
                    schoolId:respObj.schoolId,
                    name:this.resume.uni,
                    type:this.resume.classific,
                    property:this.resume.level,
-                   propertyType:this.resume.specialLv,
+                   propertyType:this.resume.specialLv=="211"?1:0,
                    scale:this.resume.amount,
                    profession:majorstring,
+                   imgUrlBus:this.resume.comLicense,
+                   imgUrlAgree:this.resume.uniLicense,
                    discription:this.resume.intro
-              }
+              };
+              console.log(postdata);
               EventUtils.ajaxReq('/user/school/modifyInfo','post',postdata,function(resp,status){
                   console.log(resp);
              })
 
          },
          checkExlv:function(){
-              this.resume.specialLv=$(".uni-level input[type='radio']:checked").val();
+              this.resume.specialLv=$(".uni-level input[type='radio']:checked").val()=="0"?"985":"211";
          },
          modItem:function(item){
-              window.open("uniRequire.html?modify","_blank")
+              var pageurl = "uniRequire.html?new=0&userId="+parObj.userId;
+              window.open(pageurl,"_blank");
          },
          delItem:function(item){
               this.require.items.remove(item);
@@ -454,13 +516,6 @@ var appCont = new Vue({
                    case "03":return {color:"#333"};break;
               }
          },
-         showResult:function(index,curpage,itemsnum){
-              if(index>=(parseInt(curpage)-1)*parseInt(itemsnum)&&index<parseInt(curpage)*parseInt(itemsnum)){
-                   return true;
-              }else{
-                   return false;
-              }
-         },
          pagesum:function(totalitems){
               var totalpage =1;
               if(totalitems%3==0){
@@ -472,10 +527,10 @@ var appCont = new Vue({
          },
          showpage:function(totalitems){
               var totalpage =1;
-              if(totalitems%3==0){
-                   totalpage = totalitems/3
+              if(totalitems%this.require.pagesize==0){
+                   totalpage = totalitems/this.require.pagesize
               }else{
-                   totalpage = Math.floor(totalitems/3)+1;
+                   totalpage = Math.floor(totalitems/this.require.pagesize)+1;
               }
               if(totalpage<3){
                    return totalpage;
@@ -498,9 +553,9 @@ var appCont = new Vue({
          },
          changeFile:function(obj,type){
               if(type=="commence"){
-                   this.resume.comLicense=$(obj).val();
+                   this.resume.comLicense=EventUtils.getFileUrl(obj);
               }else if(type=="uni"){
-                    this.resume.uniLicense=$(obj).val();
+                    this.resume.uniLicense=EventUtils.getFileUrl(obj);
               }
          },
          remainText:function(text){
@@ -875,7 +930,7 @@ function uploadEventBind(){
 
 
 function navEventBind(){
-    $(".sideBox>li").bind("click",function(){
+    $(".sideBox>li").unbind("click").bind("click",function(){
         $(".sideBox").children("li.on").removeClass("on");
         $(this).addClass("on");
         $(".sideBox .sub-li").hide();
@@ -889,6 +944,18 @@ function navEventBind(){
                 selectInitPos();
                 return false;
             });
+        }
+        if($(this).attr("paneid")=="requireBox"){
+             var postdata = {
+                  userId:parObj.userId,
+                  loginIdentifier:parObj.loginId,
+                  index:1,
+                  count:3
+             }
+             EventUtils.ajaxReq("/demand/school/getList","get",postdata,function(resp,status){
+                  console.log(resp.data.list);
+                   appCont.results = resp.data.list;
+             })
         }
         $(".content").children().hide();
         $(".content").children("."+$(this).attr("paneid")).show();

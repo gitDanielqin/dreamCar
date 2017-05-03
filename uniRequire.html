@@ -38,7 +38,7 @@
                        <p class="W810 bg-gray-ef fl H32"></p>
                   </div>
                   <div class="navs maT20" v-show="!newRequire"></div>
-                  <div class="nav-cont" v-show="showCombi">
+                  <div class="nav-cont cont-combi" v-show="showCombi">
                        <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写校企合作信息</h2>
                        <div class="form-cont paLeft68">
                             <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="combiData.header"/></p>
@@ -75,7 +75,7 @@
                            <button class="confirm-publish-btn" @click.prevent="publishReq">确认发布</button>
                        </div>
                   </div>
-                  <div class="nav-cont" v-show="!showCombi">
+                  <div class="nav-cont cont-recruit" v-show="!showCombi">
                       <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写招聘会信息</h2>
                       <div class="form-cont paLeft68">
                            <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="recruitData.header"/></p>

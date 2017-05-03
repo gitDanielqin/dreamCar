@@ -2,6 +2,12 @@
  * Created by xuanyuan on 2016/11/7.
  */
 var parObj = EventUtils.urlExtrac(window.location);
+var appTop = new Vue({
+     el:"#app-top",
+     data:{
+          displayCity:parObj.addr!=undefined?decodeURI(parObj.addr):"杭州市"
+     }
+})
  var appCont =  new Vue({
       el:"#app-content",
       data:{
@@ -145,7 +151,7 @@ var parObj = EventUtils.urlExtrac(window.location);
       },
       mounted:function(){
            selectInitInput();
-           selectInitPos();   
-           $(".main").css("margin-bottom",getViewport().height-746>10?getViewport().height-746:10+"px");
+           selectInitPos();
+           $(".main").css("height",getViewport().height-246+"px");
       }
 })

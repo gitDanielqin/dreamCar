@@ -142,7 +142,20 @@ var EventUtils = {
            file_url = obj.value;
          }
          return file_url;
-     }
+    },
+    getViewport:function(){
+         if(document.compatMode == 'BackCompat'){
+              return {
+                   width:document.body.clientWidth,
+                   height:document.body.clientHeight
+              };
+         }else {
+              return {
+                   width: document.documentElement.clientWidth,
+                   height:document.documentElement.clientHeight
+              }
+         }
+    }
 }
 // 数组对象功能扩充
 Array.prototype.indexOf = function(val) {
