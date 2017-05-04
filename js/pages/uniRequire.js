@@ -33,24 +33,13 @@ var appMain = new Vue({
                datatype:"combi",
                header:"",
                uniApply:{
-                    major:{major_1:"",major_2:""},
-                    stuScale:"",
-                    trainWay:"",
-                    traintime:[],
+                    stuScale:"不限",
+                    trainWay:"不限",
                },
                incApply:{
-                    pos:{
-                         pos_1:"",
-                         pos_2:"",
-                         pos_3:""
-                    },
-                    posAmount:"",
-                    incProps:"",
-                    incScale:"",
-                    incArea:{
-                         incarea_1:"",
-                         incarea_2:""
-                    }
+                    posAmount:"不限",
+                    incProps:"不限",
+                    incScale:"不限",
                },
                requireDesc:"",
                contact:{

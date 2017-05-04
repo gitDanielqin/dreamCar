@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta charset="utf-8">
     <title>高校中心</title>
     <link href="css/base.css" rel="stylesheet">
@@ -98,12 +100,12 @@
                             <li><a href="javascript:void(0)"><label for="comlicense">重新上传营业执照</label><i class="pic-icon icon-upload"></i></a>
                                  <span>{{resume.comLicense}}</span>
                                  <button v-show="resume.hasBusLicense">（查看之前上传的营业执照）</button>
-                                 <input type="file" name="image" id="file-commence" @change="changeFile($event.target,'commence')" />
+                                 <input type="file" name="image" id="imageFile" @change="resume.comLicense=$event.target.value"/>
                             </li>
                             <li><a href="javascript:void(0)"><label for="unilicense">重新上传办学许可证</label><i class="pic-icon icon-upload"></i></a>
                                  <span>{{resume.uniLicense}}</span>
                                  <button v-show="resume.hasUniLicense">（查看之前上传的办学许可证）</button>
-                                 <input type="file" name="image" id="file-uni" @change="changeFile($event.target,'uni')" />
+                                 <input type="file" name="image" id="file-uni" @change="resume.uniLicense=$event.target.value" />
                             </li>
                         </ul>
                     </div>
@@ -164,17 +166,17 @@
                         <p class="fr fSize14 maR120">我发布过的需求<span class="color-orange2 maL10 maR10">{{require.items.length}}</span>个</p>
                     </div>
                     <ul class="info-items H410">
-                        <li v-for="(item,index) in require.results" :name="item.classic" >
-                            <div v-if="!item.classic" class="paLeft29 clearfix H128 pRel">
+                        <li v-for="(item,index) in require.results" :name="item.demandType">
+                            <div v-if="item.demandType==0" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W280 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-uni.html">{{item.profession}}</a></h2>
-                                    <p>{{item.property}}<i class="depart">|</i>{{item.scale}}<i class="depart">|</i>{{item.type}}</p>
-                                    <p>{{item.trainType}}</p>
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item.demandId)">{{item.title}}</a></h2>
+                                    <p>{{infoCtrl(item.property)}}<i class="depart" v-show="infoCtrl(item.property)!=''">|</i>{{infoCtrl(item.scale)}}<i class="depart" v-show="infoCtrl(item.scale)!=''">|</i>{{infoCtrl(item.type)}}</p>
+                                    <p v-show="item.trainType!=undefined">培训方式： {{item.trainType}}</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH25 maT10">
-                                    <p>{{item.uniname}}</p>
-                                    <p>{{item.uniLevel}}</p>
+                                    <p>{{item.name}}</p>
+                                    <p>{{item.schoolProperty}}</p>
                                     <p>{{item.updateTime}}</p>
                                 </div>
                                 <div class="operations color-blueL">
@@ -182,7 +184,7 @@
                                     <p><span @click="freshItem(item)">刷新</span><span @click="stickItem(item)">置顶</span></p>
                                 </div>
                             </div>
-                            <div v-else-if="item.classic=='招聘会'" class="paLeft29 clearfix H128 pRel">
+                            <div v-else-if="item.demandType==1" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W280 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-unirecruit.html">{{item.major}}</a></h2>

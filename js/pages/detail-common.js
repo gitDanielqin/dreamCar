@@ -1,10 +1,83 @@
 /**
  * Created by Administrator on 2017/1/8.
  */
+
+ var parObj = EventUtils.urlExtrac(window.location);//地址参数对象
+ var respObj={};//页面信息
+(function(){
+     if(parObj.type=="uni"){
+          var postdemand = {
+               userId:parObj.userId,
+               loginIdentifier:parObj.loginId,
+               demandId:parObj.demandId
+          };
+          // 请求学校基本信息
+          var postbase = {
+               userId:parObj.userId,
+               loginIdentifier:parObj.loginId
+          };
+          // 请求学校需求信息
+          EventUtils.ajaxReq("/demand/school/getInfo","get",postdemand,function(resp,status){
+               console.log(resp);
+               EventUtils.ajaxReq("/user/school/getInfo","get",postbase,function(resp,status){
+                    console.log(resp)
+                    var baseinfo = {
+                         uni:resp.data.name,
+                         uniprops:resp.data.property,
+                         uniscale:resp.data.scale,
+                         address:resp.data.city+"-"+resp.data.area,
+                         discription:resp.data.discription
+                    };
+                    appMain.unidata.baseinfo = baseinfo;
+               });
+               respObj = resp.data;
+               var briefdata = {
+                    title:respObj.title,
+                    viewed:30,
+                    applied:15,
+                    publicDate:respObj.updateTime.split(" ")[0]
+               };
+               appBanner.unidata = briefdata;
+               var demandinfo = {
+                    address:respObj.address,
+                    type:EventUtils.infoExtrac(respObj.type),
+                    property:respObj.property,
+                    job:EventUtils.infoExtrac(respObj.job),
+                    scale:respObj.scale,
+                    jobCount:respObj.jobCount,
+                    profession:EventUtils.infoExtrac(respObj.profession),
+                    professionCount:respObj.professionCount,
+                    trainType:respObj.trainType,
+                    discription:respObj.discription,
+               };
+               appMain.unidata.demand = demandinfo;
+               //初始化联合培养时间表
+               $("#train-table .date-aval").removeClass("date-aval");
+               var timeArray = respObj.trainTime.split(";");
+               for(var i=0;i<timeArray.length;i++){
+                    for(var j=0;j<timeArray[i].length;j++){
+                         if(timeArray[i].charAt(j)=="1"){
+                              $("#train-table .date-tr").eq(i).find("td").eq(j+1).addClass("date-aval");
+                         }
+                    }
+               }
+          });
+
+     }
+
+})()
+
+
  var isLogin=false;
  var appBanner = new Vue({
       el:"#app-banner",
       data:{
+           unidata:{
+                title:"lalaland",
+                viewed:30,
+                applied:15,
+                publicDate:"2016-12-11"
+           },
            posdata:{
                 pos:"UI设计师",
                 viewed:30,
@@ -47,6 +120,27 @@
  var appMain = new Vue({
       el:"#app-main",
       data:{
+           unidata:{
+                demand:{
+                     address:"杭州市",//企业地址
+                     type:"互联网",//企业行业
+                     property:"民营",//企业性质
+                     job:"UI设计师",//岗位名称
+                     scale:"1000-9999人",//企业规模
+                     jobCount:"21-30人",//岗位数量
+                     profession:"影视多媒体",//影视多媒体
+                     professionCount:"40-60人",//专业人数
+                     trainType:"学生入企",//联合培养方式
+                     discription:"lalaland",//需求描述
+                },
+                baseinfo:{
+                    uni:"浙江大学",
+                    uniprops:"重点",
+                    uniscale:"20000人",
+                    address:"下沙大学城",
+                    discription:"啦啦啦"
+                }
+           },
            posdata:{
                 pos:"UI设计师",
                 salary:"6K-8K",
@@ -249,11 +343,19 @@ function selectInitPos(){
             $(".tab-cont").hide();
             $("."+$(this).attr("cont")).show();
         });
-
-
         //收藏按钮
         $(".btn-collec").bind("click",function(){
              $(this).find("span").text("已收藏");
             $(this).addClass("collected");
-        })
+       });
+       //头部下拉框
+       $(".account li").mouseenter(function(){
+            if($(this).find("dl").length>0){
+                 $(this).find("dl").slideDown();
+            }
+       }).mouseleave(function(){
+            if($(this).find("dl").length>0){
+                 $(this).find("dl").hide();
+            }
+       })
     };

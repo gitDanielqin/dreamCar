@@ -11,13 +11,13 @@
 <div class="top bg-dunkel">
     <div class="inner clearfix">
         <h3 class="fl LH-H30 fSize14 color-white">您好，欢迎来到校企职通车</h3>
-        <div class="top-right fr LH-H30 fSize14 color-white">
+        <div class="top-right fr LH-H30 fSize14 color-white" style="display: none;">
             <p class="login fl">
                 <span>【登录】</span><span>|</span><span style="color: red">【注册】</span>
             </p>
             <div class="fl fSize14 top-acc color-white"><i class="pic-icon W17 H20"></i>个人中心</div>
         </div>
-        <ul class="account fr lis-inline color-white fSize14 LH-H35" style="display: none;">
+        <ul class="account fr lis-inline color-white fSize14 LH-H35" >
             <li style="margin-right: 14px;">免费发布</li>
             <li><span style="margin-right:14px;">|</span>网站合作<i class="pic-icon maR10 icon-dropdown"></i>
                 <dl>
@@ -42,11 +42,11 @@
 <div class="banner bg-gray-f2 H176" id="app-banner">
     <div class="inner clearfix">
         <div class="fl">
-            <h2 class="LH-H76 fSize40 color-gray3">艺术设计</h2>
+            <h2 class="LH-H76 fSize40 color-gray3">{{unidata.title}}</h2>
             <ul class="lis-inline LH42 W440 brief-info fSize14 maB14">
-                <li class="W174"><i class="pic-icon icon-eye"></i>浏览次数 ：30</li>
-                <li><i class="pic-icon icon-apply"></i>申请次数 ：15人申请</li>
-                <li><i class="pic-icon icon-post"></i>发布时间 ：2016-12-11</li>
+                <li class="W174"><i class="pic-icon icon-eye"></i>浏览次数 ：{{unidata.viewed}}</li>
+                <li><i class="pic-icon icon-apply"></i>申请次数 ：{{unidata.applied}}人申请</li>
+                <li><i class="pic-icon icon-post"></i>发布时间 ：{{unidata.publicDate}}</li>
             </ul>
         </div>
         <div class="fr">
@@ -69,36 +69,36 @@
             <div class="fl descript W828 maT9">
                 <h3>高校对企业要求</h3>
                 <ul class="lis-inline">
-                    <li><label>企业所在城市 ：</label>杭州</li>
-                    <li><label>企业行业 ：</label>互联网</li>
-                    <li><label>企业性质 ：</label>国企</li>
-                    <li><label>岗位名称 ：</label>UI设计师</li>
-                    <li><label>企业规模 ：</label>1000-9999人</li>
-                    <li><label>岗位数量 ：</label>50人</li>
+                    <li><label>企业所在城市 ：</label>{{unidata.demand.address}}</li>
+                    <li><label>企业行业 ：</label>{{unidata.demand.type}}</li>
+                    <li><label>企业性质 ：</label>{{unidata.demand.property}}</li>
+                    <li><label>岗位名称 ：</label>{{unidata.demand.job}}</li>
+                    <li><label>企业规模 ：</label>{{unidata.demand.scale}}</li>
+                    <li><label>岗位数量 ：</label>{{unidata.demand.jobCount}}</li>
                 </ul>
                 <h3>高校提供</h3>
                 <ul class="lis-inline">
-                    <li><label>专业名称 :</label>影视多媒体</li>
-                    <li><label>专业人数 :</label>50-100</li>
+                    <li><label>专业名称 :</label>{{unidata.demand.profession}}</li>
+                    <li><label>专业人数 :</label>{{unidata.demand.professionCount}}</li>
                 </ul>
                 <h3>其他</h3>
-                <p class="fSize14 paLeft22 W370 LH-H60"><label>培养方式 ：</label>企业高管到校培训</p>
+                <p class="fSize14 paLeft22 W370 LH-H60"><label>培养方式 ：</label>{{unidata.demand.trainType}}</p>
                 <p class="fSize14 paLeft22 W370 LH-H36"><label>联合培养时间 ：</label></p>
-                <table class="date-table color-gray79 maL22 fSize14 t-center maT9">
+                <table class="date-table color-gray79 maL22 fSize14 t-center maT9" id="train-table">
                     <tr><th></th><th>星期一</th><th>星期二</th><th>星期三</th><th>星期四</th><th>星期五</th><th>星期六</th><th>星期日</th></tr>
-                    <tr><td>上午</td><td class="date-aval"></td><td class="date-aval"></td><td></td><td></td><td class="date-aval"></td><td></td><td></td></tr>
-                    <tr><td>下午</td><td></td><td class="date-aval"></td><td></td><td class="date-aval"></td><td></td><td></td><td class="date-aval"></td></tr>
-                    <tr><td>晚上</td><td class="date-aval"></td><td></td><td class="date-aval"></td><td class="date-aval"></td><td></td><td class="date-aval"></td><td></td></tr>
+                    <tr class="date-tr"><td>上午</td><td class="date-aval"></td><td class="date-aval"></td><td></td><td></td><td class="date-aval"></td><td></td><td></td></tr>
+                    <tr class="date-tr"><td>下午</td><td></td><td class="date-aval"></td><td></td><td class="date-aval"></td><td></td><td></td><td class="date-aval"></td></tr>
+                    <tr class="date-tr"><td>晚上</td><td class="date-aval"></td><td></td><td class="date-aval"></td><td class="date-aval"></td><td></td><td class="date-aval"></td><td></td></tr>
                 </table>
             </div>
             <div class="fl">
                 <div class="W170 H367 uni-porto t-center">
                     <div class="pic-wrapper W142 uni-logo maT30"><img src="images/logo-zheda.png"/> </div>
-                    <h3 class="LH-H34 fSize20 color-gray6">浙江大学</h3>
+                    <h3 class="LH-H34 fSize20 color-gray6">{{unidata.baseinfo.uni}}</h3>
                     <ul class="basic-info t-left fSize14 color-gray79 maT15">
-                        <li><i class="pic-icon icon-college"></i>学校性质：<span>本科</span> </li>
-                        <li><i class="pic-icon icon-people"></i>人数：<span>20000人</span> </li>
-                        <li><i class="pic-icon icon-map"></i>地址：<span>下沙大学城</span> </li>
+                        <li><i class="pic-icon icon-college"></i>学校性质：<span>{{unidata.baseinfo.uniprops}}</span> </li>
+                        <li><i class="pic-icon icon-people"></i>人数：<span>{{unidata.baseinfo.uniscale}}</span> </li>
+                        <li><i class="pic-icon icon-map"></i>地址：<span>{{unidata.baseinfo.address}}</span> </li>
                     </ul>
                 </div>
                 <div class="ads W166 H359 maT28 bg-white">
@@ -114,17 +114,8 @@
             <li cont="cont-apply" >申请记录<i class="msg-info">10</i></li>
             <li cont="cont-comment">学校评价<i class="msg-info">11</i></li>
         </ul>
-        <ul class="tab-cont fSize14 LH38 color-gray6 cont-demand" style="display:block ">
-            <li><label>企业性质：</label>私营</li>
-            <li><label>企业规模：</label>200人以上</li>
-            <li><label>企业所经营行业：</label>家装设计</li>
-            <li><label>校企合作模式：</label>希望企业能够到校培训，学校提供场地组织学生，在选修课上进行联合实战培训，同时能够
-                给到岗位</li>
-            <li><label>学校需求培训专业：</label>设计</li>
-            <li><label>学校需求企业提供岗位数：</label>50以上</li>
-            <li><label>联合培养周期：</label>半年内</li>
-        </ul>
-        <p class="tab-cont LH42 fSize14 color-gray6 cont-desc">浙江大学（Zhejiang University），简称浙大。学校位于“人间天堂”杭州、美丽的西子湖畔，是一所具有百年历史底蕴的教育部直属全国重点大学，是中国首批7所“211工程”、首批9所“985工程”、“珠峰计划”重点建设的名牌大学之一，也是中国大学“常春藤联盟”（C9联盟）的成员。前身是成立于1897年的求是书院，为中国人自己最早创办的高等学府之一。1928年更名为国立浙江大学。中华民国时期，浙江大学曾为中国最顶尖的几所大学之一，被英国著名学者李约瑟称誉为“东方剑桥”。如今，有着百年辉煌历史的浙江大学，正通过开拓与进取，努力建设成为具有国际先进水平的世界一流大学。2016年2月，浙江大学在2016国内高校保研率排名中排第十。2016年中国一流大学排行榜排第三。</p>
+        <p class="tab-cont fSize14 LH38 color-gray6 cont-demand" style="display:block ">{{unidata.demand.discription}}</p>
+        <p class="tab-cont LH42 fSize14 color-gray6 cont-desc">{{unidata.baseinfo.discription}}</p>
         <div class="cont-apply tab-cont">
             <table class="LH48 fSize12 result-table">
                 <tr class="bg-gray-f2 color-gray79 fSize14"><th class="W200">申请企业</th><th class="W400">申请时间</th><th class="W200">状态</th></tr>

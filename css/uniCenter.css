@@ -101,12 +101,12 @@
 .uni-coop .info-items>li{height:148px;}
 .uni-coop .logo-pic{margin-top: 34px;}
 .depart{margin:0 12px; }
-.item-block-left p{line-height: 28px; font-size: 14px;}
+.item-block-left p{line-height: 28px; font-size: 14px;width:275px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
 .item-block-right{padding: 18px; background: url("../images/dashline.png") no-repeat left 26px;}
 .uni-require .item-block-right{background: url("../images/dashline.png") no-repeat left 20px;}
 .uni-collect .item-block-right{background: url("../images/dashline.png") no-repeat left 20px;}
 .uni-message .uni-apply-message{background:none}
-.item-block-right p{color: #333;}
+.item-block-right p{color: #333; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
 .info-items .item-date{font-size: 12px; color: #666;}
 /*发布按钮样式*/
 .new-require{position: absolute; right: 10px; top: 10px;}

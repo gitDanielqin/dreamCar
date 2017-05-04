@@ -59,7 +59,6 @@ var respObj={}; //请求的本页面的数据集合
               edit:false,
               view:true
           }
-
           appCont.resume = resumedata;
           //alert(resp.info);
      })
@@ -354,6 +353,12 @@ var appCont = new Vue({
       }
     },
     methods:{
+         infoCtrl:function(text){
+              return text=="不限"||text==undefined?"":text;
+         },
+         requireLink:function(demandId){
+           return "detail-uni.html?userId="+parObj.userId+"&loginId="+parObj.loginId+"&demandId="+demandId+"&type=uni";
+         },
          submajors:function(major){
               var arr =[];
               if(major){
@@ -401,10 +406,11 @@ var appCont = new Vue({
               this.resume.view=true;
               //上传许可证等图片文件
               if(this.resume.comLicense!=""){
+                   console.log(appCont.resume.comLicense);
                    $.ajaxFileUpload({
                		url : 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload',   //提交的路径
                		secureuri : false, // 是否启用安全提交，默认为false
-               		fileElementId : 'file-commence', // file控件id
+               		fileElementId : 'imageFile', // file控件id
                		dataType : 'json',
                		data : {
                			fileName : appCont.resume.comLicense   //传递参数，用于解析出文件名
@@ -413,30 +419,28 @@ var appCont = new Vue({
                			console.log(data.data);
                		},
                		error : function(data, status) {
-               			console.log(data,1);
+               			console.log(2);
                		}
                	});
               };
-              console.log(appCont.resume.uniLicense);
-
-              if(this.resume.uniLicense!=""){
-                   $.ajaxFileUpload({
-               		url : 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload',   //提交的路径
-               		secureuri : false, // 是否启用安全提交，默认为false
-               		fileElementId : 'file-uni', // file控件id
-               		dataType : 'json',
-               		data : {
-               			fileName : appCont.resume.uniLicense   //传递参数，用于解析出文件名
-               		}, // 键:值，传递文件名
-               		success : function(data, status) {
-               			console.log(data.data);
-               		},
-               		error : function(data, status) {
-               			console.log(data,2);
-               		}
-               	});
-              };
-              console.log(3);
+          //     if(this.resume.uniLicense!=""){
+          //          $.ajaxFileUpload({
+          //      		url : 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload',   //提交的路径
+          //      		secureuri : false, // 是否启用安全提交，默认为false
+          //      		fileElementId : 'file-uni', // file控件id
+          //      		dataType : 'json',
+          //      		data : {
+          //      			fileName : appCont.resume.uniLicense   //传递参数，用于解析出文件名
+          //      		}, // 键:值，传递文件名
+          //      		success : function(data, status) {
+          //      			console.log(data.data);
+          //      		},
+          //      		error : function(data, status) {
+          //      			console.log(data,2);
+          //      		}
+          //      	});
+          //     };
+           //   console.log(3);
               var majorstring = "";
               for(var i=0; i< appCont.resume.specialmajor.length;i++){
                    if(appCont.resume.specialmajor[i].major!=""){
@@ -525,13 +529,7 @@ var appCont = new Vue({
               }
               return totalpage;
          },
-         showpage:function(totalitems){
-              var totalpage =1;
-              if(totalitems%this.require.pagesize==0){
-                   totalpage = totalitems/this.require.pagesize
-              }else{
-                   totalpage = Math.floor(totalitems/this.require.pagesize)+1;
-              }
+         showpage:function(totalpage){
               if(totalpage<3){
                    return totalpage;
               }else{
@@ -540,7 +538,16 @@ var appCont = new Vue({
          },
          topage:function(page,type){
               if(type=="require"){
-                   this.require.curpage=page;
+                   var postdata = {
+                       userId:parObj.userId,
+                       loginIdentifier:parObj.loginId,
+                       index:page,
+                       count:3
+                  }
+                  EventUtils.ajaxReq("/demand/school/getList","get",postdata,function(resp,status){
+                       appCont.require.results = resp.data.list;
+                  })
+                  this.require.curpage=page;
               }else if(type=="collect"){
                    this.collect.curpage=page;
               }else if(type=="msg-combi"){
@@ -549,13 +556,6 @@ var appCont = new Vue({
                    this.message.recruit.curpage=page;
            }else if(type=="coop"){
                    this.coop.curpage=page;
-              }
-         },
-         changeFile:function(obj,type){
-              if(type=="commence"){
-                   this.resume.comLicense=EventUtils.getFileUrl(obj);
-              }else if(type=="uni"){
-                    this.resume.uniLicense=EventUtils.getFileUrl(obj);
               }
          },
          remainText:function(text){
@@ -945,6 +945,7 @@ function navEventBind(){
                 return false;
             });
         }
+        //需求面板
         if($(this).attr("paneid")=="requireBox"){
              var postdata = {
                   userId:parObj.userId,
@@ -953,8 +954,10 @@ function navEventBind(){
                   count:3
              }
              EventUtils.ajaxReq("/demand/school/getList","get",postdata,function(resp,status){
-                  console.log(resp.data.list);
-                   appCont.results = resp.data.list;
+                  appCont.require.totalpages = resp.data.totalPage;
+                  appCont.require.pagesize = resp.data.pageSize;
+                  appCont.require.results = resp.data.list;
+               //   console.log(appCont.require.totalpages)
              })
         }
         $(".content").children().hide();
