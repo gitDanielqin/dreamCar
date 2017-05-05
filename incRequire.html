@@ -30,7 +30,7 @@
                   </ul>
                   <i class="pic-wrapper progress-txt"><img src="images/require-txt.png" /></i>
              </div>
-             <div class="navs clearfix">
+             <div class="navs clearfix" v-show="newRequire">
                   <ul class="lis-inline fl">
                        <li class="on" @click="clickNav('combi',$event.target)">校企合作</li>
                        <li @click="clickNav('recruit',$event.target)">招聘会</li>
@@ -38,7 +38,7 @@
                   </ul>
                   <p class="W740 bg-gray-ef fl H32"></p>
              </div>
-             <div class="nav-cont" v-show="showpage.page1">
+             <div class="nav-cont cont-combi" v-show="showpage.page1">
                   <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写校企合作信息</h2>
                   <div class="form-cont paLeft68">
                        <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="combiData.header"/></p>
@@ -47,9 +47,9 @@
                        <p class="form-item"><label>专业人数</label><dropdown :options="database.uni.amount" placeholder="" v-model="combiData.incReq.stuScale"></dropdown></p>
                        <p class="form-item"><label>高校性质</label><dropdown :options="database.uni.unilevel" placeholder="" v-model="combiData.incReq.uniLevel"></dropdown></p>
                        <p class="form-item"><label>高校类型</label><dropdown :options="database.uni.classific" placeholder="" v-model="combiData.incReq.uniClassific"></dropdown></p>
-                       <p class="form-item"><label>所在地</label><addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select></p>
+                       <p class="form-item"><label>所在地</label><addr-select :addrdata="database.addrData" :initaddress="combiData.initAddress" class="sel-addr disInline"></addr-select></p>
                        <h3 class="LH-H75 fSize18 maT11">我可以提供</h3>
-                       <p class="form-item"><label>岗位名称</label><pos-select :posdata="database.posdata"></pos-select></p>
+                       <p class="form-item"><label>岗位名称</label><pos-select :posdata="database.posdata" :initpos="combiData.initPosition"></pos-select></p>
                        <p class="form-item"><label>岗位数</label><input type="text" v-model="combiData.incApply.posAmount" />人</p>
                        <p class="form-item"><label>联合培养方式</label><dropdown :options="database.trainway" placeholder="" v-model="combiData.incApply.trainWay"></dropdown></p>
                        <div class="form-item clearfix"><label class="fl">培养时间</label>
@@ -71,7 +71,7 @@
                               <p><button class="confirm-btn" @click="confirmIncAddr($event.target,combiData.datatype)">确认</button></p>
                          </div>
                       </div>
-                      <button class="confirm-publish-btn">确认发布</button>
+                      <button class="confirm-publish-btn" @click="publish('combi')">确认发布</button>
                   </div>
              </div>
              <div class="nav-cont" v-show="showpage.page2">

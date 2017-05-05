@@ -55,7 +55,7 @@
 
      Vue.component("pos-select",{
           template: templPos,
-          props:["posdata"],
+          props:["posdata","initpos"],
           data:function(){
                var posArray1=[];
                var posArray2=[];
@@ -76,7 +76,8 @@
                     selpos1:"",
                     selpos2:"",
                     selpos3:"",
-                    selPos2Array:selPos2Array
+                    selPos2Array:selPos2Array,
+                    initFlag:true
                };
                return dataBase;
           },
@@ -95,9 +96,14 @@
                          }
                     }
                     this.posArray2= posArray2;
-                    this.selpos2 = posArray2[0];
-                    this.posArray3= posArray3;
-                    this.selpos3= posArray3[0];
+                    if(this.initpos&&this.initpos.pos_2&&this.initFlag){
+                      this.selpos2 = this.initpos.pos_2;
+                      if(!this.initpos.pos_3){
+                        this.initFlag=false;
+                      }
+                    }else{
+                      this.selpos2 = posArray2[0];
+                    }
                },
                "selpos2":function(curval){
                     var posArray3=[];
@@ -108,7 +114,18 @@
                          }
                     }
                     this.posArray3=posArray3;
-                    this.selpos3=posArray3[0];
+                    if(this.initpos&&this.initpos.pos_3&&this.initFlag){
+                      this.selpos3=this.initpos.pos_3;
+                      this.initFlag=false;
+                    }else{
+                      this.selpos3=posArray3[0];
+                    }
+
+               }
+          },
+          mounted:function(){
+               if(this.initpos){
+                    this.selpos1 = this.initpos.pos_1
                }
           }
      });
@@ -171,9 +188,6 @@
                     }else{
                       this.selCity = city[0];
                     }
-                    // this.district= district;
-                    // this.selDistrict= district[0];
-                    // selectEventBind();
                },
                "selCity":function(curval){
                     var district=[];
@@ -194,19 +208,15 @@
                     // selectEventBind();
                },
                "initaddress":function(curval){
-                 this.initFlag=true;
                   if(curval){
-                //    console.log(curval);
                       this.selProvince = curval.province;
-                      // this.selCity = curval.city;
-                      // this.selDistrict = curval.district;
                   }
                }
           },
           mounted:function(){
                if(this.initaddress){
                      this.selProvince = this.initaddress.province;
-               }
+               };
           }
      });
      //行业选择

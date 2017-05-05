@@ -176,7 +176,7 @@ var appMain = new Vue({
                console.log(postdata);
                EventUtils.ajaxReq('/demand/school/apply','post',postdata,function(resp,status){
                    console.log(resp);
-                   window.history.back();
+                   window.location.href="uniCenter.html?userId="+parObj.userId+"&loginId="+parObj.loginId;
               })
           }
      },
@@ -187,7 +187,7 @@ var appMain = new Vue({
                $(".steps li:nth-of-type(1)").addClass("past");
                $(".steps li:nth-of-type(2)").addClass("on");
           });
-          selectInitInput()
+          selectInitInput();
           selectInitPos();
           // selectRepos();
           selectInit();

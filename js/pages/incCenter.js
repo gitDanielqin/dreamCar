@@ -1,19 +1,63 @@
 
 var parObj = EventUtils.urlExtrac(window.location);
-var postdata={
-     userId:parObj.userId,
-     loginIdentifier:parObj.loginId
-};
-EventUtils.ajaxReq('/user/company/getInfo','get',postdata,function(data,status){
-     console.log(data);
-     alert(data.info);
-})
+var respObj={}; //请求的本页面的数据集合
+
+(function(){
+     var postdata={
+          userId:parObj.userId,
+          loginIdentifier:parObj.loginId
+     };
+     EventUtils.ajaxReq('/user/company/getInfo','get',postdata,function(resp,status){
+          respObj = resp.data;
+          console.log(respObj);
+          if(respObj){
+               var portobrief = {
+                    IncProps: respObj.property,
+                    IncScale:respObj.scale,
+                    address: {
+                         province: respObj.province,
+                         city: respObj.city,
+                         district: respObj.area
+                    },
+                    email: respObj.loginName
+               }
+               appPorto.inc = respObj.name;
+               appPorto.briefInfo = portobrief;
+
+               var specialLevel="";
+               if(respObj.isWorld=="1"){
+                    specialLevel = "世界500强";
+                     $(".uni-level input[value='0']").attr("checked","true");
+               }else if(respObj.isCountry=="1"){
+                    specialLevel = "中国500强";
+                    $(".uni-level input[value='1']").attr("checked","true");
+               }
+               var resumedata = {
+                    Inc:respObj.name,
+                    trade:respObj.type,
+                    scale:respObj.scale,
+                    props:respObj.property,
+                    specialLv:specialLevel,
+                    intro:respObj.discription,
+                    comLicense:respObj.imgUrl,
+                    hasBusLicense:respObj.imgUrl!="",
+                    edit:false,
+                    view:true
+               };
+               appCont.resume = resumedata;
+          }
+
+     })
+
+})()
+
+
 
 var appPorto = new Vue({
     el: "#app-porto",
     data: {
         viewInfo: true,
-        Inc: "企业名称",
+        inc: "企业名称",
         database:{
              incprops:incProps,
              incscale:incScale,
@@ -29,6 +73,11 @@ var appPorto = new Vue({
              },
              email: "xqztc@qq.com"
         },
+        initAddress:{
+          province:"",
+          city:"",
+          district:""
+        },
         cloneInfo:{}
    },
    methods:{
@@ -41,6 +90,20 @@ var appPorto = new Vue({
              this.briefInfo.address.city = $(".edit-brief .sel-city input").val();
              this.briefInfo.address.district = $(".edit-brief .sel-district input").val();
              this.viewInfo=true;
+             var postdata={
+                  userId:parObj.userId,
+                  companyId:respObj.companyId,
+               //    loginName:parObj.loginName,
+                  property: this.briefInfo.IncProps,
+                  province: this.briefInfo.address.province,
+                  city: this.briefInfo.address.city,
+                  area: this.briefInfo.address.district,
+                  email: this.briefInfo.email
+             }
+             console.log(postdata);
+             EventUtils.ajaxReq('/user/company/modifyInfo','post',postdata,function(resp,status){
+                  console.log(resp);
+             })
         },
         cancel:function(){
              this.briefInfo = cloneObj(this.cloneInfo);
@@ -48,6 +111,7 @@ var appPorto = new Vue({
         },
         edit:function(){
              this.cloneInfo = cloneObj(this.briefInfo);
+             this.initAddress = cloneObj(this.briefInfo.address);
              this.viewInfo=false;
         }
    }
@@ -70,14 +134,17 @@ var appCont = new Vue({
               specialLv:"",
               intro:"国际领先的互联网科技公司",
               comLicense:"",
-              firstEdit:true,
-              edit:true,
-              view:false
+              hasBusLicense:false,
+              edit:false,
+              view:true
          },
          require:{
               state:"全部类型",
               period:"全部状态",
               curpage:1,
+              totalpages:1,
+              pagesize:3,
+              newLink:"incRequire.html?new=1&userId="+parObj.userId+"&loginId="+parObj.loginId,
               items:[
                    {classic:"校企合作",coMajor:"合作专业",coScale:"合作人数",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",IncName:"企业名称",uniLevel:"高校性质",publicDate:"2017-3-5",publicTime:"24:00",IncPos:"岗位名称"},
                    {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
@@ -265,6 +332,12 @@ var appCont = new Vue({
       }
     },
     methods:{
+         infoCtrl:function(text){
+             return text=="不限"||text==undefined?"":text;
+         },
+         requireLink:function(demandId){
+          return "detail-company.html?userId="+parObj.userId+"&loginId="+parObj.loginId+"&demandId="+demandId+"&type=inc";
+         },
          popTrade:function(){
               appModal.showModal=true;
               appModal.showTrade=true;
@@ -295,15 +368,38 @@ var appCont = new Vue({
          saveResume:function(){
               this.resume.edit=false;
               this.resume.view=true;
+              var postdata = {
+                   userId: parObj.userId,
+                   companyId: respObj.companyId,
+                   name: this.resume.Inc,
+                   type: this.resume.trade,
+                   property: this.resume.props,
+                   scale: this.resume.scale,
+                   discription: this.resume.intro,
+                   imgUrl: this.resume.comLicense,
+                   isWorld: this.resume.specialLv=="世界500强"?1:0,
+                   isCountry: this.resume.specialLv=="中国500强"?1:0,
+              };
+              console.log(postdata);
+              EventUtils.ajaxReq('/user/company/modifyInfo','post',postdata,function(resp,status){
+                  console.log(resp);
+             })
          },
          checkExlv:function(){
-              this.resume.specialLv=$(".uni-level input[type='radio']:checked").val();
+              var exLevel = $(".uni-level input[type='radio']:checked").val();
+              if(exLevel=="0"){
+                  this.resume.specialLv="世界500强";
+             }else if(exLevel=="1"){
+                  this.resume.specialLv="中国500强";
+             }
+
          },
          delItem:function(item){
               this.require.items.remove(item);
          },
          modItem:function(item){
-              window.open("incRequire.html?modify","_blank")
+              var link = "incRequire.html?new=0&userId="+parObj.userId+"&loginId="+parObj.loginId+"&demandId="+item.demandId+"&demandType="+item.demandType;
+              window.open(link,"_blank");
          },
          freshItem:function(item){
               appModal.showModal=true;
@@ -358,22 +454,26 @@ var appCont = new Vue({
             }
             return totalpage;
         },
-        showpage:function(totalitems){
+        showpage:function(totalpage){
             var totalpage =1;
-            if(totalitems%3==0){
-                  totalpage = totalitems/3
-            }else{
-                  totalpage = Math.floor(totalitems/3)+1;
-            }
             if(totalpage<3){
-                  return totalpage;
+                 return totalpage;
             }else{
-                  return 3;
+                 return 3;
             }
         },
         topage:function(page,type){
             if(type=="require"){
-                  this.require.curpage=page;
+               var postdata = {
+                    userId:parObj.userId,
+                    loginIdentifier:parObj.loginId,
+                    index:page,
+                    count:3
+               }
+                EventUtils.ajaxReq("/demand/company/getList","get",postdata,function(resp,status){
+                    appCont.require.results = resp.data.list;
+                })
+                this.require.curpage=page;
             }else if(type=="collect"){
                   this.collect.curpage=page;
             }else if(type=="msg-combi"){
@@ -822,10 +922,42 @@ function navEventBind(){
                 return false;
             });
         }
+        //需求面板请求结果
+        if($(this).attr("paneid")=="requireBox"){
+             var postdata = {
+                  userId:parObj.userId,
+                  loginIdentifier:parObj.loginId,
+                  index:1,
+                  count:3
+             }
+             EventUtils.ajaxReq("/demand/company/getList","get",postdata,function(resp,status){
+                  appCont.require.totalpages = resp.data.totalPage;
+                  appCont.require.pagesize = resp.data.pageSize;
+                  appCont.require.results = resp.data.list;
+             })
+        }
         $(".content").children().hide();
         $(".content").children("."+$(this).attr("paneid")).show();
         selectInitPos();
     });
+}
+
+//如果有主题跳转信息
+if(parObj.theme){
+     switch (parObj.theme) {
+          case "vip":
+               $(".sideBox li[paneid='vip-center']").trigger("click");
+               break;
+          case "require":
+               $(".sideBox li[paneid='requireBox']").trigger("click");
+               break;
+          case "combi":
+               $(".sideBox li[paneid='uni-coop']").trigger("click");
+               break;
+          case "collect":
+               $(".sideBox li[paneid='collectBox']").trigger("click");
+               break;
+     }
 }
 function vipEventBind(){
      $(".vip-navs li").each(function(index){

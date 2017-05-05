@@ -8,29 +8,29 @@
     <link href="css/detail-comm.css" rel="stylesheet">
 </head>
 <body>
-<div class="top bg-dunkel">
+<div class="top bg-dunkel" id="app-top">
     <div class="inner clearfix">
         <h3 class="fl LH-H30 fSize14 color-white">您好，欢迎来到校企职通车</h3>
-        <div class="top-right fr LH-H30 fSize14 color-white" style="display: none;">
+        <div class="top-right fr LH-H30 fSize14 color-white" v-show="!isLogin">
             <p class="login fl">
                 <span>【登录】</span><span>|</span><span style="color: red">【注册】</span>
             </p>
             <div class="fl fSize14 top-acc color-white"><i class="pic-icon W17 H20"></i>个人中心</div>
         </div>
-        <ul class="account fr lis-inline color-white fSize14 LH-H35" >
-            <li style="margin-right: 14px;">免费发布</li>
+        <ul class="account fr lis-inline color-white fSize14 LH-H35" v-show="isLogin">
+            <li style="margin-right: 14px;" @click="publish">免费发布</li>
             <li><span style="margin-right:14px;">|</span>网站合作<i class="pic-icon maR10 icon-dropdown"></i>
                 <dl>
-                    <dd>校企合作</dd>
-                    <dd>校园推广</dd>
-                    <dd>VIP中心</dd>
+                    <dd><a href="footer-page.html?recruit">校企合作</a></dd>
+                    <dd><a href="footer-page.html?coop">校园推广</a></dd>
+                    <dd @click="toCenter('vip')">VIP中心</dd>
                 </dl>
             </li>
-            <li><span style="margin-right:14px">|</span>中国美术学院<i class="pic-icon icon-dropdown"></i>
+            <li><span style="margin-right:14px">|</span>{{name}}<i class="pic-icon icon-dropdown"></i>
                 <dl>
-                    <dd>我的发布</dd>
-                    <dd>我的合作</dd>
-                    <dd>我的收藏</dd>
+                    <dd @click="toCenter('require')">我的发布</dd>
+                    <dd @click="toCenter('combi')">我的合作</dd>
+                    <dd @click="toCenter('collect')">我的收藏</dd>
                     <dd>退出</dd>
                 </dl>
             </li>
@@ -69,7 +69,7 @@
             <div class="fl descript W828 maT9">
                 <h3>高校对企业要求</h3>
                 <ul class="lis-inline">
-                    <li><label>企业所在城市 ：</label>{{unidata.demand.address}}</li>
+                    <li><label>企业所在地 ：</label>{{unidata.demand.address}}</li>
                     <li><label>企业行业 ：</label>{{unidata.demand.type}}</li>
                     <li><label>企业性质 ：</label>{{unidata.demand.property}}</li>
                     <li><label>岗位名称 ：</label>{{unidata.demand.job}}</li>
@@ -92,7 +92,7 @@
                 </table>
             </div>
             <div class="fl">
-                <div class="W170 H367 uni-porto t-center">
+                <div class="W170 porto uni-porto t-center">
                     <div class="pic-wrapper W142 uni-logo maT30"><img src="images/logo-zheda.png"/> </div>
                     <h3 class="LH-H34 fSize20 color-gray6">{{unidata.baseinfo.uni}}</h3>
                     <ul class="basic-info t-left fSize14 color-gray79 maT15">
@@ -207,5 +207,6 @@
 <script src="js/components/pagination.js"></script>
 <script src="js/components/dropdown.js"></script>
 <script src="js/pages/detail-common.js"></script>
+<script src="js/pages/detail-uni.js"></script>
 </body>
 </html>

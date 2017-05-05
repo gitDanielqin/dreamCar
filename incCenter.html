@@ -26,18 +26,18 @@
                 <h3 class="LH-H58 fSize18 t-center color-gray3">编辑头像</h3>
             </div>
             <div class="infoTxt maT24 maL54 fl color-gray6 W300" v-show="viewInfo">
-                <h3 class="LH-H47 fSize18 color-gray3">{{Inc}}</h3>
+                <h3 class="LH-H47 fSize18 color-gray3">{{inc}}</h3>
                 <p><label>企业性质：</label>{{briefInfo.IncProps}}<span class="maL20">企业规模：</span>{{briefInfo.IncScale}}</p>
                 <p><label>所在地：</label>{{briefInfo.address.province}}-{{briefInfo.address.city}}-{{briefInfo.address.district}}</p>
                 <p><label>邮箱：</label>{{briefInfo.email}}</p>
                 <i class="LH30 t-center btn-edit pic-icon icon-edit" @click="edit"></i>
             </div>
             <div class="edit-brief maT24 maL54 fl color-gray6 W530 pRel" v-show="!viewInfo">
-                 <h3 class="LH-H47 fSize18 color-gray3">{{Inc}}</h3>
+                 <h3 class="LH-H47 fSize18 color-gray3">{{inc}}</h3>
                  <p><label>企业性质</label><dropdown :options="database.incprops" v-model="briefInfo.IncProps" class="brief-unilevel"></dropdown>
                     <label class="maL20">企业规模</label><dropdown :options="database.incscale" v-model="briefInfo.IncScale" class="brief-unilevel"></dropdown>
                  </p>
-                 <p><label>所在地</label><addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select></p>
+                 <p><label>所在地</label><addr-select :addrdata="database.addrData" :initaddress="initAddress" class="sel-addr disInline"></addr-select></p>
                  <p><label class="brief-email">邮箱</label><input type="email" v-model="briefInfo.email" /></p>
                  <div class="edit-opera fSize0">
                      <button class="maR15 btn-save" @click="save">保存</button>
@@ -75,13 +75,15 @@
         <div class="content W770 fl maL10 maT20" id="app-content">
             <div class="resumeBox" style="display:block">
                 <div class="resumeCont bg-white" v-show="resume.edit">
-                    <p class="LH-H88 fSize18 color-gray3" v-show="resume.firstEdit">亲爱的校友，您需要完善企业简介</p>
-                    <h3 class="fSize18 LH-H30 maB17" v-show="!resume.firstEdit"><i class="pic-icon icon-resume hd-icon"></i>企业简介</h3>
-                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-icon W30 icon-imp"></i><label>企业名称</label><input type="text" v-model="resume.Inc" class="W298" /></p>
-                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-icon W30 icon-imp"></i><label>所属行业</label><span @click="popTrade"><input type="text" class="career-input"  disabled v-model="resume.trade" /></span>
+                    <p class="LH-H88 fSize18 color-gray3" v-show="resume.edit">亲爱的校友，您需要完善企业简介</p>
+                    <h3 class="fSize18 LH-H30 maB17" v-show="!resume.edit"><i class="pic-icon icon-resume hd-icon"></i>企业简介</h3>
+                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-icon W30 icon-imp"></i><label>企业名称</label>
+                         <input type="text" v-model="resume.Inc" class="W298" /></p>
+                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-icon W30 icon-imp"></i><label>所属行业</label>
+                         <span @click="popTrade"><input type="text" class="career-input"  disabled v-model="resume.trade" /></span>
                     </p>
                     <p class="LH-H26 paLeft7 resume-item uni-level"><i class="pic-icon W30 icon-imp"></i><label>企业性质</label>
-                        <dropdown placeholder="企业性质" :options="database.IncProps" v-model="resume.props" classes="W138"></dropdown><input type="radio" name="level" value="世界500强" @click="checkExlv" />世界500强<input type="radio" name="level" value="中国500强" @click="checkExlv" />中国500强</p>
+                        <dropdown placeholder="企业性质" :options="database.IncProps" v-model="resume.props" classes="W138"></dropdown><input type="radio" name="level" value="0" @click="checkExlv" />世界500强<input type="radio" name="level" value="1" @click="checkExlv" />中国500强</p>
                     <p class="LH-H26 paLeft7 resume-item"><i class="pic-icon W30 icon-imp"></i><label>企业规模</label>
                         <dropdown placeholder="企业规模" :options="database.IncScale" v-model="resume.scale" classes="W138"></dropdown>
                     </p>
@@ -89,8 +91,8 @@
                         <p class="fl"><i class="pic-icon W30 icon-imp"></i><label>企业认证</label></p>
                         <ul class="fl valid-upload color-gray6 fSize12">
                              <li><a href="javascript:void(0)"><label for="comlicense">重新上传营业执照</label><i class="pic-icon icon-upload"></i></a>
-                                  <button v-show="!resume.firstEdit">（查看之前上传的营业执照）</button>
-                                  <span v-show="resume.firstEdit">{{resume.comLicense}}</span>
+                                  <span>{{resume.comLicense}}</span>
+                                  <button v-show="resume.hasBusLicense">（查看之前上传的营业执照）</button>
                                   <input type="file" name="comlicense" @change="changeFile($event.target,'commence')" />
                              </li>
                         </ul>
@@ -130,32 +132,31 @@
             </div>
             <div class="uni-require requireBox">
                 <div class="ListBox pRel">
-                    <span class="new-require color-orange-f7 fSize16"><a href="incRequire.html"><img src="images/icon-require.png" /></a></span>
+                    <span class="new-require color-orange-f7 fSize16"><a :href="require.newLink"><img src="images/icon-require.png" /></a></span>
                     <div class="hd LH-H58 bg-white pRel">
-                        <dropdown classes="state" :options="['全部类型','校企合作','招聘会','企业直聘']" v-model="require.state"></dropdown>
-                        <dropdown classes="state" :options="['全部状态','三天内','一周内','一月内']" v-model="require.period"></dropdown>
+                        <dropdown classes="state" :options="['校企合作','招聘会','企业直聘']" v-model="require.state"></dropdown>
                         <p class="disInline fSize14 maL195">我发布过的需求<span class="color-orange2 maL10 maR10">{{require.items.length}}</span>个</p>
                     </div>
                     <ul class="info-items H410">
-                        <li v-for="(item,index) in require.results" :name="item.classic" :date="item.publicDate" v-show="showResult(index,require.curpage,3)">
-                            <div v-if="item.classic=='校企合作'" class="paLeft29 clearfix H128 pRel">
+                        <li v-for="(item,index) in require.results" :name="item.classic" :date="item.publicDate">
+                            <div v-if="item.demandType==0" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W250 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-company.html">{{item.IncPos}}</a></h2>
-                                    <p>{{item.coMajor}}<i class="depart">|</i>{{item.coScale}}<i class="depart">|</i>{{item.uniLevel}}</p>
-                                    <p>联合培养方式：{{item.trainWay}}</p>
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item.demandId)">{{item.title}}</a></h2>
+                                    <p>{{infoCtrl(item.profession)}}<i class="depart" v-show="infoCtrl(item.profession)!=''">|</i>{{infoCtrl(item.professionCount)}}<i class="depart" v-show="infoCtrl(item.professionCount)!=''">|</i>{{infoCtrl(item.property)}}</p>
+                                    <p>联合培养方式：{{item.trainType}}</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH25 maT10 W242">
-                                    <p>{{item.IncName}}</p>
+                                    <p>{{item.name}}</p>
                                     <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
-                                    <p>{{item.publicDate}} {{item.publicTime}}</p>
+                                    <p>{{item.updateTime}}</p>
                                 </div>
                                 <div class="operations color-blueL fr">
                                     <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>
                                     <p><span @click="freshItem(item)">刷新</span><span @click="stickItem(item)">置顶</span></p>
                                 </div>
                             </div>
-                            <div v-else-if="item.classic=='招聘会'" class="paLeft29 clearfix H128 pRel">
+                            <div v-else-if="item.demandType==1" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W300 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-increcruit.html">{{item.IncPos}}</a></h2>
@@ -172,7 +173,7 @@
                                      <p><span @click="freshItem(item)">刷新</span><span @click="stickItem(item)">置顶</span></p>
                                 </div>
                             </div>
-                            <div v-else-if="item.classic=='企业直聘'" class="paLeft29 clearfix H128 pRel">
+                            <div v-else-if="item.demandType==2" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W300 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-position.html">{{item.IncPos}}</a></h2>
@@ -191,7 +192,7 @@
                             </div>
                         </li>
                     </ul>
-                    <pagination :showpages="showpage(require.results.length)" :totalpages="pagesum(require.results.length)" type="require" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                    <pagination :showpages="showpage(require.totalpages)" :totalpages="require.totalpages" type="require" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
             </div>
             <div class="uni-collect collectBox">

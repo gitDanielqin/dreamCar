@@ -65,7 +65,7 @@
                             <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
                             <p class="form-item"><label>联系人</label><input type="text" v-model="combiData.contact.person"/></p>
                             <p class="form-item"><label>联系电话</label><input type="text" v-model="combiData.contact.phone"/></p>
-                            <div class="form-item inc-addr pRel"><label>公司地址</label><input type="text" v-model="combiData.contact.address" class="dis-Addr" disabled/><span class="color-red maL18 cur-pointer" @click="popAddrBox($event.target)">请完善地址</span>
+                            <div class="form-item inc-addr pRel"><label>高校地址</label><input type="text" v-model="combiData.contact.address" class="dis-Addr" disabled/><span class="color-red maL18 cur-pointer" @click="popAddrBox($event.target)">请完善地址</span>
                               <div class="addr-box disNo">
                                    <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
                                    <input type="text" class="maT20 addr-ex" placeholder="请输入详细地址" />

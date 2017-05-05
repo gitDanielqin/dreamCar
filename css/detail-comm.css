@@ -27,7 +27,7 @@
 .descript h3:nth-of-type(3){background: url("../images/head-bg3.png") no-repeat 0 0;}
 .descript ul{margin:6px 0 18px; line-height: 46px; }
 .descript.pos-descript ul{line-height: 40px;}
-.descript li{font-size: 14px; padding-left: 22px; width:333px;}
+.descript li{font-size: 14px; padding-left: 22px; width:380px;}
 .descript label{font-size: 14px; color: #989898; margin-right: 15px;}
 .descript.pos-descript label{font-size: 14px;}
 .descript.pos-descript li{padding-left: 0;}
@@ -40,7 +40,9 @@
 .date-table td{border: 2px solid #dcdcdc; line-height: 52px; height:52px; width: 86px;margin: 0}
 .date-aval{background:url("../images/icon-checked.png") no-repeat center center;}
 .uni-logo img{width: 100%;}
-.uni-porto{ border-left:1px solid #c4c4c4; border-bottom: 1px solid #c4c4c4;}
+.porto{ border-left:1px solid #c4c4c4; border-bottom: 1px solid #c4c4c4;}
+.inc-porto{ height: 363px;}
+.uni-porto{ height: 363px;}
 
 .basic-info li{line-height: 40px; margin-bottom: 6px; padding-left: 18px;}
 .basic-info.pos-basic li{margin: 0;}

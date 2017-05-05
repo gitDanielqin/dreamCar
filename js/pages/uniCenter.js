@@ -12,55 +12,59 @@ var respObj={}; //请求的本页面的数据集合
      EventUtils.ajaxReq('/user/school/getInfo','get',postdata,function(resp,status){
           console.log(resp.data);
           respObj = resp.data;
-          var portobrief = {
-              level: respObj.property,
-              address: {
-                  province: respObj.province,
-                  city: respObj.city,
-                  district: respObj.area
-              },
-              email: respObj.loginName
-          }
-          appPorto.uni = respObj.name;
-          appPorto.briefInfo = portobrief;
-//   专业数据初始化
-          if(resp.data.profession){
-               var majorStrArray = resp.data.profession.split(",");
-               var majorArray=[];
-               for(var i=0;i<majorStrArray.length;i++){
-                   majorArray.push({major:majorStrArray[i].split(":")[0],submajor:majorStrArray[i].split(":")[1]});
+     //如果高校信息存在，则对简历信息进行初始化
+          if(respObj){
+               var portobrief = {
+                   level: respObj.property,
+                   address: {
+                       province: respObj.province,
+                       city: respObj.city,
+                       district: respObj.area
+                   },
+                   email: respObj.loginName
                }
-          }else{
-               var majorArray=[];
-               majorArray.push({major:"",submajor:""});
+               appPorto.uni = respObj.name;
+               appPorto.briefInfo = portobrief;
+               //   专业数据初始化
+               if(resp.data.profession){
+                    var majorStrArray = resp.data.profession.split(",");
+                    var majorArray=[];
+                    for(var i=0;i<majorStrArray.length;i++){
+                        majorArray.push({major:majorStrArray[i].split(":")[0],submajor:majorStrArray[i].split(":")[1]});
+                    }
+               }else{
+                    var majorArray=[];
+                    majorArray.push({major:"",submajor:""});
+               }
+               var specialLevel="";
+               if(respObj.propertyType&&respObj.propertyType!=""){
+                   $(".uni-level input[value='"+respObj.propertyType+"']").attr("checked","true");
+                   if(respObj.propertyType=="0"){
+                       specialLevel="985";
+                   }else{
+                       specialLevel="211";
+                   }
+
+               }
+               var resumedata = {
+                   uni:respObj.name,
+                   classific:respObj.type,
+                   amount:respObj.scale,
+                   level:respObj.property,
+                   specialLv:specialLevel,
+                   specialmajor:majorArray,
+                   intro:respObj.discription,
+                   comLicense:respObj.imgUrlBus,
+                   uniLicense:respObj.imgUrlAgree,
+                   hasBusLicense:respObj.imgUrlBus!="",
+                   hasUniLicense:respObj.imgUrlAgree!="",
+                   edit:false,
+                   view:true
+               }
+               console.log(resumedata);
+               appCont.resume = resumedata;
           }
 
-
-          var specialLevel="";
-          if(respObj.propertyType!=""){
-              $(".uni-level input[value='"+respObj.propertyType+"']").attr("checked","true");
-              if(respObj.propertyType=="0"){
-                  specialLevel="985";
-              }else{
-                  specialLevel="211";
-              }
-
-          }
-          var resumedata = {
-              uni:respObj.name,
-              classific:respObj.type,
-              amount:respObj.scale,
-              level:respObj.property,
-              specialLv:specialLevel,
-              specialmajor:majorArray,
-              intro:respObj.discription,
-              comLicense:"",
-              uniLicense:"",
-              edit:false,
-              view:true
-          }
-          appCont.resume = resumedata;
-          //alert(resp.info);
      })
 })()
 
@@ -156,7 +160,7 @@ var appCont = new Vue({
               curpage:1,
               totalpages:1,
               pagesize:3,
-              newLink:"uniRequire.html?new=1&userId="+parObj.userId,
+              newLink:"uniRequire.html?new=1&userId="+parObj.userId+"&loginId="+parObj.loginId,
               items:[
                    {classic:"校企合作",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11"},
                    {classic:"校企合作",major:"通信工程",IncProps:"国有企业",IncScale:"600人以上",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11"},
@@ -945,7 +949,7 @@ function navEventBind(){
                 return false;
             });
         }
-        //需求面板
+        //需求面板请求结果
         if($(this).attr("paneid")=="requireBox"){
              var postdata = {
                   userId:parObj.userId,
@@ -965,6 +969,23 @@ function navEventBind(){
         selectInitPos();
     });
 };
+//如果有主题跳转信息
+if(parObj.theme){
+     switch (parObj.theme) {
+          case "vip":
+               $(".sideBox li[paneid='vip-center']").trigger("click");
+               break;
+          case "require":
+               $(".sideBox li[paneid='requireBox']").trigger("click");
+               break;
+          case "combi":
+               $(".sideBox li[paneid='uni-coop']").trigger("click");
+               break;
+          case "collect":
+               $(".sideBox li[paneid='collectBox']").trigger("click");
+               break;
+     }
+}
 function selectInit(){
      $(".selectee input").each(function(){
           $(this).width($(this).width()-20);
@@ -1068,7 +1089,6 @@ function refreshEventBind(){
           }
      })
 };
-
 function datepickEventBind(){
   var nowTemp = new Date();
   var timediff = 6*24*3600*1000;

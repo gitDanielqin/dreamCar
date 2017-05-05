@@ -1,10 +1,64 @@
+var parObj= EventUtils.urlExtrac(window.location);
+var isNewRequire = true;
+var respObj = {};
+if(parObj.new!="1"){//非首次发布
+     isNewRequire=false;
+     var pageindex = parObj.demandType;
+     (function(){
+          var postdata={
+               userId:parObj.userId,
+               loginIdentifier:parObj.loginId,
+               demandId:parObj.demandId
+          }
+          EventUtils.ajaxReq("/demand/company/getInfo","get",postdata,function(resp,status){
+               respObj = resp.data;
+               console.log(respObj);
+               if(pageindex=="0"){//如果是校企合作需求详情
+                    var combidata ={
+                         datatype:"combi",
+                         header:respObj.title,
+                         initAddress:{
+                              province:respObj.address.split(";")[0],
+                              city:respObj.address.split(";")[1],
+                              district:respObj.address.split(";")[2]
+                         },
+                         initPosition:{
+                              pos_1:respObj.job.split(";")[0],
+                              pos_2:respObj.job.split(";")[1],
+                              pos_3:respObj.job.split(";")[2]
+                         },
+                         incReq:{
+                              stuScale:respObj.professionCount,
+                              uniLevel:respObj.property,
+                              uniClassific:respObj.type,
+                         },
+                         incApply:{
+                              posAmount:respObj.jobCount,
+                              trainWay:respObj.trainType,
+                         },
+                         requireDesc:respObj.discription,
+                         contact:{
+                              person:respObj.linkMan,
+                              phone:respObj.mobile,
+                              address:respObj.companyAddress
+                         }
+                    }
+                    appMain.combiData = combidata;
+               };
+               $(".cont-combi .major-input-1 input").val(respObj.profession.split(";")[0]);
+               $(".cont-combi .major-input-2 input").val(respObj.profession.split(";")[1]);
+          });
+     })()
+};
+
 var appMain = new Vue({
      el:"#app-main",
      data:{
+          newRequire:isNewRequire,
           showpage:{
-               page1:true,
-               page2:false,
-               page3:false
+               page1:pageindex=="0",
+               page2:pageindex=="1",
+               page3:pageindex=="2"
           },
           database:{
                addrData:addArray,
@@ -26,21 +80,24 @@ var appMain = new Vue({
           combiData:{
                datatype:"combi",
                header:"",
+               initAddress:{
+                    province:"不限",
+                    city:"不限",
+                    district:"不限"
+               },
+               initPosition:{
+                    pos_1:"不限",
+                    pos_2:"不限",
+                    pos_3:"不限"
+               },
                incReq:{
-                    major:{major_1:"",major_2:""},
                     stuScale:"",
                     uniLevel:"",
                     uniClassific:"",
                },
                incApply:{
-                    pos:{
-                         pos_1:"",
-                         pos_2:"",
-                         pos_3:""
-                    },
                     posAmount:"",
                     trainWay:"",
-                    traintime:[],
                },
                requireDesc:"",
                contact:{
@@ -144,6 +201,45 @@ var appMain = new Vue({
                     this.directData.contact.address=incAddress;
                }
                addBox.hide();
+          },
+          publish:function(type){
+               if(type=="combi"){
+                    if($(".cont-combi .time-table").find("td.on").length>0){
+                         var timestring ="";
+                         $(".cont-combi .time-table .time-tr").each(function(){
+                              $(this).find("td.t-cell").each(function(){
+                                   timestring+=$(this).hasClass("on")?"1":"0";
+                              });
+                              timestring+=";";
+                         });
+                         timestring= timestring.slice(0,timestring.length-1);
+                    }else{
+                         var timestring ="";
+                    }
+
+                    var postdata = {
+                         userId: parObj.userId,
+                         title:this.combiData.header,
+                         profession:$(".cont-combi .major-input-1 input").val()+";"+$(".cont-combi .major-input-2 input").val(),
+                         professionCount:this.combiData.incReq.stuScale,
+                         property:this.combiData.incReq.uniLevel,
+                         type:this.combiData.incReq.uniClassific,
+                         address:$(".cont-combi .sel-province input").val()+";"+$(".cont-combi .sel-city input").val()+";"+$(".cont-combi .sel-district input").val(),
+                         job: $(".cont-combi .sel-pos-1 input").val()+";"+$(".cont-combi .sel-pos-2 input").val()+";"+$(".cont-combi .sel-pos-3 input").val(),
+                         jobCount:this.combiData.incApply.posAmount,
+                         trainType:this.combiData.incApply.trainWay,
+                         trainTime:timestring,
+                         discription:this.combiData.requireDesc,
+                         linkMan:this.combiData.contact.person,
+                         mobile:this.combiData.contact.phone,
+                         companyAddress:this.combiData.contact.address
+                    };
+                    // console.log(postdata);
+                    EventUtils.ajaxReq('/demand/company/apply','post',postdata,function(resp,status){
+                    //     console.log(resp);
+                        window.location.href="incCenter.html?userId="+parObj.userId+"&loginId="+parObj.loginId;
+                   })
+               }
           }
      },
      mounted:function(){
@@ -153,8 +249,8 @@ var appMain = new Vue({
                $(".steps li:nth-of-type(1)").addClass("past");
                $(".steps li:nth-of-type(2)").addClass("on");
           });
+          selectInitInput();
           selectInitPos();
-          selectRepos()
           selectInit();
           selectTime();
           selectWelfare();
