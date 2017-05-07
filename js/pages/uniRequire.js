@@ -3,12 +3,85 @@ var parObj= EventUtils.urlExtrac(window.location);
 var isNewRequire = true;
 if(parObj.new!="1"){
      isNewRequire=false;
+     var pageindex = parObj.demandType;
+     (function(){
+          var postdata={
+               userId:parObj.userId,
+               loginIdentifier:parObj.loginId,
+               demandId:parObj.demandId
+          }
+          EventUtils.ajaxReq("/demand/school/getInfo","get",postdata,function(resp,status){
+               respObj = resp.data;
+               console.log(respObj);
+               if(pageindex=="0"){//如果是校企合作需求详情
+                    var combidata ={
+                         datatype:"combi",
+                         header:respObj.title,
+                         initAddress:{
+                              province:respObj.address.split(";")[0],
+                              city:respObj.address.split(";")[1],
+                              district:respObj.address.split(";")[2]
+                         },
+                         initPosition:{
+                              pos_1:respObj.job.split(";")[0],
+                              pos_2:respObj.job.split(";")[1],
+                              pos_3:respObj.job.split(";")[2]
+                         },
+                         uniApply:{
+                              stuScale:respObj.professionCount,
+                              trainWay:respObj.trainType,
+                         },
+                         incApply:{
+                              posAmount:respObj.jobCount,
+                              incProps:respObj.property,
+                              incScale:respObj.scale,
+                         },
+                         requireDesc:respObj.discription,
+                         contact:{
+                              person:respObj.linkMan,
+                              phone:respObj.mobile,
+                              address:respObj.schoolAddress
+                         }
+                    }
+                    appMain.combiData = combidata;
+               };
+               // 专业数据
+               $(".cont-combi .major-input-1 input").val(respObj.profession.split(";")[0]);
+               $(".cont-combi .major-input-2 input").val(respObj.profession.split(";")[1]);
+               // 企业行业
+               $(".cont-combi .input-area-1 input").val(respObj.type.split(";")[0]);
+               $(".cont-combi .input-area-2 input").val(respObj.type.split(";")[1]);
+
+               //初始化联合培养时间表
+               $(".cont-combi .time-table td.on").removeClass("on");
+               var timeArray = respObj.trainTime.split(";");
+               for(var i=0;i<timeArray.length;i++){
+                    for(var j=0;j<timeArray[i].length;j++){
+                         if(timeArray[i].charAt(j)=="1"){
+                              $(".cont-combi .time-table .time-tr").eq(i).find("td.t-cell").eq(j).addClass("on");
+                         }
+                    }
+               }
+          });
+     })()
 };
+var appTop = new Vue({
+     el:"#app-top",
+     data:{
+          centerLink:"uniCenter.html?userId="+parObj.userId+"&loginId="+parObj.loginId
+     },
+     methods:{
+          showMsg:function(){
+               appModal.show.modal=true;
+               appModal.show.message=true;
+          }
+     }
+})
 var appMain = new Vue({
      el:"#app-main",
      data:{
           newRequire:isNewRequire,
-          showCombi:true,
+          showCombi:pageindex=="0"||isNewRequire,
           database:{
                addrData:addArray,
                uni:{
@@ -32,6 +105,16 @@ var appMain = new Vue({
           combiData:{
                datatype:"combi",
                header:"",
+               initPosition:{
+                    pos_1:"不限",
+                    pos_2:"不限",
+                    pos_3:"不限"
+               },
+               initAddress:{
+                    province:"不限",
+                    city:"不限",
+                    district:"不限"
+               },
                uniApply:{
                     stuScale:"不限",
                     trainWay:"不限",
@@ -87,6 +170,8 @@ var appMain = new Vue({
                }else{
                     this.showCombi=false;
                }
+               // selectInitPos();
+               $(".pop-major").hide();
                $(".steps li:nth-of-type(1)").removeClass("past");
                $(".steps li:nth-of-type(2)").removeClass("on");
           },
@@ -105,6 +190,7 @@ var appMain = new Vue({
           },
           popAddrBox:function(obj){
                $(obj).siblings(".addr-box").show();
+               selectInitPos();
           },
           confirmIncAddr:function(target,type){
                var incAddress="";
@@ -187,8 +273,13 @@ var appMain = new Vue({
                $(".steps li:nth-of-type(1)").addClass("past");
                $(".steps li:nth-of-type(2)").addClass("on");
           });
+          $("body").click(function(){
+               $(".pop-major").hide();
+               $(".addr-box").hide();
+          })
           selectInitInput();
           selectInitPos();
+          navEventBind();
           // selectRepos();
           selectInit();
           selectTime();
@@ -196,17 +287,42 @@ var appMain = new Vue({
      watch:{
           "combiData.showIncAddr":function(curval){
                if(curval==true){
-               //     selectInitPos();
+               //    selectInitPos();
                }
           },
           "recruitData.showAddr":function(curval){
                if(curval==true){
-               //     selectInitPos();
+                //   selectInitPos();
                }
           }
      }
 })
 
+var appModal = new Vue({
+     el:"#app-modal",
+     data:{
+          show:{modal:false,message:false}
+     },
+     methods:{
+          closeMsg:function(){
+               this.show.message = false;
+               this.show.modal = false;
+          }
+     }
+})
+
+function navEventBind(){//头部导航栏事件绑定
+     $(".navs ul li").click(function(){
+          $(".navs .on").removeClass("on");
+          $(this).addClass("on");
+          $(".nav-cont").hide();
+          $(".cont-"+$(this).attr("name")).show();
+          $(".pop-major").hide();
+          $(".steps li:nth-of-type(1)").removeClass("past");
+          $(".steps li:nth-of-type(2)").removeClass("on");
+          selectInitPos();
+     })
+}
 function selectInit(){
      $(".major-input input").each(function(index){
           $(this).width($(this).width()-20);

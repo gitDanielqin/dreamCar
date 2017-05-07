@@ -1,6 +1,7 @@
 var parObj= EventUtils.urlExtrac(window.location);
 var isNewRequire = true;
 var respObj = {};
+var pageindex="0";
 if(parObj.new!="1"){//非首次发布
      isNewRequire=false;
      var pageindex = parObj.demandType;
@@ -47,10 +48,32 @@ if(parObj.new!="1"){//非首次发布
                };
                $(".cont-combi .major-input-1 input").val(respObj.profession.split(";")[0]);
                $(".cont-combi .major-input-2 input").val(respObj.profession.split(";")[1]);
+               //初始化联合培养时间表
+               $(".cont-combi .time-table td.on").removeClass("on");
+               var timeArray = respObj.trainTime.split(";");
+               for(var i=0;i<timeArray.length;i++){
+                    for(var j=0;j<timeArray[i].length;j++){
+                         if(timeArray[i].charAt(j)=="1"){
+                              $(".cont-combi .time-table .time-tr").eq(i).find("td.t-cell").eq(j).addClass("on");
+                         }
+                    }
+               }
           });
      })()
 };
 
+var appTop = new Vue({
+     el:"#app-top",
+     data:{
+          centerLink:"incCenter.html?userId="+parObj.userId+"&loginId="+parObj.loginId
+     },
+     methods:{
+          showMsg:function(){
+               appModal.show.message=true;
+               appModal.show.modal=true;
+          }
+     }
+})
 var appMain = new Vue({
      el:"#app-main",
      data:{
@@ -150,22 +173,11 @@ var appMain = new Vue({
           clickNav:function(type,obj){
                $(".navs ul li.on").removeClass("on");
                $(obj).addClass("on");
-               if(type=="combi"){
-                    this.showpage.page1=true;
-                    this.showpage.page2=false;
-                    this.showpage.page3=false;
-               }else if(type=="recruit"){
-                    this.showpage.page1=false;
-                    this.showpage.page2=true;
-                    this.showpage.page3=false;
-               }else if(type=="direct"){
-                    this.showpage.page1=false;
-                    this.showpage.page2=false;
-                    this.showpage.page3=true;
-               }
+               $(".nav-cont").hide();
+               $(".cont-"+type).show();
                $(".steps li:nth-of-type(1)").removeClass("past");
                $(".steps li:nth-of-type(2)").removeClass("on");
-            // selectInitPos();
+              selectInitPos();
           },
           fontCal:function(str,type){
                if(str.length<=1000){
@@ -184,7 +196,7 @@ var appMain = new Vue({
           },
           popAddrBox:function(obj){
                $(obj).siblings(".addr-box").show();
-          //     selectInitPos();
+               selectInitPos();
           },
           confirmIncAddr:function(target,type){
                var incAddress="";
@@ -234,11 +246,15 @@ var appMain = new Vue({
                          mobile:this.combiData.contact.phone,
                          companyAddress:this.combiData.contact.address
                     };
+                    if(parObj.demandId){
+                         postdata.demandId = parObj.demandId;
+                    }
+                    console.log(postdata);
                     // console.log(postdata);
-                    EventUtils.ajaxReq('/demand/company/apply','post',postdata,function(resp,status){
+                     EventUtils.ajaxReq('/demand/company/apply','post',postdata,function(resp,status){
                     //     console.log(resp);
-                        window.location.href="incCenter.html?userId="+parObj.userId+"&loginId="+parObj.loginId;
-                   })
+                    //     window.location.href="incCenter.html?userId="+parObj.userId+"&loginId="+parObj.loginId;
+                    })
                }
           }
      },
@@ -249,6 +265,10 @@ var appMain = new Vue({
                $(".steps li:nth-of-type(1)").addClass("past");
                $(".steps li:nth-of-type(2)").addClass("on");
           });
+          $("body").click(function(){
+               $(".pop-major").hide();
+               $(".addr-box").hide();
+          })
           selectInitInput();
           selectInitPos();
           selectInit();
@@ -256,7 +276,18 @@ var appMain = new Vue({
           selectWelfare();
      }
 })
-
+var appModal = new Vue({
+     el:"#app-modal",
+     data:{
+          show:{modal:false,message:false}
+     },
+     methods:{
+          closeMsg:function(){
+               this.show.message = false;
+               this.show.modal = false;
+          }
+     }
+})
 function selectRepos(){
      $(".selectee ul").each(function(){
            var sibInput=$(this).siblings("input");

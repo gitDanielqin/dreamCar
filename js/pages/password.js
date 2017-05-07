@@ -9,9 +9,9 @@ var appCont = new Vue({
      el:"#app-content",
      data:{
           show:{
-               step1:false,
+               step1:true,
                step2:false,
-               step3:true,
+               step3:false,
                email:true,
                mobile:false,
                mobilehint:false,

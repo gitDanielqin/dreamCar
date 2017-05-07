@@ -19,7 +19,7 @@ var respObj={}; //请求的本页面的数据集合
                          city: respObj.city,
                          district: respObj.area
                     },
-                    email: respObj.loginName
+                    email: respObj.email
                }
                appPorto.inc = respObj.name;
                appPorto.briefInfo = portobrief;
@@ -41,8 +41,8 @@ var respObj={}; //请求的本页面的数据集合
                     intro:respObj.discription,
                     comLicense:respObj.imgUrl,
                     hasBusLicense:respObj.imgUrl!="",
-                    edit:false,
-                    view:true
+                    edit:respObj.infoStatus=="0",
+                    view:respObj.infoStatus!="0"
                };
                appCont.resume = resumedata;
           }

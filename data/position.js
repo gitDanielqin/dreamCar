@@ -797,3 +797,29 @@ var posArray = [
      };
      posArray.push(expos1);
 })()
+
+function maxposcalculate(){
+     var maxpos1="";
+     var maxpos2="";
+     var maxpos3="";
+     for(var i=0;i<posArray.length;i++){
+          if(posArray[i].name.length>maxpos1.length){
+               maxpos1 = posArray[i].name;
+          }
+          for(var j=0;j<posArray[i].subpos.length;j++){
+               if(posArray[i].subpos[j].name.length>maxpos2.length){
+                    maxpos2 = posArray[i].subpos[j].name;
+               }
+               for(var k=0;k<posArray[i].subpos[j].subpos.length;k++){
+                    if(posArray[i].subpos[j].subpos[k].length>maxpos3.length){
+                         maxpos3 = posArray[i].subpos[j].subpos[k];
+                    }
+               }
+          }
+     }
+     console.log(maxpos1,maxpos1.length);
+     console.log(maxpos2,maxpos2.length);
+     console.log(maxpos3,maxpos3.length);
+}
+// maxposcalculate();
+// })()

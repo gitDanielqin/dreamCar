@@ -1,11 +1,11 @@
 (function(){
      var templMajor= '<div style="position:relative" class="pop-major-box">\
-          <span @click="pop(\'major\')" class="major-input major-input-1"><input type="text" placeholder="一级学科" disabled v-model="selMajor" ></span>\
-          <span @click="pop(\'submajor\')" class="major-input major-input-2"><input type="text" placeholder="二级学科" disabled v-model="selSubMajor"></span>\
+          <span @click.stop="pop(1,$event.target)" class="major-input major-input-1"><input type="text" placeholder="一级学科" disabled v-model="selMajor" ></span>\
+          <span @click.stop="pop(2,$event.target)" class="major-input major-input-2"><input type="text" placeholder="二级学科" disabled v-model="selSubMajor"></span>\
           <input type="text" class="ex-major" placeholder="请输入专业名称" v-model="exMajor" v-show="showExMajor"/>\
           <div class="pop-major-1 pop-major" v-show="showMajor1">\
                <h3 class="pop-major-title">专业名称<i class="pic-wrapper major-closer" @click=closePop><span class="pic-icon icon-close"></span></i></h3>\
-               <div class="major-table-box">\
+               <div class="major-table-box pop-box">\
                     <table>\
                          <tr v-for="tr in major.trs">\
                               <td @click="clickMajor($event.target)">{{major.dataArray[tr*4]}}</td>\
@@ -18,7 +18,7 @@
           </div>\
           <div class="pop-major-2 pop-major" v-show="showMajor2">\
                <h3 class="pop-major-title">专业名称<i class="pic-wrapper major-closer" @click=closePop><span class="pic-icon icon-close"></span></i></h3>\
-               <div class="major-table-box">\
+               <div class="major-table-box pop-box">\
                     <table>\
                          <tr v-for="tr in submajor.trs">\
                               <td @click="clickSubMajor($event.target)">{{submajor.dataArray[tr*3]}}</td>\
@@ -67,32 +67,20 @@
                return dataBase;
           },
           methods:{
-               pop:function(type){
-                    if(type=="major"){
-                         $(".pop-major-1").hide();
-                         $(".pop-major-2").hide();
-                         this.showMajor2=false;
-                         this.showMajor1 = true;
-                    }else if(type=="submajor"){
-                         $(".pop-major-1").hide();
-                         $(".pop-major-2").hide();
-                         this.showMajor1=false;
-                         this.showMajor2 = true;
-                    }
+               pop:function(index,obj){
+                    $(".pop-major").hide();
+                    $(obj).parent().siblings(".pop-major-"+index).show();
                },
                clickMajor:function(obj){
                     this.selMajor = $(obj).html();
-                    this.showMajor1=false;
-                    this.showMajor2 = false;
+                    $(".pop-major").hide();
                },
                clickSubMajor:function(obj){
                     this.selSubMajor = $(obj).html();
-                    this.showMajor1=false;
-                    this.showMajor2 = false;
+                    $(".pop-major").hide();
                },
                closePop:function(){
-                    this.showMajor1=false;
-                    this.showMajor2 = false;
+                    $(".pop-major").hide();
                }
           },
           mounted:function(){
@@ -103,8 +91,10 @@
                     })
                })
                $(".pop-major-2").each(function(){
+                    //console.log($(this).siblings(".major-input-2").offset().left)
+                    //console.log($(this).siblings(".major-input-2").offset().left-$(this).parent(".pop-major-box").offset().left);
                     $(this).css({
-                         "left":$(this).siblings(".major-input-2").position().left+"px",
+                         "left":$(this).siblings(".major-input-2").offset().left-$(this).parent(".pop-major-box").offset().left+"px",
                          "top":$(this).siblings(".major-input-2").height()-2+"px"
                     })
                });

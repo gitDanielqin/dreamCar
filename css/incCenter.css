@@ -169,24 +169,7 @@ position: absolute;  display:none;}
 .pageBot li.page-index{width:30px;}
 
 
-/*消息弹框样式*/
-.msg-box{margin-top:15%; border: 10px solid rgba(0,0,0,0.3)}
-.msg-box i.closer{display: inline-block; font-family: Consolas;}
-.msg-box .msg-date{font-size: 18px; padding-left:30px; }
-.msg-back{cursor: pointer;}
-.msg-body li{font-size: 14px; border-top:1px solid #fbd0a4; line-height: 39px; cursor: pointer;}
-.msg-body li span{display: inline-block; vertical-align: middle;}
-.msg-body li span:first-child{width:135px; padding-left: 30px;}
-.msg-body li span:nth-of-type(2){width:534px;}
-.msg-body li span:nth-child(3){width:92px; text-align: center}
-.msg-body li span:nth-child(4){width:97px; text-align: center}
-.msg-body li:nth-child(2n){background: white;}
-.msg-body li:nth-child(2n+1){background: #fcf1e3;}
-.msg-body li:last-child{border-bottom: 1px solid #fbd0a4;}
-.msg-detail p{padding-left: 42px;}
-.msg-bot .page-bot{display: inline-block;}
-.msg-bot .page-bot li{margin: 0 10px;}
-.close{cursor: pointer;}
+
 
 /*手机弹框样式*/
 .phone-change{position: absolute; left:50%; top: 256px;margin-left: -250px;  }
@@ -258,9 +241,6 @@ position: absolute;  display:none;}
 .porto-upload .close .icon-close{background: url("../images/sprite.png") no-repeat -322px -52px; width: 26px;height: 25px;}
 .phone-change .icon-close{background: url("../images/sprite.png") no-repeat -289px -52px; width: 26px;height: 25px;}
 .wechat-bind .icon-close{background: url("../images/sprite.png") no-repeat -289px -52px; width: 26px;height: 25px;}
-.msg-box-head .icon-return{background: url("../images/sprite.png") no-repeat -191px -2px; width: 32px;height: 29px; margin-top: 30px;}
-.msg-box-head .icon-email{background: url("../images/sprite.png") no-repeat -147px -5px; width: 28px;height: 20px;}
-.msg-box-head .icon-close{background: url("../images/sprite.png") no-repeat -289px -52px; width: 26px;height: 25px; margin-top: 32px;}
 .trade-box .closer .icon-close{background: url("../images/sprite.png") no-repeat -60px -55px; width: 14px;height: 13px;}
 /*.icon-trigle-up{background: url("../images/sprite.png") no-repeat -62px -155px; height: 18px;}*/
 

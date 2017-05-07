@@ -14,7 +14,7 @@
 
 .class-name a:hover{ text-decoration: underline;}
 /*专业弹出样式*/
-.major-input input{width: 148px;}
+.major-input input{width: 124px; padding-right: 20px; background-position: 134px center;}
 
 .sel-addr .selectee{width:100px; margin-right: 20px;}
 .main .sInfo{ border: 1px solid #ccc;}
@@ -76,7 +76,7 @@
 .hd-icon{width:30px; height:30px; line-height: 30px; margin-right: 10px;background: url("../images/sprite.png") no-repeat 8px -127px;}
 .resume-item{font-size: 14px; margin-bottom: 20px;}
 .resume-item label{margin-right: 10px;}
-.resumeCont input{border: 1px solid #ccc; height: 24px; line-height: 24px; padding-left: 10px; color: #999; box-sizing: border-box;}
+.resumeCont input{border: 1px solid #ccc; height: 24px; line-height: 24px; padding-left: 10px; color: #999;}
 .uni-level input[type="radio"]{margin-left: 20px; margin-right: 7px; vertical-align: middle;}
 .btn-add-major{background: none;}
 .btn-del-major{background: none; color: red;}
@@ -155,24 +155,7 @@ position: absolute;  display:none;}
 .pageBot li.side-page{width:60px;}
 .pageBot li.page-index{width:30px;}
 
-/*消息弹框样式*/
-.msg-box{margin-top:15%; border: 10px solid rgba(0,0,0,0.3)}
-.msg-box i.closer{display: inline-block; font-family: Consolas;}
-.msg-box .msg-date{font-size: 18px; padding-left:30px; }
-.msg-back{cursor: pointer;}
-.msg-body li{font-size: 14px; border-top:1px solid #fbd0a4; line-height: 39px; cursor: pointer;}
-.msg-body li span{display: inline-block; vertical-align: middle;}
-.msg-body li span:first-child{width:135px; padding-left: 30px;}
-.msg-body li span:nth-of-type(2){width:534px;}
-.msg-body li span:nth-child(3){width:92px; text-align: center}
-.msg-body li span:nth-child(4){width:97px; text-align: center}
-.msg-body li:nth-child(2n){background: white;}
-.msg-body li:nth-child(2n+1){background: #fcf1e3;}
-.msg-body li:last-child{border-bottom: 1px solid #fbd0a4;}
-.msg-detail p{padding-left: 42px;}
-.msg-bot .page-bot{display: inline-block;}
-.msg-bot .page-bot li{margin: 0 10px;}
-.close{cursor: pointer;}
+
 
 /*评价弹框样式*/
 .comment-box{width: 765px; margin: 15% auto 0; background: white; }
@@ -252,9 +235,6 @@ position: absolute;  display:none;}
 .porto-upload .close .icon-close{background: url("../images/sprite.png") no-repeat -322px -52px; width: 26px;height: 25px;}
 .phone-change .icon-close{background: url("../images/sprite.png") no-repeat -289px -52px; width: 26px;height: 25px;}
 .wechat-bind .icon-close{background: url("../images/sprite.png") no-repeat -289px -52px; width: 26px;height: 25px;}
-.msg-box-head .icon-return{background: url("../images/sprite.png") no-repeat -191px -2px; width: 32px;height: 29px; margin-top: 30px;}
-.msg-box-head .icon-email{background: url("../images/sprite.png") no-repeat -147px -5px; width: 28px;height: 20px;}
-.msg-box-head .icon-close{background: url("../images/sprite.png") no-repeat -289px -52px; width: 26px;height: 25px; margin-top: 32px;}
 /*置顶弹框*/
 .refresh-box{position: absolute; left: 50%; top: 50%;transform: translateX(-50%);box-shadow: 0 5px 20px rgba(0,0,0,0.5);}
 .refresh-hd{background: #f7a132;}

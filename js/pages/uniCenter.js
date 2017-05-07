@@ -21,7 +21,7 @@ var respObj={}; //请求的本页面的数据集合
                        city: respObj.city,
                        district: respObj.area
                    },
-                   email: respObj.loginName
+                   email: respObj.email
                }
                appPorto.uni = respObj.name;
                appPorto.briefInfo = portobrief;
@@ -58,10 +58,10 @@ var respObj={}; //请求的本页面的数据集合
                    uniLicense:respObj.imgUrlAgree,
                    hasBusLicense:respObj.imgUrlBus!="",
                    hasUniLicense:respObj.imgUrlAgree!="",
-                   edit:false,
-                   view:true
+                   edit:respObj.infoStatus=="0",
+                   view:respObj.infoStatus!="0"
                }
-               console.log(resumedata);
+               //console.log(resumedata);
                appCont.resume = resumedata;
           }
 
@@ -481,7 +481,7 @@ var appCont = new Vue({
               this.resume.specialLv=$(".uni-level input[type='radio']:checked").val()=="0"?"985":"211";
          },
          modItem:function(item){
-              var pageurl = "uniRequire.html?new=0&userId="+parObj.userId;
+              var pageurl = "uniRequire.html?new=0&userId="+parObj.userId+"&loginId="+parObj.loginId+"&demandId="+item.demandId+"&demandType="+item.demandType;
               window.open(pageurl,"_blank");
          },
          delItem:function(item){
@@ -866,7 +866,8 @@ var appModal = new Vue({
      }
 });
 function init_center(){
-     selectInit();
+     // selectInit();
+     selectInitInput();
      selectInitPos();
    init_safepos();
    navEventBind();
@@ -985,20 +986,6 @@ if(parObj.theme){
                $(".sideBox li[paneid='collectBox']").trigger("click");
                break;
      }
-}
-function selectInit(){
-     $(".selectee input").each(function(){
-          $(this).width($(this).width()-20);
-          $(this).css("padding-right",20+"px");
-        var bgPos=$(this).width()+10+"px center";
-        $(this).attr("disabled","true").css("background-position",bgPos);
-    });
-     $(".major-input input").each(function(index){
-          $(this).width($(this).width()-20);
-          $(this).css("padding-right",20+"px");
-          var bgPos=$(this).width()+10+"px center";
-          $(this).attr("disabled","true").css("background-position",bgPos);
-     })
 }
 
 function vipEventBind(){

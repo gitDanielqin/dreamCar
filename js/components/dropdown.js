@@ -35,6 +35,7 @@
             },
             clickEv: function(obj){
                $(".selectee ul").hide();
+               //$(".pop-box").hide();
                $(obj).siblings("ul").show();
                 return false;
             }
@@ -121,6 +122,11 @@
                       this.selpos3=posArray3[0];
                     }
 
+               },
+               "initpos":function(curval){
+                    if(curval){
+                         this.selpos1 = curval.pos_1;
+                    }
                }
           },
           mounted:function(){
@@ -291,6 +297,7 @@
      })
      // 选择下拉框定位
      function selectInitPos(){
+          // console.log(2);
          $(".selectee ul").each(function(){
                var sibInput=$(this).siblings("input");
                var parentObj = $(this).parent(".selectee");
