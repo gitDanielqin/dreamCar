@@ -38,13 +38,30 @@ var respObj={}; //请求的本页面的数据集合
                     scale:respObj.scale,
                     props:respObj.property,
                     specialLv:specialLevel,
-                    intro:respObj.discription,
+                    intro:respObj.discription!=undefined?respObj.discription:"",
                     comLicense:respObj.imgUrl,
                     hasBusLicense:respObj.imgUrl!="",
                     edit:respObj.infoStatus=="0",
                     view:respObj.infoStatus!="0"
                };
                appCont.resume = resumedata;
+               var percent = 0;
+              if(respObj.mobile!=""){
+                   percent+=50;
+              }
+              if(respObj.email!=""){
+                   percent+=30;
+              }
+              init_safepos(percent);
+               var configdata = {
+                    loginName:respObj.loginName,
+                    safeLevel:percent+"%",
+                    bind:{
+                         mobile:respObj.mobile,
+                         email:respObj.email
+                    }
+               }
+               appCont.config = configdata;
           }
 
      })
@@ -139,32 +156,14 @@ var appCont = new Vue({
               view:true
          },
          require:{
-              state:"全部类型",
+              state:"校企合作",
               period:"全部状态",
               curpage:1,
               totalpages:1,
               pagesize:3,
+              totalitems:1,
               newLink:"incRequire.html?new=1&userId="+parObj.userId+"&loginId="+parObj.loginId,
-              items:[
-                   {classic:"校企合作",coMajor:"合作专业",coScale:"合作人数",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",IncName:"企业名称",uniLevel:"高校性质",publicDate:"2017-3-5",publicTime:"24:00",IncPos:"岗位名称"},
-                   {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
-                   {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
-                   {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
-                   {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
-                   {classic:"企业直聘",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"大专",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:2,publicDate:"2017-2-14",publicTime:"24:00",IncAddr:"滨江"},
-                   {classic:"企业直聘",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"大专",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:2,publicDate:"2017-2-14",publicTime:"24:00",IncAddr:"滨江"},
-                   {classic:"企业直聘",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"大专",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:2,publicDate:"2017-2-14",publicTime:"24:00",IncAddr:"滨江"},
-              ],
-              results:[
-                   {classic:"校企合作",coMajor:"合作专业",coScale:"合作人数",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业业所属行业所属行业所属行",trainWay:"企业提供的培训方式",IncName:"企业名称",uniLevel:"高校性质",publicDate:"2017-3-5",publicTime:"24:00",IncPos:"岗位名称"},
-                   {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
-                   {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
-                   {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
-                   {classic:"招聘会",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"本科",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:20,publicDate:"2017-3-1",publicTime:"24:00",recruitDate:"2017-01-30",recruitAddr:"地点"},
-                   {classic:"企业直聘",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"大专",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:2,publicDate:"2017-2-14",publicTime:"24:00",IncAddr:"滨江"},
-                   {classic:"企业直聘",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"大专",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:2,publicDate:"2017-2-14",publicTime:"24:00",IncAddr:"滨江"},
-                   {classic:"企业直聘",salary:"7K-8K",major:"设计相关专业",exp:"1-3年经验",scolar:"大专",date:"2017-01-30",IncName:"杭州黄巢信息科技",IncProps:"国企",IncPos:"岗位名称",posAmount:2,publicDate:"2017-2-14",publicTime:"24:00",IncAddr:"滨江"},
-              ],
+              results:[],
               showCombi:true,
               showRecruit:true
          },
@@ -259,12 +258,56 @@ var appCont = new Vue({
                  {uniname:"高校名称",uniLevel:"高校性质",uniApply:"高校提供的培训方式",date:"2017-3-5",time:"24:00",coopState:"03",coPos:"合作岗位"},
                  {uniname:"高校名称",uniLevel:"高校性质",uniApply:"高校提供的培训方式",date:"2017-3-5",time:"24:00",coopState:"01",coPos:"合作岗位"}
             ]
+       },
+       config:{
+            loginName:"",
+            safeLevel:"80%",
+            bind:{mobile:"",email:""}
        }
     },
     watch:{
+         "config.bind.mobile":function(curval){
+              var percent = 0;
+              if(this.config.bind.mobile!=""){
+                   percent+=50;
+              }
+              if(this.config.bind.email!=""){
+                   percent+=30;
+              }
+              init_safepos(percent);
+              percent +="%";
+              this.config.safeLevel = percent;
+         },
+         "config.bind.email":function(curval){
+              var percent = 0;
+              if(this.config.bind.mobile!=""){
+                   percent+=50;
+              }
+              if(this.config.bind.email!=""){
+                   percent+=30;
+              }
+              init_safepos(percent);
+              percent +="%";
+              this.config.safeLevel = percent;
+         },
       "require.state":function(curval){
-           this.require.results=reqFilter(curval,this.require.period);
-           this.require.curpage=1;
+           if(curval=="校企合作"){
+                var postdata = {
+                     userId:parObj.userId,
+                     loginIdentifier:parObj.loginId,
+                     index:1,
+                     count:3
+                }
+                console.log(postdata);
+                EventUtils.ajaxReq("/demand/company/getList","get",postdata,function(resp,status){
+                     appCont.require.totalpages = resp.data.totalPage;
+                     appCont.require.pagesize = resp.data.pageSize;
+                     appCont.require.results = resp.data.list;
+                     appCont.require.totalitems = resp.data.totalRow;
+                })
+                this.require.curpage=1;
+           }
+
       },
       "require.period":function(curval){
            this.require.results=reqFilter(this.require.state,curval);
@@ -497,7 +540,19 @@ var appCont = new Vue({
                 this.collect.results.splice(index,1);
                 this.collect.items = cloneObj(this.collect.results);
            }
-      }
+      },
+      modifyMobile:function(){
+          appModal.show.mobile=true;
+          appModal.showModal=true;
+      },
+      modifyEmail:function(){
+          appModal.show.email=true;
+          appModal.showModal=true;
+      },
+      bindWechat:function(){
+          appModal.show.wechat=true;
+          appModal.showModal=true;
+      },
     },
     computed:{
          majorArr:function(){
@@ -535,7 +590,10 @@ var appModal = new Vue({
                stickybox:false,
                stickyhintbox:false,
                freshbox:false,
-               freshhintbox:false
+               freshhintbox:false,
+               mobile:false,
+               email:false,
+               wechat:false
           },
           sticky:{
                content:[
@@ -708,6 +766,18 @@ var appModal = new Vue({
           closePorto:function(){
                this.showUpload=false;
                this.showModal=false;
+          },
+          closeMobile:function(){
+               this.show.mobile=false;
+               this.showModal=false;
+          },
+          closeWechat:function(){
+               this.show.wechat=false;
+               this.showModal=false;
+          },
+          closeEmail:function(){
+               this.show.email=false;
+               this.showModal=false;
           }
      },
      watch:{
@@ -756,12 +826,9 @@ var appModal = new Vue({
      }
 });
 function init_center(){
-     selectInit();
+     // selectInit();
+   selectInitInput();
      selectInitPos();
-     init_safepos();
-  //  selectEventBind();
-  //  editEventBind();
-   // init_paneAdd();
    refreshEventBind();
    navEventBind();
    showContact();
@@ -772,12 +839,6 @@ function init_center(){
 init_center();
 
 function selectInit(){
-     $(".selectee input").each(function(){
-          $(this).width($(this).width()-20);
-          $(this).css("padding-right",20+"px");
-        var bgPos=$(this).width()+10+"px center";
-        $(this).attr("disabled","true").css("background-position",bgPos);
-    });
      $(".major-input input").each(function(index){
           $(this).width($(this).width()-20);
           $(this).css("padding-right",20+"px");
@@ -839,88 +900,25 @@ function uploadEventBind(){
             })
 }
 
-function reqFilter(type,state){
-     var filterArray = [];
-     var diff_day=0;
-     switch (state) {
-          case "三天内":
-               diff_day=3;
-               break;
-          case "一周内":
-               diff_day=7;
-               break;
-          case "一月内":
-               diff_day=30;
-               break;
-     };
-     if(type=="全部类型"){
-          if(state=="全部状态"){
-               filterArray = cloneObj(appCont.require.items);
-          }else{
-               for(var i=0; i<appCont.require.items.length;i++){
-                    if(diffDay(appCont.require.items[i].publicDate)<=diff_day){
-                         filterArray.push(appCont.require.items[i]);
-                    }
-               }
-          }
-     }else{
-          if(state=="全部状态"){
-               for(var i=0;i<appCont.require.items.length; i++){
-                    if(appCont.require.items[i].classic==type){
-                         filterArray.push(appCont.require.items[i]);
-                    }
-               }
-          }else{
-               for(var i=0;i<appCont.require.items.length; i++){
-                    if(appCont.require.items[i].classic==type&&diffDay(appCont.require.items[i].publicDate)<=diff_day){
-                         filterArray.push(appCont.require.items[i]);
-                    }
-               }
-          }
-     };
-     return filterArray;
-}
 
-function selectEventBind(){
-    $(".selectee ul li").bind({
-        "mouseover":function(){
-            $(this).addClass("over");
-        },
-       "mouseout":function(){
-           $(this).removeClass("over");
-       },
-       "click":function(){
-           $(this).siblings(".selected").removeClass("selected");
-           $(this).addClass("selected");
-           $(this).parent().siblings("input").val($(this).text());
-           $(this).parent().hide();
-           return false;
-       }
-     });
-    $(".selectee").bind("click",function(){
-        $(".selectee ul").hide();
-        $(this).children("ul").show();
-        return false;
-    });
-    $("body").bind("click",function(){
-        $(".selectee ul").hide();
-    })
-}
 function navEventBind(){
+     $(".sideBox .sub-li p").unbind("click").bind("click",function(){
+         $(this).siblings("p.on").removeClass("on");
+         $(this).addClass("on");
+         $(".content").children().hide();
+         $(".content").children("."+$(this).attr("paneid")).show();
+         selectInitPos();
+         return false;
+     });
+
     $(".sideBox>li").bind("click",function(){
         $(".sideBox").children("li.on").removeClass("on");
         $(this).addClass("on");
         $(".sideBox .sub-li").hide();
         if($(this).find(".sub-li").length>0){
             $(this).find(".sub-li").show();
-            $(this).find(".sub-li p").unbind("click").bind("click",function(){
-                $(".sideBox .sub-li .on").removeClass("on");
-                $(this).addClass("on");
-                $(".content").children().hide();
-                $(".content").children("."+$(this).attr("paneid")).show();
-                selectInitPos();
-                return false;
-            });
+            $(".content").children().hide();
+            $(".content").children("."+$(this).find(".sub-li .on").attr("paneid")).show();
         }
         //需求面板请求结果
         if($(this).attr("paneid")=="requireBox"){
@@ -930,14 +928,18 @@ function navEventBind(){
                   index:1,
                   count:3
              }
+             console.log(postdata);
              EventUtils.ajaxReq("/demand/company/getList","get",postdata,function(resp,status){
                   appCont.require.totalpages = resp.data.totalPage;
                   appCont.require.pagesize = resp.data.pageSize;
                   appCont.require.results = resp.data.list;
+                  appCont.require.totalitems = resp.data.totalRow;
              })
         }
-        $(".content").children().hide();
-        $(".content").children("."+$(this).attr("paneid")).show();
+        if($(this).attr("paneid")){
+            $(".content").children().hide();
+            $(".content").children("."+$(this).attr("paneid")).show();
+        }
         selectInitPos();
     });
 }
@@ -970,30 +972,13 @@ function vipEventBind(){
 
      })
 }
-function init_safepos(){
-     var p_left= Math.floor($(".safe-range p").width()*$(".safe-range").width()/100)-16+"px";
-    // var p_left= Math.floor($(".safe-range p").width())-16+"px";
-    $(".r-pointer").css("left",p_left);
+function init_safepos(percent){
+     var p_left= Math.floor($(".safe-range").width()*percent/100)-16+"px";
+     $(".r-pointer").css("left",p_left);
+     $("#safe-progress").css("width",percent+"%");
 }
 function modalEventBind(){
-    $(".bind-acc button.chg-phone").click(function(){
-        $(".modal").show();
-        $(".modal").children().hide();
-        $(".modal .phone-change").show();
-        $(".close").unbind("click").bind("click",function(){
-            $(this).closest("div").hide();
-            $(".modal").hide();
-        })
-    });
-    $(".bind-acc button.wechatBind").click(function(){
-        $(".modal").show();
-        $(".modal").children().hide();
-        $(".modal .wechat-bind").show();
-        $(".close").unbind("click").bind("click",function(){
-            $(this).closest("div").hide();
-            $(".modal").hide();
-        });
-    });
+
     $(".msg-center").click(function(){
         $(".modal").show();
         $(".modal").children().hide();

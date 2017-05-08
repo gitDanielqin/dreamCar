@@ -57,7 +57,7 @@
                 <li class="on" paneid="resumeBox"><i class="pic-icon icon-resume"></i>企业简介</li>
                 <li paneid="requireBox"><i class="pic-icon icon-study"></i>企业需求</li>
                 <li class="myCollect" paneid="collectBox"><i class="pic-icon icon-collect"></i>企业收藏</li>
-                <li paneid="combi-msg"><i class="pic-icon icon-apply"></i>消息中心
+                <li><i class="pic-icon icon-apply"></i>消息中心
                     <div class="sub-li LH37">
                         <p class="on" paneid="combi-msg">校企合作</p>
                         <p paneid="recruit-msg">招聘消息</p>
@@ -65,7 +65,7 @@
                 </li>
                 <li paneid="vip-center"><i class="pic-icon icon-apply"></i>VIP中心</li>
                 <li paneid="uni-coop"><i class="pic-icon icon-apply"></i>校企合作</li>
-                <li class="myConfig" paneid="conf-keyword"><i class="pic-icon icon-config"></i>设置
+                <li class="myConfig"><i class="pic-icon icon-config"></i>设置
                     <div class="sub-li paTop2 paBot2 LH30">
                         <p class="on" paneid="conf-keyword">修改密码</p>
                         <p paneid="conf-account">绑定账号</p>
@@ -136,7 +136,7 @@
                     <span class="new-require color-orange-f7 fSize16"><a :href="require.newLink"><img src="images/icon-require.png" /></a></span>
                     <div class="hd LH-H58 bg-white pRel">
                         <dropdown classes="state" :options="['校企合作','招聘会','企业直聘']" v-model="require.state"></dropdown>
-                        <p class="disInline fSize14 maL195">我发布过的需求<span class="color-orange2 maL10 maR10">{{require.items.length}}</span>个</p>
+                        <p class="disInline fSize14 maL195">我发布过的需求<span class="color-orange2 maL10 maR10">{{require.totalitems}}</span>个</p>
                     </div>
                     <ul class="info-items H410">
                         <li v-for="(item,index) in require.results" :name="item.classic" :date="item.publicDate">
@@ -459,12 +459,12 @@
             </div>
             <div class="conf-keyword ListBox">
                <h2 class="paTop14 LH-H52 fSize24 paLeft40">修改密码</h2>
-               <form class="paLeft40 fSize18 LH40">
-                    <div><label>登陆账号</label><span>1234567890</span></div>
-                    <div><label>当前密码</label><input type="password"/></div>
-                    <div><label>新密码</label><input type="password"/></div>
-                    <div><label>确认密码</label><input type="password"/></div>
-                    <div><label>验证码</label><input type="password"/><i class="varify-code W100 LH-H40 bg-pinkL maL10 t-center">验证码</i></div>
+               <form class="paLeft40 fSize16 LH40">
+                    <div><label>登陆账号</label><span>{{config.loginName}}</span></div>
+                    <div><label>当前密码</label><input type="password" placeholder="6-16字母、数字、无空格"/></div>
+                    <div><label>新密码</label><input type="password" placeholder="6-16字母、数字、无空格"/></div>
+                    <div><label>确认密码</label><input type="password" placeholder="6-16字母、数字、无空格"/></div>
+                    <div><label>验证码</label><input type="text"/><i class="varify-code W100 LH-H36 bg-pinkL maL10 t-center"><img src="images/picCode.jpg" /></i></div>
                     <div class="t-center paTop20 "><button class="LH-H40 W100 bg-orange2 fSize18 color-white maB40">保存</button></div>
                </form>
             </div>
@@ -472,15 +472,15 @@
                <h2 class="fSize24 LH-H63 maT9">绑定账号</h2>
                <div class="safeLevel maB12 H80 bg-gray-f7 pRel">
                     <h3 class="paLeft40 fSize18 LH-H40"><i class="pic-icon W20 maR10 icon-safe"></i>安全等级</h3>
-                    <div class="LH-H30 paLeft80 fSize14"><span class="maR12 color-red2">危险</span><div class="safe-range pRel"><p></p><div class="r-pointer LH26 H40 t-center W46 color-white">80%</div></div><span class="maL12 color-green">安全</span></div>
+                    <div class="LH-H30 paLeft80 fSize14"><span class="maR12 color-red2">危险</span><div class="safe-range pRel"><p id="safe-progress"></p><div class="r-pointer LH26 H40 t-center W46 color-white">{{config.safeLevel}}</div></div><span class="maL12 color-green">安全</span></div>
                     <i class="trigle-up"><img src="images/trigle-up02.jpg"/></i>
                </div>
-               <p class="fSize14 LH-H35">登录账号：123456789</p>
+               <p class="fSize14 LH-H35">登录账号：{{config.loginName}}</p>
                <p class="fSize14 LH-H35 maB22">绑定后，你可以同时使用以下方式登录</p>
                <ul class="bind-acc fSize18">
-                    <li><i class="pic-icon icon-phone"></i>已绑定手机号 12345678900<button class="maL20 chg-phone">更换手机号</button></li>
-                    <li><i class="pic-icon icon-email"></i><button>绑定邮箱</button></li>
-                    <li><i class="pic-icon icon-wechat"></i><button class="wechatBind">绑定微信账号</button></li>
+                    <li><i class="pic-icon icon-phone"></i>{{config.bind.mobile}}<button class="maL20 chg-phone" @click.stop="modifyMobile">更换手机号</button></li>
+                    <li><i class="pic-icon icon-email"></i>{{config.bind.email}}<button class="maL20" @click.stop="modifyEmail">更换邮箱</button></li>
+                    <li><i class="pic-icon icon-wechat"></i><button class="wechatBind" @click.stop="bindWechat">绑定微信账号</button></li>
                </ul>
             </div>
         </div>
@@ -517,23 +517,33 @@
                <div class="submit-btns t-center maT28"><button class="bg-blueL" id="btnSubmit">确定</button><button class="bg-orange2" @click="closePorto">取消</button></div>
           </div>
     </div>
-     <div class="phone-change W500 disNo" >
-         <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换手机号<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13"><i class="pic-icon icon-close"></i></i></h2>
-         <div class="bg-white paTop8 paBot60">
-            <h3 class="LH-H83 fSize18 t-center">请输入新的手机号，完成手机号绑定</h3>
-            <p><input type="text" placeholder="完成手机号" class="W290"></p>
-            <p><input type="text" placeholder="请输入短信认证码" class="W194"><button class="W96 H44 bg-blueM fSize14">获取验证码</button></p>
-            <p><input type="text" placeholder="确认登入密码" class="W290"></p>
-            <div class="btn-submit t-center paTop20"><button class="bg-blueM">完成绑定</button><button class="bg-orange2 maL40">返回</button></div>
-         </div>
-     </div>
-     <div class="wechat-bind W500 disNo">
-         <h2 class="LH-H60 fSize24 color-white t-center bg-blueM">微信登录<i class="pic-wrapper LH-H40 W40 close"><i class="pic-icon icon-close"></i></i></h2>
-         <div class="bg-white paTop14 t-center paBot53">
-            <i class="barCode pic-wrapper W284 LH-H284 bg-grayC maB22"></i>
-            <p class="LH-H40 W220 t-center bg-orange2 color-white maCenter" style="border-radius: 20px;">请使用微信扫一扫二维码登录</p>
-         </div>
-     </div>
+    <div class="bind-change W500" v-show="show.mobile" @click.stop="">
+        <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换手机号<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13" @click.stop="closeMobile"><i class="pic-icon icon-close"></i></i></h2>
+        <div class="bg-white paTop8 paBot60">
+           <h3 class="LH-H83 fSize18 t-center">请输入新的手机号，完成手机号绑定</h3>
+           <p><input type="text" placeholder="完成手机号" class="W290"></p>
+           <p><input type="text" placeholder="请输入短信认证码" class="W194"><button class="W96 H44 bg-blueM fSize14 color-white">获取验证码</button></p>
+           <p><input type="text" placeholder="确认登入密码" class="W290"></p>
+           <div class="btn-submit t-center paTop20"><button class="bg-blueM">完成绑定</button><button class="bg-orange2 maL40" @click.stop="closeMobile">返回</button></div>
+        </div>
+    </div>
+    <div class="bind-change W500" v-show="show.email" @click.stop="">
+        <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换绑定邮箱<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13" @click.stop="closeEmail"><i class="pic-icon icon-close"></i></i></h2>
+        <div class="bg-white paTop8 paBot60">
+           <h3 class="LH-H83 fSize18 t-center">请输入新的邮箱，完成邮箱绑定</h3>
+           <p><input type="text" placeholder="请输入邮箱" class="W290"></p>
+           <p><input type="text" placeholder="请输入验证码" class="W194"><button class="W96 H44 bg-blueM fSize14 color-white">获取验证码</button></p>
+           <p><input type="text" placeholder="确认登入密码" class="W290"></p>
+           <div class="btn-submit t-center paTop20"><button class="bg-blueM">完成绑定</button><button class="bg-orange2 maL40" @click.stop="closeEmail">返回</button></div>
+        </div>
+    </div>
+    <div class="wechat-bind W500" v-show="show.wechat" @click.stop="">
+        <h2 class="LH-H60 fSize24 color-white t-center bg-blueM">微信登录<i class="pic-wrapper LH-H40 W40 close" @click.stop="closeWechat"><i class="pic-icon icon-close"></i></i></h2>
+        <div class="bg-white paTop14 t-center paBot53">
+           <i class="barCode pic-wrapper W284 LH-H284 bg-grayC maB22"></i>
+           <p class="LH-H40 W220 t-center bg-orange2 color-white maCenter" style="border-radius: 20px;">请使用微信扫一扫二维码登录</p>
+        </div>
+    </div>
      <div class="msg-box  W888 maCenter disNo">
          <h3 class="bg-orange4 LH-H86 fSize30 color-white t-center msg-box-head"><i class="pic-icon fl maL30 back show02 disNo msg-back icon-return"></i><i class="pic-icon maR21 show01 icon-email"></i><span class="msg-head">消息提醒</span><span class="icon-wrapper fr maR10"><i class="close pic-icon W40 icon-close"></i></span></h3>
          <div class="msg-lis show01">

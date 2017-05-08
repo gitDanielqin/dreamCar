@@ -7,7 +7,7 @@
           <link href="css/index.css" rel="stylesheet" />
      </head>
      <body>
-          <div class="front-page pRel mod-page" id="app-front">
+          <div class="front-page pRel mod-page" id="app-front" v-cloak>
                <div class="inner" style="height:770px">
                     <div class="header clearfix color-white" >
                         <div class="logo fl clearfix">
@@ -33,17 +33,17 @@
                           <p class="maT38"><input type="text" placeholder="岗位名称/学校名称/企业名称" class="search LH-H48 v-top"/><button class="search-btn">搜索</button></p>
                     </div>
                     <ul class="lis-inline module-entry">
-                         <li><span class="pic-wrapper"><i class="pic-icon"></i></span><a href="display-uni.html">高校需求</a></li>
-                         <li><span class="pic-wrapper"><i class="pic-icon"></i></span><a href="display-company.html">企业需求</a></li>
-                         <li><span class="pic-wrapper"><i class="pic-icon"></i></span><a href="#">充电站</a></li>
-                         <li><span class="pic-wrapper"><i class="pic-icon"></i></span><a href="v-recruit.html">招聘会</a></li>
-                         <li><span class="pic-wrapper"><i class="pic-icon"></i></span><a href="display-position.html">校企岗位</a></li>
-                         <li><span class="pic-wrapper"><i class="pic-icon"></i></span><a href="#">职业规划</a></li>
+                         <li><a href="display-uni.html"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>高校需求</b></a></li>
+                         <li><a href="display-company.html"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>企业需求</b></a></li>
+                         <li><a href="#"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>充电站</b></a></li>
+                         <li><a href="v-recruit.html"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>招聘会</b></a></li>
+                         <li><a href="display-position.html"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>校企岗位</b></a></li>
+                         <li><a href="#"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>职业规划</b></a></li>
                     </ul>
                     <i class="pic-wrapper weiter" @click="downwards"><img src="images/icon-weiter.png" /></i>
                </div>
           </div>
-          <div class="mod-page class-show" id="app-show">
+          <div class="mod-page class-show" id="app-show" v-cloak>
                <h2 class="t-center p-title LH56">课堂展示</h2>
                <h3 class="p-subtitle LH37 fSize24 t-center">CLASSROOM</h3>
                <ul class="lis-inline inner show-pics">
@@ -54,7 +54,7 @@
                </ul>
                <i class="turn-left"><</i>
           </div>
-          <div class="about-us H742" id="app-about">
+          <div class="about-us H742 mod-page" id="app-about" v-cloak>
                <div class="inner paTop100">
                     <h2 class="t-center p-title LH66 color-white">关于我们</h2>
                     <h3 class="p-subtitle LH43 fSize24 t-center color-white">ABOUT US</h3>
@@ -67,8 +67,9 @@
                     </ul>
                </div>
           </div>
-          <div class="coop H433" id="app-coop">
-               <div class="inner paTop58 t-center">
+          <div class="mod-page">
+               <div class="coop H433" id="app-coop" v-cloak>
+                    <div class="inner paTop58 t-center">
                     <ul class="coop-navs LH66 fSize22 lis-inline disInline">
                          <li :class="{'on':showinc}" @click="showinc=true">合作企业</li><li :class="{'on':!showinc}" @click="showinc=false">合作高校</li>
                     </ul>
@@ -99,9 +100,9 @@
                          <i class="pic-wrapper fl maT34" @click.stop="uniRight"><img src="images/right-arrow.png" /></i>
                     </div> -->
                </div>
-          </div>
-          <div class="footer H238" id="app-footer">
-               <div class="inner clearfix">
+               </div>
+               <div class="footer H238" id="app-footer" v-cloak>
+                    <div class="inner clearfix">
                     <div class="logo fl clearfix paTop64">
                         <img src="images/logo.png" class="fl maR21"/>
                         <h2 class="fl LH-H63 fSize30 color-white">校企职通车</h2>
@@ -117,6 +118,7 @@
                          <i class="pic-wrapper"><img src="images/barcode.png" /></i>
                     </div>
                </div>
+               </div>
           </div>
           <div class="bot">
                <p class="inner LH50 t-center">校企职通车版权所有©2016 XxiaoQi  浙ICP备17007975号-2  浙公网安备3481464号</p>
@@ -124,6 +126,7 @@
           <script src="js/libs/jquery-3.1.0.min.js"></script>
           <script src="js/libs/vue.js"></script>
           <script src="js/common/common.js"></script>
+          <script src="js/common/onepage-scroll.js"></script>
           <script src="js/components/dropdown.js"></script>
           <script src="data/address.js"></script>
           <script src="js/pages/index.js"></script>

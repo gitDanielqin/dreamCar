@@ -13,6 +13,8 @@
 .selectee ul li.selected{background: #2ea8e6; color:#fff;}
 
 .class-name a:hover{ text-decoration: underline;}
+
+.resumeCont .selectee input{ width: 144px;}
 /*专业弹出样式*/
 .major-input input{width: 124px; padding-right: 20px; background-position: 134px center;}
 
@@ -139,8 +141,8 @@ position: absolute;  display:none;}
 .conf-keyword h2{border-bottom: 1px dashed #ccc;}
 .conf-keyword form div{margin-top: 20px;}
 .conf-keyword form label{width:118px; text-align: right; display: inline-block; margin-right: 30px;}
-.conf-keyword form input{width:290px; padding-left: 10px;background: #f2f0f0;height: 40px; line-height: 40px;}
-.conf-keyword .varify-code{display: inline-block;}
+.conf-keyword form input{width:290px; padding-left: 10px;background: #f2f0f0;height: 36px; line-height: 36px;}
+.conf-keyword .varify-code{display: inline-block; vertical-align: middle; width: 74px;}
 .conf-account{border: 1px solid #ccc; background: white;}
 .trigle-up{position: absolute; left: 50px; top: -14px;}
 .safe-range{width:382px; height:10px; padding: 2px 1px;border: 1px solid #ccc; border-radius:8px; display: inline-block; vertical-align: middle;}
@@ -164,14 +166,20 @@ position: absolute;  display:none;}
 .comment-operation{padding: 18px 0; text-align: center;}
 .comment-operation button{width: 120px; height: 40px; color: white; margin: 0 16px; font-size: 18px;}
 
-/*手机弹框样式*/
-.phone-change{position: absolute; left:50%; top: 256px;margin-left: -250px;  }
-.phone-change input{height:44px; background: #f3f3f3; font-size: 14px; padding-left: 10px;}
-.phone-change p{text-align: center; margin-bottom: 20px;}
-.phone-change .btn-submit button{width:120px; height:40px; font-size: 18px; color: #fff;}
+/*手机邮箱弹框样式*/
+.bind-change{position: absolute; left:50%; top: 256px;margin-left: -250px; box-shadow: 0 5px 20px rgba(0,0,0,0.5)}
+.bind-change .close:hover{background: #999;}
+.bind-change input{height:44px; background: #f3f3f3; font-size: 14px; padding-left: 10px;}
+.bind-change p{text-align: center; margin-bottom: 20px;}
+.bind-change .btn-submit button{width:120px; height:40px; font-size: 18px; color: #fff;}
+.bind-change .icon-close{background: url("../images/icon-bind-close.png") no-repeat center center; width: 26px;height: 25px;}
+
 /*微信弹框样式*/
-.wechat-bind{position: absolute; left:50%; top: 256px;margin-left: -250px;}
+.wechat-bind{position: absolute; left:50%; top: 256px;margin-left: -250px; box-shadow: 0 5px 20px rgba(0,0,0,0.5)}
 .wechat-bind .close{position: absolute; right:10px; top:13px;}
+.wechat-bind .close:hover{background: #999;}
+.wechat-bind .icon-close{background: url("../images/icon-bind-close.png") no-repeat center center; width: 26px;height: 25px;}
+
 
 /*头像编辑弹框样式*/
 .porto-upload{position: absolute; left:50%; top: 256px;margin-left: -250px;}
@@ -233,8 +241,6 @@ position: absolute;  display:none;}
 .bot-infos .icon-email{width:20px; height: 14px;background: url("../images/sprite.png") no-repeat -117px -34px;}
 .pop-major .icon-close{background: url("../images/sprite.png") no-repeat -61px -56px;}
 .porto-upload .close .icon-close{background: url("../images/sprite.png") no-repeat -322px -52px; width: 26px;height: 25px;}
-.phone-change .icon-close{background: url("../images/sprite.png") no-repeat -289px -52px; width: 26px;height: 25px;}
-.wechat-bind .icon-close{background: url("../images/sprite.png") no-repeat -289px -52px; width: 26px;height: 25px;}
 /*置顶弹框*/
 .refresh-box{position: absolute; left: 50%; top: 50%;transform: translateX(-50%);box-shadow: 0 5px 20px rgba(0,0,0,0.5);}
 .refresh-hd{background: #f7a132;}

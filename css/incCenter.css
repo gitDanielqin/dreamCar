@@ -6,7 +6,7 @@
 .top .navs a .icon-msg{width: 31px; height: 31px; background: url("../images/sprite.png") no-repeat -6px -262px;}
 .msg-info{display: inline-block; width: 24px; height: 24px; background: #ef3e3e; line-height: 24px; color: white; position: absolute; right: 1px; top: 3px; border-radius: 50%;}
 
- .selectee{position: relative; display: inline-block;}
+.selectee{position: relative;  display: inline-block; width: 148px;}
 .selectee input{background: url("../images/icon-select.png") no-repeat right 10px; border:1px solid #ccc; padding-left: 10px; width: 100%;}
 .selectee ul{position: absolute; left: 0; top:36px;border: 1px solid #d2d2d2;
     font-size: 12px; height: 149px; overflow: auto;background: #fff; display: none; z-index: 10;}
@@ -14,6 +14,7 @@
 .selectee ul li.over{background: #9bcce5; color:#fff;}
 .selectee ul li.selected{background: #2ea8e6; color:#fff;}
 
+.resumeCont .selectee input{ width: 148px;}
 .class-name a:hover{text-decoration: underline;}
 .sel-add input{width:58px;}
 .sel-addr input{width: 100px;}
@@ -79,10 +80,10 @@
 .resumeCont{padding:29px 73px 47px 53px; border: 1px solid #ccc; min-height: 500px;}
 .resumeCont .icon-imp{background: url("../images/sprite.png") no-repeat -52px -100px; height: 26px;}
 .hd-icon{width:30px; height:30px; line-height: 30px; margin-right: 10px;background: url("../images/sprite.png") no-repeat 8px -127px;}
-.career-input{background: url("../images/icon-prop.jpg") no-repeat 277px center; padding-right: 23px; width:298px;}
+.career-input{background: url("../images/icon-prop.jpg") no-repeat 285px center; padding-right: 23px; width:275px;}
 .resume-item{font-size: 14px; margin-bottom: 20px;}
 .resume-item label{margin-right: 10px;}
-.resumeCont input{border: 1px solid #ccc; height: 24px; line-height: 24px; padding-left: 10px; color: #999; box-sizing: border-box;}
+.resumeCont input{border: 1px solid #ccc; height: 24px; line-height: 24px; padding-left: 10px; color: #999;}
 .uni-level input[type="radio"]{margin-left: 20px; margin-right: 7px; vertical-align: middle;}
 .btn-add-major{background: none;}
 .valid-upload li{height: 20px; line-height: 20px; margin-bottom: 14px; position: relative;}
@@ -152,8 +153,8 @@ position: absolute;  display:none;}
 .conf-keyword h2{border-bottom: 1px dashed #ccc;}
 .conf-keyword form div{margin-top: 20px;}
 .conf-keyword form label{width:118px; text-align: right; display: inline-block; margin-right: 30px;}
-.conf-keyword form input{width:290px; padding-left: 10px;background: #f2f0f0;height: 40px; line-height: 40px;}
-.conf-keyword .varify-code{display: inline-block;}
+.conf-keyword form input{width:290px; padding-left: 10px;background: #f2f0f0;height: 36px; line-height: 36px;}
+.conf-keyword .varify-code{display: inline-block;vertical-align: middle; width: 74px;}
 .conf-account{border: 1px solid #ccc; background: white;}
 .trigle-up{position: absolute; left: 50px; top: -14px;}
 .safe-range{width:382px; height:10px; padding: 2px 1px;border: 1px solid #ccc; border-radius:8px; display: inline-block; vertical-align: middle;}
@@ -168,17 +169,19 @@ position: absolute;  display:none;}
 .pageBot li.side-page{width:60px;}
 .pageBot li.page-index{width:30px;}
 
-
-
-
-/*手机弹框样式*/
-.phone-change{position: absolute; left:50%; top: 256px;margin-left: -250px;  }
-.phone-change input{height:44px; background: #f3f3f3; font-size: 14px; padding-left: 10px;}
-.phone-change p{text-align: center; margin-bottom: 20px;}
-.phone-change .btn-submit button{width:120px; height:40px; font-size: 18px; color: #fff;}
+/*手机邮箱弹框样式*/
+.bind-change{position: absolute; left:50%; top: 256px;margin-left: -250px; box-shadow: 0 5px 20px rgba(0,0,0,0.5)}
+.bind-change .close:hover{background: #999;}
+.bind-change input{height:44px; background: #f3f3f3; font-size: 14px; padding-left: 10px;}
+.bind-change p{text-align: center; margin-bottom: 20px;}
+.bind-change .btn-submit button{width:120px; height:40px; font-size: 18px; color: #fff;}
+.bind-change .icon-close{background: url("../images/icon-bind-close.png") no-repeat center center; width: 26px;height: 25px;}
 /*微信弹框样式*/
 .wechat-bind{position: absolute; left:50%; top: 256px;margin-left: -250px;}
 .wechat-bind .close{position: absolute; right:10px; top:13px;}
+.wechat-bind .close:hover{background: #999;}
+.wechat-bind .icon-close{background: url("../images/icon-bind-close.png") no-repeat center center; width: 26px;height: 25px;}
+
 /*行业弹框*/
 .trade-box{margin-top:15%;}
 .trade-box .closer img{width:12px; height:12px;}
@@ -239,8 +242,6 @@ position: absolute;  display:none;}
 .icon-vip-3{background: url("../images/sprite.png") no-repeat -259px -269px; width: 25px;height: 25px;}
 .icon-vip-4{background: url("../images/sprite.png") no-repeat -210px -264px; width: 41px;height: 25px;}
 .porto-upload .close .icon-close{background: url("../images/sprite.png") no-repeat -322px -52px; width: 26px;height: 25px;}
-.phone-change .icon-close{background: url("../images/sprite.png") no-repeat -289px -52px; width: 26px;height: 25px;}
-.wechat-bind .icon-close{background: url("../images/sprite.png") no-repeat -289px -52px; width: 26px;height: 25px;}
 .trade-box .closer .icon-close{background: url("../images/sprite.png") no-repeat -60px -55px; width: 14px;height: 13px;}
 /*.icon-trigle-up{background: url("../images/sprite.png") no-repeat -62px -155px; height: 18px;}*/
 

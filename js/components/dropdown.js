@@ -297,7 +297,6 @@
      })
      // 选择下拉框定位
      function selectInitPos(){
-          // console.log(2);
          $(".selectee ul").each(function(){
                var sibInput=$(this).siblings("input");
                var parentObj = $(this).parent(".selectee");
@@ -314,6 +313,7 @@
      }
      function selectInitInput(){
           $(".selectee input").each(function(){
+          //     console.log($(this).width());
                $(this).width($(this).width()-20);
                $(this).css("padding-right",20+"px");
              var bgPos=$(this).width()+10+"px center";

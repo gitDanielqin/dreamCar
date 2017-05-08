@@ -36,6 +36,7 @@ table,table tr,table td, table th{padding: 0; margin: 0; border-spacing: 0;}
 .border-e4{border:1px solid #e4e4e4;}
 .cur-pointer{cursor: pointer}
 .blackStyle{font-family: "黑体";}
+[v-cloak] {display: none;}
 
 /*宽度和高度*/
 .H880{height:880px;}

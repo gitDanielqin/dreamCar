@@ -1,7 +1,7 @@
 //初始化首屏的尺寸和元素位置
 function init_pos(){
      var winH = getViewport().height;
-     $(".mod-page").height($(window).height());
+     $(".mod-page").height(winH);
      $(".center-teil").css({
           "margin-top": Math.floor(winH * 0.135) + "px"
      });
@@ -13,6 +13,8 @@ function init_pos(){
           "padding-top": Math.floor(winH * 0.079) + "px"
      })
 }
+//init_pos();
+
 
 function showEventBind(){
      $(".show-pics li").mouseover(function(){
@@ -48,6 +50,7 @@ function wheelEventBind(element,index){
                }else{
                     wheelValue = ev.detail
                };
+               console.log(wheelValue);
                if(wheelValue<0){
                     if(document.body.scrollTop<getViewport().height*(index-1)){
                          $("body").animate({
@@ -84,7 +87,6 @@ function wheelEventBind(element,index){
      }
 
 }
-
 var appFront = new Vue({
      el:"#app-front",
      data:{
@@ -187,7 +189,6 @@ var appShow =  new Vue({
           }
      },
      mounted:function(){
-          $("#app-show").height(getViewport().height);
      //     wheelEventBind("app-show",2);
           turnEventBind();
           //showEventBind();
@@ -253,7 +254,7 @@ var appCoop =  new Vue({
                }
      },
      mounted:function(){
-          $("#app-coop").height(getViewport().height-288);
+          $("#app-coop").height(getViewport().height-238);
      }
 });
 
@@ -281,3 +282,9 @@ var appFooter =  new Vue({
           }
      }
 })
+
+// $(".main").onepage_scroll({
+//  sectionContainer: "section",
+//  responsiveFallback: 600,
+//  loop: true
+// });

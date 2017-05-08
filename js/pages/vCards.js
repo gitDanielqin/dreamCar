@@ -129,7 +129,7 @@ var appTop = new Vue({
                     window.location.href = domainUrl+parstring;
                }
 
-          //     EventUtils.ajaxReq(posturl,'post',postdata,callback)
+               EventUtils.ajaxReq(posturl,'post',postdata,callback)
 
            }
       },

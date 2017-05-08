@@ -88,7 +88,10 @@ var appCont =  new Vue({
                };
                //console.log(postdata);
                var callback = function(resp,status){
-                    console.log(resp);
+                    if(resp.code=="10002"){
+                         alert(resp.info);
+                         return false;
+                    }
                     if(resp.data.cardStatus=="0"){
                          var parstring = "userType="+resp.data.userType+"&userid="+resp.data.userId+"&loginId="+resp.data.loginIdentifier;
                          window.location.href="vCards.html?"+parstring;

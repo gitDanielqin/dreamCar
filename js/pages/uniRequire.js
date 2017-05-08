@@ -262,7 +262,7 @@ var appMain = new Vue({
                console.log(postdata);
                EventUtils.ajaxReq('/demand/school/apply','post',postdata,function(resp,status){
                    console.log(resp);
-                   window.location.href="uniCenter.html?userId="+parObj.userId+"&loginId="+parObj.loginId;
+                   window.location.href="uniCenter.html?userId="+parObj.userId+"&loginId="+parObj.loginId+"&paneId=requireBox";
               })
           }
      },

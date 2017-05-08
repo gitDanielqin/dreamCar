@@ -1,4 +1,5 @@
 body{transition: all 0.5s;}
+.mod-page{min-height: 600px;}
 .header{padding-top: 2.7%; position: relative;}
 .front-page{background: url("../images/bg-2.jpg") no-repeat center 0; background-size: cover;}
 #sel-add .pic-icon{background: url("../images/sprite.png") no-repeat -143px -186px;width: 11px; height: 8px;}
@@ -29,7 +30,7 @@ position: absolute; left: 29px; top:46px; border-top: none; font-size: 14px; dis
 .module-entry li:nth-child(4) .pic-icon{width: 49px; height: 37px; background: url("../images/sprite.png") no-repeat -149px -264px; margin-top: 34px;}
 .module-entry li:nth-child(5) .pic-icon{width: 36px; height: 54px; background: url("../images/sprite.png") no-repeat -107px -207px; margin-top: 25px;}
 .module-entry li:last-child .pic-icon{width: 40px; height: 44px; background: url("../images/sprite.png") no-repeat -157px -212px; margin-top: 31px;}
-.module-entry li a{ display: inline-block; vertical-align: middle; line-height: 32px; font-size: 18px; color: white; width: 100%;}
+.module-entry li b{ display: inline-block; vertical-align: middle; line-height: 32px; font-size: 18px; color: white; width: 100%;}
 .module-entry li:hover{background-color: rgba(255,168,0,0.8);}
 
 .weiter{position: absolute; left: 50%; bottom:50px; transform: translateX(-50%); cursor: pointer; animation: slide-down 1.5s infinite;}

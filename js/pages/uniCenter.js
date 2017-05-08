@@ -4,6 +4,7 @@
 var parObj = EventUtils.urlExtrac(window.location);
 var respObj={}; //请求的本页面的数据集合
 // 请求本页面数据
+
 (function(){
      var postdata={
           userId:parObj.userId,
@@ -44,7 +45,6 @@ var respObj={}; //请求的本页面的数据集合
                    }else{
                        specialLevel="211";
                    }
-
                }
                var resumedata = {
                    uni:respObj.name,
@@ -53,7 +53,7 @@ var respObj={}; //请求的本页面的数据集合
                    level:respObj.property,
                    specialLv:specialLevel,
                    specialmajor:majorArray,
-                   intro:respObj.discription,
+                   intro:respObj.discription!=undefined?respObj.discription:"",
                    comLicense:respObj.imgUrlBus,
                    uniLicense:respObj.imgUrlAgree,
                    hasBusLicense:respObj.imgUrlBus!="",
@@ -63,10 +63,30 @@ var respObj={}; //请求的本页面的数据集合
                }
                //console.log(resumedata);
                appCont.resume = resumedata;
-          }
 
-     })
+               //
+               var percent = 0;
+              if(respObj.mobile!=""){
+                   percent+=50;
+              }
+              if(respObj.email!=""){
+                   percent+=30;
+              }
+              init_safepos(percent);
+               var configdata = {
+                    loginName:respObj.loginName,
+                    safeLevel:percent+"%",
+                    bind:{
+                         mobile:respObj.mobile,
+                         email:respObj.email
+                    }
+               }
+               appCont.config = configdata;
+          }
+     });
+
 })()
+
 
 var appPorto = new Vue({
     el: "#app-porto",
@@ -128,6 +148,7 @@ var appPorto = new Vue({
         }
    }
 });
+
 var appCont = new Vue({
     el: "#app-content",
     data:{
@@ -156,31 +177,13 @@ var appCont = new Vue({
               view:false
          },
          require:{
-              state:"全部状态",
+              state:"校企合作",
               curpage:1,
               totalpages:1,
+              totalitems:1,
               pagesize:3,
               newLink:"uniRequire.html?new=1&userId="+parObj.userId+"&loginId="+parObj.loginId,
-              items:[
-                   {classic:"校企合作",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11"},
-                   {classic:"校企合作",major:"通信工程",IncProps:"国有企业",IncScale:"600人以上",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11"},
-                   {classic:"校企合作",major:"通信工程",IncProps:"国有企业",IncScale:"600人以上",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11"},
-                   {classic:"校企合作",major:"通信工程",IncProps:"国有企业",IncScale:"600人以上",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11"},
-                   {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},
-                   {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},
-                   {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},
-                   {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},
-              ],
-              results:[
-                   {classic:"校企合作",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",uniname:"高校名称",uniLevel:"高校性质",date:"2017.11.11"},
-                   {classic:"校企合作",major:"通信工程",IncProps:"国有企业",IncScale:"600人以上",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11"},
-                   {classic:"校企合作",major:"通信工程",IncProps:"国有企业",IncScale:"600人以上",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11"},
-                   {classic:"校企合作",major:"通信工程",IncProps:"国有企业",IncScale:"600人以上",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11"},
-                   {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},
-                   {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},
-                   {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},
-                   {classic:"招聘会",major:"专业名称",IncProps:"企业性质",IncScale:"企业规模",IncPos:"岗位名称",unireq:"高校对企要求",majorScale:"专业人数",IncArea:"通信技术",trainWay:"到校培训",uniname:"浙江大学",uniLevel:"重点大学",date:"2017.11.11",recruitDate:"招聘会时间",recruitAddr:"地点"},
-              ],
+              results:[],
               showCombi:true,
               showRecruit:true
          },
@@ -247,7 +250,7 @@ var appCont = new Vue({
               }
          },
          vip:{
-              records:[
+            records:[
                  {date:"2017.01.01", action:"信息刷新：4条", price:0, state:"交易完成"},
                  {date:"2017.01.01", action:"信息置顶：1次", price:0, state:"交易完成"},
                  {date:"2017.01.01", action:"广告投放：1次", price:0, state:"交易完成"},
@@ -259,7 +262,7 @@ var appCont = new Vue({
                  {level:"中级会员",prior:2,refresh:4,mapping:12,price:1040,icon:"images/crown-middle.png"},
                  {level:"初级会员",prior:4,refresh:8,mapping:16,price:1560,icon:"images/crown-senior.png"},
             ]
-       },
+          },
        coop:{
             state:"全部状态",
             curpage:1,
@@ -277,19 +280,54 @@ var appCont = new Vue({
                  {IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",date:"2017.11.11",time:"24:00",coopState:"03",major:"合作专业"},
                  {IncName:"公司名称",IncProps:"企业性质",IncScale:"企业规模",IncArea:"企业所属行业",trainWay:"企业提供的培训方式",date:"2017.11.11",time:"24:00",coopState:"01",major:"公共管理专业"},
             ]
+       },
+       config:{
+            loginName:"",
+            safeLevel:"80%",
+            bind:{mobile:"",email:""}
        }
     },
     watch:{
+      "config.bind.mobile":function(curval){
+           var percent = 0;
+           if(this.config.bind.mobile!=""){
+                percent+=50;
+           }
+           if(this.config.bind.email!=""){
+                percent+=30;
+           }
+           init_safepos(percent);
+           percent +="%";
+           this.config.safeLevel = percent;
+
+      },
+      "config.bind.email":function(curval){
+           var percent = 0;
+           if(this.config.bind.mobile!=""){
+                percent+=50;
+           }
+           if(this.config.bind.email!=""){
+                percent+=30;
+           }
+           init_safepos(percent);
+           percent +="%";
+           this.config.safeLevel = percent;
+      },
       "require.state":function(curval,oldval){
-           if(curval=="全部状态"){
-                this.require.results = cloneObj(this.require.items);
-           }else if(curval=="校企合作"){
-                 this.require.results=[];
-                for(var i=0; i<this.require.items.length; i++){
-                     if(this.require.items[i].classic=="校企合作"){
-                          this.require.results.push(this.require.items[i]);
-                     }
+           if(curval=="校企合作"){
+                var postdata = {
+                     userId:parObj.userId,
+                     loginIdentifier:parObj.loginId,
+                     index:1,
+                     count:3
                 }
+                EventUtils.ajaxReq("/demand/school/getList","get",postdata,function(resp,status){
+                     console.log(resp);
+                     appCont.require.totalpages = resp.data.totalPage;
+                     appCont.require.pagesize = resp.data.pageSize;
+                     appCont.require.results = resp.data.list;
+                  //   console.log(appCont.require.totalpages)
+                })
            }else if(curval=="招聘会"){
                  this.require.results=[];
                 for(var i=0; i<this.require.items.length; i++){
@@ -581,7 +619,19 @@ var appCont = new Vue({
               appModal.comment.index=index;
               appModal.showModal=true;
               appModal.showComment=true;
-         }
+         },
+         modifyMobile:function(){
+              appModal.show.mobile=true;
+              appModal.showModal=true;
+         },
+         modifyEmail:function(){
+              appModal.show.email=true;
+              appModal.showModal=true;
+         },
+         bindWechat:function(){
+              appModal.show.wechat=true;
+              appModal.showModal=true;
+         },
     },
     computed:{
          majorArr:function(){
@@ -608,6 +658,7 @@ var appCont = new Vue({
          'pagination':pagination
     }
 });
+
 var appModal = new Vue({
      el:"#app-modal",
      data:{
@@ -620,7 +671,10 @@ var appModal = new Vue({
                stickybox:false,
                stickyhintbox:false,
                freshbox:false,
-               freshhintbox:false
+               freshhintbox:false,
+               mobile:false,
+               email:false,
+               wechat:false
           },
           showModal:false,
           showTrade:false,
@@ -818,6 +872,18 @@ var appModal = new Vue({
           cancelComment:function(){
                this.showComment=false;
                this.showModal=false;
+          },
+          closeMobile:function(){
+               this.show.mobile=false;
+               this.showModal=false;
+          },
+          closeWechat:function(){
+               this.show.wechat=false;
+               this.showModal=false;
+          },
+          closeEmail:function(){
+               this.show.email=false;
+               this.showModal=false;
           }
      },
      watch:{
@@ -869,14 +935,16 @@ function init_center(){
      // selectInit();
      selectInitInput();
      selectInitPos();
-   init_safepos();
    navEventBind();
    showContact();
    vipEventBind();
    modalEventBind();
    uploadEventBind();
    refreshEventBind();
-   datepickEventBind()
+   datepickEventBind();
+   if(parObj.paneId){
+        $(".sideBox li[paneid='"+parObj.paneId+"']").trigger("click");
+   }
 }
 init_center();
 
@@ -935,20 +1003,24 @@ function uploadEventBind(){
 
 
 function navEventBind(){
+
+     $(".sideBox .sub-li p").unbind("click").bind("click",function(){
+         $(this).siblings("p.on").removeClass("on");
+         $(this).addClass("on");
+         $(".content").children().hide();
+         $(".content").children("."+$(this).attr("paneid")).show();
+         selectInitPos();
+         return false;
+     });
+
     $(".sideBox>li").unbind("click").bind("click",function(){
         $(".sideBox").children("li.on").removeClass("on");
         $(this).addClass("on");
         $(".sideBox .sub-li").hide();
         if($(this).find(".sub-li").length>0){
             $(this).find(".sub-li").show();
-            $(this).find(".sub-li p").unbind("click").bind("click",function(){
-                $(".sideBox .sub-li .on").removeClass("on");
-                $(this).addClass("on");
-                $(".content").children().hide();
-                $(".content").children("."+$(this).attr("paneid")).show();
-                selectInitPos();
-                return false;
-            });
+            $(".content").children().hide();
+            $(".content").children("."+$(this).find(".sub-li .on").attr("paneid")).show();
         }
         //需求面板请求结果
         if($(this).attr("paneid")=="requireBox"){
@@ -959,14 +1031,17 @@ function navEventBind(){
                   count:3
              }
              EventUtils.ajaxReq("/demand/school/getList","get",postdata,function(resp,status){
+                  console.log(resp);
                   appCont.require.totalpages = resp.data.totalPage;
                   appCont.require.pagesize = resp.data.pageSize;
                   appCont.require.results = resp.data.list;
-               //   console.log(appCont.require.totalpages)
+                  appCont.require.totalitems = resp.data.totalRow;
              })
         }
-        $(".content").children().hide();
-        $(".content").children("."+$(this).attr("paneid")).show();
+        if($(this).attr("paneid")){
+            $(".content").children().hide();
+            $(".content").children("."+$(this).attr("paneid")).show();
+        }
         selectInitPos();
     });
 };
@@ -999,30 +1074,12 @@ function vipEventBind(){
 
      })
 }
-function init_safepos(){
-     //console.log($(".safe-range p").width(),$(".safe-range").width());
-    var p_left= Math.floor($(".safe-range p").width())-16+"px";
-    $(".r-pointer").css("left",p_left);
+function init_safepos(percent){
+     var p_left= Math.floor($(".safe-range").width()*percent/100)-16+"px";
+     $(".r-pointer").css("left",p_left);
+     $("#safe-progress").css("width",percent+"%");
 }
 function modalEventBind(){
-    $(".bind-acc button.chg-phone").click(function(){
-        $(".modal").show();
-        $(".modal").children().hide();
-        $(".modal .phone-change").show();
-        $(".close").unbind("click").bind("click",function(){
-            $(this).closest("div").hide();
-            $(".modal").hide();
-        })
-    });
-    $(".bind-acc button.wechatBind").click(function(){
-        $(".modal").show();
-        $(".modal").children().hide();
-        $(".modal .wechat-bind").show();
-        $(".close").unbind("click").bind("click",function(){
-            $(this).closest("div").hide();
-            $(".modal").hide();
-        });
-    });
     $(".msg-center").click(function(){
         $(".modal").show();
         $(".modal").children().hide();
