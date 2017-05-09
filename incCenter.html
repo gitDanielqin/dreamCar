@@ -140,16 +140,16 @@
                     </div>
                     <ul class="info-items H410">
                         <li v-for="(item,index) in require.results" :name="item.classic" :date="item.publicDate">
-                            <div v-if="item.demandType==0" class="paLeft29 clearfix H128 pRel">
+                            <div v-if="require.demandSrc==0" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W250 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item.demandId)">{{item.title}}</a></h2>
-                                    <p>{{infoCtrl(item.profession)}}<i class="depart" v-show="infoCtrl(item.profession)!=''">|</i>{{infoCtrl(item.professionCount)}}<i class="depart" v-show="infoCtrl(item.professionCount)!=''">|</i>{{infoCtrl(item.property)}}</p>
+                                    <p>{{infoCtrl(item.schoolProperty)}}<i class="depart" v-show="infoCtrl(item.schoolProperty)!=''">|</i>{{infoCtrl(item.professionCount)}}<i class="depart" v-show="infoCtrl(item.professionCount)!=''&&infoCtrl(item.profession)!=''">|</i>{{infoCtrl(item.profession)}}</p>
                                     <p>联合培养方式：{{item.trainType}}</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH25 maT10 W242">
-                                    <p>{{item.name}}</p>
-                                    <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
+                                    <p>{{resume.Inc}}</p>
+                                    <p>{{resume.props}}<i class="depart">|</i>{{resume.scale}}<i class="depart">|</i>{{infoExtrac(resume.trade)}}</p>
                                     <p>{{item.updateTime}}</p>
                                 </div>
                                 <div class="operations color-blueL fr">
@@ -157,7 +157,7 @@
                                     <p><span @click="freshItem(item)">刷新</span><span @click="stickItem(item)">置顶</span></p>
                                 </div>
                             </div>
-                            <div v-else-if="item.demandType==1" class="paLeft29 clearfix H128 pRel">
+                            <div v-else-if="require.demandSrc==1" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W300 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-increcruit.html">{{item.IncPos}}</a></h2>
@@ -174,7 +174,7 @@
                                      <p><span @click="freshItem(item)">刷新</span><span @click="stickItem(item)">置顶</span></p>
                                 </div>
                             </div>
-                            <div v-else-if="item.demandType==2" class="paLeft29 clearfix H128 pRel">
+                            <div v-else-if="require.demandSrc==2" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W300 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-position.html">{{item.IncPos}}</a></h2>

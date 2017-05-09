@@ -262,8 +262,8 @@
      })
      // 学科选择
      var templMajor='<div>\
-          <dropdown placeholder="一级学科" :options="major" v-model="selMajor"></dropdown>\
-          <dropdown placeholder="二级学科" :options="submajor" v-model="selsubMajor"></dropdown>\
+          <dropdown placeholder="一级学科" :options="major" class="major-input-1" v-model="selMajor"></dropdown>\
+          <dropdown placeholder="二级学科" :options="submajor" class="major-input-2" v-model="selsubMajor"></dropdown>\
      </div>';
      Vue.component("major-select",{
           template:templMajor,
@@ -292,6 +292,9 @@
                               break;
                          }
                     }
+               },
+               "selsubMajor":function(curval){
+                    this.$emit('callback',this.selMajor,this.selsubMajor);
                }
           }
      })

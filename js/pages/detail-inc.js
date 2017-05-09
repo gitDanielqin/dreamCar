@@ -15,7 +15,7 @@ var respObj={};//页面信息
               loginIdentifier:parObj.loginId
          };
          // 请求企业需求信息
-         EventUtils.ajaxReq("/demand/company/getInfo","get",postdemand,function(resp,status){
+         EventUtils.ajaxReq("/demand/getInfo","get",postdemand,function(resp,status){
               console.log(resp);
               EventUtils.ajaxReq("/user/company/getInfo","get",postbase,function(resp,status){
                    console.log(resp)
@@ -37,12 +37,12 @@ var respObj={};//页面信息
                    publicDate:respObj.updateTime.split(" ")[0]
               };
               appBanner.incdata = briefdata;
-              var addArray = respObj.address.split(';');
+              var addArray = respObj.schoolAddress.split(';');
 
               var demandinfo = {
                    address:addArray[0]+" - "+addArray[1],
-                   type:EventUtils.infoExtrac(respObj.type),
-                   property:respObj.property,
+                   type:EventUtils.infoExtrac(respObj.schoolType),
+                   property:respObj.schoolProperty,
                    job:EventUtils.infoExtrac(respObj.job),
                    jobCount:respObj.jobCount,
                    profession:EventUtils.infoExtrac(respObj.profession),

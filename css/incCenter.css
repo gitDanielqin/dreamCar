@@ -119,7 +119,7 @@
 .item-block-right p{color: #333;}
 .info-items .item-date{font-size: 12px; color: #666;}
 /*发布按钮样式*/
-.new-require{position: absolute; right: 10px; top: 10px; z-index: 10;}
+.new-require{position: absolute; right: 10px; top: 10px; z-index: 3;}
 .new-require a{display: inline-block;}
 .new-require img{width: 92%;}
 

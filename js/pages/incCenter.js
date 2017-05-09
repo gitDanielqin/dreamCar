@@ -1,4 +1,3 @@
-
 var parObj = EventUtils.urlExtrac(window.location);
 var respObj={}; //请求的本页面的数据集合
 
@@ -158,6 +157,7 @@ var appCont = new Vue({
          require:{
               state:"校企合作",
               period:"全部状态",
+              demandSrc:0,
               curpage:1,
               totalpages:1,
               pagesize:3,
@@ -295,11 +295,12 @@ var appCont = new Vue({
                 var postdata = {
                      userId:parObj.userId,
                      loginIdentifier:parObj.loginId,
+                     demandType:2,
                      index:1,
                      count:3
                 }
-                console.log(postdata);
-                EventUtils.ajaxReq("/demand/company/getList","get",postdata,function(resp,status){
+                EventUtils.ajaxReq("/demand/getList","get",postdata,function(resp,status){
+                     console.log(resp);
                      appCont.require.totalpages = resp.data.totalPage;
                      appCont.require.pagesize = resp.data.pageSize;
                      appCont.require.results = resp.data.list;
@@ -376,7 +377,13 @@ var appCont = new Vue({
     },
     methods:{
          infoCtrl:function(text){
+              if(text){
+                 text = EventUtils.infoExtrac(text);
+              }
              return text=="不限"||text==undefined?"":text;
+         },
+         infoExtrac:function(item){
+              return EventUtils.infoExtrac(item);
          },
          requireLink:function(demandId){
           return "detail-company.html?userId="+parObj.userId+"&loginId="+parObj.loginId+"&demandId="+demandId+"&type=inc";
@@ -498,7 +505,6 @@ var appCont = new Vue({
             return totalpage;
         },
         showpage:function(totalpage){
-            var totalpage =1;
             if(totalpage<3){
                  return totalpage;
             }else{
@@ -510,10 +516,11 @@ var appCont = new Vue({
                var postdata = {
                     userId:parObj.userId,
                     loginIdentifier:parObj.loginId,
+                    demandType:2,
                     index:page,
                     count:3
                }
-                EventUtils.ajaxReq("/demand/company/getList","get",postdata,function(resp,status){
+                EventUtils.ajaxReq("/demand/getList","get",postdata,function(resp,status){
                     appCont.require.results = resp.data.list;
                 })
                 this.require.curpage=page;
@@ -925,15 +932,19 @@ function navEventBind(){
              var postdata = {
                   userId:parObj.userId,
                   loginIdentifier:parObj.loginId,
+                  demandType:2,
                   index:1,
                   count:3
              }
              console.log(postdata);
-             EventUtils.ajaxReq("/demand/company/getList","get",postdata,function(resp,status){
+             EventUtils.ajaxReq("/demand/getList","get",postdata,function(resp,status){
+                  console.log(resp);
                   appCont.require.totalpages = resp.data.totalPage;
                   appCont.require.pagesize = resp.data.pageSize;
+                  appCont.require.demandSrc = 0;
                   appCont.require.results = resp.data.list;
                   appCont.require.totalitems = resp.data.totalRow;
+
              })
         }
         if($(this).attr("paneid")){

@@ -15,7 +15,7 @@ var respObj={};//页面信息
               loginIdentifier:parObj.loginId
          };
          // 请求学校需求信息
-         EventUtils.ajaxReq("/demand/school/getInfo","get",postdemand,function(resp,status){
+         EventUtils.ajaxReq("/demand/getInfo","get",postdemand,function(resp,status){
               console.log(resp);
               EventUtils.ajaxReq("/user/school/getInfo","get",postbase,function(resp,status){
                    console.log(resp)
@@ -37,13 +37,13 @@ var respObj={};//页面信息
                    publicDate:respObj.updateTime.split(" ")[0]
               };
               appBanner.unidata = briefdata;
-              var incAddArray = respObj.address.split(";");
+              var incAddArray = respObj.companyAddress.split(";");
               var demandinfo = {
                    address:incAddArray[0]+" - "+incAddArray[1],
-                   type:EventUtils.infoExtrac(respObj.type),
-                   property:respObj.property,
+                   type:EventUtils.infoExtrac(respObj.companyType),
+                   property:respObj.companyProperty,
                    job:EventUtils.infoExtrac(respObj.job),
-                   scale:respObj.scale,
+                   scale:respObj.companyScale,
                    jobCount:respObj.jobCount,
                    profession:EventUtils.infoExtrac(respObj.profession),
                    professionCount:respObj.professionCount,
@@ -64,7 +64,14 @@ var respObj={};//页面信息
          });
          isLogin = true;
     }
-
+    if(parObj.type=="display"){
+         var postdemand = {
+              demandId:parObj.demandId
+         }
+         EventUtils.ajaxReq("/demand/getInfo","get",postdemand,function(resp,status){
+              console.log(resp);
+         })
+    }
 })()
 
 

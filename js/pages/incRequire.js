@@ -9,9 +9,9 @@ if(parObj.new!="1"){//非首次发布
           var postdata={
                userId:parObj.userId,
                loginIdentifier:parObj.loginId,
-               demandId:parObj.demandId
+               demandId:parObj.demandId,
           }
-          EventUtils.ajaxReq("/demand/company/getInfo","get",postdata,function(resp,status){
+          EventUtils.ajaxReq("/demand/getInfo","get",postdata,function(resp,status){
                respObj = resp.data;
                console.log(respObj);
                if(pageindex=="0"){//如果是校企合作需求详情
@@ -232,11 +232,12 @@ var appMain = new Vue({
                     var postdata = {
                          userId: parObj.userId,
                          title:this.combiData.header,
+                         demandType:2,
                          profession:$(".cont-combi .major-input-1 input").val()+";"+$(".cont-combi .major-input-2 input").val(),
                          professionCount:this.combiData.incReq.stuScale,
-                         property:this.combiData.incReq.uniLevel,
-                         type:this.combiData.incReq.uniClassific,
-                         address:$(".cont-combi .sel-province input").val()+";"+$(".cont-combi .sel-city input").val()+";"+$(".cont-combi .sel-district input").val(),
+                         schoolProperty:this.combiData.incReq.uniLevel,
+                         schoolType:this.combiData.incReq.uniClassific,
+                         schoolAddress:$(".cont-combi .sel-province input").val()+";"+$(".cont-combi .sel-city input").val()+";"+$(".cont-combi .sel-district input").val(),
                          job: $(".cont-combi .sel-pos-1 input").val()+";"+$(".cont-combi .sel-pos-2 input").val()+";"+$(".cont-combi .sel-pos-3 input").val(),
                          jobCount:this.combiData.incApply.posAmount,
                          trainType:this.combiData.incApply.trainWay,
@@ -249,11 +250,11 @@ var appMain = new Vue({
                     if(parObj.demandId){
                          postdata.demandId = parObj.demandId;
                     }
-                    console.log(postdata);
+               //     console.log(postdata);
                     // console.log(postdata);
-                     EventUtils.ajaxReq('/demand/company/apply','post',postdata,function(resp,status){
-                    //     console.log(resp);
-                    //     window.location.href="incCenter.html?userId="+parObj.userId+"&loginId="+parObj.loginId;
+                     EventUtils.ajaxReq('/demand/apply','post',postdata,function(resp,status){
+                         console.log(resp);
+                         window.location.href="incCenter.html?userId="+parObj.userId+"&loginId="+parObj.loginId+"&theme=require";
                     })
                }
           }

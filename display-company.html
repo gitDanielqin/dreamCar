@@ -57,18 +57,18 @@
              </div>
              <div class="clearfix maB16">
                  <label>对校要求：</label><dropdown :options="database.uni.props" placeholder="高校性质" v-model="incQuery.uniReq.uniprops"></dropdown>
-                 <major-select class="uni-major lang-select" :majordata="database.uni.majors"></major-select><input type="text" v-show="incQuery.uniReq.majorEx"/>
+                 <major-select class="uni-major lang-select" :majordata="database.uni.majors" callback="selMajor"></major-select><input type="text" v-show="incQuery.uniReq.majorEx"/>
                  <dropdown :options="database.uni.majorAmount" placeholder="专业人数" v-model="incQuery.uniReq.majorsum"></dropdown>
              </div>
              <div class="clearfix maB16">
                  <label>企业提供：</label>
                  <div class="selectee lang-select pos-input" @click.stop="clickPos"><input type="text" placeholder="岗位名称" disabled v-model="incQuery.pos.pos_2"/></div>
-                 <dropdown :options="database.inc.posAmount" placeholder="企业规模" v-model="incQuery.posAmount"></dropdown>
+                 <dropdown :options="database.inc.posAmount" placeholder="岗位数量" v-model="incQuery.posAmount"></dropdown>
              </div>
              <div class="clearfix maB16">
                  <label>其他：</label>
-                    <dropdown :options="['三天内','一周内','一月内']" placeholder="发布时间" v-model="incQuery.publicTime"></dropdown>
-                    <dropdown :options="['高管到校培训','入企培训','面议']" placeholder="联合培养方式" v-model="incQuery.trainway" class="lang-select"></dropdown>
+                    <dropdown :options="['三天内','一周内','一月内','不限']" placeholder="发布时间" v-model="incQuery.publicTime"></dropdown>
+                    <dropdown :options="['企业高管到校','学生入企','面议','不限']" placeholder="联合培养方式" v-model="incQuery.trainway" class="lang-select"></dropdown>
              </div>
              <div class="pos-box popBox inc-pos" v-show="showPosBox">
                 <div>
@@ -89,18 +89,18 @@
          <div class="bg-gray-f7">
              <div class="inner clearfix">
                 <ul class="results paTop10 fl H635">
-                     <li v-for="(item,index) in incList.results" v-show="showResult(index,incList.curpage,5)" onclick="window.open('detail-company.html')">
+                     <li v-for="(item,index) in incList.results">
                           <div class="paLeft29 clearfix H108 pRel">
                               <div class="W78 H70 logo-pic bg-brown disInline v-mid fl maT20"></div>
                               <div class="item-block-left fl paTop20 W321 maL25">
-                                  <h2 class="color-blueL fSize16 LH-H24">{{item.pos}}</h2>
-                                  <p>{{item.uniProps}}<i class="depart">|</i>{{item.major}}<i class="depart">|</i>{{item.stuScale}}</p>
-                                  <p class="f-bold fSize14"><span>企业提供的培训方式：</span>{{item.trainway}}</p>
+                                  <h2 class="color-blueL fSize16 LH-H24">{{infoExtrac(item.job)}}</h2>
+                                  <p>{{item.schoolProperty}}<i class="depart">|</i>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.professionCount}}</p>
+                                  <p class="f-bold fSize14"><span>企业提供的培训方式：</span>{{item.trainType}}</p>
                               </div>
                               <div class="item-block-right fl fSize14 maT4">
-                                  <p class="fSize16 item-name" :title="item.inc">{{item.inc}}</p>
-                                  <p class="fSize12">{{item.IncProps}}<span class="maL16">岗位数：{{item.posAmount}}</span></p>
-                                  <p class="fSize12 pubdate">{{item.publicDate}}</p>
+                                  <p class="fSize16 item-name" :title="item.inc">{{item.userName}}</p>
+                                  <p class="fSize12">{{item.userProperty}}<span class="maL16">岗位数：{{item.jobCount}}</span></p>
+                                  <p class="fSize12 pubdate">{{item.updateTime}}</p>
                               </div>
                               <button class="btn-apply color-blueL t-left" @click="coApply"><span class="maL21">申请合作</span><i class="pic-icon maL6"></i></button>
                           </div>
@@ -113,7 +113,7 @@
                  </div>
              </div>
              <div class="wrapper paBot33">
-                  <pagination :showpages="showpage(incList.results.length)" :totalpages="pagesum(incList.results.length)" type="inc" @topage="topage" class="maT28 fSize14 maL278"></pagination>
+                  <pagination :showpages="showpage(incList.totalpages)" :totalpages="incList.totalpages" type="inc" @topage="topage" class="maT28 fSize14 maL278"></pagination>
              </div>
          </div>
          </div>
@@ -183,6 +183,6 @@
      <script src="data/major.js"></script>
      <script src="data/position.js"></script>
      <script src="data/workareas.js"></script>
-     <script src="js/pages/display-common.js"></script>
+     <script src="js/pages/display-inc.js"></script>
 </body>
 </html>

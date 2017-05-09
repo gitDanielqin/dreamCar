@@ -111,7 +111,7 @@
 .item-block-right p{color: #333; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
 .info-items .item-date{font-size: 12px; color: #666;}
 /*发布按钮样式*/
-.new-require{position: absolute; right: 10px; top: 10px;}
+.new-require{position: absolute; right: 10px; top: 10px; z-index: 3}
 .new-require a{display: inline-block;}
 .new-require img{width: 92%;}
 

@@ -182,6 +182,7 @@ var appCont = new Vue({
               totalpages:1,
               totalitems:1,
               pagesize:3,
+              demandSrc:0,
               newLink:"uniRequire.html?new=1&userId="+parObj.userId+"&loginId="+parObj.loginId,
               results:[],
               showCombi:true,
@@ -318,10 +319,11 @@ var appCont = new Vue({
                 var postdata = {
                      userId:parObj.userId,
                      loginIdentifier:parObj.loginId,
+                     demandType:1,
                      index:1,
                      count:3
                 }
-                EventUtils.ajaxReq("/demand/school/getList","get",postdata,function(resp,status){
+                EventUtils.ajaxReq("/demand/getList","get",postdata,function(resp,status){
                      console.log(resp);
                      appCont.require.totalpages = resp.data.totalPage;
                      appCont.require.pagesize = resp.data.pageSize;
@@ -583,10 +585,11 @@ var appCont = new Vue({
                    var postdata = {
                        userId:parObj.userId,
                        loginIdentifier:parObj.loginId,
+                       demandType:1,
                        index:page,
                        count:3
                   }
-                  EventUtils.ajaxReq("/demand/school/getList","get",postdata,function(resp,status){
+                  EventUtils.ajaxReq("/demand/getList","get",postdata,function(resp,status){
                        appCont.require.results = resp.data.list;
                   })
                   this.require.curpage=page;
@@ -942,9 +945,6 @@ function init_center(){
    uploadEventBind();
    refreshEventBind();
    datepickEventBind();
-   if(parObj.paneId){
-        $(".sideBox li[paneid='"+parObj.paneId+"']").trigger("click");
-   }
 }
 init_center();
 
@@ -1027,13 +1027,15 @@ function navEventBind(){
              var postdata = {
                   userId:parObj.userId,
                   loginIdentifier:parObj.loginId,
+                  demandType:1,
                   index:1,
                   count:3
              }
-             EventUtils.ajaxReq("/demand/school/getList","get",postdata,function(resp,status){
+             EventUtils.ajaxReq("/demand/getList","get",postdata,function(resp,status){
                   console.log(resp);
                   appCont.require.totalpages = resp.data.totalPage;
                   appCont.require.pagesize = resp.data.pageSize;
+                  appCont.require.demandSrc=0;
                   appCont.require.results = resp.data.list;
                   appCont.require.totalitems = resp.data.totalRow;
              })
@@ -1043,7 +1045,7 @@ function navEventBind(){
             $(".content").children("."+$(this).attr("paneid")).show();
         }
         selectInitPos();
-    });
+   });
 };
 //如果有主题跳转信息
 if(parObj.theme){
@@ -1071,7 +1073,6 @@ function vipEventBind(){
                $(".vip-cont").removeClass("on");
                $($(".vip-cont")[index]).addClass("on");
           });
-
      })
 }
 function init_safepos(percent){

@@ -1,7 +1,7 @@
 // 获取字段判断是否为首次发布还是修改
 var parObj= EventUtils.urlExtrac(window.location);
 var isNewRequire = true;
-if(parObj.new!="1"){
+if(parObj.new!="1"){ //非新需求
      isNewRequire=false;
      var pageindex = parObj.demandType;
      (function(){
@@ -208,27 +208,6 @@ var appMain = new Vue({
                }
           },
           publishReq:function(){
-               // 拼接二三级选项的字符串
-               // if($(".cont-combi .sel-pos-1 input").val()){
-               //      var jobstring = $(".cont-combi .sel-pos-1 input").val()+";"+$(".cont-combi .sel-pos-2 input").val()+";"+$(".cont-combi .sel-pos-3 input").val();
-               // }else{
-               //      var jobstring = "";
-               // }
-               // if($(".cont-combi .input-area-1 input").val()){
-               //      var areastring = $(".cont-combi .input-area-1 input").val()+";"+$(".cont-combi .input-area-2 input").val();
-               // }else{
-               //      var areastring="";
-               // }
-               // if($(".cont-combi .sel-province input").val()){
-               //      var incAddstring = $(".cont-combi .sel-province input").val()+";"+$(".cont-combi .sel-city input").val()+";"+$(".cont-combi .sel-district input").val();
-               // }else{
-               //      var incAddstring = "";
-               // }
-               // if($(".cont-combi .major-input-1 input").val()){
-               //      var prostring = $(".cont-combi .major-input-1 input").val()+";"+$(".cont-combi .major-input-2 input").val()
-               // }else{
-               //      var prostring = "";
-               // }
                if($(".cont-combi .time-table").find("td.on").length>0){
                     var timestring ="";
                     $(".cont-combi .time-table .time-tr").each(function(){
@@ -244,12 +223,13 @@ var appMain = new Vue({
                var postdata ={
                     userId:parObj.userId,
                     title:this.combiData.header,
+                    demandType:1,
                     job:$(".cont-combi .sel-pos-1 input").val()+";"+$(".cont-combi .sel-pos-2 input").val()+";"+$(".cont-combi .sel-pos-3 input").val(),
                     jobCount:this.combiData.incApply.posAmount,
-                    property:this.combiData.incApply.incProps,
-                    scale:this.combiData.incApply.incScale,
-                    type:$(".cont-combi .input-area-1 input").val()+";"+$(".cont-combi .input-area-2 input").val(),
-                    address:$(".cont-combi .sel-province input").val()+";"+$(".cont-combi .sel-city input").val()+";"+$(".cont-combi .sel-district input").val(),
+                    companyProperty:this.combiData.incApply.incProps,
+                    companyScale:this.combiData.incApply.incScale,
+                    companyType:$(".cont-combi .input-area-1 input").val()+";"+$(".cont-combi .input-area-2 input").val(),
+                    companyAddress:$(".cont-combi .sel-province input").val()+";"+$(".cont-combi .sel-city input").val()+";"+$(".cont-combi .sel-district input").val(),
                     profession:$(".cont-combi .major-input-1 input").val()+";"+$(".cont-combi .major-input-2 input").val(),
                     professionCount:this.combiData.uniApply.stuScale,
                     trainType:this.combiData.uniApply.trainWay,
@@ -260,9 +240,9 @@ var appMain = new Vue({
                     schoolAddress:this.combiData.contact.address
                }
                console.log(postdata);
-               EventUtils.ajaxReq('/demand/school/apply','post',postdata,function(resp,status){
+               EventUtils.ajaxReq('/demand/apply','post',postdata,function(resp,status){
                    console.log(resp);
-                   window.location.href="uniCenter.html?userId="+parObj.userId+"&loginId="+parObj.loginId+"&paneId=requireBox";
+                   window.location.href="uniCenter.html?userId="+parObj.userId+"&loginId="+parObj.loginId+"&theme=require";
               })
           }
      },
