@@ -1,33 +1,32 @@
 /**
  * Created by xuanyuan on 2016/12/31.
  */
-var isLogin=false;
-var parObj = EventUtils.urlExtrac(window.location);//地址参数对象
-var respObj={};//页面信息
-var subposArray = [];
-(function(){
-     //提取出二级职位信息
-     for(var i=0; i<posArray.length;i++){
-               for(var j=0;j<posArray[i].subpos.length;j++){
-                    if(posArray[i].subpos[j].name!="不限"){
-                         subposArray.push(posArray[i].subpos[j]);
-                    }
-               }
-          };
-     subposArray.push({name:"不限",subpos:["不限"]});
-     var postdata = {
-          demandType:1,
-          index:1,
-          count:8
-     }
-     EventUtils.ajaxReq("/demand/getList","get",postdata,function(resp,status){
-          console.log(resp);
-          if(resp.data){
-               appResult.uniList.totalpages = resp.data.totalPage;
-               appResult.uniList.results = resp.data.list;
-          }
-     })
+ var isLogin=false;
+ var parObj = EventUtils.urlExtrac(window.location);//地址参数对象
+ var respObj={};//页面信息
+ var subposArray = [];
+ (function(){
+      //提取出二级职位信息
+      for(var i=0; i<posArray.length;i++){
+                for(var j=0;j<posArray[i].subpos.length;j++){
+                     if(posArray[i].subpos[j].name!="不限"){
+                          subposArray.push(posArray[i].subpos[j]);
+                     }
+                }
+           };
+      subposArray.push({name:"不限",subpos:["不限"]});
+      var postdata = {
+           demandType:2,
+           index:1,
+           count:8
+      }
+     //  EventUtils.ajaxReq("/demand/getList","get",postdata,function(resp,status){
+     //       console.log(resp);
+     //       appResult.incList.totalpages = resp.data.totalPage;
+     //       appResult.incList.results = resp.data.list;
+     //  })
 })()
+
 
 var appTop = new Vue({
      el:"#app-top",
@@ -67,11 +66,11 @@ var appTop = new Vue({
                 ],
                 conts:["滨江区", "淳安县", "富阳市", "拱墅区", "江干区", "建德市", "临安市", "上城区", "桐庐县", "西湖区", "下城区", "萧山区", "余杭区","不限"]
            },
-           uniQuery:{
+           uniRecruit:{
                 major:"",
                 majorsum:"",
-                majorEx:false,
                 address:"",
+                majorEx:false,
                 incReq:{
                     areas:{
                          area_1:"",
@@ -87,7 +86,7 @@ var appTop = new Vue({
                },
                publicTime:"",
                trainway:""
-           },
+          },
            showPosBox:false,
            showAreaBox:false,
            showWelBox:false
@@ -99,7 +98,7 @@ var appTop = new Vue({
                 $(obj).addClass("on");
                this.database.conts= this.database.navcitys[index].conts;
            },
-           selDistrict:function(obj){
+           selDistict:function(obj){
                 $(".queryform .district .on").removeClass("on");
                 $(obj).addClass("on");
                 var addrString = "";
@@ -114,11 +113,11 @@ var appTop = new Vue({
                      }
                 }
                 addrString+=";"+$(".queryform .district .on").text();
-                this.uniQuery.address = addrString;
+                this.uniRecruit.address = addrString;
                 resultsRequest(1);
            },
            selMajor:function(major1,major2){
-                this.uniQuery.major = major1+";"+major2;
+                this.uniRecruit.major = major1+";"+major2;
                 resultsRequest(1);
            },
            selPos:function(pos,type){
@@ -176,39 +175,24 @@ var appTop = new Vue({
            }
       },
       mounted:function(){
-           this.database.inc.pos1=[];
-           this.database.inc.area1=[];
+           var posArray1=[];
+           var areaArray1=[];
            for(var i=0;i<subposArray.length;i++){
-                this.database.inc.pos1.push(subposArray[i].name);
+                posArray1.push(subposArray[i].name);
            };
+           this.database.inc.pos1=posArray1;
            this.database.inc.pos2 = subposArray[0].subpos;
            for(var j=0;j<workareas.length;j++){
-                this.database.inc.area1.push(workareas[j].title);
+                areaArray1.push(workareas[j].title);
            };
+           this.database.inc.area1=areaArray1;
            this.database.inc.area2 = workareas[0].subareas;
       },
       watch:{
-           'uniQuery.incReq.areas.area_1':function(curval){
-                for(var i=0; i<workareas.length;i++){
-                     if(workareas[i].title==curval){
-                          this.database.inc.area2 = workareas[i].subareas;
-                          break;
-                     }
-                }
-           },
-           'uniQuery.incReq.areas.area_2':function(curval){
-                if(this.uniQuery.incReq.areas.area_1==""){
-                    this.uniQuery.incReq.areas.area_1=workareas[0].title;
-                }
+           'uniRecruit.majorsum':function(curval){
                 resultsRequest(1);
            },
-           'uniQuery.incReq.IncProps':function(curval){
-                resultsRequest(1);
-           },
-           'uniQuery.incReq.IncScale':function(curval){
-                resultsRequest(1);
-           },
-           'uniQuery.incReq.pos.pos_1':function(curval){
+           'uniRecruit.incReq.pos.pos_1':function(curval){
                 for(var i=0;i<subposArray.length;i++){
                      if(subposArray[i].name==curval){
                          this.database.inc.pos2=subposArray[i].subpos;
@@ -216,22 +200,36 @@ var appTop = new Vue({
                      }
                 }
            },
-           'uniQuery.incReq.pos.pos_2':function(curval){
-                if(this.uniQuery.incReq.pos.pos_1==""){
-                     this.uniQuery.incReq.pos.pos_1 = subposArray[0].name;
+           'uniRecruit.incReq.pos.pos_2':function(curval){
+                if(this.uniRecruit.incReq.pos.pos_1==""){
+                     this.uniRecruit.incReq.pos.pos_1 = subposArray[0].name;
                 }
                 resultsRequest(1);
            },
-           'uniQuery.incReq.posAmount':function(curval){
+           'uniRecruit.incReq.areas.area_1':function(curval){
+                for(var i=0; i<workareas.length;i++){
+                     if(workareas[i].title==curval){
+                          this.database.inc.area2 = workareas[i].subareas;
+                          break;
+                     }
+                }
+           },
+           'uniRecruit.incReq.areas.area_2':function(curval){
+                if(this.uniRecruit.incReq.areas.area_1==""){
+                    this.uniRecruit.incReq.areas.area_1=workareas[0].title;
+                }
                 resultsRequest(1);
            },
-           'uniQuery.majorsum':function(curval){
+           'uniRecruit.incReq.IncProps':function(curval){
                 resultsRequest(1);
            },
-           'uniQuery.trainway':function(curval){
+           'uniRecruit.incReq.IncScale':function(curval){
                 resultsRequest(1);
            },
-           'uniQuery.publicTime':function(curval){
+           'uniRecruit.incReq.posAmount':function(curval){
+                resultsRequest(1);
+           },
+           'uniRecruit.publicTime':function(curval){
                 resultsRequest(1);
            },
            'showPosBox':function(curval){
@@ -252,9 +250,17 @@ var appTop = new Vue({
 var appResult = new Vue({
      el:"#app-result",
      data:{
-          uniList:{
+          unirecruitList:{
                totalpages:1,
-               results:[]
+               results:[
+                    {demandId:"1",title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"2016-12-11",IncProps:"性质",IncScale:"规模",IncPos:"岗位名称",publicDate:"2017-11-11"},
+                    {demandId:"1",title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"2016-12-11",IncProps:"性质",IncScale:"规模",IncPos:"岗位名称",publicDate:"2017-11-11"},
+                    {demandId:"1",title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"2016-12-11",IncProps:"性质",IncScale:"规模",IncPos:"岗位名称",publicDate:"2017-11-11"},
+                    {demandId:"1",title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"2016-12-11",IncProps:"性质",IncScale:"规模",IncPos:"岗位名称",publicDate:"2017-11-11"},
+                    {demandId:"1",title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"2016-12-11",IncProps:"性质",IncScale:"规模",IncPos:"岗位名称",publicDate:"2017-11-11"},
+                    {demandId:"1",title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"2016-12-11",IncProps:"性质",IncScale:"规模",IncPos:"岗位名称",publicDate:"2017-11-11"},
+                    {demandId:"1",title:"艺术设计",major:"专业名称",stuScale:"专业人数",addr:{city:"杭州",district:"滨江区"},recruitDate:"2016-12-11",IncProps:"性质",IncScale:"规模",IncPos:"岗位名称",publicDate:"2017-11-11"},
+               ],
           },
      },
      methods:{
@@ -262,7 +268,7 @@ var appResult = new Vue({
                return EventUtils.infoExtrac(info);
           },
           demandLink:function(demandId){
-               return "detail-uni.html?demandId="+demandId+"&type=display";
+               return "detail-unirecruit.html?demandId="+demandId+"&type=display";
           },
           coApply:function(){
                if(isLogin){
@@ -359,51 +365,30 @@ function selectInitPos(){
         //申请合作对话框事件绑定
     }
 
-    // 筛选结果请求
-    function resultsRequest(page){
-     //     日期选择变量转化
-         var dateindex = "";
-         switch (appQuery.uniQuery.publicTime) {
-              case "三天内":dateindex=1;break;
-              case "一周内":dateindex=2;break;
-              case "一月内":dateindex=3;break;
-              default:
-         }
-         var postdata = {
-              demandType:1,
-              index:page,
-              count:8,
-              userAddress:appQuery.uniQuery.address,
-              companyProperty:appQuery.uniQuery.incReq.areas.area_1==""?"":appQuery.uniQuery.incReq.areas.area_1+";"+appQuery.uniQuery.incReq.areas.area_2,
-              companyScale:appQuery.uniQuery.incReq.IncScale,
-              companyType:appQuery.uniQuery.incReq.areas.area_1==""?"":appQuery.uniQuery.incReq.areas.area_1+";"+appQuery.uniQuery.incReq.areas.area_2,
-              profession:$(".queryform .major-input-1 input").val()==""?"不限":appQuery.uniQuery.major,
-              professionCount:appQuery.uniQuery.majorsum,
-              job:appQuery.uniQuery.incReq.pos.pos_1==""?"":appQuery.uniQuery.incReq.pos.pos_1+";"+appQuery.uniQuery.incReq.pos.pos_2,
-              jobCount:appQuery.uniQuery.incReq.posAmount,
-              trainType:appQuery.uniQuery.trainway,
-              timeType:dateindex
-         }
-         // 清楚发送数据对象值为空的属性
-         for(var key in postdata){
-              if(key=="profession"){
-                   console.log(postdata[key]);
-              }
-              if(postdata[key]==""||postdata[key]=="不限"){
-                   delete postdata[key];
-              }
-         }
-         console.log(postdata);
-         EventUtils.ajaxReq("/demand/getList","get",postdata,function(resp,status){
-              console.log(resp);
-              if(resp.data){
-                   appResult.uniList.totalpages = resp.data.totalPage;
-                   appResult.uniList.results = resp.data.list;
-                   if(resp.data.list.length<=1){
-                        $(".results").css("background","url('images/display-bg.png') no-repeat bottom center");
-                   }else{
-                        $(".results").css("background","none");
-                   }
-              }
-         })
-    }
+// 筛选结果请求
+function resultsRequest(page){
+     var postdata = {
+          demandType:2,
+          index:page,
+          count:8,
+          schoolProperty:appQuery.incQuery.uniReq.uniprops,
+          profession:$(".queryform .major-input-1 input").val()==""?"不限":$(".queryform .major-input-1 input").val()+";"+$(".queryform .major-input-2 input").val(),
+          professionCount:appQuery.incQuery.uniReq.majorsum,
+          job:appQuery.incQuery.pos.pos_1==""?"":appQuery.incQuery.pos.pos_1+";"+appQuery.incQuery.pos.pos_2,
+          jobCount:appQuery.incQuery.posAmount,
+          trainType:appQuery.incQuery.trainway
+     }
+     // 清楚发送数据对象值为空的属性
+     for(var key in postdata){
+          if(postdata[key]==""||postdata[key]=="不限"){
+               delete postdata[key];
+          }
+     }
+     EventUtils.ajaxReq("/demand/getList","get",postdata,function(resp,status){
+          console.log(resp);
+          if(resp.data){
+               appResult.incList.totalpages = resp.data.totalPage;
+               appResult.incList.results = resp.data.list;
+          }
+     })
+}

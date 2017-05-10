@@ -2,7 +2,7 @@ var parObj= EventUtils.urlExtrac(window.location);
 var isNewRequire = true;
 var respObj = {};
 var pageindex="0";
-if(parObj.new!="1"){//非首次发布
+if(parObj.new&&parObj.new!="1"){//非首次发布
      isNewRequire=false;
      var pageindex = parObj.demandType;
      (function(){
@@ -93,6 +93,7 @@ var appMain = new Vue({
                     majors:majorArray
                },
                inc:{
+                    posAmount:positionsum,
                     worksexp:worksexp,
                     salary:salaryItems
                },
@@ -204,7 +205,11 @@ var appMain = new Vue({
                addBox.find(".sel-addr input").each(function(){
                     incAddress+=$(this).val()+"-";
                });
-               incAddress+=addBox.find(".addr-ex").val();
+               if(addBox.find(".addr-ex").val()!=""){
+                    incAddress+=addBox.find(".addr-ex").val();
+               }else{
+                    incAddress = incAddress.slice(0,-1);
+               }
                if(type=="combi"){
                     this.combiData.contact.address=incAddress;
                }else if(type=="recruit"){
@@ -245,7 +250,7 @@ var appMain = new Vue({
                          discription:this.combiData.requireDesc,
                          linkMan:this.combiData.contact.person,
                          mobile:this.combiData.contact.phone,
-                         companyAddress:this.combiData.contact.address
+                         companyAddress:this.combiData.contact.address.split("-").join(";")
                     };
                     if(parObj.demandId){
                          postdata.demandId = parObj.demandId;

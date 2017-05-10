@@ -57,7 +57,7 @@
         </div>
         <div class="clearfix maB16">
             <label>高校提供：</label>
-            <major-select class="uni-major lang-select" :majordata="database.uni.majors"></major-select><input type="text" v-show="uniRecruit.majorEx"/>
+            <major-select class="uni-major lang-select" :majordata="database.uni.majors" @callback="selMajor"></major-select><input type="text" v-show="uniRecruit.majorEx"/>
             <dropdown :options="database.uni.majorAmount" placeholder="专业人数" v-model="uniRecruit.majorsum"></dropdown>
         </div>
         <div class="clearfix maB16">
@@ -97,12 +97,12 @@
     </div>
     <div class="bg-gray-f7">
         <div class="inner clearfix">
-           <ul class="results paTop10 fl H635">
-                <li v-for="(item,index) in unirecruitList.results" v-show="showResult(index,unirecruitList.curpage,5)" onclick="window.open('detail-unirecruit.html')">
+           <ul class="results paTop10 fl">
+                <li v-for="(item,index) in unirecruitList.results">
                      <div class="paLeft29 clearfix H108 pRel">
                          <div class="W78 H70 logo-pic bg-brown disInline v-mid fl maT20"></div>
                          <div class="item-block-left fl paTop20 W321 maL25">
-                             <h2 class="color-blueL fSize16 LH-H24">{{item.title}}</h2>
+                             <h2 class="color-blueL fSize16 LH-H24"><a :href="demandLink(item.demandId)"></a>{{item.title}}</h2>
                              <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.addr.city}}-{{item.addr.district}}</p>
                              <p class="f-bold fSize14"><span>招聘会时间：</span>{{item.recruitDate}}</p>
                          </div>
@@ -122,7 +122,7 @@
             </div>
         </div>
         <div class="wrapper paBot33">
-             <pagination :showpages="showpage(unirecruitList.results.length)" :totalpages="pagesum(unirecruitList.results.length)" type="uni-rec" @topage="topage" class="maT28 fSize14 maL278"></pagination>
+             <pagination :showpages="showpage(unirecruitList.totalpages)" :totalpages="unirecruitList.totalpages" type="uni-rec" @topage="topage" class="maT28 fSize14 maL278"></pagination>
         </div>
     </div>
     </div>
@@ -192,6 +192,6 @@
 <script src="data/major.js"></script>
 <script src="data/position.js"></script>
 <script src="data/workareas.js"></script>
-<script src="js/pages/display-common.js"></script>
+<script src="js/pages/display-unirecruit.js"></script>
 </body>
 </html>

@@ -68,10 +68,61 @@ var respObj={};//页面信息
          var postdemand = {
               demandId:parObj.demandId
          }
+         console.log(postdemand);
          EventUtils.ajaxReq("/demand/getInfo","get",postdemand,function(resp,status){
+              respObj = resp.data;
+              var briefdata = {
+                   title:respObj.title,
+                   viewed:30,
+                   applied:15,
+                   publicDate:respObj.updateTime.split(" ")[0]
+              };
+              appBanner.unidata = briefdata;
+              var incAddArray = respObj.companyAddress.split(";");
+            var demandinfo = {
+                  address:incAddArray[0]+" - "+incAddArray[1],
+                  type:EventUtils.infoExtrac(respObj.companyType),
+                  property:respObj.companyProperty,
+                  job:EventUtils.infoExtrac(respObj.job),
+                  scale:respObj.companyScale,
+                  jobCount:respObj.jobCount,
+                  profession:EventUtils.infoExtrac(respObj.profession),
+                  professionCount:respObj.professionCount,
+                  trainType:respObj.trainType,
+                  discription:respObj.discription,
+            };
+            appMain.unidata.demand = demandinfo;
+            var baseinfo = {
+                  uni:respObj.userName,
+                  uniprops:respObj.userProperty,
+                  uniscale:respObj.userScale,
+                  address:respObj.userAddress,
+                  discription:respObj.discription
+            };
+            appMain.unidata.baseinfo = baseinfo;
               console.log(resp);
+              //初始化联合培养时间表
+            $("#train-table .date-aval").removeClass("date-aval");
+            var timeArray = respObj.trainTime.split(";");
+            for(var i=0;i<timeArray.length;i++){
+                  for(var j=0;j<timeArray[i].length;j++){
+                       if(timeArray[i].charAt(j)=="1"){
+                            $("#train-table .date-tr").eq(i).find("td").eq(j+1).addClass("date-aval");
+                       }
+                  }
+            }
          })
     }
+
+    var postdata = {
+         index:1,
+         count:13,
+         demandId:parObj.demandId
+    };
+    EventUtils.ajaxReq("/demand/getDemandApplyList","get",postdemand,function(resp,status){
+         console.log(resp)
+    })
+
 })()
 
 

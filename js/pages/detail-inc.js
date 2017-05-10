@@ -64,7 +64,53 @@ var respObj={};//页面信息
          });
          isLogin = true;
     }
-
+    if(parObj.type=="display"){
+         var postdemand = {
+              demandId:parObj.demandId
+         }
+         EventUtils.ajaxReq("/demand/getInfo","get",postdemand,function(resp,status){
+              respObj = resp.data;
+              console.log(respObj);
+              var baseinfo = {
+                   inc:resp.data.userName,
+                   incprops:resp.data.userProperty,
+                   incscale:resp.data.userScale,
+                   address:resp.data.userAddress,
+                   discription:resp.data.discription
+              };
+              appMain.incdata.baseinfo = baseinfo;
+              var briefdata = {
+                  title:respObj.title,
+                  viewed:30,
+                  applied:15,
+                  publicDate:respObj.updateTime.split(" ")[0]
+            };
+            appBanner.incdata = briefdata;
+            var addArray = respObj.schoolAddress.split(';');
+            var demandinfo = {
+                  address:addArray[0]+" - "+addArray[1],
+                  type:respObj.schoolType,
+                  property:respObj.schoolProperty,
+                  job:EventUtils.infoExtrac(respObj.job),
+                  jobCount:respObj.jobCount,
+                  profession:EventUtils.infoExtrac(respObj.profession),
+                  professionCount:respObj.professionCount,
+                  trainType:respObj.trainType,
+                  discription:respObj.discription,
+            };
+            appMain.incdata.demand = demandinfo;
+            //初始化联合培养时间表
+            $("#train-table .date-aval").removeClass("date-aval");
+            var timeArray = respObj.trainTime.split(";");
+            for(var i=0;i<timeArray.length;i++){
+                  for(var j=0;j<timeArray[i].length;j++){
+                       if(timeArray[i].charAt(j)=="1"){
+                            $("#train-table .date-tr").eq(i).find("td").eq(j+1).addClass("date-aval");
+                       }
+                  }
+            }
+         })
+    }
 })()
 
 

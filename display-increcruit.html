@@ -83,8 +83,8 @@
          </div>
          <div class="bg-gray-f7">
              <div class="inner clearfix">
-                <ul class="results paTop10 H635 fl">
-                     <li v-for="(item,index) in increcruitList.results" v-show="showResult(index,increcruitList.curpage,5)" onclick="window.open('detail-increcruit.html')">
+                <ul class="results paTop10 fl">
+                     <li v-for="(item,index) in increcruitList.results">
                           <div class="paLeft29 clearfix H108 pRel">
                               <div class="W78 H70 logo-pic bg-brown disInline v-mid fl maT20"></div>
                               <div class="item-block-left fl paTop20 W321 maL25">
@@ -109,7 +109,7 @@
                  </div>
              </div>
              <div class="wrapper paBot33">
-                  <pagination :showpages="showpage(increcruitList.results.length)" :totalpages="pagesum(increcruitList.results.length)" type="inc-rec" @topage="topage" class="maT28 fSize14 maL278"></pagination>
+                  <pagination :showpages="showpage(increcruitList.totalpages)" :totalpages="increcruitList.totalpages" type="inc-rec" @topage="topage" class="maT28 fSize14 maL278"></pagination>
              </div>
          </div>
          </div>
@@ -179,6 +179,6 @@
      <script src="data/major.js"></script>
      <script src="data/position.js"></script>
      <script src="data/workareas.js"></script>
-     <script src="js/pages/display-common.js"></script>
+     <script src="js/pages/display-increcruit.js"></script>
 </body>
 </html>

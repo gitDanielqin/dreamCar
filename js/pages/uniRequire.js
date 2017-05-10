@@ -1,7 +1,7 @@
 // 获取字段判断是否为首次发布还是修改
 var parObj= EventUtils.urlExtrac(window.location);
 var isNewRequire = true;
-if(parObj.new!="1"){ //非新需求
+if(parObj.new&&parObj.new!="1"){ //非新需求
      isNewRequire=false;
      var pageindex = parObj.demandType;
      (function(){
@@ -198,7 +198,11 @@ var appMain = new Vue({
                addBox.find(".sel-addr input").each(function(){
                     incAddress+=$(this).val()+"-";
                });
-               incAddress+=addBox.find(".addr-ex").val();
+               if(addBox.find(".addr-ex").val()!=""){
+                    incAddress+=addBox.find(".addr-ex").val();
+               }else{
+                    incAddress = incAddress.slice(0,-1);
+               }
                if(type=="combi"){
                     this.combiData.contact.address=incAddress;
                     addBox.hide();
@@ -220,6 +224,7 @@ var appMain = new Vue({
                }else{
                     var timestring ="";
                }
+               //var linkAddress = this.combiData.contact.address.split("-").join(";");
                var postdata ={
                     userId:parObj.userId,
                     title:this.combiData.header,
@@ -237,13 +242,13 @@ var appMain = new Vue({
                     discription:this.combiData.requireDesc,
                     linkMan:this.combiData.contact.person,
                     mobile:this.combiData.contact.phone,
-                    schoolAddress:this.combiData.contact.address
+                    schoolAddress:this.combiData.contact.address.split("-").join(";")
                }
                console.log(postdata);
-               EventUtils.ajaxReq('/demand/apply','post',postdata,function(resp,status){
-                   console.log(resp);
-                   window.location.href="uniCenter.html?userId="+parObj.userId+"&loginId="+parObj.loginId+"&theme=require";
-              })
+          //      EventUtils.ajaxReq('/demand/apply','post',postdata,function(resp,status){
+          //          console.log(resp);
+          //          window.location.href="uniCenter.html?userId="+parObj.userId+"&loginId="+parObj.loginId+"&theme=require";
+          //     })
           }
      },
      mounted:function(){

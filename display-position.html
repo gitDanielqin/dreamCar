@@ -63,8 +63,8 @@
              </div>
              <div class="clearfix maB16">
                  <label>其他：</label>
-                    <dropdown :options="['三天内','一周内','一月内']" placeholder="发布时间" v-model="incQuery.publicTime"></dropdown>
-                    <dropdown :options="['高管到校培训','入企培训','面议']" placeholder="联合培养方式" v-model="incQuery.trainway" class="lang-select"></dropdown>
+                    <dropdown :options="['三天内','一周内','一月内']" placeholder="发布时间" v-model="posQuery.publicTime"></dropdown>
+                    <dropdown :options="['高管到校培训','入企培训','面议']" placeholder="联合培养方式" v-model="posQuery.trainway" class="lang-select"></dropdown>
              </div>
              <div class="area-box popBox pos-pos" v-show="showAreaBox">
                   <div>
@@ -98,12 +98,12 @@
          </div>
          <div class="bg-gray-f7">
              <div class="inner clearfix">
-                <ul class="results paTop10 fl H635">
-                     <li v-for="(item,index) in posList.results" v-show="showResult(index,posList.curpage,5)" onclick="window.open('detail-position.html')">
+                <ul class="results paTop10 fl">
+                     <li v-for="(item,index) in posList.results">
                           <div class="paLeft29 clearfix H108 pRel">
                               <div class="W78 H70 logo-pic bg-brown disInline v-mid fl maT20"></div>
                               <div class="item-block-left fl paTop20 W321 maL25">
-                                  <h2 class="color-blueL fSize16 LH-H24">{{item.pos}}</h2>
+                                  <h2 class="color-blueL fSize16 LH-H24"><a :href="demandLink(item.demandId)">{{item.pos}}</a></h2>
                                   <p><span class="fSize16 maR24 color-orange-f7">{{item.salary}}</span>{{item.major}}<i class="depart">|</i>{{item.worksexp}}<i class="depart">|</i>{{item.scolar}}</p>
                                   <p class="fSize14"><span class="maR15">【{{item.address.district}}】</span>岗位数：{{item.posAmount}}人</p>
                               </div>
@@ -123,7 +123,7 @@
                  </div>
              </div>
              <div class="wrapper paBot33">
-                  <pagination :showpages="showpage(posList.results.length)" :totalpages="pagesum(posList.results.length)" type="pos" @topage="topage" class="maT28 fSize14 maL278"></pagination>
+                  <pagination :showpages="showpage(posList.totalpages)" :totalpages="posList.totalpages" type="pos" @topage="topage" class="maT28 fSize14 maL278"></pagination>
              </div>
          </div>
          </div>
@@ -193,6 +193,6 @@
      <script src="data/major.js"></script>
      <script src="data/position.js"></script>
      <script src="data/workareas.js"></script>
-     <script src="js/pages/display-common.js"></script>
+     <script src="js/pages/display-position.js"></script>
 </body>
 </html>

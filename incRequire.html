@@ -50,7 +50,7 @@
                        <p class="form-item"><label>所在地</label><addr-select :addrdata="database.addrData" :initaddress="combiData.initAddress" class="sel-addr disInline"></addr-select></p>
                        <h3 class="LH-H75 fSize18 maT11">我可以提供</h3>
                        <p class="form-item"><label>岗位名称</label><pos-select :posdata="database.posdata" :initpos="combiData.initPosition"></pos-select></p>
-                       <p class="form-item"><label>岗位数</label><input type="text" v-model="combiData.incApply.posAmount" />人</p>
+                       <p class="form-item"><label>岗位数</label><dropdown :options="database.inc.posAmount" placeholder="" v-model="combiData.incApply.posAmount"></dropdown></p>
                        <p class="form-item"><label>联合培养方式</label><dropdown :options="database.trainway" placeholder="" v-model="combiData.incApply.trainWay"></dropdown></p>
                        <div class="form-item clearfix"><label class="fl">培养时间</label>
                          <table class="fl time-table">
@@ -194,7 +194,7 @@
                 <p class="bg-gray-e0 LH-H50 t-center"><span class="date">2016-12-17</span><span class="time">12:12</span></p>
              </div>
          </div>
-    </div>     
+    </div>
      <script src="js/libs/jquery-3.1.0.min.js"></script>
      <script src="js/libs/vue.js"></script>
      <script src="js/common/common.js"></script>

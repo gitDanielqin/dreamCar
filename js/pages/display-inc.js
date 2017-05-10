@@ -57,14 +57,14 @@ var appTop = new Vue({
                      welfare:["五险一金","双休","餐补","交通补","带薪年假","节日聚餐"]
                 },
                 navcitys:[
-                     {"city":"杭州","conts":["滨江区", "淳安县", "富阳市", "拱墅区", "江干区", "建德市", "临安市", "上城区", "桐庐县", "西湖区", "下城区", "萧山区", "余杭区"]},
-                     {"city":"上海","conts":["宝山区", "长宁区", "奉贤区", "虹口区", "黄浦区", "嘉定区", "金山区", "静安区", "卢湾区", "闵行区", "南汇区", "普陀区", "浦东新区", "青浦区", "松江区", "徐汇区", "杨浦区", "闸北区"]},
-                     {"city":"北京","conts":["昌平区", "朝阳区", "崇文区", "大兴区", "东城区", "房山区", "丰台区", "海淀区", "怀柔区", "门头沟区", "平谷区", "石景山区", "顺义区", "通州区", "西城区", "宣武区"]},
-                     {"city":"武汉","conts":["蔡甸区", "东西湖区", "汉阳区", "汉南区", "洪山区", "黄陂区", "江岸区", "江汉区", "江夏区", "乔口区", "青山区", "武昌区", "新洲区"]},
-                     {"city":"广州","conts":["宝山区", "长宁区", "奉贤区", "虹口区", "黄浦区", "嘉定区", "金山区", "静安区", "卢湾区", "闵行区", "南汇区", "普陀区", "浦东新区", "青浦区", "松江区", "徐汇区", "杨浦区", "闸北区"]},
-                     {"city":"深圳","conts":["宝安区", "福田区", "龙岗区", "罗湖区", "南山区", "盐田区"]}
+                     {"province":"浙江省","city":"杭州","conts":["滨江区", "淳安县", "富阳市", "拱墅区", "江干区", "建德市", "临安市", "上城区", "桐庐县", "西湖区", "下城区", "萧山区", "余杭区","不限"]},
+                     {"province":"上海市","city":"上海","conts":["宝山区", "长宁区", "奉贤区", "虹口区", "黄浦区", "嘉定区", "金山区", "静安区", "卢湾区", "闵行区", "南汇区", "普陀区", "浦东新区", "青浦区", "松江区", "徐汇区", "杨浦区", "闸北区","不限"]},
+                     {"province":"北京市","city":"北京","conts":["昌平区", "朝阳区", "崇文区", "大兴区", "东城区", "房山区", "丰台区", "海淀区", "怀柔区", "门头沟区", "平谷区", "石景山区", "顺义区", "通州区", "西城区", "宣武区","不限"]},
+                     {"province":"湖北省","city":"武汉","conts":["蔡甸区", "东西湖区", "汉阳区", "汉南区", "洪山区", "黄陂区", "江岸区", "江汉区", "江夏区", "乔口区", "青山区", "武昌区", "新洲区","不限"]},
+                     {"province":"广东省","city":"广州","conts":["宝山区", "长宁区", "奉贤区", "虹口区", "黄浦区", "嘉定区", "金山区", "静安区", "卢湾区", "闵行区", "南汇区", "普陀区", "浦东新区", "青浦区", "松江区", "徐汇区", "杨浦区", "闸北区","不限"]},
+                     {"province":"广东省","city":"深圳","conts":["宝安区", "福田区", "龙岗区", "罗湖区", "南山区", "盐田区","不限"]}
                 ],
-                conts:["滨江区", "淳安县", "富阳市", "拱墅区", "江干区", "建德市", "临安市", "上城区", "桐庐县", "西湖区", "下城区", "萧山区", "余杭区"]
+                conts:["滨江区", "淳安县", "富阳市", "拱墅区", "江干区", "建德市", "临安市", "上城区", "桐庐县", "西湖区", "下城区", "萧山区", "余杭区","不限"]
            },
            incQuery:{
                address:"",
@@ -96,8 +96,23 @@ var appTop = new Vue({
            selDistict:function(obj){
                 $(".queryform .district .on").removeClass("on");
                 $(obj).addClass("on");
+                var addrString = "";
+                for(var i=0; i<this.database.navcitys.length;i++){
+                     if($(".address .on").text()==this.database.navcitys[i].city){
+                          if($(".address .on").text()=="北京"||$(".address .on").text()=="上海"){
+                               addrString = this.database.navcitys[i].province+";"+this.database.navcitys[i].city+"辖区";
+                          }else{
+                               addrString = this.database.navcitys[i].province+";"+this.database.navcitys[i].city+"市";
+                          }
+                          break;
+                     }
+                }
+                addrString+=";"+$(".queryform .district .on").text();
+                this.incQuery.address = addrString;
+                resultsRequest(1);
            },
            selMajor:function(major1,major2){
+                this.incQuery.uniReq.major = major1+";"+major2;
                 resultsRequest(1);
            },
            selPos:function(pos,type){
@@ -155,15 +170,17 @@ var appTop = new Vue({
            }
       },
       mounted:function(){
-           this.database.inc.pos1=[];
-           this.database.inc.area1=[];
+           var posArray1 = [];
+           var areaArray1 = [];
            for(var i=0;i<subposArray.length;i++){
-                this.database.inc.pos1.push(subposArray[i].name);
+                posArray1.push(subposArray[i].name);
            };
+           this.database.inc.pos1 = posArray1;
            this.database.inc.pos2 = subposArray[0].subpos;
            for(var j=0;j<workareas.length;j++){
-                this.database.inc.area1.push(workareas[j].title);
+                areaArray1.push(workareas[j].title);
            };
+           this.database.inc.area1 = areaArray1;
            this.database.inc.area2 = workareas[0].subareas;
       },
       watch:{
@@ -175,19 +192,25 @@ var appTop = new Vue({
                      }
                 }
            },
+           'incQuery.pos.pos_2':function(curval){
+               if(this.incQuery.pos.pos_1==""){
+                    this.incQuery.pos.pos_1 = subposArray[0].name;
+               }
+                resultsRequest(1);
+           },
            'incQuery.uniReq.uniprops':function(curval){
                 resultsRequest(1);
            },
            'incQuery.uniReq.majorsum':function(curval){
                 resultsRequest(1);
            },
-           'incQuery.pos.pos_2':function(curval){
-                 resultsRequest(1);
-           },
            'incQuery.posAmount':function(curval){
                 resultsRequest(1);
            },
            'incQuery.trainway':function(curval){
+                resultsRequest(1);
+           },
+           'incQuery.publicTime':function(curval){
                 resultsRequest(1);
            },
            'showPosBox':function(curval){
@@ -214,6 +237,9 @@ var appResult = new Vue({
           },
      },
      methods:{
+          demandLink:function(demandId){
+               return "detail-company.html?demandId="+demandId+"&type=display";
+          },
           infoExtrac:function(info){
                return EventUtils.infoExtrac(info);
           },
@@ -314,16 +340,26 @@ function selectInitPos(){
 
 // 筛选结果请求
 function resultsRequest(page){
+     //     日期选择变量转化
+         var dateindex = "";
+         switch (appQuery.incQuery.publicTime) {
+              case "三天内":dateindex=1;break;
+              case "一周内":dateindex=2;break;
+              case "一月内":dateindex=3;break;
+              default:
+         }
      var postdata = {
           demandType:2,
           index:page,
           count:8,
+          userAddress:appQuery.incQuery.address,
           schoolProperty:appQuery.incQuery.uniReq.uniprops,
-          profession:$(".queryform .major-input-1 input").val()==""?"不限":$(".queryform .major-input-1 input").val()+";"+$(".queryform .major-input-2 input").val(),
+          profession:$(".queryform .major-input-1 input").val()==""?"不限":appQuery.incQuery.uniReq.major,
           professionCount:appQuery.incQuery.uniReq.majorsum,
           job:appQuery.incQuery.pos.pos_1==""?"":appQuery.incQuery.pos.pos_1+";"+appQuery.incQuery.pos.pos_2,
           jobCount:appQuery.incQuery.posAmount,
-          trainType:appQuery.incQuery.trainway
+          trainType:appQuery.incQuery.trainway,
+          timeType:dateindex
      }
      // 清楚发送数据对象值为空的属性
      for(var key in postdata){
@@ -331,11 +367,17 @@ function resultsRequest(page){
                delete postdata[key];
           }
      }
+     console.log(postdata);
      EventUtils.ajaxReq("/demand/getList","get",postdata,function(resp,status){
           console.log(resp);
           if(resp.data){
                appResult.incList.totalpages = resp.data.totalPage;
                appResult.incList.results = resp.data.list;
-          }     
+               if(resp.data.list.length<=1){
+                    $(".results").css("background","url('images/display-bg.png') no-repeat bottom center");
+               }else{
+                    $(".results").css("background","none");
+               }
+          }
      })
 }
