@@ -1,76 +1,15 @@
 var isLogin=false;
 var parObj = EventUtils.urlExtrac(window.location);//地址参数对象
 var respObj={};//页面信息
-(function(){
-    //如果是来自高校中心的页面
-    if(parObj.type=="uni"){
-         var postdemand = {
-              userId:parObj.userId,
-              loginIdentifier:parObj.loginId,
-              demandId:parObj.demandId
-         };
-         // 请求学校基本信息
-         var postbase = {
-              userId:parObj.userId,
-              loginIdentifier:parObj.loginId
-         };
-         // 请求学校需求信息
-         EventUtils.ajaxReq("/demand/getInfo","get",postdemand,function(resp,status){
-              console.log(resp);
-              EventUtils.ajaxReq("/user/school/getInfo","get",postbase,function(resp,status){
-                   console.log(resp)
-                   appTop.name = resp.data.name;
-                   var baseinfo = {
-                        uni:resp.data.name,
-                        uniprops:resp.data.property,
-                        uniscale:resp.data.scale,
-                        address:resp.data.city+"-"+resp.data.area,
-                        discription:resp.data.discription
-                   };
-                   appMain.unidata.baseinfo = baseinfo;
-              });
-              respObj = resp.data;
-              var briefdata = {
-                   title:respObj.title,
-                   viewed:30,
-                   applied:15,
-                   publicDate:respObj.updateTime.split(" ")[0]
-              };
-              appBanner.unidata = briefdata;
-              var incAddArray = respObj.companyAddress.split(";");
-              var demandinfo = {
-                   address:incAddArray[0]+" - "+incAddArray[1],
-                   type:EventUtils.infoExtrac(respObj.companyType),
-                   property:respObj.companyProperty,
-                   job:EventUtils.infoExtrac(respObj.job),
-                   scale:respObj.companyScale,
-                   jobCount:respObj.jobCount,
-                   profession:EventUtils.infoExtrac(respObj.profession),
-                   professionCount:respObj.professionCount,
-                   trainType:respObj.trainType,
-                   discription:respObj.discription,
-              };
-              appMain.unidata.demand = demandinfo;
-              //初始化联合培养时间表
-              $("#train-table .date-aval").removeClass("date-aval");
-              var timeArray = respObj.trainTime.split(";");
-              for(var i=0;i<timeArray.length;i++){
-                   for(var j=0;j<timeArray[i].length;j++){
-                        if(timeArray[i].charAt(j)=="1"){
-                             $("#train-table .date-tr").eq(i).find("td").eq(j+1).addClass("date-aval");
-                        }
-                   }
-              }
-         });
-         isLogin = true;
-    }
-    if(parObj.type=="display"){
+// 初始化页面信息请求
+function infoRequest(){
          var postdemand = {
               demandId:parObj.demandId
          }
          console.log(postdemand);
          EventUtils.ajaxReq("/demand/getInfo","get",postdemand,function(resp,status){
               respObj = resp.data;
+              console.log(respObj);
               var briefdata = {
                    title:respObj.title,
                    viewed:30,
@@ -92,15 +31,15 @@ var respObj={};//页面信息
                   discription:respObj.discription,
             };
             appMain.unidata.demand = demandinfo;
+            var userAddArray = respObj.userAddress.split(";");
             var baseinfo = {
                   uni:respObj.userName,
                   uniprops:respObj.userProperty,
                   uniscale:respObj.userScale,
-                  address:respObj.userAddress,
-                  discription:respObj.discription
+                  address:userAddArray[1]+"-"+userAddArray[2],
+                  discription:respObj.userDiscription
             };
             appMain.unidata.baseinfo = baseinfo;
-              console.log(resp);
               //初始化联合培养时间表
             $("#train-table .date-aval").removeClass("date-aval");
             var timeArray = respObj.trainTime.split(";");
@@ -112,18 +51,34 @@ var respObj={};//页面信息
                   }
             }
          })
-    }
 
-    var postdata = {
-         index:1,
-         count:13,
-         demandId:parObj.demandId
-    };
-    EventUtils.ajaxReq("/demand/getDemandApplyList","get",postdemand,function(resp,status){
-         console.log(resp)
-    })
-
-})()
+         if(parObj.loginId&&parObj.userType){
+              var getdata = {
+                   userId:parObj.userId,
+                   loginIdentifier:parObj.loginId
+              }
+              appTop.userType = parObj.userType;
+              switch (parObj.userType) {
+                   case "1":  EventUtils.ajaxReq("/user/school/getInfo","get",getdata,function(resp,status){
+                              appTop.userName= resp.data.name;
+                              appTop.isLogin= true;})
+                              break;
+                    case "2":  EventUtils.ajaxReq("/user/company/getInfo","get",getdata,function(resp,status){
+                               appTop.userName= resp.data.name;
+                               appTop.isLogin= true;})
+                               break;
+                   default:
+              }
+         }
+    // var postdata = {
+    //      index:1,
+    //      count:13,
+    //      demandId:parObj.demandId
+    // };
+    // EventUtils.ajaxReq("/demand/getDemandApplyList","get",postdemand,function(resp,status){
+    //      console.log(resp)
+    // })
+}
 
 
 
@@ -131,26 +86,53 @@ var appTop = new Vue({
      el:"#app-top",
      data:{
           isLogin:isLogin,
-          name:""
+          userType:"0",
+          userName:""
      },
      methods:{
+          loginEv:function(){
+               appModal.showModal=true;
+               appModal.showLogin=true;
+          },
+          regisEv:function(){
+               window.open("login.html?newAcc=1","_blank");
+          },
           publish:function(){
-               switch (parObj.type) {
-                    case "uni": //如果是来自高校中心的页面
-                         var link= "uniRequire.html?new=1&userId="+parObj.userId+"&loginId="+parObj.loginId;
-                         window.open(link,'_blank');
+               switch (this.userType) {
+                    case "1":
+                         var link= "uniRequire.html?new=1&userId="+respObj.userId+"&loginId="+respObj.loginId;
+                         break;
+                    case "2":
+                         var link= "incRequire.html?new=1&userId="+respObj.userId+"&loginId="+respObj.loginId;
                          break;
                     default:
                }
+               window.open(link,'_blank');
           },
           toCenter:function(theme){
-               if(parObj.type=="uni"){
-                    var link = "uniCenter.html?loginId="+parObj.loginId+"&userId="+parObj.userId+"&theme="+theme;
-                    window.open(link,'_blank');
+               switch (this.userType) {
+                    case "0":
+                         var link = "pCenter.html?loginId="+respObj.loginId+"&userId="+respObj.userId+"&theme="+theme;
+                         break;
+                    case "1":
+                         var link = "uniCenter.html?loginId="+respObj.loginId+"&userId="+respObj.userId+"&theme="+theme;
+                         break;
+                    case "2":
+                         var link = "incCenter.html?loginId="+respObj.loginId+"&userId="+respObj.userId+"&theme="+theme;
+                         break;
+                    default:
+
                }
+               window.open(link,'_blank');
+          },
+          logout:function(){
+               this.isLogin = false;
+               appModal.login.account="";
+               appModal.login.password="";
           }
      }
-})
+});
+
 var appBanner = new Vue({
      el:"#app-banner",
      data:{
@@ -282,7 +264,11 @@ var appModal = new Vue({
     data:{
          showModal:false,
          showSucc:false,
-         showLogin:false
+         showLogin:false,
+         login:{
+              account:"",
+              password:""
+         }
     },
     methods:{
          confirmSuc:function(){
@@ -296,11 +282,36 @@ var appModal = new Vue({
          closeLog:function(){
               this.showLogin=false;
               this.showModal=false;
+         },
+         loginEv:function(){
+              var postdata ={
+                   loginName:this.login.account,
+                   password:this.login.password
+              };
+              EventUtils.ajaxReq("/center/user/login","post",postdata,function(resp,status){
+                   respObj.userId = resp.data.userId;
+                   respObj.loginId = resp.data.loginIdentifier;
+                   appTop.userType = resp.data.userType;
+                   appTop.userName = resp.data.name;
+                   appTop.isLogin = true;
+                   appModal.showModal = false;
+                   appModal.showLogin = false;
+                   console.log(resp);
+              })
+         }
+    },
+    watch:{
+         'showLogin':function(curval){
+              if(curval){
+                   var dis_top = Math.floor(EventUtils.getViewport().height*0.2)+document.body.scrollTop+"px";
+                   $(".dlg-login").css("top",dis_top);
+              }
          }
     }
 })
 
 function _init(){
+     infoRequest();
      selectInitPos();
      initEventBind();
 }

@@ -31,7 +31,51 @@
 var appTop = new Vue({
      el:"#app-top",
      data:{
-          isLogin:isLogin
+          isLogin:isLogin,
+          userType:"0",
+          userName:""
+     },
+     methods:{
+          loginEv:function(){
+               appModal.showModal=true;
+               appModal.showLogin=true;
+          },
+          regisEv:function(){
+               window.open("login.html?newAcc=1","_blank");
+          },
+          publish:function(){
+               switch (this.userType) {
+                    case "1":
+                         var link= "uniRequire.html?new=1&userId="+respObj.userId+"&loginId="+respObj.loginId;
+                         break;
+                    case "2":
+                         var link= "incRequire.html?new=1&userId="+respObj.userId+"&loginId="+respObj.loginId;
+                         break;
+                    default:
+               }
+               window.open(link,'_blank');
+          },
+          toCenter:function(theme){
+               switch (this.userType) {
+                    case "0":
+                         var link = "pCenter.html?loginId="+respObj.loginId+"&userId="+respObj.userId+"&theme="+theme;
+                         break;
+                    case "1":
+                         var link = "uniCenter.html?loginId="+respObj.loginId+"&userId="+respObj.userId+"&theme="+theme;
+                         break;
+                    case "2":
+                         var link = "incCenter.html?loginId="+respObj.loginId+"&userId="+respObj.userId+"&theme="+theme;
+                         break;
+                    default:
+
+               }
+               window.open(link,'_blank');
+          },
+          logout:function(){
+               this.isLogin = false;
+               appModal.login.account="";
+               appModal.login.password="";
+          }
      }
 })
  var appQuery = new Vue({
@@ -308,7 +352,11 @@ var appModal = new Vue({
      data:{
           showModal:false,
           showSucc:false,
-          showLogin:false
+          showLogin:false,
+          login:{
+               account:"",
+               password:""
+          }
      },
      methods:{
           confirmSuc:function(){
@@ -323,6 +371,30 @@ var appModal = new Vue({
                this.showLogin=false;
                this.showModal=false;
           },
+          loginEv:function(){
+               var postdata ={
+                    loginName:this.login.account,
+                    password:this.login.password
+               };
+               EventUtils.ajaxReq("/center/user/login","post",postdata,function(resp,status){
+                    respObj.userId = resp.data.userId;
+                    respObj.loginId = resp.data.loginIdentifier;
+                    appTop.userType = resp.data.userType;
+                    appTop.userName = resp.data.name;
+                    appTop.isLogin = true;
+                    appModal.showModal = false;
+                    appModal.showLogin = false;
+                    console.log(resp);
+               })
+          }
+     },
+     watch:{
+          'showLogin':function(curval){
+               if(curval){
+                    var dis_top = Math.floor(EventUtils.getViewport().height*0.2)+document.body.scrollTop+"px";
+                    $(".dlg-login").css("top",dis_top);
+               }
+          }
      }
 })
 function _init(){

@@ -386,7 +386,7 @@ var appCont = new Vue({
               return EventUtils.infoExtrac(item);
          },
          requireLink:function(demandId){
-          return "detail-company.html?userId="+parObj.userId+"&loginId="+parObj.loginId+"&demandId="+demandId+"&type=inc";
+          return "detail-company.html?userId="+parObj.userId+"&loginId="+parObj.loginId+"&demandId="+demandId+"&userType=2";
          },
          popTrade:function(){
               appModal.showModal=true;
@@ -939,12 +939,15 @@ function navEventBind(){
              console.log(postdata);
              EventUtils.ajaxReq("/demand/getList","get",postdata,function(resp,status){
                   console.log(resp);
-                  appCont.require.totalpages = resp.data.totalPage;
-                  appCont.require.pagesize = resp.data.pageSize;
-                  appCont.require.demandSrc = 0;
-                  appCont.require.results = resp.data.list;
-                  appCont.require.totalitems = resp.data.totalRow;
-
+                  if(resp.data){
+                      appCont.require.totalpages = resp.data.totalPage;
+                      appCont.require.pagesize = resp.data.pageSize;
+                      appCont.require.demandSrc = 0;
+                      appCont.require.results = resp.data.list;
+                      appCont.require.totalitems = resp.data.totalRow;
+                 }else{
+                      appCont.require.results=[];
+                 }
              })
         }
         if($(this).attr("paneid")){

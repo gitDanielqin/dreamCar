@@ -11,13 +11,13 @@
     <link href="css/uniCenter.css" rel="stylesheet">
 </head>
 <body class="bg-gray-f2">
-    <div class="top bg-gray3 H100 color-white">
+    <div class="top bg-gray3 H100 color-white" id="app-top">
         <div class="inner">
-            <a href='index.html'><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" /></a>
+            <a :href='homeLink'><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" /></a>
             <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
             <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">高校中心</h2>
             <div class="fr navs maT42">
-                 <a href="index.html"><i class="pic-icon icon-home"></i></a>
+                 <a :href="homeLink"><i class="pic-icon icon-home"></i></a>
                  <a href="#"><i class="pic-icon icon-account"></i></a>
                  <a class="msg-center pRel" href="#"><i class="pic-icon icon-msg"></i><i class="msg-info">99</i></a>
             </div>
@@ -202,6 +202,11 @@
                                 </div>
                             </div>
                         </li>
+                        <li v-show="require.results.length==0">
+                             <div class="paLeft29 clearfix H128 pRel">
+                                  <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                             </div>
+                        </li>
                     </ul>
                     <pagination :showpages="showpage(require.totalpages)" :totalpages="require.totalpages" type="require" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
@@ -232,6 +237,11 @@
                                     </div>
                                 </div>
                             </div>
+                        </li>
+                        <li v-show="collect.results.length==0">
+                             <div class="paLeft29 clearfix H128 pRel">
+                                  <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                             </div>
                         </li>
                     </ul>
                     <pagination :showpages="showpage(collect.results.length)" :totalpages="pagesum(collect.results.length)" type="collect" @topage="topage" class="maT28 fSize14 fr"></pagination>
@@ -294,6 +304,11 @@
                               </div>
                          </template>
                         </li>
+                        <li v-show="message.combi.results.length==0">
+                             <div class="paLeft29 clearfix H128 pRel">
+                                  <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                             </div>
+                        </li>
                     </ul>
                     <pagination :showpages="showpage(message.combi.results.length)" :totalpages="pagesum(message.combi.results.length)" type="msg-combi" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
@@ -328,6 +343,11 @@
                                     </div>
                                 </div>
                             </div>
+                        </li>
+                        <li v-show="message.recruit.results.length==0">
+                             <div class="paLeft29 clearfix H128 pRel">
+                                  <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                             </div>
                         </li>
                     </ul>
                     <pagination :showpages="showpage(message.recruit.results.length)" :totalpages="pagesum(message.recruit.results.length)" type="msg-recruit" @topage="topage" class="maT28 fSize14 fr"></pagination>
@@ -438,6 +458,11 @@
                                 </div>
                                 <button class="btn-comment" @click="popComment(index)">评价</button>
                             </div>
+                        </li>
+                        <li v-show="coop.results.length==0">
+                             <div class="paLeft29 clearfix H128 pRel">
+                                  <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                             </div>
                         </li>
                     </ul>
                     <pagination :showpages="showpage(coop.results.length)" :totalpages="pagesum(coop.results.length)" type="coop" @topage="topage" class="maT28 fSize14 fr"></pagination>

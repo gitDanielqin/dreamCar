@@ -98,13 +98,13 @@ var appCont =  new Vue({
                     }else{
                          switch (resp.data.userType) {
                               case "0":
-                                   window.location.href="pCenter.html?userId="+resp.data.userId+"&loginId="+resp.data.loginIdentifier+"&loginName="+resp.data.loginName;
+                                   window.location.href="pCenter.html?userId="+resp.data.userId+"&loginId="+resp.data.loginIdentifier;
                                    break;
                               case "1":
-                                   window.location.href="uniCenter.html?userId="+resp.data.userId+"&loginId="+resp.data.loginIdentifier+"&loginName="+resp.data.loginName;
+                                   window.location.href="uniCenter.html?userId="+resp.data.userId+"&loginId="+resp.data.loginIdentifier;
                                    break;
                               case "2":
-                                   window.location.href="incCenter.html?userId="+resp.data.userId+"&loginId="+resp.data.loginIdentifier+"&loginName="+resp.data.loginName;
+                                   window.location.href="incCenter.html?userId="+resp.data.userId+"&loginId="+resp.data.loginIdentifier;
                                    break;
                               default:
                          }

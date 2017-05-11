@@ -87,7 +87,12 @@ var respObj={}; //请求的本页面的数据集合
 
 })()
 
-
+var appTop = new Vue({
+     el:"#app-top",
+     data:{
+          homeLink:"index.html?userId="+parObj.userId+"&loginId="+parObj.loginId
+     }
+})
 var appPorto = new Vue({
     el: "#app-porto",
     data: {
@@ -182,7 +187,7 @@ var appCont = new Vue({
               totalpages:1,
               totalitems:1,
               pagesize:3,
-              demandSrc:0,
+              demandSrc:0,//0：校企合作 1：招聘会
               newLink:"uniRequire.html?new=1&userId="+parObj.userId+"&loginId="+parObj.loginId,
               results:[],
               showCombi:true,
@@ -401,7 +406,7 @@ var appCont = new Vue({
               return text=="不限"||text==undefined?"":text;
          },
          requireLink:function(demandId){
-           return "detail-uni.html?userId="+parObj.userId+"&loginId="+parObj.loginId+"&demandId="+demandId+"&type=uni";
+           return "detail-uni.html?userId="+parObj.userId+"&loginId="+parObj.loginId+"&demandId="+demandId+"&userType=1";
          },
          submajors:function(major){
               var arr =[];
@@ -457,16 +462,23 @@ var appCont = new Vue({
                		fileElementId : 'imageFile', // file控件id
                		dataType : 'json',
                		data : {
+                              userId:parObj.userId,
+                              type:2,
                			fileName : appCont.resume.comLicense   //传递参数，用于解析出文件名
                		}, // 键:值，传递文件名
                		success : function(data, status) {
                			console.log(data.data);
+                         //     alert(1);
                		},
                		error : function(data, status) {
-               			console.log(2);
+               		//	alert(2);
                		}
                	});
               };
+
+              EventUtils.ajaxReq("/sys/getImgUrl?","post",{userId:parObj.userId,type:2},function(resp,status){
+                   console.log(resp);
+              })
           //     if(this.resume.uniLicense!=""){
           //          $.ajaxFileUpload({
           //      		url : 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload',   //提交的路径
@@ -511,9 +523,9 @@ var appCont = new Vue({
                    imgUrlAgree:this.resume.uniLicense,
                    discription:this.resume.intro
               };
-              console.log(postdata);
+            //  console.log(postdata);
               EventUtils.ajaxReq('/user/school/modifyInfo','post',postdata,function(resp,status){
-                  console.log(resp);
+                //  console.log(resp);
              })
 
          },
@@ -590,7 +602,9 @@ var appCont = new Vue({
                        count:3
                   }
                   EventUtils.ajaxReq("/demand/getList","get",postdata,function(resp,status){
-                       appCont.require.results = resp.data.list;
+                       if(resp.data){
+                         appCont.require.results = resp.data.list;
+                       }
                   })
                   this.require.curpage=page;
               }else if(type=="collect"){
@@ -1024,6 +1038,7 @@ function navEventBind(){
         }
         //需求面板请求结果
         if($(this).attr("paneid")=="requireBox"){
+             //默认请求校企合作的数据
              var postdata = {
                   userId:parObj.userId,
                   loginIdentifier:parObj.loginId,
@@ -1033,11 +1048,15 @@ function navEventBind(){
              }
              EventUtils.ajaxReq("/demand/getList","get",postdata,function(resp,status){
                   console.log(resp);
-                  appCont.require.totalpages = resp.data.totalPage;
-                  appCont.require.pagesize = resp.data.pageSize;
-                  appCont.require.demandSrc=0;
-                  appCont.require.results = resp.data.list;
-                  appCont.require.totalitems = resp.data.totalRow;
+                  if(resp.data){
+                      appCont.require.totalpages = resp.data.totalPage;
+                      appCont.require.pagesize = resp.data.pageSize;
+                      appCont.require.demandSrc=0;
+                      appCont.require.results = resp.data.list;
+                      appCont.require.totalitems = resp.data.totalRow;
+                 }else{
+                      appCont.require.results =[];
+                 }
              })
         }
         if($(this).attr("paneid")){

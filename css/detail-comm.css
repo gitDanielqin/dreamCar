@@ -125,6 +125,6 @@ a.login-link{display: block; color:#fcb62e;}
 .account .pic-icon{margin-left:9px; background: url("../images/sprite.png") no-repeat -122px -85px; width: 16px; height: 12px;}
 .account li{cursor: pointer; position: relative;}
 /*.account li:hover dl{display: block;}*/
-.account dl{position: absolute; left: 0; top:35px; background: #313131; width: 100%; display: none;}
+.account dl{position: absolute; left: 0; top:30px; background: #313131; width: 100%; display: none;}
 .account dl dd{padding-left: 14px;}
 .account dl dd:hover{background: #494848;}

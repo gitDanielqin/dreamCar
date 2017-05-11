@@ -192,6 +192,11 @@
                                 </div>
                             </div>
                         </li>
+                        <li v-show="require.results.length==0">
+                             <div class="paLeft29 clearfix H128 pRel">
+                                  <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                             </div>
+                        </li>
                     </ul>
                     <pagination :showpages="showpage(require.totalpages)" :totalpages="require.totalpages" type="require" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
@@ -207,6 +212,11 @@
                         </ul> -->
                     </div>
                     <ul class="info-items H470">
+                         <li v-show="collect.results.length==0">
+                              <div class="paLeft29 clearfix H128 pRel">
+                                   <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                              </div>
+                         </li>
                         <li v-for="(item,index) in collect.results" :name="item.classic" v-show="showResult(index,collect.curpage,3)">
                             <div v-if="item.classic=='高校招聘会'">
                                  <div class="paLeft29 clearfix H128 pRel">
@@ -259,6 +269,11 @@
                         <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{combimsg}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
+                         <li v-show="message.combi.results.length==0">
+                              <div class="paLeft29 clearfix H128 pRel">
+                                   <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                              </div>
+                         </li>
                         <li v-for="(item,index) in message.combi.results" :name="item.code" v-show="showResult(index,message.combi.curpage,3)">
                             <template v-if="item.code=='01'">
                               <div class="paLeft29 clearfix H128 pRel">
@@ -320,6 +335,11 @@
                         <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{message.recruit.items.length}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
+                         <li v-show="message.recruit.results.length==0">
+                              <div class="paLeft29 clearfix H128 pRel">
+                                   <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                              </div>
+                         </li>
                         <li v-for="(item,index) in message.recruit.results" v-show="showResult(index,message.recruit.curpage,3)">
                             <div class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
@@ -437,6 +457,11 @@
                         <p class="fr fSize14 maR30">我合作的高校<span class="color-orange2 maL10 maR10">{{coop.items.length}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
+                         <li v-show="coop.results.length==0">
+                              <div class="paLeft29 clearfix H128 pRel">
+                                   <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                              </div>
+                         </li>
                         <li v-for="(item,index) in coop.results" :name="item.classic" v-show="showResult(index,coop.curpage,3)">
                             <div class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>

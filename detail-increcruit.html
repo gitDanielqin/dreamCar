@@ -8,35 +8,47 @@
     <link href="css/detail-comm.css" rel="stylesheet">
 </head>
 <body>
-<div class="top bg-dunkel">
-    <div class="inner clearfix">
-        <h3 class="fl LH-H30 fSize14 color-white">您好，欢迎来到校企职通车</h3>
-        <div class="top-right fr LH-H30 fSize14 color-white" >
-            <p class="login fl">
-                <span>【登录】</span><span>|</span><span style="color: red">【注册】</span>
-            </p>
-            <div class="fl fSize14 top-acc color-white"><i class="pic-icon W17 H20"></i>个人中心</div>
-        </div>
-        <ul class="account fr lis-inline color-white fSize14 LH-H35" style="display: none;">
-            <li style="margin-right: 14px;">免费发布</li>
-            <li><span style="margin-right:14px;">|</span>网站合作<i class="pic-icon maR10 icon-dropdown"></i>
-                <dl>
-                    <dd>校企合作</dd>
-                    <dd>校园推广</dd>
-                    <dd>VIP中心</dd>
-                </dl>
-            </li>
-            <li><span style="margin-right:14px">|</span>中国美术学院<i class="pic-icon icon-dropdown"></i>
-                <dl>
-                    <dd>我的发布</dd>
-                    <dd>我的合作</dd>
-                    <dd>我的收藏</dd>
-                    <dd>退出</dd>
-                </dl>
-            </li>
-        </ul>
-    </div>
-</div>
+     <div class="top bg-dunkel" id="app-top">
+         <div class="inner clearfix">
+             <h3 class="fl LH-H30 fSize14 color-white">您好，欢迎来到校企职通车</h3>
+             <div class="top-right fr LH-H30 fSize14 color-white" v-show="!isLogin">
+                 <p class="login fl">
+                     <span @click="loginEv">【登录】</span><i>|</i><span style="color: red" @click="regisEv">【注册】</span>
+                 </p>
+                 <div class="fl fSize14 top-acc color-white"><i class="pic-icon W17 H20"></i>个人中心</div>
+             </div>
+             <ul class="account fr lis-inline color-white fSize14 LH-H30" v-show="isLogin&&userType!='0'">
+                 <li style="margin-right: 14px;" @click="publish">免费发布</li>
+                 <li><span style="margin-right:14px;">|</span>网站合作<i class="pic-icon maR10 icon-dropdown"></i>
+                     <dl>
+                         <dd><a href="footer-page.html?recruit">校企合作</a></dd>
+                         <dd><a href="footer-page.html?coop">校园推广</a></dd>
+                         <dd @click="toCenter('vip')">VIP中心</dd>
+                     </dl>
+                 </li>
+                 <li><span style="margin-right:14px">|</span>{{userName}}<i class="pic-icon icon-dropdown"></i>
+                     <dl>
+                         <dd @click="toCenter('require')">我的发布</dd>
+                         <dd @click="toCenter('combi')">我的合作</dd>
+                         <dd @click="toCenter('collect')">我的收藏</dd>
+                         <dd @click="logout">退出</dd>
+                     </dl>
+                 </li>
+             </ul>
+             <ul class="account fr lis-inline color-white fSize12 LH-H30" v-show="isLogin&&userType=='0'">
+                 <li @click="toCenter('')">我的简历</li>
+                 <li><span style="margin:0 12px">|</span><span @click="toCenter('jobBox')">投递箱</span></li>
+                 <li><span style="margin:0 12px">|</span><span @click="toCenter('collec-study')">收藏夹</span><span style="margin-left:12px">|</span></li>
+                 <li style="padding-left:12px;">江玉海<i class="pic-icon maR10 icon-dropdown"></i>
+                     <dl>
+                         <dd @click="toCenter('classBox')">我的学习</dd>
+                         <dd @click="toCenter('conf-keyword')">账号设置</dd>
+                         <dd @click="logout">退出</dd>
+                     </dl>
+                 </li>
+             </ul>
+         </div>
+     </div>
 <h2 class="inner LH-H110 fSize30 color-grayH maB3"><img src="images/logo.png" class="v-mid H47 maR17"/>校企职通车</h2>
 <div class="banner bg-gray-f2 H176" id="app-banner">
     <div class="inner clearfix">

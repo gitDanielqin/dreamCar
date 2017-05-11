@@ -7,7 +7,8 @@
 .selectee ul li.selected{background: #2ea8e6; color:#fff;}
 
 
-.login  span{margin-left: 15px;}
+.login  i{margin:0 15px;}
+.login span{cursor: pointer;}
 .top-acc{margin-left: 47px; margin-right: 15px;}
 .top-acc .pic-icon{width: 17px; height: 20px; background: url("../images/sprite.png") no-repeat -113px -177px;margin-right: 6px;}
 .search input{width:438px; border: 1px solid #ffa800; background: url(../images/icon-search.png) no-repeat 10px center;}

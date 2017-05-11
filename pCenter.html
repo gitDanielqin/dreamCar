@@ -360,6 +360,11 @@
                      <p class="fr fSize14 maR30">我学习过的课程<span class="color-orange2 maL10 maR10">{{courses.results.length}}</span>个</p>
                  </div>
                  <ul class="classList contList H410">
+                      <li v-show="courses.results.length==0">
+                           <div class="paLeft29 clearfix H128 pRel">
+                                <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                           </div>
+                      </li>
                      <li v-for="(item,index) in courses.results" v-show="showResult(index,courses.curpage,3)">
                          <div class="class-pic logo-pic"></div>
                          <div class="class-txt fl paTop20 W328">
@@ -388,6 +393,11 @@
                      <p class="fr fSize14 maR30">我收藏过的课程<span class="color-orange2 maL10 maR10">{{colStuList.results.length}}</span>个</p>
                  </div>
                  <ul class="colStudyList contList H470">
+                      <li v-show="colStuList.results.length==0">
+                           <div class="paLeft29 clearfix H128 pRel">
+                                <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                           </div>
+                      </li>
                      <li v-for="(item,index) in colStuList.results" v-show="showResult(index,colStuList.curpage,3)">
                          <div class="logo-pic"></div>
                          <div class="class-txt fl paTop20 W328">
@@ -410,6 +420,11 @@
                      <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">{{colPosList.results.length}}</span>个</p>
                  </div>
                  <ul class="colCompanyList contList H470">
+                      <li v-show="colPosList.results.length==0">
+                           <div class="paLeft29 clearfix H128 pRel">
+                                <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                           </div>
+                      </li>
                      <li v-for="(item,index) in colPosList.results" v-show="showResult(index,colPosList.curpage,3)">
                          <div class="logo-pic"></div>
                          <div class="class-txt fl paTop20 W328">
@@ -433,6 +448,11 @@
                      <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">{{colRecList.results.length}}</span>个</p>
                  </div>
                  <ul class="colCompanyList contList">
+                      <li v-show="colRecList.results.length==0">
+                           <div class="paLeft29 clearfix H128 pRel">
+                                <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                           </div>
+                      </li>
                      <li v-for="(item,index) in colRecList.results" v-show="showResult(index,colRecList.curpage,3)">
                          <div class="logo-pic"></div>
                          <div class="class-txt fl paTop20 W328">
@@ -456,6 +476,11 @@
                      <p class="fr fSize14 maR30">已投递简历<span class="color-orange2 maL10 maR10">{{myPosList.results.length}}</span>份</p>
                  </div>
                  <ul class="collectList contList H410">
+                      <li v-show="myPosList.results.length==0">
+                           <div class="paLeft29 clearfix H128 pRel">
+                                <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                           </div>
+                      </li>
                      <li v-for="(item,index) in myPosList.results" v-show="showResult(index,myPosList.curpage,3)">
                          <div class="logo-pic"></div>
                          <div class="class-txt fl paTop20 W328">

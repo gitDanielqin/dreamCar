@@ -245,10 +245,10 @@ var appMain = new Vue({
                     schoolAddress:this.combiData.contact.address.split("-").join(";")
                }
                console.log(postdata);
-          //      EventUtils.ajaxReq('/demand/apply','post',postdata,function(resp,status){
-          //          console.log(resp);
-          //          window.location.href="uniCenter.html?userId="+parObj.userId+"&loginId="+parObj.loginId+"&theme=require";
-          //     })
+               EventUtils.ajaxReq('/demand/apply','post',postdata,function(resp,status){
+                   console.log(resp);
+                   window.location.href="uniCenter.html?userId="+parObj.userId+"&loginId="+parObj.loginId+"&theme=require";
+              })
           }
      },
      mounted:function(){
