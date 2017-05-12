@@ -292,6 +292,9 @@
                               break;
                          }
                     }
+                    if(curval=="不限"&&this.selsubMajor=="不限"){
+                         this.$emit('callback',this.selMajor,this.selsubMajor);
+                    }
                },
                "selsubMajor":function(curval){
                     this.$emit('callback',this.selMajor,this.selsubMajor);

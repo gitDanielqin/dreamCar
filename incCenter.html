@@ -8,13 +8,13 @@
     <link href="css/incCenter.css" rel="stylesheet">
 </head>
 <body class="bg-gray-f2">
-    <div class="top bg-gray3 H100 color-white">
+    <div class="top bg-gray3 H100 color-white" id="app-top">
         <div class="inner">
-            <a href="index.html"><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" /></a>
+            <a :href="homeLink"><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" /></a>
             <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
             <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">企业中心</h2>
             <div class="fr navs maT42">
-                <a href="index.html"><i class="pic-icon icon-home"></i></a>
+                <a :href="homeLink"><i class="pic-icon icon-home"></i></a>
                 <a href="#"><i class="pic-icon icon-account"></i></a>
                 <a class="msg-center pRel" href="#"><i class="pic-icon icon-msg"></i><i class="msg-info">99</i></a>
             </div>

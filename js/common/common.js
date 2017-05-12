@@ -131,6 +131,42 @@ var EventUtils = {
        if(parseInt(day)<10){day="0"+day;}
        return year+"-"+month+"-"+day;
      },
+     getOs:function(){
+          var OsObject = "";
+          if(navigator.userAgent.indexOf("MSIE")>0) {
+               return "MSIE";
+          }
+          if(isFirefox=navigator.userAgent.indexOf("Firefox")>0){
+               return "Firefox";
+          }
+          if(isSafari=navigator.userAgent.indexOf("Safari")>0) {
+               return "Safari";
+          }
+          if(isCamino=navigator.userAgent.indexOf("Camino")>0){
+               return "Camino";
+          }
+          if(isMozilla=navigator.userAgent.indexOf("Gecko/")>0){
+               return "Gecko";
+          }
+     },
+     getLocalImgUrl:function(fid){
+          // IE浏览器获取图片路径
+         this.getImgUrlByMSIE = function(fileid) {
+              return document.getElementById(fileid).value;
+         }
+         // 非IE浏览器获取图片路径
+         this.getImgUrlByUnMSIE = function(fileid) {
+              var f = document.getElementById(fileid).files[0];
+              return window.URL.createObjectURL(f);
+         }
+         var imgsrc="";
+         if("MSIE"==EventUtils.getOs()) {
+              imgsrc = this.getImgUrlByMSIE(fid);
+         } else {
+              imgsrc = this.getImgUrlByUnMSIE(fid);
+         }
+         return imgsrc;
+     },
      getFileUrl:function(obj){
        //判断浏览器
          var Sys = {};

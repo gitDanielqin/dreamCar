@@ -87,6 +87,7 @@ function wheelEventBind(element,index){
      }
 
 }
+
 var appFront = new Vue({
      el:"#app-front",
      data:{
@@ -97,6 +98,7 @@ var appFront = new Vue({
                     hotcitys:["北京","上海","杭州","广州","深圳"]
                }
           },
+          isLogin:true,
           showAddr:false,
           address:{
                selProvince:"",

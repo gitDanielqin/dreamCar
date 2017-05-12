@@ -67,6 +67,12 @@ var respObj={}; //请求的本页面的数据集合
 
 })()
 
+var appTop = new Vue({
+     el:"#app-top",
+     data:{
+          homeLink:"index.html?userId="+parObj.userId+"&loginId="+parObj.loginId
+     }
+})
 
 
 var appPorto = new Vue({

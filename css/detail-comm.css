@@ -1,4 +1,5 @@
-.login  span{margin-left: 15px;}
+.login  i{margin:0 15px;}
+.login span{cursor: pointer;}
 .top-acc{margin-left: 47px; margin-right: 15px;}
 .detail-header img{vertical-align: middle;}
 .top-acc .pic-icon{width: 17px; height: 20px; background: url("../images/sprite.png") no-repeat -113px -177px;margin-right: 6px;}

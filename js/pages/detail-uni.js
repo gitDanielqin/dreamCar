@@ -6,7 +6,6 @@ function infoRequest(){
          var postdemand = {
               demandId:parObj.demandId
          }
-         console.log(postdemand);
          EventUtils.ajaxReq("/demand/getInfo","get",postdemand,function(resp,status){
               respObj = resp.data;
               console.log(respObj);
@@ -60,12 +59,15 @@ function infoRequest(){
               appTop.userType = parObj.userType;
               switch (parObj.userType) {
                    case "1":  EventUtils.ajaxReq("/user/school/getInfo","get",getdata,function(resp,status){
-                              appTop.userName= resp.data.name;
-                              appTop.isLogin= true;})
+                                   console.log(resp);
+                                   appTop.userName= resp.data.name;
+                                   appTop.isLogin= true;
+                              })
                               break;
                     case "2":  EventUtils.ajaxReq("/user/company/getInfo","get",getdata,function(resp,status){
-                               appTop.userName= resp.data.name;
-                               appTop.isLogin= true;})
+                                   appTop.userName= resp.data.name;
+                                   appTop.isLogin= true;
+                              })
                                break;
                    default:
               }
@@ -100,10 +102,10 @@ var appTop = new Vue({
           publish:function(){
                switch (this.userType) {
                     case "1":
-                         var link= "uniRequire.html?new=1&userId="+respObj.userId+"&loginId="+respObj.loginId;
+                         var link= "uniRequire.html?new=1&userId="+parObj.userId+"&loginId="+parObj.loginId;
                          break;
                     case "2":
-                         var link= "incRequire.html?new=1&userId="+respObj.userId+"&loginId="+respObj.loginId;
+                         var link= "incRequire.html?new=1&userId="+parObj.userId+"&loginId="+parObj.loginId;
                          break;
                     default:
                }
@@ -111,14 +113,14 @@ var appTop = new Vue({
           },
           toCenter:function(theme){
                switch (this.userType) {
-                    case "0":
-                         var link = "pCenter.html?loginId="+respObj.loginId+"&userId="+respObj.userId+"&theme="+theme;
+                    case "0":parObj
+                         var link = "pCenter.html?loginId="+parObj.loginId+"&userId="+parObj.userId+"&theme="+theme;
                          break;
                     case "1":
-                         var link = "uniCenter.html?loginId="+respObj.loginId+"&userId="+respObj.userId+"&theme="+theme;
+                         var link = "uniCenter.html?loginId="+parObj.loginId+"&userId="+parObj.userId+"&theme="+theme;
                          break;
                     case "2":
-                         var link = "incCenter.html?loginId="+respObj.loginId+"&userId="+respObj.userId+"&theme="+theme;
+                         var link = "incCenter.html?loginId="+parObj.loginId+"&userId="+parObj.userId+"&theme="+theme;
                          break;
                     default:
 
@@ -289,8 +291,9 @@ var appModal = new Vue({
                    password:this.login.password
               };
               EventUtils.ajaxReq("/center/user/login","post",postdata,function(resp,status){
-                   respObj.userId = resp.data.userId;
-                   respObj.loginId = resp.data.loginIdentifier;
+                   parObj.userId = resp.data.userId;
+                   parObj.loginId = resp.data.loginIdentifier;
+                   parObj.userType = resp.data.userType;
                    appTop.userType = resp.data.userType;
                    appTop.userName = resp.data.name;
                    appTop.isLogin = true;

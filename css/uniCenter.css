@@ -3,6 +3,7 @@
 .top .navs a .icon-account{width: 28px; height: 33px; background: url("../images/sprite.png") no-repeat -360px -222px;}
 .top .navs a .icon-msg{width: 31px; height: 31px; background: url("../images/sprite.png") no-repeat -6px -262px;}
 .msg-info{display: inline-block; width: 24px; height: 24px; background: #ef3e3e; line-height: 24px; color: white; position: absolute; right: 1px; top: 3px; border-radius: 50%;}
+.preview-file{position: absolute; left: 50%; transform: translate(-50%,-50%);}
 
 .selectee{position: relative; display: inline-block; width: 148px;}
 .selectee input{background: url("../images/icon-select.png") no-repeat right 10px; border:1px solid #ccc; padding-left: 10px; width: 100%;}

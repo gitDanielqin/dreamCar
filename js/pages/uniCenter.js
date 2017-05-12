@@ -54,13 +54,16 @@ var respObj={}; //请求的本页面的数据集合
                    specialLv:specialLevel,
                    specialmajor:majorArray,
                    intro:respObj.discription!=undefined?respObj.discription:"",
-                   comLicense:respObj.imgUrlBus,
-                   uniLicense:respObj.imgUrlAgree,
+                   comLicense:"",
+                   uniLicense:"",
+                   comLicenseUrl:"",
+                   uniLicenseUrl:"",
                    hasBusLicense:respObj.imgUrlBus!="",
                    hasUniLicense:respObj.imgUrlAgree!="",
                    edit:respObj.infoStatus=="0",
                    view:respObj.infoStatus!="0"
                }
+               console.log(resumedata);
                //console.log(resumedata);
                appCont.resume = resumedata;
 
@@ -176,6 +179,8 @@ var appCont = new Vue({
               intro:"世界一流的艺术大学",
               comLicense:"",
               uniLicense:"",
+              comLicenseUrl:"", //营业执照网上地址
+              uniLicenseUrl:"", //办学许可证网上地址
               hasBusLicense:false,
               hasUniLicense:false,
               edit:true,
@@ -402,6 +407,39 @@ var appCont = new Vue({
       }
     },
     methods:{
+         changeComLicense:function(obj){
+              if(obj.files[0].size>3*1024*1204){
+                   alert("请上传小于3M的文件！");
+                   obj.value = "";
+              }
+              this.resume.comLicense=obj.value
+         },
+         changeUniLicense:function(obj){
+          //     console.log(obj.files[0].size);
+              if(obj.files[0].size>3*1024*1024){
+                   alert("请上传小于3M的文件！");
+                   obj.value = "";
+              }
+              this.resume.uniLicense=obj.value
+         },
+         showFile:function(fid){
+              appModal.preImgUrl = EventUtils.getLocalImgUrl(fid);
+              appModal.showModal=true;
+              appModal.show.preImg=true;
+         },
+         showPrefile:function(type){
+              if(type=="com"){
+                   appModal.preImgUrl = appCont.resume.comLicenseUrl;
+                   console.log(appCont.resume.comLicenseUrl,1)
+                   appModal.showModal=true;
+                   appModal.show.preImg=true;
+              }else if(type=="uni"){
+                   appModal.preImgUrl = appCont.resume.uniLicenseUrl;
+                   console.log(appCont.resume.uniLicenseUrl,2)
+                   appModal.showModal=true;
+                   appModal.show.preImg=true;
+              }
+         },
          infoCtrl:function(text){
               return text=="不限"||text==undefined?"":text;
          },
@@ -453,13 +491,13 @@ var appCont = new Vue({
               this.resume.hasUniLicense=this.resume.uniLicense==""?false:true;
               this.resume.edit=false;
               this.resume.view=true;
+              console.log(appCont.resume.comLicense,appCont.resume.uniLicense);
               //上传许可证等图片文件
               if(this.resume.comLicense!=""){
-                   console.log(appCont.resume.comLicense);
                    $.ajaxFileUpload({
                		url : 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload',   //提交的路径
                		secureuri : false, // 是否启用安全提交，默认为false
-               		fileElementId : 'imageFile', // file控件id
+               		fileElementId : 'file-busi', // file控件id
                		dataType : 'json',
                		data : {
                               userId:parObj.userId,
@@ -467,7 +505,8 @@ var appCont = new Vue({
                			fileName : appCont.resume.comLicense   //传递参数，用于解析出文件名
                		}, // 键:值，传递文件名
                		success : function(data, status) {
-               			console.log(data.data);
+               			 console.log(data.data);
+                               appCont.resume.comLicenseUrl = data.data;
                          //     alert(1);
                		},
                		error : function(data, status) {
@@ -476,26 +515,26 @@ var appCont = new Vue({
                	});
               };
 
-              EventUtils.ajaxReq("/sys/getImgUrl?","post",{userId:parObj.userId,type:2},function(resp,status){
-                   console.log(resp);
-              })
-          //     if(this.resume.uniLicense!=""){
-          //          $.ajaxFileUpload({
-          //      		url : 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload',   //提交的路径
-          //      		secureuri : false, // 是否启用安全提交，默认为false
-          //      		fileElementId : 'file-uni', // file控件id
-          //      		dataType : 'json',
-          //      		data : {
-          //      			fileName : appCont.resume.uniLicense   //传递参数，用于解析出文件名
-          //      		}, // 键:值，传递文件名
-          //      		success : function(data, status) {
-          //      			console.log(data.data);
-          //      		},
-          //      		error : function(data, status) {
-          //      			console.log(data,2);
-          //      		}
-          //      	});
-          //     };
+              if(this.resume.uniLicense!=""){
+                   $.ajaxFileUpload({
+               		url : 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload',   //提交的路径
+               		secureuri : false, // 是否启用安全提交，默认为false
+               		fileElementId : 'file-uni', // file控件id
+               		dataType : 'json',
+               		data : {
+                              userId:parObj.userId,
+                              type:1,
+               			fileName : appCont.resume.uniLicense   //传递参数，用于解析出文件名
+               		}, // 键:值，传递文件名
+               		success : function(data, status) {
+                              console.log(data.data);
+               			appCont.resume.uniLicenseUrl = data.data;
+               		},
+               		error : function(data, status) {
+               		//	console.log(data,2);
+               		}
+               	});
+              };
            //   console.log(3);
               var majorstring = "";
               for(var i=0; i< appCont.resume.specialmajor.length;i++){
@@ -691,8 +730,10 @@ var appModal = new Vue({
                freshhintbox:false,
                mobile:false,
                email:false,
-               wechat:false
+               wechat:false,
+               preImg:false
           },
+          preImgUrl:"",
           showModal:false,
           showTrade:false,
           showPreview:false,
@@ -904,6 +945,12 @@ var appModal = new Vue({
           }
      },
      watch:{
+          "show.preImg":function(curval){
+               if(curval){
+                    var top = Math.floor($(window).height()*0.5+$("body").scrollTop())+"px";
+                    $("#app-modal .preview-file").css("top",top);
+               }
+          },
           "showComment":function(curval){
                if(curval){
                     var top = Math.floor($(window).height()*0.15+$("body").scrollTop())+"px";
@@ -976,7 +1023,7 @@ function uploadEventBind(){
               cropper = $('.imgBox').cropbox(options);
           }
           reader.readAsDataURL(this.files[0]);
-          this.files = [];
+          //this.files = [];
      });
      $('.zoom-in').on('click', function () {
           cropper.zoomIn();
@@ -1004,7 +1051,7 @@ function uploadEventBind(){
                //  });
                // $('.cropped').append('<img src="' + img + '" align="absmiddle" style="width:64px;margin-top:4px;border-radius:64px;box-shadow:0px 0px 12px #7E7E7E;" ><p>64px*64px</p>');
                var imgsrc= cropper.getDataURL();
-               //console.log(imgsrc);
+               console.log(imgsrc);
                //$("#porto-img").html('');
                //console.log($("#porto-img").length);
                $("#avatar-box").html("<img src='"+ imgsrc +"' />");

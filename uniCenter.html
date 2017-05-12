@@ -45,7 +45,7 @@
                      <button class="maR15 btn-save" @click="save">保存</button>
                      <button class="btn-cancel" @click="cancel">取消</button>
                 </div>
-            </div>
+           </div>
             <div class="barCodeBox maT14 W168 fr color-gray6 fSize14">
                 <p class="LH-H37">扫一扫微信公众号</p>
                 <img class="maL6 v-mid" src="images/barcode.png" />
@@ -95,17 +95,17 @@
                         </ul>
                     </div>
                     <div class="LH26 paLeft7 resume-item clearfix">
-                        <p class="fl"><i class="pic-icon W30 icon-imp"></i><label>高校认证</label></p>
+                        <p class="fl"><i class="pic-icon W30 icon-imp"></i><label>高校认证</label><br /><span class="fSize12 color-red maL16">（各小于3M）</span></p>
                         <ul class="fl valid-upload color-gray6 fSize12">
                             <li><a href="javascript:void(0)"><label for="comlicense">重新上传营业执照</label><i class="pic-icon icon-upload"></i></a>
                                  <span>{{resume.comLicense}}</span>
-                                 <button v-show="resume.hasBusLicense">（查看之前上传的营业执照）</button>
-                                 <input type="file" name="image" id="imageFile" @change="resume.comLicense=$event.target.value"/>
+                                 <button v-show="resume.comLicense!=''" class="color-orange" @click="showFile('file-busi')">（查看营业执照）</button>
+                                 <input type="file" name="image" id="file-busi" @change="changeComLicense($event.target)"/>
                             </li>
                             <li><a href="javascript:void(0)"><label for="unilicense">重新上传办学许可证</label><i class="pic-icon icon-upload"></i></a>
                                  <span>{{resume.uniLicense}}</span>
-                                 <button v-show="resume.hasUniLicense">（查看之前上传的办学许可证）</button>
-                                 <input type="file" name="image" id="file-uni" @change="resume.uniLicense=$event.target.value" />
+                                 <button v-show="resume.uniLicense!=''" class="color-orange" @click="showFile('file-uni')">（查看办学许可证）</button>
+                                 <input type="file" name="image" id="file-uni" @change="changeUniLicense($event.target)" />
                             </li>
                         </ul>
                     </div>
@@ -138,17 +138,14 @@
                         <div class="clearfix">
                             <p class="fl"><label>高校认证：</label></p>
                             <ul class="fl valid-upload color-gray6 fSize12 paTop5">
-                                <li><span v-show="resume.comLicense" class="view-valid-label">已上传营业执照</span><span v-show="!resume.comLicense" class="view-valid-label color-gray9">未上传营业执照</span>
+                                <li><span v-show="resume.hasBusLicense" class="view-valid-label">已上传营业执照</span><span v-show="!resume.hasBusLicense" class="view-valid-label color-gray9">未上传营业执照</span>
                                    <p class="disInline pRel">
-                                       <button class="color-blueL" v-show="resume.comLicense">（查看之前上传的营业执照）</button>
-                                       <button class="color-orange-fc" v-show="!resume.comLicense">（点击此处上传营业执照）</button>
-                                       <input type="file" @change="changeFile($event.target,'uni')"/>
+                                       <button class="color-blueL" v-show="resume.hasBusLicense" @click.stop="showPrefile('com')">（查看之前上传的营业执照）</button>
                                   </p>
                                 </li>
-                                <li><span v-show="resume.uniLicense" class="view-valid-label">已上传办学许可证</span><span v-show="!resume.uniLicense" class="view-valid-label color-gray9">未上传办学许可证</span>
+                                <li><span v-show="resume.hasUniLicense" class="view-valid-label">已上传办学许可证</span><span v-show="!resume.hasUniLicense" class="view-valid-label color-gray9">未上传办学许可证</span>
                                    <p class="disInline pRel">
-                                     <button class="color-blueL" v-show="resume.uniLicense">（查看之前上传的办学许可证）</button>
-                                     <button class="color-orange-fc" v-show="!resume.uniLicense">（点击此处上传办学许可证）</button>
+                                     <button class="color-blueL" v-show="resume.hasUniLicense" @click.stop="showPrefile('uni')">（查看之前上传的办学许可证）</button>
                                    </p>
                                 </li>
                             </ul>
@@ -497,6 +494,9 @@
         </div>
     </div>
      <div class="modal" id="app-modal" v-show="showModal" @click="hidemodal" v-cloak>
+     <div class="preview-file" v-show="show.preImg">
+          <img :src="preImgUrl"/>
+     </div>
      <div class="porto-upload W500" v-show="showUpload" @click="stayshow($event)">
            <h2 class="LH-H60 fSize24 color-white t-left bg-blueM paLeft30">编辑头像<i class="pic-wrapper LH-H40 W40 close" @click.stop="closePorto"><i class="pic-icon icon-close"></i></i></h2>
            <div class="edit-area H407 bg-white">
@@ -525,7 +525,7 @@
                 </div>
                <div class="submit-btns t-center maT28"><button class="bg-blueL" id="btnSubmit">确定</button><button class="bg-orange2" @click="closePorto">取消</button></div>
           </div>
-    </div>
+     </div>
      <div class="bind-change W500" v-show="show.mobile" @click.stop="">
          <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换手机号<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13" @click.stop="closeMobile"><i class="pic-icon icon-close"></i></i></h2>
          <div class="bg-white paTop8 paBot60">
@@ -752,8 +752,8 @@
             </div>
         </div>
     </div>
-    <!-- <script src="js/libs/jquery-3.1.0.min.js"></script> -->
-    <script src="js/libs/jquery.min.js"></script>
+    <script src="js/libs/jquery-3.1.0.min.js"></script>
+    <!-- <script src="js/libs/jquery.min.js"></script> -->
     <script src="js/libs/vue.js"></script>
     <script src="js/common/common.js"></script>
     <script src="js/common/ajaxfileupload.js"></script>

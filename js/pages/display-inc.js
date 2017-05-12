@@ -15,6 +15,8 @@
                 }
            };
       subposArray.push({name:"不限",subpos:["不限"]});
+ })()
+ function infoRequest(){
       var postdata = {
            demandType:2,
            index:1,
@@ -24,8 +26,33 @@
            console.log(resp);
            appResult.incList.totalpages = resp.data.totalPage;
            appResult.incList.results = resp.data.list;
-      })
- })()
+      });
+      if(parObj.loginId&&parObj.userType){
+          var getdata = {
+               userId:parObj.userId,
+               loginIdentifier:parObj.loginId
+          }
+          appResult.loginInfo = {
+               userId : parObj.userId,
+               userType: parObj.userType,
+               loginId : parObj.loginId
+          }
+          appTop.userType = parObj.userType;
+          switch (parObj.userType) {
+               case "1":  EventUtils.ajaxReq("/user/school/getInfo","get",getdata,function(resp,status){
+                               appTop.userName= resp.data.name;
+                               appTop.isLogin= true;
+                          })
+                          break;
+                case "2":  EventUtils.ajaxReq("/user/company/getInfo","get",getdata,function(resp,status){
+                               appTop.userName= resp.data.name;
+                               appTop.isLogin= true;
+                          })
+                           break;
+               default:
+          }
+     }
+ }
 
  var appTop = new Vue({
       el:"#app-top",
@@ -45,10 +72,10 @@
            publish:function(){
                 switch (this.userType) {
                      case "1":
-                          var link= "uniRequire.html?new=1&userId="+respObj.userId+"&loginId="+respObj.loginId;
+                          var link= "uniRequire.html?new=1&userId="+parObj.userId+"&loginId="+parObj.loginId;
                           break;
                      case "2":
-                          var link= "incRequire.html?new=1&userId="+respObj.userId+"&loginId="+respObj.loginId;
+                          var link= "incRequire.html?new=1&userId="+parObj.userId+"&loginId="+parObj.loginId;
                           break;
                      default:
                 }
@@ -57,13 +84,13 @@
            toCenter:function(theme){
                 switch (this.userType) {
                      case "0":
-                          var link = "pCenter.html?loginId="+respObj.loginId+"&userId="+respObj.userId+"&theme="+theme;
+                          var link = "pCenter.html?loginId="+parObj.loginId+"&userId="+parObj.userId+"&theme="+theme;
                           break;
                      case "1":
-                          var link = "uniCenter.html?loginId="+respObj.loginId+"&userId="+respObj.userId+"&theme="+theme;
+                          var link = "uniCenter.html?loginId="+parObj.loginId+"&userId="+parObj.userId+"&theme="+theme;
                           break;
                      case "2":
-                          var link = "incCenter.html?loginId="+respObj.loginId+"&userId="+respObj.userId+"&theme="+theme;
+                          var link = "incCenter.html?loginId="+parObj.loginId+"&userId="+parObj.userId+"&theme="+theme;
                           break;
                      default:
 
@@ -74,6 +101,18 @@
                 this.isLogin = false;
                 appModal.login.account="";
                 appModal.login.password="";
+                appResult.loginInfo={
+                     userId:"",
+                     userType:"",
+                     loginId:""
+                };
+                var state = {
+                     title: document.title,
+                     url: document.location.href,
+                     otherkey: null
+                };
+                //无刷新页面替换URL
+                history.replaceState(state, document.title, "display-company.html");
            }
       }
  })
@@ -274,6 +313,11 @@
 var appResult = new Vue({
      el:"#app-result",
      data:{
+          loginInfo:{
+               userId:"",
+               userType:"",
+               loginId:""
+          },
           incList:{
                totalpages:1,
                results:[],
@@ -281,7 +325,11 @@ var appResult = new Vue({
      },
      methods:{
           demandLink:function(demandId){
-               return "detail-company.html?demandId="+demandId+"&type=display";
+               var link = "detail-company.html?demandId="+demandId;
+               if(this.loginInfo.loginId!=""){
+                   link += "&userId=" + this.loginInfo.userId + "&loginId=" + this.loginInfo.loginId+"&userType="+this.loginInfo.userType;
+               }
+               return link;
           },
           infoExtrac:function(info){
                return EventUtils.infoExtrac(info);
@@ -350,14 +398,24 @@ var appModal = new Vue({
                     password:this.login.password
                };
                EventUtils.ajaxReq("/center/user/login","post",postdata,function(resp,status){
-                    respObj.userId = resp.data.userId;
-                    respObj.loginId = resp.data.loginIdentifier;
+                    parObj.userId = resp.data.userId;
+                    parObj.userType = resp.data.userType;
+                    parObj.loginId = resp.data.loginIdentifier;
+                    appResult.loginInfo.userId = resp.data.userId;
+                    appResult.loginInfo.userType = resp.data.userType;
+                    appResult.loginInfo.loginId = resp.data.loginIdentifier;
                     appTop.userType = resp.data.userType;
                     appTop.userName = resp.data.name;
                     appTop.isLogin = true;
+                    var state = {
+                         title: document.title,
+                         url: document.location.href,
+                         otherkey: null
+                    };
+                    //无刷新页面替换URL
+                    history.replaceState(state, document.title, "display-company.html?userId="+ resp.data.userId+"&loginId="+resp.data.loginIdentifier+"&userType="+resp.data.userType);
                     appModal.showModal = false;
                     appModal.showLogin = false;
-                    console.log(resp);
                })
           }
      },
@@ -371,6 +429,7 @@ var appModal = new Vue({
      }
 })
 function _init(){
+     infoRequest();
      selectInitPos();
      _initEventBind();
 }

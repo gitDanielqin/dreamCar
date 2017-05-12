@@ -9,6 +9,8 @@ body{transition: all 0.5s;}
 .subtitle{margin: 0 auto; background: rgba(0,0,0,0.3); border-radius: 5px;}
 .search{border-top-left-radius: 5px; border-bottom-left-radius: 5px;padding-left: 30px;width: 284px;}
 .search-btn{width: 130px; height: 48px; background: #ffa800; font-size: 20px;}
+.account-name{ color: #f7b632; font-size: 16px;}
+.account-name-icon { display: inline-block; transform: rotate(90deg); font-family: consolas; margin-left: 10px;}
 
 .banner-address{position: absolute; left: 88px; bottom:-60px;width: 690px; background: rgba(0,0,0,0.3);}
 .banner-address h2{position: relative;}
