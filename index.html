@@ -1,88 +1,113 @@
 <!DOCTYPE html>
 <html>
-     <head>
-          <meta charset="utf-8">
-          <title>首页</title>
-          <link href="css/base.css" rel="stylesheet" />
-          <link href="css/index.css" rel="stylesheet" />
-     </head>
-     <body>
-          <div class="front-page pRel mod-page" id="app-front" v-cloak>
-               <div class="inner" style="height:770px">
-                    <div class="header clearfix color-white" >
-                        <div class="logo fl clearfix">
-                            <img src="images/logo.png" class="fl maR21"/>
-                            <h2 class="fl LH-H63 fSize30">校企职通车</h2>
-                            <h3 id="sel-add" class="cur-pointer fl LH-H47 fSize14 paTop14 maL30" @click.stop="showAddr=true"><b>{{address.displayCity}}</b><span class="maL18">[切换城市]<i class="pic-icon maL6"></i></span></h3>
-                        </div>
-                        <div class="login fr paTop10" v-show="!isLogin">
-                            <a :href="encodeURI('login.html?newAcc=1&address='+address.displayCity)" class="b-Radius5">注册</a>
-                            <a :href="encodeURI('login.html?newAcc=0&address='+address.displayCity)" class="b-Radius5">登录</a>
-                       </div>
-                       <div class="fr account" v-show="isLogin">
-                              <button class="account-name fSize16">小酒窝<i class="account-name-icon">></i></button>
-                       </div>
-                        <div id="address" class="banner-address LH-H60 v-mid clearfix" v-show="showAddr" @click.stop="">
-                            <h2 class="fl maL50 fSize18">省<dropdown :options="database.address.provinces" v-model="address.selProvince"></dropdown></h2>
-                            <h2 class="fl maL40 fSize18">市<dropdown :options="database.address.citys" v-model="address.selCity" @callback="showAddr=false"></dropdown></h2>
-                            <p class="maL50 fl LH-H50 paTop10 fSize14"><span class="color-yellow">热门城市：</span>
-                              <ul class="lis-inline disInline paTop10 LH50 hotcity-list"><li v-for="city in database.address.hotcitys" @click.stop="selhotcity(city)">{{city}}</li></ul>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="center-teil t-center">
-                          <p class="subtitle fSize16 W260 LH-H35 t-center">加强大学生实践学习经验</p>
-                          <h2 class="maT28 fSize0"><img src="images/title-txt.png" /></h2>
-                          <p class="maT38"><input type="text" placeholder="岗位名称/学校名称/企业名称" class="search LH-H48 v-top"/><button class="search-btn">搜索</button></p>
-                    </div>
-                    <ul class="lis-inline module-entry">
-                         <li><a href="display-uni.html"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>高校需求</b></a></li>
-                         <li><a href="display-company.html"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>企业需求</b></a></li>
-                         <li><a href="#"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>充电站</b></a></li>
-                         <li><a href="v-recruit.html"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>招聘会</b></a></li>
-                         <li><a href="display-position.html"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>校企岗位</b></a></li>
-                         <li><a href="#"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>职业规划</b></a></li>
+
+<head>
+    <meta charset="utf-8">
+    <title>首页</title>
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/index.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="front-page pRel mod-page" id="app-front" v-cloak>
+        <div class="inner" style="height:770px">
+            <div class="header clearfix color-white">
+                <div class="logo fl clearfix">
+                    <img src="images/logo.png" class="fl maR21" />
+                    <h2 class="fl LH-H63 fSize30">校企职通车</h2>
+                    <h3 id="sel-add" class="cur-pointer fl LH-H47 fSize14 paTop14 maL30" @click.stop="showAddr=true"><b>{{address.displayCity}}</b><span class="maL18">[切换城市]<i class="pic-icon maL6"></i></span></h3>
+                </div>
+                <div class="login fr paTop10" v-show="!isLogin">
+                    <a :href="encodeURI('login.html?newAcc=1&address='+address.displayCity)" class="b-Radius5">注册</a>
+                    <a :href="encodeURI('login.html?newAcc=0&address='+address.displayCity)" class="b-Radius5">登录</a>
+                </div>
+                <div class="fr account" v-show="isLogin">
+                    <button class="account-name fSize16 H33">{{account.userName}}<i class="account-name-icon">></i></button>
+                    <ul class="account-options" v-show="account.userType=='0'" @click="selectAction($event.target)">
+                        <li name="center">个人中心</li>
+                        <li name="collect">我的收藏</li>
+                        <li name="myjob">我的求职</li>
+                        <li name="logout">退出</li>
                     </ul>
-                    <i class="pic-wrapper weiter" @click="downwards"><img src="images/icon-weiter.png" /></i>
-               </div>
-          </div>
-          <div class="mod-page class-show" id="app-show" v-cloak>
-               <h2 class="t-center p-title LH56">课堂展示</h2>
-               <h3 class="p-subtitle LH37 fSize24 t-center">CLASSROOM</h3>
-               <ul class="lis-inline inner show-pics">
-                    <li class="pic-box t-center" v-for="(item,index) in showInfos" :class="cssrotate(index)" @click="showSwitch(index)">
-                         <i class="pic-wrapper show-frame"><img :src="item.imgsrc" /></i>
-                         <p class="fSize18">{{item.txt}}-{{index}}</p>
+                    <ul class="account-options" v-show="account.userType!='0'" @click="selectAction($event.target)">
+                        <li name="center">校企中心</li>
+                        <li name="publish">我的发布</li>
+                        <li name="collect">我的收藏</li>
+                        <li name="logout">退出</li>
+                    </ul>
+                </div>
+                <div id="address" class="banner-address LH-H60 v-mid clearfix" v-show="showAddr" @click.stop="">
+                    <h2 class="fl maL50 fSize18">省
+                        <dropdown :options="database.address.provinces" v-model="address.selProvince"></dropdown>
+                    </h2>
+                    <h2 class="fl maL40 fSize18">市
+                        <dropdown :options="database.address.citys" v-model="address.selCity" @callback="showAddr=false"></dropdown>
+                    </h2>
+                    <p class="maL50 fl LH-H50 paTop10 fSize14"><span class="color-yellow">热门城市：</span>
+                        <ul class="lis-inline disInline paTop10 LH50 hotcity-list">
+                            <li v-for="city in database.address.hotcitys" @click.stop="selhotcity(city)">{{city}}</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+            <div class="center-teil t-center">
+                <p class="subtitle fSize16 W260 LH-H35 t-center">加强大学生实践学习经验</p>
+                <h2 class="maT28 fSize0"><img src="images/title-txt.png" /></h2>
+                <p class="maT38"><input type="text" placeholder="岗位名称/学校名称/企业名称" class="search LH-H48 v-top" /><button class="search-btn">搜索</button></p>
+            </div>
+            <ul class="lis-inline module-entry">
+                <li><a href="display-uni.html"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>高校需求</b></a></li>
+                <li><a href="display-company.html"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>企业需求</b></a></li>
+                <li><a href="#"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>充电站</b></a></li>
+                <li><a href="v-recruit.html"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>招聘会</b></a></li>
+                <li><a href="display-position.html"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>校企岗位</b></a></li>
+                <li><a href="#"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>职业规划</b></a></li>
+            </ul>
+            <i class="pic-wrapper weiter" @click="downwards"><img src="images/icon-weiter.png" /></i>
+        </div>
+    </div>
+    <div class="mod-page class-show" id="app-show" v-cloak>
+        <h2 class="t-center p-title LH56">课堂展示</h2>
+        <h3 class="p-subtitle LH37 fSize24 t-center">CLASSROOM</h3>
+        <ul class="lis-inline inner show-pics">
+            <li class="pic-box t-center" v-for="(item,index) in showInfos" :class="cssrotate(index)" @click="showSwitch(index)">
+                <i class="pic-wrapper show-frame"><img :src="item.imgsrc" /></i>
+                <p class="fSize18">{{item.txt}}-{{index}}</p>
+            </li>
+        </ul>
+        <i class="turn-left"><</i>
+    </div>
+    <div class="about-us H742 mod-page" id="app-about" v-cloak>
+        <div class="inner paTop100">
+            <h2 class="t-center p-title LH66 color-white">关于我们</h2>
+            <h3 class="p-subtitle LH43 fSize24 t-center color-white">ABOUT US</h3>
+            <p class="LH30 color-gray9 maT25 fSize14 t-center">校企职通车网站是国内唯一一家专注解决大学生从学习到就业的信息服务平台。<br />校企的服务目标是：让每一个大学生都能专业对口就业。</p>
+            <ul class="lis-inline about-lis color-white maT70">
+                <li><i class="pic-wrapper"><img src="images/about-xq.jpg" /></i><span>校企联合培训</span></li>
+                <li><i class="pic-wrapper"><img src="images/about-major.jpg" /></i><span>专业对口就业</span></li>
+                <li><i class="pic-wrapper"><img src="images/about-train.jpg" /></i><span>职业强化训练</span></li>
+                <li><i class="pic-wrapper"><img src="images/about-plan.jpg" /></i><span>职业科学规划</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="mod-page">
+        <div class="coop H433" id="app-coop" v-cloak>
+            <div class="inner paTop58 t-center">
+                <ul class="coop-navs LH66 fSize22 lis-inline disInline">
+                    <li :class="{'on':showinc}" @click="showinc=true">合作企业</li>
+                    <li :class="{'on':!showinc}" @click="showinc=false">合作高校</li>
+                </ul>
+                <ul class="lis-inline coop-lis coop-inc" v-show="showinc">
+                    <li v-for="item in coopInc">
+                        <a class="pic-wrapper"><img :src="item.imgsrc" /></a>
                     </li>
-               </ul>
-               <i class="turn-left"><</i>
-          </div>
-          <div class="about-us H742 mod-page" id="app-about" v-cloak>
-               <div class="inner paTop100">
-                    <h2 class="t-center p-title LH66 color-white">关于我们</h2>
-                    <h3 class="p-subtitle LH43 fSize24 t-center color-white">ABOUT US</h3>
-                    <p class="LH30 color-gray9 maT25 fSize14 t-center">校企职通车网站是国内唯一一家专注解决大学生从学习到就业的信息服务平台。<br />校企的服务目标是：让每一个大学生都能专业对口就业。</p>
-                    <ul class="lis-inline about-lis color-white maT70">
-                         <li><i class="pic-wrapper"><img src="images/about-xq.jpg" /></i><span>校企联合培训</span></li>
-                         <li><i class="pic-wrapper"><img src="images/about-major.jpg" /></i><span>专业对口就业</span></li>
-                         <li><i class="pic-wrapper"><img src="images/about-train.jpg" /></i><span>职业强化训练</span></li>
-                         <li><i class="pic-wrapper"><img src="images/about-plan.jpg" /></i><span>职业科学规划</span></li>
-                    </ul>
-               </div>
-          </div>
-          <div class="mod-page">
-               <div class="coop H433" id="app-coop" v-cloak>
-                    <div class="inner paTop58 t-center">
-                    <ul class="coop-navs LH66 fSize22 lis-inline disInline">
-                         <li :class="{'on':showinc}" @click="showinc=true">合作企业</li><li :class="{'on':!showinc}" @click="showinc=false">合作高校</li>
-                    </ul>
-                    <ul class="lis-inline coop-lis coop-inc" v-show="showinc">
-                         <li v-for="item in coopInc"><a class="pic-wrapper"><img :src="item.imgsrc" /></a></li>
-                    </ul>
-                    <ul class="lis-inline coop-lis" v-show="!showinc">
-                         <li v-for="item in coopUni"><a class="pic-wrapper"><img :src="item.imgsrc" /></a></li>
-                    </ul>
-                    <!-- <div class="clearfix">
+                </ul>
+                <ul class="lis-inline coop-lis" v-show="!showinc">
+                    <li v-for="item in coopUni">
+                        <a class="pic-wrapper"><img :src="item.imgsrc" /></a>
+                    </li>
+                </ul>
+                <!-- <div class="clearfix">
                          <h3 class="fl fSize22 LH40 paTop40 t-center">合作企业<span class="LH30 fSize14 color-gray-c coop-sub">COOPERATION</span></h3>
                          <i class="pic-wrapper fl maT34 maL22" @click.stop="incLeft"><img src="images/left-arrow.png" /></i>
                          <div class="fl coop-frame">
@@ -102,36 +127,37 @@
                          </div>
                          <i class="pic-wrapper fl maT34" @click.stop="uniRight"><img src="images/right-arrow.png" /></i>
                     </div> -->
-               </div>
-               </div>
-               <div class="footer H238" id="app-footer" v-cloak>
-                    <div class="inner clearfix">
-                    <div class="logo fl clearfix paTop64">
-                        <img src="images/logo.png" class="fl maR21"/>
-                        <h2 class="fl LH-H63 fSize30 color-white">校企职通车</h2>
-                    </div>
-                    <ul class="lis-inline footer-lis fl">
-                         <li v-for="item in fBlocks">
-                              <dt>{{item.title}}</dt>
-                              <dd v-for="subitem in item.sublis" @click="linkFoo(item.title)">{{subitem}}</dd>
-                         </li>
-                    </ul>
-                    <div class="fr paTop28">
-                         <h3 class="fSize18 LH50 t-center color-white">关注我们</h3>
-                         <i class="pic-wrapper"><img src="images/barcode.png" /></i>
-                    </div>
-               </div>
-               </div>
-          </div>
-          <div class="bot">
-               <p class="inner LH50 t-center">校企职通车版权所有©2016 XxiaoQi  浙ICP备17007975号-2  浙公网安备3481464号</p>
-          </div>
-          <script src="js/libs/jquery-3.1.0.min.js"></script>
-          <script src="js/libs/vue.js"></script>
-          <script src="js/common/common.js"></script>
-          <script src="js/common/onepage-scroll.js"></script>
-          <script src="js/components/dropdown.js"></script>
-          <script src="data/address.js"></script>
-          <script src="js/pages/index.js"></script>
-     </body>
+            </div>
+        </div>
+        <div class="footer H238" id="app-footer" v-cloak>
+            <div class="inner clearfix">
+                <div class="logo fl clearfix paTop64">
+                    <img src="images/logo.png" class="fl maR21" />
+                    <h2 class="fl LH-H63 fSize30 color-white">校企职通车</h2>
+                </div>
+                <ul class="lis-inline footer-lis fl">
+                    <li v-for="item in fBlocks">
+                        <dt>{{item.title}}</dt>
+                        <dd v-for="subitem in item.sublis" @click="linkFoo(item.title)">{{subitem}}</dd>
+                    </li>
+                </ul>
+                <div class="fr paTop28">
+                    <h3 class="fSize18 LH50 t-center color-white">关注我们</h3>
+                    <i class="pic-wrapper"><img src="images/barcode.png" /></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bot">
+        <p class="inner LH50 t-center">校企职通车版权所有©2016 XxiaoQi 浙ICP备17007975号-2 浙公网安备3481464号</p>
+    </div>
+    <script src="js/libs/jquery-3.1.0.min.js"></script>
+    <script src="js/libs/vue.js"></script>
+    <script src="js/common/common.js"></script>
+    <script src="js/common/onepage-scroll.js"></script>
+    <script src="js/components/dropdown.js"></script>
+    <script src="data/address.js"></script>
+    <script src="js/pages/index.js"></script>
+</body>
+
 </html>
