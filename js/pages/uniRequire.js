@@ -3,7 +3,6 @@ var parObj = EventUtils.urlExtrac(window.location);
 var isNewRequire = true;
 if (parObj.new && parObj.new != "1") { //非新需求
     isNewRequire = false;
-    console.log(1)
     var pageindex = parObj.demandSrc;
     (function() {
         var postdata = {

@@ -5,35 +5,16 @@ var respObj = {}; //请求的本页面的数据集合
 function infoRequest() {
     if (parObj.userId) {
         EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function(resp, status) {
-
+            var account = {
+                userName: resp.data.userName,
+                userId: parObj.userId,
+                userType: resp.data.userType,
+                loginId: resp.data.loginIdentifier
+            }
+            appFront.account = account;
+            appFront.isLogin = true;
         })
-        switch (parObj.userType) {
-            case "1":
-                EventUtils.ajaxReq("/user/school/getInfo", "get", getdata, function(resp, status) {
-                    var account = {
-                        userName: resp.data.name,
-                        userId: parObj.userId,
-                        userType: parObj.userType,
-                        loginId: parObj.loginId
-                    }
-                    appFront.account = account;
-                    appFront.isLogin = true;
-                })
-                break;
-            case "2":
-                EventUtils.ajaxReq("/user/company/getInfo", "get", getdata, function(resp, status) {
-                    var account = {
-                        userName: resp.data.name,
-                        userId: parObj.userId,
-                        userType: parObj.userType,
-                        loginId: parObj.loginId
-                    }
-                    appFront.account = account;
-                    appFront.isLogin = true;
-                })
-                break;
-            default:
-        }
+
     }
 }
 
@@ -189,15 +170,15 @@ var appFront = new Vue({
                     break;
                 case "publish":
                     if (this.account.userType == "1") {
-                        var link = "uniCenter.html?userId=" + this.account.userId + "&loginId=" + this.account.loginId + "&theme=requireBox";
+                        var link = "uniCenter.html?userId=" + this.account.userId + "&loginId=" + this.account.loginId + "&theme=require";
                         window.open(link, "_blank");
                     } else if (this.account.userType == "2") {
-                        var link = "incCenter.html?userId=" + this.account.userId + "&loginId=" + this.account.loginId + "&theme=requireBox";
+                        var link = "incCenter.html?userId=" + this.account.userId + "&loginId=" + this.account.loginId + "&theme=require";
                         window.open(link, "_blank");
                     }
                     break;
                 case "myjob":
-                    var link = "pCenter.html?userId=" + this.account.userId + "&loginId=" + this.account.loginId + "&theme=jobBox";
+                    var link = "pCenter.html?userId=" + this.account.userId + "&loginId=" + this.account.loginId + "&theme=job";
                     window.open(link, "_blank");
                     break;
                 case "logout":

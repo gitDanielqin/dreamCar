@@ -21,15 +21,15 @@
                     <a :href="encodeURI('login.html?newAcc=1&address='+address.displayCity)" class="b-Radius5">注册</a>
                     <a :href="encodeURI('login.html?newAcc=0&address='+address.displayCity)" class="b-Radius5">登录</a>
                 </div>
-                <div class="fr account" v-show="isLogin">
+                <div class="fr account pRel" v-show="isLogin">
                     <button class="account-name fSize16 H33">{{account.userName}}<i class="account-name-icon">></i></button>
-                    <ul class="account-options" v-show="account.userType=='0'" @click="selectAction($event.target)">
+                    <ul class="account-options" v-if="account.userType=='0'" @click="selectAction($event.target)">
                         <li name="center">个人中心</li>
                         <li name="collect">我的收藏</li>
                         <li name="myjob">我的求职</li>
                         <li name="logout">退出</li>
                     </ul>
-                    <ul class="account-options" v-show="account.userType!='0'" @click="selectAction($event.target)">
+                    <ul class="account-options" v-if="account.userType!='0'" @click="selectAction($event.target)">
                         <li name="center">校企中心</li>
                         <li name="publish">我的发布</li>
                         <li name="collect">我的收藏</li>

@@ -91,7 +91,7 @@ var respObj = {}; //请求的本页面的数据集合
 var appTop = new Vue({
     el: "#app-top",
     data: {
-        homeLink: "index.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&userType="
+        homeLink: "index.html?userId=" + parObj.userId
     }
 })
 var appPorto = new Vue({
@@ -491,6 +491,7 @@ var appCont = new Vue({
             this.resume.view = true;
             //上传许可证等图片文件
             if (this.resume.comLicense != "") {
+                console.log(new Date().getTime(), 1);
                 var hascomUrl = false;
                 $.ajaxFileUpload({
                     url: 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload', //提交的路径
@@ -503,7 +504,7 @@ var appCont = new Vue({
                         fileName: appCont.resume.comLicense //传递参数，用于解析出文件名
                     }, // 键:值，传递文件名
                     success: function(data, status) {
-                        console.log(data.data);
+                        console.log(new Date().getTime(), 2);
                         hascomUrl = true;
                         appCont.resume.comLicenseUrl = data.data;
                         //     alert(1);
@@ -516,6 +517,7 @@ var appCont = new Vue({
 
             if (this.resume.uniLicense != "") {
                 var hasuniUrl = false;
+                console.log(new Date().getTime(), 3);
                 $.ajaxFileUpload({
                     url: 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload', //提交的路径
                     secureuri: false, // 是否启用安全提交，默认为false
@@ -527,6 +529,7 @@ var appCont = new Vue({
                         fileName: appCont.resume.uniLicense //传递参数，用于解析出文件名
                     }, // 键:值，传递文件名
                     success: function(data, status) {
+                        console.log(new Date().getTime(), 4);
                         hasuniUrl = true;
                         appCont.resume.uniLicenseUrl = data.data;
                     },
@@ -604,7 +607,32 @@ var appCont = new Vue({
             window.open(pageurl, "_blank");
         },
         delItem: function(item) {
-            this.require.items.remove(item);
+            var postdata = {
+                userId: parObj.userId,
+                loginIdentifier: parObj.loginId,
+                demandId: item.demandId
+            }
+
+            EventUtils.ajaxReq("/demand/delInfo", "post", postdata, function(resp, status) {
+                var getdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    demandType: 1,
+                    index: appCont.require.curpage,
+                    count: 3
+                }
+                EventUtils.ajaxReq("/demand/getList", "get", getdata, function(resp, status) {
+                        if (resp.data) {
+                            appCont.require.results = resp.data.list;
+                            appCont.require.totalpages = resp.data.totalPage;
+                            appCont.require.totalitems = resp.data.totalRow;
+                        } else {
+                            appCont.require.results = [];
+                            appCont.require.totalitems = 0;
+                        }
+                    })
+                    //alert(resp.info);
+            })
         },
         freshItem: function(item) {
             appModal.showModal = true;
@@ -1165,6 +1193,7 @@ function navEventBind() {
                     appCont.require.totalitems = resp.data.totalRow;
                 } else {
                     appCont.require.results = [];
+                    appCont.require.totalitems = 0;
                 }
             })
         }
