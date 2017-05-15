@@ -24,16 +24,16 @@
                 <div class="fr account pRel" v-show="isLogin">
                     <button class="account-name fSize16 H33">{{account.userName}}<i class="account-name-icon">></i></button>
                     <ul class="account-options" v-if="account.userType=='0'" @click="selectAction($event.target)">
-                        <li name="center">个人中心</li>
-                        <li name="collect">我的收藏</li>
-                        <li name="myjob">我的求职</li>
-                        <li name="logout">退出</li>
+                        <li name="center"><i class="pic-icon icon-center"></i>个人中心</li>
+                        <li name="collect"><i class="pic-icon icon-collect"></i>我的收藏</li>
+                        <li name="myjob"><i class="pic-icon icon-job"></i>我的求职</li>
+                        <li name="logout"><i class="pic-icon icon-logout"></i>退出</li>
                     </ul>
                     <ul class="account-options" v-if="account.userType!='0'" @click="selectAction($event.target)">
-                        <li name="center">校企中心</li>
-                        <li name="publish">我的发布</li>
-                        <li name="collect">我的收藏</li>
-                        <li name="logout">退出</li>
+                        <li name="center"><i class="pic-icon icon-center"></i>校企中心</li>
+                        <li name="publish"><i class="pic-icon icon-publish"></i>我的发布</li>
+                        <li name="collect"><i class="pic-icon icon-collect"></i>我的收藏</li>
+                        <li name="logout"><i class="pic-icon icon-logout"></i>退出</li>
                     </ul>
                 </div>
                 <div id="address" class="banner-address LH-H60 v-mid clearfix" v-show="showAddr" @click.stop="">

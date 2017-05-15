@@ -8,6 +8,7 @@ function infoRequest() {
     }
     EventUtils.ajaxReq("/demand/getInfo", "get", postdemand, function(resp, status) {
         respObj = resp.data;
+        console.log(respObj);
         var briefdata = {
             title: respObj.title,
             viewed: 30,
@@ -52,7 +53,7 @@ function infoRequest() {
 
     if (parObj.userId) {
         EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId }, function(resp, status) {
-            console.log(resp);
+            //  console.log(resp);
             appTop.userName = resp.data.userName;
             appTop.userType = resp.data.userType;
             appTop.isLogin = true;
@@ -152,7 +153,19 @@ var appBanner = new Vue({
         }
     },
     methods: {
+        collect: function(obj) {
+            if (parObj.userId == respObj.userId) {
+                alert("无法收藏自己的需求！")
+            } else {
+                $(obj).find("span").text("已收藏");
+                $(obj).addClass("collected");
+            }
+        },
         coApply: function() {
+            if (parObj.userId == respObj.userId) {
+                alert("无法申请自己的需求！");
+                return false;
+            }
             if (appTop.isLogin) {
                 var postdata = {
                     userId: parObj.userId,
@@ -296,6 +309,13 @@ var appModal = new Vue({
                 appTop.isLogin = true;
                 appModal.showModal = false;
                 appModal.showLogin = false;
+                var state = {
+                    title: document.title,
+                    url: document.location.href,
+                    otherkey: null
+                };
+                //无刷新页面替换URL
+                history.replaceState(state, document.title, "detail-uni.html?userId=" + resp.data.userId + "&loginId=" + resp.data.loginIdentifier + "&demandId=" + respObj.demandId);
                 console.log(resp);
             })
         }

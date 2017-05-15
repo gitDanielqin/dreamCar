@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>企业中心</title>
@@ -7,6 +8,7 @@
     <link href="css/widget.css" rel="stylesheet">
     <link href="css/incCenter.css" rel="stylesheet">
 </head>
+
 <body class="bg-gray-f2">
     <div class="top bg-gray3 H100 color-white" id="app-top">
         <div class="inner">
@@ -34,15 +36,21 @@
                 <i class="LH30 t-center btn-edit pic-icon icon-edit" @click="edit"></i>
             </div>
             <div class="edit-brief maT24 maL54 fl color-gray6 W530 pRel" v-show="!viewInfo">
-                 <h3 class="LH-H47 fSize18 color-gray3">{{inc}}</h3>
-                 <p><label>企业性质</label><dropdown :options="database.incprops" v-model="briefInfo.IncProps" class="brief-unilevel"></dropdown>
-                    <label class="maL20">企业规模</label><dropdown :options="database.incscale" v-model="briefInfo.IncScale" class="brief-unilevel"></dropdown>
-                 </p>
-                 <p><label>所在地</label><addr-select :addrdata="database.addrData" :initaddress="initAddress" class="sel-addr disInline"></addr-select></p>
-                 <p><label class="brief-email">邮箱</label><input type="email" v-model="briefInfo.email" /></p>
-                 <div class="edit-opera fSize0">
-                     <button class="maR15 btn-save" @click="save">保存</button>
-                     <button class="btn-cancel" @click="cancel">取消</button>
+                <h3 class="LH-H47 fSize18 color-gray3">{{inc}}</h3>
+                <p><label>企业性质</label>
+                    <dropdown :options="database.incprops" v-model="briefInfo.IncProps" class="brief-unilevel"></dropdown>
+                    <label class="maL53">企业规模</label>
+                    <dropdown :options="database.incscale" v-model="briefInfo.IncScale" class="brief-unilevel"></dropdown>
+                </p>
+                <p><label>所在地</label>
+                    <addr-select :addrdata="database.addrData" :initaddress="initAddress" class="sel-addr disInline"></addr-select>
+                </p>
+                <p><label class="brief-email">邮箱</label>
+                    <input type="email" v-model="briefInfo.email" />
+                </p>
+                <div class="edit-opera fSize0">
+                    <button class="maR15 btn-save" @click="save">保存</button>
+                    <button class="btn-cancel" @click="cancel">取消</button>
                 </div>
             </div>
             <div class="barCodeBox maT14 W168 fr color-gray6 fSize14">
@@ -79,9 +87,9 @@
                     <p class="LH-H88 fSize18 color-gray3" v-show="resume.edit">亲爱的校友，您需要完善企业简介</p>
                     <h3 class="fSize18 LH-H30 maB17" v-show="!resume.edit"><i class="pic-icon icon-resume hd-icon"></i>企业简介</h3>
                     <p class="LH-H26 paLeft7 resume-item"><i class="pic-icon W30 icon-imp"></i><label>企业名称</label>
-                         <input type="text" v-model="resume.Inc" class="W298" /></p>
+                        <input type="text" v-model="resume.Inc" class="W298" /></p>
                     <p class="LH-H26 paLeft7 resume-item"><i class="pic-icon W30 icon-imp"></i><label>所属行业</label>
-                         <span @click="popTrade"><input type="text" class="career-input"  disabled v-model="resume.trade" /></span>
+                        <span @click="popTrade"><input type="text" class="career-input"  disabled v-model="resume.trade" /></span>
                     </p>
                     <p class="LH-H26 paLeft7 resume-item uni-level"><i class="pic-icon W30 icon-imp"></i><label>企业性质</label>
                         <dropdown placeholder="企业性质" :options="database.IncProps" v-model="resume.props" classes="W138"></dropdown><input type="radio" name="level" value="0" @click="checkExlv" />世界500强<input type="radio" name="level" value="1" @click="checkExlv" />中国500强</p>
@@ -91,11 +99,11 @@
                     <div class="LH26 paLeft7 resume-item clearfix">
                         <p class="fl"><i class="pic-icon W30 icon-imp"></i><label>企业认证</label></p>
                         <ul class="fl valid-upload color-gray6 fSize12">
-                             <li><a href="javascript:void(0)"><label for="comlicense">重新上传营业执照</label><i class="pic-icon icon-upload"></i></a>
-                                  <span>{{resume.comLicense}}</span>
-                                  <button v-show="resume.hasBusLicense">（查看之前上传的营业执照）</button>
-                                  <input type="file" name="comlicense" @change="changeFile($event.target,'commence')" />
-                             </li>
+                            <li><a href="javascript:void(0)"><label for="comlicense">重新上传营业执照</label><i class="pic-icon icon-upload"></i></a>
+                                <span>{{resume.comLicense}}</span>
+                                <button v-show="resume.comLicense!=''" class="color-orange" @click="showFile('file-busi')">（查看营业执照）</button>
+                                <input type="file" name="image" id="file-busi" @change="changeComLicense($event.target)" />
+                            </li>
                         </ul>
                     </div>
                     <div class="uni-intro LH26 paLeft7 resume-item clearfix">
@@ -119,12 +127,12 @@
                         <div class="clearfix">
                             <p class="fl"><label>企业认证：</label></p>
                             <ul class="fl valid-upload color-gray6 fSize12 paTop5">
-                                 <li><a href="javascript:void(0)"><label for="comlicense">重新上传营业执照</label><i class="pic-icon icon-upload"></i></a>
-                                     <button v-show="!resume.firstEdit">（查看之前上传的营业执照）</button>
-                                     <span v-show="resume.firstEdit">{{resume.comLicense}}</span>
-                                     <input type="file" name="comlicense" @change="changeFile($event.target,'commence')" />
+                                <li><span v-show="resume.hasBusLicense" class="view-valid-label">已上传营业执照</span><span v-show="!resume.hasBusLicense" class="view-valid-label color-gray9">未上传营业执照</span>
+                                    <p class="disInline pRel">
+                                        <button class="color-blueL" v-show="resume.hasBusLicense" @click.stop="showPrefile('com')">（查看之前上传的营业执照）</button>
+                                    </p>
                                 </li>
-                           </ul>
+                            </ul>
                         </div>
                         <p><label>企业简介：</label>{{resume.intro}}</p>
                     </div>
@@ -170,8 +178,8 @@
                                     <p>{{item.publicDate}} {{item.publicTime}}</p>
                                 </div>
                                 <div class="operations color-blueL">
-                                     <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>
-                                     <p><span @click="freshItem(item)">刷新</span><span @click="stickItem(item)">置顶</span></p>
+                                    <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>
+                                    <p><span @click="freshItem(item)">刷新</span><span @click="stickItem(item)">置顶</span></p>
                                 </div>
                             </div>
                             <div v-else-if="require.demandSrc==2" class="paLeft29 clearfix H128 pRel">
@@ -187,15 +195,15 @@
                                     <p>{{item.publicDate}} {{item.publicTime}}</p>
                                 </div>
                                 <div class="operations color-blueL">
-                                     <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>
-                                     <p><span @click="freshItem(item)">刷新</span><span @click="stickItem(item)">置顶</span></p>
+                                    <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>
+                                    <p><span @click="freshItem(item)">刷新</span><span @click="stickItem(item)">置顶</span></p>
                                 </div>
                             </div>
                         </li>
                         <li v-show="require.results.length==0">
-                             <div class="paLeft29 clearfix H128 pRel">
-                                  <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
-                             </div>
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                            </div>
                         </li>
                     </ul>
                     <pagination :showpages="showpage(require.totalpages)" :totalpages="require.totalpages" type="require" @topage="topage" class="maT28 fSize14 fr"></pagination>
@@ -212,50 +220,50 @@
                         </ul> -->
                     </div>
                     <ul class="info-items H470">
-                         <li v-show="collect.results.length==0">
-                              <div class="paLeft29 clearfix H128 pRel">
-                                   <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
-                              </div>
-                         </li>
+                        <li v-show="collect.results.length==0">
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                            </div>
+                        </li>
                         <li v-for="(item,index) in collect.results" :name="item.classic" v-show="showResult(index,collect.curpage,3)">
                             <div v-if="item.classic=='高校招聘会'">
-                                 <div class="paLeft29 clearfix H128 pRel">
-                                     <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                     <div class="item-block-left fl paTop22 W328 maL20">
-                                         <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-unirecruit.html">{{item.major}}</a></h2>
-                                         <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.recruitAddr}}</p>
-                                         <p>招聘会时间：{{item.recruitDate}}</p>
-                                     </div>
-                                     <div class="item-block-right fl fSize14 LH25 maT10">
-                                         <p>高校对企业要求</p>
-                                         <p>{{item.IncScale}}<i class="depart">|</i>{{item.IncProps}}<i class="depart">|</i>{{item.pos}}</p>
-                                         <p class="pubdate">{{item.publicDate}} {{item.publicTime}}</p>
-                                         <div class="collect-btn">
-                                             <button class="color-blueL" @click.stop="cancel('collec-recruit',index)">取消收藏</button>
-                                             <button class="color-orange-f7" @click.stop="apply('collec-recruit',index)">申请合作</button>
-                                         </div>
-                                     </div>
-                                 </div>
+                                <div class="paLeft29 clearfix H128 pRel">
+                                    <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                    <div class="item-block-left fl paTop22 W328 maL20">
+                                        <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-unirecruit.html">{{item.major}}</a></h2>
+                                        <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.recruitAddr}}</p>
+                                        <p>招聘会时间：{{item.recruitDate}}</p>
+                                    </div>
+                                    <div class="item-block-right fl fSize14 LH25 maT10">
+                                        <p>高校对企业要求</p>
+                                        <p>{{item.IncScale}}<i class="depart">|</i>{{item.IncProps}}<i class="depart">|</i>{{item.pos}}</p>
+                                        <p class="pubdate">{{item.publicDate}} {{item.publicTime}}</p>
+                                        <div class="collect-btn">
+                                            <button class="color-blueL" @click.stop="cancel('collec-recruit',index)">取消收藏</button>
+                                            <button class="color-orange-f7" @click.stop="apply('collec-recruit',index)">申请合作</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div v-else-if="item.classic=='校企合作'">
-                                 <div class="paLeft29 clearfix H128 pRel">
-                                     <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                     <div class="item-block-left fl paTop22 W328 maL20">
-                                         <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-uni.html">{{item.major}}</a></h2>
-                                         <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
-                                         <p>{{item.trainway}}</p>
-                                         <p class="item-date">{{item.date}}</span> {{item.time}}</p>
-                                     </div>
-                                     <div class="item-block-right fl fSize14 LH25 maT10">
-                                         <p>{{item.uniname}}</p>
-                                         <p>{{item.uniLevel}}</p>
-                                         <p class="pubdate">{{item.publicDate}} {{item.publicTime}}</p>
-                                         <div class="collect-btn">
-                                             <button class="color-blueL" @click.stop="cancel('collec-combi',index)">取消收藏</button>
-                                             <button class="color-orange-f7" @click.stop="apply('collec-combi',index)">申请合作</button>
-                                         </div>
-                                     </div>
-                                 </div>
+                                <div class="paLeft29 clearfix H128 pRel">
+                                    <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                    <div class="item-block-left fl paTop22 W328 maL20">
+                                        <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-uni.html">{{item.major}}</a></h2>
+                                        <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
+                                        <p>{{item.trainway}}</p>
+                                        <p class="item-date">{{item.date}}</span> {{item.time}}</p>
+                                    </div>
+                                    <div class="item-block-right fl fSize14 LH25 maT10">
+                                        <p>{{item.uniname}}</p>
+                                        <p>{{item.uniLevel}}</p>
+                                        <p class="pubdate">{{item.publicDate}} {{item.publicTime}}</p>
+                                        <div class="collect-btn">
+                                            <button class="color-blueL" @click.stop="cancel('collec-combi',index)">取消收藏</button>
+                                            <button class="color-orange-f7" @click.stop="apply('collec-combi',index)">申请合作</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </li>
                     </ul>
@@ -269,11 +277,11 @@
                         <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{combimsg}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
-                         <li v-show="message.combi.results.length==0">
-                              <div class="paLeft29 clearfix H128 pRel">
-                                   <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
-                              </div>
-                         </li>
+                        <li v-show="message.combi.results.length==0">
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                            </div>
+                        </li>
                         <li v-for="(item,index) in message.combi.results" :name="item.code" v-show="showResult(index,message.combi.curpage,3)">
                             <template v-if="item.code=='01'">
                               <div class="paLeft29 clearfix H128 pRel">
@@ -335,11 +343,11 @@
                         <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{message.recruit.items.length}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
-                         <li v-show="message.recruit.results.length==0">
-                              <div class="paLeft29 clearfix H128 pRel">
-                                   <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
-                              </div>
-                         </li>
+                        <li v-show="message.recruit.results.length==0">
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                            </div>
+                        </li>
                         <li v-for="(item,index) in message.recruit.results" v-show="showResult(index,message.recruit.curpage,3)">
                             <div class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
@@ -369,86 +377,86 @@
                 </div>
             </div>
             <div class="vip-center">
-                 <ul class="vip-navs lis-inline LH-H37 fSize18 color-gray6 t-center">
-                      <li class="on">信息刷新<i class="nav-line"></i></li>
-                      <li>信息置顶<i class="nav-line"></i></li>
-                      <li>信息匹配<i class="nav-line"></i></li>
-                      <li>品牌推广<i class="nav-line"></i></li>
-                      <li>VIP中心<i class="nav-line"></i></li>
-                 </ul>
-                 <div class="vip-cont vip-service clearfix on">
-                      <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic01.jpg"/></i>
-                      <div class="fl fSize14 vip-cont-text maL33">
-                           <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-1"></i>刷新</h2>
-                           <p class="LH30 maB20">让老的信息重新往前排，同时可以突破橱窗的显示限制，让你的信息排名重新往前排。</p>
-                           <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-2"></i>价格</h2>
-                           <p class="LH30">信息刷新校企每一个用户每一个类目有三次免费刷新机会。</p>
-                           <p class="LH30">单次购买刷新<span class="color-red">1</span>元/次，可在发布的信息页面进行操作刷新。</p>
-                           <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
-                      </div>
-                 </div>
-                 <div class="vip-cont vip-service clearfix">
-                      <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic02.jpg"/></i>
-                      <div class="fl fSize14 vip-cont-text maL33">
-                           <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-1"></i>置顶</h2>
-                           <p class="LH30 maB20">让您的信息排在列表页最上方，比刷新信息还要靠前！更可点亮专属<span class="color-red">王冠图标</span>让信息更醒目，效果翻至3.5倍。</p>
-                           <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-2"></i>价格</h2>
-                           <p class="LH30">单次购买置顶<span class="color-red">10</span>元/次，可在发布的信息息页面进行操作置顶。</p>
-                           <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
-                      </div>
-                 </div>
-                 <div class="vip-cont vip-service clearfix">
-                      <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic03.jpg"/></i>
-                      <div class="fl fSize14 vip-cont-text maL33">
-                           <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-3"></i>信息匹配</h2>
-                           <p class="LH30 maB20">根据高校详细需求，平台为你第一时间进行配对，企业需求信息匹配，无需手动搜索，一键解决需求配对。</p>
-                           <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-2"></i>价格</h2>
-                           <p class="LH30">单次购买匹配<span class="color-red">10</span>元/条，可在会员中心进行操作购买。</p>
-                           <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
-                      </div>
-                 </div>
-                 <div class="vip-cont vip-service clearfix">
-                      <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic04.jpg"/></i>
-                      <div class="fl fSize14 vip-cont-text maL33">
-                           <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-4"></i>品牌推广</h2>
-                           <p class="LH30 maB20">根据高校详细需求，平台为你第一时间进行配对，企业需求信息匹配，无需手动搜索，一键解决需求配对。</p>
-                           <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-2"></i>价格</h2>
-                           <p class="LH30">单次购买推广展位<span class="color-red">500</span>元/月，会员特权购买当中，会在每一个类目中展示。</p>
-                           <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
-                      </div>
-                 </div>
-                 <div class="vip-cont vip-recharge">
+                <ul class="vip-navs lis-inline LH-H37 fSize18 color-gray6 t-center">
+                    <li class="on">信息刷新<i class="nav-line"></i></li>
+                    <li>信息置顶<i class="nav-line"></i></li>
+                    <li>信息匹配<i class="nav-line"></i></li>
+                    <li>品牌推广<i class="nav-line"></i></li>
+                    <li>VIP中心<i class="nav-line"></i></li>
+                </ul>
+                <div class="vip-cont vip-service clearfix on">
+                    <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic01.jpg"/></i>
+                    <div class="fl fSize14 vip-cont-text maL33">
+                        <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-1"></i>刷新</h2>
+                        <p class="LH30 maB20">让老的信息重新往前排，同时可以突破橱窗的显示限制，让你的信息排名重新往前排。</p>
+                        <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-2"></i>价格</h2>
+                        <p class="LH30">信息刷新校企每一个用户每一个类目有三次免费刷新机会。</p>
+                        <p class="LH30">单次购买刷新<span class="color-red">1</span>元/次，可在发布的信息页面进行操作刷新。</p>
+                        <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
+                    </div>
+                </div>
+                <div class="vip-cont vip-service clearfix">
+                    <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic02.jpg"/></i>
+                    <div class="fl fSize14 vip-cont-text maL33">
+                        <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-1"></i>置顶</h2>
+                        <p class="LH30 maB20">让您的信息排在列表页最上方，比刷新信息还要靠前！更可点亮专属<span class="color-red">王冠图标</span>让信息更醒目，效果翻至3.5倍。</p>
+                        <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-2"></i>价格</h2>
+                        <p class="LH30">单次购买置顶<span class="color-red">10</span>元/次，可在发布的信息息页面进行操作置顶。</p>
+                        <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
+                    </div>
+                </div>
+                <div class="vip-cont vip-service clearfix">
+                    <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic03.jpg"/></i>
+                    <div class="fl fSize14 vip-cont-text maL33">
+                        <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-3"></i>信息匹配</h2>
+                        <p class="LH30 maB20">根据高校详细需求，平台为你第一时间进行配对，企业需求信息匹配，无需手动搜索，一键解决需求配对。</p>
+                        <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-2"></i>价格</h2>
+                        <p class="LH30">单次购买匹配<span class="color-red">10</span>元/条，可在会员中心进行操作购买。</p>
+                        <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
+                    </div>
+                </div>
+                <div class="vip-cont vip-service clearfix">
+                    <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic04.jpg"/></i>
+                    <div class="fl fSize14 vip-cont-text maL33">
+                        <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-4"></i>品牌推广</h2>
+                        <p class="LH30 maB20">根据高校详细需求，平台为你第一时间进行配对，企业需求信息匹配，无需手动搜索，一键解决需求配对。</p>
+                        <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-2"></i>价格</h2>
+                        <p class="LH30">单次购买推广展位<span class="color-red">500</span>元/月，会员特权购买当中，会在每一个类目中展示。</p>
+                        <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
+                    </div>
+                </div>
+                <div class="vip-cont vip-recharge">
                     <p class="LH-H54"><span class="color-orange-f7">VIP</span>会员享受<span style="color:#d19100">信息刷新</span>优先展示，刷新置顶低至<span class="color-red">7</span>折，是各位小伙伴的首选，目前已有10W+伙伴享受VIP特权服务。</p>
                     <p class="LH-H60 bg-gray-f7 paLeft20">VIP等级：<span class="color-orange-f7 fSize18 maR80">地主</span>账户余额：<b class="color-red"><span class="fSize18">0</span>.00</b>元<button class="recharge-btn">会员充值</button></p>
                     <div class="bg-gray-f7 maT2">
-                         <h3 class="LH-H42 maL20 fSize16 vip-record-head">使用记录</h3>
-                         <ul class="vip-records">
-                              <li v-for="record in vip.records"><span class="W182">{{record.date}}</span><span class="W212">{{record.action}}</span><span class="W216"><b class="fSize14">{{priceCal1(record.price)}}</b>{{priceCal2(record.price)}}元</span><span class="">{{record.state}}</span></li>
-                         </ul>
-                         <p class="LH-H36 t-right maR40"><button class="more-records">查看更多使用记录</button></p>
+                        <h3 class="LH-H42 maL20 fSize16 vip-record-head">使用记录</h3>
+                        <ul class="vip-records">
+                            <li v-for="record in vip.records"><span class="W182">{{record.date}}</span><span class="W212">{{record.action}}</span><span class="W216"><b class="fSize14">{{priceCal1(record.price)}}</b>{{priceCal2(record.price)}}元</span><span class="">{{record.state}}</span></li>
+                        </ul>
+                        <p class="LH-H36 t-right maR40"><button class="more-records">查看更多使用记录</button></p>
                     </div>
                     <div class="maB38">
-                         <h3 class="LH-H50 fSize16 paLeft16">会员权限说明</h3>
-                         <ul class="tarif-info">
-                              <li v-for="(item,index) in vip.tarif" class="clearfix">
-                                   <div class="fl W160 t-center">
-                                        <i class="pic-icon maT32" :class="'icon-crown-'+(index+1)"></i>
-                                        <p class="LH52">{{item.level}}</p>
-                                   </div>
-                                   <div class="fl LH30 fSize12 paLeft12">
-                                        <p>1.信息置顶（每周{{item.prior}}次）</p>
-                                        <p>2.刷新（每天{{item.refresh}}次）</p>
-                                        <p>3.广告投放（一个版面展示，每次5分钟，会员内每天展示）</p>
-                                        <p>4.高校匹配信息优先（每月{{item.mapping}}条）</p>
-                                   </div>
-                                   <div class="fr paTop5 t-center W185 tarif-buy">
-                                        <p class="LH56 fSize14">收费：{{item.price}}/月</p>
-                                        <button type="button" class="tarif-btn">购买</button>
-                                   </div>
-                              </li>
-                         </ul>
+                        <h3 class="LH-H50 fSize16 paLeft16">会员权限说明</h3>
+                        <ul class="tarif-info">
+                            <li v-for="(item,index) in vip.tarif" class="clearfix">
+                                <div class="fl W160 t-center">
+                                    <i class="pic-icon maT32" :class="'icon-crown-'+(index+1)"></i>
+                                    <p class="LH52">{{item.level}}</p>
+                                </div>
+                                <div class="fl LH30 fSize12 paLeft12">
+                                    <p>1.信息置顶（每周{{item.prior}}次）</p>
+                                    <p>2.刷新（每天{{item.refresh}}次）</p>
+                                    <p>3.广告投放（一个版面展示，每次5分钟，会员内每天展示）</p>
+                                    <p>4.高校匹配信息优先（每月{{item.mapping}}条）</p>
+                                </div>
+                                <div class="fr paTop5 t-center W185 tarif-buy">
+                                    <p class="LH56 fSize14">收费：{{item.price}}/月</p>
+                                    <button type="button" class="tarif-btn">购买</button>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                 </div>
+                </div>
             </div>
             <div class="uni-coop">
                 <div class="ListBox">
@@ -457,11 +465,11 @@
                         <p class="fr fSize14 maR30">我合作的高校<span class="color-orange2 maL10 maR10">{{coop.items.length}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
-                         <li v-show="coop.results.length==0">
-                              <div class="paLeft29 clearfix H128 pRel">
-                                   <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
-                              </div>
-                         </li>
+                        <li v-show="coop.results.length==0">
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                            </div>
+                        </li>
                         <li v-for="(item,index) in coop.results" :name="item.classic" v-show="showResult(index,coop.curpage,3)">
                             <div class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
@@ -483,277 +491,325 @@
                 </div>
             </div>
             <div class="conf-keyword ListBox">
-               <h2 class="paTop14 LH-H52 fSize24 paLeft40">修改密码</h2>
-               <form class="paLeft40 fSize16 LH40">
+                <h2 class="paTop14 LH-H52 fSize24 paLeft40">修改密码</h2>
+                <form class="paLeft40 fSize16 LH40">
                     <div><label>登陆账号</label><span>{{config.loginName}}</span></div>
-                    <div><label>当前密码</label><input type="password" placeholder="6-16字母、数字、无空格"/></div>
-                    <div><label>新密码</label><input type="password" placeholder="6-16字母、数字、无空格"/></div>
-                    <div><label>确认密码</label><input type="password" placeholder="6-16字母、数字、无空格"/></div>
-                    <div><label>验证码</label><input type="text"/><i class="varify-code W100 LH-H36 bg-pinkL maL10 t-center"><img src="images/picCode.jpg" /></i></div>
+                    <div><label>当前密码</label><input type="password" placeholder="6-16字母、数字、无空格" /></div>
+                    <div><label>新密码</label><input type="password" placeholder="6-16字母、数字、无空格" /></div>
+                    <div><label>确认密码</label><input type="password" placeholder="6-16字母、数字、无空格" /></div>
+                    <div><label>验证码</label><input type="text" /><i class="varify-code W100 LH-H36 bg-pinkL maL10 t-center"><img src="images/picCode.jpg" /></i></div>
                     <div class="t-center paTop20 "><button class="LH-H40 W100 bg-orange2 fSize18 color-white maB40">保存</button></div>
-               </form>
+                </form>
             </div>
             <div class="conf-account paLeft40 paRight40">
-               <h2 class="fSize24 LH-H63 maT9">绑定账号</h2>
-               <div class="safeLevel maB12 H80 bg-gray-f7 pRel">
+                <h2 class="fSize24 LH-H63 maT9">绑定账号</h2>
+                <div class="safeLevel maB12 H80 bg-gray-f7 pRel">
                     <h3 class="paLeft40 fSize18 LH-H40"><i class="pic-icon W20 maR10 icon-safe"></i>安全等级</h3>
-                    <div class="LH-H30 paLeft80 fSize14"><span class="maR12 color-red2">危险</span><div class="safe-range pRel"><p id="safe-progress"></p><div class="r-pointer LH26 H40 t-center W46 color-white">{{config.safeLevel}}</div></div><span class="maL12 color-green">安全</span></div>
+                    <div class="LH-H30 paLeft80 fSize14"><span class="maR12 color-red2">危险</span>
+                        <div class="safe-range pRel">
+                            <p id="safe-progress"></p>
+                            <div class="r-pointer LH26 H40 t-center W46 color-white">{{config.safeLevel}}</div>
+                        </div><span class="maL12 color-green">安全</span></div>
                     <i class="trigle-up"><img src="images/trigle-up02.jpg"/></i>
-               </div>
-               <p class="fSize14 LH-H35">登录账号：{{config.loginName}}</p>
-               <p class="fSize14 LH-H35 maB22">绑定后，你可以同时使用以下方式登录</p>
-               <ul class="bind-acc fSize18">
+                </div>
+                <p class="fSize14 LH-H35">登录账号：{{config.loginName}}</p>
+                <p class="fSize14 LH-H35 maB22">绑定后，你可以同时使用以下方式登录</p>
+                <ul class="bind-acc fSize18">
                     <li><i class="pic-icon icon-phone"></i>{{config.bind.mobile}}<button class="maL20 chg-phone" @click.stop="modifyMobile">更换手机号</button></li>
                     <li><i class="pic-icon icon-email"></i>{{config.bind.email}}<button class="maL20" @click.stop="modifyEmail">更换邮箱</button></li>
                     <li><i class="pic-icon icon-wechat"></i><button class="wechatBind" @click.stop="bindWechat">绑定微信账号</button></li>
-               </ul>
+                </ul>
             </div>
         </div>
 
 
     </div>
-<div class="modal" id="app-modal" v-show="showModal" @click="hidemodal">
-     <div class="porto-upload W500" v-show="showUpload" @click="stayshow($event)">
-           <h2 class="LH-H60 fSize24 color-white t-left bg-blueM paLeft30">编辑头像<i class="pic-wrapper LH-H40 W40 close" @click="closePorto"><i class="pic-icon icon-close"></i></i></h2>
-           <div class="edit-area H407 bg-white">
+    <div class="modal" id="app-modal" v-show="showModal" @click="hidemodal">
+        <div class="preview-file" v-show="show.preImg">
+            <img :src="preImgUrl" />
+        </div>
+        <div class="porto-upload W500" v-show="showUpload" @click="stayshow($event)">
+            <h2 class="LH-H60 fSize24 color-white t-left bg-blueM paLeft30">编辑头像<i class="pic-wrapper LH-H40 W40 close" @click="closePorto"><i class="pic-icon icon-close"></i></i>
+            </h2>
+            <div class="edit-area H407 bg-white">
                 <div class="clearfix">
-                     <div class="fl">
-                          <div class="imgBox W240 H248">
-                              <div class="thumbBox">
+                    <div class="fl">
+                        <div class="imgBox W240 H248">
+                            <div class="thumbBox">
 
-                              </div>
-                              <div class="spinner disNo">Loading...</div>
-                         </div>
-                         <div class="img-handle t-center LH-H36 maT8 paLeft20">
-                              <button class="zoom zoom-out">-</button>
-                              <button class="zoom zoom-in">+</button>
-                         </div>
-                     </div>
-                     <div class="fl upload-block">
-                          <div class="pRel">
+                            </div>
+                            <div class="spinner disNo">Loading...</div>
+                        </div>
+                        <div class="img-handle t-center LH-H36 maT8 paLeft20">
+                            <button class="zoom zoom-out">-</button>
+                            <button class="zoom zoom-in">+</button>
+                        </div>
+                    </div>
+                    <div class="fl upload-block">
+                        <div class="pRel">
                             <a href="javascript:void(0)" class="upload-img">
-                               <label for="upload-file"><span>+</span>选择照片</label>
+                                <label for="upload-file"><span>+</span>选择照片</label>
                             </a>
                             <input type="file" class="upload-input" name="upload-file" id="upload-file" />
-                          </div>
-                          <p class="maT13 LH30 fSize16 color-gray6">支持jpg、gif、png格式，文件小于5M</p>
-                     </div>
+                        </div>
+                        <p class="maT13 LH30 fSize16 color-gray6">支持jpg、gif、png格式，文件小于5M</p>
+                    </div>
                 </div>
-               <div class="submit-btns t-center maT28"><button class="bg-blueL" id="btnSubmit">确定</button><button class="bg-orange2" @click="closePorto">取消</button></div>
-          </div>
-    </div>
-    <div class="bind-change W500" v-show="show.mobile" @click.stop="">
-        <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换手机号<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13" @click.stop="closeMobile"><i class="pic-icon icon-close"></i></i></h2>
-        <div class="bg-white paTop8 paBot60">
-           <h3 class="LH-H83 fSize18 t-center">请输入新的手机号，完成手机号绑定</h3>
-           <p><input type="text" placeholder="完成手机号" class="W290"></p>
-           <p><input type="text" placeholder="请输入短信认证码" class="W194"><button class="W96 H44 bg-blueM fSize14 color-white">获取验证码</button></p>
-           <p><input type="text" placeholder="确认登入密码" class="W290"></p>
-           <div class="btn-submit t-center paTop20"><button class="bg-blueM">完成绑定</button><button class="bg-orange2 maL40" @click.stop="closeMobile">返回</button></div>
-        </div>
-    </div>
-    <div class="bind-change W500" v-show="show.email" @click.stop="">
-        <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换绑定邮箱<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13" @click.stop="closeEmail"><i class="pic-icon icon-close"></i></i></h2>
-        <div class="bg-white paTop8 paBot60">
-           <h3 class="LH-H83 fSize18 t-center">请输入新的邮箱，完成邮箱绑定</h3>
-           <p><input type="text" placeholder="请输入邮箱" class="W290"></p>
-           <p><input type="text" placeholder="请输入验证码" class="W194"><button class="W96 H44 bg-blueM fSize14 color-white">获取验证码</button></p>
-           <p><input type="text" placeholder="确认登入密码" class="W290"></p>
-           <div class="btn-submit t-center paTop20"><button class="bg-blueM">完成绑定</button><button class="bg-orange2 maL40" @click.stop="closeEmail">返回</button></div>
-        </div>
-    </div>
-    <div class="wechat-bind W500" v-show="show.wechat" @click.stop="">
-        <h2 class="LH-H60 fSize24 color-white t-center bg-blueM">微信登录<i class="pic-wrapper LH-H40 W40 close" @click.stop="closeWechat"><i class="pic-icon icon-close"></i></i></h2>
-        <div class="bg-white paTop14 t-center paBot53">
-           <i class="barCode pic-wrapper W284 LH-H284 bg-grayC maB22"></i>
-           <p class="LH-H40 W220 t-center bg-orange2 color-white maCenter" style="border-radius: 20px;">请使用微信扫一扫二维码登录</p>
-        </div>
-    </div>
-     <div class="msg-box  W888 maCenter disNo">
-         <h3 class="bg-orange4 LH-H86 fSize30 color-white t-center msg-box-head"><i class="pic-icon fl maL30 back show02 disNo msg-back icon-return"></i><i class="pic-icon maR21 show01 icon-email"></i><span class="msg-head">消息提醒</span><span class="icon-wrapper fr maR10"><i class="close pic-icon W40 icon-close"></i></span></h3>
-         <div class="msg-lis show01">
-            <ul class="msg-body ">
-                 <li class="msg-date">今天</li>
-                 <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-                 <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-                 <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-                 <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-                 <li class="msg-date">2016-6-1</li>
-                 <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-                 <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-            </ul>
-            <div class="msg-bot LH-H70 fSize14 bg-white t-center">
-                 <ul class="page-bot lis-inline fSize14">
-                     <li class="side-page first-page">首页</li>
-                     <li class="prev side-page">上一页</li>
-                     <li class="page-index">1</li>
-                     <li class="page-index">2</li>
-                     <li class="page-index">3</li>
-                     <li class="next side-page">下一页</li>
-                     <li class="side-page last-page">尾页</li>
-                 </ul>
-                 <span class="fr maR40">全部清空</span>
+                <div class="submit-btns t-center maT28"><button class="bg-blueL" id="btnSubmit">确定</button><button class="bg-orange2" @click="closePorto">取消</button></div>
             </div>
-         </div>
-         <div class="msg-detail fSize14 disNo show02">
-            <p class="H266 bg-white paTop25 LH25">校企2.0上线啦上线啦上线啦</p>
-            <p class="bg-gray-e0 LH-H50 t-center"><span class="date">2016-12-17</span><span class="time">12:12</span></p>
-         </div>
-     </div>
-     <!--工作经历行业选择框单选  -->
-    <div class="trade-box W770 H420 maCenter trade-box-single" v-show="showTrade" @click="stayshow($event)">
-         <h3 class="bg-gray-e6 fSize14 LH-H36 paLeft30 paRight30 color-black">选择行业分类<i class="pic-wrapper W26 LH-H26 maT5 closer t-center fr cur-pointer" @click="closeTrade"><i class="pic-icon icon-close"></i></i></h3>
-         <div class="H328 bg-white paLeft35 cont paTop14">
-              <table class="fSize12 trade-single-table">
-                   <tr v-for="trade in trades">
+        </div>
+        <div class="bind-change W500" v-show="show.mobile" @click.stop="">
+            <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换手机号<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13" @click.stop="closeMobile"><i class="pic-icon icon-close"></i></i>
+            </h2>
+            <div class="bg-white paTop8 paBot60">
+                <h3 class="LH-H83 fSize18 t-center">请输入新的手机号，完成手机号绑定</h3>
+                <p><input type="text" placeholder="完成手机号" class="W290"></p>
+                <p><input type="text" placeholder="请输入短信认证码" class="W194"><button class="W96 H44 bg-blueM fSize14 color-white">获取验证码</button></p>
+                <p><input type="text" placeholder="确认登入密码" class="W290"></p>
+                <div class="btn-submit t-center paTop20"><button class="bg-blueM">完成绑定</button><button class="bg-orange2 maL40" @click.stop="closeMobile">返回</button></div>
+            </div>
+        </div>
+        <div class="bind-change W500" v-show="show.email" @click.stop="">
+            <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换绑定邮箱<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13" @click.stop="closeEmail"><i class="pic-icon icon-close"></i></i>
+            </h2>
+            <div class="bg-white paTop8 paBot60">
+                <h3 class="LH-H83 fSize18 t-center">请输入新的邮箱，完成邮箱绑定</h3>
+                <p><input type="text" placeholder="请输入邮箱" class="W290"></p>
+                <p><input type="text" placeholder="请输入验证码" class="W194"><button class="W96 H44 bg-blueM fSize14 color-white">获取验证码</button></p>
+                <p><input type="text" placeholder="确认登入密码" class="W290"></p>
+                <div class="btn-submit t-center paTop20"><button class="bg-blueM">完成绑定</button><button class="bg-orange2 maL40" @click.stop="closeEmail">返回</button></div>
+            </div>
+        </div>
+        <div class="wechat-bind W500" v-show="show.wechat" @click.stop="">
+            <h2 class="LH-H60 fSize24 color-white t-center bg-blueM">微信登录<i class="pic-wrapper LH-H40 W40 close" @click.stop="closeWechat"><i class="pic-icon icon-close"></i></i>
+            </h2>
+            <div class="bg-white paTop14 t-center paBot53">
+                <i class="barCode pic-wrapper W284 LH-H284 bg-grayC maB22"></i>
+                <p class="LH-H40 W220 t-center bg-orange2 color-white maCenter" style="border-radius: 20px;">请使用微信扫一扫二维码登录</p>
+            </div>
+        </div>
+        <div class="msg-box  W888 maCenter disNo">
+            <h3 class="bg-orange4 LH-H86 fSize30 color-white t-center msg-box-head"><i class="pic-icon fl maL30 back show02 disNo msg-back icon-return"></i><i class="pic-icon maR21 show01 icon-email"></i><span class="msg-head">消息提醒</span><span class="icon-wrapper fr maR10"><i class="close pic-icon W40 icon-close"></i></span></h3>
+            <div class="msg-lis show01">
+                <ul class="msg-body ">
+                    <li class="msg-date">今天</li>
+                    <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
+                    <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
+                    <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
+                    <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
+                    <li class="msg-date">2016-6-1</li>
+                    <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
+                    <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
+                </ul>
+                <div class="msg-bot LH-H70 fSize14 bg-white t-center">
+                    <ul class="page-bot lis-inline fSize14">
+                        <li class="side-page first-page">首页</li>
+                        <li class="prev side-page">上一页</li>
+                        <li class="page-index">1</li>
+                        <li class="page-index">2</li>
+                        <li class="page-index">3</li>
+                        <li class="next side-page">下一页</li>
+                        <li class="side-page last-page">尾页</li>
+                    </ul>
+                    <span class="fr maR40">全部清空</span>
+                </div>
+            </div>
+            <div class="msg-detail fSize14 disNo show02">
+                <p class="H266 bg-white paTop25 LH25">校企2.0上线啦上线啦上线啦</p>
+                <p class="bg-gray-e0 LH-H50 t-center"><span class="date">2016-12-17</span><span class="time">12:12</span></p>
+            </div>
+        </div>
+        <!--工作经历行业选择框单选  -->
+        <div class="trade-box W770 H420 maCenter trade-box-single" v-show="showTrade" @click="stayshow($event)">
+            <h3 class="bg-gray-e6 fSize14 LH-H36 paLeft30 paRight30 color-black">选择行业分类<i class="pic-wrapper W26 LH-H26 maT5 closer t-center fr cur-pointer" @click="closeTrade"><i class="pic-icon icon-close"></i></i>
+            </h3>
+            <div class="H328 bg-white paLeft35 cont paTop14">
+                <table class="fSize12 trade-single-table">
+                    <tr v-for="trade in trades">
                         <td class="W158 LH64 t-center">{{trade.title}}</td>
                         <td class="W539">
-                             <ul class="lis-inline paTop5 paBot5">
-                                  <li v-for="item in trade.subareas" class="W246 maL12 LH-H27">
-                                       <input type="radio"  name="workstrade" :value="item" />{{item}}
-                                  </li>
-                             </ul>
+                            <ul class="lis-inline paTop5 paBot5">
+                                <li v-for="item in trade.subareas" class="W246 maL12 LH-H27">
+                                    <input type="radio" name="workstrade" :value="item" />{{item}}
+                                </li>
+                            </ul>
                         </td>
-                   </tr>
-              </table>
-         </div>
-         <div class="trade-bot LH-H56 bg-gray-e6 t-center">
-               <button @click="submitTrade">确定</button><button @click="cancelTrade">取消</button>
-         </div>
-    </div>
-    <div class="refresh-box W700" @click.stop="" v-show="show.stickybox">
-         <h2 class="LH-H60 paLeft50 refresh-hd">
-              <span class="color-white fSize24 disInline maR23">置顶提示</span>
-              <ul class="lis-inline disInline fSize20 t-center stick-navs">
-                   <li><span class="on" @click.stop="selectStickWay('sofort',$event.target)">立即置顶</span></li>
-                   <li><span @click.stop="selectStickWay('plan',$event.target)">计划置顶</span></li>
-              </ul>
-              <span class="pic-wrapper refresh-closer fr" @click="closeSticky">
+                    </tr>
+                </table>
+            </div>
+            <div class="trade-bot LH-H56 bg-gray-e6 t-center">
+                <button @click="submitTrade">确定</button><button @click="cancelTrade">取消</button>
+            </div>
+        </div>
+        <div class="refresh-box W700" @click.stop="" v-show="show.stickybox">
+            <h2 class="LH-H60 paLeft50 refresh-hd">
+                <span class="color-white fSize24 disInline maR23">置顶提示</span>
+                <ul class="lis-inline disInline fSize20 t-center stick-navs">
+                    <li><span class="on" @click.stop="selectStickWay('sofort',$event.target)">立即置顶</span></li>
+                    <li><span @click.stop="selectStickWay('plan',$event.target)">计划置顶</span></li>
+                </ul>
+                <span class="pic-wrapper refresh-closer fr" @click="closeSticky">
                    <i class="pic-icon"></i>
               </span>
-         </h2>
-         <div v-show="sticky.sofort">
-              <div class="refresh-cont paLeft50 H298">
-                   <p class="LH52 fSize14 color-orange2">信息置顶，排名提前到第一页，获得海量曝光，效果翻倍，赶快来试试吧！</p>
-                   <table class="LH40 fSize18 sticky-sofort-list">
+            </h2>
+            <div v-show="sticky.sofort">
+                <div class="refresh-cont paLeft50 H298">
+                    <p class="LH52 fSize14 color-orange2">信息置顶，排名提前到第一页，获得海量曝光，效果翻倍，赶快来试试吧！</p>
+                    <table class="LH40 fSize18 sticky-sofort-list">
                         <tr v-for="(item,index) in sticky.content">
-                             <td class="W210"><span class="icon-radio" :class="{'on':index==0}" @click="selectStickyItem(index,$event.target)"><i class="pic-icon"></i></span>{{item.duration}}</td>
-                             <td class="W90"><span class="color-orange-fc">{{item.price}}</span>元</td>
-                             <td>{{item.hint}}</td>
+                            <td class="W210"><span class="icon-radio" :class="{'on':index==0}" @click="selectStickyItem(index,$event.target)"><i class="pic-icon"></i></span>{{item.duration}}</td>
+                            <td class="W90"><span class="color-orange-fc">{{item.price}}</span>元</td>
+                            <td>{{item.hint}}</td>
                         </tr>
-                   </table>
-                   <p class="LH40 color-gray79">注：每24小时执行一次，购买后立即执行。</p>
-              </div>
-              <div class="refresh-bot paLeft50 paTop10 fSize18">
-                   <p class="LH50">应付金额<span class="color-orange-fc">{{sticky.sum}}</span>元<span class="maL22 price-pre">原价：{{sticky.presum}}元</span></p>
-                   <p class="LH20"><i class="pic-icon icon-checkbox on" @click="checkAutopay($event.target)"></i>自动续费<span class="color-orange-fc">{{sticky.discount}}</span></p>
-                   <p class="LH36 color-gray79 fSize14">（系统将在智能置顶到期后自动帮您续费，可通过选中自动续费启用或取消）</p>
-                   <button type="button" class="refresh-btn">{{sticky.sofortBtn}}</button>
-              </div>
-         </div>
-         <div v-show="!sticky.sofort">
-              <div class="refresh-cont paLeft50 paBot20">
-                   <p class="LH52 fSize14 color-orange2">信息置顶，排名提前到第一页，获得海量曝光，效果翻倍，赶快来试试吧！</p>
-                   <p class="LH26 fSize16"><label class="plan-label">计划时间</label><input type="text" class="date-input" placeholder="2016-12-17"/>到<input type="text" class="date-input" placeholder="2016-12-17"/></p>
-                   <p class="maT11 LH34"><label class="plan-label">置顶时段</label></p>
-                   <table class="LH43 fSize14 t-center plan-sticky-table">
-                        <tr><th>时间</th><th>星期一</th><th>星期二</th><th>星期三</th><th>星期四</th><th>星期五</th><th>星期六</th><th>星期日</th></tr>
-                        <tr><td class="td-title">全天置顶</td><td name="1"></td><td name="2"></td><td name="3"></td><td name="4"></td><td name="5"></td><td name="6"></td><td name="7"></td></tr>
-                        <tr><td class="td-title">早8点-晚8点</td><td name="1"></td><td name="2"></td><td name="3"></td><td name="4"></td><td name="5"></td><td name="6"></td><td name="7"></td></tr>
-                        <tr><td class="td-title">不置顶</td><td name="1"></td><td name="2"></td><td name="3"></td><td name="4"></td><td name="5"></td><td name="6"></td><td name="7"></td></tr>
-                   </table>
-              </div>
-              <div class="refresh-bot paLeft50 paTop8 fSize18 paBot14">
-                   <ul class="LH36">
+                    </table>
+                    <p class="LH40 color-gray79">注：每24小时执行一次，购买后立即执行。</p>
+                </div>
+                <div class="refresh-bot paLeft50 paTop10 fSize18">
+                    <p class="LH50">应付金额<span class="color-orange-fc">{{sticky.sum}}</span>元<span class="maL22 price-pre">原价：{{sticky.presum}}元</span></p>
+                    <p class="LH20"><i class="pic-icon icon-checkbox on" @click="checkAutopay($event.target)"></i>自动续费<span class="color-orange-fc">{{sticky.discount}}</span></p>
+                    <p class="LH36 color-gray79 fSize14">（系统将在智能置顶到期后自动帮您续费，可通过选中自动续费启用或取消）</p>
+                    <button type="button" class="refresh-btn">{{sticky.sofortBtn}}</button>
+                </div>
+            </div>
+            <div v-show="!sticky.sofort">
+                <div class="refresh-cont paLeft50 paBot20">
+                    <p class="LH52 fSize14 color-orange2">信息置顶，排名提前到第一页，获得海量曝光，效果翻倍，赶快来试试吧！</p>
+                    <p class="LH26 fSize16"><label class="plan-label">计划时间</label><input type="text" class="date-input" placeholder="2016-12-17" />到<input type="text" class="date-input" placeholder="2016-12-17" /></p>
+                    <p class="maT11 LH34"><label class="plan-label">置顶时段</label></p>
+                    <table class="LH43 fSize14 t-center plan-sticky-table">
+                        <tr>
+                            <th>时间</th>
+                            <th>星期一</th>
+                            <th>星期二</th>
+                            <th>星期三</th>
+                            <th>星期四</th>
+                            <th>星期五</th>
+                            <th>星期六</th>
+                            <th>星期日</th>
+                        </tr>
+                        <tr>
+                            <td class="td-title">全天置顶</td>
+                            <td name="1"></td>
+                            <td name="2"></td>
+                            <td name="3"></td>
+                            <td name="4"></td>
+                            <td name="5"></td>
+                            <td name="6"></td>
+                            <td name="7"></td>
+                        </tr>
+                        <tr>
+                            <td class="td-title">早8点-晚8点</td>
+                            <td name="1"></td>
+                            <td name="2"></td>
+                            <td name="3"></td>
+                            <td name="4"></td>
+                            <td name="5"></td>
+                            <td name="6"></td>
+                            <td name="7"></td>
+                        </tr>
+                        <tr>
+                            <td class="td-title">不置顶</td>
+                            <td name="1"></td>
+                            <td name="2"></td>
+                            <td name="3"></td>
+                            <td name="4"></td>
+                            <td name="5"></td>
+                            <td name="6"></td>
+                            <td name="7"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="refresh-bot paLeft50 paTop8 fSize18 paBot14">
+                    <ul class="LH36">
                         <li>总计价格：<span class="color-orange-fc">{{sticky.sum}}</span>元</li>
                         <li>账户余额：<span class="color-orange-fc">{{account.money}}</span>元</li>
-                   </ul>
-                   <button type="button" class="refresh-btn plan-btn">{{sticky.planBtn}}</button>
-              </div>
-         </div>
-    </div>
-    <div class="refresh-hint-box W700" @click.stop="" v-show="show.stickyhintbox">
-         <h2 class="LH-H60 t-center refresh-hint-hd fSize24 color-white">帖子置顶提示
-              <span class="pic-wrapper refresh-closer fr" @click="closeHintSticky">
+                    </ul>
+                    <button type="button" class="refresh-btn plan-btn">{{sticky.planBtn}}</button>
+                </div>
+            </div>
+        </div>
+        <div class="refresh-hint-box W700" @click.stop="" v-show="show.stickyhintbox">
+            <h2 class="LH-H60 t-center refresh-hint-hd fSize24 color-white">帖子置顶提示
+                <span class="pic-wrapper refresh-closer fr" @click="closeHintSticky">
                    <i class="pic-icon"></i>
               </span>
-         </h2>
-         <div class="refresh-hint-content paLeft50 paTop30 bg-white paBot50">
-              <p class="LH43 fSize18">成功置顶<span class="color-orange-fc">1</span>条信息，并从余额中扣除<span class="color-orange-fc">{{sticky.sum}}</span>元</p>
-              <p class="LH40 fSize14">同类别的信息有置顶间隔限制，必须等上一条信息置顶成功后，系统才能帮您执行置顶请求。</p>
-              <div class="refresh-text-box maT24 paBot10">
-                   <h3 class="LH-H60 fSize20 t-center">置顶内容</h3>
-                   <p class="fSize14 LH43"><span class="stick-name maR33">UI设计招聘</span>您的信息已<span class="color-orange-fc">置顶成功</span>，正在让更多的客户<span class="color-orange-fc">查看</span></p>
-                   <p class="LH30 t-center sticky-time fSize14">执行置顶时间： {{sticky.date}} {{sticky.time}}</p>
-                   <p class="LH58 t-center fSize14">计划置顶，低价获得更多展示，每次置顶<span class="color-orange-fc">7</span>元起<button class="color-blue" @click="toPlanSticky">立即使用</button></p>
-              </div>
-         </div>
-    </div>
-    <div class="refresh-box W700" @click.stop="" v-show="show.freshbox">
-         <h2 class="LH-H60 paLeft50 refresh-hd">
-              <span class="color-white fSize24 disInline maR23">刷新提示</span>
-              <ul class="lis-inline disInline fSize20 t-center fresh-navs">
-                   <li><span class="on" @click.stop="selectFreshWay('smart',$event.target)">智能刷新</span></li>
-                   <li><span @click.stop="selectFreshWay('sofort',$event.target)">普通刷新</span></li>
-              </ul>
-              <span class="pic-wrapper refresh-closer fr" @click="closeFresh">
+            </h2>
+            <div class="refresh-hint-content paLeft50 paTop30 bg-white paBot50">
+                <p class="LH43 fSize18">成功置顶<span class="color-orange-fc">1</span>条信息，并从余额中扣除<span class="color-orange-fc">{{sticky.sum}}</span>元</p>
+                <p class="LH40 fSize14">同类别的信息有置顶间隔限制，必须等上一条信息置顶成功后，系统才能帮您执行置顶请求。</p>
+                <div class="refresh-text-box maT24 paBot10">
+                    <h3 class="LH-H60 fSize20 t-center">置顶内容</h3>
+                    <p class="fSize14 LH43"><span class="stick-name maR33">UI设计招聘</span>您的信息已<span class="color-orange-fc">置顶成功</span>，正在让更多的客户<span class="color-orange-fc">查看</span></p>
+                    <p class="LH30 t-center sticky-time fSize14">执行置顶时间： {{sticky.date}} {{sticky.time}}</p>
+                    <p class="LH58 t-center fSize14">计划置顶，低价获得更多展示，每次置顶<span class="color-orange-fc">7</span>元起<button class="color-blue" @click="toPlanSticky">立即使用</button></p>
+                </div>
+            </div>
+        </div>
+        <div class="refresh-box W700" @click.stop="" v-show="show.freshbox">
+            <h2 class="LH-H60 paLeft50 refresh-hd">
+                <span class="color-white fSize24 disInline maR23">刷新提示</span>
+                <ul class="lis-inline disInline fSize20 t-center fresh-navs">
+                    <li><span class="on" @click.stop="selectFreshWay('smart',$event.target)">智能刷新</span></li>
+                    <li><span @click.stop="selectFreshWay('sofort',$event.target)">普通刷新</span></li>
+                </ul>
+                <span class="pic-wrapper refresh-closer fr" @click="closeFresh">
                    <i class="pic-icon"></i>
               </span>
-         </h2>
-         <div v-show="fresh.smart">
-              <div class="refresh-cont paLeft50 H298">
-                   <p class="LH52 fSize14 color-orange2"><img src="images/fresh-title.png" /></p>
-                   <table class="LH40 fSize18 fresh-smart-list">
+            </h2>
+            <div v-show="fresh.smart">
+                <div class="refresh-cont paLeft50 H298">
+                    <p class="LH52 fSize14 color-orange2"><img src="images/fresh-title.png" /></p>
+                    <table class="LH40 fSize18 fresh-smart-list">
                         <tr v-for="(item,index) in fresh.content">
-                             <td class="W210"><span class="icon-radio" :class="{'on':index==0}" @click="selectFreshItem(index,$event.target)"><i class="pic-icon"></i></span>{{item.duration}}</td>
-                             <td class="W90"><span class="color-orange-fc">{{item.price}}</span>元</td>
-                             <td>{{item.hint}}</td>
+                            <td class="W210"><span class="icon-radio" :class="{'on':index==0}" @click="selectFreshItem(index,$event.target)"><i class="pic-icon"></i></span>{{item.duration}}</td>
+                            <td class="W90"><span class="color-orange-fc">{{item.price}}</span>元</td>
+                            <td>{{item.hint}}</td>
                         </tr>
-                   </table>
-                   <p class="LH40 color-gray79">注：每6小时执行一次，购买后立即执行。</p>
-              </div>
-              <div class="refresh-bot paLeft50 paTop10 fSize18">
-                   <p class="LH50">应付金额<span class="color-orange-fc">{{fresh.sum}}</span>元<span class="maL22 price-pre">原价：{{fresh.presum}}元</span></p>
-                   <p class="LH20"><i class="pic-icon icon-checkbox on" @click="checkAutopay($event.target)"></i>自动续费<span class="color-orange-fc">{{fresh.discount}}</span></p>
-                   <p class="LH36 color-gray79 fSize14">（系统将在智能刷新到期后自动帮您续费，可通过选中自动续费启用或取消）</p>
-                   <button type="button" class="refresh-btn">{{fresh.smartBtn}}</button>
-              </div>
-         </div>
-         <div v-show="!fresh.smart">
-              <div class="refresh-cont paBot10 paTop54 t-center" v-show="account.freeFreshTimes>0">
-                   <p class="LH48 fSize16 color-orange2">信息刷新后：排名靠前，时间显示最新，能获得更多浏览机会</p>
-                   <p class="LH48 fSize16"><span class="color-orange-fc">智能刷新</span>，效果翻倍，每天仅需<span class="color-orange-fc">0.7</span>元</p>
-                   <p class="fSize18 LH123">本次刷新<span class="color-orange-fc">免费</span>，是否确定刷新？</p>
-              </div>
-              <div class="refresh-cont paBot45 paTop26 t-center" v-show="account.freeFreshTimes==0">
-                   <p class="LH50 fSize16 color-orange2">信息刷新后：排名靠前，时间显示最新，能获得更多浏览机会</p>
-                   <p class="LH50 fSize16"><span class="color-orange-fc">智能刷新</span>，效果翻倍，每天仅需<span class="color-orange-fc">0.7</span>元</p>
-                   <p class="fSize18 LH45 maT22 color-gray6">提示：免费刷新次数已经用完，不享有免费刷新。</p>
-                   <p class="fSize18 LH45">本次刷新需要扣除推广金 <span class="color-orange-fc">1.0</span>元，是否确定刷新？</p>
-              </div>
-              <div class="refresh-bot t-center paTop8 fSize18 paBot14 H108">
-                   <span class="maR176" v-show="account.freeFreshTimes==0">您的校企余额：<b class="color-orange-fc">{{account.money.toFixed(1)}}</b>元</span><button type="button" class="refresh-btn fresh-sofort-btn">{{fresh.sofortBtn}}</button>
-              </div>
-         </div>
-    </div>
-    <div class="refresh-hint-box W700" @click.stop="" v-show="show.freshhintbox">
-         <h2 class="LH-H60 t-center refresh-hint-hd fSize24 color-white">帖子刷新提示
-              <span class="pic-wrapper refresh-closer fr" @click="closeHintFresh">
+                    </table>
+                    <p class="LH40 color-gray79">注：每6小时执行一次，购买后立即执行。</p>
+                </div>
+                <div class="refresh-bot paLeft50 paTop10 fSize18">
+                    <p class="LH50">应付金额<span class="color-orange-fc">{{fresh.sum}}</span>元<span class="maL22 price-pre">原价：{{fresh.presum}}元</span></p>
+                    <p class="LH20"><i class="pic-icon icon-checkbox on" @click="checkAutopay($event.target)"></i>自动续费<span class="color-orange-fc">{{fresh.discount}}</span></p>
+                    <p class="LH36 color-gray79 fSize14">（系统将在智能刷新到期后自动帮您续费，可通过选中自动续费启用或取消）</p>
+                    <button type="button" class="refresh-btn">{{fresh.smartBtn}}</button>
+                </div>
+            </div>
+            <div v-show="!fresh.smart">
+                <div class="refresh-cont paBot10 paTop54 t-center" v-show="account.freeFreshTimes>0">
+                    <p class="LH48 fSize16 color-orange2">信息刷新后：排名靠前，时间显示最新，能获得更多浏览机会</p>
+                    <p class="LH48 fSize16"><span class="color-orange-fc">智能刷新</span>，效果翻倍，每天仅需<span class="color-orange-fc">0.7</span>元</p>
+                    <p class="fSize18 LH123">本次刷新<span class="color-orange-fc">免费</span>，是否确定刷新？</p>
+                </div>
+                <div class="refresh-cont paBot45 paTop26 t-center" v-show="account.freeFreshTimes==0">
+                    <p class="LH50 fSize16 color-orange2">信息刷新后：排名靠前，时间显示最新，能获得更多浏览机会</p>
+                    <p class="LH50 fSize16"><span class="color-orange-fc">智能刷新</span>，效果翻倍，每天仅需<span class="color-orange-fc">0.7</span>元</p>
+                    <p class="fSize18 LH45 maT22 color-gray6">提示：免费刷新次数已经用完，不享有免费刷新。</p>
+                    <p class="fSize18 LH45">本次刷新需要扣除推广金 <span class="color-orange-fc">1.0</span>元，是否确定刷新？</p>
+                </div>
+                <div class="refresh-bot t-center paTop8 fSize18 paBot14 H108">
+                    <span class="maR176" v-show="account.freeFreshTimes==0">您的校企余额：<b class="color-orange-fc">{{account.money.toFixed(1)}}</b>元</span><button type="button" class="refresh-btn fresh-sofort-btn">{{fresh.sofortBtn}}</button>
+                </div>
+            </div>
+        </div>
+        <div class="refresh-hint-box W700" @click.stop="" v-show="show.freshhintbox">
+            <h2 class="LH-H60 t-center refresh-hint-hd fSize24 color-white">帖子刷新提示
+                <span class="pic-wrapper refresh-closer fr" @click="closeHintFresh">
                    <i class="pic-icon"></i>
               </span>
-         </h2>
-         <div class="refresh-hint-content paLeft50 paTop30 bg-white paBot50">
-              <p class="LH43 fSize18">成功刷新<span class="color-orange-fc">1</span>条信息，并从余额中扣除<span class="color-orange-fc">{{fresh.sum}}</span>元</p>
-              <p class="LH40 fSize14">同类别的信息有刷新间隔限制，必须等上一条信息刷新成功后，系统才能帮您执行刷新请求。</p>
-              <div class="refresh-text-box maT24 paBot10">
-                   <h3 class="LH-H60 fSize20 t-center">刷新内容</h3>
-                   <p class="fSize14 LH43"><span class="stick-name maR33">UI设计招聘</span>您的信息已<span class="color-orange-fc">刷新成功</span>，正在让更多的客户<span class="color-orange-fc">查看</span></p>
-                   <p class="LH30 t-center sticky-time fSize14">执行刷新时间： {{fresh.date}} {{fresh.time}}</p>
-                   <p class="LH58 t-center fSize14">智能刷新，低价获得更多展示，每次刷新<span class="color-orange-fc">0.7</span>元起<button class="color-blue" @click="toSmartFresh">立即使用</button></p>
-              </div>
-         </div>
+            </h2>
+            <div class="refresh-hint-content paLeft50 paTop30 bg-white paBot50">
+                <p class="LH43 fSize18">成功刷新<span class="color-orange-fc">1</span>条信息，并从余额中扣除<span class="color-orange-fc">{{fresh.sum}}</span>元</p>
+                <p class="LH40 fSize14">同类别的信息有刷新间隔限制，必须等上一条信息刷新成功后，系统才能帮您执行刷新请求。</p>
+                <div class="refresh-text-box maT24 paBot10">
+                    <h3 class="LH-H60 fSize20 t-center">刷新内容</h3>
+                    <p class="fSize14 LH43"><span class="stick-name maR33">UI设计招聘</span>您的信息已<span class="color-orange-fc">刷新成功</span>，正在让更多的客户<span class="color-orange-fc">查看</span></p>
+                    <p class="LH30 t-center sticky-time fSize14">执行刷新时间： {{fresh.date}} {{fresh.time}}</p>
+                    <p class="LH58 t-center fSize14">智能刷新，低价获得更多展示，每次刷新<span class="color-orange-fc">0.7</span>元起<button class="color-blue" @click="toSmartFresh">立即使用</button></p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
     <div class="bot paTop8 t-center bot-account">
         <div class="inner clearfix">
             <div class="fl">
@@ -786,6 +842,7 @@
     <script src="data/address.js"></script>
     <script src="data/workareas.js"></script>
     <script src="js/common/common.js"></script>
+    <script src="js/common/ajaxfileupload.js"></script>
     <script src="js/common/cropbox.js"></script>
     <script src="js/components/pagination.js"></script>
     <script src="js/components/dropdown.js"></script>

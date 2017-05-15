@@ -91,12 +91,24 @@ var appCont = new Vue({
             var postdata = {};
             var domainUrl = "";
             if (type == "person") {
-                posturl = "/user/school/createCard"
+                posturl = "/user/user/createCard"
                 domainUrl = "pCenter.html?";
+                postdata = {
+                    userId: parObj.userId,
+                    realName: this.pInfo.name,
+                    birthday: this.pInfo.birth.year + "-" + this.pInfo.birth.month + "-01",
+                    liveStatus: this.pInfo.workstate,
+                    sex: $(".personCard .gender .on").text() == "男" ? 1 : 2,
+                    province: $(".personCard .sel-province input").val(),
+                    city: $(".personCard .sel-city input").val(),
+                    area: $(".personCard .sel-district input").val(),
+                    email: this.pInfo.email
+                }
+
             } else if (type == "uni") {
                 posturl = "/user/school/createCard";
                 postdata = {
-                    userId: parObj.userid,
+                    userId: parObj.userId,
                     name: this.uniInfo.name,
                     property: this.uniInfo.props,
                     province: $(".uniCard .sel-province input").val(),
@@ -107,11 +119,10 @@ var appCont = new Vue({
                     code: this.uniInfo.validCode
                 };
                 domainUrl = "uniCenter.html?";
-                //window.location.href="uniCenter.html"
             } else if (type == "inc") {
                 posturl = "/user/company/createCard";
                 postdata = {
-                    userId: parObj.userid,
+                    userId: parObj.userId,
                     name: this.incInfo.name,
                     property: this.incInfo.props,
                     scale: this.incInfo.scale,
@@ -123,12 +134,12 @@ var appCont = new Vue({
                     code: this.incInfo.validCode
                 }
                 domainUrl = "incCenter.html?";
-                //window.location.href="incCenter.html"
             }
             console.log(postdata);
 
             var callback = function(data, status) {
-                var parstring = "userId=" + parObj.userid + "&loginIdentifier=" + parObj.loginIdentifier;
+                var parstring = "userId=" + parObj.userId + "&loginId=" + parObj.loginIdentifier;
+                console.log(data);
                 window.location.href = domainUrl + parstring;
             }
 

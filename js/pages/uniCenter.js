@@ -132,13 +132,14 @@ var appPorto = new Vue({
             var postdata = {
                 userId: parObj.userId,
                 schoolId: respObj.schoolId,
-                loginName: parObj.loginName,
+                loginName: respObj.loginName,
                 property: this.briefInfo.level,
                 province: this.briefInfo.address.province,
                 city: this.briefInfo.address.city,
                 area: this.briefInfo.address.district,
                 email: this.briefInfo.email
             }
+            console.log(postdata);
             EventUtils.ajaxReq('/user/school/modifyInfo', 'post', postdata, function(resp, status) {
                 console.log(resp);
             })
@@ -283,11 +284,11 @@ var appCont = new Vue({
                 { IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", date: "2017.11.11", time: "24:00", coopState: "01", major: "公共管理专业" },
             ],
             results: [
-                { IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", date: "2017.11.11", time: "24:00", coopState: "02", major: "公共管理专业" },
-                { IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", date: "2017.11.11", time: "24:00", coopState: "03", major: "合作专业" },
-                { IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", date: "2017.11.11", time: "24:00", coopState: "03", major: "合作专业" },
-                { IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", date: "2017.11.11", time: "24:00", coopState: "03", major: "合作专业" },
-                { IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", date: "2017.11.11", time: "24:00", coopState: "01", major: "公共管理专业" },
+                { userId: "4", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", date: "2017.11.11", time: "24:00", coopState: "02", major: "公共管理专业" },
+                { userId: "4", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", date: "2017.11.11", time: "24:00", coopState: "03", major: "合作专业" },
+                { userId: "5", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", date: "2017.11.11", time: "24:00", coopState: "03", major: "合作专业" },
+                { userId: "5", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", date: "2017.11.11", time: "24:00", coopState: "03", major: "合作专业" },
+                { userId: "4", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", date: "2017.11.11", time: "24:00", coopState: "01", major: "公共管理专业" },
             ]
         },
         config: {
@@ -491,7 +492,6 @@ var appCont = new Vue({
             this.resume.view = true;
             //上传许可证等图片文件
             if (this.resume.comLicense != "") {
-                console.log(new Date().getTime(), 1);
                 var hascomUrl = false;
                 $.ajaxFileUpload({
                     url: 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload', //提交的路径
@@ -504,9 +504,9 @@ var appCont = new Vue({
                         fileName: appCont.resume.comLicense //传递参数，用于解析出文件名
                     }, // 键:值，传递文件名
                     success: function(data, status) {
-                        console.log(new Date().getTime(), 2);
                         hascomUrl = true;
                         appCont.resume.comLicenseUrl = data.data;
+                        console.log(data.data);
                         //     alert(1);
                     },
                     error: function(data, status) {
@@ -517,7 +517,6 @@ var appCont = new Vue({
 
             if (this.resume.uniLicense != "") {
                 var hasuniUrl = false;
-                console.log(new Date().getTime(), 3);
                 $.ajaxFileUpload({
                     url: 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload', //提交的路径
                     secureuri: false, // 是否启用安全提交，默认为false
@@ -529,9 +528,9 @@ var appCont = new Vue({
                         fileName: appCont.resume.uniLicense //传递参数，用于解析出文件名
                     }, // 键:值，传递文件名
                     success: function(data, status) {
-                        console.log(new Date().getTime(), 4);
                         hasuniUrl = true;
                         appCont.resume.uniLicenseUrl = data.data;
+                        console.log(data.data);
                     },
                     error: function(data, status) {
                         //	console.log(data,2);
@@ -555,7 +554,7 @@ var appCont = new Vue({
 
             if (this.resume.comLicense != "" || this.resume.uniLicense != "") { //如果用户有上传文件
                 setTimeout(function() {
-                    if (appCont.resume.comLicense != "" && !hascomUrl || appCont.resume.comLicense != "" && !hasuniUrl) {
+                    if (appCont.resume.comLicense != "" && !hascomUrl || appCont.resume.uniLicense != "" && !hasuniUrl) {
                         alert("文件上传失败，请重新上传！");
                     } else {
                         var postdata = {
@@ -571,12 +570,11 @@ var appCont = new Vue({
                             imgUrlAgree: appCont.resume.uniLicenseUrl,
                             discription: appCont.resume.intro
                         };
-                        console.log(postdata);
                         EventUtils.ajaxReq('/user/school/modifyInfo', 'post', postdata, function(resp, status) {
                             //  console.log(resp);
                         })
                     }
-                }, 2000)
+                }, 1500)
             } else {
                 var postdata = {
                     userId: parObj.userId,
@@ -740,8 +738,8 @@ var appCont = new Vue({
                 }
             }
         },
-        popComment: function(index) {
-            appModal.comment.index = index;
+        popComment: function(id) {
+            appModal.comment.userId = id;
             appModal.showModal = true;
             appModal.showComment = true;
         },
@@ -848,7 +846,7 @@ var appModal = new Vue({
             smart: true
         },
         comment: {
-            index: 0,
+            userId: 0,
             text: ""
         },
         baseInfo: appPorto.oldInfo,
@@ -1010,6 +1008,16 @@ var appModal = new Vue({
             }
         },
         confirmComment: function() {
+            var postdata = {
+                userId: parObj.userId,
+                loginIdentifier: parObj.loginId,
+                comment: this.comment.text,
+                reportUserId: this.comment.userId
+            }
+            console.log(postdata);
+            EventUtils.ajaxReq("/sys/comment", "post", postdata, function(resp, status) {
+                console.log(resp);
+            })
             this.showComment = false;
             this.showModal = false;
         },
@@ -1105,7 +1113,7 @@ function uploadEventBind() {
     var cropper = $('.imgBox').cropbox(options);
     $('#upload-file').on('change', function() {
         // if(this.files[0].size)
-        console.log(this.value, this.files[0].size);
+        // console.log(this.value, this.files[0].size);
 
         var reader = new FileReader();
         reader.onload = function(e) {
@@ -1124,7 +1132,7 @@ function uploadEventBind() {
 
     $('#btnSubmit').on('click', function() {
         var imgsrc = cropper.getDataURL();
-        console.log(imgsrc.length);
+        // console.log(imgsrc.length);
         if (imgsrc.length > 500 * 1024) {
             alert("请上传小于500K的头像！");
             return
@@ -1133,20 +1141,9 @@ function uploadEventBind() {
             userId: parObj.userId,
             userIcon: imgsrc
         }
-        EventUtils.ajaxReq("center/user/uploadIcon", "post", postdata, function(resp, status) {
+        EventUtils.ajaxReq("/center/user/uploadIcon", "post", postdata, function(resp, status) {
             $("#avatar-box").html("<img src='" + resp.data + "' />");
         });
-        // $.ajax("http://192.168.0.113:8000/easily_xq_WebApi/center/user/uploadIcon?", {
-        //     type: 'post',
-        //     data: postdata,
-        //     success: function(data, status) {
-        //         console.log(data);
-        //         $("#avatar-box").html("<img src='" + data.data + "' />");
-        //     },
-        //     error: function() {
-
-        //     }
-        // });
         appModal.showUpload = false;
         appModal.showModal = false;
     })

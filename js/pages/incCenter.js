@@ -9,6 +9,7 @@ var respObj = {}; //请求的本页面的数据集合
     EventUtils.ajaxReq('/user/company/getInfo', 'get', postdata, function(resp, status) {
         respObj = resp.data;
         console.log(respObj);
+        $("#avatar-box").html("<img src='" + respObj.userIcon + "' />");
         if (respObj) {
             var portobrief = {
                 IncProps: respObj.property,
@@ -38,7 +39,8 @@ var respObj = {}; //请求的本页面的数据集合
                 props: respObj.property,
                 specialLv: specialLevel,
                 intro: respObj.discription != undefined ? respObj.discription : "",
-                comLicense: respObj.imgUrl,
+                comLicense: "",
+                comLicenseUrl: respObj.imgUrl,
                 hasBusLicense: respObj.imgUrl != "",
                 edit: respObj.infoStatus == "0",
                 view: respObj.infoStatus != "0"
@@ -156,6 +158,7 @@ var appCont = new Vue({
             specialLv: "",
             intro: "国际领先的互联网科技公司",
             comLicense: "",
+            comLicenseUrl: "",
             hasBusLicense: false,
             edit: false,
             view: true
@@ -167,7 +170,7 @@ var appCont = new Vue({
             curpage: 1,
             totalpages: 1,
             pagesize: 3,
-            totalitems: 1,
+            totalitems: 0,
             newLink: "incRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId,
             results: [],
             showCombi: true,
@@ -422,24 +425,72 @@ var appCont = new Vue({
             this.resume.view = false;
         },
         saveResume: function() {
+            this.resume.hasBusLicense = this.resume.comLicense == "" ? false : true;
             this.resume.edit = false;
             this.resume.view = true;
-            var postdata = {
-                userId: parObj.userId,
-                companyId: respObj.companyId,
-                name: this.resume.Inc,
-                type: this.resume.trade,
-                property: this.resume.props,
-                scale: this.resume.scale,
-                discription: this.resume.intro,
-                imgUrl: this.resume.comLicense,
-                isWorld: this.resume.specialLv == "世界500强" ? 1 : 0,
-                isCountry: this.resume.specialLv == "中国500强" ? 1 : 0,
+            //上传许可证等图片文件
+            if (this.resume.comLicense != "") {
+                var hascomUrl = false;
+                $.ajaxFileUpload({
+                    url: 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload', //提交的路径
+                    secureuri: false, // 是否启用安全提交，默认为false
+                    fileElementId: 'file-busi', // file控件id
+                    dataType: 'json',
+                    data: {
+                        userId: parObj.userId,
+                        type: 2,
+                        fileName: appCont.resume.comLicense //传递参数，用于解析出文件名
+                    }, // 键:值，传递文件名
+                    success: function(data, status) {
+                        hascomUrl = true;
+                        appCont.resume.comLicenseUrl = data.data;
+                        console.log(data.data);
+                        //     alert(1);
+                    },
+                    error: function(data, status) {
+                        //	alert(2);
+                    }
+                });
             };
-            console.log(postdata);
-            EventUtils.ajaxReq('/user/company/modifyInfo', 'post', postdata, function(resp, status) {
-                console.log(resp);
-            })
+            if (this.resume.hasBusLicense) { //如果用户有上传文件
+                setTimeout(function() {
+                    if (!hascomUrl) {
+                        alert("文件上传失败，请重新上传！");
+                    } else {
+                        var postdata = {
+                            userId: parObj.userId,
+                            companyId: respObj.companyId,
+                            name: appCont.resume.Inc,
+                            type: appCont.resume.trade,
+                            property: appCont.resume.props,
+                            scale: appCont.resume.scale,
+                            discription: appCont.resume.intro,
+                            imgUrl: appCont.resume.comLicenseUrl,
+                            isWorld: appCont.resume.specialLv == "世界500强" ? 1 : 0,
+                            isCountry: appCont.resume.specialLv == "中国500强" ? 1 : 0,
+                        };
+                        EventUtils.ajaxReq('/user/company/modifyInfo', 'post', postdata, function(resp, status) {
+                            console.log(resp);
+                        })
+                    }
+                }, 1500)
+            } else {
+                var postdata = {
+                    userId: parObj.userId,
+                    companyId: respObj.companyId,
+                    name: appCont.resume.Inc,
+                    type: appCont.resume.trade,
+                    property: appCont.resume.props,
+                    scale: appCont.resume.scale,
+                    discription: appCont.resume.intro,
+                    imgUrl: appCont.resume.comLicenseUrl,
+                    isWorld: appCont.resume.specialLv == "世界500强" ? 1 : 0,
+                    isCountry: appCont.resume.specialLv == "中国500强" ? 1 : 0,
+                };
+                EventUtils.ajaxReq('/user/company/modifyInfo', 'post', postdata, function(resp, status) {
+                    console.log(resp);
+                })
+            }
         },
         checkExlv: function() {
             var exLevel = $(".uni-level input[type='radio']:checked").val();
@@ -451,10 +502,35 @@ var appCont = new Vue({
 
         },
         delItem: function(item) {
-            this.require.items.remove(item);
+            var postdata = {
+                userId: parObj.userId,
+                loginIdentifier: parObj.loginId,
+                demandId: item.demandId
+            }
+
+            EventUtils.ajaxReq("/demand/delInfo", "post", postdata, function(resp, status) {
+                var getdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    demandType: 2,
+                    index: appCont.require.curpage,
+                    count: 3
+                }
+                EventUtils.ajaxReq("/demand/getList", "get", getdata, function(resp, status) {
+                        if (resp.data) {
+                            appCont.require.results = resp.data.list;
+                            appCont.require.totalpages = resp.data.totalPage;
+                            appCont.require.totalitems = resp.data.totalRow;
+                        } else {
+                            appCont.require.results = [];
+                            appCont.require.totalitems = 0;
+                        }
+                    })
+                    //alert(resp.info);
+            })
         },
         modItem: function(item) {
-            var link = "incRequire.html?new=0&userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + item.demandId + "&demandType=" + item.demandType;
+            var link = "incRequire.html?new=0&userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + item.demandId + "&demandType=" + item.demandType + "&demandSrc=" + appCont.require.demandSrc;
             window.open(link, "_blank");
         },
         freshItem: function(item) {
@@ -553,9 +629,27 @@ var appCont = new Vue({
                 this.coop.curpage = page;
             }
         },
-        changeFile: function(obj, type) {
-            if (type == "commence") {
-                this.resume.comLicense = $(obj).val();
+        changeComLicense: function(obj) {
+            if (obj.files[0].size > 3 * 1024 * 1204) {
+                alert("请上传小于3M的文件！");
+                obj.value = "";
+            }
+            this.resume.comLicense = obj.value
+        },
+        showFile: function(fid) {
+            appModal.preImgUrl = EventUtils.getLocalImgUrl(fid);
+            appModal.showModal = true;
+            appModal.show.preImg = true;
+        },
+        showPrefile: function(type) {
+            if (type == "com") {
+                appModal.preImgUrl = appCont.resume.comLicenseUrl;
+                appModal.showModal = true;
+                appModal.show.preImg = true;
+            } else if (type == "uni") {
+                appModal.preImgUrl = appCont.resume.uniLicenseUrl;
+                appModal.showModal = true;
+                appModal.show.preImg = true;
             }
         },
         apply: function(type, index) {
@@ -619,8 +713,14 @@ var appModal = new Vue({
             freshhintbox: false,
             mobile: false,
             email: false,
-            wechat: false
+            wechat: false,
+            preImg: false
         },
+        showModal: false,
+        showTrade: false,
+        showPreview: false,
+        showUpload: false,
+        preImgUrl: "",
         sticky: {
             content: [
                 { duration: "置顶1天", price: 10, hint: "(无折扣仅10元/天)" },
@@ -654,10 +754,6 @@ var appModal = new Vue({
             smart: true
         },
         checkedTrades: [],
-        showModal: false,
-        showTrade: false,
-        showPreview: false,
-        showUpload: false,
         trades: workareas,
         baseInfo: appPorto.oldInfo,
         resumeInfo: appCont.resume
@@ -800,6 +896,7 @@ var appModal = new Vue({
             this.showModal = false;
             this.showTrade = false;
             this.showPreview = false;
+            this.show.preImg = false;
         },
         stayshow: function(ev) {
             ev.stopPropagation();
@@ -823,6 +920,13 @@ var appModal = new Vue({
         }
     },
     watch: {
+        "show.preImg": function(curval) {
+            if (curval) {
+                var top = Math.floor($(window).height() * 0.5 + $("body").scrollTop()) + "px";
+                console.log(top);
+                $("#app-modal .preview-file").css("top", top);
+            }
+        },
         'showTrade': function(curval) {
             if (curval) {
                 var top = Math.floor($(window).height() * 0.15 + $("body").scrollTop()) + "px";
@@ -904,7 +1008,7 @@ function uploadEventBind() {
             cropper = $('.imgBox').cropbox(options);
         }
         reader.readAsDataURL(this.files[0]);
-        this.files = [];
+        this.files = null;
     });
     $('.zoom-in').on('click', function() {
         cropper.zoomIn();
@@ -914,33 +1018,20 @@ function uploadEventBind() {
     });
 
     $('#btnSubmit').on('click', function() {
-        //      var img = cropper.getDataURL().replace('data:image/png;base64,', '');
-        //  var url = 'AvatarHandler.ashx';
-        //  var data = {
-        //      action: "add",
-        //      picStr: img
-        //  };
-        //  $.ajax(url, {
-        //      type: 'post',
-        //      data: data,
-        //      success: function (data) {
-        //
-        //      },
-        //      error: function (XMLHttpRequest, textStatus, errorThrown) {
-        //
-        //      }
-        //  });
-        // $('.cropped').append('<img src="' + img + '" align="absmiddle" style="width:64px;margin-top:4px;border-radius:64px;box-shadow:0px 0px 12px #7E7E7E;" ><p>64px*64px</p>');
         var imgsrc = cropper.getDataURL();
-        //console.log(imgsrc);
-        //$("#porto-img").html('');
-        //console.log($("#porto-img").length);
-
-        $("#avatar-box").html("<img src='" + imgsrc + "' />");
+        if (imgsrc.length > 500 * 1024) {
+            alert("请上传小于500K的头像！");
+            return
+        }
+        var postdata = {
+            userId: parObj.userId,
+            userIcon: imgsrc
+        }
+        EventUtils.ajaxReq("/center/user/uploadIcon", "post", postdata, function(resp, status) {
+            $("#avatar-box").html("<img src='" + resp.data + "' />");
+        });
         appModal.showUpload = false;
         appModal.showModal = false;
-        //     css("src",cropper.getDataURL());
-
     })
 }
 

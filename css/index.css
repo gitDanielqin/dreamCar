@@ -91,7 +91,33 @@ body {
 
 .account-options li {
     cursor: pointer;
-    padding-left: 14px;
+    padding-left: 13px;
+}
+
+.account-options .pic-icon {
+    width: 22px;
+    height: 22px;
+    margin-right: 10px;
+}
+
+.account-options .icon-center {
+    background: url("../images/icon-center.png") no-repeat center center;
+}
+
+.account-options .icon-collect {
+    background: url("../images/icon-collect.png") no-repeat center center;
+}
+
+.account-options .icon-job {
+    background: url("../images/icon-jog.png") no-repeat center center;
+}
+
+.account-options .icon-publish {
+    background: url("../images/icon-publish.png") no-repeat center center;
+}
+
+.account-options .icon-logout {
+    background: url("../images/icon-logout.png") no-repeat center center;
 }
 
 .account-options li:hover {
