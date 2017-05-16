@@ -13,26 +13,43 @@ function infoRequest() {
     };
     console.log(postdata);
     EventUtils.ajaxReq("/user/user/getInfo", "get", postdata, function(resp, status) {
-        console.log(resp);
         respObj = resp.data;
+        console.log(respObj);
         var briefdata = {
-            gender: respObj.sex == "1" ? "男" : "女",
-            birthyear: respObj.birthday.split("-")[0],
-            birthmonth: respObj.birthday.split("-")[1],
-            birthday: respObj.birthday.split("-")[2],
+            name: respObj.userInfo.realName,
+            gender: respObj.userInfo.sex == "1" ? "男" : "女",
+            birthyear: respObj.userInfo.birthday.split("-")[0],
+            birthmonth: respObj.userInfo.birthday.split("-")[1],
+            birthday: respObj.userInfo.birthday.split("-")[2],
             address: {
-                province: "",
-                city: "",
-                district: ""
+                province: respObj.userInfo.province,
+                city: respObj.userInfo.city,
+                district: respObj.userInfo.area
             },
-            phone: "",
-            state: respObj.liveStatus
+            phone: respObj.userInfo.mobile,
+            state: respObj.userInfo.liveStatus
         };
         appPorto.briefInfo = briefdata;
+        if (respObj.userInfo.infoStatus == "0") { //首次编辑页面信息
+            appCont.resume.firstEdit = true;
+            $(".view").hide();
+            $(".edit").show();
+        } else {
+            appCont.resume.firstEdit = false;
+            $(".edit").hide();
+            $(".view").show();
+        }
     })
 }
 
 infoRequest();
+
+var appTop = new Vue({
+    el: "#app-top",
+    data: {
+        homeLink: "index.html?userId=" + parObj.userId
+    }
+})
 
 var appPorto = new Vue({
     el: "#app-porto",
@@ -68,19 +85,19 @@ var appPorto = new Vue({
             this.briefInfo.address.city = $("#app-porto .address .sel-city input").val();
             this.briefInfo.address.district = $("#app-porto .address .sel-district input").val();
             var postdata = {
+                id: respObj.id,
                 userId: parObj.userId,
-                loginName: parObj.loginName,
+                loginIdentifier: parObj.loginId,
                 sex: this.briefInfo.gender == "男" ? 1 : 2,
-                birthday: this.birthyear + "-" + this.birthmonth + "-" + this.birthday,
+                birthday: this.briefInfo.birthyear + "-" + this.briefInfo.birthmonth + "-" + this.briefInfo.birthday,
                 liveStatus: this.briefInfo.state,
                 province: this.briefInfo.address.province,
                 city: this.briefInfo.address.city,
                 area: this.briefInfo.address.district,
             }
             EventUtils.ajaxReq('/user/user/modifyInfo', 'post', postdata, function(resp, status) {
-                console.log(resp);
+                appPorto.viewInfo = true;
             })
-            this.viewInfo = true;
         },
         cancel: function() {
             this.briefInfo = cloneObj(this.cloneInfo);
@@ -111,6 +128,10 @@ for (var i = 0; i < addArray.length; i++) {
     provinceArray.push(addArray[i].name);
 }
 
+var appSider = new Vue({
+    el: "#app-side",
+    data: {}
+})
 var appCont = new Vue({
     el: "#app-content",
     data: {
@@ -132,12 +153,12 @@ var appCont = new Vue({
             ]
         },
         resume: {
-            birthyear: 1988,
-            birthmonth: 1,
+            firstEdit: true,
+            realName: "秦",
             family: "已婚",
             phone: "15264598745",
             email: "xqztc@163.com",
-            province: "安徽",
+            nativePlace: "安徽",
             nation: "汉族",
             curWorksIndex: 1,
             expect: {
@@ -410,11 +431,8 @@ var appCont = new Vue({
             }
             this.resume.projects[index].show = true;
         },
-        edit: function() {
-            $(".view").hide();
-            $(".edit").show();
-        },
         submit: function() {
+            this.resume.firstEdit = false;
             $(".edit").hide();
             $(".view").show();
         },
@@ -584,9 +602,9 @@ var appModal = new Vue({
 });
 
 function init_center() {
-    selectInit();
+    selectInitInput();
     selectInitPos();
-    selectEventBind();
+    // selectEventBind();
     init_safepos();
     editEventBind();
     navEventBind();
@@ -654,13 +672,58 @@ function editEventBind() {
 
     $(".resumeBox .btn-edit").click(function() {
         var editName = $(this).closest(".view-item").attr("name");
+        switch (editName) {
+            case "work":
+                for (var i = 0; i < appCont.resume.worksExps.length; i++) {
+                    appCont.resume.worksExps[i].show = false;
+                };
+                appCont.resume.worksExps[0].show = true;
+            case "edu":
+                for (var i = 0; i < appCont.resume.edus.length; i++) {
+                    appCont.resume.edus[i].show = false;
+                };
+                appCont.resume.edus[0].show = true;
+            case "edu":
+                for (var i = 0; i < appCont.resume.projects.length; i++) {
+                    appCont.resume.projects[i].show = false;
+                };
+                appCont.resume.projects[0].show = true;
+        }
         $(this).closest(".view-item").hide();
         $(".resumeBox .edit-item[name=" + editName + "]").show();
+        selectInitPos();
         oldResume = cloneObj(appCont.resume);
     });
     $(".resumeBox .edit-item .buttons button:nth-of-type(1)").click(function() {
         var editBlock = $(this).closest(".edit-item");
         var viewName = editBlock.attr("name");
+        var postdata = {};
+        switch (viewName) {
+            case "basic":
+                var marryindex = 0;
+                if (appCont.resume.family == "已婚") {
+                    marryindex = 1;
+                } else if (appCont.resume.family == "离异") {
+                    marryindex = 2;
+                }
+                postdata = {
+                    realName: appCont.resume.realName,
+                    mobile: appCont.resume.phone,
+                    email: appCont.resume.email,
+                    marryStatus: appCont.resume.family,
+                    nativePlace: appCont.resume.nativePlace,
+                    nation: appCont.resume.nation
+                };
+                break;
+            case "trade":
+                postdata = {
+
+                }
+
+
+        }
+
+        // EventUtils.ajaxReq("/user/user/modifyInfo", "post", post)
         if (viewName == "trade") {
             appCont.resume.expect.province = editBlock.find(".sel-province input").val();
             appCont.resume.expect.city = editBlock.find(".sel-city input").val();
@@ -712,20 +775,7 @@ function init_safepos() {
     $(".r-pointer").css("left", p_left);
 }
 
-function selectInit() {
-    $(".selectee input").each(function() {
-        $(this).width($(this).width() - 20);
-        $(this).css("padding-right", 20 + "px");
-        var bgPos = $(this).width() + 10 + "px center";
-        $(this).attr("disabled", "true").css("background-position", bgPos);
-    });
-    $(".major-input input").each(function(index) {
-        $(this).width($(this).width() - 20);
-        $(this).css("padding-right", 20 + "px");
-        var bgPos = $(this).width() + 10 + "px center";
-        $(this).attr("disabled", "true").css("background-position", bgPos);
-    })
-}
+
 
 function navEventBind() {
     $(".sideBox>li").bind("click", function() {
@@ -787,4 +837,27 @@ function modalEventBind() {
         $(this).closest("div").hide();
         $(".modal").hide();
     })
+}
+
+function postResume() {
+    var postdata = {
+        cvInfo: {
+            expJob: appCont.resume.expect.tradeItems,
+            expJobFunction: appCont.resume.expect.posItems,
+            expPlace: appCont.resume.expect.province + ";" + appCont.resume.expect.city + ";" + appCont.resume.expect.district,
+            expSalary: appCont.resume.expect.salary,
+        },
+        userInfo: {
+            userId: parObj.userId,
+            realName: appCont.resume.realName,
+            marryStatus: appCont.resume.family,
+            nativePlace: appCont.resume.nativePlace,
+            nation: appCont.resume.nation,
+        },
+        companyList:
+
+
+
+
+    }
 }

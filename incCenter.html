@@ -10,7 +10,7 @@
 </head>
 
 <body class="bg-gray-f2">
-    <div class="top bg-gray3 H100 color-white" id="app-top">
+    <div class="top bg-gray3 H100 color-white" id="app-top" v-cloak>
         <div class="inner">
             <a :href="homeLink"><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" /></a>
             <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="main inner paTop20 clearfix maB60">
-        <div class="W958 H198 sInfo maCenter bg-white" id="app-porto">
+        <div class="W958 H198 sInfo maCenter bg-white" id="app-porto" v-cloak>
             <div class="porto fl maL60 maT30">
                 <div class="porto-img W96 H96" id="avatar-box" @click="uploading"></div>
                 <h3 class="LH-H58 fSize18 t-center color-gray3">编辑头像</h3>
@@ -46,7 +46,7 @@
                     <addr-select :addrdata="database.addrData" :initaddress="initAddress" class="sel-addr disInline"></addr-select>
                 </p>
                 <p><label class="brief-email">邮箱</label>
-                    <input type="email" v-model="briefInfo.email" />
+                    <input type="email" v-model="briefInfo.email" readonly/>
                 </p>
                 <div class="edit-opera fSize0">
                     <button class="maR15 btn-save" @click="save">保存</button>
@@ -59,7 +59,7 @@
                 <p class="LH-H25">实时了解最新动态</p>
             </div>
         </div>
-        <div class="fl W178 maL20 maT20">
+        <div class="fl W178 maL20 maT20" id="app-side" v-cloak>
             <button class="hr-entry-btn" onclick="window.open('HR-center.html')">HR中心</button>
             <ul class="sideBox paTop20 fSize18 color-gray3 bg-white">
                 <li class="on" paneid="resumeBox"><i class="pic-icon icon-resume"></i>企业简介</li>
@@ -81,7 +81,7 @@
                 </li>
             </ul>
         </div>
-        <div class="content W770 fl maL10 maT20" id="app-content">
+        <div class="content W770 fl maL10 maT20" id="app-content" v-cloak>
             <div class="resumeBox" style="display:block">
                 <div class="resumeCont bg-white" v-show="resume.edit">
                     <p class="LH-H88 fSize18 color-gray3" v-show="resume.edit">亲爱的校友，您需要完善企业简介</p>
@@ -524,7 +524,7 @@
 
 
     </div>
-    <div class="modal" id="app-modal" v-show="showModal" @click="hidemodal">
+    <div class="modal" id="app-modal" v-show="showModal" @click="hidemodal" v-cloak>
         <div class="preview-file" v-show="show.preImg">
             <img :src="preImgUrl" />
         </div>

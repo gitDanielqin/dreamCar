@@ -147,13 +147,17 @@
 }
 
 .descript li {
-    font-size: 14px;
+    font-size: 16px;
     padding-left: 22px;
     width: 380px;
 }
 
+.descript p {
+    font-size: 16px;
+}
+
 .descript label {
-    font-size: 14px;
+    font-size: 16px;
     color: #989898;
     margin-right: 15px;
 }

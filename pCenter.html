@@ -10,13 +10,13 @@
 </head>
 
 <body class="bg-gray-f2">
-    <div class="top bg-gray3 H100 color-white">
+    <div class="top bg-gray3 H100 color-white" id="app-top" v-cloak>
         <div class="inner">
-            <a href="index.html"><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" /></a>
+            <a :href="homeLink"><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" /></a>
             <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
             <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">个人中心</h2>
             <div class="fr navs maT42">
-                <a href="index.html"><i class="pic-icon icon-home"></i></a>
+                <a :href="homeLink"><i class="pic-icon icon-home"></i></a>
                 <a href="#"><i class="pic-icon icon-account"></i></a>
                 <a class="msg-center pRel" href="#"><i class="pic-icon icon-msg"></i><i class="msg-info">99</i></a>
             </div>
@@ -24,13 +24,13 @@
     </div>
     <div class="main paTop20 clearfix maB60">
         <div class="inner">
-            <div class="W958 H198 sInfo maCenter bg-white" id="app-porto">
+            <div class="W958 H198 sInfo maCenter bg-white" id="app-porto" v-cloak>
                 <div class="porto fl maL60 maT30">
                     <div class="porto-img W96 H96" id="avatar-box" @click="uploading"></div>
                     <h3 class="LH-H58 fSize18 t-center color-gray3">编辑头像</h3>
                 </div>
                 <div class="infoTxt maT24 maL54 fl color-gray6 W266" v-show="viewInfo">
-                    <h3 class="LH-H47 fSize18 color-gray3">江玉海</h3>
+                    <h3 class="LH-H47 fSize18 color-gray3">{{briefInfo.name}}</h3>
                     <p><span class="maR33 age">{{age(briefInfo.birthyear)}}岁</span><span class="gender">{{briefInfo.gender}}</span><span class="state maL22">{{briefInfo.state}}</span></p>
                     <p>{{briefInfo.address.province}}-{{briefInfo.address.city}}-{{briefInfo.address.district}}</p>
                     <p class="phone">手机：{{briefInfo.phone}}</p>
@@ -39,7 +39,7 @@
                     <i class="LH30 t-center btn-edit pic-icon icon-edit" @click="edit"></i>
                 </div>
                 <div class="edit-brief maT24 maL54 fl color-gray6 pRel" v-show="!viewInfo">
-                    <h3 class="LH-H47 fSize18 color-gray3">江玉海</h3>
+                    <h3 class="LH-H47 fSize18 color-gray3">{{briefInfo.name}}</h3>
                     <div class="fSize0">
                         <label class="fSize14">生　　日</label>
                         <dropdown classes="sel-birthyear birthday maL13" placeholder="出生年" v-bind:options="database.date.year" v-model="briefInfo.birthyear"></dropdown>
@@ -51,7 +51,7 @@
                     <div class="fSize14 maT10">
                         <label>工作状态</label>
                         <dropdown class="sel-career maL13" placeholder="工作状态" v-model="briefInfo.state" v-bind:options="['在职，打算换个新环境','离职，可立即到岗工作','在校学生','应届毕业生','暂时不想找工作']"></dropdown>
-                        <label class="maL44">手机号</label><input type="text" class="maL18 paLeft10 edit-phone" disabled v-model="briefInfo.phone" />
+                        <label class="maL44">手机号</label><input type="text" class="maL18 paLeft10 edit-phone" readonly v-model="briefInfo.phone" />
                     </div>
                     <div class="fSize14 address maT10">
                         <span>所 在 地</span>
@@ -68,7 +68,7 @@
                     <p class="LH-H25">实时了解最新动态</p>
                 </div>
             </div>
-            <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3 bg-white">
+            <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3 bg-white" id="app-side" v-cloak>
                 <li class="on" paneid="resumeBox"><i class="pic-icon icon-resume"></i>个人简历</li>
                 <li paneid="classBox"><i class="pic-icon icon-study"></i>我的学习</li>
                 <li class="myCollect" paneid="collec-study"><i class="pic-icon icon-collect"></i>我的收藏
@@ -86,34 +86,33 @@
                     </div>
                 </li>
             </ul>
-            <div class="content W770 fl maL10 maT20" id="app-content">
+            <div class="content W770 fl maL10 maT20" id="app-content" v-cloak>
                 <div style="display: block;" class="resumeBox bg-white">
                     <div class="paLeft52 paTop14 paRight73">
-                        <p class="LH-H88 fSize18 color-gray3 edit">亲爱的校友，您的基本资料尚未填写</p>
+                        <p class="LH-H88 fSize18 color-gray3" v-show="resume.firstEdit">亲爱的校友，您的基本资料尚未填写</p>
                         <div class="itemBox item-basic edit edit-item" name="basic">
                             <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-basic"></span></i>基本资料<span class="require-label">（必填）</span></h3>
                             <div class="item-row">
                                 <div class="item-left fSize0">
-                                    <label class="laLeft">出生年月</label>
-                                    <dropdown classes="birthday" placeholder="出生年" v-bind:options="database.date.year" v-model="resume.birthyear"></dropdown><i class="bind-line"></i>
-                                    <dropdown classes="birthday birthmonth" placeholder="出生月" v-bind:options="database.date.month" v-model="resume.birthmonth"></dropdown>
+                                    <label class="laLeft">真实姓名</label>
+                                    <input type="text" v-model="resume.realName" />
                                 </div>
                                 <label class="laRight">婚姻状况</label>
                                 <dropdown v-bind:options="['已婚','未婚','离异']" v-model="resume.family"></dropdown>
                             </div>
                             <div class="item-row">
                                 <div class="item-left">
-                                    <label class="laLeft">手机</label><input type="text" v-model="resume.phone" />
-                                </div><label class="laRight">邮箱</label><input type="text" v-model="resume.email" />
+                                    <label class="laLeft">手机</label><input type="text" v-model="resume.phone" readonly/>
+                                </div><label class="laRight">邮箱</label><input type="text" v-model="resume.email" readonly/>
                             </div>
                             <div class="item-row">
                                 <div class="item-left">
                                     <label class="laLeft">籍贯</label>
-                                    <dropdown :options="database.address.province" v-model="resume.province"></dropdown>
+                                    <dropdown :options="database.address.province" v-model="resume.nativePlace"></dropdown>
                                 </div><label class="laRight">民族</label>
                                 <dropdown :options="database.nations" v-model="resume.nation"></dropdown>
                             </div>
-                            <div class="buttons">
+                            <div class="buttons" v-show="!resume.firstEdit">
                                 <button>保存</button><button>取消</button>
                             </div>
                         </div>
@@ -121,8 +120,8 @@
                             <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-basic"></span></i>基本资料<span class="require-label">（必填）</span></h3>
                             <table class="fSize12 LH-H25">
                                 <tr>
-                                    <td class="la-l">出生年月：</td>
-                                    <td class="val-l">{{resume.birthyear}}年{{resume.birthmonth}}月</td>
+                                    <td class="la-l">真实姓名：</td>
+                                    <td class="val-l">{{resume.realName}}</td>
                                     <td class="la-r">婚姻状况：</td>
                                     <td>{{resume.family}}</td>
                                 </tr>
@@ -134,7 +133,7 @@
                                 </tr>
                                 <tr>
                                     <td class="la-l">籍贯：</td>
-                                    <td class="val-l">{{resume.province}}</td>
+                                    <td class="val-l">{{resume.nativePlace}}</td>
                                     <td class="la-r">民族：</td>
                                     <td>{{resume.nation}}</td>
                                 </tr>
@@ -160,7 +159,7 @@
                                 <dropdown classes="sel-salary" :options="database.salary" v-model="resume.expect.salary"></dropdown>
                                 <span class="maL13 fSize14 color-gray3">元 / 月</span>
                             </div>
-                            <div class="buttons">
+                            <div class="buttons" v-show="!resume.firstEdit">
                                 <button>保存</button><button>取消</button>
                             </div>
                         </div>
@@ -219,7 +218,7 @@
                                 </div>
                             </div>
                             <div class="addItem color-gray6" @click="addWorksexp"><i class="maR5 pic-icon icon-cross-add"></i>添加工作经历</div>
-                            <div class="buttons">
+                            <div class="buttons" v-show="!resume.firstEdit">
                                 <button>保存</button><button>取消</button>
                             </div>
                         </div>
@@ -265,7 +264,7 @@
                                 </div>
                             </div>
                             <div class="addItem color-gray6" @click="addEdu"><i class="maR5 pic-icon icon-cross-add"></i>添加教育经历</div>
-                            <div class="buttons">
+                            <div class="buttons" v-show="!resume.firstEdit">
                                 <button>保存</button><button>取消</button>
                             </div>
                         </div>
@@ -286,7 +285,7 @@
                             <form class="language-skills maL30 fSize14 W620">
                                 <label v-for="language in database.languages"><input type="checkbox" :value="language">{{language}}</label>
                             </form>
-                            <div class="buttons">
+                            <div class="buttons" v-show="!resume.firstEdit">
                                 <button>保存</button><button>取消</button>
                             </div>
                         </div>
@@ -329,7 +328,7 @@
                                 </div>
                             </div>
                             <div class="addItem color-gray6" @click="addProject"><i class="maR5 pic-icon icon-cross-add"></i>添加项目经历</div>
-                            <div class="buttons">
+                            <div class="buttons" v-show="!resume.firstEdit">
                                 <button>保存</button><button>取消</button>
                             </div>
                         </div>
@@ -352,7 +351,7 @@
                             <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-comment"></span></i>自我评价</h3>
                             <textarea placeholder="建议您对自己做一个简短的评价" v-model="resume.selfEval" @input="checkText('selfeval')"></textarea>
                             <p>你还可以输入<span>{{remainText(resume.selfEval)}}</span>字</p>
-                            <div class="buttons">
+                            <div class="buttons" v-show="!resume.firstEdit">
                                 <button>保存</button><button>取消</button>
                             </div>
                         </div>
@@ -365,7 +364,7 @@
                             <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-attach"></span></i>附加信息</h3>
                             <textarea placeholder="如：获奖、技能资格证书、专利等" v-model="resume.psInfo" @input="checkText('psinfo')"></textarea>
                             <p>你还可以输入<span>{{remainText(resume.psInfo)}}</span>字</p>
-                            <div class="buttons">
+                            <div class="buttons" v-show="!resume.firstEdit">
                                 <button>保存</button><button>取消</button>
                             </div>
                         </div>
@@ -378,7 +377,7 @@
                             <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-skills"></span></i>擅长技能</h3>
                             <textarea placeholder="在此添加您擅长的技能" v-model="resume.skills" @input="checkText('skill')"></textarea>
                             <p>你还可以输入<span>{{remainText(resume.skills)}}</span>字</p>
-                            <div class="buttons">
+                            <div class="buttons" v-show="!resume.firstEdit">
                                 <button>保存</button><button>取消</button>
                             </div>
                         </div>
@@ -388,8 +387,8 @@
                             <i class="LH-H30 W30 t-center btn-edit"><span class="pic-icon icon-edit"></span></i>
                         </div>
                     </div>
-                    <div class="buttons-commit t-center maT55 maB108">
-                        <button type="button" class="bg-blueL edit" @click="showPre">预览简历</button><button class="bg-orange3 edit" @click="submit">提交</button>
+                    <div class="buttons-commit t-center maT55 maB108" v-show="resume.firstEdit">
+                        <button type="button" class="bg-blueL" @click="showPre">预览简历</button><button class="bg-orange3" @click="submit">提交</button>
                     </div>
                 </div>
                 <div class="classBox ListBox">
@@ -583,7 +582,7 @@
             </div>
         </div>
     </div>
-    <div class="modal" id="app-modal" v-show="showModal" @click="hidemodal">
+    <div class="modal" id="app-modal" v-show="showModal" @click="hidemodal" v-cloak>
         <div class="porto-upload W500" v-show="showUpload" @click="stayshow($event)">
             <h2 class="LH-H60 fSize24 color-white t-left bg-blueM paLeft30">编辑头像<i class="pic-wrapper LH-H40 W40 close" @click="closePorto"><i class="pic-icon icon-close"></i></i>
             </h2>

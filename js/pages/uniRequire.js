@@ -39,7 +39,7 @@ if (parObj.new && parObj.new != "1") { //非新需求
                     contact: {
                         person: respObj.linkMan,
                         phone: respObj.mobile,
-                        address: respObj.schoolAddress
+                        address: respObj.schoolAddress.split(";").join("-")
                     }
                 }
                 appMain.combiData = combidata;

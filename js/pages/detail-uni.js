@@ -155,10 +155,29 @@ var appBanner = new Vue({
     methods: {
         collect: function(obj) {
             if (parObj.userId == respObj.userId) {
-                alert("无法收藏自己的需求！")
+                alert("无法收藏自己的需求！");
+                return false;
+            }
+            if (appTop.isLogin) {
+                var isCollected = $(obj).hasClass("collected") || $(obj).parent().hasClass("collected");
+                if (!isCollected) {
+                    var postdata = {
+                        userId: parObj.userId,
+                        loginIdentifier: parObj.loginId,
+                        demandId: parObj.demandId,
+                    }
+                    EventUtils.ajaxReq("/demand/addMarkInfo", "post", postdata, function(resp, status) {
+                        $(obj).find("span").text("已收藏");
+                        $(obj).addClass("collected");
+                    })
+                }
             } else {
-                $(obj).find("span").text("已收藏");
-                $(obj).addClass("collected");
+                $(".dlg-login").css({
+                    top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
+                })
+                appModal.showModal = true;
+                appModal.showLogin = true;
+                appModal.showSucc = false;
             }
         },
         coApply: function() {

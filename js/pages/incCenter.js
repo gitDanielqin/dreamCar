@@ -699,6 +699,9 @@ var appCont = new Vue({
         'pagination': pagination
     }
 });
+var appSider = new Vue({
+    el: "#app-side"
+})
 var appModal = new Vue({
     el: "#app-modal",
     data: {

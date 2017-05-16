@@ -47,28 +47,16 @@ function infoRequest() {
             }
         }
     });
-    if (parObj.loginId && parObj.userType) {
+    if (parObj.userId) {
         var getdata = {
-            userId: parObj.userId,
-            loginIdentifier: parObj.loginId
+            userId: parObj.userId
         }
-        appTop.userType = parObj.userType;
-        switch (parObj.userType) {
-            case "1":
-                EventUtils.ajaxReq("/user/school/getInfo", "get", getdata, function(resp, status) {
-                    appTop.userName = resp.data.name;
-                    appTop.isLogin = true;
-                })
-                break;
-            case "2":
-                EventUtils.ajaxReq("/user/company/getInfo", "get", getdata, function(resp, status) {
-                    console.log(resp);
-                    appTop.userName = resp.data.name;
-                    appTop.isLogin = true;
-                })
-                break;
-            default:
-        }
+        EventUtils.ajaxReq("/center/user/getInfo", "get", getdata, function(resp, status) {
+            appTop.userName = resp.data.name;
+            appTop.isLogin = true;
+            appTop.userType = resp.data.userType
+        })
+
     }
 }
 
@@ -134,14 +122,26 @@ var appBanner = new Vue({
         }
     },
     methods: {
-        coApply: function() {
-            if (isLogin) {
-                $(".dlg-success").css({
-                    top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
-                })
-                appModal.showModal = true;
-                appModal.showLogin = false;
-                appModal.showSucc = true;
+        collect: function(obj) {
+            if (parObj.userId == respObj.userId) {
+                alert("无法收藏自己的需求！");
+                return false;
+            }
+            if (appTop.isLogin) {
+                var isCollected = $(obj).hasClass("collected") || $(obj).parent().hasClass("collected");
+                if (!isCollected) {
+                    var postdata = {
+                        userId: parObj.userId,
+                        loginIdentifier: parObj.loginId,
+                        demandId: parObj.demandId
+                    }
+                    EventUtils.ajaxReq("/demand/addMarkInfo", "post", postdata, function(resp, status) {
+                        console.log(resp);
+                        $(obj).find("span").text("已收藏");
+                        $(obj).addClass("collected");
+                    })
+                }
+
             } else {
                 $(".dlg-login").css({
                     top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
@@ -150,6 +150,36 @@ var appBanner = new Vue({
                 appModal.showLogin = true;
                 appModal.showSucc = false;
             }
+        },
+        coApply: function() {
+            if (parObj.userId == respObj.userId) {
+                alert("无法申请自己的需求！");
+                return false;
+            }
+            if (appTop.isLogin) {
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    demandId: parObj.demandId
+                }
+                EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
+                    console.log(resp);
+                    $(".dlg-success").css({
+                        top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
+                    });
+                    appModal.showModal = true;
+                    appModal.showLogin = false;
+                    appModal.showSucc = true;
+                });
+            } else {
+                $(".dlg-login").css({
+                    top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
+                })
+                appModal.showModal = true;
+                appModal.showLogin = true;
+                appModal.showSucc = false;
+            }
+
         }
     }
 });
@@ -274,7 +304,7 @@ var appModal = new Vue({
                     otherkey: null
                 };
                 //无刷新页面替换URL
-                history.replaceState(state, document.title, "detail-uni.html?userId=" + resp.data.userId + "&loginId=" + resp.data.loginIdentifier + "&demandId=" + respObj.demandId);
+                history.replaceState(state, document.title, "detail-company.html?userId=" + resp.data.userId + "&loginId=" + resp.data.loginIdentifier + "&demandId=" + respObj.demandId);
 
                 console.log(resp);
             })

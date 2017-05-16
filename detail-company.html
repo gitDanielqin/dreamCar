@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div class="top bg-dunkel" id="app-top">
+    <div class="top bg-dunkel" id="app-top" v-cloak>
         <div class="inner clearfix">
             <h3 class="fl LH-H30 fSize14 color-white">您好，欢迎来到校企职通车</h3>
             <div class="top-right fr LH-H30 fSize14 color-white" v-show="!isLogin">
@@ -65,7 +65,7 @@
             </div>
             <div class="fr">
                 <div class="maT64 banner-btns">
-                    <button class="btn-collec v-mid bg-white"><i class="pic-icon"></i><span class="maR10">收 藏</span></button>
+                    <button class="btn-collec v-mid bg-white" @click="collect($event.target)"><i class="pic-icon"></i><span class="maR10">收 藏</span></button>
                     <button class="bg-orange4 color-white v-mid maL26 btn-apply t-left" @click="coApply"><span class="maL10">申请合作</span><i class="pic-icon maL6"></i></button>
                 </div>
                 <p class="share LH-H58 t-right">

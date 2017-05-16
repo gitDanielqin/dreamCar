@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div class="top bg-dunkel" id="app-top">
+    <div class="top bg-dunkel" id="app-top" v-cloak>
         <div class="inner clearfix">
             <h3 class="fl LH-H30 fSize14 color-white">您好，欢迎来到校企职通车</h3>
             <div class="top-right fr LH-H30 fSize14 color-white" v-show="!isLogin">
@@ -53,7 +53,7 @@
     </div>
     <h2 class="inner LH-H110 fSize30 color-grayH maB3"><img src="images/logo.png" class="v-mid H47 maR17" />校企职通车</h2>
     <!-- <h2 class="maT30 fSize30 LH47 color-grayH"><img class="H47 maR17 v-mid" src="images/logo.png"/>校企职通车</h2> -->
-    <div class="banner bg-gray-f2 H176" id="app-banner">
+    <div class="banner bg-gray-f2 H176" id="app-banner" v-cloak>
         <div class="inner clearfix">
             <div class="fl">
                 <h2 class="LH-H76 fSize40 color-gray3">{{unidata.title}}</h2>
@@ -77,7 +77,7 @@
             </div>
         </div>
     </div>
-    <div class="main" id="app-main">
+    <div class="main" id="app-main" v-cloak>
         <div class="inner">
             <div class="clearfix">
                 <div class="fl descript W828 maT9">
@@ -225,7 +225,7 @@
             </div>
         </div>
     </div>
-    <div class="modal" id="app-modal" v-show="showModal">
+    <div class="modal" id="app-modal" v-show="showModal" v-cloak>
         <div class="dlg-success dlg W670 paBot4" v-show="showSucc">
             <h2 class="LH-H54 fSize20 color-white paLeft62">申请状态<i class="pic-wrapper fr maR17 cur-pointer closer" @click="closeSuc"><img src="images/icon-close2.png" class="W30"/> </i></h2>
             <div class="H348 W660 bg-white maCenter t-center succ-msg">

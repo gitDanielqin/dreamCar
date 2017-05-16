@@ -156,6 +156,11 @@ var appPorto = new Vue({
     }
 });
 
+var appSider = new Vue({
+    el: "#app-side",
+    data: {}
+})
+
 var appCont = new Vue({
     el: "#app-content",
     data: {
@@ -982,7 +987,7 @@ var appModal = new Vue({
             this.showModal = false;
             this.showTrade = false;
             this.showPreview = false;
-            this.preImg = false;
+            this.show.preImg = false;
         },
         stayshow: function(ev) {
             ev.stopPropagation();
@@ -1040,8 +1045,10 @@ var appModal = new Vue({
     },
     watch: {
         "show.preImg": function(curval) {
+            // console.log(curval);
             if (curval) {
                 var top = Math.floor($(window).height() * 0.5 + $("body").scrollTop()) + "px";
+                // console.log(top);
                 $("#app-modal .preview-file").css("top", top);
             }
         },

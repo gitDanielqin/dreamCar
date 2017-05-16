@@ -13,7 +13,7 @@
 </head>
 
 <body class="bg-gray-f2">
-    <div class="top bg-gray3 H100 color-white" id="app-top">
+    <div class="top bg-gray3 H100 color-white" id="app-top" v-cloak>
         <div class="inner">
             <a :href='homeLink'><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" /></a>
             <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
@@ -46,7 +46,9 @@
                 <p><label>所在地</label>
                     <addr-select :addrdata="database.addrData" :initaddress="initAddress" class="sel-addr disInline"></addr-select>
                 </p>
-                <p><label class="brief-email">邮箱</label><input type="email" v-model="briefInfo.email" disabled/></p>
+                <p><label class="brief-email">邮箱</label>
+                    <input type="email" v-model="briefInfo.email" readonly/>
+                </p>
                 <div class="edit-opera fSize0">
                     <button class="maR15 btn-save" @click="save">保存</button>
                     <button class="btn-cancel" @click="cancel">取消</button>
@@ -58,7 +60,7 @@
                 <p class="LH-H25">实时了解最新动态</p>
             </div>
         </div>
-        <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3 bg-white">
+        <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3 bg-white" id="app-side" v-cloak>
             <li class="on" paneid="resumeBox"><i class="pic-icon icon-resume"></i>高校简介</li>
             <li paneid="requireBox"><i class="pic-icon icon-study"></i>高校需求</li>
             <li class="myCollect" paneid="collectBox"><i class="pic-icon icon-collect"></i>高校收藏</li>
@@ -171,7 +173,7 @@
                     <ul class="info-items H410">
                         <li v-for="(item,index) in require.results" :name="item.demandType">
                             <div v-if="require.demandSrc==0" class="paLeft29 clearfix H128 pRel">
-                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                 <div class="item-block-left fl paTop22 W280 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item.demandId)">{{item.title}}</a></h2>
                                     <p>{{infoCtrl(item.companyProperty)}}<i class="depart" v-show="infoCtrl(item.companyProperty)!=''">|</i>{{infoCtrl(item.companyScale)}}<i class="depart" v-show="infoCtrl(item.companyScale)!=''">|</i>{{infoCtrl(item.companyType)}}</p>
@@ -188,7 +190,7 @@
                                 </div>
                             </div>
                             <div v-else-if="require.demandSrc==1" class="paLeft29 clearfix H128 pRel">
-                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                 <div class="item-block-left fl paTop22 W280 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-unirecruit.html">{{item.major}}</a></h2>
                                     <p>{{item.major}}<i class="depart">|</i>{{item.majorScale}}<i class="depart">|</i>{{item.recruitAddr}}</p>
