@@ -88,7 +88,7 @@
             </ul>
             <div class="content W770 fl maL10 maT20" id="app-content" v-cloak>
                 <div style="display: block;" class="resumeBox bg-white">
-                    <div class="paLeft52 paTop14 paRight73">
+                    <div class="resume-content">
                         <p class="LH-H88 fSize18 color-gray3" v-show="resume.firstEdit">亲爱的校友，您的基本资料尚未填写</p>
                         <div class="itemBox item-basic edit edit-item" name="basic">
                             <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-basic"></span></i>基本资料<span class="require-label">（必填）</span></h3>
@@ -150,7 +150,7 @@
                             </div>
                             <div class="item-row">
                                 <label>期望地点</label>
-                                <div class="address">
+                                <div class="address exp-address">
                                     <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
                                 </div>
                             </div>
@@ -197,7 +197,7 @@
                                 </div>
                                 <div class="item-row">
                                     <label>公司地址</label>
-                                    <div class="address">
+                                    <div class="address work-address">
                                         <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
                                     </div>
                                 </div>
@@ -237,7 +237,7 @@
                             </div>
                             <i class="LH-H30 W30 t-center btn-edit"><span class="pic-icon icon-edit"></span></i>
                         </div>
-                        <div class="itemBox edit edit-item" name="edu">
+                        <div class="itemBox edit edit-item edit-edu" name="edu">
                             <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-college"></span></i>教育经历<span class="require-label">（必填）</span>
                                 <ul class="lis-inline pane-tabs">
                                     <li v-for="(edu,index) in resume.edus" @click="eduSwipe(index)">经历{{index+1}}</li>
@@ -291,7 +291,7 @@
                         </div>
                         <div class="itemBox view view-item" name="speech">
                             <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-language"></span></i>语言能力</h3>
-                            <p class="LH-H32 paLeft40">{{resume.laSkills.join()}}</p>
+                            <p class="LH-H32 paLeft40">{{resume.laSkills}}</p>
                             <i class="LH-H30 W30 t-center btn-edit"><span class="pic-icon icon-edit"></span></i>
                         </div>
                         <div class="itemBox edit edit-item" name="project">
@@ -694,7 +694,7 @@
                 </div>
                 <div class="itemBox">
                     <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-language"></span></i>语言能力</h3>
-                    <p class="LH-H32 paLeft40">{{resumeInfo.laSkills.join()}}</p>
+                    <p class="LH-H32 paLeft40">{{resumeInfo.laSkills}}</p>
                 </div>
                 <div class="itemBox">
                     <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-project"></span></i>项目经历

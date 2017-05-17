@@ -205,14 +205,9 @@ var appCont = new Vue({
         collect: {
             state: "全部状态",
             curpage: 1,
-            items: [
-                { pos: "岗位名称", major: "专业", stuScale: "人数", IncName: "公司名称", publicDate: "发布时间", IncProps: "企业性质", uniApply: "高校需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", date: "2017.11.11", time: "24:00" },
-                { pos: "岗位名称", major: "通信工程", stuScale: "人数", IncName: "公司名称", publicDate: "发布时间", IncProps: "企业性质", uniApply: "高校需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", date: "2017.11.11", time: "24:00" },
-                { pos: "岗位名称", major: "专业", stuScale: "人数", IncName: "公司名称", publicDate: "发布时间", IncProps: "企业性质", uniApply: "高校需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", date: "2017.11.11", time: "24:00" },
-                { pos: "岗位名称", major: "专业", stuScale: "人数", IncName: "公司名称", publicDate: "发布时间", IncProps: "企业性质", uniApply: "高校需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", date: "2017.11.11", time: "24:00" },
-                { pos: "岗位名称", major: "专业", stuScale: "人数", IncName: "公司名称", publicDate: "发布时间", IncProps: "企业性质", uniApply: "高校需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", date: "2017.11.11", time: "24:00" },
-                { pos: "岗位名称", major: "专业", stuScale: "人数", IncName: "公司名称", publicDate: "发布时间", IncProps: "企业性质", uniApply: "高校需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", date: "2017.11.11", time: "24:00" },
-            ],
+            totalpages: 1,
+            totalitems: 1,
+            pagesize: 3,
             results: [
                 { pos: "岗位名称", major: "专业", stuScale: "人数", IncName: "公司名称", publicDate: "发布时间", IncProps: "企业性质", uniApply: "高校需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", date: "2017.11.11", time: "24:00" },
                 { pos: "岗位名称", major: "通信工程", stuScale: "人数", IncName: "公司名称", publicDate: "发布时间", IncProps: "企业性质", uniApply: "高校需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", date: "2017.11.11", time: "24:00" },
@@ -663,13 +658,10 @@ var appCont = new Vue({
             switch (state) {
                 case "01":
                     return "合作待开始";
-                    break;
                 case "02":
                     return "合作进行中";
-                    break;
                 case "03":
                     return "合作已完成";
-                    break;
                 default:
                     return "合作待开始"
             }
@@ -678,13 +670,10 @@ var appCont = new Vue({
             switch (state) {
                 case "01":
                     return { color: "#91daef" };
-                    break;
                 case "02":
                     return { color: "#f7aa00" };
-                    break;
                 case "03":
                     return { color: "#333" };
-                    break;
             }
         },
         pagesum: function(totalitems) {
@@ -1199,6 +1188,21 @@ function navEventBind() {
                     appCont.require.results = [];
                     appCont.require.totalitems = 0;
                 }
+            })
+        }
+
+        // 收藏面板请求结果
+        if ($(this).attr("paneid") == "collectBox") {
+            var postdata = {
+                userId: parObj.userId,
+                loginIdentifier: parObj.loginId,
+                index: 1,
+                count: 3
+            };
+            EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function(resp, status) {
+                console.log(resp);
+
+
             })
         }
         if ($(this).attr("paneid")) {

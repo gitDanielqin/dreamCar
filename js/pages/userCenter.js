@@ -30,12 +30,104 @@ function infoRequest() {
             state: respObj.userInfo.liveStatus
         };
         appPorto.briefInfo = briefdata;
-        if (respObj.userInfo.infoStatus == "0") { //首次编辑页面信息
+        if (respObj.userInfo.cvStatus == "0") { //首次编辑页面信息
             appCont.resume.firstEdit = true;
             $(".view").hide();
             $(".edit").show();
-        } else {
+        } else { //已注册用户进入页面请求简历信息
             appCont.resume.firstEdit = false;
+            var familyStatus = "";
+            switch (respObj.userInfo.marryStatus) {
+                case "0":
+                    familyStatus = "未婚";
+                    break;
+                case "1":
+                    familyStatus = "已婚";
+                    break;
+                case "2":
+                    familyStatus = "离异";
+                    break;
+            }
+            var worksExps = [];
+            for (var i = 0; i < respObj.companyList.length; i++) {
+                var workexp = {
+                    show: i == 0,
+                    cvCpyId: respObj.companyList[i].cvCpyId,
+                    firma: respObj.companyList[i].companyName,
+                    trade: respObj.companyList[i].companyType,
+                    pos: respObj.companyList[i].position,
+                    province: respObj.companyList[i].workAddress.split(";")[0],
+                    city: respObj.companyList[i].workAddress.split(";")[1],
+                    district: respObj.companyList[i].workAddress.split(";")[2],
+                    salary: respObj.companyList[i].salary,
+                    startyear: respObj.companyList[i].startTime.split("-")[0],
+                    startmonth: respObj.companyList[i].startTime.split("-")[1],
+                    endyear: respObj.companyList[i].endTime.split("-")[0],
+                    endmonth: respObj.companyList[i].endTime.split("-")[1],
+                    resp: respObj.companyList[i].content
+                };
+                worksExps.push(workexp);
+            }
+            var edus = [];
+            for (var j = 0; j < respObj.eduList.length; j++) {
+                var edu = {
+                    show: j == 0,
+                    cvEduId: respObj.eduList[j].cvEduId,
+                    uni: respObj.eduList[j].schoolName,
+                    major: respObj.eduList[j].professional.split(";")[0],
+                    submajor: respObj.eduList[j].professional.split(";")[1],
+                    exmajor: respObj.eduList[j].professional.split(";")[2],
+                    startyear: respObj.eduList[j].startTime.split("-")[0],
+                    startmonth: respObj.eduList[j].startTime.split("-")[1],
+                    endyear: respObj.eduList[j].endTime.split("-")[0],
+                    endmonth: respObj.eduList[j].endTime.split("-")[1],
+                    qualification: respObj.eduList[j].qualification,
+                };
+                edus.push(edu);
+            }
+            var projects = [];
+            for (var k = 0; k < respObj.projectList.length; k++) {
+                var project = {
+                    show: k == 0,
+                    cvProId: respObj.projectList[k].cvProId,
+                    name: respObj.projectList[k].projectName,
+                    firma: respObj.projectList[k].companyName,
+                    startyear: respObj.projectList[k].startTime.split("-")[0],
+                    startmonth: respObj.projectList[k].startTime.split("-")[1],
+                    endyear: respObj.projectList[k].endTime.split("-")[0],
+                    endmonth: respObj.projectList[k].endTime.split("-")[1],
+                    desc: respObj.projectList[k].description,
+                    resp: respObj.projectList[k].position,
+                    achiev: respObj.projectList[k].achievement
+                }
+                projects.push(project);
+            }
+            var cvInfo = {
+                firstEdit: false,
+                realName: respObj.userInfo.realName,
+                family: familyStatus,
+                phone: respObj.userInfo.mobile,
+                email: respObj.userInfo.email,
+                nativePlace: respObj.userInfo.nativePlace,
+                nation: respObj.userInfo.nation,
+                curWorksIndex: 1,
+                expect: {
+                    tradeItems: respObj.cvInfo.expJob,
+                    posItems: respObj.cvInfo.expJobFunction,
+                    province: respObj.cvInfo.expPlace.split(";")[0],
+                    city: respObj.cvInfo.expPlace.split(";")[1],
+                    district: respObj.cvInfo.expPlace.split(";")[2],
+                    salary: respObj.cvInfo.expSalary
+                },
+                worksExps: worksExps,
+                edus: edus,
+                projects: projects,
+                laSkills: respObj.cvInfo.languages,
+                selfEval: respObj.cvInfo.evaluation,
+                psInfo: respObj.cvInfo.anymore,
+                skills: respObj.cvInfo.speciality
+            };
+            appModal.resumeInfo = appCont.resume = cvInfo;
             $(".edit").hide();
             $(".view").show();
         }
@@ -154,65 +246,65 @@ var appCont = new Vue({
         },
         resume: {
             firstEdit: true,
-            realName: "秦",
-            family: "已婚",
+            realName: "",
+            family: "",
             phone: "15264598745",
             email: "xqztc@163.com",
-            nativePlace: "安徽",
-            nation: "汉族",
+            nativePlace: "",
+            nation: "",
             curWorksIndex: 1,
             expect: {
                 tradeItems: "",
                 posItems: "",
-                province: "浙江",
-                city: "杭州",
-                district: "滨江",
-                salary: "8000-10000"
+                province: "",
+                city: "",
+                district: "",
+                salary: ""
             },
             worksExps: [{
                 show: true,
-                firma: "阿里巴巴",
-                trade: "互联网",
-                pos: "Web前端工程师",
-                province: "浙江",
-                city: "杭州",
-                district: "滨江",
-                salary: 1000,
+                firma: "",
+                trade: "",
+                pos: "",
+                province: "",
+                city: "",
+                district: "",
+                salary: 0,
                 startyear: 2010,
                 startmonth: 2,
                 endyear: 2016,
                 endmonth: 10,
-                resp: "前端工作"
+                resp: ""
             }],
             edus: [{
                 show: true,
-                uni: "郑州大学",
-                major: "信息技术",
-                submajor: "通信工程",
+                uni: "",
+                major: "",
+                submajor: "",
                 exmajor: "",
                 startyear: 2006,
                 startmonth: 2,
                 endyear: 2010,
                 endmonth: 10,
-                qualification: "本科",
+                qualification: "",
 
             }],
             projects: [{
                 show: true,
-                name: "校企职通车",
-                firma: "杭州黄巢信息科技有限公司",
+                name: "",
+                firma: "",
                 startyear: 2010,
                 startmonth: 2,
                 endyear: 2016,
                 endmonth: 10,
-                desc: "校企联合培训",
-                resp: "前端工作",
-                achiev: "前端页面开发"
+                desc: "",
+                resp: "",
+                achiev: ""
             }],
-            laSkills: ["英语", "德语"],
-            selfEval: "我是一个好人",
-            psInfo: "我真的是一个好人",
-            skills: "前端各种技术"
+            laSkills: [],
+            selfEval: "",
+            psInfo: "",
+            skills: ""
         },
         courses: {
             curpage: 1,
@@ -358,14 +450,6 @@ var appCont = new Vue({
             appModal.showPreview = true;
             $(window).scrollTop(0);
         },
-        checkLan: function(target, language) {
-            if (target.checked && this.resume.laSkills.indexOf(language) < 0) {
-                this.resume.laSkills.push(language);
-            }
-            if (!target.checked) {
-                this.resume.laSkills.remove(language);
-            }
-        },
         addWorksexp: function() {
             for (var i = 0; i < this.resume.worksExps.length; i++) {
                 this.resume.worksExps[i].show = false;
@@ -376,12 +460,20 @@ var appCont = new Vue({
             }
             worksexp.show = true;
             this.resume.worksExps.push(worksexp);
+            this.$nextTick(function() {
+                selectInitInput();
+                selectInitPos();
+            });
         },
         workSwipe: function(index) {
             for (var i = 0; i < this.resume.worksExps.length; i++) {
                 this.resume.worksExps[i].show = false;
             }
             this.resume.worksExps[index].show = true;
+            this.$nextTick(function() {
+                selectInitInput();
+                selectInitPos();
+            });
         },
         addEdu: function() {
             for (var i = 0; i < this.resume.edus.length; i++) {
@@ -400,12 +492,20 @@ var appCont = new Vue({
                 qualification: "",
             };
             this.resume.edus.push(edusExp);
+            this.$nextTick(function() {
+                selectInitInput();
+                selectInitPos();
+            });
         },
         eduSwipe: function(index) {
             for (var i = 0; i < this.resume.edus.length; i++) {
                 this.resume.edus[i].show = false;
             };
             this.resume.edus[index].show = true;
+            this.$nextTick(function() {
+                selectInitInput();
+                selectInitPos();
+            });
         },
         addProject: function() {
             for (var i = 0; i < this.resume.projects.length; i++) {
@@ -414,35 +514,48 @@ var appCont = new Vue({
             var project = {
                 show: true,
                 name: "",
-                firma: "杭州黄巢信息科技有限公司",
-                startyear: 2010,
-                startmonth: 2,
-                endyear: 2016,
-                endmonth: 10,
+                firma: "",
+                startyear: "",
+                startmonth: "",
+                endyear: "",
+                endmonth: "",
                 desc: "",
                 resp: "",
                 achiev: ""
             };
             this.resume.projects.push(project);
+            this.$nextTick(function() {
+                selectInitInput();
+                selectInitPos();
+            });
         },
         projectSwipe: function(index) {
             for (var i = 0; i < this.resume.projects.length; i++) {
                 this.resume.projects[i].show = false;
             }
             this.resume.projects[index].show = true;
+            this.$nextTick(function() {
+                selectInitInput();
+                selectInitPos();
+            });
         },
         submit: function() {
+
             this.resume.firstEdit = false;
+            postResume("all");
             $(".edit").hide();
             $(".view").show();
         },
         deleteItem: function(type, index) {
             if (type == "worksexp") {
                 this.resume.worksExps.splice(index, 1);
+                postResume("work", "del");
             } else if (type == "edu") {
                 this.resume.edus.splice(index, 1);
+                postResume("edu", "del");
             } else if (type == "project") {
                 this.resume.projects.splice(index, 1);
+                postResume("project", "del");
             }
         },
         stateCss: function(state) {
@@ -613,6 +726,7 @@ function init_center() {
 }
 init_center();
 
+
 function uploadEventBind() {
     var options = {
         thumbBox: '.thumbBox',
@@ -699,54 +813,56 @@ function editEventBind() {
         var viewName = editBlock.attr("name");
         var postdata = {};
         switch (viewName) {
-            case "basic":
-                var marryindex = 0;
-                if (appCont.resume.family == "已婚") {
-                    marryindex = 1;
-                } else if (appCont.resume.family == "离异") {
-                    marryindex = 2;
+            case "speech":
+                var skillArray = [];
+                $(".language-skills input[type='checkbox']").each(function() {
+                    if (this.checked) {
+                        skillArray.push(this.value);
+                    }
+                });
+                appCont.resume.laSkills = skillArray;
+                skillArray = JSON.stringify(skillArray);
+                var postdata = {
+                    userId: parObj.userId,
+                    cvId: respObj.cvInfo.cvId,
+                    languages: skillArray
                 }
-                postdata = {
-                    realName: appCont.resume.realName,
-                    mobile: appCont.resume.phone,
-                    email: appCont.resume.email,
-                    marryStatus: appCont.resume.family,
-                    nativePlace: appCont.resume.nativePlace,
-                    nation: appCont.resume.nation
-                };
+                EventUtils.ajaxReq("/user/user/modifyCvBaiscInfo", "post", postdata, function(resp, status) {
+                    console.log(resp, 2);
+                })
                 break;
-            case "trade":
-                postdata = {
-
+            case "selfeval":
+                var postdata = {
+                    userId: parObj.userId,
+                    cvId: respObj.cvInfo.cvId,
+                    evaluation: appCont.resume.selfEval
                 }
-
-
-        }
-
-        // EventUtils.ajaxReq("/user/user/modifyInfo", "post", post)
-        if (viewName == "trade") {
-            appCont.resume.expect.province = editBlock.find(".sel-province input").val();
-            appCont.resume.expect.city = editBlock.find(".sel-city input").val();
-            appCont.resume.expect.district = editBlock.find(".sel-district input").val();
-        } else if (viewName == "work") {
-            editBlock.find(".pane").each(function(index) {
-                appCont.resume.worksExps[index].province = $(this).find(".address .sel-province input").val();
-                appCont.resume.worksExps[index].city = $(this).find(".address .sel-city input").val();
-                appCont.resume.worksExps[index].district = $(this).find(".address .sel-district input").val();
-            })
-        } else if (viewName == "edu") {
-            editBlock.find(".pane").each(function(index) {
-                appCont.resume.edus[index].major = $(this).find(".major-input-1 input").val();
-                appCont.resume.edus[index].submajor = $(this).find(".major-input-2 input").val();
-                appCont.resume.edus[index].exmajor = $(this).find(".ex-major").val();
-            })
-        } else if (viewName == "speech") {
-            appCont.resume.laSkills = [];
-            editBlock.find(".language-skills input[type='checkbox']").each(function() {
-                if (this.checked) {
-                    appCont.resume.laSkills.push(this.value);
+                EventUtils.ajaxReq("/user/user/modifyCvBaiscInfo", "post", postdata, function(resp, status) {
+                    console.log(resp, 2);
+                });
+                break;
+            case "psinfo":
+                var postdata = {
+                    userId: parObj.userId,
+                    cvId: respObj.cvInfo.cvId,
+                    anymore: appCont.resume.psInfo
                 }
-            })
+                EventUtils.ajaxReq("/user/user/modifyCvBaiscInfo", "post", postdata, function(resp, status) {
+                    console.log(resp, 2);
+                });
+                break;
+            case "skill":
+                var postdata = {
+                    userId: parObj.userId,
+                    cvId: respObj.cvInfo.cvId,
+                    speciality: appCont.resume.skills
+                }
+                EventUtils.ajaxReq("/user/user/modifyCvBaiscInfo", "post", postdata, function(resp, status) {
+                    console.log(resp, 2);
+                });
+                break;
+            default:
+                postResume(viewName);
         }
         editBlock.hide();
         $(".resumeBox .view-item[name=" + viewName + "]").show();
@@ -759,16 +875,6 @@ function editEventBind() {
     })
 }
 
-function selectEventBind() {
-    $(".selectee ul li").bind({
-        "mouseover": function() {
-            $(this).addClass("over");
-        },
-        "mouseout": function() {
-            $(this).removeClass("over");
-        }
-    });
-}
 
 function init_safepos() {
     var p_left = Math.floor($(".safe-range p").width() * $(".safe-range").width() / 100) - 16 + "px";
@@ -839,25 +945,150 @@ function modalEventBind() {
     })
 }
 
-function postResume() {
-    var postdata = {
-        cvInfo: {
+
+
+function postResume(editType, isDel) {
+    if (editType == "all" || editType == "basic") {
+        var marryindex = 0;
+        if (appCont.resume.family == "已婚") {
+            marryindex = 1;
+        } else if (appCont.resume.family == "离异") {
+            marryindex = 2;
+        }
+        var postUserdata = {
+            userId: parObj.userId,
+            id: respObj.userInfo.id,
+            realName: appCont.resume.realName,
+            marryStatus: marryindex,
+            nativePlace: appCont.resume.nativePlace,
+            nation: appCont.resume.nation,
+            cvStatus: 1
+        }
+        console.log(postUserdata, 1);
+        EventUtils.ajaxReq("/user/user/modifyInfo", "post", postUserdata, function(resp, status) {
+            console.log(resp, 1);
+        })
+    }
+
+    if (editType == "all" || editType == "trade") {
+        if (!isDel) {
+            appCont.resume.expect.province = $(".exp-address .sel-province input").val();
+            appCont.resume.expect.city = $(".exp-address .sel-city input").val();
+            appCont.resume.expect.district = $(".exp-address .sel-district input").val();
+        }
+        var postCvdata = {
+            userId: parObj.userId,
+            cvId: respObj.cvInfo.cvId,
             expJob: appCont.resume.expect.tradeItems,
             expJobFunction: appCont.resume.expect.posItems,
             expPlace: appCont.resume.expect.province + ";" + appCont.resume.expect.city + ";" + appCont.resume.expect.district,
             expSalary: appCont.resume.expect.salary,
-        },
-        userInfo: {
-            userId: parObj.userId,
-            realName: appCont.resume.realName,
-            marryStatus: appCont.resume.family,
-            nativePlace: appCont.resume.nativePlace,
-            nation: appCont.resume.nation,
-        },
-        companyList:
-
-
-
-
+            evaluation: appCont.resume.selfEval,
+            anymore: appCont.resume.psInfo,
+            speciality: appCont.resume.skills,
+            languages: appCont.resume.laSkills
+        }
+        console.log(postCvdata, 2);
+        EventUtils.ajaxReq("/user/user/modifyCvBaiscInfo", "post", postCvdata, function(resp, status) {
+            console.log(resp, 2);
+        })
     }
+
+    if (editType == "all" || editType == "work") {
+        if (!isDel) {
+            var worksArray = $(".work-address");
+            for (var i = 0; i < appCont.resume.worksExps.length; i++) {
+                appCont.resume.worksExps[i].province = worksArray.eq(i).find(".sel-province input").val();
+                appCont.resume.worksExps[i].city = worksArray.eq(i).find(".sel-city input").val();
+                appCont.resume.worksExps[i].district = worksArray.eq(i).find(".sel-district input").val();
+            };
+        }
+        var postCvWorks = [];
+        for (var i = 0; i < appCont.resume.worksExps.length; i++) {
+            var workexp = {
+                userId: parObj.userId,
+                cvCpyId: appCont.resume.worksExps[i].cvCpyId,
+                companyName: appCont.resume.worksExps[i].firma,
+                companyType: appCont.resume.worksExps[i].trade,
+                position: appCont.resume.worksExps[i].pos,
+                content: appCont.resume.worksExps[i].resp,
+                workAddress: appCont.resume.worksExps[i].province + ";" + appCont.resume.worksExps[i].city + ";" + appCont.resume.worksExps[i].district,
+                salary: appCont.resume.worksExps[i].salary,
+                startTime: appCont.resume.worksExps[i].startyear + "-" + appCont.resume.worksExps[i].startmonth,
+                endTime: appCont.resume.worksExps[i].endyear + "-" + appCont.resume.worksExps[i].endmonth,
+            }
+            postCvWorks.push(workexp);
+        }
+        console.log(postCvWorks, 3);
+        postCvWorks = JSON.stringify(postCvWorks);
+
+        EventUtils.ajaxReq("/user/user/modifyCvCo", "post", { userId: parObj.userId, cvArray: postCvWorks }, function(resp, status) {
+            console.log(resp, 3);
+            for (var i = 0; i < appCont.resume.worksExps.length; i++) {
+                appCont.resume.worksExps[i].cvCpyId = resp.data[i].cv_cpy_id;
+            }
+        })
+    }
+
+    if (editType == "all" || editType == "edu") {
+        if (!isDel) {
+            var majorArray = $(".major-name");
+            for (var j = 0; j < appCont.resume.edus.length; j++) {
+                appCont.resume.edus[j].major = majorArray.eq(j).find(".major-input-1 input").val();
+                appCont.resume.edus[j].submajor = majorArray.eq(j).find(".major-input-2 input").val();
+                appCont.resume.edus[j].exmajor = majorArray.eq(j).find(".ex-major").val();
+            }
+        }
+        var postCvEdus = [];
+        for (var j = 0; j < appCont.resume.edus.length; j++) {
+            var edu = {
+                userId: parObj.userId,
+                cvEduId: appCont.resume.edus[j].cvEduId,
+                schoolName: appCont.resume.edus[j].uni,
+                professional: appCont.resume.edus[j].major + ";" + appCont.resume.edus[j].submajor + ";" + appCont.resume.edus[j].exmajor,
+                qualification: appCont.resume.edus[j].qualification,
+                startTime: appCont.resume.edus[j].startyear + "-" + appCont.resume.edus[j].startmonth,
+                endTime: appCont.resume.edus[j].endyear + "-" + appCont.resume.edus[j].endmonth,
+            }
+            postCvEdus.push(edu);
+        }
+        console.log(postCvEdus, 4);
+        postCvEdus = JSON.stringify(postCvEdus);
+
+        EventUtils.ajaxReq("/user/user/modifyCvEdu", "post", { userId: parObj.userId, cvArray: postCvEdus }, function(resp, status) {
+            for (var i = 0; i < appCont.resume.edus.length; i++) {
+                appCont.resume.edus[i].cvEduId = resp.data[i].cv_edu_id;
+            }
+            console.log(resp, 4);
+        })
+    }
+
+    if (editType == "all" || editType == "project") {
+        var postCvProjects = [];
+        for (var k = 0; k < appCont.resume.projects.length; k++) {
+            var project = {
+                userId: parObj.userId,
+                cvProId: appCont.resume.projects[k].cvProId,
+                companyName: appCont.resume.projects[k].firma,
+                projectName: appCont.resume.projects[k].name,
+                description: appCont.resume.projects[k].desc,
+                position: appCont.resume.projects[k].resp,
+                achievement: appCont.resume.projects[k].achiev,
+                startTime: appCont.resume.projects[k].startyear + "-" + appCont.resume.projects[k].startmonth,
+                endTime: appCont.resume.projects[k].endyear + "-" + appCont.resume.projects[k].endmonth
+            };
+            postCvProjects.push(project);
+        }
+        console.log(postCvProjects, 5)
+        postCvProjects = JSON.stringify(postCvProjects);
+
+        EventUtils.ajaxReq("/user/user/modifyCvPro", "post", { userId: parObj.userId, cvArray: postCvProjects }, function(resp, status) {
+            for (var i = 0; i < appCont.resume.projects.length; i++) {
+                appCont.resume.projects[i].cvProId = resp.data[i].cv_pro_id;
+            }
+            console.log(resp, 5);
+        })
+    }
+
+
 }

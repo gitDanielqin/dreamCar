@@ -220,7 +220,7 @@
                 <div class="ListBox">
                     <div class="hd LH-H58 bg-white">
                         <dropdown classes="state" :options="['全部状态','近一个星期','近一个月','近三个月']" v-model="collect.state"></dropdown>
-                        <p class="fr fSize14 maR30">我发布过的需求<span class="color-orange2 maL10 maR10">{{collect.items.length}}</span>个</p>
+                        <p class="fr fSize14 maR30">我收藏的需求<span class="color-orange2 maL10 maR10">{{collect.results.length}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
                         <li v-for="(item,index) in collect.results" :name="item.classic">
