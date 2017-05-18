@@ -25,18 +25,8 @@
     background: url("../images/sprite.png") no-repeat -6px -262px;
 }
 
-.main .selectee {
-    position: relative;
-    display: inline-block;
-}
 
-.main .selectee input {
-    background: url("../images/icon-select.png") no-repeat right 10px;
-    border: 1px solid #ccc;
-    padding-left: 10px;
-}
-
-.main .selectee ul {
+/*.main .selectee ul {
     position: absolute;
     left: 0;
     top: 36px;
@@ -65,7 +55,7 @@
 .main .selectee ul li.selected {
     background: #2ea8e6;
     color: #fff;
-}
+}*/
 
 .sel-addr input {
     width: 78px;
@@ -236,6 +226,10 @@
     background: url("../images/icon-prop.jpg") no-repeat 438px center;
     padding-right: 23px;
     width: 425px;
+}
+
+.main .itemBox .career-input.hint-nullable {
+    background: url("../images/icon-prop.jpg") no-repeat 438px center #ffd2d2;
 }
 
 .main .itemBox .sel-salary input {

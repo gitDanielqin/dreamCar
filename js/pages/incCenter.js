@@ -1,7 +1,7 @@
 var parObj = EventUtils.urlExtrac(window.location);
 var respObj = {}; //请求的本页面的数据集合
 
-(function() {
+function infoRequest() {
     var postdata = {
         userId: parObj.userId,
         loginIdentifier: parObj.loginId
@@ -67,7 +67,7 @@ var respObj = {}; //请求的本页面的数据集合
 
     })
 
-})()
+}
 
 var appTop = new Vue({
     el: "#app-top",
@@ -177,26 +177,12 @@ var appCont = new Vue({
             showRecruit: true
         },
         collect: {
-            state: "全部状态",
+            state: "校企合作",
             curpage: 1,
-            items: [
-                { classic: "高校招聘会", pos: "岗位名称", major: "专业名称", stuScale: "专业人数", IncName: "公司名称", recruitDate: "2017-01-30", recruitAddr: "地点", IncProps: "企业性质", IncScale: "企业规模", publicDate: "2017-11-11", publicTime: "24:00" },
-                { classic: "高校招聘会", pos: "岗位名称", major: "专业名称", stuScale: "专业人数", IncName: "公司名称", recruitDate: "2017-01-30", recruitAddr: "地点", IncProps: "企业性质", IncScale: "企业规模", publicDate: "2017-11-11", publicTime: "24:00" },
-                { classic: "高校招聘会", pos: "岗位名称", major: "专业名称", stuScale: "专业人数", IncName: "公司名称", recruitDate: "2017-01-30", recruitAddr: "地点", IncProps: "企业性质", IncScale: "企业规模", publicDate: "2017-11-11", publicTime: "24:00" },
-                { classic: "校企合作", major: "专业名称", publicDate: "发布时间", IncProps: "企业性质", trainway: "企业需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", publicDate: "2017-11-11", publicTime: "24:00" },
-                { classic: "校企合作", major: "专业名称", publicDate: "发布时间", IncProps: "企业性质", trainway: "企业需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", publicDate: "2017-11-11", publicTime: "24:00" },
-                { classic: "校企合作", major: "专业名称", publicDate: "发布时间", IncProps: "企业性质", trainway: "企业需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", publicDate: "2017-11-11", publicTime: "24:00" },
-                { classic: "校企合作", major: "专业名称", publicDate: "发布时间", IncProps: "企业性质", trainway: "到校培训", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", publicDate: "2017-11-11", publicTime: "24:00" },
-            ],
-            results: [
-                { classic: "高校招聘会", pos: "岗位名称", major: "专业名称", stuScale: "专业人数", IncName: "公司名称", recruitDate: "2017-01-30", recruitAddr: "地点", IncProps: "企业性质", IncScale: "企业规模", publicDate: "2017-11-11", publicTime: "24:00" },
-                { classic: "高校招聘会", pos: "岗位名称", major: "专业名称", stuScale: "专业人数", IncName: "公司名称", recruitDate: "2017-01-30", recruitAddr: "地点", IncProps: "企业性质", IncScale: "企业规模", publicDate: "2017-11-11", publicTime: "24:00" },
-                { classic: "高校招聘会", pos: "岗位名称", major: "专业名称", stuScale: "专业人数", IncName: "公司名称", recruitDate: "2017-01-30", recruitAddr: "地点", IncProps: "企业性质", IncScale: "企业规模", publicDate: "2017-11-11", publicTime: "24:00" },
-                { classic: "校企合作", major: "专业名称", publicDate: "发布时间", IncProps: "企业性质", trainway: "企业需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", publicDate: "2017-11-11", publicTime: "24:00" },
-                { classic: "校企合作", major: "专业名称", publicDate: "发布时间", IncProps: "企业性质", trainway: "企业需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", publicDate: "2017-11-11", publicTime: "24:00" },
-                { classic: "校企合作", major: "专业名称", publicDate: "发布时间", IncProps: "企业性质", trainway: "企业需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", publicDate: "2017-11-11", publicTime: "24:00" },
-                { classic: "校企合作", major: "专业名称", publicDate: "发布时间", IncProps: "企业性质", trainway: "到校培训", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", publicDate: "2017-11-11", publicTime: "24:00" },
-            ]
+            totalpages: 1,
+            pagesize: 3,
+            totalitems: 0,
+            results: []
         },
         message: {
             combi: {
@@ -559,13 +545,10 @@ var appCont = new Vue({
             switch (state) {
                 case "01":
                     return "合作待开始";
-                    break;
                 case "02":
                     return "合作进行中";
-                    break;
                 case "03":
                     return "合作已完成";
-                    break;
                 default:
                     return "合作待开始"
             }
@@ -574,13 +557,10 @@ var appCont = new Vue({
             switch (state) {
                 case "01":
                     return { color: "#91daef" };
-                    break;
                 case "02":
                     return { color: "#f7aa00" };
-                    break;
                 case "03":
                     return { color: "#333" };
-                    break;
             }
         },
         showResult: function(index, curpage, itemsnum) {
@@ -620,6 +600,16 @@ var appCont = new Vue({
                 })
                 this.require.curpage = page;
             } else if (type == "collect") {
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    index: page,
+                    count: 3
+                }
+                EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function(resp, status) {
+                    console.log(resp);
+                    appCont.collect.results = resp.data.list;
+                })
                 this.collect.curpage = page;
             } else if (type == "msg-combi") {
                 this.message.combi.curpage = page;
@@ -652,14 +642,48 @@ var appCont = new Vue({
                 appModal.show.preImg = true;
             }
         },
-        apply: function(type, index) {
-
-        },
-        cancel: function(type, index) {
-            if (type == "collec-recruit") {
-                this.collect.results.splice(index, 1);
-                this.collect.items = cloneObj(this.collect.results);
+        applyCollect: function(demandId) {
+            var postdata = {
+                userId: parObj.userId,
+                loginIdentifier: parObj.loginId,
+                demandId: demandId
             }
+            EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
+                console.log(resp);
+                alert("申请已发送！");
+            })
+        },
+        cancel: function() {},
+        cancelCollect: function(demandId, id) {
+            var postdata = {
+                userId: parObj.userId,
+                demandId: demandId,
+                id: id
+            }
+            console.log(postdata);
+            EventUtils.ajaxReq("/demand/delMarkInfo", "post", postdata, function(resp, status) {
+                console.log(resp);
+                if (appCont.collect.results.length == 1 && appCont.collect.curpage > 1) {
+                    appCont.collect.curpage -= 1;
+                }
+                var getdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    index: appCont.collect.curpage,
+                    count: 3
+                }
+                EventUtils.ajaxReq("/demand/getMarkList", "get", getdata, function(resp, status) {
+                    console.log(resp);
+                    if (resp.data) {
+                        appCont.collect.results = resp.data.list;
+                        appCont.collect.totalpages = resp.data.totalPage;
+                        appCont.collect.totalitems = resp.data.totalRow;
+                    } else {
+                        appCont.collect.results = [];
+                        appCont.collect.totalitems = 0;
+                    }
+                })
+            })
         },
         modifyMobile: function() {
             appModal.show.mobile = true;
@@ -975,6 +999,8 @@ var appModal = new Vue({
     }
 });
 
+infoRequest();
+
 function init_center() {
     // selectInit();
     selectInitInput();
@@ -1079,6 +1105,39 @@ function navEventBind() {
                 } else {
                     appCont.require.results = [];
                 }
+            })
+        }
+
+        // 收藏面板请求结果
+        if ($(this).attr("paneid") == "collectBox") {
+            var postdata = {
+                userId: parObj.userId,
+                loginIdentifier: parObj.loginId,
+                index: 1,
+                count: 3
+            };
+            console.log(postdata);
+            EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function(resp, status) {
+                console.log(resp);
+                appCont.collect.curpage = 1;
+                appCont.collect.totalpages = resp.data.totalPage;
+                appCont.collect.totalitems = resp.data.totalRow;
+                // dataList = [];
+                // for (var i = 0; i < resp.data.list.length; i++) {
+                //     var dataItem = {
+                //         major: EventUtils.infoExtrac(resp.data.list[i].profession),
+                //         publicDate: resp.data.list[i].updateTime,
+                //         IncProps: resp.data.list[i].companyProperty,
+                //         trainway: resp.data.list[i].trainType,
+                //         IncScale: resp.data.list[i].companyScale,
+                //         IncArea: EventUtils.infoExtrac(resp.data.list[i].companyType),
+                //         uniname: resp.data.list[i].userName,
+                //         uniLevel: resp.data.list[i].userProperty,
+                //         date: resp.data.list[i].collectTime,
+                //     };
+                //     dataList.push(dataItem);
+                // };
+                appCont.collect.results = resp.data.list;
             })
         }
         if ($(this).attr("paneid")) {

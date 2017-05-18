@@ -222,6 +222,10 @@ table th {
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
 }
 
+input.hint-nullable {
+    background-color: #ffd2d2;
+}
+
 [v-cloak] {
     display: none;
 }

@@ -127,8 +127,11 @@ var appBanner = new Vue({
                 alert("无法收藏自己的需求！");
                 return false;
             }
+            if (!$(obj).hasClass("btn-collec")) {
+                obj = obj.parentNode;
+            }
             if (appTop.isLogin) {
-                var isCollected = $(obj).hasClass("collected") || $(obj).parent().hasClass("collected");
+                var isCollected = $(obj).hasClass("collected");
                 if (!isCollected) {
                     var postdata = {
                         userId: parObj.userId,
@@ -136,7 +139,6 @@ var appBanner = new Vue({
                         demandId: parObj.demandId
                     }
                     EventUtils.ajaxReq("/demand/addMarkInfo", "post", postdata, function(resp, status) {
-                        console.log(resp);
                         $(obj).find("span").text("已收藏");
                         $(obj).addClass("collected");
                     })

@@ -1,132 +1,644 @@
-.selectee{position: relative; display: inline-block;}
-.selectee input{background: url("../images/icon-select-1.png") no-repeat right 10px white; border:1px solid #ccc;line-height: 24px;padding:0 20px 0 10px; width: 100%;}
-.selectee ul{position: absolute; left: 0; top:36px;border: 1px solid #d2d2d2;
-    font-size: 12px; height: 149px; overflow: auto;background: #fff; display: none; z-index: 10;}
-.selectee ul li{line-height: 24px; height: 24px; cursor: pointer;padding-left: 10px;}
-.selectee ul li.over{background: #9bcce5; color:#fff;}
-.selectee ul li.selected{background: #2ea8e6; color:#fff;}
+.selectee {
+    position: relative;
+    display: inline-block;
+}
+
+.selectee input {
+    background: url("../images/icon-select-1.png") no-repeat right 10px white;
+    border: 1px solid #ccc;
+    line-height: 24px;
+    padding: 0 20px 0 10px;
+    width: 100%;
+}
+
+.selectee ul {
+    position: absolute;
+    left: 0;
+    top: 36px;
+    border: 1px solid #d2d2d2;
+    font-size: 12px;
+    padding-bottom: 5px;
+    max-height: 149px;
+    overflow: auto;
+    background: #fff;
+    display: none;
+    z-index: 10;
+}
+
+.selectee ul li {
+    line-height: 24px;
+    height: 24px;
+    cursor: pointer;
+    padding-left: 10px;
+}
+
+.selectee ul li.over {
+    background: #9bcce5;
+    color: #fff;
+}
+
+.selectee ul li.selected {
+    background: #2ea8e6;
+    color: #fff;
+}
+
+.login i {
+    margin: 0 15px;
+}
+
+.login span {
+    cursor: pointer;
+}
+
+.top-acc {
+    margin-left: 47px;
+    margin-right: 15px;
+}
+
+.top-acc .pic-icon {
+    width: 17px;
+    height: 20px;
+    background: url("../images/sprite.png") no-repeat -113px -177px;
+    margin-right: 6px;
+}
+
+.search input {
+    width: 438px;
+    border: 1px solid #ffa800;
+    background: url(../images/icon-search.png) no-repeat 10px center;
+}
+
+.search button {
+    letter-spacing: 16px;
+    padding-left: 16px;
+    width: 116px;
+}
+
+.queryform {
+    border: 1px solid #d2d2d2;
+    position: relative;
+}
+
+.queryform label {
+    float: left;
+    width: 95px;
+    text-align: right;
+    font-size: 15px;
+    line-height: 26px;
+    margin-right: 10px;
+}
+
+.queryform .label-val {
+    float: left;
+    font-size: 12px;
+    line-height: 24px;
+}
+
+.queryform .label-val select {
+    height: 34px;
+    line-height: 34px;
+    width: 158px;
+    border-color: #d2d2d2;
+    margin-right: 19px;
+    padding-left: 20px;
+    font-size: 18px;
+    background: url("../images/icon-select-1.png") no-repeat 135px center;
+    color: #000;
+}
+
+.queryform input {
+    width: 86px;
+    margin-right: 16px;
+}
+
+.uni-major {
+    display: inline-block;
+}
+
+.lang-select input {
+    width: 138px;
+}
+
+.popBox {
+    width: 490px;
+    height: 211px;
+    border: 1px solid #a6a6a6;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background: white;
+    z-index: 10
+}
+
+.posLis {
+    margin-top: 8px;
+    height: 168px;
+    overflow: auto;
+}
+
+.posLis li {
+    width: 150px;
+    cursor: pointer;
+}
+
+.posLis li:hover {
+    background: #f5f5f5;
+    color: #ffb842;
+}
+
+.popBox .selectee {
+    margin-left: 15px;
+    margin-top: 8px;
+    vertical-align: bottom;
+}
+
+.popBox .selectee input {
+    width: 225px;
+    margin-right: 0;
+    background: url("../images/icon-select-1.png") no-repeat right 10px #f1f1f1;
+}
+
+.area-box {
+    left: 80px;
+    top: 170px;
+}
+
+.pos-box {
+    right: 0;
+    top: 170px;
+}
+
+.pos-box.inc-pos {
+    left: 105px;
+    top: 170px;
+}
+
+.pos-box.pos-pos {
+    left: 274px;
+    top: 126px;
+}
+
+.pos-box.pos-increc {
+    left: 105px;
+    top: 170px;
+}
+
+.area-box.pos-pos {
+    left: 105px;
+    top: 126px;
+}
+
+.welfare-box {
+    padding: 5px 10px;
+    top: 167px;
+    left: 274px;
+}
+
+.check-box {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.check-box.on {
+    background: url("../images/icon-checked3.png") no-repeat center center;
+}
+
+.welfare-lis li {
+    margin-right: 10px;
+    width: 100px;
+    margin-top: 5px;
+}
+
+.welfare-box .confirm {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: none;
+}
 
 
-.login  i{margin:0 15px;}
-.login span{cursor: pointer;}
-.top-acc{margin-left: 47px; margin-right: 15px;}
-.top-acc .pic-icon{width: 17px; height: 20px; background: url("../images/sprite.png") no-repeat -113px -177px;margin-right: 6px;}
-.search input{width:438px; border: 1px solid #ffa800; background: url(../images/icon-search.png) no-repeat 10px center;}
-.search button{letter-spacing: 16px; padding-left: 16px; width: 116px;}
-
-.queryform{border:1px solid #d2d2d2; position: relative;}
-.queryform label{float: left; width:95px; text-align:right;font-size: 15px; line-height: 26px; margin-right: 10px;}
-.queryform .label-val{float:left; font-size: 12px; line-height: 24px;}
-.queryform .label-val select{height:34px; line-height: 34px;width: 158px; border-color:#d2d2d2;margin-right: 19px; padding-left: 20px; font-size: 18px; background: url("../images/icon-select-1.png") no-repeat 135px center;
-color:#000; }
-.queryform input{width: 86px; margin-right: 16px;}
-.uni-major{display: inline-block;}
-.lang-select input{width: 138px;}
-.popBox{width:490px; height: 211px; border: 1px solid #a6a6a6; position: absolute; right: 0; top: 50px; background: white; z-index: 10}
-.posLis{margin-top: 8px; height: 168px; overflow: auto;}
-.posLis li{width:150px;cursor: pointer;}
-.posLis li:hover{background: #f5f5f5; color: #ffb842;}
-.popBox .selectee{margin-left: 15px; margin-top: 8px;vertical-align: bottom;}
-.popBox .selectee input{width: 225px;  margin-right: 0; background: url("../images/icon-select-1.png") no-repeat right 10px #f1f1f1;}
-.area-box{left: 80px; top:170px;}
-.pos-box{right: 0;top:170px;}
-.pos-box.inc-pos{left: 105px; top:170px;}
-.pos-box.pos-pos{left: 274px; top:126px;}
-.pos-box.pos-increc{left: 105px;top: 170px;}
-.area-box.pos-pos{left:105px; top:126px;}
-
-
-.welfare-box{padding: 5px 10px; top: 167px; left: 274px;}
-.check-box{width: 20px; height: 20px; border: 1px solid #ccc; display: inline-block; vertical-align: middle; margin-right: 12px; cursor: pointer;}
-.check-box.on{background: url("../images/icon-checked3.png") no-repeat center center;}
-.welfare-lis li{margin-right: 10px; width: 100px;margin-top: 5px;}
-.welfare-box .confirm{position: absolute; bottom: 10px; right: 10px; background: none; }
 /*.sel-input{ border:1px solid #d2d2d2; background: url("../images/icon-select-1.png") no-repeat 155px center #fff; }
 .sel-lis dd:hover{background: #f5f5f5; color:#fcc067;}*/
-.item-block-right{padding: 18px; background: url("../images/dashline.png") no-repeat left center;}
-.btn-apply{position: absolute; right: 38px; top: 34px; color: white; font-size: 14px; width: 125px; height: 40px; background: #ffa800;}
-.btn-apply .pic-icon{ background: url("../images/sprite.png") no-repeat -89px -133px; width: 23px; height: 16px; position: absolute;right: 18px; top: 14px;}
-.btn-apply:hover{background: #48c1e4;}
-.item-name{width: 136px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
+
+.item-block-right {
+    padding: 18px;
+    background: url("../images/dashline.png") no-repeat left center;
+}
+
+.btn-apply {
+    position: absolute;
+    right: 38px;
+    top: 34px;
+    color: white;
+    font-size: 14px;
+    width: 125px;
+    height: 40px;
+    background: #ffa800;
+}
+
+.btn-apply .pic-icon {
+    background: url("../images/sprite.png") no-repeat -89px -133px;
+    width: 23px;
+    height: 16px;
+    position: absolute;
+    right: 18px;
+    top: 14px;
+}
+
+.btn-apply:hover {
+    background: #48c1e4;
+}
+
+.item-name {
+    width: 136px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 
 /*头部地址选择卡*/
-.sel-lis{cursor: pointer;position: absolute; left: 0; top:35px; border: 1px solid #d2d2d2; background: #fff;z-index: 10; height: 138px; overflow-y: auto; padding: 5px 0;}
-.sel-lis dd{float: left; width: 178px; height:31px; line-height: 31px; text-align: center;}
-.queryform .address li{width:60px;margin-right: 8px; line-height: 24px; height:24px;text-align: center; position: relative;}
-.queryform .address li:hover{color:#ffa800; cursor: pointer;}
-.queryform .address li.on{ border:1px solid #d2d2d2; border-bottom:1px solid #fff; background: #fff;}
-.queryform .address li span{ width: 100%; height: 4px; background: white; position: absolute; left: 0 ;z-index: 4; bottom:-2px; display: none;}
-.queryform .address li.on span{display: block;}
-.queryform .district{width:743px; border: 1px solid #d2d2d2;}
-.queryform .district li{width: 60px; cursor: pointer; margin:6px 6px;height: 20px; line-height: 20px;}
-.queryform .district li:hover{color:#ffa800; }
-.queryform .district li.on{background: #ffa800; color:white;}
-.queryform .district li.dis-label{width: 48px;padding-left: 5px;}
-.queryform .district li.dis-label:hover{color:#797979;}
 
-.main-result .title{border-bottom: 1px solid #f7b632; }
-.main-result .results{min-height: 635px; width: 810px; }
-.main-result .results li{width:808px; margin-top: 15px; background: #fff; border: 1px solid #ccc;}
-.main-result .results li a:hover{text-decoration: underline;}
-.main-result .results .logo-pic{ background: #2ea8e6; border: 1px solid #959595;}
-.main-result .results .logo-pic img{width: 100%; }
-.main-result .results li p{line-height: 23px;height:23px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-.main-result .results li p i{margin:0 8px;}
-.main-result .results .institute{border-left:1px dashed #cecece;}
-.ads{border:1px solid #c9c9c9;}
-.ad-pic{overflow: hidden; margin-bottom: 24px; margin-left: 19px; width: 132px; height: 132px;}
+.sel-lis {
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 35px;
+    border: 1px solid #d2d2d2;
+    background: #fff;
+    z-index: 10;
+    height: 138px;
+    overflow-y: auto;
+    padding: 5px 0;
+}
+
+.sel-lis dd {
+    float: left;
+    width: 178px;
+    height: 31px;
+    line-height: 31px;
+    text-align: center;
+}
+
+.queryform .address li {
+    width: 60px;
+    margin-right: 8px;
+    line-height: 24px;
+    height: 24px;
+    text-align: center;
+    position: relative;
+}
+
+.queryform .address li:hover {
+    color: #ffa800;
+    cursor: pointer;
+}
+
+.queryform .address li.on {
+    border: 1px solid #d2d2d2;
+    border-bottom: 1px solid #fff;
+    background: #fff;
+}
+
+.queryform .address li span {
+    width: 100%;
+    height: 4px;
+    background: white;
+    position: absolute;
+    left: 0;
+    z-index: 4;
+    bottom: -2px;
+    display: none;
+}
+
+.queryform .address li.on span {
+    display: block;
+}
+
+.queryform .district {
+    width: 743px;
+    border: 1px solid #d2d2d2;
+}
+
+.queryform .district li {
+    width: 60px;
+    cursor: pointer;
+    margin: 6px 6px;
+    height: 20px;
+    line-height: 20px;
+}
+
+.queryform .district li:hover {
+    color: #ffa800;
+}
+
+.queryform .district li.on {
+    background: #ffa800;
+    color: white;
+}
+
+.queryform .district li.dis-label {
+    width: 48px;
+    padding-left: 5px;
+}
+
+.queryform .district li.dis-label:hover {
+    color: #797979;
+}
+
+.main-result .title {
+    border-bottom: 1px solid #f7b632;
+}
+
+.main-result .results {
+    min-height: 635px;
+    width: 810px;
+}
+
+.main-result .results li {
+    width: 808px;
+    margin-top: 15px;
+    background: #fff;
+    border: 1px solid #ccc;
+}
+
+.main-result .results li a:hover {
+    text-decoration: underline;
+}
+
+.main-result .results .logo-pic {
+    background: #2ea8e6;
+    border: 1px solid #959595;
+}
+
+.main-result .results .logo-pic img {
+    width: 100%;
+}
+
+.main-result .results li p {
+    line-height: 23px;
+    height: 23px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.main-result .results li p i {
+    margin: 0 8px;
+}
+
+.main-result .results .institute {
+    border-left: 1px dashed #cecece;
+}
+
+.ads {
+    border: 1px solid #c9c9c9;
+}
+
+.ad-pic {
+    overflow: hidden;
+    margin-bottom: 24px;
+    margin-left: 19px;
+    width: 132px;
+    height: 132px;
+}
+
 
 /*页码样式*/
-.pagination ul{overflow: hidden;}
-.pagination ul li{float: left;margin-left: 10px; cursor: pointer;}
-.pagination a{display:inline-block;background: #999; color: #fff;line-height: 30px; height: 30px; text-align: center;}
-.pagination a.highLight{background: #333;}
-.pagination a:hover{background: #333;}
-.pagination .lastPage{width: 60px;}
-.pagination .nextPage{width: 60px;}
-.pagination .page{ width:30px;}
+
+.pagination ul {
+    overflow: hidden;
+}
+
+.pagination ul li {
+    float: left;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.pagination a {
+    display: inline-block;
+    background: #999;
+    color: #fff;
+    line-height: 30px;
+    height: 30px;
+    text-align: center;
+}
+
+.pagination a.highLight {
+    background: #333;
+}
+
+.pagination a:hover {
+    background: #333;
+}
+
+.pagination .lastPage {
+    width: 60px;
+}
+
+.pagination .nextPage {
+    width: 60px;
+}
+
+.pagination .page {
+    width: 30px;
+}
 
 
 /*底部样式，与首页基本*/
-.bot-nav{display: inline-block;}
-.bot-nav a{color:#797979;}
-.bot-nav a:hover{color:#f00; cursor: pointer}
-.bot .barcode-text{display: inline-block; vertical-align: middle;}
-.bot-account{border-top:2px solid #9d9d9d;}
 
-.company-name{overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
-.label-val .job-pos{height:252px;}
-.label-val .job-pos dd{font-size: 14px;}
-.sel-lis .selectee{vertical-align: middle}
-.sel-lis .selectee input{background: url("../images/icon-select-1.png") no-repeat 154px center #f1f1f1; }
-.sel-lis .selectee ul{background: #f1f1f1; height: 170px;}
-.sel-lis .selectee ul li.over{background: #f9c560; color: white;}
+.bot-nav {
+    display: inline-block;
+}
+
+.bot-nav a {
+    color: #797979;
+}
+
+.bot-nav a:hover {
+    color: #f00;
+    cursor: pointer
+}
+
+.bot .barcode-text {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.bot-account {
+    border-top: 2px solid #9d9d9d;
+}
+
+.company-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.label-val .job-pos {
+    height: 252px;
+}
+
+.label-val .job-pos dd {
+    font-size: 14px;
+}
+
+.sel-lis .selectee {
+    vertical-align: middle
+}
+
+.sel-lis .selectee input {
+    background: url("../images/icon-select-1.png") no-repeat 154px center #f1f1f1;
+}
+
+.sel-lis .selectee ul {
+    background: #f1f1f1;
+    height: 170px;
+}
+
+.sel-lis .selectee ul li.over {
+    background: #f9c560;
+    color: white;
+}
+
 
 /*申请成功对话框样式*/
-.dlg-success{position: absolute; top:580px; left: 50%; transform: translateX(-50%); background: #fcb62e; }
-.dlg-login{position: absolute; top:580px; left: 50%; transform: translateX(-50%); background: #fcb62e; }
-.confirm{background: url("../images/icon-sure.png") no-repeat 86% center #fcb62e;}
-.stamp{position: absolute; left: -35px; top:-29px;}
-.login-form input{width: 363px; height:55px; padding-left: 25px; font-size: 16px; border: 2px solid #e5e5e5; color:#a1a1a1;
-background: #f8f8f8; margin-top: 30px; margin-left: 25px;}
-.dlg-login .regis{border-left: 1px dashed #eee;}
-a.login-link{display: block; color:#fcb62e;}
-.login-link .pic-icon{width: 28px; height: 28px; background: url("../images/sprite.png") no-repeat -361px -267px;}
-.fast-login i.pic-icon{margin-right:35px;}
-.fast-login .icon-wechat{background: url("../images/sprite.png") no-repeat -192px -77px; width:34px;height: 27px;}
-.fast-login .icon-qq{background: url("../images/sprite.png") no-repeat -192px -112px; width: 26px;height: 29px;}
-.fast-login .icon-weibo{background: url("../images/sprite.png") no-repeat -190px -152px; width: 32px;height: 26px;}
-.succ-msg{background: #f7eec9;}
 
-.bot-infos .pic-icon{margin-right: 15px;}
-.bot-infos .icon-phone{width:20px; height: 14px;background: url("../images/sprite.png") no-repeat -27px -3px;}
-.bot-infos .icon-address{width:20px; height: 20px;background: url("../images/sprite.png") no-repeat -89px -102px;}
-.bot-infos .icon-email{width:20px; height: 14px;background: url("../images/sprite.png") no-repeat -117px -34px;}
+.dlg-success {
+    position: absolute;
+    top: 580px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fcb62e;
+}
+
+.dlg-login {
+    position: absolute;
+    top: 580px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fcb62e;
+}
+
+.confirm {
+    background: url("../images/icon-sure.png") no-repeat 86% center #fcb62e;
+}
+
+.stamp {
+    position: absolute;
+    left: -35px;
+    top: -29px;
+}
+
+.login-form input {
+    width: 363px;
+    height: 55px;
+    padding-left: 25px;
+    font-size: 16px;
+    border: 2px solid #e5e5e5;
+    color: #a1a1a1;
+    background: #f8f8f8;
+    margin-top: 30px;
+    margin-left: 25px;
+}
+
+.dlg-login .regis {
+    border-left: 1px dashed #eee;
+}
+
+a.login-link {
+    display: block;
+    color: #fcb62e;
+}
+
+.login-link .pic-icon {
+    width: 28px;
+    height: 28px;
+    background: url("../images/sprite.png") no-repeat -361px -267px;
+}
+
+.fast-login i.pic-icon {
+    margin-right: 35px;
+}
+
+.fast-login .icon-wechat {
+    background: url("../images/sprite.png") no-repeat -192px -77px;
+    width: 34px;
+    height: 27px;
+}
+
+.fast-login .icon-qq {
+    background: url("../images/sprite.png") no-repeat -192px -112px;
+    width: 26px;
+    height: 29px;
+}
+
+.fast-login .icon-weibo {
+    background: url("../images/sprite.png") no-repeat -190px -152px;
+    width: 32px;
+    height: 26px;
+}
+
+.succ-msg {
+    background: #f7eec9;
+}
+
+.bot-infos .pic-icon {
+    margin-right: 15px;
+}
+
+.bot-infos .icon-phone {
+    width: 20px;
+    height: 14px;
+    background: url("../images/sprite.png") no-repeat -27px -3px;
+}
+
+.bot-infos .icon-address {
+    width: 20px;
+    height: 20px;
+    background: url("../images/sprite.png") no-repeat -89px -102px;
+}
+
+.bot-infos .icon-email {
+    width: 20px;
+    height: 14px;
+    background: url("../images/sprite.png") no-repeat -117px -34px;
+}
 
 
 /*头部已登录信息*/
-.account .pic-icon{margin-left:9px; background: url("../images/sprite.png") no-repeat -122px -85px; width: 16px; height: 12px;}
-.account li{cursor: pointer; position: relative;}
-.account dl{position: absolute; left: 0; top:30px; background: #313131; width: 100%; display: none;}
-.account dl dd{padding-left: 14px;}
-.account dl dd:hover{background: #494848;}
+
+.account .pic-icon {
+    margin-left: 9px;
+    background: url("../images/sprite.png") no-repeat -122px -85px;
+    width: 16px;
+    height: 12px;
+}
+
+.account li {
+    cursor: pointer;
+    position: relative;
+}
+
+.account dl {
+    position: absolute;
+    left: 0;
+    top: 30px;
+    background: #313131;
+    width: 100%;
+    display: none;
+}
+
+.account dl dd {
+    padding-left: 14px;
+}
+
+.account dl dd:hover {
+    background: #494848;
+}

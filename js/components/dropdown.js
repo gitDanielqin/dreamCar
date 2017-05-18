@@ -214,7 +214,7 @@
                 // selectEventBind();
             },
             "initaddress": function(curval) {
-                if (curval) {
+                if (curval && curval.province) {
                     this.selProvince = curval.province;
                 }
             }
@@ -303,7 +303,7 @@
         })
         // 选择下拉框定位
     function selectInitPos() {
-        $(".selectee ul").each(function() {
+        $(".selectee:visible ul").each(function() {
             if (!this.initFlag) {
                 var sibInput = $(this).siblings("input");
                 var parentObj = $(this).parent(".selectee");

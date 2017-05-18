@@ -206,16 +206,9 @@ var appCont = new Vue({
             state: "全部状态",
             curpage: 1,
             totalpages: 1,
-            totalitems: 1,
+            totalitems: 0,
             pagesize: 3,
-            results: [
-                { pos: "岗位名称", major: "专业", stuScale: "人数", IncName: "公司名称", publicDate: "发布时间", IncProps: "企业性质", uniApply: "高校需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", date: "2017.11.11", time: "24:00" },
-                { pos: "岗位名称", major: "通信工程", stuScale: "人数", IncName: "公司名称", publicDate: "发布时间", IncProps: "企业性质", uniApply: "高校需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", date: "2017.11.11", time: "24:00" },
-                { pos: "岗位名称", major: "专业", stuScale: "人数", IncName: "公司名称", publicDate: "发布时间", IncProps: "企业性质", uniApply: "高校需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", date: "2017.11.11", time: "24:00" },
-                { pos: "岗位名称", major: "专业", stuScale: "人数", IncName: "公司名称", publicDate: "发布时间", IncProps: "企业性质", uniApply: "高校需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", date: "2017.11.11", time: "24:00" },
-                { pos: "岗位名称", major: "专业", stuScale: "人数", IncName: "公司名称", publicDate: "发布时间", IncProps: "企业性质", uniApply: "高校需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", date: "2017.11.11", time: "24:00" },
-                { pos: "岗位名称", major: "专业", stuScale: "人数", IncName: "公司名称", publicDate: "发布时间", IncProps: "企业性质", uniApply: "高校需要提供的", IncScale: "企业规模", IncArea: "企业所属行业", uniname: "高校名称", uniLevel: "高校性质", date: "2017.11.11", time: "24:00" },
-            ]
+            results: []
         },
         message: {
             combi: {
@@ -406,6 +399,9 @@ var appCont = new Vue({
         }
     },
     methods: {
+        infoExtrac: function(item) {
+            return EventUtils.infoExtrac(item);
+        },
         changeComLicense: function(obj) {
             if (obj.files[0].size > 3 * 1024 * 1204) {
                 alert("请上传小于3M的文件！");
@@ -493,6 +489,7 @@ var appCont = new Vue({
             //上传许可证等图片文件
             if (this.resume.comLicense != "") {
                 var hascomUrl = false;
+                console.log(appCont.resume.comLicense);
                 $.ajaxFileUpload({
                     url: 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload', //提交的路径
                     secureuri: false, // 是否启用安全提交，默认为false
@@ -517,6 +514,7 @@ var appCont = new Vue({
 
             if (this.resume.uniLicense != "") {
                 var hasuniUrl = false;
+                console.log(appCont.resume.uniLicense);
                 $.ajaxFileUpload({
                     url: 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload', //提交的路径
                     secureuri: false, // 是否启用安全提交，默认为false
@@ -557,6 +555,7 @@ var appCont = new Vue({
                     if (appCont.resume.comLicense != "" && !hascomUrl || appCont.resume.uniLicense != "" && !hasuniUrl) {
                         alert("文件上传失败，请重新上传！");
                     } else {
+                        console.log(appCont.resume.comLicenseUrl, appCont.resume.uniLicenseUrl);
                         var postdata = {
                             userId: parObj.userId,
                             schoolId: respObj.schoolId,
@@ -571,7 +570,7 @@ var appCont = new Vue({
                             discription: appCont.resume.intro
                         };
                         EventUtils.ajaxReq('/user/school/modifyInfo', 'post', postdata, function(resp, status) {
-                            //  console.log(resp);
+                            console.log(resp);
                         })
                     }
                 }, 1500)
@@ -731,6 +730,45 @@ var appCont = new Vue({
                     this.resume.intro = this.resume.intro.slice(0, 1000);
                 }
             }
+        },
+        cancelCollect: function(demandId, id) {
+            var postdata = {
+                userId: parObj.userId,
+                demandId: demandId,
+                id: id
+            }
+            console.log(postdata);
+            EventUtils.ajaxReq("/demand/delMarkInfo", "post", postdata, function(resp, status) {
+                console.log(resp);
+                var getdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    index: appCont.collect.curpage,
+                    count: 3
+                }
+                EventUtils.ajaxReq("/demand/getMarkList", "get", getdata, function(resp, status) {
+                    console.log(resp);
+                    if (resp.data) {
+                        appCont.collect.results = resp.data.list;
+                        appCont.collect.totalpages = resp.data.totalPage;
+                        appCont.collect.totalitems = resp.data.totalRow;
+                    } else {
+                        appCont.collect.results = [];
+                        appCont.collect.totalitems = 0;
+                    }
+                })
+            })
+        },
+        applyCollect: function(demandId) {
+            var postdata = {
+                userId: parObj.userId,
+                loginIdentifier: parObj.loginId,
+                demandId: demandId
+            }
+            EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
+                console.log(resp);
+                alert("申请已发送！");
+            })
         },
         popComment: function(id) {
             appModal.comment.userId = id;
@@ -1200,9 +1238,28 @@ function navEventBind() {
                 count: 3
             };
             EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function(resp, status) {
-                console.log(resp);
-
-
+                console.log(resp.data);
+                appCont.collect.curpage = 1;
+                appCont.collect.totalpages = resp.data.totalPage;
+                appCont.collect.totalitems = resp.data.totalRow;
+                dataList = [];
+                for (var i = 0; i < resp.data.list.length; i++) {
+                    var dataItem = {
+                        pos: EventUtils.infoExtrac(resp.data.list[i].job),
+                        major: EventUtils.infoExtrac(resp.data.list[i].profession),
+                        stuScale: resp.data.list[i].professionCount,
+                        IncName: resp.data.list[i].userName,
+                        publicDate: resp.data.list[i].updateTime.split(" ")[0],
+                        IncProps: resp.data.list[i].userProperty,
+                        trainType: resp.data.list[i].trainType,
+                        IncScale: resp.data.list[i].userScale,
+                        IncArea: resp.data.list[i].userType,
+                        uniLevel: resp.data.list[i].schoolType,
+                        date: resp.data.list[i].collectTime.split(" ")[0]
+                    };
+                    dataList.push(dataItem);
+                };
+                appCont.collect.results = dataList;
             })
         }
         if ($(this).attr("paneid")) {

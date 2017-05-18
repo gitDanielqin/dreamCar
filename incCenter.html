@@ -212,12 +212,8 @@
             <div class="uni-collect collectBox">
                 <div class="ListBox">
                     <div class="hd LH-H58 bg-white">
-                        <dropdown classes="state" :options="['全部状态','校企合作','高校招聘会']" v-model="collect.state"></dropdown>
-                        <p class="fr fSize14 maR30">我收藏的高校<span class="color-orange2 maL10 maR10">{{collect.items.length}}</span>个</p>
-                        <!-- <ul class="lis-inline hd-navs maL10 fl">
-                             <li>校企合作<span class="color-orange2 maL10 maR10">{{collect.items.length}}</span></li>
-                             <li>高校招聘会<span class="color-orange2 maL10 maR10">{{collect.items.length}}</span></li>
-                        </ul> -->
+                        <dropdown classes="state" :options="['校企合作','高校招聘会']" v-model="collect.state"></dropdown>
+                        <p class="fr fSize14 maR30">我收藏的需求<span class="color-orange2 maL10 maR10">{{collect.totalitems}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
                         <li v-show="collect.results.length==0">
@@ -225,49 +221,29 @@
                                 <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
                             </div>
                         </li>
-                        <li v-for="(item,index) in collect.results" :name="item.classic" v-show="showResult(index,collect.curpage,3)">
-                            <div v-if="item.classic=='高校招聘会'">
-                                <div class="paLeft29 clearfix H128 pRel">
-                                    <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                    <div class="item-block-left fl paTop22 W328 maL20">
-                                        <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-unirecruit.html">{{item.major}}</a></h2>
-                                        <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.recruitAddr}}</p>
-                                        <p>招聘会时间：{{item.recruitDate}}</p>
-                                    </div>
-                                    <div class="item-block-right fl fSize14 LH25 maT10">
-                                        <p>高校对企业要求</p>
-                                        <p>{{item.IncScale}}<i class="depart">|</i>{{item.IncProps}}<i class="depart">|</i>{{item.pos}}</p>
-                                        <p class="pubdate">{{item.publicDate}} {{item.publicTime}}</p>
-                                        <div class="collect-btn">
-                                            <button class="color-blueL" @click.stop="cancel('collec-recruit',index)">取消收藏</button>
-                                            <button class="color-orange-f7" @click.stop="apply('collec-recruit',index)">申请合作</button>
-                                        </div>
-                                    </div>
+                        <li v-for="(item,index) in collect.results">
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                <div class="item-block-left fl paTop22 W328 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-uni.html">{{infoExtrac(item.profession)}}</a></h2>
+                                    <p>{{item.companyProperty}}<i class="depart">|</i>{{item.companyScale}}<i class="depart">|</i>{{infoExtrac(item.companyType)}}</p>
+                                    <p>联合培养方式：{{item.trainType}}</p>
+                                    <p class="item-date">收藏时间：{{item.collectTime.split(" ")[0]}}</span>
+                                    </p>
                                 </div>
-                            </div>
-                            <div v-else-if="item.classic=='校企合作'">
-                                <div class="paLeft29 clearfix H128 pRel">
-                                    <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                    <div class="item-block-left fl paTop22 W328 maL20">
-                                        <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-uni.html">{{item.major}}</a></h2>
-                                        <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
-                                        <p>{{item.trainway}}</p>
-                                        <p class="item-date">{{item.date}}</span> {{item.time}}</p>
-                                    </div>
-                                    <div class="item-block-right fl fSize14 LH25 maT10">
-                                        <p>{{item.uniname}}</p>
-                                        <p>{{item.uniLevel}}</p>
-                                        <p class="pubdate">{{item.publicDate}} {{item.publicTime}}</p>
-                                        <div class="collect-btn">
-                                            <button class="color-blueL" @click.stop="cancel('collec-combi',index)">取消收藏</button>
-                                            <button class="color-orange-f7" @click.stop="apply('collec-combi',index)">申请合作</button>
-                                        </div>
+                                <div class="item-block-right fl fSize14 LH25 maT10">
+                                    <p>{{item.userName}}</p>
+                                    <p>{{item.userProperty}}</p>
+                                    <p class="pubdate">发布时间：{{item.updateTime.split(" ")[0]}}</p>
+                                    <div class="collect-btn">
+                                        <button class="color-blueL" @click.stop="cancelCollect(item.demandId,item.id)">取消收藏</button>
+                                        <button class="color-orange-f7" @click.stop="applyCollect(item.demandId)">申请合作</button>
                                     </div>
                                 </div>
                             </div>
                         </li>
                     </ul>
-                    <pagination :showpages="showpage(collect.results.length)" :totalpages="pagesum(collect.results.length)" type="collect" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                    <pagination :showpages="showpage(collect.totalpages)" :totalpages="collect.totalpages" type="collect" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
             </div>
             <div class="uni-message combi-msg">

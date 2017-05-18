@@ -31,7 +31,7 @@
      </div>';
     Vue.component("major-pop", {
         template: templMajor,
-        props: ["majordata"],
+        props: ["majordata", "initmajors"],
         data: function() {
             var major = {
                 trs: [],
@@ -85,8 +85,16 @@
         },
         mounted: function() {
             initPop();
+            if (this.initmajors) {
+                this.selMajor = this.initmajors.major;
+            }
         },
         watch: {
+            "initmajors": function(curval) {
+                if (curval && curval.major) {
+                    this.selMajor = curval.major;
+                }
+            },
             "selMajor": function(curval) {
                 for (var i = 0; i < this.majordata.length; i++) {
                     if (this.majordata[i].major == curval) {

@@ -30,6 +30,8 @@ function infoRequest() {
             state: respObj.userInfo.liveStatus
         };
         appPorto.briefInfo = briefdata;
+        $("#avatar-box").html("<img src='" + respObj.userInfo.userIcon + "' />");
+        $(".porto-img").html("<img src='" + respObj.userInfo.userIcon + "' />");
         if (respObj.userInfo.cvStatus == "0") { //首次编辑页面信息
             appCont.resume.firstEdit = true;
             $(".view").hide();
@@ -269,11 +271,11 @@ var appCont = new Vue({
                 province: "",
                 city: "",
                 district: "",
-                salary: 0,
-                startyear: 2010,
-                startmonth: 2,
-                endyear: 2016,
-                endmonth: 10,
+                salary: "",
+                startyear: "",
+                startmonth: "",
+                endyear: "",
+                endmonth: "",
                 resp: ""
             }],
             edus: [{
@@ -282,21 +284,20 @@ var appCont = new Vue({
                 major: "",
                 submajor: "",
                 exmajor: "",
-                startyear: 2006,
-                startmonth: 2,
-                endyear: 2010,
-                endmonth: 10,
+                startyear: "",
+                startmonth: "",
+                endyear: "",
+                endmonth: "",
                 qualification: "",
-
             }],
             projects: [{
                 show: true,
                 name: "",
                 firma: "",
-                startyear: 2010,
-                startmonth: 2,
-                endyear: 2016,
-                endmonth: 10,
+                startyear: "",
+                startmonth: "",
+                endyear: "",
+                endmonth: "",
                 desc: "",
                 resp: "",
                 achiev: ""
@@ -540,7 +541,17 @@ var appCont = new Vue({
             });
         },
         submit: function() {
-
+            var isFilled = true;
+            $(".edit-must input:visible").each(function(index) {
+                if (this.value == "") {
+                    $(this).addClass("hint-nullable");
+                    isFilled = false;
+                }
+            });
+            if (!isFilled) {
+                alert("请完成必填信息！");
+                return false;
+            }
             this.resume.firstEdit = false;
             postResume("all");
             $(".edit").hide();
@@ -548,14 +559,14 @@ var appCont = new Vue({
         },
         deleteItem: function(type, index) {
             if (type == "worksexp") {
+                delItem("work", appCont.resume.worksExps[index].cvCpyId);
                 this.resume.worksExps.splice(index, 1);
-                postResume("work", "del");
             } else if (type == "edu") {
+                delItem("edu", appCont.resume.edus[index].cvEduId);
                 this.resume.edus.splice(index, 1);
-                postResume("edu", "del");
             } else if (type == "project") {
+                delItem("project", appCont.resume.projects[index].cvProId);
                 this.resume.projects.splice(index, 1);
-                postResume("project", "del");
             }
         },
         stateCss: function(state) {
@@ -741,7 +752,7 @@ function uploadEventBind() {
             cropper = $('.imgBox').cropbox(options);
         }
         reader.readAsDataURL(this.files[0]);
-        this.files = [];
+        this.files = null;
     });
     $('.zoom-in').on('click', function() {
         cropper.zoomIn();
@@ -751,32 +762,21 @@ function uploadEventBind() {
     });
 
     $('#btnSubmit').on('click', function() {
-        //      var img = cropper.getDataURL().replace('data:image/png;base64,', '');
-        //  var url = 'AvatarHandler.ashx';
-        //  var data = {
-        //      action: "add",
-        //      picStr: img
-        //  };
-        //  $.ajax(url, {
-        //      type: 'post',
-        //      data: data,
-        //      success: function (data) {
-        //
-        //      },
-        //      error: function (XMLHttpRequest, textStatus, errorThrown) {
-        //
-        //      }
-        //  });
-        // $('.cropped').append('<img src="' + img + '" align="absmiddle" style="width:64px;margin-top:4px;border-radius:64px;box-shadow:0px 0px 12px #7E7E7E;" ><p>64px*64px</p>');
         var imgsrc = cropper.getDataURL();
-        //console.log(imgsrc);
-        //$("#porto-img").html('');
-        //console.log($("#porto-img").length);
+        if (imgsrc.length > 500 * 1024) {
+            alert("请上传小于500K的头像！");
+            return
+        }
+        var postdata = {
+            userId: parObj.userId,
+            userIcon: imgsrc
+        }
+        EventUtils.ajaxReq("/center/user/uploadIcon", "post", postdata, function(resp, status) {
+            $("#avatar-box").html("<img src='" + resp.data + "' />");
+        });
         $(".porto-img").html("<img src='" + imgsrc + "' />");
         appModal.showUpload = false;
         appModal.showModal = false;
-        //     css("src",cropper.getDataURL());
-
     })
 }
 
@@ -797,7 +797,7 @@ function editEventBind() {
                     appCont.resume.edus[i].show = false;
                 };
                 appCont.resume.edus[0].show = true;
-            case "edu":
+            case "project":
                 for (var i = 0; i < appCont.resume.projects.length; i++) {
                     appCont.resume.projects[i].show = false;
                 };
@@ -946,6 +946,38 @@ function modalEventBind() {
 }
 
 
+function delItem(editType, id) {
+    switch (editType) {
+        case "work":
+            var postdata = {
+                userId: parObj.userId,
+                cvArray: JSON.stringify([{ cvCpyId: id, delFlg: "1" }])
+            };
+            EventUtils.ajaxReq("/user/user/modifyCvCo", "post", postdata, function(resp, status) {
+                console.log(resp, 3);
+            });
+            break;
+        case "edu":
+            var postdata = {
+                userId: parObj.userId,
+                cvArray: JSON.stringify([{ cvEduId: id, delFlg: "1" }])
+            }
+            EventUtils.ajaxReq("/user/user/modifyCvEdu", "post", postdata, function(resp, status) {
+                console.log(resp, 4);
+            });
+            break;
+        case "project":
+            var postdata = {
+                userId: parObj.userId,
+                cvArray: JSON.stringify([{ cvProId: id, delFlg: "1" }])
+            }
+            EventUtils.ajaxReq("/user/user/modifyCvPro", "post", postdata, function(resp, status) {
+                console.log(resp, 5);
+            });
+            break;
+    }
+}
+
 
 function postResume(editType, isDel) {
     if (editType == "all" || editType == "basic") {
@@ -971,11 +1003,11 @@ function postResume(editType, isDel) {
     }
 
     if (editType == "all" || editType == "trade") {
-        if (!isDel) {
-            appCont.resume.expect.province = $(".exp-address .sel-province input").val();
-            appCont.resume.expect.city = $(".exp-address .sel-city input").val();
-            appCont.resume.expect.district = $(".exp-address .sel-district input").val();
-        }
+
+        appCont.resume.expect.province = $(".exp-address .sel-province input").val();
+        appCont.resume.expect.city = $(".exp-address .sel-city input").val();
+        appCont.resume.expect.district = $(".exp-address .sel-district input").val();
+
         var postCvdata = {
             userId: parObj.userId,
             cvId: respObj.cvInfo.cvId,
@@ -995,14 +1027,14 @@ function postResume(editType, isDel) {
     }
 
     if (editType == "all" || editType == "work") {
-        if (!isDel) {
-            var worksArray = $(".work-address");
-            for (var i = 0; i < appCont.resume.worksExps.length; i++) {
-                appCont.resume.worksExps[i].province = worksArray.eq(i).find(".sel-province input").val();
-                appCont.resume.worksExps[i].city = worksArray.eq(i).find(".sel-city input").val();
-                appCont.resume.worksExps[i].district = worksArray.eq(i).find(".sel-district input").val();
-            };
-        }
+
+        var worksArray = $(".work-address");
+        for (var i = 0; i < appCont.resume.worksExps.length; i++) {
+            appCont.resume.worksExps[i].province = worksArray.eq(i).find(".sel-province input").val();
+            appCont.resume.worksExps[i].city = worksArray.eq(i).find(".sel-city input").val();
+            appCont.resume.worksExps[i].district = worksArray.eq(i).find(".sel-district input").val();
+        };
+
         var postCvWorks = [];
         for (var i = 0; i < appCont.resume.worksExps.length; i++) {
             var workexp = {
@@ -1031,14 +1063,14 @@ function postResume(editType, isDel) {
     }
 
     if (editType == "all" || editType == "edu") {
-        if (!isDel) {
-            var majorArray = $(".major-name");
-            for (var j = 0; j < appCont.resume.edus.length; j++) {
-                appCont.resume.edus[j].major = majorArray.eq(j).find(".major-input-1 input").val();
-                appCont.resume.edus[j].submajor = majorArray.eq(j).find(".major-input-2 input").val();
-                appCont.resume.edus[j].exmajor = majorArray.eq(j).find(".ex-major").val();
-            }
+
+        var majorArray = $(".major-name");
+        for (var j = 0; j < appCont.resume.edus.length; j++) {
+            appCont.resume.edus[j].major = majorArray.eq(j).find(".major-input-1 input").val();
+            appCont.resume.edus[j].submajor = majorArray.eq(j).find(".major-input-2 input").val();
+            appCont.resume.edus[j].exmajor = majorArray.eq(j).find(".ex-major").val();
         }
+
         var postCvEdus = [];
         for (var j = 0; j < appCont.resume.edus.length; j++) {
             var edu = {
