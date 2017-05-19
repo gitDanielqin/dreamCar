@@ -546,6 +546,12 @@
 
 /*左右信息超出部分出现省略号*/
 
+.item-block-left h2 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .item-block-left p {
     width: 100%;
     white-space: nowrap;

@@ -185,14 +185,14 @@
                             <div v-else-if="require.demandSrc==2" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W300 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-position.html">{{item.IncPos}}</a></h2>
-                                    <p><span class="maR17 color-orange-f7">{{item.salary}}</span>{{item.major}}<i class="depart">|</i>{{item.exp}}<i class="depart">|</i>{{item.scolar}}</p>
-                                    <p><span class="maR17">【{{item.IncAddr}}】</span>岗位数：{{item.posAmount}}人</p>
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-position.html">{{infoExtrac(item.job)}}</a></h2>
+                                    <p><span class="maR17 color-orange-f7">{{item.salary}}</span>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.workTime}}<i class="depart">|</i>{{item.education}}</p>
+                                    <p><span class="maR17">【{{cityExtrac(item.companyAddress)}}】</span>岗位数：{{item.recruitCount}}人</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH25 maT10">
-                                    <p>{{item.IncName}}</p>
-                                    <p>{{item.IncProps}}<i class="depart">|</i>岗位数：{{item.posAmount}}人</p>
-                                    <p>{{item.publicDate}} {{item.publicTime}}</p>
+                                    <p>{{item.companyName}}</p>
+                                    <p>{{item.companyProperty}}</p>
+                                    <p>发布时间：{{item.updateTime.split(" ")[0]}}</p>
                                 </div>
                                 <div class="operations color-blueL">
                                     <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>

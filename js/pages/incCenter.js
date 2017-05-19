@@ -165,7 +165,6 @@ var appCont = new Vue({
         },
         require: {
             state: "校企合作",
-            period: "全部状态",
             demandSrc: 0,
             curpage: 1,
             totalpages: 1,
@@ -287,6 +286,7 @@ var appCont = new Vue({
         },
         "require.state": function(curval) {
             if (curval == "校企合作") {
+                this.require.demandSrc = 0;
                 var postdata = {
                     userId: parObj.userId,
                     loginIdentifier: parObj.loginId,
@@ -295,6 +295,22 @@ var appCont = new Vue({
                     count: 3
                 }
                 EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
+                    console.log(resp);
+                    appCont.require.totalpages = resp.data.totalPage;
+                    appCont.require.pagesize = resp.data.pageSize;
+                    appCont.require.results = resp.data.list;
+                    appCont.require.totalitems = resp.data.totalRow;
+                })
+                this.require.curpage = 1;
+            } else if (curval == "企业直聘") {
+                this.require.demandSrc = 2;
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    index: 1,
+                    count: 3
+                }
+                EventUtils.ajaxReq("/recruit/getList", "get", postdata, function(resp, status) {
                     console.log(resp);
                     appCont.require.totalpages = resp.data.totalPage;
                     appCont.require.pagesize = resp.data.pageSize;
@@ -376,6 +392,16 @@ var appCont = new Vue({
                 text = EventUtils.infoExtrac(text);
             }
             return text == "不限" || text == undefined ? "" : text;
+        },
+        cityExtrac: function(text) {
+            if (text) {
+                return text.split(";")[1]
+            } else {
+                return "";
+            }
+        },
+        infoToArray: function(text) {
+            return EventUtils.infoToArray(text);
         },
         requireLink: function(demandId) {
             return "detail-company.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + demandId + "&userType=2";
@@ -501,7 +527,14 @@ var appCont = new Vue({
             })
         },
         modItem: function(item) {
-            var link = "incRequire.html?new=0&userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + item.demandId + "&demandType=" + item.demandType + "&demandSrc=" + appCont.require.demandSrc;
+            console.log(item);
+            var link = "incRequire.html?new=0&userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandSrc=" + appCont.require.demandSrc;
+            if (item.demandId) {
+                link += "&demandId=" + item.demandId + "&demandType=" + item.demandType;
+            }
+            if (item.recruitId) {
+                link += "&recruitId=" + item.recruitId;
+            }
             window.open(link, "_blank");
         },
         freshItem: function(item) {
@@ -573,23 +606,43 @@ var appCont = new Vue({
         },
         topage: function(page, type) {
             if (type == "require") {
-                var postdata = {
-                    userId: parObj.userId,
-                    loginIdentifier: parObj.loginId,
-                    demandType: 2,
-                    index: page,
-                    count: 3
-                }
-                EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-                    if (resp.data) {
-                        appCont.require.results = resp.data.list;
-                        appCont.require.totalitems = resp.data.totalRow;
-                        appCont.require.totalpages = resp.data.totalPage;
-                    } else {
-                        appCont.require.results = [];
-                        appCont.require.totalitems = 0;
+                if (this.require.demandSrc == 0) {
+                    var postdata = {
+                        userId: parObj.userId,
+                        loginIdentifier: parObj.loginId,
+                        demandType: 2,
+                        index: page,
+                        count: 3
                     }
-                })
+                    EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
+                        if (resp.data) {
+                            appCont.require.results = resp.data.list;
+                            appCont.require.totalitems = resp.data.totalRow;
+                            appCont.require.totalpages = resp.data.totalPage;
+                        } else {
+                            appCont.require.results = [];
+                            appCont.require.totalitems = 0;
+                        }
+                    })
+                } else if (this.require.demandSrc == 2) {
+                    var postdata = {
+                        userId: parObj.userId,
+                        loginIdentifier: parObj.loginId,
+                        index: page,
+                        count: 3
+                    }
+                    EventUtils.ajaxReq("/recruit/getList", "get", postdata, function(resp, status) {
+                        if (resp.data) {
+                            appCont.require.results = resp.data.list;
+                            appCont.require.totalitems = resp.data.totalRow;
+                            appCont.require.totalpages = resp.data.totalPage;
+                        } else {
+                            appCont.require.results = [];
+                            appCont.require.totalitems = 0;
+                        }
+                    })
+                }
+
                 this.require.curpage = page;
             } else if (type == "collect") {
                 var postdata = {

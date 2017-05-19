@@ -112,12 +112,12 @@
             },
             "showMajor1": function(curval) {
                 if (curval) {
-                    initPop();
+                    initPos();
                 }
             },
             "showMajor2": function(curval) {
                 if (curval) {
-                    initPop();
+                    initPos();
                 }
             },
             "selSubMajor": function(curval) {
@@ -130,17 +130,7 @@
         }
     })
 
-    function initPop() {
-        $(".pop-major-box .major-input input").each(function() {
-            if (!this.initFlag) {
-                $(this).width($(this).width() - 20);
-                $(this).css("padding-right", 20 + "px");
-                var bgPos = $(this).width() + 10 + "px center";
-                $(this).attr("disabled", "true").css("background-position", bgPos);
-                this.initFlag = true;
-            }
-        });
-
+    function initPos() {
         $(".pop-major-1").each(function() {
             if (!this.initFlag) {
                 $(this).css({
@@ -160,7 +150,18 @@
                 this.initFlag = true;
             }
         });
+    }
 
+    function initPop() {
+        $(".pop-major-box .major-input input").each(function() {
+            if (!this.initFlag) {
+                $(this).width($(this).width() - 20);
+                $(this).css("padding-right", 20 + "px");
+                var bgPos = $(this).width() + 10 + "px center";
+                $(this).attr("disabled", "true").css("background-position", bgPos);
+                this.initFlag = true;
+            }
+        });
     }
 
 })();

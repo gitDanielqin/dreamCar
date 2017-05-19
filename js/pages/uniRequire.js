@@ -13,15 +13,17 @@ if (parObj.new && parObj.new != "1") { //非新需求
             respObj = resp.data;
             console.log(respObj);
             if (pageindex == "0") { //如果是校企合作需求详情
+                var initAddr = "";
+                var initPos = "";
                 if (respObj.companyAddress) {
-                    var initAddr = {
+                    initAddr = {
                         province: respObj.companyAddress.split(";")[0],
                         city: respObj.companyAddress.split(";")[1],
                         district: respObj.companyAddress.split(";")[2]
                     }
                 }
                 if (respObj.job) {
-                    var initPos = {
+                    initPos = {
                         pos_1: respObj.job.split(";")[0],
                         pos_2: respObj.job.split(";")[1],
                         pos_3: respObj.job.split(";")[2]
@@ -31,11 +33,7 @@ if (parObj.new && parObj.new != "1") { //非新需求
                     datatype: "combi",
                     header: respObj.title,
                     initAddress: initAddr,
-                    initPosition: {
-                        pos_1: respObj.job.split(";")[0],
-                        pos_2: respObj.job.split(";")[1],
-                        pos_3: respObj.job.split(";")[2]
-                    },
+                    initPosition: initPos,
                     uniApply: {
                         stuScale: respObj.professionCount,
                         trainWay: respObj.trainType,
@@ -49,7 +47,7 @@ if (parObj.new && parObj.new != "1") { //非新需求
                     contact: {
                         person: respObj.linkMan,
                         phone: respObj.mobile,
-                        address: respObj.schoolAddress.split(";").join("-")
+                        address: respObj.schoolAddress ? respObj.schoolAddress.split(";").join("-") : ""
                     }
                 }
                 appMain.combiData = combidata;
@@ -77,7 +75,8 @@ if (parObj.new && parObj.new != "1") { //非新需求
 var appTop = new Vue({
     el: "#app-top",
     data: {
-        centerLink: "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId
+        centerLink: "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId,
+        homeLink: "index.html?userId=" + parObj.userId
     },
     methods: {
         showMsg: function() {
@@ -185,6 +184,9 @@ var appMain = new Vue({
             $(".steps li:nth-of-type(2)").removeClass("on");
         },
         fontCal: function(str, type) {
+            if (!str) {
+                return 1000
+            }
             if (str.length <= 1000) {
                 return (1000 - str.length);
             } else {
@@ -221,6 +223,18 @@ var appMain = new Vue({
             }
         },
         publishReq: function() {
+            var isValid = true;
+            alert($(".phone-input:visible").length);
+            $(".phone-input:visible").each(function() {
+                if (!variableUtils.regExp.phone.test(this.value) && !variableUtils.regExp.mobile.test(this.value)) {
+                    $(this).addClass("hint-nullable");
+                    isValid = false;
+                }
+            });
+            if (!isValid) {
+                alert("请检查信息是否正确！");
+                return false;
+            }
             if ($(".cont-combi .time-table").find("td.on").length > 0) {
                 var timestring = "";
                 $(".cont-combi .time-table .time-tr").each(function() {

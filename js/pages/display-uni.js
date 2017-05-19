@@ -127,6 +127,7 @@ var appTop = new Vue({
 var appQuery = new Vue({
     el: "#app-query",
     data: {
+        homeLink: appTop.isLogin ? "index.html?userId=" + parObj.userId : "index.html",
         database: {
             uni: {
                 majors: majorArray,

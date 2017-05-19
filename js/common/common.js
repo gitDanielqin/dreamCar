@@ -63,7 +63,15 @@ function readFileFirefox(fileBrowser) {
     return file.path;
 }
 
-// 计算日期差值
+var variableUtils = {
+        regExp: {
+            mobile: /^1[34578]\d{9}$/,
+            email: /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/,
+            password: /^[a-zA-Z0-9]{6,16}$/,
+            phone: /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/
+        }
+    }
+    // 计算日期差值
 function diffDay(dateObj) {
     var nowDate = new Date();
     aDate = dateObj.split("-");
@@ -108,6 +116,13 @@ var EventUtils = {
                         return infoArray[i];
                     }
                 }
+            } else {
+                return "";
+            }
+        },
+        infoToArray: function(info) {
+            if (info != undefined || info != "") {
+                return info.split(";")
             } else {
                 return "";
             }

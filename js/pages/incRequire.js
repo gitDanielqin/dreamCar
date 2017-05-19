@@ -3,7 +3,13 @@ var isNewRequire = true;
 var respObj = {};
 if (parObj.new && parObj.new != "1") { //非首次发布
     isNewRequire = false;
-    (function() {
+    infoRequest()
+}
+
+function infoRequest() {
+    // if(parObj.demandSrc==0){
+    if (parObj.demandSrc == "0") { //如果是校企合作需求详情     
+
         var postdata = {
             userId: parObj.userId,
             loginIdentifier: parObj.loginId,
@@ -12,38 +18,38 @@ if (parObj.new && parObj.new != "1") { //非首次发布
         EventUtils.ajaxReq("/demand/getInfo", "get", postdata, function(resp, status) {
             respObj = resp.data;
             console.log(respObj);
-            if (parObj.demandSrc == "0") { //如果是校企合作需求详情
-                var combidata = {
-                    datatype: "combi",
-                    header: respObj.title,
-                    initAddress: {
-                        province: respObj.schoolAddress.split(";")[0],
-                        city: respObj.schoolAddress.split(";")[1],
-                        district: respObj.schoolAddress.split(";")[2]
-                    },
-                    initPosition: {
-                        pos_1: respObj.job.split(";")[0],
-                        pos_2: respObj.job.split(";")[1],
-                        pos_3: respObj.job.split(";")[2]
-                    },
-                    incReq: {
-                        stuScale: respObj.professionCount,
-                        uniLevel: respObj.schoolProperty,
-                        uniClassific: respObj.schoolType
-                    },
-                    incApply: {
-                        posAmount: respObj.jobCount,
-                        trainWay: respObj.trainType,
-                    },
-                    requireDesc: respObj.discription,
-                    contact: {
-                        person: respObj.linkMan,
-                        phone: respObj.mobile,
-                        address: respObj.companyAddress.split(";").join("-")
-                    }
+
+            var combidata = {
+                datatype: "combi",
+                header: respObj.title,
+                initAddress: {
+                    province: respObj.schoolAddress.split(";")[0],
+                    city: respObj.schoolAddress.split(";")[1],
+                    district: respObj.schoolAddress.split(";")[2]
+                },
+                initPosition: {
+                    pos_1: respObj.job.split(";")[0],
+                    pos_2: respObj.job.split(";")[1],
+                    pos_3: respObj.job.split(";")[2]
+                },
+                incReq: {
+                    stuScale: respObj.professionCount,
+                    uniLevel: respObj.schoolProperty,
+                    uniClassific: respObj.schoolType
+                },
+                incApply: {
+                    posAmount: respObj.jobCount,
+                    trainWay: respObj.trainType,
+                },
+                requireDesc: respObj.discription,
+                contact: {
+                    person: respObj.linkMan,
+                    phone: respObj.mobile,
+                    address: respObj.companyAddress.split(";").join("-")
                 }
-                appMain.combiData = combidata;
-            };
+            }
+            appMain.combiData = combidata;
+
             $(".cont-combi .major-input-1 input").val(respObj.profession.split(";")[0]);
             $(".cont-combi .major-input-2 input").val(respObj.profession.split(";")[1]);
             //初始化联合培养时间表
@@ -57,12 +63,76 @@ if (parObj.new && parObj.new != "1") { //非首次发布
                 }
             }
         });
-    })()
+    }
+
+    if (parObj.demandSrc == "2") { //如果是企业直聘需求详情 
+        var postdata = {
+            userId: parObj.userId,
+            loginIdentifier: parObj.loginId,
+            recruitId: parObj.recruitId,
+        }
+        console.log(postdata);
+        EventUtils.ajaxReq("/recruit/getInfo", "get", postdata, function(resp, status) {
+            respObj = resp.data;
+            console.log(respObj);
+            var gender = "";
+            switch (respObj.sex) {
+                case "1":
+                    gender = "男";
+                    break;
+                case "2":
+                    gender = "女";
+                    break;
+                case "3":
+                    gender = "不限";
+                    break;
+            }
+            if (respObj.job) {
+                var initpos = {
+                    pos_1: respObj.job.split(";")[0],
+                    pos_2: respObj.job.split(";")[1],
+                    pos_3: respObj.job.split(";")[2]
+                }
+            } else {
+                var initpos = ""
+            }
+            if (respObj.profession) {
+                $(".cont-direct .major-input-1 input").val(respObj.profession.split(";")[0]);
+                $(".cont-direct .major-input-2 input").val(respObj.profession.split(";")[1]);
+            }
+            if (respObj.welfare) {
+                var welfareArray = respObj.welfare.split(";");
+                $(".cont-direct .welfare-lis li").each(function() {
+                    if (welfareArray.indexOf($(this).find("span").html()) > 0) {
+                        $(this).find("i.check-box").addClass("on");
+                    }
+                });
+            }
+            var directdata = {
+                datatype: "direct",
+                header: respObj.title,
+                initPosition: initpos,
+                amount: respObj.recruitCount,
+                scolar: respObj.education,
+                gender: gender,
+                worksexp: respObj.workTime,
+                salary: respObj.salary,
+                desc: respObj.discription,
+                contact: {
+                    person: respObj.linkMan,
+                    phone: respObj.mobile,
+                    address: respObj.companyAddress ? respObj.companyAddress.split(";").join("-") : ""
+                }
+            };
+            appMain.directData = directdata;
+        })
+    }
 };
 
 var appTop = new Vue({
     el: "#app-top",
     data: {
+        homeLink: "index.html?userId=" + parObj.userId,
         centerLink: "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId
     },
     methods: {
@@ -218,6 +288,17 @@ var appMain = new Vue({
             addBox.hide();
         },
         publish: function(type) {
+            var isValid = true;
+            $(".phone-input:visible").each(function() {
+                if (!variableUtils.regExp.phone.test(this.value) && !variableUtils.regExp.mobile.test(this.value)) {
+                    $(this).addClass("hint-nullable");
+                    isValid = false;
+                }
+            });
+            if (!isValid) {
+                alert("请检查信息是否正确！");
+                return false;
+            }
             if (type == "combi") {
                 if ($(".cont-combi .time-table").find("td.on").length > 0) {
                     var timestring = "";
@@ -267,6 +348,43 @@ var appMain = new Vue({
                     })
                 }
 
+            } else if (type == "recruit") {
+                var sex = 1;
+                if (this.directData.gender == "女") {
+                    sex = 2;
+                } else if (this.directData.gender == "不限") {
+                    sex = 3;
+                }
+                var welfare = "";
+                $(".welfare-lis li").each(function() {
+                    if ($(this).children("i.check-box").hasClass("on")) {
+                        welfare += $(this).find("span").html() + ";"
+                    }
+                });
+                welfare = welfare.slice(0, -2);
+                var postdata = {
+                    userId: parObj.userId,
+                    title: this.directData.header,
+                    job: $(".cont-direct .sel-pos-1 input").val() + ";" + $(".cont-direct .sel-pos-2 input").val() + ";" + $(".cont-direct .sel-pos-3 input").val(),
+                    profession: $(".cont-direct .major-input-1 input").val() + ";" + $(".cont-direct .major-input-2 input").val(),
+                    recruitCount: this.directData.amount,
+                    education: this.directData.scolar,
+                    sex: sex,
+                    salary: this.directData.salary,
+                    workTime: this.directData.worksexp,
+                    welfare: welfare,
+                    discription: this.directData.desc,
+                    linkMan: this.directData.contact.person,
+                    mobile: this.directData.contact.phone,
+                    companyAddress: this.directData.contact.address != "" ? this.directData.contact.address.split("-").join(";") : ""
+                }
+                console.log(postdata);
+                if (isNewRequire) {
+                    EventUtils.ajaxReq('/recruit/apply', 'post', postdata, function(resp, status) {
+                        console.log(resp);
+                        window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                    })
+                }
             }
         }
     },
@@ -283,7 +401,6 @@ var appMain = new Vue({
         })
         selectInitInput();
         selectInitPos();
-        selectInit();
         selectTime();
         selectWelfare();
     }
@@ -313,14 +430,6 @@ function selectRepos() {
     });
 }
 
-function selectInit() {
-    $(".major-input input").each(function(index) {
-        $(this).width($(this).width() - 20);
-        $(this).css("padding-right", 20 + "px");
-        var bgPos = $(this).width() + 10 + "px center";
-        $(this).attr("disabled", "true").css("background-position", bgPos);
-    })
-}
 //时间表选择事件
 function selectTime() {
     $(".time-table .t-cell").click(function() {

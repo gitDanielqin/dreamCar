@@ -12,11 +12,11 @@
 <body>
     <div class="top bg-gray3 H100 color-white" id="app-top" v-cloak>
         <div class="inner">
-            <img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" />
+            <a :href="homeLink"><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" /></a>
             <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
             <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">企业中心</h2>
             <div class="fr navs maT42">
-                <a href="index.html"><i class="pic-icon icon-home"></i></a>
+                <a :href="homeLink"><i class="pic-icon icon-home"></i></a>
                 <a :href="centerLink"><i class="pic-icon icon-account"></i></a>
                 <a class="msg-center pRel" href="#" @click.prevent="showMsg"><i class="pic-icon icon-msg"></i><i class="msg-info">99</i></a>
             </div>
@@ -48,7 +48,7 @@
             <div class="nav-cont cont-combi" v-show="showpage.page1">
                 <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写校企合作信息</h2>
                 <div class="form-cont paLeft68">
-                    <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="combiData.header" /></p>
+                    <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="combiData.header" /><span class="color-red">（请小于12个字）</span></p>
                     <h3 class="LH-H75 fSize18 maT11">我对高校的要求</h3>
                     <p class="form-item"><label>专业名称</label>
                         <major-pop :majordata="database.uni.majors" class="disInline"></major-pop>
@@ -122,7 +122,7 @@
                     <p class="form-item pRel"><label>需求描述</label><textarea v-model="combiData.requireDesc" class="form-desc"></textarea><span class="fSize14 LH40 color-gray-c desc-hint">你还可以输入{{fontCal(combiData.requireDesc,combiData.datatype)}} 字</span></p>
                     <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
                     <p class="form-item"><label>联系人</label><input type="text" v-model="combiData.contact.person" /></p>
-                    <p class="form-item"><label>联系电话</label><input type="text" v-model="combiData.contact.phone" /></p>
+                    <p class="form-item"><label>联系电话</label><input type="text" class="phone-input" v-model="combiData.contact.phone" /></p>
                     <div class="form-item inc-addr pRel"><label>公司地址</label><input type="text" v-model="combiData.contact.address" class="dis-Addr" disabled/><span class="color-red maL18 cur-pointer" @click.stop="popAddrBox($event.target)">请完善地址</span>
                         <div class="addr-box disNo" @click.stop="">
                             <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
@@ -136,13 +136,18 @@
             <div class="nav-cont cont-recruit" v-show="showpage.page2">
                 <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写招聘会信息</h2>
                 <div class="form-cont paLeft68">
-                    <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="recruitData.header" /></p>
+                    <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="recruitData.header" /><span class="color-red">（请小于12个字）</span></p>
                     <p class="form-item maT28"><label>职位类别</label>
                         <pos-select :posdata="database.posdata"></pos-select>
                     </p>
-                    <p class="form-item"><label>招聘人数</label><input type="text" v-model="recruitData.amount" />人</p>
+                    <p class="form-item"><label>招聘人数</label>
+                        <input type="text" v-model="recruitData.amount" />人
+                    </p>
                     <p class="form-item"><label>学历要求</label>
                         <dropdown :options="database.uni.scolars" placeholder="" v-model="recruitData.scolar"></dropdown>
+                    </p>
+                    <p class="form-item"><label>专业要求</label>
+                        <major-pop :majordata="database.uni.majors" class="disInline"></major-pop>
                     </p>
                     <p class="form-item"><label>性别</label>
                         <dropdown :options="['男','女','不限']" placeholder="" v-model="recruitData.gender"></dropdown>
@@ -164,7 +169,7 @@
                     <p class="form-item pRel"><label>招聘会描述</label><textarea v-model="recruitData.desc" class="form-desc"></textarea><span class="fSize14 LH40 color-gray-c desc-hint">你还可以输入{{fontCal(recruitData.desc,recruitData.datatype)}} 字</span></p>
                     <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
                     <p class="form-item"><label>联系人</label><input type="text" v-model="recruitData.contact.person" /></p>
-                    <p class="form-item"><label>联系电话</label><input type="text" v-model="recruitData.contact.phone" /></p>
+                    <p class="form-item"><label>联系电话</label><input type="text" class="phone-input" v-model="recruitData.contact.phone" /></p>
                     <div class="form-item inc-addr pRel"><label>招聘会地点</label><input type="text" v-model="recruitData.contact.address" class="dis-Addr" disabled/><span class="color-red maL18 cur-pointer" @click.stop="popAddrBox($event.target)">请完善地址</span>
                         <div class="addr-box disNo" @click.stop="">
                             <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
@@ -178,13 +183,18 @@
             <div class="nav-cont cont-direct" v-show="showpage.page3">
                 <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写直聘信息</h2>
                 <div class="form-cont paLeft68">
-                    <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="directData.header" /></p>
+                    <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="directData.header" /><span class="color-red">（请小于12个字）</span></p>
                     <p class="form-item maT28"><label>职位类别</label>
-                        <pos-select :posdata="database.posdata"></pos-select>
+                        <pos-select :posdata="database.posdata" :initpos="directData.initPosition"></pos-select>
                     </p>
-                    <p class="form-item"><label>招聘人数</label><input type="text" v-model="directData.amount" />人</p>
+                    <p class="form-item"><label>招聘人数</label>
+                        <input type="text" v-model="directData.amount" />人
+                    </p>
                     <p class="form-item"><label>学历要求</label>
                         <dropdown :options="database.uni.scolars" placeholder="" v-model="directData.scolar"></dropdown>
+                    </p>
+                    <p class="form-item"><label>专业要求</label>
+                        <major-pop :majordata="database.uni.majors" class="disInline"></major-pop>
                     </p>
                     <p class="form-item"><label>性别</label>
                         <dropdown :options="['男','女','不限']" placeholder="" v-model="directData.gender"></dropdown>
@@ -205,7 +215,7 @@
                     <p class="form-item pRel"><label>职位描述</label><textarea v-model="directData.desc" class="form-desc"></textarea><span class="fSize14 LH40 color-gray-c desc-hint">你还可以输入{{fontCal(directData.desc,directData.datatype)}} 字</span></p>
                     <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
                     <p class="form-item"><label>联系人</label><input type="text" v-model="directData.contact.person" /></p>
-                    <p class="form-item"><label>联系电话</label><input type="text" v-model="directData.contact.phone" /></p>
+                    <p class="form-item"><label>联系电话</label><input type="text" class="phone-input" v-model="directData.contact.phone" /></p>
                     <div class="form-item inc-addr pRel"><label>工作地点</label><input type="text" v-model="directData.contact.address" class="dis-Addr" disabled/><span class="color-red maL18 cur-pointer" @click.stop="popAddrBox($event.target)">请完善地址</span>
                         <div class="addr-box disNo" @click.stop="">
                             <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
@@ -213,7 +223,7 @@
                             <p><button class="confirm-btn" @click.stop="confirmIncAddr($event.target,directData.datatype)">确认</button></p>
                         </div>
                     </div>
-                    <button class="confirm-publish-btn">确认发布</button>
+                    <button class="confirm-publish-btn" @click.stop="publish('recruit')">确认发布</button>
                 </div>
             </div>
         </div>
