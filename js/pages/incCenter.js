@@ -371,14 +371,11 @@ var appCont = new Vue({
         }
     },
     methods: {
-        infoCtrl: function(text) {
+        infoExtrac: function(text) {
             if (text) {
                 text = EventUtils.infoExtrac(text);
             }
             return text == "不限" || text == undefined ? "" : text;
-        },
-        infoExtrac: function(item) {
-            return EventUtils.infoExtrac(item);
         },
         requireLink: function(demandId) {
             return "detail-company.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + demandId + "&userType=2";
@@ -495,24 +492,12 @@ var appCont = new Vue({
             }
 
             EventUtils.ajaxReq("/demand/delInfo", "post", postdata, function(resp, status) {
-                var getdata = {
-                    userId: parObj.userId,
-                    loginIdentifier: parObj.loginId,
-                    demandType: 2,
-                    index: appCont.require.curpage,
-                    count: 3
+                if (appCont.require.results.length == 1 && appCont.require.curpage > 1) {
+                    appCont.require.curpage -= 1;
                 }
-                EventUtils.ajaxReq("/demand/getList", "get", getdata, function(resp, status) {
-                        if (resp.data) {
-                            appCont.require.results = resp.data.list;
-                            appCont.require.totalpages = resp.data.totalPage;
-                            appCont.require.totalitems = resp.data.totalRow;
-                        } else {
-                            appCont.require.results = [];
-                            appCont.require.totalitems = 0;
-                        }
-                    })
-                    //alert(resp.info);
+                $(".requireBox .pagination a.page").eq(appCont.require.curpage - 1).parent().trigger("click");
+
+                //alert(resp.info);
             })
         },
         modItem: function(item) {
@@ -596,7 +581,14 @@ var appCont = new Vue({
                     count: 3
                 }
                 EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-                    appCont.require.results = resp.data.list;
+                    if (resp.data) {
+                        appCont.require.results = resp.data.list;
+                        appCont.require.totalitems = resp.data.totalRow;
+                        appCont.require.totalpages = resp.data.totalPage;
+                    } else {
+                        appCont.require.results = [];
+                        appCont.require.totalitems = 0;
+                    }
                 })
                 this.require.curpage = page;
             } else if (type == "collect") {
@@ -607,10 +599,17 @@ var appCont = new Vue({
                     count: 3
                 }
                 EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function(resp, status) {
-                    console.log(resp);
-                    appCont.collect.results = resp.data.list;
+                    if (resp.data) {
+                        appCont.collect.results = resp.data.list;
+                        appCont.collect.totalitems = resp.data.totalRow;
+                        appCont.collect.totalpages = resp.data.totalPage;
+                    } else {
+                        appCont.collect.results = [];
+                        appCont.collect.totalitems = 0;
+                    }
                 })
                 this.collect.curpage = page;
+                // console.log($(".collectBox .pagination a.page").eq(appCont.collect.curpage - 1).parent()[0]);
             } else if (type == "msg-combi") {
                 this.message.combi.curpage = page;
             } else if (type == "msg-recruit") {
@@ -666,23 +665,25 @@ var appCont = new Vue({
                 if (appCont.collect.results.length == 1 && appCont.collect.curpage > 1) {
                     appCont.collect.curpage -= 1;
                 }
-                var getdata = {
-                    userId: parObj.userId,
-                    loginIdentifier: parObj.loginId,
-                    index: appCont.collect.curpage,
-                    count: 3
-                }
-                EventUtils.ajaxReq("/demand/getMarkList", "get", getdata, function(resp, status) {
-                    console.log(resp);
-                    if (resp.data) {
-                        appCont.collect.results = resp.data.list;
-                        appCont.collect.totalpages = resp.data.totalPage;
-                        appCont.collect.totalitems = resp.data.totalRow;
-                    } else {
-                        appCont.collect.results = [];
-                        appCont.collect.totalitems = 0;
-                    }
-                })
+
+                $(".collectBox .pagination a.page").eq(appCont.collect.curpage - 1).parent().trigger("click");
+                // var getdata = {
+                //     userId: parObj.userId,
+                //     loginIdentifier: parObj.loginId,
+                //     index: appCont.collect.curpage,
+                //     count: 3
+                // }
+                // EventUtils.ajaxReq("/demand/getMarkList", "get", getdata, function(resp, status) {
+                //     console.log(resp);
+                //     if (resp.data) {
+                //         appCont.collect.results = resp.data.list;
+                //         appCont.collect.totalpages = resp.data.totalPage;
+                //         appCont.collect.totalitems = resp.data.totalRow;
+                //     } else {
+                //         appCont.collect.results = [];
+                //         appCont.collect.totalitems = 0;
+                //     }
+                // })
             })
         },
         modifyMobile: function() {

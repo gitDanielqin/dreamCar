@@ -13,14 +13,24 @@ if (parObj.new && parObj.new != "1") { //非新需求
             respObj = resp.data;
             console.log(respObj);
             if (pageindex == "0") { //如果是校企合作需求详情
-                var combidata = {
-                    datatype: "combi",
-                    header: respObj.title,
-                    initAddress: {
+                if (respObj.companyAddress) {
+                    var initAddr = {
                         province: respObj.companyAddress.split(";")[0],
                         city: respObj.companyAddress.split(";")[1],
                         district: respObj.companyAddress.split(";")[2]
-                    },
+                    }
+                }
+                if (respObj.job) {
+                    var initPos = {
+                        pos_1: respObj.job.split(";")[0],
+                        pos_2: respObj.job.split(";")[1],
+                        pos_3: respObj.job.split(";")[2]
+                    }
+                }
+                var combidata = {
+                    datatype: "combi",
+                    header: respObj.title,
+                    initAddress: initAddr,
                     initPosition: {
                         pos_1: respObj.job.split(";")[0],
                         pos_2: respObj.job.split(";")[1],

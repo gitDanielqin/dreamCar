@@ -1,9 +1,13 @@
 var isLogin = false;
 var parObj = EventUtils.urlExtrac(window.location); //地址参数对象
 var respObj = {}; //页面信息
+var accountObj = {}; // 用户信息
 function infoRequest() {
     var postdemand = {
         demandId: parObj.demandId
+    }
+    if (parObj.userId) {
+        postdemand.userId = parObj.userId;
     }
     EventUtils.ajaxReq("/demand/getInfo", "get", postdemand, function(resp, status) {
         respObj = resp.data;
@@ -20,7 +24,7 @@ function infoRequest() {
             title: respObj.title,
             viewed: 30,
             applied: 15,
-            publicDate: respObj.updateTime.split(" ")[0]
+            publicDate: respObj.updateTime ? respObj.updateTime.split(" ")[0] : []
         };
         appBanner.incdata = briefdata;
         var addArray = respObj.schoolAddress.split(';');
@@ -38,21 +42,32 @@ function infoRequest() {
         appMain.incdata.demand = demandinfo;
         //初始化联合培养时间表
         $("#train-table .date-aval").removeClass("date-aval");
-        var timeArray = respObj.trainTime.split(";");
-        for (var i = 0; i < timeArray.length; i++) {
-            for (var j = 0; j < timeArray[i].length; j++) {
-                if (timeArray[i].charAt(j) == "1") {
-                    $("#train-table .date-tr").eq(i).find("td").eq(j + 1).addClass("date-aval");
+        if (respObj.trainTime) {
+            var timeArray = respObj.trainTime.split(";");
+            for (var i = 0; i < timeArray.length; i++) {
+                for (var j = 0; j < timeArray[i].length; j++) {
+                    if (timeArray[i].charAt(j) == "1") {
+                        $("#train-table .date-tr").eq(i).find("td").eq(j + 1).addClass("date-aval");
+                    }
                 }
             }
         }
+        //判断是否已收藏
+        if (respObj.markStatus == "1") {
+            $("#app-banner .btn-collec").addClass("collected");
+            $("#app-banner .btn-collec span").html("已收藏");
+        }
+
     });
+
     if (parObj.userId) {
+        console.log(parObj.userId);
         var getdata = {
             userId: parObj.userId
         }
         EventUtils.ajaxReq("/center/user/getInfo", "get", getdata, function(resp, status) {
-            appTop.userName = resp.data.name;
+            accountObj = resp.data;
+            appTop.userName = resp.data.userName;
             appTop.isLogin = true;
             appTop.userType = resp.data.userType
         })
@@ -106,6 +121,8 @@ var appTop = new Vue({
         },
         logout: function() {
             this.isLogin = false;
+            $("#app-banner .btn-collec").removeClass("collected");
+            $("#app-banner .btn-collec span").html("收 藏");
             appModal.login.account = "";
             appModal.login.password = "";
         }
@@ -125,6 +142,10 @@ var appBanner = new Vue({
         collect: function(obj) {
             if (parObj.userId == respObj.userId) {
                 alert("无法收藏自己的需求！");
+                return false;
+            }
+            if (respObj.demandType == accountObj.userType) {
+                alert("抱歉，目前您不能收藏企业的需求！");
                 return false;
             }
             if (!$(obj).hasClass("btn-collec")) {
@@ -295,11 +316,24 @@ var appModal = new Vue({
                 parObj.userId = resp.data.userId;
                 parObj.loginId = resp.data.loginIdentifier;
                 parObj.userType = resp.data.userType;
+                accountObj = resp.data;
                 appTop.userType = resp.data.userType;
                 appTop.userName = resp.data.name;
                 appTop.isLogin = true;
                 appModal.showModal = false;
                 appModal.showLogin = false;
+
+                var postdemand = {
+                    demandId: parObj.demandId,
+                    userId: accountObj.userId
+                }
+                EventUtils.ajaxReq("/demand/getInfo", "get", postdemand, function(resp, status) {
+                    if (resp.data.markStatus == "1") {
+                        $("#app-banner .btn-collec").addClass("collected");
+                        $("#app-banner .btn-collec span").html("已收藏");
+                    }
+                });
+
                 var state = {
                     title: document.title,
                     url: document.location.href,

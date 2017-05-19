@@ -399,9 +399,6 @@ var appCont = new Vue({
         }
     },
     methods: {
-        infoExtrac: function(item) {
-            return EventUtils.infoExtrac(item);
-        },
         changeComLicense: function(obj) {
             if (obj.files[0].size > 3 * 1024 * 1204) {
                 alert("请上传小于3M的文件！");
@@ -435,7 +432,10 @@ var appCont = new Vue({
                 appModal.show.preImg = true;
             }
         },
-        infoCtrl: function(text) {
+        infoExtrac: function(text) {
+            if (text) {
+                text = EventUtils.infoExtrac(text);
+            }
             return text == "不限" || text == undefined ? "" : text;
         },
         requireLink: function(demandId) {
@@ -609,26 +609,11 @@ var appCont = new Vue({
                 loginIdentifier: parObj.loginId,
                 demandId: item.demandId
             }
-
             EventUtils.ajaxReq("/demand/delInfo", "post", postdata, function(resp, status) {
-                var getdata = {
-                    userId: parObj.userId,
-                    loginIdentifier: parObj.loginId,
-                    demandType: 1,
-                    index: appCont.require.curpage,
-                    count: 3
+                if (appCont.require.results.length == 1 && appCont.require.curpage > 1) {
+                    appCont.require.curpage -= 1;
                 }
-                EventUtils.ajaxReq("/demand/getList", "get", getdata, function(resp, status) {
-                        if (resp.data) {
-                            appCont.require.results = resp.data.list;
-                            appCont.require.totalpages = resp.data.totalPage;
-                            appCont.require.totalitems = resp.data.totalRow;
-                        } else {
-                            appCont.require.results = [];
-                            appCont.require.totalitems = 0;
-                        }
-                    })
-                    //alert(resp.info);
+                $(".requireBox .pagination a.page").eq(appCont.require.curpage - 1).parent().trigger("click");
             })
         },
         freshItem: function(item) {
@@ -703,10 +688,31 @@ var appCont = new Vue({
                 EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
                     if (resp.data) {
                         appCont.require.results = resp.data.list;
+                        appCont.require.totalitems = resp.data.totalRow;
+                        appCont.require.totalpages = resp.data.totalPage;
+                    } else {
+                        appCont.require.results = [];
+                        appCont.require.totalitems = 0;
                     }
                 })
                 this.require.curpage = page;
             } else if (type == "collect") {
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    index: page,
+                    count: 3
+                }
+                EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function(resp, status) {
+                    if (resp && resp.data) {
+                        appCont.collect.results = resp.data.list;
+                        appCont.collect.totalitems = resp.data.totalRow;
+                        appCont.collect.totalpages = resp.data.totalPage;
+                    } else {
+                        appCont.collect.results = [];
+                        appCont.collect.totalitems = 0;
+                    }
+                })
                 this.collect.curpage = page;
             } else if (type == "msg-combi") {
                 this.message.combi.curpage = page;
@@ -737,26 +743,13 @@ var appCont = new Vue({
                 demandId: demandId,
                 id: id
             }
-            console.log(postdata);
             EventUtils.ajaxReq("/demand/delMarkInfo", "post", postdata, function(resp, status) {
-                console.log(resp);
-                var getdata = {
-                    userId: parObj.userId,
-                    loginIdentifier: parObj.loginId,
-                    index: appCont.collect.curpage,
-                    count: 3
+                if (appCont.collect.results.length == 1 && appCont.collect.curpage > 1) {
+                    appCont.collect.curpage -= 1;
                 }
-                EventUtils.ajaxReq("/demand/getMarkList", "get", getdata, function(resp, status) {
-                    console.log(resp);
-                    if (resp.data) {
-                        appCont.collect.results = resp.data.list;
-                        appCont.collect.totalpages = resp.data.totalPage;
-                        appCont.collect.totalitems = resp.data.totalRow;
-                    } else {
-                        appCont.collect.results = [];
-                        appCont.collect.totalitems = 0;
-                    }
-                })
+                console.log(resp);
+                $(".collectBox .pagination a.page").eq(appCont.collect.curpage - 1).parent().trigger("click");
+
             })
         },
         applyCollect: function(demandId) {
@@ -1238,28 +1231,16 @@ function navEventBind() {
                 count: 3
             };
             EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function(resp, status) {
-                console.log(resp.data);
-                appCont.collect.curpage = 1;
-                appCont.collect.totalpages = resp.data.totalPage;
-                appCont.collect.totalitems = resp.data.totalRow;
-                dataList = [];
-                for (var i = 0; i < resp.data.list.length; i++) {
-                    var dataItem = {
-                        pos: EventUtils.infoExtrac(resp.data.list[i].job),
-                        major: EventUtils.infoExtrac(resp.data.list[i].profession),
-                        stuScale: resp.data.list[i].professionCount,
-                        IncName: resp.data.list[i].userName,
-                        publicDate: resp.data.list[i].updateTime.split(" ")[0],
-                        IncProps: resp.data.list[i].userProperty,
-                        trainType: resp.data.list[i].trainType,
-                        IncScale: resp.data.list[i].userScale,
-                        IncArea: resp.data.list[i].userType,
-                        uniLevel: resp.data.list[i].schoolType,
-                        date: resp.data.list[i].collectTime.split(" ")[0]
-                    };
-                    dataList.push(dataItem);
-                };
-                appCont.collect.results = dataList;
+                if (resp.data) {
+                    appCont.collect.curpage = 1;
+                    appCont.collect.totalpages = resp.data.totalPage;
+                    appCont.collect.totalitems = resp.data.totalRow;
+                    appCont.collect.results = resp.data.list;
+                } else {
+                    appCont.collect.results = [];
+                    appCont.collect.totalitems = 0;
+                }
+
             })
         }
         if ($(this).attr("paneid")) {

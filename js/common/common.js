@@ -122,7 +122,7 @@ var EventUtils = {
                 error: function(data, status) {
                     alert("请求服务器信息错误！" + data.info);
                 },
-                timeout: 5000
+                timeout: 100000
             })
         },
         formatDate: function(year, month, day) {
