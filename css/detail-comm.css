@@ -162,10 +162,6 @@
     margin-right: 15px;
 }
 
-.descript.pos-descript label {
-    font-size: 14px;
-}
-
 .descript.pos-descript li {
     padding-left: 0;
 }
@@ -228,6 +224,8 @@
 
 .uni-porto {
     height: 363px;
+    border-left: 1px solid #c4c4c4;
+    border-bottom: 1px solid #c4c4c4;
 }
 
 .basic-info li {

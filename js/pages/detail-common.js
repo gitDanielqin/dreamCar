@@ -28,12 +28,6 @@ function initEventBind() {
         $(".tab-cont").hide();
         $("." + $(this).attr("cont")).show();
     });
-    //收藏按钮
-    //     $(".btn-collec").bind("click",function(){
-    //          $(this).find("span").text("已收藏");
-    //         $(this).addClass("collected");
-    //    });
-    //头部下拉框
     $(".account li").mouseenter(function() {
         if ($(this).find("dl").length > 0) {
             $(this).find("dl").slideDown();

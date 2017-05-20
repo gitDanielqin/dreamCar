@@ -1,79 +1,86 @@
 var isLogin = false;
 var parObj = EventUtils.urlExtrac(window.location); //地址参数对象
 var respObj = {}; //页面信息
-var accountObj = {}; // 用户信息
+var accountObj = {} //用户信息
+    // 初始化页面信息请求
 function infoRequest() {
-    var postdemand = {
-        demandId: parObj.demandId
+    var postdata = {
+        recruitId: parObj.recruitId
     }
     if (parObj.userId) {
-        postdemand.userId = parObj.userId;
+        postdata.userId = parObj.userId;
     }
-    EventUtils.ajaxReq("/demand/getInfo", "get", postdemand, function(resp, status) {
+    EventUtils.ajaxReq("/recruit/getInfo", "get", postdata, function(resp, status) {
         respObj = resp.data;
         console.log(respObj);
-        var baseinfo = {
-            inc: resp.data.userName,
-            incprops: resp.data.userProperty,
-            incscale: resp.data.userScale,
-            address: resp.data.userAddress,
-            discription: resp.data.userDiscription
-        };
-        appMain.incdata.baseinfo = baseinfo;
         var briefdata = {
             title: respObj.title,
-            viewed: 30,
-            applied: 15,
-            publicDate: respObj.updateTime ? respObj.updateTime.split(" ")[0] : []
+            viewed: respObj.readCount,
+            applied: respObj.applyCount,
+            publicDate: respObj.updateTime.split(" ")[0]
         };
-        appBanner.incdata = briefdata;
-        var addArray = respObj.schoolAddress.split(';');
-        var demandinfo = {
-            address: addArray[0] + " - " + addArray[1],
-            type: respObj.schoolType,
-            property: respObj.schoolProperty,
-            job: EventUtils.infoExtrac(respObj.job),
-            jobCount: respObj.jobCount,
-            profession: EventUtils.infoExtrac(respObj.profession),
-            professionCount: respObj.professionCount,
-            trainType: respObj.trainType,
-            discription: respObj.discription,
-        };
-        appMain.incdata.demand = demandinfo;
-        //初始化联合培养时间表
-        $("#train-table .date-aval").removeClass("date-aval");
-        if (respObj.trainTime) {
-            var timeArray = respObj.trainTime.split(";");
-            for (var i = 0; i < timeArray.length; i++) {
-                for (var j = 0; j < timeArray[i].length; j++) {
-                    if (timeArray[i].charAt(j) == "1") {
-                        $("#train-table .date-tr").eq(i).find("td").eq(j + 1).addClass("date-aval");
-                    }
-                }
-            }
+        var gender = "";
+        switch (respObj.sex) {
+            case "1":
+                gender = "男";
+                break;
+            case "2":
+                gender = "女";
+                break;
+            case "3":
+                gender = "不限";
+                break;
         }
+        appBanner.posdata = briefdata;
+        var posinfo = {
+            pos: EventUtils.infoExtrac(respObj.job),
+            salary: respObj.salary,
+            posType: respObj.workType,
+            scolar: respObj.education,
+            gender: gender,
+            worksexp: respObj.workTime,
+            posAmount: respObj.recruitCount,
+            contact: respObj.mobile,
+            address: respObj.companyAddress ? respObj.companyAddress.split(";").join("-") : "",
+            welfare: respObj.welfare ? respObj.welfare.split(";") : "",
+            inc: respObj.userName,
+            incProps: respObj.userProperty,
+            incScale: respObj.userScale,
+            incArea: respObj.userType,
+            posDesc: respObj.discription,
+            userDesc: respObj.userDiscription
+        };
+        appMain.posdata = posinfo;
         //判断是否已收藏
         if (respObj.markStatus == "1") {
             $("#app-banner .btn-collec").addClass("collected");
             $("#app-banner .btn-collec span").html("已收藏");
         }
-
-    });
+    })
 
     if (parObj.userId) {
-        console.log(parObj.userId);
-        var getdata = {
-            userId: parObj.userId
-        }
-        EventUtils.ajaxReq("/center/user/getInfo", "get", getdata, function(resp, status) {
+        EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId }, function(resp, status) {
+            //  console.log(resp);
             accountObj = resp.data;
-            appTop.userName = resp.data.userName;
-            appTop.isLogin = true;
-            appTop.userType = resp.data.userType
+            console.log(accountObj);
+            if (accountObj) {
+                appTop.userName = resp.data.userName;
+                appTop.userType = resp.data.userType;
+                appTop.isLogin = true;
+                isLogin = true;
+            }
         })
-
     }
+    // var postdata = {
+    //      index:1,
+    //      count:13,
+    //      demandId:parObj.demandId
+    // };
+    // EventUtils.ajaxReq("/demand/getDemandApplyList","get",postdemand,function(resp,status){
+    //      console.log(resp)
+    // })
 }
+
 
 
 var appTop = new Vue({
@@ -106,6 +113,7 @@ var appTop = new Vue({
         toCenter: function(theme) {
             switch (this.userType) {
                 case "0":
+                    parObj
                     var link = "pCenter.html?loginId=" + parObj.loginId + "&userId=" + parObj.userId + "&theme=" + theme;
                     break;
                 case "1":
@@ -131,8 +139,8 @@ var appTop = new Vue({
 var appBanner = new Vue({
     el: "#app-banner",
     data: {
-        incdata: {
-            title: "lalaland",
+        posdata: {
+            pos: "UI设计师",
             viewed: 30,
             applied: 15,
             publicDate: "2016-12-11"
@@ -140,32 +148,32 @@ var appBanner = new Vue({
     },
     methods: {
         collect: function(obj) {
-            if (parObj.userId == respObj.userId) {
-                alert("无法收藏自己的需求！");
-                return false;
-            }
-            if (respObj.demandType == accountObj.userType) {
-                alert("抱歉，目前您不能收藏企业的需求！");
-                return false;
-            }
-            if (!$(obj).hasClass("btn-collec")) {
-                obj = obj.parentNode;
-            }
-            if (appTop.isLogin) {
-                var isCollected = $(obj).hasClass("collected");
-                if (!isCollected) {
+
+            if (appTop.isLogin) { //登录状态下
+                if (accountObj.userId == respObj.userId) {
+                    alert("无法收藏自己的需求！");
+                    return false;
+                }
+                if (accountObj.userType != "0") {
+                    alert("抱歉，您不能收藏直聘的需求！");
+                    return false;
+                }
+                if (!$(obj).hasClass("btn-collec")) {
+                    obj = obj.parentNode;
+                }
+                if (!$(obj).hasClass("collected")) {
                     var postdata = {
                         userId: parObj.userId,
                         loginIdentifier: parObj.loginId,
-                        demandId: parObj.demandId
+                        recruitId: parObj.recruitId,
                     }
-                    EventUtils.ajaxReq("/demand/addMarkInfo", "post", postdata, function(resp, status) {
+                    EventUtils.ajaxReq("/recruit/addMarkInfo", "post", postdata, function(resp, status) {
+                        console.log(resp);
                         $(obj).find("span").text("已收藏");
                         $(obj).addClass("collected");
                     })
                 }
-
-            } else {
+            } else { //未登录状态下
                 $(".dlg-login").css({
                     top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
                 })
@@ -175,17 +183,21 @@ var appBanner = new Vue({
             }
         },
         coApply: function() {
-            if (parObj.userId == respObj.userId) {
-                alert("无法申请自己的需求！");
-                return false;
-            }
             if (appTop.isLogin) {
+                if (accountObj.userId == respObj.userId) {
+                    alert("无法申请自己的需求！");
+                    return false;
+                }
+                if (accountObj.userType != "0") {
+                    alert("抱歉，您不能投递该职位！");
+                    return false;
+                }
                 var postdata = {
                     userId: parObj.userId,
                     loginIdentifier: parObj.loginId,
-                    demandId: parObj.demandId
+                    recruitId: parObj.recruitId
                 }
-                EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
+                EventUtils.ajaxReq("/recruit/cooperateRecruit", "post", postdata, function(resp, status) {
                     console.log(resp);
                     $(".dlg-success").css({
                         top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
@@ -194,6 +206,7 @@ var appBanner = new Vue({
                     appModal.showLogin = false;
                     appModal.showSucc = true;
                 });
+
             } else {
                 $(".dlg-login").css({
                     top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
@@ -202,7 +215,6 @@ var appBanner = new Vue({
                 appModal.showLogin = true;
                 appModal.showSucc = false;
             }
-
         }
     },
     computed: {
@@ -214,26 +226,25 @@ var appBanner = new Vue({
 var appMain = new Vue({
     el: "#app-main",
     data: {
-        incdata: {
-            demand: {
-                address: "杭州市", //高校地址
-                type: "综合类", //高校类别
-                property: "重点", //高校性质
-                job: "UI设计师", //岗位名称
-                jobCount: "21-30人", //岗位数量
-                profession: "影视多媒体", //专业
-                professionCount: "40-60人", //专业人数
-                trainType: "学生入企", //联合培养方式
-                discription: "lalaland", //需求描述
-            },
-            baseinfo: {
-                inc: "校企职通车",
-                incprops: "国企",
-                incscale: "20-90人",
-                address: "",
-                discription: ""
-            }
+        posdata: {
+            pos: "UI设计师",
+            salary: "6K-8K",
+            posType: "全职",
+            scolar: "大专以上",
+            gender: "不限",
+            worksexp: "1-3年经验",
+            posAmount: 1,
+            contact: "18845696321",
+            address: "杭州市滨江区六合路368号一幢(北)三楼B3077室-4",
+            welfare: ["五险一金", "带薪年假", "加班补助", "双休", "朝九晚五", "运营大咖", "美酒零食"],
+            inc: "杭州煌巢科技有限公司分公司",
+            incProps: "国企",
+            incScale: 20000,
+            incArea: "互联网",
+            posDesc: "",
+            userDesc: ""
         },
+        showMobile: false,
         applyRec: [
             { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
             { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "未查看" },
@@ -249,7 +260,7 @@ var appMain = new Vue({
             { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
             { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
         ],
-        incComment: [
+        uniComment: [
             { portUrl: "images/porto01.jpg", cont: "挺好的，还不错，恩，呵呵", date: "2016-12-11 22:33" },
             { portUrl: "images/porto02.jpg", cont: "挺好的，还不错，恩，呵呵", date: "2016-12-11 22:33" },
             { portUrl: "images/porto01.jpg", cont: "挺好的，还不错，恩，呵呵", date: "2016-12-11 22:33" },
@@ -269,12 +280,21 @@ var appMain = new Vue({
             }
         },
         showContact: function(contact) {
-            if (isLogin) {
+            if (this.showMobile && appTop.isLogin) {
                 return contact;
             } else {
                 var cont_h = contact.slice(0, 3);
                 var cont_e = contact.slice(7);
                 return (cont_h + "****" + cont_e);
+            }
+        },
+        showPhone: function() {
+            if (!appTop.isLogin) {
+                appModal.showLogin = true;
+                appModal.showSucc = false;
+                appModal.showModal = true;
+            } else {
+                this.showMobile = true;
             }
         },
         showAllContact: function(contact) {
@@ -327,26 +347,26 @@ var appModal = new Vue({
                 appTop.isLogin = true;
                 appModal.showModal = false;
                 appModal.showLogin = false;
-
+                //登录判断是否已收藏
                 var postdemand = {
-                    demandId: parObj.demandId,
+                    recruitId: parObj.recruitId,
                     userId: accountObj.userId
                 }
-                EventUtils.ajaxReq("/demand/getInfo", "get", postdemand, function(resp, status) {
+                console.log(postdemand);
+                EventUtils.ajaxReq("/recruit/getInfo", "get", postdemand, function(resp, status) {
+                    console.log(resp.data);
                     if (resp.data.markStatus == "1") {
                         $("#app-banner .btn-collec").addClass("collected");
                         $("#app-banner .btn-collec span").html("已收藏");
                     }
                 });
-
                 var state = {
                     title: document.title,
                     url: document.location.href,
                     otherkey: null
                 };
                 //无刷新页面替换URL
-                history.replaceState(state, document.title, "detail-company.html?userId=" + resp.data.userId + "&loginId=" + resp.data.loginIdentifier + "&demandId=" + respObj.demandId);
-
+                history.replaceState(state, document.title, "detail-position.html?userId=" + resp.data.userId + "&loginId=" + resp.data.loginIdentifier + "&recruitId=" + respObj.recruitId);
                 console.log(resp);
             })
         }

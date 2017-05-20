@@ -185,7 +185,7 @@
                             <div v-else-if="require.demandSrc==2" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W300 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-position.html">{{infoExtrac(item.job)}}</a></h2>
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="positionLink(item.recruitId)">{{infoExtrac(item.job)}}</a></h2>
                                     <p><span class="maR17 color-orange-f7">{{item.salary}}</span>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.workTime}}<i class="depart">|</i>{{item.education}}</p>
                                     <p><span class="maR17">【{{cityExtrac(item.companyAddress)}}】</span>岗位数：{{item.recruitCount}}人</p>
                                 </div>

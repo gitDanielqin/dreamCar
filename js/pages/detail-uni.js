@@ -10,7 +10,6 @@ function infoRequest() {
     if (parObj.userId) {
         postdemand.userId = parObj.userId;
     }
-    console.log(postdemand);
     EventUtils.ajaxReq("/demand/getInfo", "get", postdemand, function(resp, status) {
         respObj = resp.data;
         console.log(respObj);
@@ -148,24 +147,6 @@ var appBanner = new Vue({
             viewed: 30,
             applied: 15,
             publicDate: "2016-12-11"
-        },
-        posdata: {
-            pos: "UI设计师",
-            viewed: 30,
-            applied: 15,
-            publicDate: "2016-12-11"
-        },
-        unirecdata: {
-            title: "UI设计师",
-            viewed: 30,
-            applied: 15,
-            publicDate: "2016-12-11"
-        },
-        increcdata: {
-            title: "UI设计师",
-            viewed: 30,
-            applied: 15,
-            publicDate: "2016-12-11"
         }
     },
     methods: {
@@ -233,6 +214,11 @@ var appBanner = new Vue({
                 appModal.showLogin = true;
                 appModal.showSucc = false;
             }
+        }
+    },
+    computed: {
+        homeLink: function() {
+            return appTop.isLogin ? "index.html?userId=" + parObj.userId : "index.html"
         }
     }
 });
@@ -391,6 +377,5 @@ var appModal = new Vue({
 function _init() {
     infoRequest();
     selectInitPos();
-    initEventBind();
 }
 _init();

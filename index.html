@@ -56,11 +56,11 @@
                 <p class="maT38"><input type="text" placeholder="岗位名称/学校名称/企业名称" class="search LH-H48 v-top" /><button class="search-btn">搜索</button></p>
             </div>
             <ul class="lis-inline module-entry">
-                <li><a href="display-uni.html"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>高校需求</b></a></li>
-                <li><a href="display-company.html"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>企业需求</b></a></li>
+                <li><a :href="modLink('uni')"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>高校需求</b></a></li>
+                <li><a :href="modLink('inc')"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>企业需求</b></a></li>
                 <li><a href="#"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>充电站</b></a></li>
-                <li><a href="v-recruit.html"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>招聘会</b></a></li>
-                <li><a href="display-position.html"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>校企岗位</b></a></li>
+                <li><a :href="modLink('recruit')"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>招聘会</b></a></li>
+                <li><a :href="modLink('pos')"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>校企岗位</b></a></li>
                 <li><a href="#"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>职业规划</b></a></li>
             </ul>
             <i class="pic-wrapper weiter" @click="downwards"><img src="images/icon-weiter.png" /></i>

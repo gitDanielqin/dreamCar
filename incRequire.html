@@ -137,8 +137,11 @@
                 <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写招聘会信息</h2>
                 <div class="form-cont paLeft68">
                     <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="recruitData.header" /><span class="color-red">（请小于12个字）</span></p>
-                    <p class="form-item maT28"><label>职位类别</label>
+                    <p class="form-item maT28"><label>岗位名称</label>
                         <pos-select :posdata="database.posdata"></pos-select>
+                    </p>
+                    <p class="form-item"><label>职位类别</label>
+                        <dropdown :options="database.uni.postype" placeholder="" v-model="recruitData.postype"></dropdown>
                     </p>
                     <p class="form-item"><label>招聘人数</label>
                         <input type="text" v-model="recruitData.amount" />人
@@ -184,8 +187,11 @@
                 <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写直聘信息</h2>
                 <div class="form-cont paLeft68">
                     <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="directData.header" /><span class="color-red">（请小于12个字）</span></p>
-                    <p class="form-item maT28"><label>职位类别</label>
+                    <p class="form-item maT28"><label>岗位名称</label>
                         <pos-select :posdata="database.posdata" :initpos="directData.initPosition"></pos-select>
+                    </p>
+                    <p class="form-item"><label>职位类别</label>
+                        <dropdown :options="database.uni.postype" placeholder="" v-model="directData.postype"></dropdown>
                     </p>
                     <p class="form-item"><label>招聘人数</label>
                         <input type="text" v-model="directData.amount" />人

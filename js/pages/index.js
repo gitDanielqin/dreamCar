@@ -135,6 +135,27 @@ var appFront = new Vue({
         }
     },
     methods: {
+        modLink: function(name) {
+            var link = "";
+            switch (name) {
+                case "uni":
+                    link = "display-uni.html?";
+                    break;
+                case "inc":
+                    link = "display-company.html?";
+                    break;
+                case "pos":
+                    link = "display-position.html?";
+                    break;
+                case "recruit":
+                    link = "v-recruit.html?";
+                    break;
+            };
+            if (this.isLogin) {
+                link += "?userId=" + parObj.userId;
+            };
+            return link;
+        },
         selhotcity: function(city) {
             this.address.displayCity = city + "市";
             this.showAddr = false;
@@ -188,6 +209,9 @@ var appFront = new Vue({
                     break;
             }
         }
+    },
+    computed: {
+
     },
     mounted: function() {
         init_pos();

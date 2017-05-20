@@ -102,14 +102,16 @@ function infoRequest() {
             }
             if (respObj.welfare) {
                 var welfareArray = respObj.welfare.split(";");
+                console.log(welfareArray);
                 $(".cont-direct .welfare-lis li").each(function() {
-                    if (welfareArray.indexOf($(this).find("span").html()) > 0) {
+                    if (welfareArray.indexOf($(this).find("span").html()) >= 0) {
                         $(this).find("i.check-box").addClass("on");
                     }
                 });
             }
             var directdata = {
                 datatype: "direct",
+                postype: respObj.workType,
                 header: respObj.title,
                 initPosition: initpos,
                 amount: respObj.recruitCount,
@@ -155,6 +157,7 @@ var appMain = new Vue({
             addrData: addArray,
             uni: {
                 classific: uniclassific,
+                postype: ["全职", "兼职", "实习", "校园", "不限"],
                 amount: majorSum,
                 unilevel: unilevel,
                 scolars: scolarship,
@@ -201,10 +204,7 @@ var appMain = new Vue({
         recruitData: {
             datatype: "recruit",
             header: "",
-            postype: {
-                postype_1: "",
-                postype_2: ""
-            },
+            postype: "",
             amount: "",
             scolar: "",
             gender: "",
@@ -221,10 +221,7 @@ var appMain = new Vue({
         directData: {
             datatype: "direct",
             header: "",
-            postype: {
-                postype_1: "",
-                postype_2: ""
-            },
+            postype: "",
             amount: "",
             scolar: "",
             gender: "",
@@ -361,10 +358,11 @@ var appMain = new Vue({
                         welfare += $(this).find("span").html() + ";"
                     }
                 });
-                welfare = welfare.slice(0, -2);
+                welfare = welfare.slice(0, -1);
                 var postdata = {
                     userId: parObj.userId,
                     title: this.directData.header,
+                    workType: this.directData.postype,
                     job: $(".cont-direct .sel-pos-1 input").val() + ";" + $(".cont-direct .sel-pos-2 input").val() + ";" + $(".cont-direct .sel-pos-3 input").val(),
                     profession: $(".cont-direct .major-input-1 input").val() + ";" + $(".cont-direct .major-input-2 input").val(),
                     recruitCount: this.directData.amount,
@@ -381,6 +379,12 @@ var appMain = new Vue({
                 console.log(postdata);
                 if (isNewRequire) {
                     EventUtils.ajaxReq('/recruit/apply', 'post', postdata, function(resp, status) {
+                        console.log(resp);
+                        window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                    })
+                } else {
+                    postdata.recruitId = parObj.recruitId;
+                    EventUtils.ajaxReq('/recruit/modifyInfo', 'post', postdata, function(resp, status) {
                         console.log(resp);
                         window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
                     })

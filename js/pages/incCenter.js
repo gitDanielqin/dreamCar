@@ -312,10 +312,15 @@ var appCont = new Vue({
                 }
                 EventUtils.ajaxReq("/recruit/getList", "get", postdata, function(resp, status) {
                     console.log(resp);
-                    appCont.require.totalpages = resp.data.totalPage;
-                    appCont.require.pagesize = resp.data.pageSize;
-                    appCont.require.results = resp.data.list;
-                    appCont.require.totalitems = resp.data.totalRow;
+                    if (resp.data) {
+                        appCont.require.totalpages = resp.data.totalPage;
+                        appCont.require.pagesize = resp.data.pageSize;
+                        appCont.require.results = resp.data.list;
+                        appCont.require.totalitems = resp.data.totalRow;
+                    } else {
+                        appCont.require.results = [];
+                        appCont.require.totalitems = 0;
+                    }
                 })
                 this.require.curpage = 1;
             }
@@ -405,6 +410,9 @@ var appCont = new Vue({
         },
         requireLink: function(demandId) {
             return "detail-company.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + demandId + "&userType=2";
+        },
+        positionLink: function(id) {
+            return "detail-position.html?userId=" + parObj.userId + "&recruitId=" + id;
         },
         popTrade: function() {
             appModal.showModal = true;
@@ -511,20 +519,35 @@ var appCont = new Vue({
 
         },
         delItem: function(item) {
-            var postdata = {
-                userId: parObj.userId,
-                loginIdentifier: parObj.loginId,
-                demandId: item.demandId
+            if (item.demandId) {
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    demandId: item.demandId
+                }
+
+                EventUtils.ajaxReq("/demand/delInfo", "post", postdata, function(resp, status) {
+                    if (appCont.require.results.length == 1 && appCont.require.curpage > 1) {
+                        appCont.require.curpage -= 1;
+                    }
+                    $(".requireBox .pagination a.page").eq(appCont.require.curpage - 1).parent().trigger("click");
+                })
+            }
+            if (item.recruitId) {
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    recruitId: item.recruitId
+                }
+
+                EventUtils.ajaxReq("/recruit/delInfo", "post", postdata, function(resp, status) {
+                    if (appCont.require.results.length == 1 && appCont.require.curpage > 1) {
+                        appCont.require.curpage -= 1;
+                    }
+                    $(".requireBox .pagination a.page").eq(appCont.require.curpage - 1).parent().trigger("click");
+                })
             }
 
-            EventUtils.ajaxReq("/demand/delInfo", "post", postdata, function(resp, status) {
-                if (appCont.require.results.length == 1 && appCont.require.curpage > 1) {
-                    appCont.require.curpage -= 1;
-                }
-                $(".requireBox .pagination a.page").eq(appCont.require.curpage - 1).parent().trigger("click");
-
-                //alert(resp.info);
-            })
         },
         modItem: function(item) {
             console.log(item);
@@ -1173,25 +1196,15 @@ function navEventBind() {
             console.log(postdata);
             EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function(resp, status) {
                 console.log(resp);
-                appCont.collect.curpage = 1;
-                appCont.collect.totalpages = resp.data.totalPage;
-                appCont.collect.totalitems = resp.data.totalRow;
-                // dataList = [];
-                // for (var i = 0; i < resp.data.list.length; i++) {
-                //     var dataItem = {
-                //         major: EventUtils.infoExtrac(resp.data.list[i].profession),
-                //         publicDate: resp.data.list[i].updateTime,
-                //         IncProps: resp.data.list[i].companyProperty,
-                //         trainway: resp.data.list[i].trainType,
-                //         IncScale: resp.data.list[i].companyScale,
-                //         IncArea: EventUtils.infoExtrac(resp.data.list[i].companyType),
-                //         uniname: resp.data.list[i].userName,
-                //         uniLevel: resp.data.list[i].userProperty,
-                //         date: resp.data.list[i].collectTime,
-                //     };
-                //     dataList.push(dataItem);
-                // };
-                appCont.collect.results = resp.data.list;
+                if (resp.data) {
+                    appCont.collect.curpage = 1;
+                    appCont.collect.totalpages = resp.data.totalPage;
+                    appCont.collect.totalitems = resp.data.totalRow;
+                    appCont.collect.results = resp.data.list;
+                } else {
+                    appCont.collect.results = [];
+                    appCont.collect.totalitems = 0;
+                }
             })
         }
         if ($(this).attr("paneid")) {

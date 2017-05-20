@@ -122,7 +122,6 @@ var appTop = new Vue({
 var appQuery = new Vue({
     el: "#app-query",
     data: {
-        homeLink: appTop.isLogin ? "index.html?userId=" + parObj.userId : "index.html",
         database: {
             uni: {
                 majors: majorArray,
@@ -253,6 +252,11 @@ var appQuery = new Vue({
             });
             this.posQuery.welfare = selWelfare;
             this.showWelBox = false;
+        }
+    },
+    computed: {
+        homeLink: function() {
+            return appTop.isLogin ? "index.html?userId=" + parObj.userId : "index.html"
         }
     },
     mounted: function() {

@@ -4,6 +4,7 @@
 var isLogin = false;
 var parObj = EventUtils.urlExtrac(window.location); //地址参数对象
 var respObj = {}; //页面信息
+var accountObj = {} //用户信息
 var subposArray = [];
 (function() {
     //提取出二级职位信息
@@ -15,19 +16,41 @@ var subposArray = [];
         }
     };
     subposArray.push({ name: "不限", subpos: ["不限"] });
-    var postdata = {
-            demandType: 2,
-            index: 1,
-            count: 8
-        }
-        //  EventUtils.ajaxReq("/demand/getList","get",postdata,function(resp,status){
-        //       console.log(resp);
-        //       appResult.incList.totalpages = resp.data.totalPage;
-        //       appResult.incList.results = resp.data.list;
-        //  })
 })()
 
+// 初始化页面信息请求
+function infoRequest() {
+    var postdata = {
+        index: 1,
+        count: 8
+    }
+    EventUtils.ajaxReq("/recruit/getList", "get", postdata, function(resp, status) {
+        console.log(resp);
+        if (resp.data) {
+            appResult.posList.totalpages = resp.data.totalPage;
+            appResult.posList.results = resp.data.list;
+        }
+    });
+    if (parObj.userId) {
+        var getdata = {
+            userId: parObj.userId
+        }
+        EventUtils.ajaxReq("/center/user/getInfo", "get", getdata, function(resp, status) {
+            accountObj = resp.data;
+            appTop.userName = resp.data.name;
+            appTop.isLogin = true;
+            appTop.userType = accountObj.userType;
+            appResult.loginInfo = {
+                userId: accountObj.userId,
+                userType: accountObj.userType,
+                loginId: accountObj.loginId
+            }
+            console.log(resp)
+        })
+    }
+}
 
+infoRequest();
 var appTop = new Vue({
     el: "#app-top",
     data: {
@@ -81,7 +104,6 @@ var appTop = new Vue({
 var appQuery = new Vue({
     el: "#app-query",
     data: {
-        homeLink: appTop.isLogin ? "index.html?userId=" + parObj.userId : "index.html",
         database: {
             uni: {
                 majors: majorArray,
@@ -216,6 +238,11 @@ var appQuery = new Vue({
             this.showWelBox = false;
         }
     },
+    computed: {
+        homeLink: function() {
+            return appTop.isLogin ? "index.html?userId=" + parObj.userId : "index.html"
+        }
+    },
     mounted: function() {
         var posArray1 = [];
         var areaArray1 = [];
@@ -297,19 +324,23 @@ var appResult = new Vue({
     data: {
         posList: {
             totalpages: 1,
-            results: [
-                { demandId: "1", pos: "艺术设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, posAmount: 2, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", IncScale: "20-99人", publicDate: "2017-11-11" },
-                { demandId: "1", pos: "艺术设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, posAmount: 2, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", IncScale: "20-99人", publicDate: "2017-11-11" },
-                { demandId: "1", pos: "艺术设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, posAmount: 2, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", IncScale: "20-99人", publicDate: "2017-11-11" },
-                { demandId: "1", pos: "艺术设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, posAmount: 2, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", IncScale: "20-99人", publicDate: "2017-11-11" },
-                { demandId: "1", pos: "艺术设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, posAmount: 2, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", IncScale: "20-99人", publicDate: "2017-11-11" },
-                { demandId: "1", pos: "艺术设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, posAmount: 2, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", IncScale: "20-99人", publicDate: "2017-11-11" }
-            ],
+            results: [],
         },
     },
     methods: {
         infoExtrac: function(info) {
-            return EventUtils.infoExtrac(info);
+            if (info) {
+                return EventUtils.infoExtrac(info);
+            } else {
+                return "";
+            }
+        },
+        cityExtrac: function(text) {
+            if (text) {
+                return text.split(";")[1]
+            } else {
+                return "";
+            }
         },
         demandLink: function(demandId) {
             return "detail-position.html?demandId=" + demandId + "&type=display";
@@ -442,9 +473,10 @@ function _initEventBind() {
 // 筛选结果请求
 function resultsRequest(page) {
     var postdata = {
-            demandType: 2,
             index: page,
             count: 8,
+            userAddress: appQuery.posQuery.address,
+            type: appQuery.posQuery.area.area_1,
             schoolProperty: appQuery.incQuery.uniReq.uniprops,
             profession: $(".queryform .major-input-1 input").val() == "" ? "不限" : $(".queryform .major-input-1 input").val() + ";" + $(".queryform .major-input-2 input").val(),
             professionCount: appQuery.incQuery.uniReq.majorsum,

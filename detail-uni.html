@@ -51,30 +51,32 @@
             </ul>
         </div>
     </div>
-    <h2 class="inner LH-H110 fSize30 color-grayH maB3">
-        <a :href="homeLink"><img src="images/logo.png" class="v-mid H47 maR17" /></a>校企职通车</h2>
-    <!-- <h2 class="maT30 fSize30 LH47 color-grayH"><img class="H47 maR17 v-mid" src="images/logo.png"/>校企职通车</h2> -->
-    <div class="banner bg-gray-f2 H176" id="app-banner" v-cloak>
-        <div class="inner clearfix">
-            <div class="fl">
-                <h2 class="LH-H76 fSize40 color-gray3">{{unidata.title}}</h2>
-                <ul class="lis-inline LH42 W440 brief-info fSize14 maB14">
-                    <li class="W174"><i class="pic-icon icon-eye"></i>浏览次数 ：{{unidata.viewed}}</li>
-                    <li><i class="pic-icon icon-apply"></i>申请次数 ：{{unidata.applied}}人申请</li>
-                    <li><i class="pic-icon icon-post"></i>发布时间 ：{{unidata.publicDate}}</li>
-                </ul>
-            </div>
-            <div class="fr">
-                <div class="maT64 banner-btns">
-                    <button class="btn-collec v-mid bg-white" @click.stop="collect($event.target)"><i class="pic-icon"></i><span class="maR10">收 藏</span></button>
-                    <button class="bg-orange4 color-white v-mid maL26 btn-apply t-left" @click="coApply"><span class="maL10">申请合作</span><i class="pic-icon maL6"></i></button>
+    <div id="app-banner" v-cloak>
+        <h2 class="inner LH-H110 fSize30 color-grayH maB3">
+            <a :href="homeLink"><img src="images/logo.png" class="v-mid H47 maR17" /></a>校企职通车</h2>
+        <!-- <h2 class="maT30 fSize30 LH47 color-grayH"><img class="H47 maR17 v-mid" src="images/logo.png"/>校企职通车</h2> -->
+        <div class="banner bg-gray-f2 H176">
+            <div class="inner clearfix">
+                <div class="fl">
+                    <h2 class="LH-H76 fSize40 color-gray3">{{unidata.title}}</h2>
+                    <ul class="lis-inline LH42 W440 brief-info fSize14 maB14">
+                        <li class="W174"><i class="pic-icon icon-eye"></i>浏览次数 ：{{unidata.viewed}}</li>
+                        <li><i class="pic-icon icon-apply"></i>申请次数 ：{{unidata.applied}}人申请</li>
+                        <li><i class="pic-icon icon-post"></i>发布时间 ：{{unidata.publicDate}}</li>
+                    </ul>
                 </div>
-                <p class="share LH-H58 t-right">
-                    <span class="fSize14">分享：</span>
-                    <i class="pic-icon"></i>
-                    <i class="pic-icon"></i>
-                    <i class="pic-icon"></i>
-                </p>
+                <div class="fr">
+                    <div class="maT64 banner-btns">
+                        <button class="btn-collec v-mid bg-white" @click.stop="collect($event.target)"><i class="pic-icon"></i><span class="maR10">收 藏</span></button>
+                        <button class="bg-orange4 color-white v-mid maL26 btn-apply t-left" @click="coApply"><span class="maL10">申请合作</span><i class="pic-icon maL6"></i></button>
+                    </div>
+                    <p class="share LH-H58 t-right">
+                        <span class="fSize14">分享：</span>
+                        <i class="pic-icon"></i>
+                        <i class="pic-icon"></i>
+                        <i class="pic-icon"></i>
+                    </p>
+                </div>
             </div>
         </div>
     </div>

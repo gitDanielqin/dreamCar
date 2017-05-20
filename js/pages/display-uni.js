@@ -33,7 +33,7 @@ function infoRequest() {
             appResult.uniList.results = resp.data.list;
         }
     });
-    if (parObj.loginId && parObj.userType) {
+    if (parObj.userId && parObj.userType) {
         var getdata = {
             userId: parObj.userId,
             loginIdentifier: parObj.loginId
@@ -127,7 +127,6 @@ var appTop = new Vue({
 var appQuery = new Vue({
     el: "#app-query",
     data: {
-        homeLink: appTop.isLogin ? "index.html?userId=" + parObj.userId : "index.html",
         database: {
             uni: {
                 majors: majorArray,
@@ -263,6 +262,11 @@ var appQuery = new Vue({
             });
             this.posQuery.welfare = selWelfare;
             this.showWelBox = false;
+        }
+    },
+    computed: {
+        homeLink: function() {
+            return appTop.isLogin ? "index.html?userId=" + parObj.userId : "index.html"
         }
     },
     mounted: function() {

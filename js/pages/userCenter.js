@@ -133,7 +133,8 @@ function infoRequest() {
             $(".edit").hide();
             $(".view").show();
         }
-    })
+    });
+
 }
 
 infoRequest();
@@ -725,6 +726,7 @@ var appModal = new Vue({
     }
 });
 
+
 function init_center() {
     selectInitInput();
     selectInitPos();
@@ -732,6 +734,9 @@ function init_center() {
     init_safepos();
     editEventBind();
     navEventBind();
+    if (parObj.theme) {
+        $(".sideBox li[paneid='" + parObj.theme + "']").trigger("click");
+    }
     modalEventBind();
     uploadEventBind();
 }
