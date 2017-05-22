@@ -222,9 +222,8 @@ var appMain = new Vue({
                 addBox.hide();
             }
         },
-        publishReq: function() {
+        publish: function(type) {
             var isValid = true;
-            alert($(".phone-input:visible").length);
             $(".phone-input:visible").each(function() {
                 if (!variableUtils.regExp.phone.test(this.value) && !variableUtils.regExp.mobile.test(this.value)) {
                     $(this).addClass("hint-nullable");
@@ -235,52 +234,87 @@ var appMain = new Vue({
                 alert("请检查信息是否正确！");
                 return false;
             }
-            if ($(".cont-combi .time-table").find("td.on").length > 0) {
-                var timestring = "";
-                $(".cont-combi .time-table .time-tr").each(function() {
-                    $(this).find("td.t-cell").each(function() {
-                        timestring += $(this).hasClass("on") ? "1" : "0";
+            if (type == "combi") {
+                if ($(".cont-combi .time-table").find("td.on").length > 0) {
+                    var timestring = "";
+                    $(".cont-combi .time-table .time-tr").each(function() {
+                        $(this).find("td.t-cell").each(function() {
+                            timestring += $(this).hasClass("on") ? "1" : "0";
+                        });
+                        timestring += ";";
                     });
-                    timestring += ";";
-                });
-                timestring = timestring.slice(0, timestring.length - 1);
-            } else {
-                var timestring = "";
-            }
-            //var linkAddress = this.combiData.contact.address.split("-").join(";");
-            var postdata = {
-                    userId: parObj.userId,
-                    title: this.combiData.header,
-                    demandType: 1,
-                    job: $(".cont-combi .sel-pos-1 input").val() + ";" + $(".cont-combi .sel-pos-2 input").val() + ";" + $(".cont-combi .sel-pos-3 input").val(),
-                    jobCount: this.combiData.incApply.posAmount,
-                    companyProperty: this.combiData.incApply.incProps,
-                    companyScale: this.combiData.incApply.incScale,
-                    companyType: $(".cont-combi .input-area-1 input").val() + ";" + $(".cont-combi .input-area-2 input").val(),
-                    companyAddress: $(".cont-combi .sel-province input").val() + ";" + $(".cont-combi .sel-city input").val() + ";" + $(".cont-combi .sel-district input").val(),
-                    profession: $(".cont-combi .major-input-1 input").val() + ";" + $(".cont-combi .major-input-2 input").val(),
-                    professionCount: this.combiData.uniApply.stuScale,
-                    trainType: this.combiData.uniApply.trainWay,
-                    trainTime: timestring,
-                    discription: this.combiData.requireDesc,
-                    linkMan: this.combiData.contact.person,
-                    mobile: this.combiData.contact.phone,
-                    schoolAddress: this.combiData.contact.address.split("-").join(";")
+                    timestring = timestring.slice(0, -1);
+                } else {
+                    var timestring = "";
                 }
-                // console.log(postdata);
-            if (isNewRequire) {
-                EventUtils.ajaxReq('/demand/apply', 'post', postdata, function(resp, status) {
-                    console.log(resp);
-                    window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
-                })
-            } else {
-                postdata.demandId = parObj.demandId;
-                console.log(postdata);
-                EventUtils.ajaxReq('/demand/modifyInfo', 'post', postdata, function(resp, status) {
-                    console.log(resp);
-                    window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
-                })
+                var postdata = {
+                        userId: parObj.userId,
+                        title: this.combiData.header,
+                        demandType: 1,
+                        job: $(".cont-combi .sel-pos-1 input").val() + ";" + $(".cont-combi .sel-pos-2 input").val() + ";" + $(".cont-combi .sel-pos-3 input").val(),
+                        jobCount: this.combiData.incApply.posAmount,
+                        companyProperty: this.combiData.incApply.incProps,
+                        companyScale: this.combiData.incApply.incScale,
+                        companyType: $(".cont-combi .input-area-1 input").val() + ";" + $(".cont-combi .input-area-2 input").val(),
+                        companyAddress: $(".cont-combi .sel-province input").val() + ";" + $(".cont-combi .sel-city input").val() + ";" + $(".cont-combi .sel-district input").val(),
+                        profession: $(".cont-combi .major-input-1 input").val() + ";" + $(".cont-combi .major-input-2 input").val(),
+                        professionCount: this.combiData.uniApply.stuScale,
+                        trainType: this.combiData.uniApply.trainWay,
+                        trainTime: timestring,
+                        discription: this.combiData.requireDesc,
+                        linkMan: this.combiData.contact.person,
+                        mobile: this.combiData.contact.phone,
+                        schoolAddress: this.combiData.contact.address.split("-").join(";")
+                    }
+                    // console.log(postdata);
+                if (isNewRequire) {
+                    EventUtils.ajaxReq('/demand/apply', 'post', postdata, function(resp, status) {
+                        console.log(resp);
+                        window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                    })
+                } else {
+                    postdata.demandId = parObj.demandId;
+                    console.log(postdata);
+                    EventUtils.ajaxReq('/demand/modifyInfo', 'post', postdata, function(resp, status) {
+                        console.log(resp);
+                        window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
+                    })
+                }
+            } else if (type == "jobfair") {
+                var postdata = {
+                    userId: parObj.userId,
+                    jobFairType: 1,
+                    title: this.recruitData.header,
+                    companyType: $(".cont-recruit .input-area-1 input").val() + ";" + $(".cont-recruit .input-area-2 input").val(),
+                    companyProperty: this.recruitData.incReq.incProps,
+                    companyScale: this.recruitData.incReq.incScale,
+                    job: $(".cont-recruit .sel-pos-1 input").val() + ";" + $(".cont-recruit .sel-pos-2 input").val() + ";" + $(".cont-recruit .sel-pos-3 input").val(),
+                    jobCount: this.recruitData.incReq.posAmount,
+                    companyAddress: $(".company-address sel-province input").val() + ";" + $(".company-address sel-city input").val() + ";" + $(".company-address sel-district input").val(),
+                    profession: $(".cont-recruit .major-input-1 input").val() + ";" + $(".cont-recruit .major-input-2 input").val(),
+                    professionCount: this.recruitData.uniApply.stuScale,
+                    startTime: this.recruitData.date,
+                    discription: this.recruitData.desc,
+                    linkMan: this.recruitData.contact.person,
+                    mobile: this.recruitData.contact.phone,
+                    jobFairAddress: this.recruitData.contact.address == "" ? "" : this.recruitData.contact.address.split("-").join(";")
+                }
+                if (isNewRequire) {
+                    EventUtils.ajaxReq('/jobfair/apply', 'post', postdata, function(resp, status) {
+                        console.log(resp);
+                        //   window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                    })
+                } else {
+                    postdata.demandId = parObj.demandId;
+                    console.log(postdata);
+                    EventUtils.ajaxReq('/jobfair/modifyInfo', 'post', postdata, function(resp, status) {
+                        console.log(resp);
+                        //   window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
+                    })
+                }
             }
+
+            //var linkAddress = this.combiData.contact.address.split("-").join(";");
 
         }
     },

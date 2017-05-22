@@ -333,17 +333,11 @@ var appCont = new Vue({
         },
         colPosList: {
             curpage: 1,
+            totalpages: 1,
+            totalitems: 0,
             states: ['全部状态', '未投递', '已投递', '已下线'],
             curstate: "全部状态",
-            results: [
-                { pos: "艺术设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, posAmount: 2, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", IncScale: "20-99人", publicDate: "2017-11-11" },
-                { pos: "艺术设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, posAmount: 2, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", IncScale: "20-99人", publicDate: "2017-11-11" },
-                { pos: "艺术设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, posAmount: 2, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", IncScale: "20-99人", publicDate: "2017-11-11" },
-                { pos: "艺术设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, posAmount: 2, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", IncScale: "20-99人", publicDate: "2017-11-11" },
-                { pos: "艺术设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, posAmount: 2, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", IncScale: "20-99人", publicDate: "2017-11-11" },
-                { pos: "艺术设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, posAmount: 2, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", IncScale: "20-99人", publicDate: "2017-11-11" },
-                { pos: "UI设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, posAmount: 2, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", IncScale: "20-99人", publicDate: "2017-11-11" }
-            ]
+            results: []
         },
         colRecList: {
             curpage: 1,
@@ -373,6 +367,20 @@ var appCont = new Vue({
 
     },
     methods: {
+        infoExtrac: function(item) {
+            if (item) {
+                return EventUtils.infoExtrac(item)
+            } else {
+                return ""
+            }
+        },
+        cityExtrac: function(text) {
+            if (text) {
+                return text.split(";")[1]
+            } else {
+                return "";
+            }
+        },
         feedRes: function(action, obj) {
             if ($(obj).parent("li").hasClass("on")) {
                 if (action == "over") {
@@ -595,17 +603,26 @@ var appCont = new Vue({
             }
             return totalpage;
         },
-        showpage: function(totalitems) {
-            var totalpage = 1;
-            if (totalitems % 3 == 0) {
-                totalpage = totalitems / 3
-            } else {
-                totalpage = Math.floor(totalitems / 3) + 1;
-            }
+        showpage: function(totalpage) {
             if (totalpage < 3) {
                 return totalpage;
             } else {
                 return 3;
+            }
+        },
+        cancelCollect: function(type, id) {
+            switch (type) {
+                case "position":
+                    var postdata = {
+                        userId: parObj.userId,
+                        id: id
+                    };
+                    EventUtils.ajaxReq("/recruit/delMarkInfo", "post", postdata, function(resp, status) {
+                        if (appCont.colPosList.results.length == 1 && appCont.colPosList.curpage > 1) {
+                            appCont.colPosList.curpage -= 1;
+                        }
+                        $(".collec-job .pagination a.page").eq(appCont.colPosList.curpage - 1).parent().trigger("click");
+                    })
             }
         },
         topage: function(page, type) {
@@ -615,12 +632,64 @@ var appCont = new Vue({
                 this.colStuList.curpage = page;
             } else if (type == "col-pos") {
                 this.colPosList.curpage = page;
+                var getdata = {
+                    userId: parObj.userId,
+                    index: page,
+                    count: 3
+                }
+                EventUtils.ajaxReq("/recruit/getMarkList", "get", getdata, function(resp, status) {
+                    // console.log(resp);
+                    if (resp.data) {
+                        appCont.colPosList.results = resp.data.list;
+                        appCont.colPosList.totalpages = resp.data.totalPage;
+                        appCont.colPosList.totalitems = resp.data.totalRow;
+                    } else {
+                        appCont.colPosList.results = [];
+                        appCont.colPosList.totalitems = 0;
+                    }
+                })
             } else if (type == "col-rec") {
                 this.colRecList.curpage = page;
             } else if (type == "my-pos") {
                 this.myPosList.curpage = page;
             }
         }
+    },
+    watch: {
+        'colPosList.curstate': function(curval) {
+            console.log(curval);
+            var applyindex = 0;
+            switch (curval) {
+                case "未投递":
+                    applyindex = 1;
+                    break;
+                case "已投递":
+                    applyindex = 2;
+                    break;
+                case "已下线":
+                    applyindex = 3;
+                    break;
+                default:
+                    applyindex = 0;
+            }
+            var getdata = {
+                userId: parObj.userId,
+                index: 1,
+                count: 3,
+                applyStatus: applyindex
+            }
+            EventUtils.ajaxReq("/recruit/getMarkList", "get", getdata, function(resp, status) {
+                console.log(resp);
+                if (resp.data) {
+                    appCont.colPosList.results = resp.data.list;
+                    appCont.colPosList.totalpages = resp.data.totalPage;
+                    appCont.colPosList.totalitems = resp.data.totalRow;
+                } else {
+                    appCont.colPosList.results = [];
+                    appCont.colPosList.totalitems = 0;
+                }
+            })
+        },
     },
     components: {
         'pagination': pagination
@@ -898,6 +967,24 @@ function navEventBind() {
             $(this).find(".sub-li p").unbind("click").bind("click", function() {
                 $(".sideBox .sub-li .on").removeClass("on");
                 $(this).addClass("on");
+                if ($(this).attr("paneid") == "collec-job") {
+                    var getdata = {
+                        userId: parObj.userId,
+                        index: 1,
+                        count: 3
+                    }
+                    EventUtils.ajaxReq("/recruit/getMarkList", "get", getdata, function(resp, status) {
+                        console.log(resp);
+                        if (resp.data) {
+                            appCont.colPosList.results = resp.data.list;
+                            appCont.colPosList.totalpages = resp.data.totalPage;
+                            appCont.colPosList.totalitems = resp.data.totalRow;
+                        } else {
+                            appCont.colPosList.results = [];
+                            appCont.colPosList.totalitems = 0;
+                        }
+                    })
+                }
                 $(".content").children().hide();
                 $(".content").children("." + $(this).attr("paneid")).show();
                 selectInitPos();

@@ -22,14 +22,18 @@ function infoRequest() {
         appMain.incdata.baseinfo = baseinfo;
         var briefdata = {
             title: respObj.title,
-            viewed: 30,
-            applied: 15,
+            viewed: respObj.readCount,
+            applied: respObj.applyCount,
             publicDate: respObj.updateTime ? respObj.updateTime.split(" ")[0] : []
         };
         appBanner.incdata = briefdata;
-        var addArray = respObj.schoolAddress.split(';');
+        if (respObj.schoolAddress) {
+            var address = respObj.schoolAddress.split(';')[0] + respObj.schoolAddress.split(';')[1];
+        } else {
+            var address = "";
+        }
         var demandinfo = {
-            address: addArray[0] + " - " + addArray[1],
+            address: address,
             type: respObj.schoolType,
             property: respObj.schoolProperty,
             job: EventUtils.infoExtrac(respObj.job),
@@ -144,7 +148,7 @@ var appBanner = new Vue({
                 alert("无法收藏自己的需求！");
                 return false;
             }
-            if (respObj.demandType == accountObj.userType) {
+            if (accountObj.userType != "1") {
                 alert("抱歉，目前您不能收藏企业的需求！");
                 return false;
             }
@@ -175,11 +179,15 @@ var appBanner = new Vue({
             }
         },
         coApply: function() {
-            if (parObj.userId == respObj.userId) {
-                alert("无法申请自己的需求！");
-                return false;
-            }
             if (appTop.isLogin) {
+                if (parObj.userId == respObj.userId) {
+                    alert("无法申请自己的需求！");
+                    return false;
+                };
+                if (accountObj.userType != "1") {
+                    alert("抱歉，目前您不能申请企业的需求！");
+                    return false;
+                }
                 var postdata = {
                     userId: parObj.userId,
                     loginIdentifier: parObj.loginId,
@@ -367,3 +375,21 @@ function _init() {
     initEventBind();
 }
 _init();
+
+function initEventBind() {
+    $(".result-tabs li").bind("click", function() {
+        $(".result-tabs li").removeClass("on");
+        $(this).addClass("on");
+        $(".tab-cont").hide();
+        $("." + $(this).attr("cont")).show();
+    });
+    $(".account li").mouseenter(function() {
+        if ($(this).find("dl").length > 0) {
+            $(this).find("dl").slideDown();
+        }
+    }).mouseleave(function() {
+        if ($(this).find("dl").length > 0) {
+            $(this).find("dl").hide();
+        }
+    })
+};

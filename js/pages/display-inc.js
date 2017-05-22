@@ -4,6 +4,7 @@
 var isLogin = false;
 var parObj = EventUtils.urlExtrac(window.location); //地址参数对象
 var respObj = {}; //页面信息
+var accountObj = {}; // 登录用户信息
 var subposArray = [];
 (function() {
     //提取出二级职位信息
@@ -28,32 +29,18 @@ function infoRequest() {
         appResult.incList.totalpages = resp.data.totalPage;
         appResult.incList.results = resp.data.list;
     });
-    if (parObj.loginId && parObj.userType) {
-        var getdata = {
-            userId: parObj.userId,
-            loginIdentifier: parObj.loginId
-        }
-        appResult.loginInfo = {
-            userId: parObj.userId,
-            userType: parObj.userType,
-            loginId: parObj.loginId
-        }
-        appTop.userType = parObj.userType;
-        switch (parObj.userType) {
-            case "1":
-                EventUtils.ajaxReq("/user/school/getInfo", "get", getdata, function(resp, status) {
-                    appTop.userName = resp.data.name;
-                    appTop.isLogin = true;
-                })
-                break;
-            case "2":
-                EventUtils.ajaxReq("/user/company/getInfo", "get", getdata, function(resp, status) {
-                    appTop.userName = resp.data.name;
-                    appTop.isLogin = true;
-                })
-                break;
-            default:
-        }
+    if (parObj.userId) {
+        EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId }, function(resp, status) {
+            //  console.log(resp);
+            accountObj = resp.data;
+            console.log(accountObj);
+            if (accountObj) {
+                appTop.userName = resp.data.userName;
+                appTop.userType = resp.data.userType;
+                appTop.isLogin = true;
+                isLogin = true;
+            }
+        })
     }
 }
 
@@ -104,11 +91,7 @@ var appTop = new Vue({
             this.isLogin = false;
             appModal.login.account = "";
             appModal.login.password = "";
-            appResult.loginInfo = {
-                userId: "",
-                userType: "",
-                loginId: ""
-            };
+            accountObj = {};
             var state = {
                 title: document.title,
                 url: document.location.href,
@@ -216,6 +199,7 @@ var appQuery = new Vue({
         },
         clickPos: function() {
             this.showPosBox = true;
+            $(".selectee ul").hide();
         },
         selArea: function(area, type) {
             if (type == "uni") {
@@ -227,12 +211,6 @@ var appQuery = new Vue({
             }
 
             this.showAreaBox = false;
-        },
-        clickArea: function() {
-            this.showAreaBox = true;
-        },
-        clickWel: function() {
-            this.showWelBox = true;
         },
         checkEv: function(obj) {
             if ($(obj).hasClass("on")) {
@@ -321,11 +299,6 @@ var appQuery = new Vue({
 var appResult = new Vue({
     el: "#app-result",
     data: {
-        loginInfo: {
-            userId: "",
-            userType: "",
-            loginId: ""
-        },
         incList: {
             totalpages: 1,
             results: [],
@@ -334,22 +307,38 @@ var appResult = new Vue({
     methods: {
         demandLink: function(demandId) {
             var link = "detail-company.html?demandId=" + demandId;
-            if (this.loginInfo.loginId != "") {
-                link += "&userId=" + this.loginInfo.userId + "&loginId=" + this.loginInfo.loginId + "&userType=" + this.loginInfo.userType;
+            if (accountObj) {
+                link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginId + "&userType=" + accountObj.userType;
             }
             return link;
         },
         infoExtrac: function(info) {
             return EventUtils.infoExtrac(info);
         },
-        coApply: function() {
-            if (isLogin) {
-                $(".dlg-success").css({
-                    top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
-                })
-                appModal.showModal = true;
-                appModal.showLogin = false;
-                appModal.showSucc = true;
+        coApply: function(id) {
+            if (appTop.isLogin) {
+                if (accountObj.userId == respObj.userId) {
+                    alert("无法申请自己的需求！");
+                    return false;
+                };
+                if (accountObj.userType != "1") {
+                    alert("抱歉，目前您不能申请企业的需求！");
+                    return false;
+                }
+                var postdata = {
+                    userId: accountObj.userId,
+                    loginIdentifier: accountObj.loginId,
+                    demandId: id
+                }
+                EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
+                    console.log(resp);
+                    $(".dlg-success").css({
+                        top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
+                    });
+                    appModal.showModal = true;
+                    appModal.showLogin = false;
+                    appModal.showSucc = true;
+                });
             } else {
                 $(".dlg-login").css({
                     top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
@@ -409,9 +398,7 @@ var appModal = new Vue({
                 parObj.userId = resp.data.userId;
                 parObj.userType = resp.data.userType;
                 parObj.loginId = resp.data.loginIdentifier;
-                appResult.loginInfo.userId = resp.data.userId;
-                appResult.loginInfo.userType = resp.data.userType;
-                appResult.loginInfo.loginId = resp.data.loginIdentifier;
+                accountObj = resp.data;
                 appTop.userType = resp.data.userType;
                 appTop.userName = resp.data.name;
                 appTop.isLogin = true;

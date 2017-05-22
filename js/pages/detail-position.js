@@ -10,7 +10,9 @@ function infoRequest() {
     if (parObj.userId) {
         postdata.userId = parObj.userId;
     }
+    console.log(postdata);
     EventUtils.ajaxReq("/recruit/getInfo", "get", postdata, function(resp, status) {
+
         respObj = resp.data;
         console.log(respObj);
         var briefdata = {
@@ -62,7 +64,7 @@ function infoRequest() {
         EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId }, function(resp, status) {
             //  console.log(resp);
             accountObj = resp.data;
-            console.log(accountObj);
+            //   console.log(accountObj);
             if (accountObj) {
                 appTop.userName = resp.data.userName;
                 appTop.userType = resp.data.userType;
@@ -86,7 +88,7 @@ function infoRequest() {
 var appTop = new Vue({
     el: "#app-top",
     data: {
-        isLogin: isLogin,
+        isLogin: false,
         userType: "0",
         userName: ""
     },
@@ -148,7 +150,6 @@ var appBanner = new Vue({
     },
     methods: {
         collect: function(obj) {
-
             if (appTop.isLogin) { //登录状态下
                 if (accountObj.userId == respObj.userId) {
                     alert("无法收藏自己的需求！");
@@ -185,7 +186,7 @@ var appBanner = new Vue({
         coApply: function() {
             if (appTop.isLogin) {
                 if (accountObj.userId == respObj.userId) {
-                    alert("无法申请自己的需求！");
+                    alert("无法投递自己的职位！");
                     return false;
                 }
                 if (accountObj.userType != "0") {
@@ -198,15 +199,18 @@ var appBanner = new Vue({
                     recruitId: parObj.recruitId
                 }
                 EventUtils.ajaxReq("/recruit/cooperateRecruit", "post", postdata, function(resp, status) {
-                    console.log(resp);
-                    $(".dlg-success").css({
-                        top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
-                    });
-                    appModal.showModal = true;
-                    appModal.showLogin = false;
-                    appModal.showSucc = true;
+                    // console.log(resp);
+                    if (resp.data.isApply == "0") {
+                        $(".dlg-success").css({
+                            top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
+                        });
+                        appModal.showModal = true;
+                        appModal.showLogin = false;
+                        appModal.showSucc = true;
+                    } else {
+                        alert(resp.info);
+                    }
                 });
-
             } else {
                 $(".dlg-login").css({
                     top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
@@ -219,7 +223,7 @@ var appBanner = new Vue({
     },
     computed: {
         homeLink: function() {
-            return appTop.isLogin ? "index.html?userId=" + parObj.userId : "index.html"
+            return appTop.isLogin ? "index.html?userId=" + accountObj.userId : "index.html"
         }
     }
 });
@@ -342,8 +346,8 @@ var appModal = new Vue({
                 parObj.loginId = resp.data.loginIdentifier;
                 parObj.userType = resp.data.userType;
                 accountObj = resp.data;
-                appTop.userType = resp.data.userType;
-                appTop.userName = resp.data.name;
+                appTop.userType = accountObj.userType;
+                appTop.userName = accountObj.userName;
                 appTop.isLogin = true;
                 appModal.showModal = false;
                 appModal.showLogin = false;
@@ -387,3 +391,21 @@ function _init() {
     initEventBind();
 }
 _init();
+
+function initEventBind() {
+    $(".result-tabs li").bind("click", function() {
+        $(".result-tabs li").removeClass("on");
+        $(this).addClass("on");
+        $(".tab-cont").hide();
+        $("." + $(this).attr("cont")).show();
+    });
+    $(".account li").mouseenter(function() {
+        if ($(this).find("dl").length > 0) {
+            $(this).find("dl").slideDown();
+        }
+    }).mouseleave(function() {
+        if ($(this).find("dl").length > 0) {
+            $(this).find("dl").hide();
+        }
+    })
+};

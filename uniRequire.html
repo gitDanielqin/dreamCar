@@ -132,7 +132,7 @@
                             <p><button class="confirm-btn" @click.stop="confirmIncAddr($event.target,combiData.datatype)">确认</button></p>
                         </div>
                     </div>
-                    <button class="confirm-publish-btn" @click.prevent="publishReq">确认发布</button>
+                    <button class="confirm-publish-btn" @click.prevent="publish('combi')">确认发布</button>
                 </div>
             </div>
             <div class="nav-cont cont-recruit" v-show="!showCombi">
@@ -155,7 +155,7 @@
                     <p class="form-item"><label>岗位数</label>
                         <dropdown :options="database.inc.posAmount" placeholder="" v-model="recruitData.incReq.posAmount"></dropdown>
                     </p>
-                    <p class="form-item"><label>所在地</label>
+                    <p class="form-item company-address"><label>所在地</label>
                         <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
                     </p>
                     <h3 class="LH-H75 fSize18 maT11">高校参与应聘专业</h3>
@@ -177,7 +177,7 @@
                             <p><button class="confirm-btn" @click.stop="confirmIncAddr($event.target,recruitData.datatype)">确认</button></p>
                         </div>
                     </div>
-                    <button class="confirm-publish-btn">确认发布</button>
+                    <button class="confirm-publish-btn" @click.prevent="publish('jobfair')">确认发布</button>
                 </div>
             </div>
         </div>

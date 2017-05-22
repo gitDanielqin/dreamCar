@@ -41,7 +41,7 @@
                 <li @click="toCenter('')">我的简历</li>
                 <li><span style="margin:0 12px">|</span><span @click="toCenter('jobBox')">投递箱</span></li>
                 <li><span style="margin:0 12px">|</span><span @click="toCenter('collec-study')">收藏夹</span><span style="margin-left:12px">|</span></li>
-                <li style="padding-left:12px;">江玉海<i class="pic-icon maR10 icon-dropdown"></i>
+                <li style="padding-left:12px;">{{userName}}<i class="pic-icon maR10 icon-dropdown"></i>
                     <dl>
                         <dd @click="toCenter('classBox')">我的学习</dd>
                         <dd @click="toCenter('conf-keyword')">账号设置</dd>
@@ -73,8 +73,9 @@
             <div class="clearfix maB16">
                 <label>要求选择：</label>
                 <div class="selectee lang-select area-input" @click.stop="clickArea"><input type="text" placeholder="行业领域" disabled v-model="posQuery.areas.area_2" /></div>
-                <div class="selectee lang-select pos-input" @click.stop="clickPos"><input type="text" placeholder="职位类别" disabled v-model="posQuery.pos.pos_2" /></div>
-                <dropdown :options="database.inc.worksExp" placeholder="工作经验" v-model="posQuery.worksexp" class="lang-select"></dropdown>
+                <div class="selectee lang-select pos-input" @click.stop="clickPos"><input type="text" placeholder="岗位名称" disabled v-model="posQuery.pos.pos_2" /></div>
+                <dropdown :options="database.inc.workType" placeholder="职位类别" v-model="posQuery.workstype"></dropdown>
+                <dropdown :options="database.inc.worksExp" placeholder="工作经验" v-model="posQuery.worksexp"></dropdown>
                 <dropdown :options="database.uni.scolars" placeholder="学历" v-model="posQuery.scolar"></dropdown>
             </div>
             <div class="clearfix maB16">
@@ -84,8 +85,7 @@
             </div>
             <div class="clearfix maB16">
                 <label>其他：</label>
-                <dropdown :options="['三天内','一周内','一月内']" placeholder="发布时间" v-model="posQuery.publicTime"></dropdown>
-                <dropdown :options="['高管到校培训','入企培训','面议']" placeholder="联合培养方式" v-model="posQuery.trainway" class="lang-select"></dropdown>
+                <dropdown :options="['三天内','一周内','一月内','不限']" placeholder="发布时间" v-model="posQuery.publicTime" class="lang-select"></dropdown>
             </div>
             <div class="area-box popBox pos-pos" v-show="showAreaBox">
                 <div>
@@ -103,7 +103,7 @@
                     <li v-for="pos in database.inc.pos2" @click.stop="selPos(pos,'pos')">{{pos}}</li>
                 </ul>
             </div>
-            <div class="welfare-box popBox" v-show="showWelBox">
+            <div class="welfare-box popBox" v-show="showWelBox" style="top:183px; left:294px">
                 <ul class="lis-inline welfare-lis">
                     <li v-for="item in database.inc.welfare"><i class="check-box" @click.stop="checkEv($event.target)"></i>{{item}}</li>
                 </ul>
@@ -124,7 +124,7 @@
                         <div class="paLeft29 clearfix H108 pRel">
                             <div class="W78 H70 logo-pic bg-brown disInline v-mid fl maT20"></div>
                             <div class="item-block-left fl paTop20 W321 maL25">
-                                <h2 class="color-blueL fSize16 LH-H24"><a :href="demandLink(item.demandId)">{{infoExtrac(item.job)}}</a></h2>
+                                <h2 class="color-blueL fSize16 LH-H24"><a :href="positionLink(item.recruitId)">{{infoExtrac(item.job)}}</a></h2>
                                 <p><span class="fSize16 maR24 color-orange-f7">{{item.salary}}</span>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.workTime}}<i class="depart">|</i>{{item.education}}</p>
                                 <p class="fSize14"><span class="maR15">【{{cityExtrac(item.companyAddress)}}】</span>岗位数：{{item.recruitCount}}人</p>
                             </div>
@@ -133,7 +133,7 @@
                                 <p class="fSize12">{{item.userProperty}}<span class="maL16">{{item.userScale}}</span></p>
                                 <p class="fSize12 pubdate">发布日期：{{item.updateTime.split(" ")[0]}}</p>
                             </div>
-                            <button class="btn-apply color-blueL" @click="coApply">投个简历</button>
+                            <button class="btn-apply color-blueL" @click="coApply(item.recruitId)">投个简历</button>
                         </div>
                     </li>
                     <li v-show="posList.results.length==0">

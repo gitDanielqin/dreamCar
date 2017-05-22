@@ -464,7 +464,7 @@
                 <div class="collec-job ListBox">
                     <div class="hd LH-H58">
                         <dropdown :options="colPosList.states" v-model="colPosList.curstate" class="collec-job-state"></dropdown>
-                        <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">{{colPosList.results.length}}</span>个</p>
+                        <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">{{colPosList.totalitems}}</span>个</p>
                     </div>
                     <ul class="colCompanyList contList H470">
                         <li v-show="colPosList.results.length==0">
@@ -472,22 +472,27 @@
                                 <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
                             </div>
                         </li>
-                        <li v-for="(item,index) in colPosList.results" v-show="showResult(index,colPosList.curpage,3)">
+                        <li v-for="(item,index) in colPosList.results">
                             <div class="logo-pic"></div>
                             <div class="class-txt fl paTop20 W328">
-                                <h2 class="class-name"><a href="detail-position.html">{{item.pos}}</a></h2>
-                                <p class="demand"><span class="color-orange-f7">{{item.salary}}</span><i>|</i>{{item.major}}<i>|</i>{{item.scolar}}<i>|</i>{{item.worksexp}}</p>
-                                <p><span class="maR20">【{{item.address.district}}】</span>岗位数:<span>{{item.posAmount}}人</span></p>
+                                <h2 class="class-name"><a href="detail-position.html">{{infoExtrac(item.job)}}</a></h2>
+                                <p class="demand"><span class="color-orange-f7">{{item.salary}}</span><i>|</i>{{infoExtrac(item.profession)}}<i>|</i>{{item.education}}<i>|</i>{{item.workTime}}</p>
+                                <p><span class="maR20">【{{cityExtrac(item.companyAddress)}}】</span>岗位数: <span>{{item.recruitCount}}人</span></p>
                             </div>
                             <div class="col-company-info fl fSize18">
-                                <p>{{item.inc}}</p>
-                                <p>{{item.IncProps}}<i>|</i>{{item.IncScale}}</p>
-                                <p>{{item.publicDate}}</p>
-                                <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
+                                <p>{{item.userName}}</p>
+                                <p>{{item.userProperty}}<i>|</i>{{item.userScale}}</p>
+                                <p>发布时间：{{item.updateTime.split(" ")[0]}}</p>
+                                <div class="action">
+                                    <span @click="cancelCollect('position',item.id)">取消收藏</span>
+                                    <span class="post" @click="apply('position',item.id)" v-show="!item.status">投递简历</span>
+                                    <span class="posted" v-show="item.status&&item.status!=3">已投递</span>
+                                    <span class="color-gray offline" v-show="item.status&&item.status==3">已下线</span>
+                                </div>
                             </div>
                         </li>
                     </ul>
-                    <pagination :showpages="showpage(colPosList.results.length)" :totalpages="pagesum(colPosList.results.length)" type="col-pos" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                    <pagination :showpages="showpage(colPosList.totalpages)" :totalpages="colPosList.totalpages" type="col-pos" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
                 <div class="collec-recruitment ListBox">
                     <div class="hd LH-H58">

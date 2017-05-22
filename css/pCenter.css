@@ -25,38 +25,6 @@
     background: url("../images/sprite.png") no-repeat -6px -262px;
 }
 
-
-/*.main .selectee ul {
-    position: absolute;
-    left: 0;
-    top: 36px;
-    border: 1px solid #d2d2d2;
-    font-size: 12px;
-    height: 149px;
-    overflow: auto;
-    overflow-x: auto;
-    background: #fff;
-    display: none;
-    z-index: 10;
-}
-
-.main .selectee ul li {
-    line-height: 24px;
-    height: 24px;
-    cursor: pointer;
-    padding-left: 10px;
-}
-
-.main .selectee ul li.over {
-    background: #9bcce5;
-    color: #fff;
-}
-
-.main .selectee ul li.selected {
-    background: #2ea8e6;
-    color: #fff;
-}*/
-
 .sel-addr input {
     width: 78px;
 }
@@ -504,7 +472,6 @@
 
 .main .ListBox .contList .class-txt p {
     line-height: 26px;
-    height: 26px;
     color: #333;
     font-size: 14px;
     width: 275px;
@@ -579,6 +546,7 @@
     display: inline-block;
     margin-right: 35px;
     color: #46afe8;
+    cursor: pointer
 }
 
 
@@ -618,10 +586,19 @@
     display: inline-block;
     margin-right: 35px;
     color: #46afe8;
+    cursor: pointer
 }
 
 .main .ListBox .contList .col-company-info .action span.post {
     color: #f7a14a;
+}
+
+.main .ListBox .contList .col-company-info .action span.posted {
+    color: #999;
+}
+
+.main .ListBox .contList .col-company-info .action span.offline {
+    color: #999;
 }
 
 .main .ListBox .contList .col-company-info .action span.end {

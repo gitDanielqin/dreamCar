@@ -204,12 +204,12 @@ var appMain = new Vue({
         recruitData: {
             datatype: "recruit",
             header: "",
-            postype: "",
+            postype: "不限",
             amount: "",
-            scolar: "",
-            gender: "",
-            worksexp: "",
-            salary: "",
+            scolar: "不限",
+            gender: "不限",
+            worksexp: "不限",
+            salary: "不限",
             date: "",
             desc: "",
             contact: {
@@ -342,6 +342,45 @@ var appMain = new Vue({
                     EventUtils.ajaxReq('/demand/modifyInfo', 'post', postdata, function(resp, status) {
                         console.log(resp);
                         window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
+                    })
+                }
+
+            } else if (type == "jobfair") {
+                var welfare = "";
+                $(".cont-recruit .welfare-lis li").each(function() {
+                    if ($(this).children("i.check-box").hasClass("on")) {
+                        welfare += $(this).find("span").html() + ";"
+                    }
+                });
+                welfare = welfare.slice(0, -1);
+                var postdata = {
+                    userId: parObj.userId,
+                    jobFairType: 2,
+                    title: this.recruitData.header,
+                    job: $(".cont-recruit .sel-pos-1 input").val() + ";" + $(".cont-recruit .sel-pos-2 input").val() + ";" + $(".cont-recruit .sel-pos-3 input").val(),
+                    workType: this.recruitData.postype,
+                    jobCount: this.recruitData.amount,
+                    cvEducation: this.recruitData.scolar,
+                    profession: $(".cont-recruit .major-input-1 input").val() + ";" + $(".cont-recruit .major-input-2 input").val(),
+                    cvSex: this.recruitData.gender,
+                    cvProject: this.recruitData.worksexp,
+                    cvSalary: this.recruitData.salary,
+                    cvWelfare: welfare,
+                    startTime: this.recruitData.date,
+                    discription: this.recruitData.desc,
+                    linkMan: this.recruitData.contact.person,
+                    mobile: this.recruitData.contact.phone,
+                    jobFairAddress: this.recruitData.contact.address
+                }
+                console.log(postdata);
+                if (isNewRequire) {
+                    EventUtils.ajaxReq('/jobfair/apply', 'post', postdata, function(resp, status) {
+                        window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                    })
+                } else {
+                    postdata.jobfairId = parObj.jobfairId;
+                    EventUtils.ajaxReq('/jobfair/modifyInfo', 'post', postdata, function(resp, status) {
+                        window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
                     })
                 }
 

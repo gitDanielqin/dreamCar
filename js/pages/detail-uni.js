@@ -15,8 +15,8 @@ function infoRequest() {
         console.log(respObj);
         var briefdata = {
             title: respObj.title,
-            viewed: 30,
-            applied: 15,
+            viewed: respObj.readCount,
+            applied: respObj.applyCount,
             publicDate: respObj.updateTime.split(" ")[0]
         };
         appBanner.unidata = briefdata;
@@ -45,14 +45,16 @@ function infoRequest() {
         appMain.unidata.baseinfo = baseinfo;
         //初始化联合培养时间表
         $("#train-table .date-aval").removeClass("date-aval");
-        var timeArray = respObj.trainTime.split(";");
-        for (var i = 0; i < timeArray.length; i++) {
-            for (var j = 0; j < timeArray[i].length; j++) {
-                if (timeArray[i].charAt(j) == "1") {
-                    $("#train-table .date-tr").eq(i).find("td").eq(j + 1).addClass("date-aval");
+        if (respObj.trainTime) {
+            var timeArray = respObj.trainTime.split(";");
+            for (var i = 0; i < timeArray.length; i++) {
+                for (var j = 0; j < timeArray[i].length; j++) {
+                    if (timeArray[i].charAt(j) == "1") {
+                        $("#train-table .date-tr").eq(i).find("td").eq(j + 1).addClass("date-aval");
+                    }
                 }
-            }
-        };
+            };
+        }
         //判断是否已收藏
         if (respObj.markStatus == "1") {
             $("#app-banner .btn-collec").addClass("collected");
@@ -155,7 +157,7 @@ var appBanner = new Vue({
                 alert("无法收藏自己的需求！");
                 return false;
             }
-            if (respObj.demandType == accountObj.userType) {
+            if (accountObj.userType != "2") {
                 alert("抱歉，目前您不能收藏高校的需求！");
                 return false;
             }
@@ -186,11 +188,15 @@ var appBanner = new Vue({
             }
         },
         coApply: function() {
-            if (parObj.userId == respObj.userId) {
-                alert("无法申请自己的需求！");
-                return false;
-            }
             if (appTop.isLogin) {
+                if (parObj.userId == respObj.userId) {
+                    alert("无法申请自己的需求！");
+                    return false;
+                }
+                if (accountObj.userType != "2") {
+                    alert("抱歉，目前您不能申请高校的需求！");
+                    return false;
+                }
                 var postdata = {
                     userId: parObj.userId,
                     loginIdentifier: parObj.loginId,
@@ -374,8 +380,36 @@ var appModal = new Vue({
     }
 })
 
+function slideEvent() {
+    $(".account li").hover(function() {
+        $(this).find("dl").slideDown(300);
+    }, function() {
+        $(this).find("dl").slideUp(200);
+    })
+}
+
 function _init() {
     infoRequest();
+    initEventBind();
     selectInitPos();
+    slideEvent()
 }
 _init();
+
+function initEventBind() {
+    $(".result-tabs li").bind("click", function() {
+        $(".result-tabs li").removeClass("on");
+        $(this).addClass("on");
+        $(".tab-cont").hide();
+        $("." + $(this).attr("cont")).show();
+    });
+    $(".account li").mouseenter(function() {
+        if ($(this).find("dl").length > 0) {
+            $(this).find("dl").slideDown();
+        }
+    }).mouseleave(function() {
+        if ($(this).find("dl").length > 0) {
+            $(this).find("dl").hide();
+        }
+    })
+};

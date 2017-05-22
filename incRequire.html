@@ -180,7 +180,7 @@
                             <p><button class="confirm-btn" @click.stop="confirmIncAddr($event.target,recruitData.datatype)">确认</button></p>
                         </div>
                     </div>
-                    <button class="confirm-publish-btn">确认发布</button>
+                    <button class="confirm-publish-btn" @click.stop="publish('jobfair')">确认发布</button>
                 </div>
             </div>
             <div class="nav-cont cont-direct" v-show="showpage.page3">

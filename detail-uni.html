@@ -41,7 +41,7 @@
                 <li @click="toCenter('')">我的简历</li>
                 <li><span style="margin:0 12px">|</span><span @click="toCenter('jobBox')">投递箱</span></li>
                 <li><span style="margin:0 12px">|</span><span @click="toCenter('collec-study')">收藏夹</span><span style="margin-left:12px">|</span></li>
-                <li style="padding-left:12px;">江玉海<i class="pic-icon maR10 icon-dropdown"></i>
+                <li style="padding-left:12px;">{{userName}}<i class="pic-icon maR10 icon-dropdown"></i>
                     <dl>
                         <dd @click="toCenter('classBox')">我的学习</dd>
                         <dd @click="toCenter('conf-keyword')">账号设置</dd>
@@ -263,7 +263,6 @@
     <script src="js/common/common.js"></script>
     <script src="js/components/pagination.js"></script>
     <script src="js/components/dropdown.js"></script>
-    <script src="js/pages/detail-common.js"></script>
     <script src="js/pages/detail-uni.js"></script>
 </body>
 

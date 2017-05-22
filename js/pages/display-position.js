@@ -35,9 +35,10 @@ function infoRequest() {
         var getdata = {
             userId: parObj.userId
         }
+        console.log(getdata);
         EventUtils.ajaxReq("/center/user/getInfo", "get", getdata, function(resp, status) {
             accountObj = resp.data;
-            appTop.userName = resp.data.name;
+            appTop.userName = accountObj.userName;
             appTop.isLogin = true;
             appTop.userType = accountObj.userType;
             appResult.loginInfo = {
@@ -54,7 +55,7 @@ infoRequest();
 var appTop = new Vue({
     el: "#app-top",
     data: {
-        isLogin: isLogin,
+        isLogin: false,
         userType: "0",
         userName: ""
     },
@@ -116,12 +117,9 @@ var appQuery = new Vue({
                 IncProps: incProps,
                 posAmount: positionsum,
                 worksExp: worksexp,
-                pos1: [],
-                pos2: [],
-                area1: [],
-                area2: [],
+                workType: ["全职", "兼职", "实习", "校园", "不限"],
                 salary: salaryItems,
-                welfare: ["五险一金", "双休", "餐补", "交通补", "带薪年假", "节日聚餐"]
+                welfare: welfares
             },
             navcitys: [
                 { "province": "浙江省", "city": "杭州", "conts": ["滨江区", "淳安县", "富阳市", "拱墅区", "江干区", "建德市", "临安市", "上城区", "桐庐县", "西湖区", "下城区", "萧山区", "余杭区", "不限"] },
@@ -143,6 +141,7 @@ var appQuery = new Vue({
                 pos_2: ""
             },
             worksexp: "",
+            workstype: "",
             scolar: "",
             salary: "",
             welfare: "",
@@ -198,9 +197,6 @@ var appQuery = new Vue({
             }
             this.showPosBox = false;
         },
-        clickPos: function() {
-            this.showPosBox = true;
-        },
         selArea: function(area, type) {
             if (type == "uni") {
                 this.uniQuery.incReq.areas.area_2 = area;
@@ -212,11 +208,23 @@ var appQuery = new Vue({
 
             this.showAreaBox = false;
         },
+        clickPos: function() {
+            this.showAreaBox = false;
+            this.showWelBox = false;
+            this.showPosBox = true;
+            $(".selectee ul").hide();
+        },
         clickArea: function() {
             this.showAreaBox = true;
+            this.showWelBox = false;
+            this.showPosBox = false;
+            $(".selectee ul").hide();
         },
         clickWel: function() {
+            this.showAreaBox = false;
             this.showWelBox = true;
+            this.showPosBox = false;
+            $(".selectee ul").hide();
         },
         checkEv: function(obj) {
             if ($(obj).hasClass("on")) {
@@ -265,6 +273,9 @@ var appQuery = new Vue({
                     break;
                 }
             }
+            if (curval == "不限") {
+                resultsRequest(1);
+            }
         },
         'posQuery.pos.pos_2': function(curval) {
             if (this.posQuery.pos.pos_1 == "") {
@@ -278,12 +289,18 @@ var appQuery = new Vue({
                     this.database.inc.area2 = workareas[i].subareas;
                     break;
                 }
+            };
+            if (curval == "不限") {
+                resultsRequest(1);
             }
         },
         'posQuery.areas.area_2': function(curval) {
             if (this.posQuery.areas.area_1 == "") {
                 this.posQuery.areas.area_1 = workareas[0].title;
             }
+            resultsRequest(1);
+        },
+        'posQuery.workstype': function(curval) {
             resultsRequest(1);
         },
         'posQuery.worksexp': function(curval) {
@@ -299,9 +316,6 @@ var appQuery = new Vue({
             resultsRequest(1);
         },
         'posQuery.publicTime': function(curval) {
-            resultsRequest(1);
-        },
-        'posQuery.trainway': function(curval) {
             resultsRequest(1);
         },
         'showPosBox': function(curval) {
@@ -342,17 +356,38 @@ var appResult = new Vue({
                 return "";
             }
         },
-        demandLink: function(demandId) {
-            return "detail-position.html?demandId=" + demandId + "&type=display";
+        positionLink: function(id) {
+            var link = "detail-position.html?recruitId=" + id;
+            if (appTop.isLogin) {
+                link += "&userId=" + accountObj.userId;
+            }
+            return link
         },
-        coApply: function() {
-            if (isLogin) {
-                $(".dlg-success").css({
-                    top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
-                })
-                appModal.showModal = true;
-                appModal.showLogin = false;
-                appModal.showSucc = true;
+        coApply: function(id) {
+            if (appTop.isLogin) {
+                if (accountObj.userType != "0") {
+                    alert("抱歉，您不能投递该职位！");
+                    return false;
+                }
+                var postdata = {
+                    userId: parObj.userId,
+                    recruitId: id
+                }
+                console.log(postdata);
+                EventUtils.ajaxReq("/recruit/cooperateRecruit", "post", postdata, function(resp, status) {
+                    console.log(resp);
+                    if (resp.data.isApply == "0") {
+                        $(".dlg-success").css({
+                            top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
+                        });
+                        appModal.showModal = true;
+                        appModal.showLogin = false;
+                        appModal.showSucc = true;
+                    } else {
+                        alert(resp.info)
+                    }
+                });
+
             } else {
                 $(".dlg-login").css({
                     top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
@@ -409,6 +444,7 @@ var appModal = new Vue({
                 password: this.login.password
             };
             EventUtils.ajaxReq("/center/user/login", "post", postdata, function(resp, status) {
+                console.log(resp);
                 respObj.userId = resp.data.userId;
                 respObj.loginId = resp.data.loginIdentifier;
                 appTop.userType = resp.data.userType;
@@ -472,29 +508,51 @@ function _initEventBind() {
 
 // 筛选结果请求
 function resultsRequest(page) {
+    //     日期选择变量转化
+    var dateindex = "";
+    switch (appQuery.posQuery.publicTime) {
+        case "三天内":
+            dateindex = 1;
+            break;
+        case "一周内":
+            dateindex = 2;
+            break;
+        case "一月内":
+            dateindex = 3;
+            break;
+        default:
+    }
     var postdata = {
             index: page,
             count: 8,
             userAddress: appQuery.posQuery.address,
-            type: appQuery.posQuery.area.area_1,
-            schoolProperty: appQuery.incQuery.uniReq.uniprops,
-            profession: $(".queryform .major-input-1 input").val() == "" ? "不限" : $(".queryform .major-input-1 input").val() + ";" + $(".queryform .major-input-2 input").val(),
-            professionCount: appQuery.incQuery.uniReq.majorsum,
-            job: appQuery.incQuery.pos.pos_1 == "" ? "" : appQuery.incQuery.pos.pos_1 + ";" + appQuery.incQuery.pos.pos_2,
-            jobCount: appQuery.incQuery.posAmount,
-            trainType: appQuery.incQuery.trainway
+            type: appQuery.posQuery.areas.area_1 == "" ? "" : appQuery.posQuery.areas.area_1 + ";" + appQuery.posQuery.areas.area_2,
+            job: appQuery.posQuery.pos.pos_2 == "" ? "" : appQuery.posQuery.pos.pos_1 + ";" + appQuery.posQuery.pos.pos_2,
+            workType: appQuery.posQuery.workstype,
+            workTime: appQuery.posQuery.worksexp,
+            education: appQuery.posQuery.scolar,
+            salary: appQuery.posQuery.salary,
+            welfare: appQuery.posQuery.welfare,
+            timeType: dateindex
         }
         // 清楚发送数据对象值为空的属性
     for (var key in postdata) {
+        if (typeof(postdata[key]) == "string" && postdata[key].indexOf(";") >= 0 && postdata[key].split(";")[0] == "不限") {
+            delete postdata[key];
+        }
         if (postdata[key] == "" || postdata[key] == "不限") {
             delete postdata[key];
         }
     }
-    EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
+    console.log(postdata);
+    EventUtils.ajaxReq("/recruit/getList", "get", postdata, function(resp, status) {
         console.log(resp);
         if (resp.data) {
-            appResult.incList.totalpages = resp.data.totalPage;
-            appResult.incList.results = resp.data.list;
+            appResult.posList.totalpages = resp.data.totalPage;
+            appResult.posList.results = resp.data.list;
+        } else {
+            appResult.posList.totalpages = 1;
+            appResult.posList.results = [];
         }
     })
 }
