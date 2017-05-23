@@ -370,7 +370,7 @@ var appMain = new Vue({
                     discription: this.recruitData.desc,
                     linkMan: this.recruitData.contact.person,
                     mobile: this.recruitData.contact.phone,
-                    jobFairAddress: this.recruitData.contact.address
+                    jobFairAddress: this.recruitData.contact.address == "" ? "" : this.recruitData.contact.address.split("-").join(";")
                 }
                 console.log(postdata);
                 if (isNewRequire) {

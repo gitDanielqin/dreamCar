@@ -30,14 +30,14 @@ function infoRequest() {
             state: respObj.userInfo.liveStatus
         };
         appPorto.briefInfo = briefdata;
-        $("#avatar-box").html("<img src='" + respObj.userInfo.userIcon + "' />");
-        $(".porto-img").html("<img src='" + respObj.userInfo.userIcon + "' />");
         if (respObj.userInfo.cvStatus == "0") { //首次编辑页面信息
             appCont.resume.firstEdit = true;
             $(".view").hide();
             $(".edit").show();
         } else { //已注册用户进入页面请求简历信息
             appCont.resume.firstEdit = false;
+            $("#avatar-box").html("<img src='" + respObj.userInfo.userIcon + "' />");
+            $(".porto-img").html("<img src='" + respObj.userInfo.userIcon + "' />");
             var familyStatus = "";
             switch (respObj.userInfo.marryStatus) {
                 case "0":

@@ -295,7 +295,22 @@ var appCont = new Vue({
                     count: 3
                 }
                 EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-                    console.log(resp);
+                    appCont.require.totalpages = resp.data.totalPage;
+                    appCont.require.pagesize = resp.data.pageSize;
+                    appCont.require.results = resp.data.list;
+                    appCont.require.totalitems = resp.data.totalRow;
+                })
+                this.require.curpage = 1;
+            } else if (curval == "招聘会") {
+                this.require.demandSrc = 1;
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    jobFairType: 2,
+                    index: 1,
+                    count: 3
+                }
+                EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
                     appCont.require.totalpages = resp.data.totalPage;
                     appCont.require.pagesize = resp.data.pageSize;
                     appCont.require.results = resp.data.list;
@@ -324,7 +339,6 @@ var appCont = new Vue({
                 })
                 this.require.curpage = 1;
             }
-
         },
         "require.period": function(curval) {
             this.require.results = reqFilter(this.require.state, curval);
@@ -408,11 +422,19 @@ var appCont = new Vue({
         infoToArray: function(text) {
             return EventUtils.infoToArray(text);
         },
-        requireLink: function(demandId) {
-            return "detail-company.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + demandId + "&userType=2";
+        requireLink: function(item) {
+            if (item.demandId) {
+                return "detail-company.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + item.demandId + "&userType=2";
+            }
+            if (item.recruitId) {
+                return "detail-position.html?userId=" + parObj.userId + "&recruitId=" + item.recruitId;
+            }
+            if (item.jobFairId) {
+                return "detail-increcruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
+            }
         },
-        positionLink: function(id) {
-            return "detail-position.html?userId=" + parObj.userId + "&recruitId=" + id;
+        collectLink: function(id) {
+            return "detail-uni.html?userId=" + parObj.userId + "&demandId=" + id;
         },
         popTrade: function() {
             appModal.showModal = true;
@@ -533,6 +555,19 @@ var appCont = new Vue({
                     $(".requireBox .pagination a.page").eq(appCont.require.curpage - 1).parent().trigger("click");
                 })
             }
+            if (item.jobFairId) {
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    jobFairId: item.jobFairId
+                }
+                EventUtils.ajaxReq("/jobfair/delInfo", "post", postdata, function(resp, status) {
+                    if (appCont.require.results.length == 1 && appCont.require.curpage > 1) {
+                        appCont.require.curpage -= 1;
+                    }
+                    $(".requireBox .pagination a.page").eq(appCont.require.curpage - 1).parent().trigger("click");
+                })
+            }
             if (item.recruitId) {
                 var postdata = {
                     userId: parObj.userId,
@@ -638,6 +673,24 @@ var appCont = new Vue({
                         count: 3
                     }
                     EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
+                        if (resp.data) {
+                            appCont.require.results = resp.data.list;
+                            appCont.require.totalitems = resp.data.totalRow;
+                            appCont.require.totalpages = resp.data.totalPage;
+                        } else {
+                            appCont.require.results = [];
+                            appCont.require.totalitems = 0;
+                        }
+                    })
+                } else if (this.require.demandSrc == 1) {
+                    var postdata = {
+                        userId: parObj.userId,
+                        loginIdentifier: parObj.loginId,
+                        jobFairType: 2,
+                        index: page,
+                        count: 3
+                    }
+                    EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
                         if (resp.data) {
                             appCont.require.results = resp.data.list;
                             appCont.require.totalitems = resp.data.totalRow;

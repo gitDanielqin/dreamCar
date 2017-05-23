@@ -1,9 +1,9 @@
 /**
  * Created by xuanyuan on 2016/12/31.
  */
-var isLogin = false;
 var parObj = EventUtils.urlExtrac(window.location); //地址参数对象
 var respObj = {}; //页面信息
+var accountObj = {} //登录用户信息
 var subposArray = [];
 (function() {
     //提取出二级职位信息
@@ -15,23 +15,42 @@ var subposArray = [];
         }
     };
     subposArray.push({ name: "不限", subpos: ["不限"] });
-    var postdata = {
-            demandType: 2,
-            index: 1,
-            count: 8
-        }
-        //  EventUtils.ajaxReq("/demand/getList","get",postdata,function(resp,status){
-        //       console.log(resp);
-        //       appResult.incList.totalpages = resp.data.totalPage;
-        //       appResult.incList.results = resp.data.list;
-        //  })
 })()
 
-
+function infoRequest() {
+    var postdata = {
+        jobFairType: 1,
+        index: 1,
+        count: 8
+    }
+    EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
+        console.log(resp);
+        if (resp.data) {
+            appResult.unirecruitList.totalpages = resp.data.totalPage;
+            appResult.unirecruitList.totalitems = resp.data.totalRow;
+            appResult.unirecruitList.results = resp.data.list;
+        } else {
+            appResult.unirecruitList.totalitems = 0;
+            appResult.unirecruitList.results = [];
+        }
+    });
+    if (parObj.userId) {
+        EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId }, function(resp, status) {
+            //  console.log(resp);
+            accountObj = resp.data;
+            if (accountObj) {
+                appTop.userName = resp.data.userName;
+                appTop.userType = resp.data.userType;
+                appTop.isLogin = true;
+            }
+        })
+    }
+}
+infoRequest();
 var appTop = new Vue({
     el: "#app-top",
     data: {
-        isLogin: isLogin,
+        isLogin: false,
         userType: "0",
         userName: ""
     },
@@ -46,10 +65,10 @@ var appTop = new Vue({
         publish: function() {
             switch (this.userType) {
                 case "1":
-                    var link = "uniRequire.html?new=1&userId=" + respObj.userId + "&loginId=" + respObj.loginId;
+                    var link = "uniRequire.html?new=1&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
                     break;
                 case "2":
-                    var link = "incRequire.html?new=1&userId=" + respObj.userId + "&loginId=" + respObj.loginId;
+                    var link = "incRequire.html?new=1&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
                     break;
                 default:
             }
@@ -58,13 +77,13 @@ var appTop = new Vue({
         toCenter: function(theme) {
             switch (this.userType) {
                 case "0":
-                    var link = "pCenter.html?loginId=" + respObj.loginId + "&userId=" + respObj.userId + "&theme=" + theme;
+                    var link = "pCenter.html?loginId=" + accountObj.loginIdentifier + "&userId=" + accountObj.userId + "&theme=" + theme;
                     break;
                 case "1":
-                    var link = "uniCenter.html?loginId=" + respObj.loginId + "&userId=" + respObj.userId + "&theme=" + theme;
+                    var link = "uniCenter.html?loginId=" + accountObj.loginIdentifier + "&userId=" + accountObj.userId + "&theme=" + theme;
                     break;
                 case "2":
-                    var link = "incCenter.html?loginId=" + respObj.loginId + "&userId=" + respObj.userId + "&theme=" + theme;
+                    var link = "incCenter.html?loginId=" + accountObj.loginIdentifier + "&userId=" + accountObj.userId + "&theme=" + theme;
                     break;
                 default:
 
@@ -75,6 +94,7 @@ var appTop = new Vue({
             this.isLogin = false;
             appModal.login.account = "";
             appModal.login.password = "";
+            accountObj = {};
         }
     }
 })
@@ -111,7 +131,7 @@ var appQuery = new Vue({
             conts: ["滨江区", "淳安县", "富阳市", "拱墅区", "江干区", "建德市", "临安市", "上城区", "桐庐县", "西湖区", "下城区", "萧山区", "余杭区", "不限"]
         },
         uniRecruit: {
-            major: "",
+            major: "不限",
             majorsum: "",
             address: "",
             majorEx: false,
@@ -142,7 +162,7 @@ var appQuery = new Vue({
             $(obj).addClass("on");
             this.database.conts = this.database.navcitys[index].conts;
         },
-        selDistict: function(obj) {
+        selDistrict: function(obj) {
             $(".queryform .district .on").removeClass("on");
             $(obj).addClass("on");
             var addrString = "";
@@ -248,6 +268,9 @@ var appQuery = new Vue({
                     break;
                 }
             }
+            if (curval == "不限") {
+                resultsRequest(1);
+            }
         },
         'uniRecruit.incReq.pos.pos_2': function(curval) {
             if (this.uniRecruit.incReq.pos.pos_1 == "") {
@@ -261,6 +284,9 @@ var appQuery = new Vue({
                     this.database.inc.area2 = workareas[i].subareas;
                     break;
                 }
+            }
+            if (curval == "不限") {
+                resultsRequest(1);
             }
         },
         'uniRecruit.incReq.areas.area_2': function(curval) {
@@ -300,27 +326,36 @@ var appResult = new Vue({
     el: "#app-result",
     data: {
         unirecruitList: {
+            curpage: 1,
             totalpages: 1,
-            results: [
-                { demandId: "1", title: "艺术设计", major: "专业名称", stuScale: "专业人数", addr: { city: "杭州", district: "滨江区" }, recruitDate: "2016-12-11", IncProps: "性质", IncScale: "规模", IncPos: "岗位名称", publicDate: "2017-11-11" },
-                { demandId: "1", title: "艺术设计", major: "专业名称", stuScale: "专业人数", addr: { city: "杭州", district: "滨江区" }, recruitDate: "2016-12-11", IncProps: "性质", IncScale: "规模", IncPos: "岗位名称", publicDate: "2017-11-11" },
-                { demandId: "1", title: "艺术设计", major: "专业名称", stuScale: "专业人数", addr: { city: "杭州", district: "滨江区" }, recruitDate: "2016-12-11", IncProps: "性质", IncScale: "规模", IncPos: "岗位名称", publicDate: "2017-11-11" },
-                { demandId: "1", title: "艺术设计", major: "专业名称", stuScale: "专业人数", addr: { city: "杭州", district: "滨江区" }, recruitDate: "2016-12-11", IncProps: "性质", IncScale: "规模", IncPos: "岗位名称", publicDate: "2017-11-11" },
-                { demandId: "1", title: "艺术设计", major: "专业名称", stuScale: "专业人数", addr: { city: "杭州", district: "滨江区" }, recruitDate: "2016-12-11", IncProps: "性质", IncScale: "规模", IncPos: "岗位名称", publicDate: "2017-11-11" },
-                { demandId: "1", title: "艺术设计", major: "专业名称", stuScale: "专业人数", addr: { city: "杭州", district: "滨江区" }, recruitDate: "2016-12-11", IncProps: "性质", IncScale: "规模", IncPos: "岗位名称", publicDate: "2017-11-11" },
-                { demandId: "1", title: "艺术设计", major: "专业名称", stuScale: "专业人数", addr: { city: "杭州", district: "滨江区" }, recruitDate: "2016-12-11", IncProps: "性质", IncScale: "规模", IncPos: "岗位名称", publicDate: "2017-11-11" },
-            ],
+            totalitems: 0,
+            results: [],
         },
     },
     methods: {
         infoExtrac: function(info) {
-            return EventUtils.infoExtrac(info);
+            if (info) {
+                return EventUtils.infoExtrac(info);
+            } else {
+                return "";
+            }
         },
-        demandLink: function(demandId) {
-            return "detail-unirecruit.html?demandId=" + demandId + "&type=display";
+        regAddress: function(address) {
+            if (address) {
+                return address.split(";")[1] + "-" + address.split(";")[2];
+            } else {
+                return "";
+            }
+        },
+        detailLink: function(id) {
+            var link = "detail-unirecruit.html?jobfairId=" + id;
+            if (accountObj) {
+                link += "&userId=" + accountObj.userId;
+            }
+            return link
         },
         coApply: function() {
-            if (isLogin) {
+            if (appTop.isLogin) {
                 $(".dlg-success").css({
                     top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
                 })
@@ -383,14 +418,21 @@ var appModal = new Vue({
                 password: this.login.password
             };
             EventUtils.ajaxReq("/center/user/login", "post", postdata, function(resp, status) {
-                respObj.userId = resp.data.userId;
-                respObj.loginId = resp.data.loginIdentifier;
+                accountObj = resp.data;
                 appTop.userType = resp.data.userType;
                 appTop.userName = resp.data.name;
                 appTop.isLogin = true;
                 appModal.showModal = false;
                 appModal.showLogin = false;
-                console.log(resp);
+                //无刷新页面替换URL
+                var state = {
+                    title: document.title,
+                    url: document.location.href,
+                    otherkey: null
+                };
+                history.replaceState(state, document.title, "display-unirecruit.html?userId=" + resp.data.userId);
+                appModal.showModal = false;
+                appModal.showLogin = false;
             })
         }
     },
@@ -446,28 +488,60 @@ function _initEventBind() {
 
 // 筛选结果请求
 function resultsRequest(page) {
+    var timeIndex = "";
+    switch (appQuery.uniRecruit.publicTime) {
+        case "三天内":
+            timeIndex = 1;
+            break;
+        case "一周内":
+            timeIndex = 2;
+            break;
+        case "一月内":
+            timeIndex = 3;
+            break;
+    }
     var postdata = {
-            demandType: 2,
-            index: page,
-            count: 8,
-            schoolProperty: appQuery.incQuery.uniReq.uniprops,
-            profession: $(".queryform .major-input-1 input").val() == "" ? "不限" : $(".queryform .major-input-1 input").val() + ";" + $(".queryform .major-input-2 input").val(),
-            professionCount: appQuery.incQuery.uniReq.majorsum,
-            job: appQuery.incQuery.pos.pos_1 == "" ? "" : appQuery.incQuery.pos.pos_1 + ";" + appQuery.incQuery.pos.pos_2,
-            jobCount: appQuery.incQuery.posAmount,
-            trainType: appQuery.incQuery.trainway
-        }
-        // 清楚发送数据对象值为空的属性
+        jobFairType: 1,
+        index: page,
+        count: 8,
+        userAddress: appQuery.uniRecruit.address,
+        profession: appQuery.uniRecruit.major,
+        professionCount: appQuery.uniRecruit.majorsum,
+        companyType: appQuery.uniRecruit.incReq.areas.area_1 == "" ? "" : appQuery.uniRecruit.incReq.areas.area_1 + ";" + appQuery.uniRecruit.incReq.areas.area_2,
+        companyProperty: appQuery.uniRecruit.incReq.IncProps,
+        companyScale: appQuery.uniRecruit.incReq.IncScale,
+        job: appQuery.uniRecruit.incReq.pos.pos_1 == "" ? "" : appQuery.uniRecruit.incReq.pos.pos_1 + ";" + appQuery.uniRecruit.incReq.pos.pos_2,
+        jobCount: appQuery.uniRecruit.incReq.posAmount,
+        timeType: timeIndex
+    }
+    console.log(postdata);
+    // 清楚发送数据对象值为空的属性
     for (var key in postdata) {
+        if (typeof(postdata[key]) == "string" && postdata[key].indexOf(";") >= 0 && postdata[key].split(";")[0] == "不限") {
+            delete postdata[key];
+        }
         if (postdata[key] == "" || postdata[key] == "不限") {
             delete postdata[key];
         }
     }
-    EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
+    EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
         console.log(resp);
         if (resp.data) {
-            appResult.incList.totalpages = resp.data.totalPage;
-            appResult.incList.results = resp.data.list;
+            appResult.unirecruitList.totalpages = resp.data.totalPage;
+            appResult.unirecruitList.results = resp.data.list;
+            appResult.unirecruitList.totalitems = resp.data.totalRow;
+            //背景图像
+            if (resp.data.list.length <= 1) {
+                $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
+            } else {
+                $(".results").css("background", "none");
+            }
+        } else {
+            appResult.unirecruitList.results = [];
+            appResult.unirecruitList.totalitems = 0;
+            //背景图像
+            $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
         }
-    })
+    });
+    appResult.unirecruitList.curpage = page;
 }

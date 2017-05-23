@@ -107,7 +107,7 @@ var EventUtils = {
             return paraObj;
         },
         infoExtrac: function(info) {
-            if (info != undefined || info != "") {
+            if (info) {
                 infoArray = info.split(";");
                 for (var i = infoArray.length - 1; i >= 0; i--) {
                     if (i == 0) {

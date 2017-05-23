@@ -41,7 +41,7 @@
                 <li @click="toCenter('')">我的简历</li>
                 <li><span style="margin:0 12px">|</span><span @click="toCenter('jobBox')">投递箱</span></li>
                 <li><span style="margin:0 12px">|</span><span @click="toCenter('collec-study')">收藏夹</span><span style="margin-left:12px">|</span></li>
-                <li style="padding-left:12px;">江玉海<i class="pic-icon maR10 icon-dropdown"></i>
+                <li style="padding-left:12px;">{{userName}}<i class="pic-icon maR10 icon-dropdown"></i>
                     <dl>
                         <dd @click="toCenter('classBox')">我的学习</dd>
                         <dd @click="toCenter('conf-keyword')">账号设置</dd>
@@ -51,29 +51,31 @@
             </ul>
         </div>
     </div>
-    <h2 class="inner LH-H110 fSize30 color-grayH maB3">
-        <a :href="homeLink"><img src="images/logo.png" class="v-mid H47 maR17" /></a>校企职通车</h2>
-    <div class="banner bg-gray-f2 H176" id="app-banner" v-cloak>
-        <div class="inner clearfix">
-            <div class="fl">
-                <h2 class="LH-H76 fSize40 color-gray3">{{unirecdata.title}}</h2>
-                <ul class="lis-inline LH42 W440 brief-info fSize14">
-                    <li class="W174"><i class="pic-icon icon-eye"></i>浏览次数 ：{{unirecdata.viewed}}</li>
-                    <li><i class="pic-icon icon-apply"></i>申请次数 ：{{unirecdata.applied}}人申请</li>
-                    <li><i class="pic-icon icon-post"></i>发布时间 ：{{unirecdata.publicDate}}</li>
-                </ul>
-            </div>
-            <div class="fr">
-                <div class="maT64 banner-btns">
-                    <button class="btn-collec v-mid bg-white"><i class="pic-icon"></i><span class="maR10">收 藏</span></button>
-                    <button class="bg-orange4 color-white v-mid maL26 btn-apply t-left" @click="coApply"><span class="maL10">申请招聘</span><i class="pic-icon maL6"></i></button>
+    <div id="app-banner" v-cloak>
+        <h2 class="inner LH-H110 fSize30 color-grayH maB3">
+            <a :href="homeLink"><img src="images/logo.png" class="v-mid H47 maR17" /></a>校企职通车</h2>
+        <div class="banner bg-gray-f2 H176">
+            <div class="inner clearfix">
+                <div class="fl">
+                    <h2 class="LH-H76 fSize40 color-gray3">{{unirecdata.title}}</h2>
+                    <ul class="lis-inline LH42 W440 brief-info fSize14">
+                        <li class="W174"><i class="pic-icon icon-eye"></i>浏览次数 ：{{unirecdata.viewed}}</li>
+                        <li><i class="pic-icon icon-apply"></i>申请次数 ：{{unirecdata.applied}}人申请</li>
+                        <li><i class="pic-icon icon-post"></i>发布时间 ：{{unirecdata.publicDate}}</li>
+                    </ul>
                 </div>
-                <p class="share LH-H58 t-right">
-                    <span class="fSize14">分享：</span>
-                    <i class="pic-icon"></i>
-                    <i class="pic-icon"></i>
-                    <i class="pic-icon"></i>
-                </p>
+                <div class="fr">
+                    <div class="maT64 banner-btns">
+                        <button class="btn-collec v-mid bg-white"><i class="pic-icon"></i><span class="maR10">收 藏</span></button>
+                        <button class="bg-orange4 color-white v-mid maL26 btn-apply t-left" @click="coApply"><span class="maL10">申请招聘</span><i class="pic-icon maL6"></i></button>
+                    </div>
+                    <p class="share LH-H58 t-right">
+                        <span class="fSize14">分享：</span>
+                        <i class="pic-icon"></i>
+                        <i class="pic-icon"></i>
+                        <i class="pic-icon"></i>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -96,19 +98,19 @@
                         <li><label>专业人数 :</label>{{unirecdata.stuScale}}</li>
                     </ul>
                     <h3>其他</h3>
-                    <p class="fSize14 paLeft22 LH-H60"><label>招聘会时间 ：</label>{{unirecdata.recruitDate}} {{unirecdata.recruitTime}}</p>
+                    <p class="fSize14 paLeft22 LH-H60"><label>招聘会时间 ：</label>{{unirecdata.recruitDate}}</p>
                     <p class="fSize14 paLeft22 LH-H36"><label>详细地址 ：</label>{{unirecdata.recruitAddr}}</p>
-                    <p class="LH40 paLeft22"><label>联系电话：</label><span class="fSize24 color-orange-f7 v-mid contact-phone">{{showContact(unirecdata.contact)}}</span><button class="contact-btn" @click="showAllContact(unirecdata.contact)">点击查看完整号码</button></p>
+                    <p class="LH40 paLeft22"><label>联系电话：</label><span class="fSize24 color-orange-f7 v-mid contact-phone">{{showContact(unirecdata.contact)}}</span><button class="contact-btn" @click="showPhone">点击查看完整号码</button></p>
                     <p class="fSize14 paLeft22 W370 LH-H44"><label>联系人 ：</label>{{unirecdata.contactP}}</p>
                 </div>
                 <div class="fl">
                     <div class="W170 H363 uni-porto t-center">
                         <div class="pic-wrapper W142 uni-logo"><img src="images/logo-zheda.png" /> </div>
-                        <h3 class="LH-H34 fSize20 color-gray79">浙江大学</h3>
+                        <h3 class="LH-H34 fSize20 color-gray79">{{unirecdata.userName}}</h3>
                         <ul class="basic-info t-left fSize14 color-gray79 maT15">
-                            <li><i class="pic-icon icon-college"></i>学校性质：<span>本科</span> </li>
-                            <li><i class="pic-icon icon-people"></i>人数：<span>20000人</span> </li>
-                            <li><i class="pic-icon icon-map"></i>地址：<span>下沙大学城</span> </li>
+                            <li><i class="pic-icon icon-college"></i>学校性质：<span>{{unirecdata.userProperty}}</span> </li>
+                            <li><i class="pic-icon icon-people"></i>人数：<span>{{unirecdata.userScale}}</span> </li>
+                            <li><i class="pic-icon icon-map"></i>地址：<span>{{unirecdata.userAddress}}</span> </li>
                         </ul>
                     </div>
                     <div class="ads W166 H359 maT28 bg-white">
@@ -124,17 +126,8 @@
                 <li cont="cont-apply">申请记录<i class="msg-info">10</i></li>
                 <li cont="cont-comment">学校评价<i class="msg-info">11</i></li>
             </ul>
-            <ul class="tab-cont fSize14 LH38 color-gray6 cont-demand" style="display:block ">
-                <li><label>企业性质：</label>私营</li>
-                <li><label>企业规模：</label>200人以上</li>
-                <li><label>企业所经营行业：</label>家装设计</li>
-                <li><label>校企合作模式：</label>希望企业能够到校培训，学校提供场地组织学生，在选修课上进行联合实战培训，同时能够 给到岗位
-                </li>
-                <li><label>学校需求培训专业：</label>设计</li>
-                <li><label>学校需求企业提供岗位数：</label>50以上</li>
-                <li><label>联合培养周期：</label>半年内</li>
-            </ul>
-            <p class="tab-cont LH42 fSize14 color-gray6 cont-desc">浙江大学（Zhejiang University），简称浙大。学校位于“人间天堂”杭州、美丽的西子湖畔，是一所具有百年历史底蕴的教育部直属全国重点大学，是中国首批7所“211工程”、首批9所“985工程”、“珠峰计划”重点建设的名牌大学之一，也是中国大学“常春藤联盟”（C9联盟）的成员。前身是成立于1897年的求是书院，为中国人自己最早创办的高等学府之一。1928年更名为国立浙江大学。中华民国时期，浙江大学曾为中国最顶尖的几所大学之一，被英国著名学者李约瑟称誉为“东方剑桥”。如今，有着百年辉煌历史的浙江大学，正通过开拓与进取，努力建设成为具有国际先进水平的世界一流大学。2016年2月，浙江大学在2016国内高校保研率排名中排第十。2016年中国一流大学排行榜排第三。</p>
+            <p class="tab-cont fSize14 LH38 color-gray6 cont-demand" style="display:block ">{{unirecdata.jobfairDesc}}</p>
+            <p class="tab-cont LH42 fSize14 color-gray6 cont-desc">{{unirecdata.userDesc}}</p>
             <div class="cont-apply tab-cont">
                 <table class="LH48 fSize12 result-table">
                     <tr class="bg-gray-f2 color-gray79 fSize14">
@@ -142,7 +135,7 @@
                         <th class="W400">申请时间</th>
                         <th class="W200">状态</th>
                     </tr>
-                    <tr v-for="item in uniRecruitRec">
+                    <tr v-for="item in applyRec">
                         <td>{{item.inc}}</td>
                         <td>{{item.date}}</td>
                         <td :class="viewCss(item.state)">{{item.state}}</td>
@@ -211,10 +204,10 @@
             <h2 class="LH-H54 fSize20 color-white paLeft43">登录<i class="pic-wrapper fr maR17 cur-pointer closer" @click="closeLog"><img src="images/icon-close2.png" class="W30"/> </i></h2>
             <div class="H348 W660 bg-white maCenter t-center clearfix">
                 <form class="login-form fl paTop4 paRight14">
-                    <div><input type="text" placeholder="请输入已验证手机/邮箱" /></div>
-                    <div><input type="password" placeholder="请输入登录密码" /></div>
+                    <div><input type="text" placeholder="请输入已验证手机/邮箱" v-model="login.account" /></div>
+                    <div><input type="password" placeholder="请输入登录密码" v-model="login.password" /></div>
                     <p class="LH-H50 maT6 fSize14 t-right">忘记密码？</p>
-                    <button class="W226 H56 fSize20 bg-orange4 color-white">登 录</button>
+                    <button class="W226 H56 fSize20 bg-orange4 color-white" @click.prevent="loginEv">登 录</button>
                 </form>
                 <div class="regis fl H298 maT11 paLeft28 t-left fSize14 paTop18">
                     <p class="LH-H70">还没有校企账号？</p>
@@ -230,7 +223,7 @@
     <script src="js/common/common.js"></script>
     <script src="js/components/pagination.js"></script>
     <script src="js/components/dropdown.js"></script>
-    <script src="js/pages/detail-common.js"></script>
+    <script src="js/pages/detail-unirecruit.js"></script>
 </body>
 
 </html>

@@ -290,7 +290,7 @@ var appMain = new Vue({
                     companyScale: this.recruitData.incReq.incScale,
                     job: $(".cont-recruit .sel-pos-1 input").val() + ";" + $(".cont-recruit .sel-pos-2 input").val() + ";" + $(".cont-recruit .sel-pos-3 input").val(),
                     jobCount: this.recruitData.incReq.posAmount,
-                    companyAddress: $(".company-address sel-province input").val() + ";" + $(".company-address sel-city input").val() + ";" + $(".company-address sel-district input").val(),
+                    companyAddress: $(".company-address .sel-province input").val() + ";" + $(".company-address .sel-city input").val() + ";" + $(".company-address .sel-district input").val(),
                     profession: $(".cont-recruit .major-input-1 input").val() + ";" + $(".cont-recruit .major-input-2 input").val(),
                     professionCount: this.recruitData.uniApply.stuScale,
                     startTime: this.recruitData.date,
@@ -302,14 +302,14 @@ var appMain = new Vue({
                 if (isNewRequire) {
                     EventUtils.ajaxReq('/jobfair/apply', 'post', postdata, function(resp, status) {
                         console.log(resp);
-                        //   window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                        window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
                     })
                 } else {
                     postdata.demandId = parObj.demandId;
                     console.log(postdata);
                     EventUtils.ajaxReq('/jobfair/modifyInfo', 'post', postdata, function(resp, status) {
                         console.log(resp);
-                        //   window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
+                        window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
                     })
                 }
             }

@@ -151,7 +151,7 @@
                             <div v-if="require.demandSrc==0" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W250 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item.demandId)">{{item.title}}</a></h2>
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item)">{{item.title}}</a></h2>
                                     <p>{{infoExtrac(item.schoolProperty)}}<i class="depart" v-show="infoExtrac(item.schoolProperty)!=''">|</i>{{infoExtrac(item.professionCount)}}<i class="depart" v-show="infoExtrac(item.professionCount)!=''&&infoExtrac(item.profession)!=''">|</i>{{infoExtrac(item.profession)}}</p>
                                     <p>联合培养方式：{{item.trainType}}</p>
                                 </div>
@@ -168,14 +168,14 @@
                             <div v-else-if="require.demandSrc==1" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W300 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-increcruit.html">{{item.IncPos}}</a></h2>
-                                    <p><span class="maR17 color-orange-f7">{{item.salary}}</span>{{item.major}}<i class="depart">|</i>{{item.exp}}<i class="depart">|</i>{{item.scolar}}</p>
-                                    <p>招聘会时间：{{item.recruitDate}}</p>
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item)">{{item.title}}</a></h2>
+                                    <p><span class="maR17 color-orange-f7">{{item.cvSalary}}</span>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.cvProject}}<i class="depart">|</i>{{item.cvEducation}}</p>
+                                    <p>招聘会时间：{{item.startTime}}</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH25 maT10">
-                                    <p>{{item.IncName}}</p>
-                                    <p>{{item.IncProps}}<i class="depart">|</i>岗位数：{{item.posAmount}}人</p>
-                                    <p>{{item.publicDate}} {{item.publicTime}}</p>
+                                    <p>{{item.userName}}</p>
+                                    <p>{{item.userProperty}}<i class="depart">|</i>岗位数：{{item.jobCount}}人</p>
+                                    <p>发布日期： {{item.updateTime.split(" ")[0]}}</p>
                                 </div>
                                 <div class="operations color-blueL">
                                     <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>
@@ -185,7 +185,7 @@
                             <div v-else-if="require.demandSrc==2" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W300 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="positionLink(item.recruitId)">{{infoExtrac(item.job)}}</a></h2>
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item)">{{infoExtrac(item.job)}}</a></h2>
                                     <p><span class="maR17 color-orange-f7">{{item.salary}}</span>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.workTime}}<i class="depart">|</i>{{item.education}}</p>
                                     <p><span class="maR17">【{{cityExtrac(item.companyAddress)}}】</span>岗位数：{{item.recruitCount}}人</p>
                                 </div>
@@ -225,7 +225,7 @@
                             <div class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W328 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-uni.html">{{infoExtrac(item.profession)}}</a></h2>
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="collectLink(item.demandId)">{{infoExtrac(item.profession)}}</a></h2>
                                     <p>{{item.companyProperty}}<i class="depart">|</i>{{item.companyScale}}<i class="depart">|</i>{{infoExtrac(item.companyType)}}</p>
                                     <p>联合培养方式：{{item.trainType}}</p>
                                     <p class="item-date">收藏时间：{{item.collectTime.split(" ")[0]}}</span>

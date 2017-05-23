@@ -547,6 +547,7 @@ function resultsRequest(page) {
         if (resp.data) {
             appResult.uniList.totalpages = resp.data.totalPage;
             appResult.uniList.results = resp.data.list;
+            //背景图像
             if (resp.data.list.length <= 1) {
                 $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
             } else {
@@ -555,6 +556,7 @@ function resultsRequest(page) {
         } else {
             appResult.uniList.totalpages = 1;
             appResult.uniList.results = [];
+            //背景图像
             $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
         }
     })

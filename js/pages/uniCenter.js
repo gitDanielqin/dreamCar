@@ -8,8 +8,10 @@ var respObj = {}; //请求的本页面的数据集合
     };
 
     EventUtils.ajaxReq('/user/school/getInfo', 'get', postdata, function(resp, status) {
-        console.log(resp.data);
+        // console.log(resp.data);
         respObj = resp.data;
+        //  console.log(respObj.userIcon);
+        // appCont.require.testIcon = respObj.userIcon;
         $("#avatar-box").html("<img src='" + respObj.userIcon + "' />");
         //如果高校信息存在，则对简历信息进行初始化
         if (respObj) {
@@ -194,7 +196,7 @@ var appCont = new Vue({
             state: "校企合作",
             curpage: 1,
             totalpages: 1,
-            totalitems: 1,
+            totalitems: 0,
             pagesize: 3,
             demandSrc: 0, //0：校企合作 1：招聘会
             newLink: "uniRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId,
@@ -318,6 +320,7 @@ var appCont = new Vue({
         },
         "require.state": function(curval, oldval) {
             if (curval == "校企合作") {
+                this.require.demandSrc = 0;
                 var postdata = {
                     userId: parObj.userId,
                     loginIdentifier: parObj.loginId,
@@ -327,18 +330,38 @@ var appCont = new Vue({
                 }
                 EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
                     console.log(resp);
-                    appCont.require.totalpages = resp.data.totalPage;
-                    appCont.require.pagesize = resp.data.pageSize;
-                    appCont.require.results = resp.data.list;
-                    //   console.log(appCont.require.totalpages)
+                    if (resp.data) {
+                        appCont.require.totalpages = resp.data.totalPage;
+                        appCont.require.pagesize = resp.data.pageSize;
+                        appCont.require.results = resp.data.list;
+                        appCont.require.totalitems = resp.data.totalRow;
+                    } else {
+                        appCont.require.results = [];
+                        appCont.require.totalitems = 0;
+                    }
                 })
             } else if (curval == "招聘会") {
+                this.require.demandSrc = 1;
                 this.require.results = [];
-                for (var i = 0; i < this.require.items.length; i++) {
-                    if (this.require.items[i].classic == "招聘会") {
-                        this.require.results.push(this.require.items[i]);
-                    }
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    jobFairType: 1,
+                    index: 1,
+                    count: 3
                 }
+                EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
+                    console.log(resp);
+                    if (resp.data) {
+                        appCont.require.totalpages = resp.data.totalPage;
+                        appCont.require.pagesize = resp.data.pageSize;
+                        appCont.require.results = resp.data.list;
+                        appCont.require.totalitems = resp.data.totalRow;
+                    } else {
+                        appCont.require.results = [];
+                        appCont.require.totalitems = 0;
+                    }
+                })
             };
             this.require.curpage = 1;
         },
@@ -435,11 +458,25 @@ var appCont = new Vue({
         infoExtrac: function(text) {
             if (text) {
                 text = EventUtils.infoExtrac(text);
+                return text
+            } else {
+                return ""
             }
-            return text == "不限" || text == undefined ? "" : text;
         },
-        requireLink: function(demandId) {
-            return "detail-uni.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + demandId + "&userType=1";
+        cityExtrac: function(address) {
+            if (address) {
+                return address.split(";")[1];
+            } else {
+                return ""
+            }
+        },
+        requireLink: function(item) {
+            if (item.demandId) {
+                return "detail-uni.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + item.demandId + "&userType=1";
+            }
+            if (item.jobFairId) {
+                return "detail-unirecruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
+            }
         },
         submajors: function(major) {
             var arr = [];
@@ -604,17 +641,33 @@ var appCont = new Vue({
             window.open(pageurl, "_blank");
         },
         delItem: function(item) {
-            var postdata = {
-                userId: parObj.userId,
-                loginIdentifier: parObj.loginId,
-                demandId: item.demandId
-            }
-            EventUtils.ajaxReq("/demand/delInfo", "post", postdata, function(resp, status) {
-                if (appCont.require.results.length == 1 && appCont.require.curpage > 1) {
-                    appCont.require.curpage -= 1;
+            if (item.demandId) {
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    demandId: item.demandId
                 }
-                $(".requireBox .pagination a.page").eq(appCont.require.curpage - 1).parent().trigger("click");
-            })
+                EventUtils.ajaxReq("/demand/delInfo", "post", postdata, function(resp, status) {
+                    if (appCont.require.results.length == 1 && appCont.require.curpage > 1) {
+                        appCont.require.curpage -= 1;
+                    }
+                    $(".requireBox .pagination a.page").eq(appCont.require.curpage - 1).parent().trigger("click");
+                })
+            };
+            if (item.jobFairId) {
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    jobFairId: item.jobFairId
+                }
+                EventUtils.ajaxReq("/jobfair/delInfo", "post", postdata, function(resp, status) {
+                    if (appCont.require.results.length == 1 && appCont.require.curpage > 1) {
+                        appCont.require.curpage -= 1;
+                    }
+                    $(".requireBox .pagination a.page").eq(appCont.require.curpage - 1).parent().trigger("click");
+                })
+            }
+
         },
         freshItem: function(item) {
             appModal.showModal = true;
@@ -678,23 +731,44 @@ var appCont = new Vue({
         },
         topage: function(page, type) {
             if (type == "require") {
-                var postdata = {
-                    userId: parObj.userId,
-                    loginIdentifier: parObj.loginId,
-                    demandType: 1,
-                    index: page,
-                    count: 3
-                }
-                EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-                    if (resp.data) {
-                        appCont.require.results = resp.data.list;
-                        appCont.require.totalitems = resp.data.totalRow;
-                        appCont.require.totalpages = resp.data.totalPage;
-                    } else {
-                        appCont.require.results = [];
-                        appCont.require.totalitems = 0;
+                if (appCont.require.demandSrc == "0") {
+                    var postdata = {
+                        userId: parObj.userId,
+                        loginIdentifier: parObj.loginId,
+                        demandType: 1,
+                        index: page,
+                        count: 3
                     }
-                })
+                    EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
+                        if (resp.data) {
+                            appCont.require.results = resp.data.list;
+                            appCont.require.totalitems = resp.data.totalRow;
+                            appCont.require.totalpages = resp.data.totalPage;
+                        } else {
+                            appCont.require.results = [];
+                            appCont.require.totalitems = 0;
+                        }
+                    })
+                } else if (appCont.require.demandSrc == "1") {
+                    var postdata = {
+                        userId: parObj.userId,
+                        loginIdentifier: parObj.loginId,
+                        jobFairType: 1,
+                        index: page,
+                        count: 3
+                    }
+                    EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
+                        if (resp.data) {
+                            appCont.require.results = resp.data.list;
+                            appCont.require.totalitems = resp.data.totalRow;
+                            appCont.require.totalpages = resp.data.totalPage;
+                        } else {
+                            appCont.require.results = [];
+                            appCont.require.totalitems = 0;
+                        }
+                    })
+                }
+
                 this.require.curpage = page;
             } else if (type == "collect") {
                 var postdata = {
