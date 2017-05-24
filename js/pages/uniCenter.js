@@ -637,7 +637,13 @@ var appCont = new Vue({
             this.resume.specialLv = $(".uni-level input[type='radio']:checked").val() == "0" ? "985" : "211";
         },
         modItem: function(item) {
-            var pageurl = "uniRequire.html?new=0&userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + item.demandId + "&demandType=" + item.demandType + "&demandSrc=" + appCont.require.demandSrc;
+            var pageurl = "uniRequire.html?new=0&userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandSrc=" + appCont.require.demandSrc;
+            if (item.demandId) {
+                pageUrl += "&demandId=" + item.demandId
+            }
+            if (item.jobFairId) {
+                pageUrl += "&jobfairId=" + item.jobFairId
+            }
             window.open(pageurl, "_blank");
         },
         delItem: function(item) {

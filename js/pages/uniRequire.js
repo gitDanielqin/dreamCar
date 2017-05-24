@@ -3,8 +3,11 @@ var parObj = EventUtils.urlExtrac(window.location);
 var isNewRequire = true;
 if (parObj.new && parObj.new != "1") { //非新需求
     isNewRequire = false;
-    var pageindex = parObj.demandSrc;
-    (function() {
+    infoRequest(parObj.demandSrc);
+};
+
+function infoRequest(demandSrc) {
+    if (demandSrc == "0") { //如果是校企合作需求详情
         var postdata = {
             loginIdentifier: parObj.loginId,
             demandId: parObj.demandId
@@ -12,53 +15,51 @@ if (parObj.new && parObj.new != "1") { //非新需求
         EventUtils.ajaxReq("/demand/getInfo", "get", postdata, function(resp, status) {
             respObj = resp.data;
             console.log(respObj);
-            if (pageindex == "0") { //如果是校企合作需求详情
-                var initAddr = "";
-                var initPos = "";
-                if (respObj.companyAddress) {
-                    initAddr = {
-                        province: respObj.companyAddress.split(";")[0],
-                        city: respObj.companyAddress.split(";")[1],
-                        district: respObj.companyAddress.split(";")[2]
-                    }
+            var initAddr = "";
+            var initPos = "";
+            if (respObj.companyAddress) {
+                initAddr = {
+                    province: respObj.companyAddress.split(";")[0],
+                    city: respObj.companyAddress.split(";")[1],
+                    district: respObj.companyAddress.split(";")[2]
                 }
-                if (respObj.job) {
-                    initPos = {
-                        pos_1: respObj.job.split(";")[0],
-                        pos_2: respObj.job.split(";")[1],
-                        pos_3: respObj.job.split(";")[2]
-                    }
+            }
+            if (respObj.job) {
+                initPos = {
+                    pos_1: respObj.job.split(";")[0],
+                    pos_2: respObj.job.split(";")[1],
+                    pos_3: respObj.job.split(";")[2]
                 }
-                var combidata = {
-                    datatype: "combi",
-                    header: respObj.title,
-                    initAddress: initAddr,
-                    initPosition: initPos,
-                    uniApply: {
-                        stuScale: respObj.professionCount,
-                        trainWay: respObj.trainType,
-                    },
-                    incApply: {
-                        posAmount: respObj.jobCount,
-                        incProps: respObj.companyProperty,
-                        incScale: respObj.companyScale,
-                    },
-                    requireDesc: respObj.discription,
-                    contact: {
-                        person: respObj.linkMan,
-                        phone: respObj.mobile,
-                        address: respObj.schoolAddress ? respObj.schoolAddress.split(";").join("-") : ""
-                    }
+            }
+            var combidata = {
+                datatype: "combi",
+                header: respObj.title,
+                initAddress: initAddr,
+                initPosition: initPos,
+                uniApply: {
+                    stuScale: respObj.professionCount,
+                    trainWay: respObj.trainType,
+                },
+                incApply: {
+                    posAmount: respObj.jobCount,
+                    incProps: respObj.companyProperty,
+                    incScale: respObj.companyScale,
+                },
+                requireDesc: respObj.discription,
+                contact: {
+                    person: respObj.linkMan,
+                    phone: respObj.mobile,
+                    address: respObj.schoolAddress ? respObj.schoolAddress.split(";").join("-") : ""
                 }
-                appMain.combiData = combidata;
-            };
+            }
+            appMain.combiData = combidata;
+
             // 专业数据
             $(".cont-combi .major-input-1 input").val(respObj.profession.split(";")[0]);
             $(".cont-combi .major-input-2 input").val(respObj.profession.split(";")[1]);
             // 企业行业
             $(".cont-combi .input-area-1 input").val(respObj.companyType.split(";")[0]);
             $(".cont-combi .input-area-2 input").val(respObj.companyType.split(";")[1]);
-
             //初始化联合培养时间表
             $(".cont-combi .time-table td.on").removeClass("on");
             var timeArray = respObj.trainTime.split(";");
@@ -70,8 +71,14 @@ if (parObj.new && parObj.new != "1") { //非新需求
                 }
             }
         });
-    })()
-};
+    }
+    //招聘会信息
+    if (demandSrc == "1") {
+        var postdata = {
+
+        }
+    }
+}
 var appTop = new Vue({
     el: "#app-top",
     data: {
