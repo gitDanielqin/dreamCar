@@ -138,13 +138,13 @@
                 <div class="form-cont paLeft68">
                     <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="recruitData.header" /><span class="color-red">（请小于12个字）</span></p>
                     <p class="form-item maT28"><label>岗位名称</label>
-                        <pos-select :posdata="database.posdata"></pos-select>
+                        <pos-select :posdata="database.posdata" :initpos="recruitData.initPosition"></pos-select>
                     </p>
                     <p class="form-item"><label>职位类别</label>
                         <dropdown :options="database.uni.postype" placeholder="" v-model="recruitData.postype"></dropdown>
                     </p>
                     <p class="form-item"><label>招聘人数</label>
-                        <input type="text" v-model="recruitData.amount" />人
+                        <input type="text" v-model="recruitData.jobAmount" />人
                     </p>
                     <p class="form-item"><label>学历要求</label>
                         <dropdown :options="database.uni.scolars" placeholder="" v-model="recruitData.scolar"></dropdown>

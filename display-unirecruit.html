@@ -128,7 +128,7 @@
                                 <p class="fSize12">{{item.companyScale}}<i class="depart" v-show="item.companyProperty">|</i>{{item.companyProperty}}<i class="depart" v-show="infoExtrac(item.job)">|</i>{{infoExtrac(item.job)}}</p>
                                 <p class="fSize12 pubdate">发布日期：{{item.updateTime.split(" ")[0]}}</p>
                             </div>
-                            <button class="btn-apply color-blueL t-left" @click="coApply"><span class="maL21">申请招聘</span><i class="pic-icon maL6"></i></button>
+                            <button class="btn-apply color-blueL t-left" @click="coApply(item.jobFairId)"><span class="maL21">申请招聘</span><i class="pic-icon maL6"></i></button>
                         </div>
                     </li>
                     <li v-show="unirecruitList.results.length==0">

@@ -64,7 +64,56 @@ function infoRequest() {
             }
         });
     }
-
+    if (parObj.demandSrc == "1") { //如果是招聘会需求详情
+        var postdata = {
+            userId: parObj.userId,
+            loginIdentifier: parObj.loginId,
+            jobFairId: parObj.jobfairId,
+        }
+        EventUtils.ajaxReq("/jobfair/getInfo", "get", postdata, function(resp, status) {
+            respObj = resp.data;
+            console.log(respObj);
+            var initpos = "";
+            if (respObj.job) {
+                initpos = {
+                    pos_1: respObj.job.split(";")[0],
+                    pos_2: respObj.job.split(";")[1],
+                    pos_3: respObj.job.split(";")[2]
+                }
+            }
+            if (respObj.profession) {
+                $(".cont-recruit .major-input-1 input").val(respObj.profession.split(";")[0]);
+                $(".cont-recruit .major-input-2 input").val(respObj.profession.split(";")[1]);
+            }
+            var recdata = {
+                datatype: "recruit",
+                header: respObj.title,
+                postype: respObj.workType,
+                initPosition: initpos,
+                jobAmount: respObj.jobCount,
+                scolar: respObj.cvEducation,
+                gender: respObj.cvSex,
+                worksexp: respObj.cvProject,
+                salary: respObj.cvSalary,
+                date: respObj.startTime,
+                desc: respObj.discription,
+                contact: {
+                    person: respObj.linkMan,
+                    phone: respObj.mobile,
+                    address: respObj.jobFairAddress ? respObj.jobFairAddress.split(";").join("-") : ""
+                }
+            };
+            appMain.recruitData = recdata;
+            if (respObj.cvWelfare) {
+                var welfareArray = respObj.cvWelfare.split(";");
+                $(".cont-recruit .welfare-lis li").each(function() {
+                    if (welfareArray.indexOf($(this).find("span").html()) >= 0) {
+                        $(this).find("i.check-box").addClass("on");
+                    }
+                });
+            }
+        })
+    }
     if (parObj.demandSrc == "2") { //如果是企业直聘需求详情 
         var postdata = {
             userId: parObj.userId,
@@ -102,7 +151,6 @@ function infoRequest() {
             }
             if (respObj.welfare) {
                 var welfareArray = respObj.welfare.split(";");
-                console.log(welfareArray);
                 $(".cont-direct .welfare-lis li").each(function() {
                     if (welfareArray.indexOf($(this).find("span").html()) >= 0) {
                         $(this).find("i.check-box").addClass("on");
@@ -205,7 +253,7 @@ var appMain = new Vue({
             datatype: "recruit",
             header: "",
             postype: "不限",
-            amount: "",
+            jobAmount: "",
             scolar: "不限",
             gender: "不限",
             worksexp: "不限",
@@ -359,7 +407,7 @@ var appMain = new Vue({
                     title: this.recruitData.header,
                     job: $(".cont-recruit .sel-pos-1 input").val() + ";" + $(".cont-recruit .sel-pos-2 input").val() + ";" + $(".cont-recruit .sel-pos-3 input").val(),
                     workType: this.recruitData.postype,
-                    jobCount: this.recruitData.amount,
+                    jobCount: this.recruitData.jobAmount,
                     cvEducation: this.recruitData.scolar,
                     profession: $(".cont-recruit .major-input-1 input").val() + ";" + $(".cont-recruit .major-input-2 input").val(),
                     cvSex: this.recruitData.gender,
@@ -378,7 +426,7 @@ var appMain = new Vue({
                         window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
                     })
                 } else {
-                    postdata.jobfairId = parObj.jobfairId;
+                    postdata.jobFairId = parObj.jobfairId;
                     EventUtils.ajaxReq('/jobfair/modifyInfo', 'post', postdata, function(resp, status) {
                         window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
                     })

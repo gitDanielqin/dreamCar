@@ -485,7 +485,7 @@
                                 <p>发布时间：{{item.updateTime.split(" ")[0]}}</p>
                                 <div class="action">
                                     <span @click="cancelCollect('position',item.id)">取消收藏</span>
-                                    <span class="post" @click="apply('position',item.id)" v-show="!item.status">投递简历</span>
+                                    <span class="post" @click="apply('position',item.recruitId)" v-show="!item.status">投递简历</span>
                                     <span class="posted" v-show="item.status&&item.status!=3">已投递</span>
                                     <span class="color-gray offline" v-show="item.status&&item.status==3">已下线</span>
                                 </div>
@@ -497,30 +497,35 @@
                 <div class="collec-recruitment ListBox">
                     <div class="hd LH-H58">
                         <dropdown :options="colRecList.states" v-model="colRecList.curstate" class="collec-job-state"></dropdown>
-                        <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">{{colRecList.results.length}}</span>个</p>
+                        <p class="fr fSize14 maR30">我收藏过的职位<span class="color-orange2 maL10 maR10">{{colRecList.totalitems}}</span>个</p>
                     </div>
-                    <ul class="colCompanyList contList">
+                    <ul class="colCompanyList contList H470">
                         <li v-show="colRecList.results.length==0">
                             <div class="paLeft29 clearfix H128 pRel">
                                 <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
                             </div>
                         </li>
-                        <li v-for="(item,index) in colRecList.results" v-show="showResult(index,colRecList.curpage,3)">
+                        <li v-for="(item,index) in colRecList.results">
                             <div class="logo-pic"></div>
                             <div class="class-txt fl paTop20 W328">
                                 <h2 class="class-name"><a href="detail-increcruit.html">{{item.title}}</a></h2>
-                                <p class="demand"><span class="color-orange-f7">{{item.salary}}</span><i>|</i>{{item.major}}<i>|</i>{{item.scolar}}<i>|</i>{{item.worksexp}}</p>
-                                <p><span>招聘会时间：</span>{{item.recruitDate}}</p>
+                                <p class="demand"><span class="color-orange-f7">{{item.cvSalary}}</span><i>|</i>{{infoExtrac(item.profession)}}<i>|</i>{{item.cvEducation}}<i>|</i>{{item.cvProject}}</p>
+                                <p><span>招聘会时间：</span>{{item.startTime}}</p>
                             </div>
                             <div class="col-company-info fl fSize18">
-                                <p>{{item.inc}}</p>
-                                <p>{{item.IncProps}}<i>|</i>岗位数：{{item.posAmount}}人</p>
-                                <p>{{item.publicDate}}</p>
-                                <div class="action"><span>取消收藏</span><span class="post">投递简历</span></div>
+                                <p>{{item.userName}}</p>
+                                <p>{{item.userProperty}}<i>|</i>岗位数：{{item.jobCount}}人</p>
+                                <p>发布日期：{{item.updateTime.split(" ")[0]}}</p>
+                                <div class="action">
+                                    <span @click="cancelCollect('jobfair',item.id)">取消收藏</span>
+                                    <span class="post" v-show="!item.status" @click="apply('jobfair',item.jobFairId)">投递简历</span>
+                                    <span class="posted" v-show="item.status&&item.status!=3">已投递</span>
+                                    <span class="color-gray offline" v-show="item.status&&item.status==3">已下线</span>
+                                </div>
                             </div>
                         </li>
                     </ul>
-                    <pagination :showpages="showpage(colRecList.results.length)" :totalpages="pagesum(colRecList.results.length)" type="col-rec" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                    <pagination :showpages="showpage(colRecList.totalpages)" :totalpages="colRecList.totalpages" type="col-rec" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
                 <div class="jobBox ListBox">
                     <div class="hd LH-H58">

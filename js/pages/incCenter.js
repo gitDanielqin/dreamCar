@@ -178,6 +178,7 @@ var appCont = new Vue({
         collect: {
             state: "校企合作",
             curpage: 1,
+            collectSrc: 0,
             totalpages: 1,
             pagesize: 3,
             totalitems: 0,
@@ -345,15 +346,46 @@ var appCont = new Vue({
             this.require.curpage = 1;
         },
         "collect.state": function(curval, oldval) {
-            if (curval == "全部状态") {
-                this.collect.results = cloneObj(this.collect.items);
-            } else {
-                this.collect.results = [];
-                for (var i = 0; i < this.collect.items.length; i++) {
-                    if (this.collect.items[i].classic == curval) {
-                        this.collect.results.push(this.collect.items[i]);
+            if (curval == "校企合作") {
+                this.collect.collectSrc = 0;
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    index: 1,
+                    count: 3
+                };
+                EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function(resp, status) {
+                    console.log(resp);
+                    if (resp.data) {
+                        appCont.collect.curpage = 1;
+                        appCont.collect.totalpages = resp.data.totalPage;
+                        appCont.collect.totalitems = resp.data.totalRow;
+                        appCont.collect.results = resp.data.list;
+                    } else {
+                        appCont.collect.results = [];
+                        appCont.collect.totalitems = 0;
                     }
-                }
+                })
+            }
+            if (curval == "高校招聘会") {
+                this.collect.collectSrc = 1;
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    index: 1,
+                    count: 3
+                };
+                EventUtils.ajaxReq("/jobfair/getMarkList", "get", postdata, function(resp, status) {
+                    if (resp.data) {
+                        appCont.collect.curpage = 1;
+                        appCont.collect.totalpages = resp.data.totalPage;
+                        appCont.collect.totalitems = resp.data.totalRow;
+                        appCont.collect.results = resp.data.list;
+                    } else {
+                        appCont.collect.results = [];
+                        appCont.collect.totalitems = 0;
+                    }
+                })
             }
             this.collect.curpage = 1;
         },
@@ -590,6 +622,9 @@ var appCont = new Vue({
             if (item.demandId) {
                 link += "&demandId=" + item.demandId + "&demandType=" + item.demandType;
             }
+            if (item.jobFairId) {
+                link += "&jobfairId=" + item.jobFairId;
+            }
             if (item.recruitId) {
                 link += "&recruitId=" + item.recruitId;
             }
@@ -721,6 +756,7 @@ var appCont = new Vue({
 
                 this.require.curpage = page;
             } else if (type == "collect") {
+
                 var postdata = {
                     userId: parObj.userId,
                     loginIdentifier: parObj.loginId,
@@ -794,25 +830,8 @@ var appCont = new Vue({
                 if (appCont.collect.results.length == 1 && appCont.collect.curpage > 1) {
                     appCont.collect.curpage -= 1;
                 }
-
                 $(".collectBox .pagination a.page").eq(appCont.collect.curpage - 1).parent().trigger("click");
-                // var getdata = {
-                //     userId: parObj.userId,
-                //     loginIdentifier: parObj.loginId,
-                //     index: appCont.collect.curpage,
-                //     count: 3
-                // }
-                // EventUtils.ajaxReq("/demand/getMarkList", "get", getdata, function(resp, status) {
-                //     console.log(resp);
-                //     if (resp.data) {
-                //         appCont.collect.results = resp.data.list;
-                //         appCont.collect.totalpages = resp.data.totalPage;
-                //         appCont.collect.totalitems = resp.data.totalRow;
-                //     } else {
-                //         appCont.collect.results = [];
-                //         appCont.collect.totalitems = 0;
-                //     }
-                // })
+
             })
         },
         modifyMobile: function() {

@@ -341,16 +341,11 @@ var appCont = new Vue({
         },
         colRecList: {
             curpage: 1,
+            totalpages: 1,
+            totalitems: 0,
             states: ['全部状态', '未投递', '已投递', '已下线'],
             curstate: "全部状态",
-            results: [
-                { title: "艺术设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, recruitDate: "2016-12-11", posAmount: 20, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", publicDate: "2017-11-11" },
-                { title: "艺术设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, recruitDate: "2016-12-11", posAmount: 20, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", publicDate: "2017-11-11" },
-                { title: "艺术设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, recruitDate: "2016-12-11", posAmount: 20, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", publicDate: "2017-11-11" },
-                { title: "艺术设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, recruitDate: "2016-12-11", posAmount: 20, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", publicDate: "2017-11-11" },
-                { title: "UI设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, recruitDate: "2016-12-11", posAmount: 20, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", publicDate: "2017-11-11" },
-                { title: "艺术设计", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "大专", address: { province: "浙江省", city: "杭州市", district: "滨江区" }, recruitDate: "2016-12-11", posAmount: 20, inc: "杭州煌巢信息科技有限公司", IncProps: "国企", publicDate: "2017-11-11" }
-            ]
+            results: []
         },
         myPosList: {
             curpage: 1,
@@ -614,15 +609,24 @@ var appCont = new Vue({
             switch (type) {
                 case "position":
                     var postdata = {
-                        userId: parObj.userId,
                         id: id
                     };
+                    console.log(postdata);
                     EventUtils.ajaxReq("/recruit/delMarkInfo", "post", postdata, function(resp, status) {
                         if (appCont.colPosList.results.length == 1 && appCont.colPosList.curpage > 1) {
                             appCont.colPosList.curpage -= 1;
                         }
                         $(".collec-job .pagination a.page").eq(appCont.colPosList.curpage - 1).parent().trigger("click");
-                    })
+                    });
+                    break;
+                case "jobfair":
+                    EventUtils.ajaxReq("/jobfair/delMarkInfo", "post", { id: id }, function(resp, status) {
+                        if (appCont.colRecList.results.length == 1 && appCont.colRecList.curpage > 1) {
+                            appCont.colRecList.curpage -= 1;
+                        }
+                        $(".collec-recruitment .pagination a.page").eq(appCont.colRecList.curpage - 1).parent().trigger("click");
+                    });
+                    break;
             }
         },
         topage: function(page, type) {
@@ -650,8 +654,54 @@ var appCont = new Vue({
                 })
             } else if (type == "col-rec") {
                 this.colRecList.curpage = page;
+                var getdata = {
+                    userId: parObj.userId,
+                    index: page,
+                    count: 3
+                }
+                EventUtils.ajaxReq("/jobfair/getMarkList", "get", getdata, function(resp, status) {
+                    // console.log(resp);
+                    if (resp.data) {
+                        appCont.colRecList.results = resp.data.list;
+                        appCont.colRecList.totalpages = resp.data.totalPage;
+                        appCont.colRecList.totalitems = resp.data.totalRow;
+                    } else {
+                        appCont.colRecList.results = [];
+                        appCont.colRecList.totalitems = 0;
+                    }
+                })
             } else if (type == "my-pos") {
                 this.myPosList.curpage = page;
+            }
+        },
+        apply: function(type, id) {
+            if (type == "recruit") {
+                var postdata = {
+                    userId: parObj.userId,
+                    recruitId: id
+                }
+                EventUtils.ajaxReq("/recruit/cooperateRecruit", "post", postdata, function(resp, status) {
+                    console.log(resp);
+                    if (resp.data && resp.data.isApply == "0") {
+                        alert("投递成功！")
+                    } else {
+                        alert(resp.info)
+                    }
+                });
+            }
+            if (type == "jobfair") {
+                var postdata = {
+                    userId: parObj.userId,
+                    jobFairId: id
+                }
+                EventUtils.ajaxReq("/jobfair/cooperateJobFair", "post", postdata, function(resp, status) {
+                    console.log(resp);
+                    if (resp.data && resp.data.isApply == "0") {
+                        alert("投递成功！")
+                    } else {
+                        alert(resp.info)
+                    }
+                });
             }
         }
     },
@@ -687,6 +737,40 @@ var appCont = new Vue({
                 } else {
                     appCont.colPosList.results = [];
                     appCont.colPosList.totalitems = 0;
+                }
+            })
+        },
+        'colRecList.curstate': function(curval) {
+            console.log(curval);
+            var applyindex = 0;
+            switch (curval) {
+                case "未投递":
+                    applyindex = 1;
+                    break;
+                case "已投递":
+                    applyindex = 2;
+                    break;
+                case "已下线":
+                    applyindex = 3;
+                    break;
+                default:
+                    applyindex = 0;
+            }
+            var getdata = {
+                userId: parObj.userId,
+                index: 1,
+                count: 3,
+                applyStatus: applyindex
+            }
+            EventUtils.ajaxReq("/jobfair/getMarkList", "get", getdata, function(resp, status) {
+                console.log(resp);
+                if (resp.data) {
+                    appCont.colRecList.results = resp.data.list;
+                    appCont.colRecList.totalpages = resp.data.totalPage;
+                    appCont.colRecList.totalitems = resp.data.totalRow;
+                } else {
+                    appCont.colRecList.results = [];
+                    appCont.colRecList.totalitems = 0;
                 }
             })
         },
@@ -982,6 +1066,24 @@ function navEventBind() {
                         } else {
                             appCont.colPosList.results = [];
                             appCont.colPosList.totalitems = 0;
+                        }
+                    })
+                }
+                if ($(this).attr("paneid") == "collec-recruitment") {
+                    var getdata = {
+                        userId: parObj.userId,
+                        index: 1,
+                        count: 3
+                    }
+                    EventUtils.ajaxReq("/jobfair/getMarkList", "get", getdata, function(resp, status) {
+                        console.log(resp);
+                        if (resp.data) {
+                            appCont.colRecList.results = resp.data.list;
+                            appCont.colRecList.totalpages = resp.data.totalPage;
+                            appCont.colRecList.totalitems = resp.data.totalRow;
+                        } else {
+                            appCont.colRecList.results = [];
+                            appCont.colRecList.totalitems = 0;
                         }
                     })
                 }

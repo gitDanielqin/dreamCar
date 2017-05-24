@@ -528,7 +528,7 @@
 }
 
 .uni-require .item-block-right {
-    background: url("../images/dashline.png") no-repeat left 20px;
+    max-width: 230px;
 }
 
 .uni-collect .item-block-right {

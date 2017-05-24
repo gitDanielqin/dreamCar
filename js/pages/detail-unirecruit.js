@@ -148,8 +148,8 @@ var appBanner = new Vue({
                     alert("无法收藏自己的需求！");
                     return false;
                 }
-                if (accountObj.userType != "0") {
-                    alert("抱歉，您不能收藏直聘的需求！");
+                if (accountObj.userType != "2") {
+                    alert("抱歉，您不能收藏该需求！");
                     return false;
                 }
                 if (!$(obj).hasClass("btn-collec")) {
@@ -159,9 +159,9 @@ var appBanner = new Vue({
                     var postdata = {
                         userId: accountObj.userId,
                         loginIdentifier: accountObj.loginIdentifier,
-                        recruitId: parObj.recruitId,
+                        jobFairId: parObj.jobfairId,
                     }
-                    EventUtils.ajaxReq("/recruit/addMarkInfo", "post", postdata, function(resp, status) {
+                    EventUtils.ajaxReq("/jobfair/addMarkInfo", "post", postdata, function(resp, status) {
                         console.log(resp);
                         $(obj).find("span").text("已收藏");
                         $(obj).addClass("collected");
@@ -179,19 +179,19 @@ var appBanner = new Vue({
         coApply: function() {
             if (appTop.isLogin) {
                 if (accountObj.userId == respObj.userId) {
-                    alert("无法投递自己的职位！");
+                    alert("无法申请自己的需求！");
                     return false;
                 }
-                if (accountObj.userType != "0") {
-                    alert("抱歉，您不能投递该职位！");
+                if (accountObj.userType != "2") {
+                    alert("抱歉，您不能申请该需求！");
                     return false;
                 }
                 var postdata = {
                     userId: accountObj.userId,
                     loginIdentifier: accountObj.loginIdentifier,
-                    recruitId: parObj.recruitId
+                    jobFairId: parObj.jobfairId
                 }
-                EventUtils.ajaxReq("/jobfair/cooperateRecruit", "post", postdata, function(resp, status) {
+                EventUtils.ajaxReq("/jobfair/cooperateJobFair", "post", postdata, function(resp, status) {
                     // console.log(resp);
                     if (resp.data.isApply == "0") {
                         $(".dlg-success").css({

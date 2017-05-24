@@ -8,7 +8,7 @@ var respObj = {}; //请求的本页面的数据集合
     };
 
     EventUtils.ajaxReq('/user/school/getInfo', 'get', postdata, function(resp, status) {
-        // console.log(resp.data);
+        console.log(resp.data);
         respObj = resp.data;
         //  console.log(respObj.userIcon);
         // appCont.require.testIcon = respObj.userIcon;
@@ -639,10 +639,10 @@ var appCont = new Vue({
         modItem: function(item) {
             var pageurl = "uniRequire.html?new=0&userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandSrc=" + appCont.require.demandSrc;
             if (item.demandId) {
-                pageUrl += "&demandId=" + item.demandId
+                pageurl += "&demandId=" + item.demandId
             }
             if (item.jobFairId) {
-                pageUrl += "&jobfairId=" + item.jobFairId
+                pageurl += "&jobfairId=" + item.jobFairId
             }
             window.open(pageurl, "_blank");
         },

@@ -150,7 +150,7 @@
                         <dropdown :options="database.inc.props" placeholder="" v-model="recruitData.incReq.incProps">
                     </p>
                     <p class="form-item"><label>岗位名称</label>
-                        <pos-select :posdata="database.inc.posData"></pos-select>
+                        <pos-select :posdata="database.inc.posData" :initpos="recruitData.incReq.initPosition"></pos-select>
                     </p>
                     <p class="form-item"><label>岗位数</label>
                         <dropdown :options="database.inc.posAmount" placeholder="" v-model="recruitData.incReq.posAmount"></dropdown>
@@ -163,7 +163,7 @@
                         <major-pop :majordata="database.uni.majors" class="disInline"></major-pop>
                     </p>
                     <p class="form-item"><label>专业人数</label>
-                        <dropdown :options="database.uni.amount" placeholder="" v-model="recruitData.uniApply.stuScale"></dropdown>
+                        <dropdown :options="database.uni.amount" placeholder="" v-model="recruitData.stuScale"></dropdown>
                     </p>
                     <p class="form-item"><label>举办时间</label><input type="text" placeholder="格式：2017-01-30" v-model="recruitData.date" /></p>
                     <p class="form-item pRel"><label>招聘会描述</label><textarea v-model="recruitData.desc" class="form-desc"></textarea><span class="fSize14 LH40 color-gray-c desc-hint">你还可以输入{{fontCal(recruitData.desc,recruitData.datatype)}} 字</span></p>

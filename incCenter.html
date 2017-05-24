@@ -222,7 +222,7 @@
                             </div>
                         </li>
                         <li v-for="(item,index) in collect.results">
-                            <div class="paLeft29 clearfix H128 pRel">
+                            <div v-if="collect.collectSrc==0" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W328 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="collectLink(item.demandId)">{{infoExtrac(item.profession)}}</a></h2>
@@ -235,6 +235,24 @@
                                     <p>{{item.userName}}</p>
                                     <p>{{item.userProperty}}</p>
                                     <p class="pubdate">发布时间：{{item.updateTime.split(" ")[0]}}</p>
+                                    <div class="collect-btn">
+                                        <button class="color-blueL" @click.stop="cancelCollect(item.demandId,item.id)">取消收藏</button>
+                                        <button class="color-orange-f7" @click.stop="applyCollect(item.demandId)">申请合作</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else-if="collect.collectSrc==1" class="paLeft29 clearfix H128 pRel">
+                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                <div class="item-block-left fl paTop22 W328 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="collectLink(item.demandId)">{{item.title}}</a></h2>
+                                    <p>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.professionCount}}<i class="depart">|</i>{{cityExtrac(item.jobFairAddress)}}</p>
+                                    <p class="item-date">招聘会时间：{{item.startTime}}</span>
+                                    </p>
+                                </div>
+                                <div class="item-block-right fl fSize14 LH25 maT10">
+                                    <p>高校对企业要求</p>
+                                    <p>{{item.companyScale}}<i class="depart">|</i>{{item.companyProperty}}<i class="depart">|</i>{{infoExtrac(item.job)}}</p>
+                                    <p class="pubdate">发布日期：{{item.updateTime.split(" ")[0]}}</p>
                                     <div class="collect-btn">
                                         <button class="color-blueL" @click.stop="cancelCollect(item.demandId,item.id)">取消收藏</button>
                                         <button class="color-orange-f7" @click.stop="applyCollect(item.demandId)">申请合作</button>

@@ -349,19 +349,34 @@ var appResult = new Vue({
         },
         detailLink: function(id) {
             var link = "detail-unirecruit.html?jobfairId=" + id;
-            if (accountObj) {
+            if (accountObj && accountObj.userId) {
                 link += "&userId=" + accountObj.userId;
             }
             return link
         },
-        coApply: function() {
+        coApply: function(id) {
             if (appTop.isLogin) {
-                $(".dlg-success").css({
-                    top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
-                })
-                appModal.showModal = true;
-                appModal.showLogin = false;
-                appModal.showSucc = true;
+                if (accountObj.userType != "2") {
+                    alert("抱歉，您不能申请该需求！");
+                    return false;
+                }
+                var postdata = {
+                    userId: parObj.userId,
+                    jobFairId: id
+                }
+                EventUtils.ajaxReq("/jobfair/cooperateJobFair", "post", postdata, function(resp, status) {
+                    console.log(resp);
+                    if (resp.data && resp.data.isApply == "0") {
+                        $(".dlg-success").css({
+                            top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
+                        });
+                        appModal.showModal = true;
+                        appModal.showLogin = false;
+                        appModal.showSucc = true;
+                    } else {
+                        alert(resp.info)
+                    }
+                });
             } else {
                 $(".dlg-login").css({
                     top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)

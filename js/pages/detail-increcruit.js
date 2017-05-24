@@ -144,11 +144,11 @@ var appBanner = new Vue({
         collect: function(obj) {
             if (appTop.isLogin) { //登录状态下
                 if (accountObj.userId == respObj.userId) {
-                    alert("无法收藏自己的需求！");
+                    alert("无法收藏自己的职位！");
                     return false;
                 }
                 if (accountObj.userType != "0") {
-                    alert("抱歉，您不能收藏直聘的需求！");
+                    alert("抱歉，您不能收藏该职位！");
                     return false;
                 }
                 if (!$(obj).hasClass("btn-collec")) {
@@ -158,9 +158,9 @@ var appBanner = new Vue({
                     var postdata = {
                         userId: accountObj.userId,
                         loginIdentifier: accountObj.loginIdentifier,
-                        recruitId: parObj.recruitId,
+                        jobFairId: parObj.jobfairId,
                     }
-                    EventUtils.ajaxReq("/recruit/addMarkInfo", "post", postdata, function(resp, status) {
+                    EventUtils.ajaxReq("/jobfair/addMarkInfo", "post", postdata, function(resp, status) {
                         console.log(resp);
                         $(obj).find("span").text("已收藏");
                         $(obj).addClass("collected");
@@ -188,9 +188,9 @@ var appBanner = new Vue({
                 var postdata = {
                     userId: accountObj.userId,
                     loginIdentifier: accountObj.loginIdentifier,
-                    recruitId: parObj.recruitId
+                    jobFairId: parObj.jobfairId
                 }
-                EventUtils.ajaxReq("/jobfair/cooperateRecruit", "post", postdata, function(resp, status) {
+                EventUtils.ajaxReq("/jobfair/cooperateJobFair", "post", postdata, function(resp, status) {
                     // console.log(resp);
                     if (resp.data.isApply == "0") {
                         $(".dlg-success").css({
