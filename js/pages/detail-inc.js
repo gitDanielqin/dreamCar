@@ -160,10 +160,10 @@ var appBanner = new Vue({
                 if (!isCollected) {
                     var postdata = {
                         userId: parObj.userId,
-                        loginIdentifier: parObj.loginId,
                         demandId: parObj.demandId
                     }
-                    EventUtils.ajaxReq("/demand/addMarkInfo", "post", postdata, function(resp, status) {
+                    console.log(postdata);
+                    EventUtils.ajaxReq("/demand/addMarkInfo", "get", postdata, function(resp, status) {
                         $(obj).find("span").text("已收藏");
                         $(obj).addClass("collected");
                     })

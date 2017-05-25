@@ -307,8 +307,10 @@ var appResult = new Vue({
     methods: {
         demandLink: function(demandId) {
             var link = "detail-company.html?demandId=" + demandId;
-            if (accountObj) {
-                link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginId + "&userType=" + accountObj.userType;
+            if (accountObj && accountObj.userId) {
+                link += "&userId=" + accountObj.userId;
+            } else if (parObj.userId) {
+                link += "&userId=" + parObj.userId;
             }
             return link;
         },
@@ -399,6 +401,7 @@ var appModal = new Vue({
                 parObj.userType = resp.data.userType;
                 parObj.loginId = resp.data.loginIdentifier;
                 accountObj = resp.data;
+                console.log(resp.data);
                 appTop.userType = resp.data.userType;
                 appTop.userName = resp.data.name;
                 appTop.isLogin = true;

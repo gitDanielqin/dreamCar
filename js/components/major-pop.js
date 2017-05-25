@@ -70,6 +70,7 @@
             pop: function(index, obj) {
                 $(".pop-major").hide();
                 $(obj).parent().siblings(".pop-major-" + index).show();
+                initPos();
             },
             clickMajor: function(obj) {
                 this.selMajor = $(obj).html();
@@ -110,16 +111,6 @@
                     }
                 }
             },
-            "showMajor1": function(curval) {
-                if (curval) {
-                    initPos();
-                }
-            },
-            "showMajor2": function(curval) {
-                if (curval) {
-                    initPos();
-                }
-            },
             "selSubMajor": function(curval) {
                 if (curval == "其他") {
                     this.showExMajor = true;
@@ -131,7 +122,7 @@
     })
 
     function initPos() {
-        $(".pop-major-1").each(function() {
+        $(".pop-major-1:visible").each(function() {
             if (!this.initFlag) {
                 $(this).css({
                     "left": 0,
@@ -141,7 +132,7 @@
             }
         });
 
-        $(".pop-major-2").each(function() {
+        $(".pop-major-2:visible").each(function() {
             if (!this.initFlag) {
                 $(this).css({
                     "left": $(this).siblings(".major-input-2").offset().left - $(this).parent(".pop-major-box").offset().left + "px",
@@ -163,5 +154,4 @@
             }
         });
     }
-
 })();

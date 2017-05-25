@@ -151,7 +151,7 @@
                             <div class="item-row">
                                 <label>期望地点</label>
                                 <div class="address exp-address">
-                                    <addr-select :addrdata="database.addrData" :initAddress="{province:resume.expect.province}" class="sel-addr disInline"></addr-select>
+                                    <addr-select :addrdata="database.addrData" :initaddress="{province:resume.expect.province}" class="sel-addr disInline"></addr-select>
                                 </div>
                             </div>
                             <div class="item-row">
@@ -198,7 +198,7 @@
                                 <div class="item-row">
                                     <label>公司地址</label>
                                     <div class="address work-address">
-                                        <addr-select :addrdata="database.addrData" :initAddress="{province:worksExp.province}" class="sel-addr disInline"></addr-select>
+                                        <addr-select :addrdata="database.addrData" :initaddress="{province:worksExp.province}" class="sel-addr disInline"></addr-select>
                                     </div>
                                 </div>
                                 <div class="item-row">
@@ -485,7 +485,7 @@
                                 <p>发布时间：{{item.updateTime.split(" ")[0]}}</p>
                                 <div class="action">
                                     <span @click="cancelCollect('position',item.id)">取消收藏</span>
-                                    <span class="post" @click="apply('position',item.recruitId)" v-show="!item.status">投递简历</span>
+                                    <span class="post" @click="apply('recruit',item.recruitId)" v-show="!item.status">投递简历</span>
                                     <span class="posted" v-show="item.status&&item.status!=3">已投递</span>
                                     <span class="color-gray offline" v-show="item.status&&item.status==3">已下线</span>
                                 </div>

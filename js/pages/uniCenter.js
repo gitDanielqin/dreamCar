@@ -154,6 +154,10 @@ var appPorto = new Vue({
             this.cloneInfo = cloneObj(this.briefInfo);
             this.initAddress = cloneObj(this.briefInfo.address);
             this.viewInfo = false;
+            this.$nextTick(function() {
+                selectInitInput();
+                selectInitPos();
+            });
         }
     }
 });
@@ -214,29 +218,16 @@ var appCont = new Vue({
         },
         message: {
             combi: {
-                state: "全部状态",
+                state: "发出的邀请",
                 curpage: 1,
-                items: [
-                    { code: "01", pos: "岗位名称", major: "专业", stuScale: "人数", uniLevel: "高校性质", uniApply: "高校需要提供的", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { code: "01", pos: "岗位名称", major: "专业", stuScale: "人数", uniLevel: "高校性质", uniApply: "高校需要提供的", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { code: "01", pos: "岗位名称", major: "专业", stuScale: "人数", uniLevel: "高校性质", uniApply: "高校需要提供的", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { code: "02", major: "专业名称", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00", applystate: "01" },
-                    { code: "02", major: "专业名称", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00", applystate: "01" },
-                    { code: "02", major: "专业名称", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00", applystate: "01" },
-                    { code: "02", major: "专业名称", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00", applystate: "03" },
-                ],
-                results: [
-                    { code: "01", pos: "岗位名称", major: "专业", stuScale: "人数", uniLevel: "高校性质", uniApply: "高校需要提供的", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { code: "01", pos: "岗位名称", major: "专业", stuScale: "人数", uniLevel: "高校性质", uniApply: "高校需要提供的", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { code: "01", pos: "岗位名称", major: "专业", stuScale: "人数", uniLevel: "高校性质", uniApply: "高校需要提供的", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { code: "02", major: "专业名称", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00", applystate: "01" },
-                    { code: "02", major: "专业名称", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00", applystate: "01" },
-                    { code: "02", major: "专业名称", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00", applystate: "01" },
-                    { code: "02", major: "专业名称", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00", applystate: "03" },
-                ]
+                totalpages: 1,
+                totalitems: 0,
+                pagesize: 3,
+                msgsrc: 0,
+                results: []
             },
             recruit: {
-                state: "全部状态",
+                state: "发出的邀请",
                 curpage: 1,
                 items: [
                     { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
@@ -374,22 +365,48 @@ var appCont = new Vue({
             }
         },
         "message.combi.state": function(curval) {
-            if (curval == "全部状态") {
-                this.message.combi.results = cloneObj(this.message.combi.items);
-            } else if (curval == "发出的邀请") {
-                this.message.combi.results = [];
-                for (var i = 0; i < this.message.combi.items.length; i++) {
-                    if (this.message.combi.items[i].code == "02") {
-                        this.message.combi.results.push(this.message.combi.items[i]);
-                    }
+            if (curval == "发出的邀请") {
+                //请求校企合作发出的申请
+                var postdata = {
+                    userId: parObj.userId,
+                    applyStatus: 1,
+                    index: 1,
+                    count: 3
                 }
+                EventUtils.ajaxReq("/demand/getDemandApply", "get", postdata, function(resp, status) {
+                    console.log(resp);
+                    if (resp && resp.data) {
+                        appCont.message.combi.totalitems = resp.data.totalRow;
+                        appCont.message.combi.totalpages = resp.data.totalPage;
+                        appCont.message.combi.results = resp.data.list;
+                    } else {
+                        appCont.message.combi.results = [];
+                        appCont.message.combi.totalitems = 0;
+                    }
+                    appCont.message.combi.msgsrc = 0;
+                });
+
             } else if (curval == "收到的邀请") {
-                this.message.combi.results = [];
-                for (var i = 0; i < this.message.combi.items.length; i++) {
-                    if (this.message.combi.items[i].code == "01") {
-                        this.message.combi.results.push(this.message.combi.items[i]);
-                    }
+                //请求校企合作收到的申请
+                var postdata = {
+                    userId: parObj.userId,
+                    applyStatus: 2,
+                    index: 1,
+                    count: 3
                 }
+                EventUtils.ajaxReq("/demand/getDemandApply", "get", postdata, function(resp, status) {
+                    console.log(resp);
+                    if (resp && resp.data) {
+                        appCont.message.combi.totalitems = resp.data.totalRow;
+                        appCont.message.combi.totalpages = resp.data.totalPage;
+                        appCont.message.combi.results = resp.data.list;
+                    } else {
+                        appCont.message.combi.results = [];
+                        appCont.message.combi.totalitems = 0;
+                    }
+                    appCont.message.combi.msgsrc = 1;
+                });
+
             };
             this.message.combi.curpage = 1;
         },
@@ -795,6 +812,25 @@ var appCont = new Vue({
                 })
                 this.collect.curpage = page;
             } else if (type == "msg-combi") {
+                if (this.message.combi.msgsrc == 0) {
+                    var postdata = {
+                        userId: parObj.userId,
+                        applyStatus: 1,
+                        index: page,
+                        count: 3
+                    }
+                    EventUtils.ajaxReq("/demand/getDemandApply", "get", postdata, function(resp, status) {
+                        console.log(resp);
+                        if (resp && resp.data) {
+                            appCont.message.combi.totalitems = resp.data.totalRow;
+                            appCont.message.combi.totalpages = resp.data.totalPage;
+                            appCont.message.combi.results = resp.data.list;
+                        } else {
+                            appCont.message.combi.results = [];
+                            appCont.message.combi.totalitems = 0;
+                        }
+                    });
+                }
                 this.message.combi.curpage = page;
             } else if (type == "msg-recruit") {
                 this.message.recruit.curpage = page;
@@ -1264,6 +1300,25 @@ function navEventBind() {
         $(this).addClass("on");
         $(".content").children().hide();
         $(".content").children("." + $(this).attr("paneid")).show();
+        if ($(this).attr("paneid") == "combi-msg") {
+            //请求校企合作发出的申请
+            var postdata = {
+                userId: parObj.userId,
+                applyStatus: 1,
+                index: 1,
+                count: 3
+            }
+            EventUtils.ajaxReq("/demand/getDemandApply", "get", postdata, function(resp, status) {
+                if (resp && resp.data) {
+                    appCont.message.combi.totalitems = resp.data.totalRow;
+                    appCont.message.combi.totalpages = resp.data.totalPage;
+                    appCont.message.combi.results = resp.data.list;
+                } else {
+                    appCont.message.combi.results = [];
+                    appCont.message.combi.totalitems = 0;
+                }
+            });
+        }
         selectInitPos();
         return false;
     });
@@ -1311,6 +1366,7 @@ function navEventBind() {
                 count: 3
             };
             EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function(resp, status) {
+                console.log(resp);
                 if (resp.data) {
                     appCont.collect.curpage = 1;
                     appCont.collect.totalpages = resp.data.totalPage;
@@ -1323,6 +1379,28 @@ function navEventBind() {
 
             })
         }
+        //消息中心
+        if ($(this).attr("paneid") == "combi-msg") {
+            //请求校企合作发出的申请
+            var postdata = {
+                userId: parObj.userId,
+                applyStatus: 1,
+                index: 1,
+                count: 3
+            }
+            EventUtils.ajaxReq("/demand/getDemandApply", "get", postdata, function(resp, status) {
+                console.log(resp);
+                if (resp && resp.data) {
+                    appCont.message.combi.totalitems = resp.data.totalRow;
+                    appCont.message.combi.totalpages = resp.data.totalPage;
+                    appCont.message.combi.results = resp.data.list;
+                } else {
+                    appCont.message.combi.results = [];
+                    appCont.message.combi.totalitems = 0;
+                }
+            });
+        }
+
         if ($(this).attr("paneid")) {
             $(".content").children().hide();
             $(".content").children("." + $(this).attr("paneid")).show();

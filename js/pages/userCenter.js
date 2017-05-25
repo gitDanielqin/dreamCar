@@ -70,6 +70,24 @@ function infoRequest() {
                 };
                 worksExps.push(workexp);
             }
+            if (worksExps.length == 0) {
+                var worksItem = {
+                    show: true,
+                    firma: "",
+                    trade: "",
+                    pos: "",
+                    province: "",
+                    city: "",
+                    district: "",
+                    salary: "",
+                    startyear: "",
+                    startmonth: "",
+                    endyear: "",
+                    endmonth: "",
+                    resp: ""
+                };
+                worksExps.push(worksItem);
+            }
             var edus = [];
             for (var j = 0; j < respObj.eduList.length; j++) {
                 var edu = {
@@ -87,6 +105,21 @@ function infoRequest() {
                 };
                 edus.push(edu);
             }
+            if (edus.length == 0) {
+                var eduItem = {
+                    show: true,
+                    uni: "",
+                    major: "",
+                    submajor: "",
+                    exmajor: "",
+                    startyear: "",
+                    startmonth: "",
+                    endyear: "",
+                    endmonth: "",
+                    qualification: "",
+                };
+                edus.push(eduItem);
+            }
             var projects = [];
             for (var k = 0; k < respObj.projectList.length; k++) {
                 var project = {
@@ -103,6 +136,21 @@ function infoRequest() {
                     achiev: respObj.projectList[k].achievement
                 }
                 projects.push(project);
+            }
+            if (projects.length == 0) {
+                var proItem = {
+                    show: true,
+                    name: "",
+                    firma: "",
+                    startyear: "",
+                    startmonth: "",
+                    endyear: "",
+                    endmonth: "",
+                    desc: "",
+                    resp: "",
+                    achiev: ""
+                };
+                projects.push(proItem);
             }
             var cvInfo = {
                 firstEdit: false,
@@ -180,7 +228,7 @@ var appPorto = new Vue({
             this.briefInfo.address.city = $("#app-porto .address .sel-city input").val();
             this.briefInfo.address.district = $("#app-porto .address .sel-district input").val();
             var postdata = {
-                id: respObj.id,
+                id: respObj.userInfo.id,
                 userId: parObj.userId,
                 loginIdentifier: parObj.loginId,
                 sex: this.briefInfo.gender == "男" ? 1 : 2,
@@ -190,6 +238,7 @@ var appPorto = new Vue({
                 city: this.briefInfo.address.city,
                 area: this.briefInfo.address.district,
             }
+            console.log(postdata);
             EventUtils.ajaxReq('/user/user/modifyInfo', 'post', postdata, function(resp, status) {
                 appPorto.viewInfo = true;
             })
@@ -202,6 +251,10 @@ var appPorto = new Vue({
             this.cloneInfo = cloneObj(this.briefInfo);
             this.initAddress = cloneObj(this.briefInfo.address);
             this.viewInfo = false;
+            this.$nextTick(function() {
+                selectInitInput();
+                selectInitPos();
+            });
         },
         age: function(birthyear) {
             var date = new Date();
@@ -563,14 +616,26 @@ var appCont = new Vue({
         },
         deleteItem: function(type, index) {
             if (type == "worksexp") {
-                delItem("work", appCont.resume.worksExps[index].cvCpyId);
-                this.resume.worksExps.splice(index, 1);
+                if (this.resume.worksExps.length > 1) {
+                    delItem("work", appCont.resume.worksExps[index].cvCpyId);
+                    this.resume.worksExps.splice(index, 1);
+                } else {
+                    alert("至少保留一项！");
+                }
             } else if (type == "edu") {
-                delItem("edu", appCont.resume.edus[index].cvEduId);
-                this.resume.edus.splice(index, 1);
+                if (this.resume.edus.length > 1) {
+                    delItem("edu", appCont.resume.edus[index].cvEduId);
+                    this.resume.edus.splice(index, 1);
+                } else {
+                    alert("至少保留一项！");
+                }
             } else if (type == "project") {
-                delItem("project", appCont.resume.projects[index].cvProId);
-                this.resume.projects.splice(index, 1);
+                if (this.resume.projects.length > 1) {
+                    delItem("project", appCont.resume.projects[index].cvProId);
+                    this.resume.projects.splice(index, 1);
+                } else {
+                    alert("至少保留一项！");
+                }
             }
         },
         stateCss: function(state) {
@@ -777,7 +842,7 @@ var appCont = new Vue({
     },
     components: {
         'pagination': pagination
-    }
+    },
 });
 
 var appModal = new Vue({

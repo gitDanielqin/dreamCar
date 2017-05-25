@@ -9,6 +9,7 @@
     background: url("../images/icon-select.png") no-repeat right 10px;
     border: 1px solid #ccc;
     padding-left: 10px;
+    width: 100%;
 }
 
 .selectee input.hint-nullable {

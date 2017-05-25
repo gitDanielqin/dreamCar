@@ -225,37 +225,35 @@
                             <div v-if="collect.collectSrc==0" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                 <div class="item-block-left fl paTop22 W328 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="collectLink(item.demandId)">{{infoExtrac(item.profession)}}</a></h2>
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="collectLink(item)">{{infoExtrac(item.profession)}}</a></h2>
                                     <p>{{item.companyProperty}}<i class="depart">|</i>{{item.companyScale}}<i class="depart">|</i>{{infoExtrac(item.companyType)}}</p>
                                     <p>联合培养方式：{{item.trainType}}</p>
-                                    <p class="item-date">收藏时间：{{item.collectTime.split(" ")[0]}}</span>
-                                    </p>
+                                    <p class="item-date">收藏时间：{{item.collectTime.split(" ")[0]}}</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH25 maT10">
                                     <p>{{item.userName}}</p>
                                     <p>{{item.userProperty}}</p>
                                     <p class="pubdate">发布时间：{{item.updateTime.split(" ")[0]}}</p>
                                     <div class="collect-btn">
-                                        <button class="color-blueL" @click.stop="cancelCollect(item.demandId,item.id)">取消收藏</button>
-                                        <button class="color-orange-f7" @click.stop="applyCollect(item.demandId)">申请合作</button>
+                                        <button class="color-blueL" @click.stop="cancelCollect('combi',item.id)">取消收藏</button>
+                                        <button class="color-orange-f7" @click.stop="applyCollect(item)">申请合作</button>
                                     </div>
                                 </div>
                             </div>
                             <div v-else-if="collect.collectSrc==1" class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                <div class="item-block-left fl paTop22 W328 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="collectLink(item.demandId)">{{item.title}}</a></h2>
+                                <div class="item-block-left fl paTop22 W300 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="collectLink(item)">{{item.title}}</a></h2>
                                     <p>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.professionCount}}<i class="depart">|</i>{{cityExtrac(item.jobFairAddress)}}</p>
-                                    <p class="item-date">招聘会时间：{{item.startTime}}</span>
-                                    </p>
+                                    <p class="item-date">招聘会时间：{{item.startTime}}</p>
                                 </div>
-                                <div class="item-block-right fl fSize14 LH25 maT10">
+                                <div class="item-block-right fl fSize14 LH25 maT10 W285">
                                     <p>高校对企业要求</p>
                                     <p>{{item.companyScale}}<i class="depart">|</i>{{item.companyProperty}}<i class="depart">|</i>{{infoExtrac(item.job)}}</p>
                                     <p class="pubdate">发布日期：{{item.updateTime.split(" ")[0]}}</p>
                                     <div class="collect-btn">
-                                        <button class="color-blueL" @click.stop="cancelCollect(item.demandId,item.id)">取消收藏</button>
-                                        <button class="color-orange-f7" @click.stop="applyCollect(item.demandId)">申请合作</button>
+                                        <button class="color-blueL" @click.stop="cancelCollect('jobfair',item.id)">取消收藏</button>
+                                        <button class="color-orange-f7" @click.stop="applyCollect(item)">申请合作</button>
                                     </div>
                                 </div>
                             </div>

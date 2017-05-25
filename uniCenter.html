@@ -15,7 +15,7 @@
 <body class="bg-gray-f2">
     <div class="top bg-gray3 H100 color-white" id="app-top" v-cloak>
         <div class="inner">
-            <a :href='homeLink'><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" /></a>
+            <a :href="homeLink"><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" /></a>
             <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
             <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">高校中心</h2>
             <div class="fr navs maT42">
@@ -64,10 +64,10 @@
             <li class="on" paneid="resumeBox"><i class="pic-icon icon-resume"></i>高校简介</li>
             <li paneid="requireBox"><i class="pic-icon icon-study"></i>高校需求</li>
             <li class="myCollect" paneid="collectBox"><i class="pic-icon icon-collect"></i>高校收藏</li>
-            <li><i class="pic-icon icon-apply"></i>消息中心
+            <li paneid="combi-msg"><i class="pic-icon icon-apply"></i>消息中心
                 <div class="sub-li LH37">
                     <p class="on" paneid="combi-msg">校企合作消息</p>
-                    <p paneid="recruit-msg">招聘会合作消息</p>
+                    <p paneid="recruit-msg">招聘会消息</p>
                 </div>
             </li>
             <li paneid="vip-center"><i class="pic-icon icon-apply"></i>VIP中心</li>
@@ -255,19 +255,19 @@
             <div class="uni-message combi-msg">
                 <div class="ListBox">
                     <div class="hd LH-H58 bg-white">
-                        <dropdown classes="state" :options="['全部状态','发出的邀请','收到的邀请']" v-model="message.combi.state"></dropdown>
-                        <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{combimsg}}</span>个</p>
+                        <dropdown classes="state" :options="['发出的邀请','收到的邀请']" v-model="message.combi.state"></dropdown>
+                        <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{message.combi.totalitems}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
                         <li v-for="(item,index) in message.combi.results" :name="item.code">
-                            <template v-if="item.code=='01'">
+                            <template v-if="message.combi.msgsrc==1">
                               <div class="paLeft29 clearfix H128 pRel">
                                    <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                    <div class="item-block-left fl paTop22 W328 maL20">
-                                       <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-uni.html">{{item.pos}}</a></h2>
-                                       <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.uniLevel}}</p>
+                                       <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-uni.html">{{item.title}}</a></h2>
+                                       <p>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.professionCount}}<i class="depart">|</i>{{item.schoolProperty}}</p>
                                        <p>{{item.uniApply}}</p>
-                                       <p class="item-date">{{item.date}}</span> {{item.time}}</p>
+                                       <p class="item-date">{{item.date}} {{item.time}}</p>
                                    </div>
                                    <div class="item-block-right fl fSize14 LH30 maT10">
                                        <p>{{item.IncName}}</p>
@@ -288,21 +288,20 @@
                               <div class="paLeft29 clearfix H128 pRel msg-apply">
                                    <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                    <div class="item-block-left fl paTop22 maL20 W312">
-                                       <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-company.html">{{item.major}}</a></h2>
-                                       <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
-                                       <p>{{item.trainWay}}</p>
-                                       <p class="item-date">{{item.date}}</span> {{item.time}}</p>
+                                       <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-company.html">{{infoExtrac(item.job)}}</a></h2>
+                                       <p>{{infoExtrac(item.profession)}}<i class="depart" v-show="item.professionCount">|</i>{{item.professionCount}}<i class="depart" v-show="item.schoolType">|</i>{{item.schoolType}}</p>
+                                       <p>培养方式：{{item.trainType}}</p>
+                                       <p class="item-date">申请日期：{{item.createTime.split(" ")[0]}}</p>
                                    </div>
                                    <div class="item-block-right fl fSize14 LH30 pRel maT10 uni-apply-message">
-                                       <p class="t-right">{{item.IncName}}</p>
+                                       <p class="t-right">{{item.applyUserName}}</p>
                                        <ul class="state-line lis-inline maT3">
                                              <li :class="{on:item.applystate=='01'}"><i class="state-icon"></i>已发出</li>
                                              <li :class="{on:item.applystate=='02'}"><i class="state-icon"></i>已查看</li>
-                                             <li :class="{on:(item.applystate=='03'),'to-contact':true}"><i class="state-icon"></i>待沟通</li>
                                              <li :class="{on:item.applystate=='04'}"><i class="state-icon"></i>反馈结果</li>
                                        </ul>
                                        <div class="contact-box">
-                                            <p>企业联系人：<span>{{item.contactpep}}</span></p>
+                                            <p>企业联系人：<span>{{item.applyUserName}}</span></p>
                                             <p>联系方式：<span>{{item.contactway}}</span></p>
                                        </div>
                                    </div>
@@ -315,13 +314,13 @@
                             </div>
                         </li>
                     </ul>
-                    <pagination :showpages="showpage(message.combi.results.length)" :totalpages="pagesum(message.combi.results.length)" type="msg-combi" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                    <pagination :showpages="showpage(message.combi.totalpages)" :totalpages="message.combi.totalpages" type="msg-combi" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
             </div>
             <div class="uni-message recruit-msg">
                 <div class="ListBox">
                     <div class="hd LH-H58 bg-white">
-                        <dropdown classes="state" :options="['全部状态','发出的邀请','收到的邀请']" v-model="message.combi.state"></dropdown>
+                        <dropdown classes="state" :options="['发出的邀请','收到的邀请']" v-model="message.combi.state"></dropdown>
                         <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{message.recruit.items.length}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
@@ -332,7 +331,7 @@
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-unirecruit.html">{{item.major}}</a></h2>
                                     <p>{{item.salary}}<i class="depart">|</i>{{item.posAmount}}<i class="depart">|</i>{{item.qualific}}</p>
                                     <p>公司地址：{{item.IncAddress.city}}{{item.IncAddress.district}}</p>
-                                    <p class="item-date">{{item.date}}</span> {{item.time}}</p>
+                                    <p class="item-date">{{item.date}} {{item.time}}</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH25 maT10">
                                     <p>{{item.IncName}}</p>

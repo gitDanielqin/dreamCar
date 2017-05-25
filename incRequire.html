@@ -48,7 +48,7 @@
             <div class="nav-cont cont-combi" v-show="showpage.page1">
                 <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写校企合作信息</h2>
                 <div class="form-cont paLeft68">
-                    <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="combiData.header" /><span class="color-red">（请小于12个字）</span></p>
+                    <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="combiData.header" maxlength="12" /><span class="color-red">（请小于12个字）</span></p>
                     <h3 class="LH-H75 fSize18 maT11">我对高校的要求</h3>
                     <p class="form-item"><label>专业名称</label>
                         <major-pop :majordata="database.uni.majors" class="disInline"></major-pop>
@@ -136,7 +136,7 @@
             <div class="nav-cont cont-recruit" v-show="showpage.page2">
                 <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写招聘会信息</h2>
                 <div class="form-cont paLeft68">
-                    <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="recruitData.header" /><span class="color-red">（请小于12个字）</span></p>
+                    <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="recruitData.header" maxlength="12" /><span class="color-red">（请小于12个字）</span></p>
                     <p class="form-item maT28"><label>岗位名称</label>
                         <pos-select :posdata="database.posdata" :initpos="recruitData.initPosition"></pos-select>
                     </p>
@@ -186,7 +186,7 @@
             <div class="nav-cont cont-direct" v-show="showpage.page3">
                 <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写直聘信息</h2>
                 <div class="form-cont paLeft68">
-                    <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="directData.header" /><span class="color-red">（请小于12个字）</span></p>
+                    <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="directData.header" maxlength="12" /><span class="color-red">（请小于12个字）</span></p>
                     <p class="form-item maT28"><label>岗位名称</label>
                         <pos-select :posdata="database.posdata" :initpos="directData.initPosition"></pos-select>
                     </p>

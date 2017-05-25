@@ -158,7 +158,7 @@ var appMain = new Vue({
             },
             trainway: ["企业高管到校", "学生入企", "面议"],
             postype: ["电气信息类", "电子信息科学类", "仪器仪表类", "工商管理类", "管理科学与工程类", "金融类", "其他"],
-            welfares: ["五险一金", "包住", "包吃", "年底双薪", "双休", "交通补助", "加班补助", "话补", "房补", "全选"]
+            welfares: ["五险一金", "包住", "包吃", "年底双薪", "双休", "交通补助", "加班补助", "话补", "房补"]
         },
         combiData: {
             datatype: "combi",
@@ -193,16 +193,16 @@ var appMain = new Vue({
             datatype: "recruit",
             header: "",
             incReq: {
-                incScale: "",
-                incProps: "",
+                incScale: "不限",
+                incProps: "不限",
                 initPosition: {
                     pos_1: "不限",
                     pos_2: "不限",
                     pos_3: "不限"
                 },
-                posAmount: "",
+                posAmount: "不限",
             },
-            stuScale: "",
+            stuScale: "不限",
             date: "",
             desc: "",
             contact: {
@@ -267,14 +267,23 @@ var appMain = new Vue({
         },
         publish: function(type) {
             var isValid = true;
+            // 对联系方式的输入检测
             $(".phone-input:visible").each(function() {
                 if (!variableUtils.regExp.phone.test(this.value) && !variableUtils.regExp.mobile.test(this.value)) {
                     $(this).addClass("hint-nullable");
                     isValid = false;
                 }
             });
+            //标题栏不能为空
+            if ($(".head-input:visible input").val() == "") {
+                $(".head-input:visible input").addClass("hint-nullable");
+                isValid = false;
+            } else {
+                $(".head-input:visible input").removeClass("hint-nullable");
+            }
+
             if (!isValid) {
-                alert("请检查信息是否正确！");
+                alert("请检查信息是否完整或格式是否正确！");
                 return false;
             }
             if (type == "combi") {

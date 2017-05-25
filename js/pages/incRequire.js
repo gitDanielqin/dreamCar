@@ -218,7 +218,7 @@ var appMain = new Vue({
             },
             trainway: ["企业高管到校", "学生入企", "面议"],
             posdata: posArray,
-            welfares: ["五险一金", "包住", "包吃", "年底双薪", "双休", "交通补助", "加班补助", "话补", "房补", "全选"]
+            welfares: ["五险一金", "包住", "包吃", "年底双薪", "双休", "交通补助", "加班补助", "话补", "房补"]
         },
         combiData: {
             datatype: "combi",
@@ -234,13 +234,13 @@ var appMain = new Vue({
                 pos_3: "不限"
             },
             incReq: {
-                stuScale: "",
-                uniLevel: "",
-                uniClassific: "",
+                stuScale: "不限",
+                uniLevel: "不限",
+                uniClassific: "不限",
             },
             incApply: {
-                posAmount: "",
-                trainWay: "",
+                posAmount: "不限",
+                trainWay: "不限",
             },
             requireDesc: "",
             contact: {
@@ -253,7 +253,7 @@ var appMain = new Vue({
             datatype: "recruit",
             header: "",
             postype: "不限",
-            jobAmount: "",
+            jobAmount: "不限",
             scolar: "不限",
             gender: "不限",
             worksexp: "不限",
@@ -269,12 +269,12 @@ var appMain = new Vue({
         directData: {
             datatype: "direct",
             header: "",
-            postype: "",
-            amount: "",
-            scolar: "",
-            gender: "",
-            worksexp: "",
-            salary: "",
+            postype: "不限",
+            amount: "不限",
+            scolar: "不限",
+            gender: "不限",
+            worksexp: "不限",
+            salary: "不限",
             desc: "",
             contact: {
                 person: "",

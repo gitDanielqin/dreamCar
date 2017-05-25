@@ -53,7 +53,7 @@ function infoRequest() {
 var appTop = new Vue({
     el: "#app-top",
     data: {
-        isLogin: isLogin,
+        isLogin: false,
         userType: "0",
         userName: ""
     },
@@ -345,8 +345,10 @@ var appResult = new Vue({
         },
         demandLink: function(demandId) {
             var link = "detail-uni.html?demandId=" + demandId;
-            if (accountObj) {
-                link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginId + "&userType=" + accountObj.userType;
+            if (accountObj && accountObj.userId) {
+                link += "&userId=" + accountObj.userId;
+            } else if (parObj.userId) {
+                link += "&userId=" + parObj.userId;
             }
             return link;
         },

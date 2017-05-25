@@ -47,7 +47,7 @@
             <div class="nav-cont cont-combi" v-show="showCombi">
                 <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写校企合作信息</h2>
                 <div class="form-cont paLeft68">
-                    <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="combiData.header" /><span class="color-red">（请小于12个字）</span></p>
+                    <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="combiData.header" maxlength="12" /><span class="color-red">（请小于12个字）</span></p>
                     <h3 class="LH-H75 fSize18 maT11">我对企业的要求</h3>
                     <p class="form-item"><label>提供岗位名称</label>
                         <pos-select :posdata="database.inc.posData" :initpos="combiData.initPosition"></pos-select>
@@ -138,16 +138,16 @@
             <div class="nav-cont cont-recruit" v-show="!showCombi">
                 <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写招聘会信息</h2>
                 <div class="form-cont paLeft68">
-                    <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="recruitData.header" /><span class="color-red">（请小于12个字）</span></p>
+                    <p class="maT39 head-input"><label>标　　题</label><input type="text" v-model="recruitData.header" maxlength="12" /><span class="color-red">（请小于12个字）</span></p>
                     <h3 class="LH-H75 fSize18 maT11">对参聘企业的要求</h3>
                     <p class="form-item"><label>企业行业</label>
                         <area-select :areadata="database.inc.areas"></area-select>
                     </p>
                     <p class="form-item"><label>企业规模</label>
-                        <dropdown :options="database.inc.scale" placeholder="" v-model="recruitData.incReq.incScale">
+                        <dropdown :options="database.inc.scale" placeholder="" v-model="recruitData.incReq.incScale" />
                     </p>
                     <p class="form-item"><label>企业性质</label>
-                        <dropdown :options="database.inc.props" placeholder="" v-model="recruitData.incReq.incProps">
+                        <dropdown :options="database.inc.props" placeholder="" v-model="recruitData.incReq.incProps" />
                     </p>
                     <p class="form-item"><label>岗位名称</label>
                         <pos-select :posdata="database.inc.posData" :initpos="recruitData.incReq.initPosition"></pos-select>

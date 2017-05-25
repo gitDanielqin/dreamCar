@@ -137,6 +137,10 @@ var appPorto = new Vue({
             this.cloneInfo = cloneObj(this.briefInfo);
             this.initAddress = cloneObj(this.briefInfo.address);
             this.viewInfo = false;
+            this.$nextTick(function() {
+                selectInitInput();
+                selectInitPos();
+            });
         }
     }
 });
@@ -347,7 +351,6 @@ var appCont = new Vue({
         },
         "collect.state": function(curval, oldval) {
             if (curval == "校企合作") {
-                this.collect.collectSrc = 0;
                 var postdata = {
                     userId: parObj.userId,
                     loginIdentifier: parObj.loginId,
@@ -361,14 +364,15 @@ var appCont = new Vue({
                         appCont.collect.totalpages = resp.data.totalPage;
                         appCont.collect.totalitems = resp.data.totalRow;
                         appCont.collect.results = resp.data.list;
+
                     } else {
                         appCont.collect.results = [];
                         appCont.collect.totalitems = 0;
                     }
+                    appCont.collect.collectSrc = 0;
                 })
             }
             if (curval == "高校招聘会") {
-                this.collect.collectSrc = 1;
                 var postdata = {
                     userId: parObj.userId,
                     loginIdentifier: parObj.loginId,
@@ -385,6 +389,7 @@ var appCont = new Vue({
                         appCont.collect.results = [];
                         appCont.collect.totalitems = 0;
                     }
+                    appCont.collect.collectSrc = 1;
                 })
             }
             this.collect.curpage = 1;
@@ -465,8 +470,14 @@ var appCont = new Vue({
                 return "detail-increcruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
             }
         },
-        collectLink: function(id) {
-            return "detail-uni.html?userId=" + parObj.userId + "&demandId=" + id;
+        collectLink: function(item) {
+            if (item.demandId) {
+                return "detail-uni.html?userId=" + parObj.userId + "&demandId=" + item.demandId;
+            }
+            if (item.jobFairId) {
+                return "detail-unirecruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
+            }
+
         },
         popTrade: function() {
             appModal.showModal = true;
@@ -756,23 +767,43 @@ var appCont = new Vue({
 
                 this.require.curpage = page;
             } else if (type == "collect") {
-
-                var postdata = {
-                    userId: parObj.userId,
-                    loginIdentifier: parObj.loginId,
-                    index: page,
-                    count: 3
-                }
-                EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function(resp, status) {
-                    if (resp.data) {
-                        appCont.collect.results = resp.data.list;
-                        appCont.collect.totalitems = resp.data.totalRow;
-                        appCont.collect.totalpages = resp.data.totalPage;
-                    } else {
-                        appCont.collect.results = [];
-                        appCont.collect.totalitems = 0;
+                if (this.collect.collectSrc == 0) {
+                    var postdata = {
+                        userId: parObj.userId,
+                        loginIdentifier: parObj.loginId,
+                        index: page,
+                        count: 3
                     }
-                })
+                    EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function(resp, status) {
+                        if (resp.data) {
+                            appCont.collect.results = resp.data.list;
+                            appCont.collect.totalitems = resp.data.totalRow;
+                            appCont.collect.totalpages = resp.data.totalPage;
+                        } else {
+                            appCont.collect.results = [];
+                            appCont.collect.totalitems = 0;
+                        }
+                    })
+                }
+                if (this.collect.collectSrc == 1) {
+                    var postdata = {
+                        userId: parObj.userId,
+                        loginIdentifier: parObj.loginId,
+                        index: page,
+                        count: 3
+                    }
+                    EventUtils.ajaxReq("/jobfair/getMarkList", "get", postdata, function(resp, status) {
+                        if (resp.data) {
+                            appCont.collect.results = resp.data.list;
+                            appCont.collect.totalitems = resp.data.totalRow;
+                            appCont.collect.totalpages = resp.data.totalPage;
+                        } else {
+                            appCont.collect.results = [];
+                            appCont.collect.totalitems = 0;
+                        }
+                    })
+                }
+
                 this.collect.curpage = page;
                 // console.log($(".collectBox .pagination a.page").eq(appCont.collect.curpage - 1).parent()[0]);
             } else if (type == "msg-combi") {
@@ -806,33 +837,67 @@ var appCont = new Vue({
                 appModal.show.preImg = true;
             }
         },
-        applyCollect: function(demandId) {
-            var postdata = {
-                userId: parObj.userId,
-                loginIdentifier: parObj.loginId,
-                demandId: demandId
+        applyCollect: function(item) {
+            if (item.demandId) {
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    demandId: item.demandId
+                }
+                EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
+                    console.log(resp);
+                    if (resp.data && resp.data.isApply == "0") {
+                        alert("申请已发送！");
+                    } else {
+                        alert(resp.info);
+                    }
+                })
             }
-            EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
-                console.log(resp);
-                alert("申请已发送！");
-            })
+            if (item.jobFairId) {
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    jobFairId: item.jobFairId
+                }
+                EventUtils.ajaxReq("/jobfair/cooperateJobFair", "post", postdata, function(resp, status) {
+                    console.log(resp);
+                    if (resp.data && resp.data.isApply == "0") {
+                        alert("申请已发送！");
+                    } else {
+                        alert(resp.info);
+                    }
+                })
+            }
         },
         cancel: function() {},
-        cancelCollect: function(demandId, id) {
-            var postdata = {
-                userId: parObj.userId,
-                demandId: demandId,
-                id: id
-            }
-            console.log(postdata);
-            EventUtils.ajaxReq("/demand/delMarkInfo", "post", postdata, function(resp, status) {
-                console.log(resp);
-                if (appCont.collect.results.length == 1 && appCont.collect.curpage > 1) {
-                    appCont.collect.curpage -= 1;
+        cancelCollect: function(type, id) {
+            if (type == "combi") {
+                var postdata = {
+                    id: id
                 }
-                $(".collectBox .pagination a.page").eq(appCont.collect.curpage - 1).parent().trigger("click");
+                console.log(postdata);
+                EventUtils.ajaxReq("/demand/delMarkInfo", "post", postdata, function(resp, status) {
+                    console.log(resp);
+                    if (appCont.collect.results.length == 1 && appCont.collect.curpage > 1) {
+                        appCont.collect.curpage -= 1;
+                    }
+                    $(".collectBox .pagination a.page").eq(appCont.collect.curpage - 1).parent().trigger("click");
+                })
+            }
+            if (type == "jobfair") {
+                var postdata = {
+                    id: id
+                }
+                console.log(postdata);
+                EventUtils.ajaxReq("/jobfair/delMarkInfo", "post", postdata, function(resp, status) {
+                    console.log(resp);
+                    if (appCont.collect.results.length == 1 && appCont.collect.curpage > 1) {
+                        appCont.collect.curpage -= 1;
+                    }
+                    $(".collectBox .pagination a.page").eq(appCont.collect.curpage - 1).parent().trigger("click");
+                })
+            }
 
-            })
         },
         modifyMobile: function() {
             appModal.show.mobile = true;
