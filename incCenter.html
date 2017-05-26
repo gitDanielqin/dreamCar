@@ -65,10 +65,11 @@
                 <li class="on" paneid="resumeBox"><i class="pic-icon icon-resume"></i>企业简介</li>
                 <li paneid="requireBox"><i class="pic-icon icon-study"></i>企业需求</li>
                 <li class="myCollect" paneid="collectBox"><i class="pic-icon icon-collect"></i>企业收藏</li>
-                <li><i class="pic-icon icon-apply"></i>消息中心
+                <li paneid="combi-msg"><i class="pic-icon icon-apply"></i>消息中心
                     <div class="sub-li LH37">
                         <p class="on" paneid="combi-msg">校企合作</p>
-                        <p paneid="recruit-msg">招聘消息</p>
+                        <p paneid="jobfair-msg">招聘会</p>
+                        <p paneid="recruit-msg">企业直聘</p>
                     </div>
                 </li>
                 <li paneid="vip-center"><i class="pic-icon icon-apply"></i>VIP中心</li>
@@ -265,8 +266,8 @@
             <div class="uni-message combi-msg">
                 <div class="ListBox">
                     <div class="hd LH-H58 bg-white">
-                        <dropdown classes="state" :options="['全部状态','发出的邀请','收到的邀请']" v-model="message.combi.state"></dropdown>
-                        <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{combimsg}}</span>个</p>
+                        <dropdown classes="state" :options="['发出的邀请','收到的邀请']" v-model="message.combi.state"></dropdown>
+                        <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{message.combi.totalitems}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
                         <li v-show="message.combi.results.length==0">
@@ -274,27 +275,21 @@
                                 <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
                             </div>
                         </li>
-                        <li v-for="(item,index) in message.combi.results" :name="item.code" v-show="showResult(index,message.combi.curpage,3)">
-                            <template v-if="item.code=='01'">
+                        <li v-for="(item,index) in message.combi.results">
+                            <template v-if="message.combi.msgsrc==2">
                               <div class="paLeft29 clearfix H128 pRel">
                                    <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                    <div class="item-block-left fl paTop22 W328 maL20">
-                                       <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-company.html">{{item.pos}}</a></h2>
-                                       <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.uniLevel}}</p>
-                                       <p>{{item.uniApply}}</p>
-                                       <p class="item-date">{{item.date}}</span> {{item.time}}</p>
+                                       <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="messageLink('combi',item.demandId)">{{item.title}}</a></h2>
+                                       <p>{{item.schoolProperty}}<i class="depart">|</i>{{item.professionCount}}<i class="depart">|</i>{{infoExtrac(item.profession)}}</p>
+                                       <p>{{item.trainType}}</p>
+                                       <p class="item-date">申请日期：{{item.createTime.split(" ")[0]}}</p>
                                    </div>
                                    <div class="item-block-right fl fSize14 LH30 maT10">
-                                       <p>{{item.IncName}}</p>
-                                       <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
+                                       <p>{{item.userName}}</p>
+                                       <p>{{item.userProperty}}<i class="depart">|</i>{{item.userScale}}<i class="depart">|</i>{{infoExtrac(item.userType)}}</p>
                                        <div class="message-btn LH-H35 pRel">
-                                             <button class="color-orange-f7 to-contact">待沟通</button>
-                                             <button class="color-blueL">同意</button>
-                                             <button class="color-red">不同意</button>
-                                             <div class="contact-box">
-                                                  <p>企业联系人：<span>{{item.contactpep}}</span></p>
-                                                  <p>联系方式：<span>{{item.contactway}}</span></p>
-                                             </div>
+                                             <button class="color-orange-f7 to-contact">查看对方名片</button>
                                        </div>
                                    </div>
                               </div>
@@ -303,29 +298,65 @@
                               <div class="paLeft29 clearfix H128 pRel msg-apply">
                                    <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
                                    <div class="item-block-left fl paTop22 maL20 W312">
-                                       <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-uni.html">{{item.major}}</a></h2>
-                                       <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
-                                       <p>{{item.trainWay}}</p>
-                                       <p class="item-date">{{item.date}}</span> {{item.time}}</p>
+                                       <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="messageLink('combi',item.demandId)">{{infoExtrac(item.profession)}}</a></h2>
+                                       <p>{{item.companyProperty}}<i class="depart">|</i>{{item.companyScale}}<i class="depart">|</i>{{infoExtrac(item.companyType)}}</p>
+                                       <p>{{item.trainType}}</p>
+                                       <p class="item-date">申请日期：{{item.createTime.split(" ")[0]}}</p>
                                    </div>
                                    <div class="item-block-right fl fSize14 LH30 pRel maT10 uni-apply-message">
-                                       <p class="t-right">{{item.IncName}}</p>
-                                       <ul class="state-line lis-inline maT3">
-                                             <li :class="{on:item.applystate=='01'}"><i class="state-icon"></i>已发出</li>
-                                             <li :class="{on:item.applystate=='02'}"><i class="state-icon"></i>已查看</li>
-                                             <li :class="{on:(item.applystate=='03'),'to-contact':true}"><i class="state-icon"></i>待沟通</li>
-                                             <li :class="{on:item.applystate=='04'}"><i class="state-icon"></i>反馈结果</li>
+                                       <p class="t-right">高校名称：{{item.userName}}</p>
+                                       <ul class="state-line lis-inline maT15">
+                                             <li class="on"><i class="state-icon"></i>已发出</li>
+                                             <li :class="{on:item.readStatus=='1'}"><i class="state-icon"></i>已查看</li>
+                                             <li :class="{on:item.status=='1'||item.status=='2'}"><i class="state-icon"></i>反馈结果</li>
                                        </ul>
-                                       <div class="contact-box">
-                                            <p>企业联系人：<span>{{item.contactpep}}</span></p>
-                                            <p>联系方式：<span>{{item.contactway}}</span></p>
-                                       </div>
+                                       <p class="apply-feedback fr"><span class="color-green" v-show="item.status=='1'">同意</span><span class="color-red" v-show="item.status=='2'">不同意</span></p>
                                    </div>
                               </div>
                          </template>
                         </li>
                     </ul>
-                    <pagination :showpages="showpage(message.combi.results.length)" :totalpages="pagesum(message.combi.results.length)" type="msg-combi" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                    <pagination :showpages="showpage(message.combi.totalpages)" :totalpages="message.combi.totalpages" type="msg-combi" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                </div>
+            </div>
+            <div class="uni-message jobfair-msg">
+                <div class="ListBox">
+                    <div class="hd LH-H58 bg-white">
+                        <dropdown classes="state" :options="['全部状态','发出的邀请','收到的邀请']" v-model="message.combi.state"></dropdown>
+                        <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{message.recruit.items.length}}</span>个</p>
+                    </div>
+                    <ul class="info-items H470">
+                        <li v-show="message.recruit.results.length==0">
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                            </div>
+                        </li>
+                        <li v-for="(item,index) in message.recruit.results" v-show="showResult(index,message.recruit.curpage,3)">
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                <div class="item-block-left fl paTop22 W328 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-position.html">{{item.major}}</a></h2>
+                                    <p>{{item.salary}}<i class="depart">|</i>{{item.posAmount}}<i class="depart">|</i>{{item.qualific}}</p>
+                                    <p>公司地址：{{item.IncAddress.city}}{{item.IncAddress.district}}</p>
+                                    <p class="item-date">{{item.date}} {{item.time}}</p>
+                                </div>
+                                <div class="item-block-right fl fSize14 LH25 maT10">
+                                    <p>{{item.IncName}}</p>
+                                    <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
+                                    <div class="message-btn LH-H35 pRel">
+                                        <button class="color-orange-f7 to-contact">待沟通</button>
+                                        <button class="color-blueL">同意</button>
+                                        <button class="color-red">不同意</button>
+                                        <div class="contact-box">
+                                            <p>企业联系人：<span>{{item.contactpep}}</span></p>
+                                            <p>联系方式：<span>{{item.contactway}}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <pagination :showpages="showpage(message.recruit.results.length)" :totalpages="pagesum(message.recruit.results.length)" type="msg-recruit" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
             </div>
             <div class="uni-message recruit-msg">

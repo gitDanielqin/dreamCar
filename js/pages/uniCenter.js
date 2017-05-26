@@ -222,27 +222,15 @@ var appCont = new Vue({
                 curpage: 1,
                 totalpages: 1,
                 totalitems: 0,
-                pagesize: 3,
-                msgsrc: 0,
+                msgsrc: 1,
                 results: []
             },
             recruit: {
                 state: "发出的邀请",
                 curpage: 1,
-                items: [
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                ],
-                results: [
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                ]
+                totalpages: 1,
+                totalitems: 0,
+                results: []
             }
         },
         vip: {
@@ -367,46 +355,10 @@ var appCont = new Vue({
         "message.combi.state": function(curval) {
             if (curval == "发出的邀请") {
                 //请求校企合作发出的申请
-                var postdata = {
-                    userId: parObj.userId,
-                    applyStatus: 1,
-                    index: 1,
-                    count: 3
-                }
-                EventUtils.ajaxReq("/demand/getDemandApply", "get", postdata, function(resp, status) {
-                    console.log(resp);
-                    if (resp && resp.data) {
-                        appCont.message.combi.totalitems = resp.data.totalRow;
-                        appCont.message.combi.totalpages = resp.data.totalPage;
-                        appCont.message.combi.results = resp.data.list;
-                    } else {
-                        appCont.message.combi.results = [];
-                        appCont.message.combi.totalitems = 0;
-                    }
-                    appCont.message.combi.msgsrc = 0;
-                });
-
+                combiMsgRequest(1, 1);
             } else if (curval == "收到的邀请") {
                 //请求校企合作收到的申请
-                var postdata = {
-                    userId: parObj.userId,
-                    applyStatus: 2,
-                    index: 1,
-                    count: 3
-                }
-                EventUtils.ajaxReq("/demand/getDemandApply", "get", postdata, function(resp, status) {
-                    console.log(resp);
-                    if (resp && resp.data) {
-                        appCont.message.combi.totalitems = resp.data.totalRow;
-                        appCont.message.combi.totalpages = resp.data.totalPage;
-                        appCont.message.combi.results = resp.data.list;
-                    } else {
-                        appCont.message.combi.results = [];
-                        appCont.message.combi.totalitems = 0;
-                    }
-                    appCont.message.combi.msgsrc = 1;
-                });
-
+                combiMsgRequest(2, 1);
             };
             this.message.combi.curpage = 1;
         },
@@ -493,6 +445,18 @@ var appCont = new Vue({
             }
             if (item.jobFairId) {
                 return "detail-unirecruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
+            }
+        },
+        messageLink: function(type, id) {
+            if (type == "combi") {
+                if (appCont.message.combi.msgsrc == 1) {
+                    return "detail-company.html?demandId=" + id + "&userId=" + parObj.userId;
+                } else {
+                    return "detail-uni.html?demandId=" + id + "&userId=" + parObj.userId;
+                }
+            }
+            if (type == "jobfair") {
+                return "detail-unirecruit.html?userId=" + parObj.userId + "&jobfairId=" + id;
             }
         },
         submajors: function(major) {
@@ -812,28 +776,10 @@ var appCont = new Vue({
                 })
                 this.collect.curpage = page;
             } else if (type == "msg-combi") {
-                if (this.message.combi.msgsrc == 0) {
-                    var postdata = {
-                        userId: parObj.userId,
-                        applyStatus: 1,
-                        index: page,
-                        count: 3
-                    }
-                    EventUtils.ajaxReq("/demand/getDemandApply", "get", postdata, function(resp, status) {
-                        console.log(resp);
-                        if (resp && resp.data) {
-                            appCont.message.combi.totalitems = resp.data.totalRow;
-                            appCont.message.combi.totalpages = resp.data.totalPage;
-                            appCont.message.combi.results = resp.data.list;
-                        } else {
-                            appCont.message.combi.results = [];
-                            appCont.message.combi.totalitems = 0;
-                        }
-                    });
-                }
+                combiMsgRequest(appCont.message.combi.msgsrc, page);
                 this.message.combi.curpage = page;
             } else if (type == "msg-recruit") {
-                this.message.recruit.curpage = page;
+                recruitMsgRequest(page);
             } else if (type == "coop") {
                 this.coop.curpage = page;
             }
@@ -939,14 +885,27 @@ var appModal = new Vue({
             mobile: false,
             email: false,
             wechat: false,
-            preImg: false
+            preImg: false,
+            minicard: true,
         },
         preImgUrl: "",
-        showModal: false,
+        showModal: true,
         showTrade: false,
         showPreview: false,
         showUpload: false,
         showComment: false,
+        infosets: {
+            userName: "百度",
+            imgsrc: "",
+            userProperty: "国企",
+            userScale: "99人",
+            tel: "15265458785",
+            email: "pheonixqin@gmail.com",
+            address: "杭州市-滨江区-六和桥",
+            userType: "综合类",
+            profession: "电子信息技术",
+            description: "百度（Nasdaq：BIDU）是全球最大的中文搜索引擎，2000年1月由李彦宏、徐勇两人创立于北京中关村，百度致力于向人们提供“简单，可依赖”的信息 获取方式。“百度”二字源于中国宋朝词人辛弃疾的《青玉案》诗句：“众里寻他千百度”，象征着百度对中文信息检索技术的执著追求。于2005年8月5日在 纳斯达克上市。2016年4月13日下午，百度董事长兼CEO李彦宏通过内部邮件宣布百度业务架构重组",
+        },
         trades: [
             { title: "互联网", items: ["互联网/移动互联网/电子商务", "互联网/移动互联网/电子商务", "互联网/移动互联网/电子商务", "互联网/移动互联网/电子商务"] },
             { title: "互联网", items: ["互联网/移动互联网/电子商务", "互联网/移动互联网/电子商务", "互联网/移动互联网/电子商务", "互联网/移动互联网/电子商务"] },
@@ -1238,7 +1197,6 @@ function init_center() {
     selectInitInput();
     selectInitPos();
     navEventBind();
-    showContact();
     vipEventBind();
     modalEventBind();
     uploadEventBind();
@@ -1301,23 +1259,16 @@ function navEventBind() {
         $(".content").children().hide();
         $(".content").children("." + $(this).attr("paneid")).show();
         if ($(this).attr("paneid") == "combi-msg") {
-            //请求校企合作发出的申请
-            var postdata = {
-                userId: parObj.userId,
-                applyStatus: 1,
-                index: 1,
-                count: 3
+            //请求校企合作消息
+            if (appCont.message.combi.state == "发出的邀请") {
+                combiMsgRequest(1, 1)
+            } else {
+                combiMsgRequest(2, 1)
             }
-            EventUtils.ajaxReq("/demand/getDemandApply", "get", postdata, function(resp, status) {
-                if (resp && resp.data) {
-                    appCont.message.combi.totalitems = resp.data.totalRow;
-                    appCont.message.combi.totalpages = resp.data.totalPage;
-                    appCont.message.combi.results = resp.data.list;
-                } else {
-                    appCont.message.combi.results = [];
-                    appCont.message.combi.totalitems = 0;
-                }
-            });
+        }
+        if ($(this).attr("paneid") == "recruit-msg") {
+            //请求招聘会消息
+            recruitMsgRequest(1)
         }
         selectInitPos();
         return false;
@@ -1381,24 +1332,12 @@ function navEventBind() {
         }
         //消息中心
         if ($(this).attr("paneid") == "combi-msg") {
-            //请求校企合作发出的申请
-            var postdata = {
-                userId: parObj.userId,
-                applyStatus: 1,
-                index: 1,
-                count: 3
+            //请求校企合作消息
+            if (appCont.message.combi.state == "发出的邀请") {
+                combiMsgRequest(1, 1)
+            } else {
+                combiMsgRequest(2, 1)
             }
-            EventUtils.ajaxReq("/demand/getDemandApply", "get", postdata, function(resp, status) {
-                console.log(resp);
-                if (resp && resp.data) {
-                    appCont.message.combi.totalitems = resp.data.totalRow;
-                    appCont.message.combi.totalpages = resp.data.totalPage;
-                    appCont.message.combi.results = resp.data.list;
-                } else {
-                    appCont.message.combi.results = [];
-                    appCont.message.combi.totalitems = 0;
-                }
-            });
         }
 
         if ($(this).attr("paneid")) {
@@ -1465,29 +1404,6 @@ function modalEventBind() {
     })
 }
 
-function showContact() {
-    $(".message-btn .to-contact").bind({
-        "mouseover": function() {
-            $(this).siblings(".contact-box").show();
-        },
-        "mouseout": function() {
-            $(this).siblings(".contact-box").hide();
-        }
-    });
-    $(".state-line .to-contact").bind({
-        "mouseover": function() {
-            if ($(this).hasClass("on")) {
-                $(this).parent().siblings(".contact-box").show();
-            }
-        },
-        "mouseout": function() {
-            if ($(this).hasClass("on")) {
-                $(this).parent().siblings(".contact-box").hide();
-            }
-
-        }
-    })
-}
 
 function refreshEventBind() {
     $(".plan-sticky-table td").click(function() {
@@ -1561,4 +1477,46 @@ function autoStickSum() {
         }
     };
     return summe;
+}
+
+// 请求数据函数列表
+// 校企合作消息数据请求
+function combiMsgRequest(applystatus, page) {
+    var postdata = {
+        userId: parObj.userId,
+        applyStatus: applystatus,
+        index: page,
+        count: 3
+    }
+    EventUtils.ajaxReq("/demand/getDemandApply", "get", postdata, function(resp, status) {
+        console.log(resp);
+        if (resp && resp.data) {
+            appCont.message.combi.totalitems = resp.data.totalRow;
+            appCont.message.combi.totalpages = resp.data.totalPage;
+            appCont.message.combi.results = resp.data.list;
+        } else {
+            appCont.message.combi.results = [];
+            appCont.message.combi.totalitems = 0;
+        }
+        appCont.message.combi.msgsrc = applystatus;
+    });
+}
+
+function recruitMsgRequest(page) {
+    var postdata = {
+        userId: parObj.userId,
+        index: page,
+        count: 3
+    }
+    EventUtils.ajaxReq("/jobfair/getApplySchool", "get", postdata, function(resp, status) {
+        console.log(resp);
+        if (resp && resp.data) {
+            appCont.message.recruit.totalitems = resp.data.totalRow;
+            appCont.message.recruit.totalpages = resp.data.totalPage;
+            appCont.message.recruit.results = resp.data.list;
+        } else {
+            appCont.message.recruit.results = [];
+            appCont.message.recruit.totalitems = 0;
+        }
+    });
 }

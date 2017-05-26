@@ -190,21 +190,29 @@ var appCont = new Vue({
         },
         message: {
             combi: {
+                state: "发出的邀请",
+                curpage: 1,
+                totalpages: 1,
+                totalitems: 0,
+                msgsrc: 1,
+                results: [],
+            },
+            jobfair: {
                 state: "全部状态",
                 curpage: 1,
                 items: [
-                    { code: "01", pos: "岗位名称", major: "专业", stuScale: "人数", uniLevel: "高校性质", uniApply: "高校需要提供的", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { code: "01", pos: "岗位名称", major: "专业", stuScale: "人数", uniLevel: "高校性质", uniApply: "高校需要提供的", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { code: "01", pos: "岗位名称", major: "专业", stuScale: "人数", uniLevel: "高校性质", uniApply: "高校需要提供的", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { code: "02", major: "专业名称", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00", applystate: "01" },
-                    { code: "02", major: "专业名称", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00", applystate: "03" },
+                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
+                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
+                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
+                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
+                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" }
                 ],
                 results: [
-                    { code: "01", pos: "岗位名称", major: "专业", stuScale: "人数", uniLevel: "高校性质", uniApply: "高校需要提供的", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { code: "01", pos: "岗位名称", major: "专业", stuScale: "人数", uniLevel: "高校性质", uniApply: "高校需要提供的", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { code: "01", pos: "岗位名称", major: "专业", stuScale: "人数", uniLevel: "高校性质", uniApply: "高校需要提供的", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { code: "02", major: "专业名称", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00", applystate: "01" },
-                    { code: "02", major: "专业名称", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00", applystate: "03" },
+                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
+                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
+                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
+                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
+                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" }
                 ]
             },
             recruit: {
@@ -395,22 +403,10 @@ var appCont = new Vue({
             this.collect.curpage = 1;
         },
         "message.combi.state": function(curval) {
-            if (curval == "全部状态") {
-                this.message.combi.results = cloneObj(this.message.combi.items);
-            } else if (curval == "发出的邀请") {
-                this.message.combi.results = [];
-                for (var i = 0; i < this.message.combi.items.length; i++) {
-                    if (this.message.combi.items[i].code == "02") {
-                        this.message.combi.results.push(this.message.combi.items[i]);
-                    }
-                }
+            if (curval == "发出的邀请") {
+                combiMsgRequest(1, 1);
             } else if (curval == "收到的邀请") {
-                this.message.combi.results = [];
-                for (var i = 0; i < this.message.combi.items.length; i++) {
-                    if (this.message.combi.items[i].code == "01") {
-                        this.message.combi.results.push(this.message.combi.items[i]);
-                    }
-                }
+                combiMsgRequest(2, 1);
             };
             this.message.combi.curpage = 1;
         },
@@ -478,6 +474,15 @@ var appCont = new Vue({
                 return "detail-unirecruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
             }
 
+        },
+        messageLink: function(type, id) {
+            if (type == "combi") {
+                if (appCont.message.combi.msgsrc == 1) {
+                    return "detail-uni.html?demandId=" + id + "&userId=" + parObj.userId;
+                } else {
+                    return "detail-company.html?demandId=" + id + "&userId=" + parObj.userId;
+                }
+            }
         },
         popTrade: function() {
             appModal.showModal = true;
@@ -807,6 +812,7 @@ var appCont = new Vue({
                 this.collect.curpage = page;
                 // console.log($(".collectBox .pagination a.page").eq(appCont.collect.curpage - 1).parent()[0]);
             } else if (type == "msg-combi") {
+                combiMsgRequest(appCont.message.combi.msgsrc, page);
                 this.message.combi.curpage = page;
             } else if (type == "msg-recruit") {
                 this.message.recruit.curpage = page;
@@ -1285,6 +1291,14 @@ function navEventBind() {
         $(this).addClass("on");
         $(".content").children().hide();
         $(".content").children("." + $(this).attr("paneid")).show();
+        if ($(this).attr("paneid") == "combi-msg") {
+            //请求校企合作消息
+            if (appCont.message.combi.state == "发出的邀请") {
+                combiMsgRequest(1, 1)
+            } else {
+                combiMsgRequest(2, 1)
+            }
+        }
         selectInitPos();
         return false;
     });
@@ -1343,6 +1357,15 @@ function navEventBind() {
                     appCont.collect.totalitems = 0;
                 }
             })
+        }
+        //消息中心
+        if ($(this).attr("paneid") == "combi-msg") {
+            //请求校企合作消息
+            if (appCont.message.combi.state == "发出的邀请") {
+                combiMsgRequest(1, 1)
+            } else {
+                combiMsgRequest(2, 1)
+            }
         }
         if ($(this).attr("paneid")) {
             $(".content").children().hide();
@@ -1451,4 +1474,26 @@ function refreshEventBind() {
             appModal.sticky.sum = summe;
         }
     })
+}
+
+// 校企合作消息数据请求
+function combiMsgRequest(applystatus, page) {
+    var postdata = {
+        userId: parObj.userId,
+        applyStatus: applystatus,
+        index: page,
+        count: 3
+    }
+    EventUtils.ajaxReq("/demand/getDemandApply", "get", postdata, function(resp, status) {
+        console.log(resp);
+        if (resp && resp.data) {
+            appCont.message.combi.totalitems = resp.data.totalRow;
+            appCont.message.combi.totalpages = resp.data.totalPage;
+            appCont.message.combi.results = resp.data.list;
+        } else {
+            appCont.message.combi.results = [];
+            appCont.message.combi.totalitems = 0;
+        }
+        appCont.message.combi.msgsrc = applystatus;
+    });
 }

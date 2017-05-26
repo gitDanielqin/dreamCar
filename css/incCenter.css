@@ -647,6 +647,10 @@
     background: url("../images/dashline.png") no-repeat left 20px;
 }
 
+.combi-msg .item-block-right {
+    width: 250px;
+}
+
 .uni-message .uni-apply-message {
     background: none
 }

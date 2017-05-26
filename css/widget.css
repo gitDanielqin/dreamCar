@@ -411,3 +411,94 @@
 .close {
     cursor: pointer;
 }
+
+
+/*高校企业名片样式*/
+
+.miniCard {
+    width: 925px;
+    height: 490px;
+    margin: 100px auto;
+    font-size: 14px;
+    background: white;
+}
+
+.miniCard .card-header {
+    background: #d6d5d5;
+    height: 40px;
+    line-height: 40px;
+}
+
+.miniCard .card-header-title {
+    display: block;
+    background: #f7b632;
+    color: white;
+    font-size: 14px;
+    width: 114px;
+    text-align: center;
+}
+
+.miniCard .card-body {
+    padding: 0 30px;
+    height: 370px;
+    overflow: auto;
+}
+
+.miniCard .card-avatar {
+    background: green;
+    width: 126px;
+    height: 104px;
+    margin-top: 40px;
+    margin-right: 30px;
+}
+
+.miniCard .body-top {
+    padding-bottom: 38px;
+    line-height: 30px;
+}
+
+.miniCard .body-title {
+    height: 38px;
+    line-height: 38px;
+    font-size: 18px;
+    margin-top: 26px;
+}
+
+.miniCard .body-bot {
+    border-top: 1px solid #d3d3d3;
+    font-size: 12px;
+}
+
+.miniCard .body-bot p {
+    text-indent: 2em;
+}
+
+.miniCard .body-bot h3 {
+    line-height: 40px;
+    text-align: center;
+    margin-top: 4px;
+}
+
+.miniCard .card-operations {
+    height: 78px;
+    line-height: 78px;
+    padding: 0 30px;
+    text-align: right;
+    border-top: 1px solid #d3d3d3;
+}
+
+.miniCard .card-operations button {
+    width: 80px;
+    height: 30px;
+    margin-right: 14px;
+    color: white;
+    border-radius: 10px;
+}
+
+.miniCard .button-agree {
+    background: #2bb20b;
+}
+
+.miniCard .button-deny {
+    background: #de0b0b;
+}
