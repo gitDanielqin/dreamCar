@@ -1,9 +1,9 @@
 (function() {
-    var templCard = '<div class="miniCard" v-cloak>\
+    var templCard = '<div class="minicard" v-cloak>\
         <h2 class="card-header"><span class="card-header-title" v-show="cardtype==\'inc\'">企业名片</span><span class="card-header-title" v-show="cardtype==\'uni\'">高校名片</span></h2>\
         <div class="card-body" v-show="cardtype==\'inc\'">\
             <div class="clearfix body-top">\
-                <i class="pic-wrapper fl card-avatar"><img :src="infosets.imgsrc"></i>\
+                <i class="pic-wrapper fl card-avatar"><img :src="infosets.userIcon"></i>\
                 <div class="fl">\
                     <h3 class="body-title">{{infosets.userName}}</h3>\
                     <table class="basic-info">\
@@ -15,22 +15,22 @@
                         </tr>\
                         <tr>\
                             <td>联系方式：</td>\
-                            <td style="padding-right: 15px;">{{infosets.tel}}</td>\
+                            <td style="padding-right: 15px;">{{infosets.mobile}}</td>\
                             <td>企业邮箱：</td>\
                             <td>{{infosets.email}}</td>\
                         </tr>\
                     </table>\
-                    <p><label>公司地址：</label>{{infosets.address}}</p>\
+                    <p><label>公司地址：</label>{{infosets.userAddress}}</p>\
                 </div>\
             </div>\
             <div class="body-bot">\
                 <h3>公司简介</h3>\
-                <p>{{infosets.description}}</p>\
+                <p>{{infosets.userDiscription}}</p>\
             </div>\
         </div>\
         <div class="card-body" v-show="cardtype==\'uni\'">\
             <div class="clearfix body-top">\
-                <i class="pic-wrapper fl card-avatar"><img :src="infosets.imgsrc"></i>\
+                <i class="pic-wrapper fl card-avatar"><img :src="infosets.userIcon"></i>\
                 <div class="fl">\
                     <h3 class="body-title">{{infosets.userName}}</h3>\
                     <table class="basic-info">\
@@ -42,7 +42,7 @@
                         </tr>\
                         <tr>\
                             <td>联系电话：</td>\
-                            <td style="padding-right: 15px;">{{infosets.tel}}</td>\
+                            <td style="padding-right: 15px;">{{infosets.mobile}}</td>\
                             <td>高校邮箱：</td>\
                             <td>{{infosets.email}}</td>\
                         </tr>\
@@ -50,15 +50,15 @@
                             <td>在校人数：</td>\
                             <td style="padding-right: 15px;">{{infosets.userScale}}</td>\
                             <td>重点专业：</td>\
-                            <td>{{infosets.profession}}</td>\
+                            <td>{{infosets.userProfession}}</td>\
                         </tr>\
                     </table>\
-                    <p><label>学校地址：</label>{{infosets.address}}</p>\
+                    <p><label>学校地址：</label>{{infosets.userAddress}}</p>\
                 </div>\
             </div>\
             <div class="body-bot">\
                 <h3>高校简介</h3>\
-                <p>{{infosets.description}}</p>\
+                <p>{{infosets.userDiscription}}</p>\
             </div>\
         </div>\
         <div class="card-operations">\

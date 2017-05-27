@@ -273,7 +273,7 @@
                                        <p>{{item.userName}}</p>
                                        <p>{{item.userProperty}}</p>
                                        <div class="message-btn LH-H35 pRel">
-                                             <button class="color-orange-f7 to-contact">查看对方名片</button>
+                                             <button class="color-orange-f7 to-contact" type="button" @click="popCard(item.applyId,item.applyUserId)">查看对方名片</button>
                                        </div>
                                    </div>
                               </div>
@@ -287,7 +287,7 @@
                                        <p>培养方式：{{item.trainType}}</p>
                                        <p class="item-date">申请日期：{{item.createTime.split(" ")[0]}}</p>
                                    </div>
-                                   <div class="item-block-right fl fSize14 LH30 pRel maT10 uni-apply-message">
+                                   <div class="item-block-right fl fSize14 LH30 pRel uni-apply-message">
                                        <p class="t-right">公司名称：{{item.userName}}</p>
                                        <ul class="state-line lis-inline maT3">
                                              <li class="on"><i class="state-icon"></i>已发出</li>
@@ -327,7 +327,7 @@
                                     <p>申请企业名称：{{item.applyUserName}}</p>
                                     <p>{{item.applyUserProperty}}<i class="depart">|</i>{{item.applyUserScale}}<i class="depart">|</i>{{item.applyUserType}}</p>
                                     <div class="message-btn LH-H35 pRel">
-                                        <button class="color-orange-f7 to-contact">查看对方名片</button>
+                                        <button class="color-orange-f7 to-contact" type="button" @click="popCard(item.applyId,item.applyUserId)">查看对方名片</button>
                                     </div>
                                 </div>
                             </div>
@@ -426,7 +426,7 @@
             <div class="uni-coop">
                 <div class="ListBox">
                     <div class="hd LH-H58 bg-white">
-                        <dropdown classes="state" :options="['全部状态','合作进行中','合作已完成','合作待开始']" v-model="coop.state"></dropdown>
+                        <dropdown classes="state" :options="['校企合作','招聘会']" v-model="coop.state"></dropdown>
                         <p class="fr fSize14 maR30">我合作的企业<span class="color-orange2 maL10 maR10">{{coop.items.length}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
@@ -436,12 +436,11 @@
                                 <div class="item-block-left fl paTop22 W390 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-company.html">{{item.IncName}}</a></h2>
                                     <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
-                                    <p>{{item.trainWay}}</p>
-                                    <p class="item-date">{{item.date}}</span> {{item.time}}</p>
+                                    <p>校企培训方式：{{item.trainWay}}</p>
+                                    <p class="item-date">合作开始日期：{{item.date}}</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH28 maT10">
-                                    <p :style="coopStyle(item.coopState)">{{coopSt(item.coopState)}}</p>
-                                    <p>{{item.major}}</p>
+                                    <p>合作专业：{{item.major}}</p>
                                     <button class="more-info">了解更多<i>>></i></button>
                                 </div>
                                 <button class="btn-comment" @click="popComment(item.userId)">评价</button>
@@ -489,7 +488,7 @@
         </div>
     </div>
     <div class="modal" id="app-modal" v-show="showModal" @click="hidemodal" v-cloak>
-        <minicard class="pop-box-shadow" v-show="show.minicard" cardtype="inc" :infosets="infosets"></minicard>
+        <minicard class="pop-box-shadow" v-show="show.minicard" :cardtype="cardInfo.cardtype" :infosets="cardInfo.infosets" @agree="agreeApply(cardInfo.applyId)" @deny="denyApply(cardInfo.applyId)"></minicard>
         <div class="preview-file" v-show="show.preImg">
             <img :src="preImgUrl" />
         </div>

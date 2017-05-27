@@ -172,7 +172,6 @@ var appCont = new Vue({
             demandSrc: 0,
             curpage: 1,
             totalpages: 1,
-            pagesize: 3,
             totalitems: 0,
             newLink: "incRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId,
             results: [],
@@ -184,7 +183,6 @@ var appCont = new Vue({
             curpage: 1,
             collectSrc: 0,
             totalpages: 1,
-            pagesize: 3,
             totalitems: 0,
             results: []
         },
@@ -198,40 +196,19 @@ var appCont = new Vue({
                 results: [],
             },
             jobfair: {
-                state: "全部状态",
+                state: "发出的邀请",
                 curpage: 1,
-                items: [
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" }
-                ],
-                results: [
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" }
-                ]
+                totalpages: 1,
+                totalitems: 0,
+                msgsrc: 2,
+                results: []
             },
             recruit: {
                 state: "全部状态",
                 curpage: 1,
-                items: [
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" }
-                ],
-                results: [
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" },
-                    { major: "工业设计", salary: "7K-9K", posAmount: "20人", qualific: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", contactpep: "郑先生", contactway: "18984565569", date: "2017.11.11", time: "24:00" }
-                ]
+                totalpages: 1,
+                totalitems: 0,
+                results: []
             }
         },
         vip: {
@@ -309,7 +286,6 @@ var appCont = new Vue({
                 }
                 EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
                     appCont.require.totalpages = resp.data.totalPage;
-                    appCont.require.pagesize = resp.data.pageSize;
                     appCont.require.results = resp.data.list;
                     appCont.require.totalitems = resp.data.totalRow;
                 })
@@ -325,7 +301,6 @@ var appCont = new Vue({
                 }
                 EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
                     appCont.require.totalpages = resp.data.totalPage;
-                    appCont.require.pagesize = resp.data.pageSize;
                     appCont.require.results = resp.data.list;
                     appCont.require.totalitems = resp.data.totalRow;
                 })
@@ -342,7 +317,6 @@ var appCont = new Vue({
                     console.log(resp);
                     if (resp.data) {
                         appCont.require.totalpages = resp.data.totalPage;
-                        appCont.require.pagesize = resp.data.pageSize;
                         appCont.require.results = resp.data.list;
                         appCont.require.totalitems = resp.data.totalRow;
                     } else {
@@ -410,6 +384,13 @@ var appCont = new Vue({
             };
             this.message.combi.curpage = 1;
         },
+        "message.jobfair.state": function(curval) {
+            if (curval == "发出的邀请") {
+                jobfairMsgRequest(1, 1);
+            } else {
+                jobfairMsgRequest(2, 1);
+            }
+        },
         "coop.state": function(curval) {
             if (curval == "全部状态") {
                 this.coop.results = cloneObj(this.coop.items);
@@ -439,6 +420,13 @@ var appCont = new Vue({
         }
     },
     methods: {
+        regAddress: function(address) {
+            if (address) {
+                return address.split(";").join("-");
+            } else {
+                return ""
+            }
+        },
         infoExtrac: function(text) {
             if (text) {
                 text = EventUtils.infoExtrac(text);
@@ -481,6 +469,13 @@ var appCont = new Vue({
                     return "detail-uni.html?demandId=" + id + "&userId=" + parObj.userId;
                 } else {
                     return "detail-company.html?demandId=" + id + "&userId=" + parObj.userId;
+                }
+            }
+            if (type == "jobfair") {
+                if (appCont.message.jobfair.msgsrc == 1) {
+                    return "detail-unirecruit.html?jobfairId=" + id + "&userId=" + parObj.userId;
+                } else {
+                    return "detail-increcruit.html?jobfairId=" + id + "&userId=" + parObj.userId;
                 }
             }
         },
@@ -814,8 +809,11 @@ var appCont = new Vue({
             } else if (type == "msg-combi") {
                 combiMsgRequest(appCont.message.combi.msgsrc, page);
                 this.message.combi.curpage = page;
+            } else if (type == "msg-jobfair") {
+                jobfairMsgRequest(appCont.message.jobfair.msgsrc, page);
+                this.message.jobfair.curpage = page;
             } else if (type == "msg-recruit") {
-                this.message.recruit.curpage = page;
+                recruitMsgRequest(page);
             } else if (type == "coop") {
                 this.coop.curpage = page;
             }
@@ -917,6 +915,21 @@ var appCont = new Vue({
             appModal.show.wechat = true;
             appModal.showModal = true;
         },
+        showCard: function(applyId, userId) {
+            var postdata = {
+                userId: userId,
+                applyId: applyId,
+            }
+            EventUtils.ajaxReq("/readcard/getCardInfo", "get", postdata, function(resp, status) {
+                appModal.cardInfo.cardtype = "uni";
+                appModal.cardInfo.applyId = resp.data.applyId;
+                var infosets = resp.data.viewReadCard;
+                infosets.userAddress = infosets.userAddress ? infosets.userAddress.split(";").join("") : "不详";
+                appModal.cardInfo.infosets = infosets;
+                appModal.showModal = true;
+                appModal.show.minicard = true;
+            })
+        }
     },
     computed: {
         majorArr: function() {
@@ -958,6 +971,7 @@ var appModal = new Vue({
             stickyhintbox: false,
             freshbox: false,
             freshhintbox: false,
+            minicard: false,
             mobile: false,
             email: false,
             wechat: false,
@@ -968,6 +982,22 @@ var appModal = new Vue({
         showPreview: false,
         showUpload: false,
         preImgUrl: "",
+        cardInfo: {
+            cardtype: "inc",
+            applyId: "",
+            infosets: {
+                userName: "",
+                imgsrc: "",
+                userProperty: "",
+                userScale: "",
+                tel: "",
+                email: "",
+                address: "",
+                userType: "",
+                profession: "",
+                description: "",
+            }
+        },
         sticky: {
             content: [
                 { duration: "置顶1天", price: 10, hint: "(无折扣仅10元/天)" },
@@ -1143,7 +1173,9 @@ var appModal = new Vue({
             this.showModal = false;
             this.showTrade = false;
             this.showPreview = false;
-            this.show.preImg = false;
+            for (var key in appModal.show) {
+                appModal.show[key] = false;
+            }
         },
         stayshow: function(ev) {
             ev.stopPropagation();
@@ -1164,9 +1196,56 @@ var appModal = new Vue({
         closeEmail: function() {
             this.show.email = false;
             this.showModal = false;
+        },
+        agreeApply: function(applyId) {
+            var postdata = {
+                applyId: applyId,
+                result: 1
+            }
+            EventUtils.ajaxReq("/readcard/operationApply", "get", postdata, function(resp, status) {
+                appModal.show.minicard = false;
+                appModal.showModal = false;
+            })
+        },
+        denyApply: function(applyId) {
+            var postdata = {
+                applyId: applyId,
+                result: 2
+            }
+            EventUtils.ajaxReq("/readcard/operationApply", "get", postdata, function(resp, status) {
+                appModal.show.minicard = false;
+                appModal.showModal = false;
+            })
+        },
+        checkCvs: function(item) {
+            if (item.jobFairId) {
+                var postdata = {
+                    infoStatus: 1,
+                    jobFairId: item.jobFairId,
+                    userId: parObj.userId,
+                }
+            }
+            if (item.recruitId) {
+                var postdata = {
+                    infoStatus: 2,
+                    recruitId: item.recruitId,
+                    userId: parObj.userId,
+                    job: EventUtils.infoExtrac(item.job),
+                    index: 1,
+                    count: 3
+                }
+            }
+
         }
     },
     watch: {
+        "show.minicard": function(curval) {
+            if (curval) {
+                $(".minicard").css({
+                    "margin-top": Math.floor(($(window).height() - $(".minicard").height()) / 2 + document.body.scrollTop)
+                })
+            }
+        },
         "show.preImg": function(curval) {
             if (curval) {
                 var top = Math.floor($(window).height() * 0.5 + $("body").scrollTop()) + "px";
@@ -1299,6 +1378,17 @@ function navEventBind() {
                 combiMsgRequest(2, 1)
             }
         }
+        if ($(this).attr("paneid") == "jobfair-msg") {
+            //请求校企合作消息
+            if (appCont.message.combi.state == "发出的邀请") {
+                jobfairMsgRequest(1, 1)
+            } else {
+                jobfairMsgRequest(2, 1)
+            }
+        }
+        if ($(this).attr("paneid") == "recruit-msg") {
+            recruitMsgRequest(1)
+        }
         selectInitPos();
         return false;
     });
@@ -1326,7 +1416,6 @@ function navEventBind() {
                 console.log(resp);
                 if (resp.data) {
                     appCont.require.totalpages = resp.data.totalPage;
-                    appCont.require.pagesize = resp.data.pageSize;
                     appCont.require.demandSrc = 0;
                     appCont.require.results = resp.data.list;
                     appCont.require.totalitems = resp.data.totalRow;
@@ -1496,4 +1585,46 @@ function combiMsgRequest(applystatus, page) {
         }
         appCont.message.combi.msgsrc = applystatus;
     });
+}
+//招聘会消息数据请求
+function jobfairMsgRequest(applystatus, page) {
+    var postdata = {
+        userId: parObj.userId,
+        applyStatus: applystatus,
+        index: page,
+        count: 3
+    }
+    EventUtils.ajaxReq("/jobfair/getJobFair", "get", postdata, function(resp, status) {
+        console.log(resp);
+        if (resp && resp.data) {
+            appCont.message.jobfair.totalitems = resp.data.totalRow;
+            appCont.message.jobfair.totalpages = resp.data.totalPage;
+            appCont.message.jobfair.results = resp.data.list;
+        } else {
+            appCont.message.jobfair.results = [];
+            appCont.message.jobfair.totalitems = 0;
+        }
+        appCont.message.jobfair.msgsrc = applystatus;
+    });
+}
+
+//直聘消息数据请求
+function recruitMsgRequest(page) {
+    var postdata = {
+        userId: parObj.userId,
+        index: page,
+        count: 3
+    }
+    EventUtils.ajaxReq("/recruit/getReceiveList", "get", postdata, function(resp, status) {
+        console.log(resp);
+        if (resp && resp.data) {
+            appCont.message.recruit.totalitems = resp.data.totalRow;
+            appCont.message.recruit.totalpages = resp.data.totalPage;
+            appCont.message.recruit.results = resp.data.list;
+        } else {
+            appCont.message.recruit.results = [];
+            appCont.message.recruit.totalitems = 0;
+        }
+    });
+
 }

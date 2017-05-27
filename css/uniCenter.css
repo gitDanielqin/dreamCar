@@ -502,6 +502,11 @@
     margin-top: 34px;
 }
 
+.apply-feedback {
+    padding-right: 15px;
+    line-height: 20px;
+}
+
 .depart {
     margin: 0 12px;
 }

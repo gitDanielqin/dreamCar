@@ -289,7 +289,7 @@
                                        <p>{{item.userName}}</p>
                                        <p>{{item.userProperty}}<i class="depart">|</i>{{item.userScale}}<i class="depart">|</i>{{infoExtrac(item.userType)}}</p>
                                        <div class="message-btn LH-H35 pRel">
-                                             <button class="color-orange-f7 to-contact">查看对方名片</button>
+                                             <button class="color-orange-f7 to-contact" type="button" @click.stop="showCard(item.applyId,item.applyUserId)">查看对方名片</button>
                                        </div>
                                    </div>
                               </div>
@@ -303,7 +303,7 @@
                                        <p>{{item.trainType}}</p>
                                        <p class="item-date">申请日期：{{item.createTime.split(" ")[0]}}</p>
                                    </div>
-                                   <div class="item-block-right fl fSize14 LH30 pRel maT10 uni-apply-message">
+                                   <div class="item-block-right fl fSize14 LH30 pRel uni-apply-message">
                                        <p class="t-right">高校名称：{{item.userName}}</p>
                                        <ul class="state-line lis-inline maT15">
                                              <li class="on"><i class="state-icon"></i>已发出</li>
@@ -322,48 +322,64 @@
             <div class="uni-message jobfair-msg">
                 <div class="ListBox">
                     <div class="hd LH-H58 bg-white">
-                        <dropdown classes="state" :options="['全部状态','发出的邀请','收到的邀请']" v-model="message.combi.state"></dropdown>
-                        <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{message.recruit.items.length}}</span>个</p>
+                        <dropdown classes="state" :options="['发出的邀请','收到的简历']" v-model="message.jobfair.state"></dropdown>
+                        <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{message.jobfair.totalitems}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
-                        <li v-show="message.recruit.results.length==0">
+                        <li v-show="message.jobfair.results.length==0">
                             <div class="paLeft29 clearfix H128 pRel">
                                 <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
                             </div>
                         </li>
-                        <li v-for="(item,index) in message.recruit.results" v-show="showResult(index,message.recruit.curpage,3)">
-                            <div class="paLeft29 clearfix H128 pRel">
-                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                <div class="item-block-left fl paTop22 W328 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-position.html">{{item.major}}</a></h2>
-                                    <p>{{item.salary}}<i class="depart">|</i>{{item.posAmount}}<i class="depart">|</i>{{item.qualific}}</p>
-                                    <p>公司地址：{{item.IncAddress.city}}{{item.IncAddress.district}}</p>
-                                    <p class="item-date">{{item.date}} {{item.time}}</p>
-                                </div>
-                                <div class="item-block-right fl fSize14 LH25 maT10">
-                                    <p>{{item.IncName}}</p>
-                                    <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
-                                    <div class="message-btn LH-H35 pRel">
-                                        <button class="color-orange-f7 to-contact">待沟通</button>
-                                        <button class="color-blueL">同意</button>
-                                        <button class="color-red">不同意</button>
-                                        <div class="contact-box">
-                                            <p>企业联系人：<span>{{item.contactpep}}</span></p>
-                                            <p>联系方式：<span>{{item.contactway}}</span></p>
+                        <li v-for="(item,index) in message.jobfair.results">
+                            <template v-if="message.jobfair.msgsrc==1">
+                                <div class="paLeft29 clearfix H128 pRel msg-apply">
+                                   <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                   <div class="item-block-left fl paTop22 maL20 W312">
+                                       <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="messageLink('jobfair',item.jobFairId)">{{item.title}}</a></h2>
+                                       <p>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.professionCount}}<i class="depart">|</i>{{cityExtrac(item.jobFairAddress)}}</p>
+                                       <p class="item-date">申请日期：{{item.createTime.split(" ")[0]}}</p>
+                                   </div>
+                                   <div class="item-block-right fl fSize14 LH30 pRel uni-apply-message">
+                                       <p class="t-right">高校名称：{{item.userName}}</p>
+                                       <ul class="state-line lis-inline maT15">
+                                             <li class="on"><i class="state-icon"></i>已发出</li>
+                                             <li :class="{on:item.readStatus=='1'}"><i class="state-icon"></i>已查看</li>
+                                             <li :class="{on:item.status=='1'||item.status=='2'}"><i class="state-icon"></i>反馈结果</li>
+                                       </ul>
+                                       <p class="apply-feedback fr"><span class="color-green" v-show="item.status=='1'">同意</span><span class="color-red" v-show="item.status=='2'">不同意</span></p>
+                                   </div>
+                              </div>
+                            </template>
+                            <template v-else>
+                                <div class="paLeft29 clearfix H128 pRel">
+                                    <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                    <div class="item-block-left fl paTop22 W328 maL20">
+                                        <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="messageLink('jobfair',item.jobFairId)">{{item.title}}</a></h2>
+                                        <p>{{item.cvSalary}}<i class="depart">|</i>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.cvProject}}</p>
+                                        <p>招聘会地址：{{regAddress(item.jobFairAddress)}}</p>
+                                        <p class="item-date">招聘会日期：{{item.startTime}}</p>
+                                    </div>
+                                    <div class="item-block-right fl fSize14 LH25 maT10">
+                                        <p>{{item.userName}}</p>
+                                        <p>{{item.userProperty}}<i class="depart">|</i>{{item.userScale}}<i class="depart">|</i>{{item.userType}}</p>
+                                        <div class="message-btn LH-H35 pRel">
+                                            <button class="color-orange-f7 to-contact" @click.stop="checkCvs(item)">收到的简历</button>
+                                            <span class="cv-total">{{item.count}}</span>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </template>
                         </li>
                     </ul>
-                    <pagination :showpages="showpage(message.recruit.results.length)" :totalpages="pagesum(message.recruit.results.length)" type="msg-recruit" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                    <pagination :showpages="showpage(message.jobfair.totalpages)" :totalpages="message.jobfair.totalpages" type="msg-jobfair" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
             </div>
             <div class="uni-message recruit-msg">
                 <div class="ListBox">
                     <div class="hd LH-H58 bg-white">
-                        <dropdown classes="state" :options="['全部状态','发出的邀请','收到的邀请']" v-model="message.combi.state"></dropdown>
-                        <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{message.recruit.items.length}}</span>个</p>
+                        <!--<dropdown classes="state" :options="['发出的邀请','收到的邀请']" v-model="message.combi.state"></dropdown>-->
+                        <p class="fr fSize14 maR30">我收到的简历<span class="color-orange2 maL10 maR10">{{message.recruit.totalitems}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
                         <li v-show="message.recruit.results.length==0">
@@ -371,32 +387,26 @@
                                 <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
                             </div>
                         </li>
-                        <li v-for="(item,index) in message.recruit.results" v-show="showResult(index,message.recruit.curpage,3)">
+                        <li v-for="(item,index) in message.recruit.results">
                             <div class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                <div class="item-block-left fl paTop22 W328 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-position.html">{{item.major}}</a></h2>
-                                    <p>{{item.salary}}<i class="depart">|</i>{{item.posAmount}}<i class="depart">|</i>{{item.qualific}}</p>
-                                    <p>公司地址：{{item.IncAddress.city}}{{item.IncAddress.district}}</p>
-                                    <p class="item-date">{{item.date}}</span> {{item.time}}</p>
+                                <div class="item-block-left fl paTop22 W300 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item)">{{infoExtrac(item.job)}}</a></h2>
+                                    <p><span class="maR17 color-orange-f7">{{item.salary}}</span>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.workTime}}<i class="depart">|</i>{{item.education}}</p>
+                                    <p><span class="maR17">【{{cityExtrac(item.companyAddress)}}】</span>岗位数：{{item.recruitCount}}人</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH25 maT10">
-                                    <p>{{item.IncName}}</p>
-                                    <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
+                                    <p>{{item.companyName}}</p>
+                                    <p>{{item.companyProperty}}</p>
                                     <div class="message-btn LH-H35 pRel">
-                                        <button class="color-orange-f7 to-contact">待沟通</button>
-                                        <button class="color-blueL">同意</button>
-                                        <button class="color-red">不同意</button>
-                                        <div class="contact-box">
-                                            <p>企业联系人：<span>{{item.contactpep}}</span></p>
-                                            <p>联系方式：<span>{{item.contactway}}</span></p>
-                                        </div>
+                                        <button class="color-orange-f7 to-contact" @click.stop="checkCvs(item)">收到的简历</button>
+                                        <span class="cv-total">{{item.count}}</span>
                                     </div>
                                 </div>
                             </div>
                         </li>
                     </ul>
-                    <pagination :showpages="showpage(message.recruit.results.length)" :totalpages="pagesum(message.recruit.results.length)" type="msg-recruit" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                    <pagination :showpages="showpage(message.recruit.totalpages)" :totalpages="message.recruit.totalpages" type="msg-recruit" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
             </div>
             <div class="vip-center">
@@ -548,6 +558,7 @@
 
     </div>
     <div class="modal" id="app-modal" v-show="showModal" @click="hidemodal" v-cloak>
+        <minicard class="pop-box-shadow" v-show="show.minicard" :cardtype="cardInfo.cardtype" :infosets="cardInfo.infosets" @agree="agreeApply(cardInfo.applyId)" @deny="denyApply(cardInfo.applyId)"></minicard>
         <div class="preview-file" v-show="show.preImg">
             <img :src="preImgUrl" />
         </div>
@@ -869,6 +880,7 @@
     <script src="js/common/cropbox.js"></script>
     <script src="js/components/pagination.js"></script>
     <script src="js/components/dropdown.js"></script>
+    <script src="js/components/minicard.js"></script>
     <script src="js/pages/incCenter.js"></script>
 </body>
 

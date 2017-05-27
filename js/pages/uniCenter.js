@@ -248,7 +248,7 @@ var appCont = new Vue({
             ]
         },
         coop: {
-            state: "全部状态",
+            state: "校企合作",
             curpage: 1,
             items: [
                 { IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", date: "2017.11.11", time: "24:00", coopState: "02", major: "公共管理专业" },
@@ -258,11 +258,11 @@ var appCont = new Vue({
                 { IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", date: "2017.11.11", time: "24:00", coopState: "01", major: "公共管理专业" },
             ],
             results: [
-                { userId: "4", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", date: "2017.11.11", time: "24:00", coopState: "02", major: "公共管理专业" },
-                { userId: "4", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", date: "2017.11.11", time: "24:00", coopState: "03", major: "合作专业" },
-                { userId: "5", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", date: "2017.11.11", time: "24:00", coopState: "03", major: "合作专业" },
-                { userId: "5", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", date: "2017.11.11", time: "24:00", coopState: "03", major: "合作专业" },
-                { userId: "4", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业提供的培训方式", date: "2017.11.11", time: "24:00", coopState: "01", major: "公共管理专业" },
+                { userId: "4", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "学生入企", date: "2017.11.11", time: "24:00", coopState: "02", major: "公共管理专业" },
+                { userId: "4", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "企业高管到校", date: "2017.11.11", time: "24:00", coopState: "03", major: "合作专业" },
+                { userId: "5", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "学生入企", date: "2017.11.11", time: "24:00", coopState: "03", major: "合作专业" },
+                { userId: "5", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "学生入企", date: "2017.11.11", time: "24:00", coopState: "03", major: "合作专业" },
+                { userId: "4", IncName: "公司名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", trainWay: "学生入企", date: "2017.11.11", time: "24:00", coopState: "01", major: "公共管理专业" },
             ]
         },
         config: {
@@ -830,6 +830,21 @@ var appCont = new Vue({
             appModal.showModal = true;
             appModal.showComment = true;
         },
+        popCard: function(applyId, userId) {
+            var postdata = {
+                userId: userId,
+                applyId: applyId,
+            }
+            EventUtils.ajaxReq("/readcard/getCardInfo", "get", postdata, function(resp, status) {
+                appModal.cardInfo.cardtype = "inc";
+                appModal.cardInfo.applyId = resp.data.applyId;
+                var infosets = resp.data.viewReadCard;
+                infosets.userAddress = infosets.userAddress ? infosets.userAddress.split(";").join("") : "不详";
+                appModal.cardInfo.infosets = infosets;
+                appModal.showModal = true;
+                appModal.show.minicard = true;
+            })
+        },
         modifyMobile: function() {
             appModal.show.mobile = true;
             appModal.showModal = true;
@@ -886,25 +901,29 @@ var appModal = new Vue({
             email: false,
             wechat: false,
             preImg: false,
-            minicard: true,
+            minicard: false,
         },
         preImgUrl: "",
-        showModal: true,
+        showModal: false,
         showTrade: false,
         showPreview: false,
         showUpload: false,
         showComment: false,
-        infosets: {
-            userName: "百度",
-            imgsrc: "",
-            userProperty: "国企",
-            userScale: "99人",
-            tel: "15265458785",
-            email: "pheonixqin@gmail.com",
-            address: "杭州市-滨江区-六和桥",
-            userType: "综合类",
-            profession: "电子信息技术",
-            description: "百度（Nasdaq：BIDU）是全球最大的中文搜索引擎，2000年1月由李彦宏、徐勇两人创立于北京中关村，百度致力于向人们提供“简单，可依赖”的信息 获取方式。“百度”二字源于中国宋朝词人辛弃疾的《青玉案》诗句：“众里寻他千百度”，象征着百度对中文信息检索技术的执著追求。于2005年8月5日在 纳斯达克上市。2016年4月13日下午，百度董事长兼CEO李彦宏通过内部邮件宣布百度业务架构重组",
+        cardInfo: {
+            cardtype: "uni",
+            applyId: "",
+            infosets: {
+                userName: "百度",
+                imgsrc: "",
+                userProperty: "国企",
+                userScale: "99人",
+                tel: "15265458785",
+                email: "pheonixqin@gmail.com",
+                address: "杭州市-滨江区-六和桥",
+                userType: "综合类",
+                profession: "电子信息技术",
+                description: "百度（Nasdaq：BIDU）是全球最大的中文搜索引擎，2000年1月由李彦宏、徐勇两人创立于北京中关村，百度致力于向人们提供“简单，可依赖”的信息 获取方式。“百度”二字源于中国宋朝词人辛弃疾的《青玉案》诗句：“众里寻他千百度”，象征着百度对中文信息检索技术的执著追求。于2005年8月5日在 纳斯达克上市。2016年4月13日下午，百度董事长兼CEO李彦宏通过内部邮件宣布百度业务架构重组",
+            }
         },
         trades: [
             { title: "互联网", items: ["互联网/移动互联网/电子商务", "互联网/移动互联网/电子商务", "互联网/移动互联网/电子商务", "互联网/移动互联网/电子商务"] },
@@ -953,6 +972,26 @@ var appModal = new Vue({
         resumeInfo: appCont.resume
     },
     methods: {
+        agreeApply: function(applyId) {
+            var postdata = {
+                applyId: applyId,
+                result: 1
+            }
+            EventUtils.ajaxReq("/readcard/operationApply", "get", postdata, function(resp, status) {
+                appModal.show.minicard = false;
+                appModal.showModal = false;
+            })
+        },
+        denyApply: function(applyId) {
+            var postdata = {
+                applyId: applyId,
+                result: 2
+            }
+            EventUtils.ajaxReq("/readcard/operationApply", "get", postdata, function(resp, status) {
+                appModal.show.minicard = false;
+                appModal.showModal = false;
+            })
+        },
         toSmartFresh: function() {
             this.show.freshhintbox = false;
             this.show.freshbox = true;
@@ -1082,7 +1121,9 @@ var appModal = new Vue({
             this.showModal = false;
             this.showTrade = false;
             this.showPreview = false;
-            this.show.preImg = false;
+            for (var key in appModal.show) {
+                appModal.show[key] = false;
+            }
         },
         stayshow: function(ev) {
             ev.stopPropagation();
@@ -1139,6 +1180,13 @@ var appModal = new Vue({
         }
     },
     watch: {
+        "show.minicard": function(curval) {
+            if (curval) {
+                $(".minicard").css({
+                    "margin-top": Math.floor(($(window).height() - $(".minicard").height()) / 2 + document.body.scrollTop)
+                })
+            }
+        },
         "show.preImg": function(curval) {
             // console.log(curval);
             if (curval) {
