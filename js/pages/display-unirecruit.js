@@ -363,7 +363,7 @@ var appResult = new Vue({
                     return false;
                 }
                 var postdata = {
-                    userId: parObj.userId,
+                    userId: parObj.userId || accountObj.userId,
                     jobFairId: id
                 }
                 EventUtils.ajaxReq("/jobfair/cooperateJobFair", "post", postdata, function(resp, status) {

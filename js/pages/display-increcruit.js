@@ -327,6 +327,8 @@ var appResult = new Vue({
             var link = "detail-increcruit.html?jobfairId=" + id;
             if (accountObj && accountObj.userId) {
                 link += "&userId=" + accountObj.userId;
+            } else if (parObj.userId) {
+                link += "&userId=" + parObj.userId;
             }
             return link
         },

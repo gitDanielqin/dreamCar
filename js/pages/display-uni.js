@@ -34,11 +34,10 @@ function infoRequest() {
             appResult.uniList.results = resp.data.list;
         }
     });
-    if (parObj.userId) {
-        EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId }, function(resp, status) {
+    if (localStorage.userId || parObj.userId) {
+        EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId || localStorage.userId }, function(resp, status) {
             //  console.log(resp);
             accountObj = resp.data;
-            console.log(accountObj);
             if (accountObj) {
                 appTop.userName = resp.data.userName;
                 appTop.userType = resp.data.userType;
@@ -345,7 +344,9 @@ var appResult = new Vue({
         },
         demandLink: function(demandId) {
             var link = "detail-uni.html?demandId=" + demandId;
-            if (accountObj && accountObj.userId) {
+            if (localStorage.userId) {
+                link += "&userId=" + localStorage.userId;
+            } else if (accountObj && accountObj.userId) {
                 link += "&userId=" + accountObj.userId;
             } else if (parObj.userId) {
                 link += "&userId=" + parObj.userId;

@@ -6,6 +6,7 @@
     <title>发布需求</title>
     <link href="css/base.css" rel="stylesheet">
     <link href="css/widget.css" rel="stylesheet">
+    <link href="css/foundation-datepicker.min.css" rel="stylesheet">
     <link href="css/require.css" rel="stylesheet">
 </head>
 
@@ -168,7 +169,7 @@
                             </li>
                         </ul>
                     </div>
-                    <p class="form-item"><label>举办时间</label><input type="text" placeholder="格式：2017-01-30" v-model="recruitData.date" /></p>
+                    <p class="form-item"><label>举办时间</label><input type="text" id="jobfair-date" placeholder="格式：2017-01-30" readonly/></p>
                     <p class="form-item pRel"><label>招聘会描述</label><textarea v-model="recruitData.desc" class="form-desc"></textarea><span class="fSize14 LH40 color-gray-c desc-hint">你还可以输入{{fontCal(recruitData.desc,recruitData.datatype)}} 字</span></p>
                     <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
                     <p class="form-item"><label>联系人</label><input type="text" v-model="recruitData.contact.person" /></p>
@@ -295,6 +296,7 @@
     <script src="js/common/common.js"></script>
     <script src="js/components/dropdown.js"></script>
     <script src="js/components/major-pop.js"></script>
+    <script src="js/components/foundation-datepicker.js"></script>
     <script src="data/address.js"></script>
     <script src="data/major.js"></script>
     <script src="data/position.js"></script>

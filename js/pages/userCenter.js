@@ -8,19 +8,18 @@ var respObj = {}; //请求的本页面的数据集合
 
 function infoRequest() {
     var postdata = {
-        userId: parObj.userId,
-        loginIdentifier: parObj.loginId
+        userId: localStorage.userId || parObj.userId,
+        loginIdentifier: localStorage.loginId || parObj.loginId
     };
-    console.log(postdata);
     EventUtils.ajaxReq("/user/user/getInfo", "get", postdata, function(resp, status) {
         respObj = resp.data;
         console.log(respObj);
         var briefdata = {
             name: respObj.userInfo.realName,
             gender: respObj.userInfo.sex == "1" ? "男" : "女",
-            birthyear: respObj.userInfo.birthday.split("-")[0],
-            birthmonth: respObj.userInfo.birthday.split("-")[1],
-            birthday: respObj.userInfo.birthday.split("-")[2],
+            birthyear: respObj.userInfo.birthday ? respObj.userInfo.birthday.split("-")[0] : "",
+            birthmonth: respObj.userInfo.birthday ? respObj.userInfo.birthday.split("-")[1] : "",
+            birthday: respObj.userInfo.birthday ? respObj.userInfo.birthday.split("-")[2] : "",
             address: {
                 province: respObj.userInfo.province,
                 city: respObj.userInfo.city,
@@ -58,19 +57,19 @@ function infoRequest() {
                     firma: respObj.companyList[i].companyName,
                     trade: respObj.companyList[i].companyType,
                     pos: respObj.companyList[i].position,
-                    province: respObj.companyList[i].workAddress.split(";")[0],
-                    city: respObj.companyList[i].workAddress.split(";")[1],
-                    district: respObj.companyList[i].workAddress.split(";")[2],
+                    province: respObj.companyList[i].workAddress ? respObj.companyList[i].workAddress.split(";")[0] : "",
+                    city: respObj.companyList[i].workAddress ? respObj.companyList[i].workAddress.split(";")[1] : "",
+                    district: respObj.companyList[i].workAddress ? respObj.companyList[i].workAddress.split(";")[2] : "",
                     salary: respObj.companyList[i].salary,
-                    startyear: respObj.companyList[i].startTime.split("-")[0],
-                    startmonth: respObj.companyList[i].startTime.split("-")[1],
-                    endyear: respObj.companyList[i].endTime.split("-")[0],
-                    endmonth: respObj.companyList[i].endTime.split("-")[1],
+                    startyear: respObj.companyList[i].startTime ? respObj.companyList[i].startTime.split("-")[0] : "",
+                    startmonth: respObj.companyList[i].startTime ? respObj.companyList[i].startTime.split("-")[1] : "",
+                    endyear: respObj.companyList[i].endTime ? respObj.companyList[i].endTime.split("-")[0] : "",
+                    endmonth: respObj.companyList[i].endTime ? respObj.companyList[i].endTime.split("-")[1] : "",
                     resp: respObj.companyList[i].content
                 };
                 worksExps.push(workexp);
             }
-            if (worksExps.length == 0) {
+            if (worksExps.length == 0) { //防止刚开始没有数据
                 var worksItem = {
                     show: true,
                     firma: "",
@@ -94,18 +93,18 @@ function infoRequest() {
                     show: j == 0,
                     cvEduId: respObj.eduList[j].cvEduId,
                     uni: respObj.eduList[j].schoolName,
-                    major: respObj.eduList[j].professional.split(";")[0],
-                    submajor: respObj.eduList[j].professional.split(";")[1],
-                    exmajor: respObj.eduList[j].professional.split(";")[2],
-                    startyear: respObj.eduList[j].startTime.split("-")[0],
-                    startmonth: respObj.eduList[j].startTime.split("-")[1],
-                    endyear: respObj.eduList[j].endTime.split("-")[0],
-                    endmonth: respObj.eduList[j].endTime.split("-")[1],
+                    major: respObj.eduList[j].professional ? respObj.eduList[j].professional.split(";")[0] : "",
+                    submajor: respObj.eduList[j].professional ? respObj.eduList[j].professional.split(";")[1] : "",
+                    exmajor: respObj.eduList[j].professional ? respObj.eduList[j].professional.split(";")[2] : "",
+                    startyear: respObj.eduList[j].startTime ? respObj.eduList[j].startTime.split("-")[0] : "",
+                    startmonth: respObj.eduList[j].startTime ? respObj.eduList[j].startTime.split("-")[1] : "",
+                    endyear: respObj.eduList[j].endTime ? respObj.eduList[j].endTime.split("-")[0] : "",
+                    endmonth: respObj.eduList[j].endTime ? respObj.eduList[j].endTime.split("-")[1] : "",
                     qualification: respObj.eduList[j].qualification,
                 };
                 edus.push(edu);
             }
-            if (edus.length == 0) {
+            if (edus.length == 0) { //防止刚开始没有数据
                 var eduItem = {
                     show: true,
                     uni: "",
@@ -127,17 +126,17 @@ function infoRequest() {
                     cvProId: respObj.projectList[k].cvProId,
                     name: respObj.projectList[k].projectName,
                     firma: respObj.projectList[k].companyName,
-                    startyear: respObj.projectList[k].startTime.split("-")[0],
-                    startmonth: respObj.projectList[k].startTime.split("-")[1],
-                    endyear: respObj.projectList[k].endTime.split("-")[0],
-                    endmonth: respObj.projectList[k].endTime.split("-")[1],
+                    startyear: respObj.projectList[k].startTime ? respObj.projectList[k].startTime.split("-")[0] : "",
+                    startmonth: respObj.projectList[k].startTime ? respObj.projectList[k].startTime.split("-")[1] : "",
+                    endyear: respObj.projectList[k].endTime ? respObj.projectList[k].endTime.split("-")[0] : "",
+                    endmonth: respObj.projectList[k].endTime ? respObj.projectList[k].endTime.split("-")[1] : "",
                     desc: respObj.projectList[k].description,
                     resp: respObj.projectList[k].position,
                     achiev: respObj.projectList[k].achievement
                 }
                 projects.push(project);
             }
-            if (projects.length == 0) {
+            if (projects.length == 0) { //防止刚开始没有数据
                 var proItem = {
                     show: true,
                     name: "",
@@ -164,9 +163,9 @@ function infoRequest() {
                 expect: {
                     tradeItems: respObj.cvInfo.expJob,
                     posItems: respObj.cvInfo.expJobFunction,
-                    province: respObj.cvInfo.expPlace.split(";")[0],
-                    city: respObj.cvInfo.expPlace.split(";")[1],
-                    district: respObj.cvInfo.expPlace.split(";")[2],
+                    province: respObj.cvInfo.expPlace ? respObj.cvInfo.expPlace.split(";")[0] : "",
+                    city: respObj.cvInfo.expPlace ? respObj.cvInfo.expPlace.split(";")[1] : "",
+                    district: respObj.cvInfo.expPlace ? respObj.cvInfo.expPlace.split(";")[2] : "",
                     salary: respObj.cvInfo.expSalary
                 },
                 worksExps: worksExps,
@@ -181,6 +180,24 @@ function infoRequest() {
             $(".edit").hide();
             $(".view").show();
         }
+        // 账户信息
+        var percent = 0;
+        if (respObj.userInfo.mobile != "") {
+            percent += 50;
+        }
+        if (respObj.userInfo.email != "") {
+            percent += 30;
+        }
+        init_safepos(percent);
+        var configdata = {
+            loginName: respObj.userInfo.loginName,
+            safeLevel: percent + "%",
+            bind: {
+                mobile: respObj.userInfo.mobile,
+                email: respObj.userInfo.email
+            }
+        }
+        appCont.config = configdata;
     });
 
 }
@@ -262,11 +279,11 @@ var appPorto = new Vue({
         },
         showPre: function() {
             appModal.showModal = true;
-            appModal.showPreview = true;
+            appModal.show.preview = true;
         },
         uploading: function() {
             appModal.showModal = true;
-            appModal.showUpload = true;
+            appModal.show.upload = true;
         }
     },
 })
@@ -390,6 +407,7 @@ var appCont = new Vue({
             totalitems: 0,
             states: ['全部状态', '未投递', '已投递', '已下线'],
             curstate: "全部状态",
+            applyindex: 0,
             results: []
         },
         colRecList: {
@@ -398,23 +416,37 @@ var appCont = new Vue({
             totalitems: 0,
             states: ['全部状态', '未投递', '已投递', '已下线'],
             curstate: "全部状态",
+            applyindex: 0,
             results: []
         },
         myPosList: {
             curpage: 1,
+            jobsrc: 1,
+            jobstate: 1,
+            totalpages: 1,
+            totalitems: 0,
             states: ['全部状态', '未查看', '已查看', '已反馈'],
             curstate: "全部状态",
-            results: [
-                { title: "职位名称", salary: "年薪", addr: "地区", scolar: '学历要求', worksexp: "经验要求", postdate: "2016-10-25", inc: "公司名称", state: 0, feedresult: "" },
-                { title: "职位名称", salary: "年薪", addr: "地区", scolar: '学历要求', worksexp: "经验要求", postdate: "2016-10-25", inc: "杭州煌巢科技技术有限公司", state: 1, feedresult: "" },
-                { title: "职位名称", salary: "年薪", addr: "地区", scolar: '学历要求', worksexp: "经验要求", postdate: "2016-10-25", inc: "公司名称", state: 0, feedresult: "" },
-                { title: "职位名称", salary: "年薪", addr: "地区", scolar: '学历要求', worksexp: "经验要求", postdate: "2016-10-25", inc: "公司名称", state: 2, feedresult: "不合适" },
-                { title: "职位名称", salary: "年薪", addr: "地区", scolar: '学历要求', worksexp: "经验要求", postdate: "2016-10-25", inc: "公司名称", state: 0, feedresult: "" },
-            ]
+            types: ['招聘会', '企业直聘'],
+            curtype: "招聘会",
+            results: []
+        },
+        config: {
+            loginName: "",
+            safeLevel: "80%",
+            bind: { mobile: "", email: "" }
         }
 
     },
     methods: {
+        posLink: function(item) {
+            if (item.jobFairId) {
+                return "detail-increcruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
+            }
+            if (item.recruitId) {
+                return "detail-position.html?userId=" + parObj.userId + "&recruitId=" + item.recruitId;
+            }
+        },
         infoExtrac: function(item) {
             if (item) {
                 return EventUtils.infoExtrac(item)
@@ -491,21 +523,21 @@ var appCont = new Vue({
         },
         popTrade: function(type) {
             appModal.showModal = true;
-            appModal.showTrade = true;
+            appModal.show.trade = true;
         },
         popTradeSingle: function(index) {
             appModal.showModal = true;
             this.resume.curWorksIndex = index;
-            appModal.showTradeSingle = true;
+            appModal.show.tradeSingle = true;
 
         },
         popPosition: function() {
             appModal.showModal = true;
-            appModal.showPosition = true;
+            appModal.show.position = true;
         },
         showPre: function() {
             appModal.showModal = true;
-            appModal.showPreview = true;
+            appModal.show.preview = true;
             $(window).scrollTop(0);
         },
         addWorksexp: function() {
@@ -700,43 +732,11 @@ var appCont = new Vue({
             } else if (type == "col-study") {
                 this.colStuList.curpage = page;
             } else if (type == "col-pos") {
-                this.colPosList.curpage = page;
-                var getdata = {
-                    userId: parObj.userId,
-                    index: page,
-                    count: 3
-                }
-                EventUtils.ajaxReq("/recruit/getMarkList", "get", getdata, function(resp, status) {
-                    // console.log(resp);
-                    if (resp.data) {
-                        appCont.colPosList.results = resp.data.list;
-                        appCont.colPosList.totalpages = resp.data.totalPage;
-                        appCont.colPosList.totalitems = resp.data.totalRow;
-                    } else {
-                        appCont.colPosList.results = [];
-                        appCont.colPosList.totalitems = 0;
-                    }
-                })
+                colposRequest(appCont.colPosList.applyindex, page);
             } else if (type == "col-rec") {
-                this.colRecList.curpage = page;
-                var getdata = {
-                    userId: parObj.userId,
-                    index: page,
-                    count: 3
-                }
-                EventUtils.ajaxReq("/jobfair/getMarkList", "get", getdata, function(resp, status) {
-                    // console.log(resp);
-                    if (resp.data) {
-                        appCont.colRecList.results = resp.data.list;
-                        appCont.colRecList.totalpages = resp.data.totalPage;
-                        appCont.colRecList.totalitems = resp.data.totalRow;
-                    } else {
-                        appCont.colRecList.results = [];
-                        appCont.colRecList.totalitems = 0;
-                    }
-                })
+                colrecRequest(appCont.colRecList.applyindex, page);
             } else if (type == "my-pos") {
-                this.myPosList.curpage = page;
+                posRequest(appCont.myPosList.jobsrc, appCont.myPosList.jobstate, page);
             }
         },
         apply: function(type, id) {
@@ -768,77 +768,73 @@ var appCont = new Vue({
                     }
                 });
             }
-        }
+        },
+        modifyMobile: function() {
+            appModal.show.mobile = true;
+            appModal.showModal = true;
+        },
+        modifyEmail: function() {
+            appModal.show.email = true;
+            appModal.showModal = true;
+        },
+        bindWechat: function() {
+            appModal.show.wechat = true;
+            appModal.showModal = true;
+        },
     },
     watch: {
         'colPosList.curstate': function(curval) {
-            console.log(curval);
-            var applyindex = 0;
             switch (curval) {
                 case "未投递":
-                    applyindex = 1;
+                    colposRequest(1, 1);
                     break;
                 case "已投递":
-                    applyindex = 2;
+                    colposRequest(2, 1);
                     break;
                 case "已下线":
-                    applyindex = 3;
+                    colposRequest(3, 1);
                     break;
                 default:
-                    applyindex = 0;
+                    colposRequest(0, 1);
             }
-            var getdata = {
-                userId: parObj.userId,
-                index: 1,
-                count: 3,
-                applyStatus: applyindex
-            }
-            EventUtils.ajaxReq("/recruit/getMarkList", "get", getdata, function(resp, status) {
-                console.log(resp);
-                if (resp.data) {
-                    appCont.colPosList.results = resp.data.list;
-                    appCont.colPosList.totalpages = resp.data.totalPage;
-                    appCont.colPosList.totalitems = resp.data.totalRow;
-                } else {
-                    appCont.colPosList.results = [];
-                    appCont.colPosList.totalitems = 0;
-                }
-            })
         },
         'colRecList.curstate': function(curval) {
-            console.log(curval);
-            var applyindex = 0;
             switch (curval) {
                 case "未投递":
-                    applyindex = 1;
+                    colrecRequest(1, 1);
                     break;
                 case "已投递":
-                    applyindex = 2;
+                    colrecRequest(2, 1);
                     break;
                 case "已下线":
-                    applyindex = 3;
+                    colrecRequest(3, 1);
                     break;
                 default:
-                    applyindex = 0;
+                    colrecRequest(0, 1);
             }
-            var getdata = {
-                userId: parObj.userId,
-                index: 1,
-                count: 3,
-                applyStatus: applyindex
-            }
-            EventUtils.ajaxReq("/jobfair/getMarkList", "get", getdata, function(resp, status) {
-                console.log(resp);
-                if (resp.data) {
-                    appCont.colRecList.results = resp.data.list;
-                    appCont.colRecList.totalpages = resp.data.totalPage;
-                    appCont.colRecList.totalitems = resp.data.totalRow;
-                } else {
-                    appCont.colRecList.results = [];
-                    appCont.colRecList.totalitems = 0;
-                }
-            })
         },
+        'myPosList.curtype': function(curval) {
+            if (curval == "招聘会") {
+                posRequest(1, appCont.myPosList.jobstate, 1);
+            }
+            if (curval == "企业直聘") {
+                posRequest(2, appCont.myPosList.jobstate, 1);
+            }
+        },
+        'myPosList.curstate': function(curval) {
+            if (curval == "全部状态") {
+                posRequest(appCont.myPosList.jobsrc, 1, 1);
+            }
+            if (curval == "未查看") {
+                posRequest(appCont.myPosList.jobsrc, 2, 1);
+            }
+            if (curval == "已查看") {
+                posRequest(appCont.myPosList.jobsrc, 3, 1);
+            }
+            if (curval == "已反馈") {
+                posRequest(appCont.myPosList.jobsrc, 4, 1);
+            }
+        }
     },
     components: {
         'pagination': pagination
@@ -848,13 +844,18 @@ var appCont = new Vue({
 var appModal = new Vue({
     el: "#app-modal",
     data: {
+        show: {
+            trade: false,
+            tradeSingle: false,
+            preview: false,
+            upload: false,
+            position: false,
+            mobile: false,
+            email: false,
+            wechat: false
+        },
         checkedTrades: [],
         showModal: false,
-        showTrade: false,
-        showTradeSingle: false,
-        showPreview: false,
-        showUpload: false,
-        showPosition: false,
         trades: workareas,
         baseInfo: appPorto.briefInfo,
         resumeInfo: appCont.resume,
@@ -864,12 +865,12 @@ var appModal = new Vue({
     },
     methods: {
         closePorto: function() {
-            this.showUpload = false;
+            this.show.upload = false;
             this.showModal = false;
         },
         closeTrade: function() {
-            this.showTrade = false;
-            this.showTradeSingle = false;
+            this.show.trade = false;
+            this.show.tradeSingle = false;
             this.showModal = false;
         },
         checkfunc: function(item, target) {
@@ -885,57 +886,70 @@ var appModal = new Vue({
         submitTrade: function(type) {
             if (type == "expect") {
                 appCont.resume.expect.tradeItems = this.checkedTrades.join();
-                this.showTrade = false;
+                this.show.trade = false;
             } else if (type == "worksexp") {
                 var index = appCont.resume.curWorksIndex;
                 appCont.resume.worksExps[index].trade = $(".trade-single-table input[type='radio']:checked").val();
-                this.showTradeSingle = false;
+                this.show.tradeSingle = false;
             }
             this.showModal = false;
         },
         cancelTrade: function() {
-            this.showTrade = false;
-            this.showTradeSingle = false;
+            this.show.trade = false;
+            this.show.tradeSingle = false;
             this.showModal = false;
         },
         submitPos: function(array) {
             appCont.resume.expect.posItems = array.join();
-            this.showPosition = false;
+            this.show.position = false;
             this.showModal = false;
         },
         cancelPos: function() {
-            this.showPosition = false;
+            this.show.position = false;
             this.showModal = false;
         },
         hidemodal: function() {
+            for (var key in this.show) {
+                this.show[key] = false;
+            }
             this.showModal = false;
-            this.showTrade = false;
-            this.showPreview = false;
         },
         stayshow: function(ev) {
             ev.stopPropagation();
             return false;
         },
+        closeMobile: function() {
+            this.show.mobile = false;
+            this.showModal = false;
+        },
+        closeWechat: function() {
+            this.show.wechat = false;
+            this.showModal = false;
+        },
+        closeEmail: function() {
+            this.show.email = false;
+            this.showModal = false;
+        }
     },
     watch: {
-        "showUpload": function(curval) {
+        "show.upload": function(curval) {
             if (curval) {
 
             }
         },
-        'showTradeSingle': function(curval) {
+        'show.tradeSingle': function(curval) {
             if (curval) {
                 var top = Math.floor($(window).height() * 0.15 + $("body").scrollTop()) + "px";
                 $(".trade-box-single").css("margin-top", top);
             }
         },
-        'showTrade': function(curval) {
+        'show.trade': function(curval) {
             if (curval) {
                 var top = Math.floor($(window).height() * 0.15 + $("body").scrollTop()) + "px";
                 $(".trade-box-multi").css("margin-top", top);
             }
         },
-        'showPosition': function(curval) {
+        'show.position': function(curval) {
             if (curval) {
                 var top = Math.floor($(window).height() * 0.15 + $("body").scrollTop()) + "px";
                 $(".pos-pop-box").css("margin-top", top);
@@ -998,7 +1012,7 @@ function uploadEventBind() {
             $("#avatar-box").html("<img src='" + resp.data + "' />");
         });
         $(".porto-img").html("<img src='" + imgsrc + "' />");
-        appModal.showUpload = false;
+        appModal.show.upload = false;
         appModal.showModal = false;
     })
 }
@@ -1099,64 +1113,44 @@ function editEventBind() {
 }
 
 
-function init_safepos() {
-    var p_left = Math.floor($(".safe-range p").width() * $(".safe-range").width() / 100) - 16 + "px";
+// function init_safepos() {
+//     var p_left = Math.floor($(".safe-range p").width() * $(".safe-range").width() / 100) - 16 + "px";
+//     $(".r-pointer").css("left", p_left);
+// }
+function init_safepos(percent) {
+    var p_left = Math.floor($(".safe-range").width() * percent / 100) - 16 + "px";
     $(".r-pointer").css("left", p_left);
+    $("#safe-progress").css("width", percent + "%");
 }
 
 
-
 function navEventBind() {
-    $(".sideBox>li").bind("click", function() {
+    $(".sideBox .sub-li p").unbind("click").bind("click", function() {
+        $(".sideBox .sub-li .on").removeClass("on");
+        $(this).addClass("on");
+        if ($(this).attr("paneid") == "collec-job") {
+            colposRequest(appCont.colPosList.applyindex, 1);
+        }
+        if ($(this).attr("paneid") == "collec-recruitment") {
+            colrecRequest(appCont.colRecList.applyindex, 1);
+        }
+        $(".content").children().hide();
+        $(".content").children("." + $(this).attr("paneid")).show();
+        selectInitPos();
+        return false;
+    });
+
+    $(".sideBox>li").unbind("click").bind("click", function() {
         $(".sideBox").children("li.on").removeClass("on");
         $(this).addClass("on");
         $(".sideBox .sub-li").hide();
         if ($(this).find(".sub-li").length > 0) {
             $(this).find(".sub-li").show();
-            $(this).find(".sub-li p").unbind("click").bind("click", function() {
-                $(".sideBox .sub-li .on").removeClass("on");
-                $(this).addClass("on");
-                if ($(this).attr("paneid") == "collec-job") {
-                    var getdata = {
-                        userId: parObj.userId,
-                        index: 1,
-                        count: 3
-                    }
-                    EventUtils.ajaxReq("/recruit/getMarkList", "get", getdata, function(resp, status) {
-                        console.log(resp);
-                        if (resp.data) {
-                            appCont.colPosList.results = resp.data.list;
-                            appCont.colPosList.totalpages = resp.data.totalPage;
-                            appCont.colPosList.totalitems = resp.data.totalRow;
-                        } else {
-                            appCont.colPosList.results = [];
-                            appCont.colPosList.totalitems = 0;
-                        }
-                    })
-                }
-                if ($(this).attr("paneid") == "collec-recruitment") {
-                    var getdata = {
-                        userId: parObj.userId,
-                        index: 1,
-                        count: 3
-                    }
-                    EventUtils.ajaxReq("/jobfair/getMarkList", "get", getdata, function(resp, status) {
-                        console.log(resp);
-                        if (resp.data) {
-                            appCont.colRecList.results = resp.data.list;
-                            appCont.colRecList.totalpages = resp.data.totalPage;
-                            appCont.colRecList.totalitems = resp.data.totalRow;
-                        } else {
-                            appCont.colRecList.results = [];
-                            appCont.colRecList.totalitems = 0;
-                        }
-                    })
-                }
-                $(".content").children().hide();
-                $(".content").children("." + $(this).attr("paneid")).show();
-                selectInitPos();
-                return false;
-            });
+            $(".content").children().hide();
+            $(".content").children("." + $(this).find(".sub-li .on").attr("paneid")).show();
+        }
+        if ($(this).attr("paneid") == "jobBox") {
+            posRequest(appCont.myPosList.jobsrc, appCont.myPosList.jobstate, 1);
         }
         $(".content").children().hide();
         $(".content").children("." + $(this).attr("paneid")).show();
@@ -1165,24 +1159,6 @@ function navEventBind() {
 }
 
 function modalEventBind() {
-    $(".bind-acc button.chg-phone").click(function() {
-        $(".modal").show();
-        $(".modal").children().hide();
-        $(".modal .phone-change").show();
-        $(".close").unbind("click").bind("click", function() {
-            $(this).closest("div").hide();
-            $(".modal").hide();
-        })
-    });
-    $(".bind-acc button.wechatBind").click(function() {
-        $(".modal").show();
-        $(".modal").children().hide();
-        $(".modal .wechat-bind").show();
-        $(".close").unbind("click").bind("click", function() {
-            $(this).closest("div").hide();
-            $(".modal").hide();
-        });
-    });
     $(".msg-center").click(function() {
         $(".modal").show();
         $(".modal").children().hide();
@@ -1255,7 +1231,6 @@ function postResume(editType, isDel) {
             nation: appCont.resume.nation,
             cvStatus: 1
         }
-        console.log(postUserdata, 1);
         EventUtils.ajaxReq("/user/user/modifyInfo", "post", postUserdata, function(resp, status) {
             console.log(resp, 1);
         })
@@ -1380,6 +1355,79 @@ function postResume(editType, isDel) {
             console.log(resp, 5);
         })
     }
+}
 
+//职位收藏信息请求
+function colposRequest(index, page) {
+    appCont.colPosList.applyindex = index;
+    appCont.colPosList.curpage = page;
+    var postdata = {
+        userId: parObj.userId,
+        index: page,
+        count: 3,
+        applyStatus: index
+    }
+    EventUtils.ajaxReq("/recruit/getMarkList", "get", postdata, function(resp, status) {
+        console.log(resp);
+        if (resp.data) {
+            appCont.colPosList.results = resp.data.list;
+            appCont.colPosList.totalpages = resp.data.totalPage;
+            appCont.colPosList.totalitems = resp.data.totalRow;
+        } else {
+            appCont.colPosList.results = [];
+            appCont.colPosList.totalitems = 0;
+            appCont.colPosList.totalpages = 1;
+        }
+    })
+}
 
+//招聘会收藏信息请求
+function colrecRequest(index, page) {
+    appCont.colRecList.applyindex = index;
+    appCont.colRecList.curpage = page;
+    var postdata = {
+        userId: parObj.userId,
+        index: page,
+        count: 3,
+        applyStatus: index
+    }
+    EventUtils.ajaxReq("/jobfair/getMarkList", "get", postdata, function(resp, status) {
+        console.log(resp);
+        if (resp.data) {
+            appCont.colRecList.results = resp.data.list;
+            appCont.colRecList.totalpages = resp.data.totalPage;
+            appCont.colRecList.totalitems = resp.data.totalRow;
+        } else {
+            appCont.colRecList.results = [];
+            appCont.colRecList.totalpages = 1;
+            appCont.colRecList.totalitems = 0;
+        }
+    })
+}
+
+//我的求职信息请求
+function posRequest(type, state, page) {
+    appCont.myPosList.curpage = page;
+    appCont.myPosList.jobstate = state;
+    var postdata = {
+        userId: parObj.userId,
+        loginIdentifier: parObj.loginId,
+        applyStatus: type,
+        readStatus: state,
+        index: page,
+        count: 3
+    }
+    EventUtils.ajaxReq("/user/user/getMyApply", "get", postdata, function(resp, status) {
+        console.log(resp);
+        if (resp && resp.data) {
+            appCont.myPosList.results = resp.data.list;
+            appCont.myPosList.totalpages = resp.data.totalPage;
+            appCont.myPosList.totalitems = resp.data.totalRow;
+        } else {
+            appCont.myPosList.results = [];
+            appCont.myPosList.totalpages = 1;
+            appCont.myPosList.totalitems = 0;
+        }
+        appCont.myPosList.jobsrc = type;
+    })
 }

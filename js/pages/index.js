@@ -3,9 +3,11 @@ var respObj = {}; //请求的本页面的数据集合
 // 请求本页面数据
 
 function infoRequest() {
-    if (parObj.userId) {
-
-        EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function(resp, status) {
+    if (parObj.userId || localStorage.userId) {
+        var postdata = {
+            userId: parObj.userId || localStorage.userId
+        }
+        EventUtils.ajaxReq("/center/user/getInfo", "get", postdata, function(resp, status) {
             console.log(resp.data);
             var account = {
                 userName: resp.data.userName,

@@ -427,17 +427,23 @@
 .main .ListBox .hd {
     border: 1px solid #ccc;
     background: white;
+    padding: 0 30px;
 }
 
 .main .ListBox .hd input {
     width: 88px;
     background: url("../images/icon-select-b.png") no-repeat center right;
     height: 38px;
-    margin-left: 30px;
 }
 
+.cv-title {
+    display: inline-block;
+}
 
-/*.collec-job-state input*/
+.collec-job-state {
+    margin-top: 9px;
+    text-align: left;
+}
 
 .main .ListBox .contList .logo-pic {
     width: 90px;
@@ -608,13 +614,19 @@
 
 /*我的求职*/
 
+.feedback {
+    width: 270px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .main .ListBox .feedback h3 {
     margin-top: 21px;
     height: 35px;
     line-height: 35px;
     font-size: 14px;
     padding-right: 40px;
-    text-align: right
 }
 
 .main .ListBox .feedback .feedState li {
@@ -706,8 +718,8 @@
     width: 290px;
     padding-left: 10px;
     background: #f2f0f0;
-    height: 40px;
-    line-height: 40px;
+    height: 36px;
+    line-height: 36px;
 }
 
 .conf-keyword .varify-code {
@@ -919,47 +931,75 @@
     line-height: 20px;
 }
 
-.phone-change {
+
+/*手机邮箱弹框样式*/
+
+.bind-change {
     position: absolute;
     left: 50%;
     top: 256px;
     margin-left: -250px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5)
 }
 
-.phone-change input {
+.bind-change .close:hover {
+    background: #999;
+}
+
+.bind-change input {
     height: 44px;
     background: #f3f3f3;
     font-size: 14px;
     padding-left: 10px;
 }
 
-.phone-change p {
+.bind-change p {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.phone-change .btn-submit button {
+.bind-change .btn-submit button {
     width: 120px;
     height: 40px;
     font-size: 18px;
     color: #fff;
 }
 
-.close {
-    cursor: pointer;
+.bind-change .icon-close {
+    background: url("../images/icon-bind-close.png") no-repeat center center;
+    width: 26px;
+    height: 25px;
 }
+
+
+/*微信弹框样式*/
 
 .wechat-bind {
     position: absolute;
     left: 50%;
     top: 256px;
     margin-left: -250px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5)
 }
 
 .wechat-bind .close {
     position: absolute;
     right: 10px;
     top: 13px;
+}
+
+.wechat-bind .close:hover {
+    background: #999;
+}
+
+.wechat-bind .icon-close {
+    background: url("../images/icon-bind-close.png") no-repeat center center;
+    width: 26px;
+    height: 25px;
+}
+
+.close {
+    cursor: pointer;
 }
 
 
@@ -1581,18 +1621,6 @@ input.edit-phone {
 
 .porto-upload .close .icon-close {
     background: url("../images/sprite.png") no-repeat -322px -52px;
-    width: 26px;
-    height: 25px;
-}
-
-.phone-change .icon-close {
-    background: url("../images/sprite.png") no-repeat -289px -52px;
-    width: 26px;
-    height: 25px;
-}
-
-.wechat-bind .icon-close {
-    background: url("../images/sprite.png") no-repeat -289px -52px;
     width: 26px;
     height: 25px;
 }

@@ -28,8 +28,8 @@ var appCont = new Vue({
             isPassValid: false
         },
         login: {
-            account: "",
-            password: ""
+            account: localStorage.loginName ? localStorage.loginName : "",
+            password: localStorage.password ? localStorage.password : ""
         },
         show: {
             regis: parObj.newAcc == "1",
@@ -87,12 +87,26 @@ var appCont = new Vue({
                 loginName: this.login.account,
                 password: this.login.password
             };
-            //console.log(postdata);
+
             var callback = function(resp, status) {
                 if (resp.code == "10002") {
                     alert(resp.info);
                     return false;
                 }
+                if (localStorage) {
+                    if ($(".login .check-box").hasClass("selected")) {
+                        localStorage.loginName = appCont.login.account;
+                        localStorage.password = appCont.login.password;
+                        localStorage.userId = resp.data.userId;
+                        localStorage.loginId = resp.data.loginIdentifier;
+                    } else {
+                        localStorage.removeItem("loginName");
+                        localStorage.removeItem("password");
+                        localStorage.removeItem("userId");
+                        localStorage.removeItem("loginId");
+                    }
+                }
+
                 if (resp.data.cardStatus == "0") {
                     var parstring = "userType=" + resp.data.userType + "&userId=" + resp.data.userId + "&loginId=" + resp.data.loginIdentifier;
                     window.location.href = "vCards.html?" + parstring;
@@ -123,7 +137,6 @@ var appCont = new Vue({
                     $(obj).attr("disabled", false);
                     clearInterval(timer);
                 }
-                //     $(obj).html("重新获取 ("+(60-start)+"s)");
                 appCont.validText = "重新获取 (" + (60 - start) + "s)";
             }, 1000);
             var postdata;
@@ -141,15 +154,10 @@ var appCont = new Vue({
                 };
                 posturl = "/sys/emailCode?";
             };
-
-            var callback = function(data, status) {
-                clearInterval(timer);
-                // $(obj).html("获取验证码");
+            EventUtils.ajaxReq(posturl, 'post', postdata, function(resp, status) {
                 appCont.validText = "获取验证码";
                 $(obj).attr("disabled", false);
-                //  alert(data.info);
-            }
-            EventUtils.ajaxReq(posturl, 'post', postdata, callback);
+            });
         }
     },
     watch: {
@@ -174,7 +182,6 @@ var appCont = new Vue({
             } else {
                 this.register.isPassValid = false;
             }
-            //     console.log(this.register.isAccValid,this.register.isPassValid);
         }
     },
     computed: {
@@ -203,7 +210,6 @@ var appModal = new Vue({
 function _init() {
     loginEventBind();
     regisEventBind();
-    //     validEventBind();
     initSize();
 }
 _init();
@@ -213,8 +219,6 @@ function initSize() {
     var contHeight = EventUtils.getViewport().height - $(".top").outerHeight(true) - $(".bot").outerHeight(true);
     $(".banner").height(contHeight);
 }
-
-
 
 //登录框事件绑定
 function loginEventBind() {

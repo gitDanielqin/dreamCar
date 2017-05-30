@@ -414,7 +414,7 @@ var appMain = new Vue({
                     cvProject: this.recruitData.worksexp,
                     cvSalary: this.recruitData.salary,
                     cvWelfare: welfare,
-                    startTime: this.recruitData.date,
+                    startTime: $("#jobfair-date").val(),
                     discription: this.recruitData.desc,
                     linkMan: this.recruitData.contact.person,
                     mobile: this.recruitData.contact.phone,
@@ -494,6 +494,7 @@ var appMain = new Vue({
         selectInitPos();
         selectTime();
         selectWelfare();
+        datepickEventBind()
     }
 })
 var appModal = new Vue({
@@ -540,4 +541,20 @@ function selectWelfare() {
             $(this).addClass("on");
         }
     })
+}
+
+//招聘会日期选择
+function datepickEventBind() {
+    var nowTemp = new Date();
+    var timediff = 6 * 24 * 3600 * 1000;
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    $('#jobfair-date').val(EventUtils.formatDate(nowTemp.getFullYear(), nowTemp.getMonth() + 1, nowTemp.getDate()));
+    var jobfairdate = $('#jobfair-date').fdatepicker({
+        format: 'yyyy-mm-dd',
+        onRender: function(date) {
+            return date.valueOf() < now.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function(ev) {
+        jobfairdate.hide();
+    }).data('datepicker');
 }

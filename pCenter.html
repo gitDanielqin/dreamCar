@@ -394,7 +394,7 @@
                 <div class="classBox ListBox">
                     <div class="hd LH-H58 bg-white">
                         <div class="selectee LH-H38">
-                            <input type="text" value="全部状态" class="H38 maL30" />
+                            <input type="text" value="全部状态" class="H38" />
                             <ul>
                                 <li>全部状态</li>
                                 <li>已开课</li>
@@ -429,7 +429,7 @@
                 <div class="collec-study ListBox">
                     <div class="hd LH-H58">
                         <div class="selectee ">
-                            <input type="text" value="全部状态" class="H38 maL30" />
+                            <input type="text" value="全部状态" class="H38" />
                             <ul>
                                 <li>全部状态</li>
                                 <li>已开课</li>
@@ -528,9 +528,10 @@
                     <pagination :showpages="showpage(colRecList.totalpages)" :totalpages="colRecList.totalpages" type="col-rec" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
                 <div class="jobBox ListBox">
-                    <div class="hd LH-H58">
-                        <dropdown :options="myPosList.states" v-model="colRecList.curstate" class="collec-job-state"></dropdown>
-                        <p class="fr fSize14 maR30">已投递简历<span class="color-orange2 maL10 maR10">{{myPosList.results.length}}</span>份</p>
+                    <div class="hd LH-H58 t-center">
+                        <dropdown :options="myPosList.types" v-model="myPosList.curtype" class="collec-job-state fl"></dropdown>
+                        <p class="fSize14 maR30 cv-title">已投递简历<span class="color-orange2 maL10 maR10">{{myPosList.results.length}}</span>份</p>
+                        <dropdown :options="myPosList.states" v-model="myPosList.curstate" class="collec-job-state fr"></dropdown>
                     </div>
                     <ul class="collectList contList H410">
                         <li v-show="myPosList.results.length==0">
@@ -538,34 +539,56 @@
                                 <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
                             </div>
                         </li>
-                        <li v-for="(item,index) in myPosList.results" v-show="showResult(index,myPosList.curpage,3)">
-                            <div class="logo-pic"></div>
-                            <div class="class-txt fl paTop20 W328">
-                                <h2 class="class-name"><a href="detail-position.html">{{item.title}}</a></h2>
-                                <p class="teacher">{{item.salary}}<span>|</span>{{item.addr}}<span>|</span>{{item.scolar}}<span>|</span>{{item.worksexp}}</p>
-                                <p>投递于： {{item.postdate}}</p>
-                            </div>
-                            <div class="feedback fr fSize18">
-                                <h3>{{item.inc}}</h3>
-                                <ul class="lis-inline feedState">
-                                    <li :class="{on:item.state>=0}"><i class="feedstate-icon"></i><span>已投递</span><i :class="{on:item.state>0}" class="feed-icon-bind"></i></li>
-                                    <li :class="{on:item.state>=1}"><i class="feedstate-icon"></i><span>已查看</span><i :class="{on:item.state>1}" class="feed-icon-bind"></i></li>
-                                    <li :class="{on:item.state>=2}"><i class="feedstate-icon" @mouseover="feedRes('over',$event.target)" @mouseout="feedRes('out',$event.target)"></i><span>已反馈</span>
-                                        <p class="feedback-result">{{item.feedresult}}</p>
-                                    </li>
-                                </ul>
-                            </div>
+                        <li v-for="(item,index) in myPosList.results">
+                            <template v-if="myPosList.jobsrc==1">
+                                <div class="logo-pic"></div>
+                                <div class="class-txt fl paTop20 W328">
+                                    <h2 class="class-name"><a :href="posLink(item)">{{infoExtrac(item.job)}}</a></h2>
+                                    <p class="teacher">{{item.cvSalary}}<span>|</span>{{cityExtrac(item.jobFairAddress)}}<span>|</span>{{item.cvEducation}}<span>|</span>{{item.cvProject}}</p>
+                                    <p>投递于： {{item.createTime.split(" ")[0]}}</p>
+                                </div>
+                                <div class="feedback fr fSize18">
+                                    <h3>公司名称：{{item.userName}}</h3>
+                                    <ul class="lis-inline feedState">
+                                        <li class="on"><i class="feedstate-icon"></i><span>已投递</span><i :class="{on:item.readStatus==1}" class="feed-icon-bind"></i></li>
+                                        <li :class="{on:item.readStatus==1}"><i class="feedstate-icon"></i><span>已查看</span><i :class="{on:item.status!=0}" class="feed-icon-bind"></i></li>
+                                        <li :class="{on:item.status!=0}"><i class="feedstate-icon" @mouseover="feedRes('over',$event.target)" @mouseout="feedRes('out',$event.target)"></i><span>已反馈</span>
+                                            <p class="color-green" v-show="item.status==1">合适</p>
+                                            <p class="color-red" v-show="item.status==2">不合适</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </template>
+                            <template v-else>
+                                <div class="logo-pic"></div>
+                                <div class="class-txt fl paTop20 W328">
+                                    <h2 class="class-name"><a :href="posLink(item)">{{infoExtrac(item.job)}}</a></h2>
+                                    <p class="teacher">{{item.salary}}<span>|</span>{{cityExtrac(item.jobAddress)}}<span>|</span>{{item.education}}<span>|</span>{{item.workTime}}</p>
+                                    <p>投递于： {{item.createTime.split(" ")[0]}}</p>
+                                </div>
+                                <div class="feedback fr fSize18">
+                                    <h3>公司名称：{{item.userName}}</h3>
+                                    <ul class="lis-inline feedState">
+                                        <li class="on"><i class="feedstate-icon"></i><span>已投递</span><i :class="{on:item.readStatus==1}" class="feed-icon-bind"></i></li>
+                                        <li :class="{on:item.readStatus==1}"><i class="feedstate-icon"></i><span>已查看</span><i :class="{on:item.status!=0}" class="feed-icon-bind"></i></li>
+                                        <li :class="{on:item.status!=0}"><i class="feedstate-icon" @mouseover="feedRes('over',$event.target)" @mouseout="feedRes('out',$event.target)"></i><span>已反馈</span>
+                                            <p class="color-green" v-show="item.status==1">合适</p>
+                                            <p class="color-red" v-show="item.status==2">不合适</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </template>
                         </li>
                     </ul>
-                    <pagination :showpages="showpage(myPosList.results.length)" :totalpages="pagesum(myPosList.results.length)" type="my-pos" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                    <pagination :showpages="showpage(myPosList.totalpages)" :totalpages="myPosList.totalpages" type="my-pos" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
                 <div class="conf-keyword ListBox">
                     <h2 class="paTop14 LH-H52 fSize24 paLeft40">修改密码</h2>
-                    <form class="paLeft40 fSize18 LH40">
+                    <form class="paLeft40 fSize16 LH40">
                         <div><label>登陆账号</label><span>1234567890</span></div>
-                        <div><label>当前密码</label><input type="password" /></div>
-                        <div><label>新密码</label><input type="password" /></div>
-                        <div><label>确认密码</label><input type="password" /></div>
+                        <div><label>当前密码</label><input type="password" placeholder="6-16字母、数字、无空格" /></div>
+                        <div><label>新密码</label><input type="password" placeholder="6-16字母、数字、无空格" /></div>
+                        <div><label>确认密码</label><input type="password" placeholder="6-16字母、数字、无空格" /></div>
                         <div><label>验证码</label><input type="password" /><i class="varify-code W100 LH-H40 bg-pinkL maL10 t-center">验证码</i></div>
                         <div class="t-center paTop20 "><button class="LH-H40 W100 bg-orange2 fSize18 color-white maB40">保存</button></div>
                     </form>
@@ -576,24 +599,24 @@
                         <h3 class="paLeft40 fSize18 LH-H40"><i class="pic-icon W20 maR10 icon-safe"></i>安全等级</h3>
                         <div class="LH-H30 paLeft80 fSize14"><span class="maR12 color-red2">危险</span>
                             <div class="safe-range pRel">
-                                <p></p>
-                                <div class="r-pointer LH26 H40 t-center W46 color-white">80%</div>
+                                <p id="safe-progress"></p>
+                                <div class="r-pointer LH26 H40 t-center W46 color-white">{{config.safeLevel}}</div>
                             </div><span class="maL12 color-green">安全</span></div>
                         <i class="pic-wrapper trigle-up"><img src="images/trigle-up02.jpg"/></i>
                     </div>
-                    <p class="fSize14 LH-H35">登录账号：123456789</p>
+                    <p class="fSize14 LH-H35">登录账号：{{config.loginName}}</p>
                     <p class="fSize14 LH-H35 maB22">绑定后，你可以同时使用以下方式登录</p>
-                    <ul class="bind-acc fSize18">
-                        <li><i class="pic-icon icon-phone"></i>已绑定手机号 12345678900<button class="maL20 chg-phone">更换手机号</button></li>
-                        <li><i class="pic-icon icon-email"></i><button>绑定邮箱</button></li>
-                        <li><i class="pic-icon icon-wechat"></i><button class="wechatBind">绑定微信账号</button></li>
+                    <ul class="bind-acc fSize16">
+                        <li><i class="pic-icon icon-phone"></i>{{config.bind.mobile}}<button class="maL20 chg-phone" @click.stop="modifyMobile">更换手机号</button></li>
+                        <li><i class="pic-icon icon-email"></i>{{config.bind.email}}<button class="maL20" @click.stop="modifyEmail">更换邮箱</button></li>
+                        <li><i class="pic-icon icon-wechat"></i><button class="wechatBind" @click.stop="bindWechat">绑定微信账号</button></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal" id="app-modal" v-show="showModal" @click="hidemodal" v-cloak>
-        <div class="porto-upload W500" v-show="showUpload" @click="stayshow($event)">
+        <div class="porto-upload W500" v-show="show.upload" @click="stayshow($event)">
             <h2 class="LH-H60 fSize24 color-white t-left bg-blueM paLeft30">编辑头像<i class="pic-wrapper LH-H40 W40 close" @click="closePorto"><i class="pic-icon icon-close"></i></i>
             </h2>
             <div class="edit-area H407 bg-white">
@@ -623,7 +646,7 @@
                 <div class="submit-btns t-center maT28"><button class="bg-blueL" id="btnSubmit">确定</button><button class="bg-orange2" @click="closePorto">取消</button></div>
             </div>
         </div>
-        <div class="preView W800 bg-white" v-show="showPreview" @click="stayshow($event)">
+        <div class="preView W800 bg-white" v-show="show.preview" @click="stayshow($event)">
             <div class="H200 baseInfo bg-white-ec paLeft80">
                 <div class="paTop60">
                     <div class="porto fl">
@@ -735,19 +758,30 @@
             </div>
             <div class="H26 bg-white-ec"></div>
         </div>
-        <div class="phone-change W500 disNo">
-            <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换手机号<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13"><i class="pic-icon icon-close"></i></i>
+        <div class="bind-change W500" v-show="show.mobile" @click.stop="">
+            <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换手机号<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13" @click.stop="closeMobile"><i class="pic-icon icon-close"></i></i>
             </h2>
             <div class="bg-white paTop8 paBot60">
                 <h3 class="LH-H83 fSize18 t-center">请输入新的手机号，完成手机号绑定</h3>
                 <p><input type="text" placeholder="完成手机号" class="W290"></p>
-                <p><input type="text" placeholder="请输入短信认证码" class="W194"><button class="W96 H44 bg-blueM fSize14">获取验证码</button></p>
+                <p><input type="text" placeholder="请输入短信认证码" class="W194"><button class="W96 H44 bg-blueM fSize14 color-white">获取验证码</button></p>
                 <p><input type="text" placeholder="确认登入密码" class="W290"></p>
-                <div class="btn-submit t-center paTop20"><button class="bg-blueM">完成绑定</button><button class="bg-orange2 maL40">返回</button></div>
+                <div class="btn-submit t-center paTop20"><button class="bg-blueM">完成绑定</button><button class="bg-orange2 maL40" @click.stop="closeMobile">返回</button></div>
             </div>
         </div>
-        <div class="wechat-bind W500 disNo">
-            <h2 class="LH-H60 fSize24 color-white t-center bg-blueM">微信登录<i class="pic-wrapper LH-H40 W40 close"><i class="pic-icon icon-close"></i></i>
+        <div class="bind-change W500" v-show="show.email" @click.stop="">
+            <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换绑定邮箱<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13" @click.stop="closeEmail"><i class="pic-icon icon-close"></i></i>
+            </h2>
+            <div class="bg-white paTop8 paBot60">
+                <h3 class="LH-H83 fSize18 t-center">请输入新的邮箱，完成邮箱绑定</h3>
+                <p><input type="text" placeholder="请输入邮箱" class="W290"></p>
+                <p><input type="text" placeholder="请输入验证码" class="W194"><button class="W96 H44 bg-blueM fSize14 color-white">获取验证码</button></p>
+                <p><input type="text" placeholder="确认登入密码" class="W290"></p>
+                <div class="btn-submit t-center paTop20"><button class="bg-blueM">完成绑定</button><button class="bg-orange2 maL40" @click.stop="closeEmail">返回</button></div>
+            </div>
+        </div>
+        <div class="wechat-bind W500" v-show="show.wechat" @click.stop="">
+            <h2 class="LH-H60 fSize24 color-white t-center bg-blueM">微信登录<i class="pic-wrapper LH-H40 W40 close" @click.stop="closeWechat"><i class="pic-icon icon-close"></i></i>
             </h2>
             <div class="bg-white paTop14 t-center paBot53">
                 <i class="barCode pic-wrapper W284 LH-H284 bg-grayC maB22"></i>
@@ -786,7 +820,7 @@
             </div>
         </div>
         <!--期望行业选择弹框  -->
-        <div class="trade-box W770 H420 maCenter trade-box-multi" v-show="showTrade" @click="stayshow($event)">
+        <div class="trade-box W770 H420 maCenter trade-box-multi" v-show="show.trade" @click="stayshow($event)">
             <h3 class="bg-gray-e6 fSize14 LH-H36 paLeft30 paRight30 color-black">选择行业分类<i class="pic-wrapper W26 LH-H26 maT5 closer t-center fr cur-pointer" @click="closeTrade"><i class="pic-icon icon-close"></i></i>
             </h3>
             <div class="H328 bg-white paLeft35 cont">
@@ -809,7 +843,7 @@
             </div>
         </div>
         <!--工作经历行业选择框单选  -->
-        <div class="trade-box W770 H420 maCenter trade-box-single" v-show="showTradeSingle" @click="stayshow($event)">
+        <div class="trade-box W770 H420 maCenter trade-box-single" v-show="show.tradeSingle" @click="stayshow($event)">
             <h3 class="bg-gray-e6 fSize14 LH-H36 paLeft30 paRight30 color-black">选择行业分类<i class="pic-wrapper W26 LH-H26 maT5 closer t-center fr cur-pointer" @click="closeTrade"><i class="pic-icon icon-close"></i></i>
             </h3>
             <div class="H328 bg-white paLeft35 cont paTop14">
@@ -831,7 +865,7 @@
             </div>
         </div>
         <!-- 期望职能选择弹框 -->
-        <pop-position :posdata="database.posdata" class="maCenter" v-show="showPosition" @confirm="submitPos" @cancel="cancelPos"></pop-position>
+        <pop-position :posdata="database.posdata" class="maCenter" v-show="show.position" @confirm="submitPos" @cancel="cancelPos"></pop-position>
     </div>
     <div class="bot paTop8 t-center bot-account">
         <div class="inner clearfix">

@@ -344,12 +344,13 @@ var appMain = new Vue({
                     companyAddress: $(".company-address .sel-province input").val() + ";" + $(".company-address .sel-city input").val() + ";" + $(".company-address .sel-district input").val(),
                     profession: $(".cont-recruit .major-input-1 input").val() + ";" + $(".cont-recruit .major-input-2 input").val(),
                     professionCount: this.recruitData.stuScale,
-                    startTime: this.recruitData.date,
+                    startTime: $("#jobfair-date").val(),
                     discription: this.recruitData.desc,
                     linkMan: this.recruitData.contact.person,
                     mobile: this.recruitData.contact.phone,
                     jobFairAddress: this.recruitData.contact.address == "" ? "" : this.recruitData.contact.address.split("-").join(";")
                 }
+                console.log(postdata);
                 if (isNewRequire) {
                     EventUtils.ajaxReq('/jobfair/apply', 'post', postdata, function(resp, status) {
                         console.log(resp);
@@ -383,6 +384,7 @@ var appMain = new Vue({
         selectInitPos();
         navEventBind();
         // selectRepos();
+        datepickEventBind();
         selectInit();
         selectTime();
     },
@@ -412,6 +414,8 @@ var appModal = new Vue({
         }
     }
 })
+
+datepickEventBind();
 
 function navEventBind() { //头部导航栏事件绑定
     $(".navs ul li").click(function() {
@@ -443,4 +447,20 @@ function selectTime() {
             $(this).addClass("on");
         }
     })
+}
+
+//招聘会日期选择
+function datepickEventBind() {
+    var nowTemp = new Date();
+    var timediff = 6 * 24 * 3600 * 1000;
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    $('#jobfair-date').val(EventUtils.formatDate(nowTemp.getFullYear(), nowTemp.getMonth() + 1, nowTemp.getDate()));
+    var jobfairdate = $('#jobfair-date').fdatepicker({
+        format: 'yyyy-mm-dd',
+        onRender: function(date) {
+            return date.valueOf() < now.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function(ev) {
+        jobfairdate.hide();
+    }).data('datepicker');
 }

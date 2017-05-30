@@ -9,14 +9,14 @@
 </head>
 
 <body>
-    <div class="top H100 bg-purpleD color-white" id="app-top">
+    <div class="top H100 bg-purpleD color-white" id="app-top" v-cloak>
         <div class="inner">
             <a href="index.html"><img src="images/logo.png" class="fl maR21 maT20" /></a>
             <h2 class="fl LH-H80 fSize30 maT17">校企职通车</h2>
             <h3 id="sel-add" class="city fl LH-H80 fSize18 maT16 maL60"><b>{{displayCity}}</b></h3>
         </div>
     </div>
-    <div class="banner H573 bg-purpleL" id="app-content">
+    <div class="banner H573 bg-purpleL" id="app-content" v-cloak>
         <div class="inner pRel">
             <i class="pic-wrapper loginImg"><img src="images/login-banner1.jpg"/></i>
             <div class="logBox regis" id="app-regis" v-show="show.regis">
@@ -56,7 +56,7 @@
             </div>
         </div>
     </div>
-    <div class="agree-modal" id="app-modal" v-show="showModal" @click="hideModal">
+    <div class="agree-modal" id="app-modal" v-show="showModal" @click="hideModal" v-cloak>
         <div class="agreementBox W800 H700 bg-white" @click.stop="">
             <div class="H57 maB42" style="border-bottom: 2px solid #2ea8e6; position: relative;">
                 <h2 class="title bg-white LH-H47 W242 t-center fSize18">校企职通车用户服务协议</h2>

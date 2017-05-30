@@ -3,8 +3,8 @@ var respObj = {}; //请求的本页面的数据集合
 
 function infoRequest() {
     var postdata = {
-        userId: parObj.userId,
-        loginIdentifier: parObj.loginId
+        userId: localStorage.userId || parObj.userId,
+        loginIdentifier: localStorage.loginId || parObj.loginId
     };
     EventUtils.ajaxReq('/user/company/getInfo', 'get', postdata, function(resp, status) {
         respObj = resp.data;
@@ -276,55 +276,11 @@ var appCont = new Vue({
         },
         "require.state": function(curval) {
             if (curval == "校企合作") {
-                this.require.demandSrc = 0;
-                var postdata = {
-                    userId: parObj.userId,
-                    loginIdentifier: parObj.loginId,
-                    demandType: 2,
-                    index: 1,
-                    count: 3
-                }
-                EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-                    appCont.require.totalpages = resp.data.totalPage;
-                    appCont.require.results = resp.data.list;
-                    appCont.require.totalitems = resp.data.totalRow;
-                })
-                this.require.curpage = 1;
+                demandRequest(0, 1);
             } else if (curval == "招聘会") {
-                this.require.demandSrc = 1;
-                var postdata = {
-                    userId: parObj.userId,
-                    loginIdentifier: parObj.loginId,
-                    jobFairType: 2,
-                    index: 1,
-                    count: 3
-                }
-                EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
-                    appCont.require.totalpages = resp.data.totalPage;
-                    appCont.require.results = resp.data.list;
-                    appCont.require.totalitems = resp.data.totalRow;
-                })
-                this.require.curpage = 1;
+                demandRequest(1, 1);
             } else if (curval == "企业直聘") {
-                this.require.demandSrc = 2;
-                var postdata = {
-                    userId: parObj.userId,
-                    loginIdentifier: parObj.loginId,
-                    index: 1,
-                    count: 3
-                }
-                EventUtils.ajaxReq("/recruit/getList", "get", postdata, function(resp, status) {
-                    console.log(resp);
-                    if (resp.data) {
-                        appCont.require.totalpages = resp.data.totalPage;
-                        appCont.require.results = resp.data.list;
-                        appCont.require.totalitems = resp.data.totalRow;
-                    } else {
-                        appCont.require.results = [];
-                        appCont.require.totalitems = 0;
-                    }
-                })
-                this.require.curpage = 1;
+                demandRequest(2, 1);
             }
         },
         "require.period": function(curval) {
@@ -333,48 +289,11 @@ var appCont = new Vue({
         },
         "collect.state": function(curval, oldval) {
             if (curval == "校企合作") {
-                var postdata = {
-                    userId: parObj.userId,
-                    loginIdentifier: parObj.loginId,
-                    index: 1,
-                    count: 3
-                };
-                EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function(resp, status) {
-                    console.log(resp);
-                    if (resp.data) {
-                        appCont.collect.curpage = 1;
-                        appCont.collect.totalpages = resp.data.totalPage;
-                        appCont.collect.totalitems = resp.data.totalRow;
-                        appCont.collect.results = resp.data.list;
-
-                    } else {
-                        appCont.collect.results = [];
-                        appCont.collect.totalitems = 0;
-                    }
-                    appCont.collect.collectSrc = 0;
-                })
+                collectRequest(0, 1);
             }
             if (curval == "高校招聘会") {
-                var postdata = {
-                    userId: parObj.userId,
-                    loginIdentifier: parObj.loginId,
-                    index: 1,
-                    count: 3
-                };
-                EventUtils.ajaxReq("/jobfair/getMarkList", "get", postdata, function(resp, status) {
-                    if (resp.data) {
-                        appCont.collect.curpage = 1;
-                        appCont.collect.totalpages = resp.data.totalPage;
-                        appCont.collect.totalitems = resp.data.totalRow;
-                        appCont.collect.results = resp.data.list;
-                    } else {
-                        appCont.collect.results = [];
-                        appCont.collect.totalitems = 0;
-                    }
-                    appCont.collect.collectSrc = 1;
-                })
+                collectRequest(1, 1);
             }
-            this.collect.curpage = 1;
         },
         "message.combi.state": function(curval) {
             if (curval == "发出的邀请") {
@@ -710,108 +629,13 @@ var appCont = new Vue({
         },
         topage: function(page, type) {
             if (type == "require") {
-                if (this.require.demandSrc == 0) {
-                    var postdata = {
-                        userId: parObj.userId,
-                        loginIdentifier: parObj.loginId,
-                        demandType: 2,
-                        index: page,
-                        count: 3
-                    }
-                    EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-                        if (resp.data) {
-                            appCont.require.results = resp.data.list;
-                            appCont.require.totalitems = resp.data.totalRow;
-                            appCont.require.totalpages = resp.data.totalPage;
-                        } else {
-                            appCont.require.results = [];
-                            appCont.require.totalitems = 0;
-                        }
-                    })
-                } else if (this.require.demandSrc == 1) {
-                    var postdata = {
-                        userId: parObj.userId,
-                        loginIdentifier: parObj.loginId,
-                        jobFairType: 2,
-                        index: page,
-                        count: 3
-                    }
-                    EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
-                        if (resp.data) {
-                            appCont.require.results = resp.data.list;
-                            appCont.require.totalitems = resp.data.totalRow;
-                            appCont.require.totalpages = resp.data.totalPage;
-                        } else {
-                            appCont.require.results = [];
-                            appCont.require.totalitems = 0;
-                        }
-                    })
-                } else if (this.require.demandSrc == 2) {
-                    var postdata = {
-                        userId: parObj.userId,
-                        loginIdentifier: parObj.loginId,
-                        index: page,
-                        count: 3
-                    }
-                    EventUtils.ajaxReq("/recruit/getList", "get", postdata, function(resp, status) {
-                        if (resp.data) {
-                            appCont.require.results = resp.data.list;
-                            appCont.require.totalitems = resp.data.totalRow;
-                            appCont.require.totalpages = resp.data.totalPage;
-                        } else {
-                            appCont.require.results = [];
-                            appCont.require.totalitems = 0;
-                        }
-                    })
-                }
-
-                this.require.curpage = page;
+                demandRequest(appCont.require.demandSrc, page);
             } else if (type == "collect") {
-                if (this.collect.collectSrc == 0) {
-                    var postdata = {
-                        userId: parObj.userId,
-                        loginIdentifier: parObj.loginId,
-                        index: page,
-                        count: 3
-                    }
-                    EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function(resp, status) {
-                        if (resp.data) {
-                            appCont.collect.results = resp.data.list;
-                            appCont.collect.totalitems = resp.data.totalRow;
-                            appCont.collect.totalpages = resp.data.totalPage;
-                        } else {
-                            appCont.collect.results = [];
-                            appCont.collect.totalitems = 0;
-                        }
-                    })
-                }
-                if (this.collect.collectSrc == 1) {
-                    var postdata = {
-                        userId: parObj.userId,
-                        loginIdentifier: parObj.loginId,
-                        index: page,
-                        count: 3
-                    }
-                    EventUtils.ajaxReq("/jobfair/getMarkList", "get", postdata, function(resp, status) {
-                        if (resp.data) {
-                            appCont.collect.results = resp.data.list;
-                            appCont.collect.totalitems = resp.data.totalRow;
-                            appCont.collect.totalpages = resp.data.totalPage;
-                        } else {
-                            appCont.collect.results = [];
-                            appCont.collect.totalitems = 0;
-                        }
-                    })
-                }
-
-                this.collect.curpage = page;
-                // console.log($(".collectBox .pagination a.page").eq(appCont.collect.curpage - 1).parent()[0]);
+                collectRequest(appCont.collect.collectSrc, page);
             } else if (type == "msg-combi") {
                 combiMsgRequest(appCont.message.combi.msgsrc, page);
-                this.message.combi.curpage = page;
             } else if (type == "msg-jobfair") {
                 jobfairMsgRequest(appCont.message.jobfair.msgsrc, page);
-                this.message.jobfair.curpage = page;
             } else if (type == "msg-recruit") {
                 recruitMsgRequest(page);
             } else if (type == "coop") {
@@ -1404,48 +1228,12 @@ function navEventBind() {
         }
         //需求面板请求结果
         if ($(this).attr("paneid") == "requireBox") {
-            var postdata = {
-                userId: parObj.userId,
-                loginIdentifier: parObj.loginId,
-                demandType: 2,
-                index: 1,
-                count: 3
-            }
-            console.log(postdata);
-            EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-                console.log(resp);
-                if (resp.data) {
-                    appCont.require.totalpages = resp.data.totalPage;
-                    appCont.require.demandSrc = 0;
-                    appCont.require.results = resp.data.list;
-                    appCont.require.totalitems = resp.data.totalRow;
-                } else {
-                    appCont.require.results = [];
-                }
-            })
+            demandRequest(appCont.require.demandSrc, 1);
         }
 
         // 收藏面板请求结果
         if ($(this).attr("paneid") == "collectBox") {
-            var postdata = {
-                userId: parObj.userId,
-                loginIdentifier: parObj.loginId,
-                index: 1,
-                count: 3
-            };
-            console.log(postdata);
-            EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function(resp, status) {
-                console.log(resp);
-                if (resp.data) {
-                    appCont.collect.curpage = 1;
-                    appCont.collect.totalpages = resp.data.totalPage;
-                    appCont.collect.totalitems = resp.data.totalRow;
-                    appCont.collect.results = resp.data.list;
-                } else {
-                    appCont.collect.results = [];
-                    appCont.collect.totalitems = 0;
-                }
-            })
+            collectRequest(appCont.collect.collectSrc, 1);
         }
         //消息中心
         if ($(this).attr("paneid") == "combi-msg") {
@@ -1565,8 +1353,115 @@ function refreshEventBind() {
     })
 }
 
+
+//企业需求数据请求
+function demandRequest(type, page) {
+    appCont.require.curpage = page;
+    if (type == 0) { // 校企合作
+        var postdata = {
+            userId: parObj.userId,
+            loginIdentifier: parObj.loginId,
+            demandType: 2,
+            index: page,
+            count: 3
+        }
+        EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
+            if (resp && resp.data) {
+                appCont.require.totalpages = resp.data.totalPage;
+                appCont.require.results = resp.data.list;
+                appCont.require.totalitems = resp.data.totalRow;
+            } else {
+                appCont.require.results = [];
+                appCont.require.totalitems = 0;
+            }
+            appCont.require.demandSrc = 0;
+        })
+    } else if (type == 1) { //招聘会
+        var postdata = {
+            userId: parObj.userId,
+            loginIdentifier: parObj.loginId,
+            jobFairType: 2,
+            index: page,
+            count: 3
+        }
+        EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
+            if (resp && resp.data) {
+                appCont.require.totalpages = resp.data.totalPage;
+                appCont.require.results = resp.data.list;
+                appCont.require.totalitems = resp.data.totalRow;
+            } else {
+                appCont.require.results = [];
+                appCont.require.totalitems = 0;
+            }
+            appCont.require.demandSrc = 1;
+        })
+    } else if (type == 2) { //企业直聘
+        var postdata = {
+            userId: parObj.userId,
+            loginIdentifier: parObj.loginId,
+            index: page,
+            count: 3
+        }
+        EventUtils.ajaxReq("/recruit/getList", "get", postdata, function(resp, status) {
+            console.log(resp);
+            if (resp && resp.data) {
+                appCont.require.totalpages = resp.data.totalPage;
+                appCont.require.results = resp.data.list;
+                appCont.require.totalitems = resp.data.totalRow;
+            } else {
+                appCont.require.results = [];
+                appCont.require.totalitems = 0;
+            }
+            appCont.require.demandSrc = 2;
+        })
+    }
+}
+
+//企业收藏信息请求
+function collectRequest(type, page) {
+    appCont.collect.curpage = 1;
+    if (type == 0) { //校企合作
+        var postdata = {
+            userId: parObj.userId,
+            loginIdentifier: parObj.loginId,
+            index: page,
+            count: 3
+        };
+        EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function(resp, status) {
+            console.log(resp);
+            if (resp.data) {
+                appCont.collect.totalpages = resp.data.totalPage;
+                appCont.collect.totalitems = resp.data.totalRow;
+                appCont.collect.results = resp.data.list;
+            } else {
+                appCont.collect.results = [];
+                appCont.collect.totalitems = 0;
+            }
+            appCont.collect.collectSrc = 0;
+        })
+    } else if (type == 1) { //招聘会
+        var postdata = {
+            userId: parObj.userId,
+            loginIdentifier: parObj.loginId,
+            index: page,
+            count: 3
+        };
+        EventUtils.ajaxReq("/jobfair/getMarkList", "get", postdata, function(resp, status) {
+            if (resp.data) {
+                appCont.collect.totalpages = resp.data.totalPage;
+                appCont.collect.totalitems = resp.data.totalRow;
+                appCont.collect.results = resp.data.list;
+            } else {
+                appCont.collect.results = [];
+                appCont.collect.totalitems = 0;
+            }
+            appCont.collect.collectSrc = 1;
+        })
+    }
+}
 // 校企合作消息数据请求
 function combiMsgRequest(applystatus, page) {
+    appCont.message.combi.curpage = page;
     var postdata = {
         userId: parObj.userId,
         applyStatus: applystatus,
@@ -1588,6 +1483,7 @@ function combiMsgRequest(applystatus, page) {
 }
 //招聘会消息数据请求
 function jobfairMsgRequest(applystatus, page) {
+    appCont.message.jobfair.curpage = page;
     var postdata = {
         userId: parObj.userId,
         applyStatus: applystatus,
@@ -1610,6 +1506,7 @@ function jobfairMsgRequest(applystatus, page) {
 
 //直聘消息数据请求
 function recruitMsgRequest(page) {
+    appCont.message.recruit.curpage = page;
     var postdata = {
         userId: parObj.userId,
         index: page,
@@ -1626,5 +1523,4 @@ function recruitMsgRequest(page) {
             appCont.message.recruit.totalitems = 0;
         }
     });
-
 }

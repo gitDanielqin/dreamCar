@@ -2,9 +2,6 @@
  * Created by xuanyuan on 2016/11/7.
  */
 var parObj = EventUtils.urlExtrac(window.location);
-
-
-
 var appTop = new Vue({
     el: "#app-top",
     data: {
@@ -74,7 +71,6 @@ var appCont = new Vue({
                 type: 3
             };
             var callback = function(data, status) {
-                clearInterval(timer);
                 $(obj).html("获取验证码");
                 $(obj).attr("disabled", false);
                 alert(data.info);
@@ -135,15 +131,10 @@ var appCont = new Vue({
                 }
                 domainUrl = "incCenter.html?";
             }
-            console.log(postdata);
-
-            var callback = function(data, status) {
+            EventUtils.ajaxReq(posturl, 'post', postdata, function(resp, status) {
                 var parstring = "userId=" + parObj.userId + "&loginId=" + parObj.loginIdentifier;
-                console.log(data);
                 window.location.href = domainUrl + parstring;
-            }
-
-            EventUtils.ajaxReq(posturl, 'post', postdata, callback)
+            })
 
         }
     },
