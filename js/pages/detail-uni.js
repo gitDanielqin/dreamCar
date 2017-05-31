@@ -59,14 +59,16 @@ function infoRequest() {
         if (respObj.markStatus == "1") {
             $("#app-banner .btn-collec").addClass("collected");
             $("#app-banner .btn-collec span").html("已收藏");
-        }
+        };
+        //评价一览申请
+        commentRequest(respObj.userId, 1);
+
     })
 
     if (parObj.userId) {
         EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId }, function(resp, status) {
             //  console.log(resp);
             accountObj = resp.data;
-            console.log(accountObj);
             if (accountObj) {
                 appTop.userName = resp.data.userName;
                 appTop.userType = resp.data.userType;
@@ -75,6 +77,8 @@ function infoRequest() {
             }
         })
     }
+
+
     // var postdata = {
     //      index:1,
     //      count:13,
@@ -203,13 +207,16 @@ var appBanner = new Vue({
                     demandId: parObj.demandId
                 }
                 EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
-                    console.log(resp);
-                    $(".dlg-success").css({
-                        top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
-                    });
-                    appModal.showModal = true;
-                    appModal.showLogin = false;
-                    appModal.showSucc = true;
+                    if (resp.data.isApply == "0") {
+                        $(".dlg-success").css({
+                            top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
+                        });
+                        appModal.showModal = true;
+                        appModal.showLogin = false;
+                        appModal.showSucc = true;
+                    } else {
+                        alert(resp.info)
+                    }
                 });
 
             } else {
@@ -267,12 +274,10 @@ var appMain = new Vue({
             { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
             { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
         ],
-        uniComment: [
-            { portUrl: "images/porto01.jpg", cont: "挺好的，还不错，恩，呵呵", date: "2016-12-11 22:33" },
-            { portUrl: "images/porto02.jpg", cont: "挺好的，还不错，恩，呵呵", date: "2016-12-11 22:33" },
-            { portUrl: "images/porto01.jpg", cont: "挺好的，还不错，恩，呵呵", date: "2016-12-11 22:33" },
-            { portUrl: "images/porto02.jpg", cont: "挺好的，还不错，恩，呵呵", date: "2016-12-11 22:33" },
-        ]
+        uniComment: {
+            totalpages: 1,
+            results: []
+        }
     },
     methods: {
         viewCss: function(state) {
@@ -297,6 +302,13 @@ var appMain = new Vue({
         },
         showAllContact: function(contact) {
             $(".descript .contact-phone").text(contact);
+        },
+        showpage: function(totalpages) {
+            if (totalpages > 3) {
+                return 3;
+            } else {
+                return totalpages;
+            }
         },
         topage: function() {
             //console.log(1);
@@ -413,3 +425,22 @@ function initEventBind() {
         }
     })
 };
+
+function commentRequest(id, page) {
+    var commentdata = {
+        reportUserId: id,
+        index: page,
+        count: 6
+    }
+    EventUtils.ajaxReq("/sys/getCommentList", "post", commentdata, function(resp, status) {
+        console.log(resp);
+        if (resp && resp.data) {
+            appMain.uniComment.results = resp.data.list;
+            appMain.uniComment.totalpages = resp.data.totalPage;
+        } else {
+            appMain.uniComment.results = [];
+            appMain.uniComment.totalpages = 1;
+        }
+
+    });
+}

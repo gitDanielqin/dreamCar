@@ -370,12 +370,16 @@ var appResult = new Vue({
                 }
                 EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
                     console.log(resp);
-                    $(".dlg-success").css({
-                        top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
-                    });
-                    appModal.showModal = true;
-                    appModal.showLogin = false;
-                    appModal.showSucc = true;
+                    if (resp.data.isApply == "0") {
+                        $(".dlg-success").css({
+                            top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
+                        });
+                        appModal.showModal = true;
+                        appModal.showLogin = false;
+                        appModal.showSucc = true;
+                    } else {
+                        alert(resp.info)
+                    }
                 });
             } else {
                 $(".dlg-login").css({

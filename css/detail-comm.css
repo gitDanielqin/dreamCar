@@ -368,7 +368,12 @@
     position: relative;
 }
 
-.porto img {
+.cont-comment .comment-text {
+    height: 50px;
+    overflow: auto;
+}
+
+.avatar img {
     margin-top: 10px;
     border-radius: 50%;
     width: 60px;

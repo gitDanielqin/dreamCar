@@ -61,6 +61,8 @@ function infoRequest() {
             $("#app-banner .btn-collec").addClass("collected");
             $("#app-banner .btn-collec span").html("已收藏");
         }
+        //获取评价一览
+        commentRequest(respObj.userId, 1);
 
     });
 
@@ -195,12 +197,16 @@ var appBanner = new Vue({
                 }
                 EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
                     console.log(resp);
-                    $(".dlg-success").css({
-                        top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
-                    });
-                    appModal.showModal = true;
-                    appModal.showLogin = false;
-                    appModal.showSucc = true;
+                    if (resp.data.isApply == "0") {
+                        $(".dlg-success").css({
+                            top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
+                        });
+                        appModal.showModal = true;
+                        appModal.showLogin = false;
+                        appModal.showSucc = true;
+                    } else {
+                        alert(resp.info)
+                    }
                 });
             } else {
                 $(".dlg-login").css({
@@ -210,7 +216,6 @@ var appBanner = new Vue({
                 appModal.showLogin = true;
                 appModal.showSucc = false;
             }
-
         }
     },
     computed: {
@@ -257,12 +262,11 @@ var appMain = new Vue({
             { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
             { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
         ],
-        incComment: [
-            { portUrl: "images/porto01.jpg", cont: "挺好的，还不错，恩，呵呵", date: "2016-12-11 22:33" },
-            { portUrl: "images/porto02.jpg", cont: "挺好的，还不错，恩，呵呵", date: "2016-12-11 22:33" },
-            { portUrl: "images/porto01.jpg", cont: "挺好的，还不错，恩，呵呵", date: "2016-12-11 22:33" },
-            { portUrl: "images/porto02.jpg", cont: "挺好的，还不错，恩，呵呵", date: "2016-12-11 22:33" },
-        ]
+        comment: {
+            totalpages: 1,
+            totalitems: 0,
+            results: []
+        }
     },
     methods: {
         viewCss: function(state) {
@@ -288,8 +292,22 @@ var appMain = new Vue({
         showAllContact: function(contact) {
             $(".descript .contact-phone").text(contact);
         },
+        showpage: function(totalpages) {
+            if (totalpages > 3) {
+                return 3;
+            } else {
+                return totalpages;
+            }
+        },
         topage: function() {
             //console.log(1);
+        },
+        showCount: function(totalitems) {
+            if (totalitems > 99) {
+                return "..."
+            } else {
+                return totalitems;
+            }
         }
     },
     components: {
@@ -393,3 +411,24 @@ function initEventBind() {
         }
     })
 };
+
+function commentRequest(id, page) {
+    var commentdata = {
+        reportUserId: id,
+        index: page,
+        count: 6
+    }
+    EventUtils.ajaxReq("/sys/getCommentList", "post", commentdata, function(resp, status) {
+        console.log(resp);
+        if (resp && resp.data) {
+            appMain.comment.results = resp.data.list;
+            appMain.comment.totalpages = resp.data.totalPage;
+            appMain.comment.totalitems = resp.data.totalRow;
+        } else {
+            appMain.comment.results = [];
+            appMain.comment.totalpages = 1;
+            appMain.comment.totalitems = 0;
+        }
+
+    });
+}

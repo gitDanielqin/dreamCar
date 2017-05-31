@@ -398,6 +398,9 @@ var appCont = new Vue({
                     return "detail-company.html?demandId=" + item.demandId + "&userId=" + parObj.userId;
                 }
             }
+            if (item.jobFairId) {
+                return "detail-unirecruit.html?jobfairId=" + item.jobFairId + "&userId=" + parObj.userId;
+            }
         },
         submajors: function(major) {
             var arr = [];
@@ -715,10 +718,14 @@ var appCont = new Vue({
             })
         },
         popComment: function(item) {
-            if (item.releaseType == "1") {
-                appModal.comment.releaserId = item.applyUserId;
-            } else {
-                appModal.comment.releaserId = item.userId;
+            if (item.releaseType == "1") { //发布者为高校
+                appModal.comment.cooperId = item.applyUserId;
+            }
+            if (item.releaseType == "2") { //发布者为企业
+                appModal.comment.cooperId = item.userId;
+            }
+            if (!item.releaseType) { // 招聘会
+                appModal.comment.cooperId = item.applyUserId;
             }
             appModal.showModal = true;
             appModal.show.comment = true;
@@ -858,7 +865,7 @@ var appModal = new Vue({
             smart: true
         },
         comment: {
-            releaserId: 0,
+            cooperId: 0,
             text: ""
         },
         baseInfo: appPorto.oldInfo,
@@ -1046,16 +1053,17 @@ var appModal = new Vue({
                 userId: parObj.userId,
                 loginIdentifier: parObj.loginId,
                 comment: this.comment.text,
-                reportUserId: this.comment.releaserId
+                reportUserId: this.comment.cooperId
             }
             console.log(postdata);
             EventUtils.ajaxReq("/sys/comment", "post", postdata, function(resp, status) {
-                console.log(resp);
+                appModal.comment.text = "";
+                appModal.show.comment = false;
+                appModal.showModal = false;
             })
-            this.show.comment = false;
-            this.showModal = false;
         },
         cancelComment: function() {
+            this.comment.text = "";
             this.show.comment = false;
             this.showModal = false;
         },
@@ -1522,5 +1530,4 @@ function coopRequest(applyindex, page) {
         }
         appCont.coop.applystatus = applyindex;
     });
-
 }

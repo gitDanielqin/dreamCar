@@ -144,7 +144,7 @@
                     </table>
                 </div>
                 <div class="fl">
-                    <div class="W170 porto inc-porto t-center">
+                    <div class="W170 inc-porto t-center porto">
                         <div class="pic-wrapper W142 inc-logo maT30"><img src="images/logo.png" /> </div>
                         <h3 class="LH28 fSize16 color-gray79 t-center W174 disInline" style="margin:9px auto 0">{{incdata.baseinfo.inc}}</h3>
                         <ul class="basic-info t-left fSize14 color-gray79 maT15 inc-basic">
@@ -164,7 +164,7 @@
                 <li cont="cont-demand" class="on">需求描述</li>
                 <li cont="cont-desc">企业简介</li>
                 <li cont="cont-apply">申请记录<i class="msg-info">10</i></li>
-                <li cont="cont-comment">高校评价<i class="msg-info">11</i></li>
+                <li cont="cont-comment">高校评价<i class="msg-info" v-show="comment.totalitems>0">{{showCount(comment.totalitems)}}</i></li>
             </ul>
             <p class="tab-cont fSize14 LH38 color-gray6 cont-demand" style="display:block ">{{incdata.demand.discription}}</p>
             <p class="tab-cont LH42 fSize14 color-gray6 cont-desc">{{incdata.baseinfo.discription}}</p>
@@ -185,19 +185,24 @@
                     <pagination :showpages="4" :totalpages="8" type="" @topage="topage" class="maT28 fSize14 maL150"></pagination>
                 </div>
             </div>
-            <ul class="tab-cont cont-comment">
-                <li class="clearfix" v-for="item in incComment">
-                    <div class="porto fl fSize14 color-gray6 t-center maL28 maR28">
-                        <img :src="item.portUrl" />
-                        <p>XXX</p>
-                    </div>
-                    <div class="fl fSize14">
-                        <h4 class="maT22 LH-H48 color-gray79">[评价]</h4>
-                        <p class="color-gray6 LH25">{{item.cont}}</p>
-                    </div>
-                    <span class="time">{{item.date}}</span>
-                </li>
-            </ul>
+            <div class="tab-cont cont-comment">
+                <ul class="H675">
+                    <li class="clearfix" v-for="item in comment.results">
+                        <div class="avatar fl fSize14 color-gray6 t-center maL28 maR28">
+                            <img :src="item.userIcon" />
+                        </div>
+                        <div class="fl fSize14 W660">
+                            <h4 class="LH-H36 color-gray79">[评价]</h4>
+                            <p class="color-gray6 LH25 comment-text">{{item.comment}}</p>
+                        </div>
+                        <span class="time">{{item.createTime}}</span>
+                    </li>
+                    <li v-show="comment.results.length==0" class="t-center fSize20">暂无评论~</li>
+                </ul>
+                <div class="paBot33">
+                    <pagination :showpages="showpage(comment.totalpages)" :totalpages="comment.totalpages" type="" @topage="topage" class="maT28 fSize14 maL150"></pagination>
+                </div>
+            </div>
         </div>
     </div>
     <div class="bot paTop8 t-center bot-account">

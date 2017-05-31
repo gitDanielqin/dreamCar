@@ -494,33 +494,49 @@
             <div class="uni-coop">
                 <div class="ListBox">
                     <div class="hd LH-H58 bg-white">
-                        <dropdown classes="state" :options="['全部状态','合作进行中','合作已完成','合作待开始']" v-model="coop.state"></dropdown>
-                        <p class="fr fSize14 maR30">我合作的高校<span class="color-orange2 maL10 maR10">{{coop.items.length}}</span>个</p>
+                        <dropdown classes="state" :options="['校企合作','招聘会']" v-model="coop.state"></dropdown>
+                        <p class="fr fSize14 maR30">我合作的企业<span class="color-orange2 maL10 maR10">{{coop.totalitems}}</span>个</p>
                     </div>
                     <ul class="info-items H470">
+                        <li v-for="(item,index) in coop.results">
+                            <div class="paLeft29 clearfix H128 pRel" v-if="coop.applystatus==1">
+                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                <div class="item-block-left fl paTop22 W275 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="coopLink(item)">{{item.coopName}}</a></h2>
+                                    <p>{{item.coopProperty}}<i class="depart">|</i>{{item.coopScale}}<i class="depart">|</i>{{item.coopType}}</p>
+                                    <p>校企培训方式：{{item.trainWay}}</p>
+                                    <p class="item-date">合作开始日期：{{item.coopCreateTime.split(" ")[0]}}</p>
+                                </div>
+                                <div class="item-block-right fl fSize14 LH28 maT10">
+                                    <p>合作专业：</p>
+                                    <p>{{infoExtrac(item.coopProfession)}}</p>
+                                    <a class="more-info" :href="coopLink(item)">了解更多<i>>></i></a>
+                                </div>
+                                <button class="btn-comment" @click="popComment(item)">评价</button>
+                            </div>
+                            <div class="paLeft29 clearfix H128 pRel" v-else>
+                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                <div class="item-block-left fl paTop22 W275 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="coopLink(item)">{{item.coopName}}</a></h2>
+                                    <p>{{item.coopProperty}}<i class="depart">|</i>{{item.coopScale}}<i class="depart">|</i>{{item.coopType}}</p>
+                                    <p>招聘会地址：{{item.coopAddress}}</p>
+                                    <p class="item-date">招聘会日期：{{item.startTime.split(" ")[0]}}</p>
+                                </div>
+                                <div class="item-block-right fl fSize14 LH28 maT10">
+                                    <p>招聘岗位：</p>
+                                    <p>{{infoExtrac(item.coopJob)}}</p>
+                                    <a class="more-info" :href="coopLink(item)">了解更多<i>>></i></a>
+                                </div>
+                                <button class="btn-comment" @click="popComment(item)">评价</button>
+                            </div>
+                        </li>
                         <li v-show="coop.results.length==0">
                             <div class="paLeft29 clearfix H128 pRel">
                                 <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
                             </div>
                         </li>
-                        <li v-for="(item,index) in coop.results" :name="item.classic" v-show="showResult(index,coop.curpage,3)">
-                            <div class="paLeft29 clearfix H128 pRel">
-                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                <div class="item-block-left fl paTop22 W390 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="#">{{item.uniname}}</a></h2>
-                                    <p>{{item.uniLevel}}</p>
-                                    <p>{{item.uniApply}}</p>
-                                    <p class="item-date">{{item.date}}</span> {{item.time}}</p>
-                                </div>
-                                <div class="item-block-right fl fSize14 LH28 maT10">
-                                    <p :style="coopStyle(item.coopState)">{{coopSt(item.coopState)}}</p>
-                                    <p>{{item.coPos}}</p>
-                                    <button class="more-info">了解更多<i>>></i></button>
-                                </div>
-                            </div>
-                        </li>
                     </ul>
-                    <pagination :showpages="showpage(coop.results.length)" :totalpages="pagesum(coop.results.length)" type="coop" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                    <pagination :showpages="showpage(coop.totalpages)" :totalpages="coop.totalpages" type="coop" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
             </div>
             <div class="conf-keyword ListBox">
@@ -673,6 +689,14 @@
             </div>
             <div class="trade-bot LH-H56 bg-gray-e6 t-center">
                 <button @click="submitTrade">确定</button><button @click="cancelTrade">取消</button>
+            </div>
+        </div>
+        <div class="comment-box pRel pop-box-shadow" v-show="show.comment" @click="stayshow($event)">
+            <h2 class="comment-header">评价</h2>
+            <textarea class="comment-cont" v-model="comment.text" placeholder="请输入400字以内的评价" @input="checkText('comment')"></textarea>
+            <p class="LH30 t-right paRight20 fSize14">您还可以输入 {{remainText(comment.text)}} 字</p>
+            <div class="comment-operation">
+                <button class="bg-orange2" @click="confirmComment">确定</button><button class="bg-gray-ae" @click="cancelComment">取消</button>
             </div>
         </div>
         <div class="refresh-box W700" @click.stop="" v-show="show.stickybox">

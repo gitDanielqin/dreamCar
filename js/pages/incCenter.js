@@ -6,6 +6,7 @@ function infoRequest() {
         userId: localStorage.userId || parObj.userId,
         loginIdentifier: localStorage.loginId || parObj.loginId
     };
+    console.log(postdata);
     EventUtils.ajaxReq('/user/company/getInfo', 'get', postdata, function(resp, status) {
         respObj = resp.data;
         console.log(respObj);
@@ -226,22 +227,12 @@ var appCont = new Vue({
             ]
         },
         coop: {
-            state: "全部状态",
+            state: "校企合作",
             curpage: 1,
-            items: [
-                { uniname: "高校名称", uniLevel: "高校性质", uniApply: "高校提供的培训方式", date: "2017-3-5", time: "24:00", coopState: "02", coPos: "合作岗位" },
-                { uniname: "高校名称", uniLevel: "高校性质", uniApply: "高校提供的培训方式", date: "2017-3-5", time: "24:00", coopState: "02", coPos: "合作岗位" },
-                { uniname: "高校名称", uniLevel: "高校性质", uniApply: "高校提供的培训方式", date: "2017-3-5", time: "24:00", coopState: "02", coPos: "合作岗位" },
-                { uniname: "高校名称", uniLevel: "高校性质", uniApply: "高校提供的培训方式", date: "2017-3-5", time: "24:00", coopState: "03", coPos: "合作岗位" },
-                { uniname: "高校名称", uniLevel: "高校性质", uniApply: "高校提供的培训方式", date: "2017-3-5", time: "24:00", coopState: "01", coPos: "合作岗位" }
-            ],
-            results: [
-                { uniname: "高校名称", uniLevel: "高校性质", uniApply: "高校提供的培训方式", date: "2017-3-5", time: "24:00", coopState: "02", coPos: "合作岗位" },
-                { uniname: "高校名称", uniLevel: "高校性质", uniApply: "高校提供的培训方式", date: "2017-3-5", time: "24:00", coopState: "02", coPos: "合作岗位" },
-                { uniname: "高校名称", uniLevel: "高校性质", uniApply: "高校提供的培训方式", date: "2017-3-5", time: "24:00", coopState: "02", coPos: "合作岗位" },
-                { uniname: "高校名称", uniLevel: "高校性质", uniApply: "高校提供的培训方式", date: "2017-3-5", time: "24:00", coopState: "03", coPos: "合作岗位" },
-                { uniname: "高校名称", uniLevel: "高校性质", uniApply: "高校提供的培训方式", date: "2017-3-5", time: "24:00", coopState: "01", coPos: "合作岗位" }
-            ]
+            totalpages: 1,
+            totalitems: 0,
+            applystatus: 1,
+            results: []
         },
         config: {
             loginName: "",
@@ -311,31 +302,11 @@ var appCont = new Vue({
             }
         },
         "coop.state": function(curval) {
-            if (curval == "全部状态") {
-                this.coop.results = cloneObj(this.coop.items);
-            } else if (curval == "合作进行中") {
-                this.coop.results = [];
-                for (var i = 0; i < this.coop.items.length; i++) {
-                    if (this.coop.items[i].coopState == "02") {
-                        this.coop.results.push(this.coop.items[i]);
-                    }
-                }
-            } else if (curval == "合作已完成") {
-                this.coop.results = [];
-                for (var i = 0; i < this.coop.items.length; i++) {
-                    if (this.coop.items[i].coopState == "03") {
-                        this.coop.results.push(this.coop.items[i]);
-                    }
-                }
-            } else if (curval == "合作待开始") {
-                this.coop.results = [];
-                for (var i = 0; i < this.coop.items.length; i++) {
-                    if (this.coop.items[i].coopState == "01") {
-                        this.coop.results.push(this.coop.items[i]);
-                    }
-                }
+            if (curval == "校企合作") {
+                coopRequest(1, 1);
+            } else if (curval == "招聘会") {
+                coopRequest(2, 1);
             }
-            this.coop.curpage = 1;
         }
     },
     methods: {
@@ -397,6 +368,32 @@ var appCont = new Vue({
                     return "detail-increcruit.html?jobfairId=" + id + "&userId=" + parObj.userId;
                 }
             }
+        },
+        coopLink: function(item) {
+            if (item.demandId) {
+                if (item.releaseType == "1") {
+                    return "detail-uni.html?demandId=" + item.demandId + "&userId=" + parObj.userId;
+                } else {
+                    return "detail-company.html?demandId=" + item.demandId + "&userId=" + parObj.userId;
+                }
+            }
+            if (item.jobFairId) {
+                return "detail-unirecruit.html?jobfairId=" + item.jobFairId + "&userId=" + parObj.userId;
+            }
+
+        },
+        popComment: function(item) {
+            if (item.releaseType == "1") { //发布者为高校
+                appModal.comment.cooperId = item.applyUserId;
+            }
+            if (item.releaseType == "2") { //发布者为企业
+                appModal.comment.cooperId = item.userId;
+            }
+            if (!item.releaseType) { // 招聘会
+                appModal.comment.cooperId = item.userId;
+            }
+            appModal.showModal = true;
+            appModal.show.comment = true;
         },
         popTrade: function() {
             appModal.showModal = true;
@@ -639,7 +636,7 @@ var appCont = new Vue({
             } else if (type == "msg-recruit") {
                 recruitMsgRequest(page);
             } else if (type == "coop") {
-                this.coop.curpage = page;
+                coopRequest(appCont.coop.applystatus, page);
             }
         },
         changeComLicense: function(obj) {
@@ -799,7 +796,8 @@ var appModal = new Vue({
             mobile: false,
             email: false,
             wechat: false,
-            preImg: false
+            preImg: false,
+            comment: false
         },
         showModal: false,
         showTrade: false,
@@ -854,12 +852,50 @@ var appModal = new Vue({
             sofortBtn: "立即刷新",
             smart: true
         },
+        comment: {
+            cooperId: 0,
+            text: ""
+        },
         checkedTrades: [],
         trades: workareas,
         baseInfo: appPorto.oldInfo,
         resumeInfo: appCont.resume
     },
     methods: {
+        remainText: function(text) {
+            if (400 - text.length < 0) {
+                return 0;
+            }
+            return (400 - text.length);
+        },
+        checkText: function(type) {
+            if (type == "comment") {
+                var len = this.comment.text.length;
+                if (len > 400) {
+                    alert("最多只能输入400字！");
+                    this.comment.text = this.comment.text.slice(0, 400);
+                }
+            }
+        },
+        confirmComment: function() {
+            var postdata = {
+                userId: parObj.userId,
+                loginIdentifier: parObj.loginId,
+                comment: this.comment.text,
+                reportUserId: this.comment.cooperId
+            }
+            console.log(postdata);
+            EventUtils.ajaxReq("/sys/comment", "post", postdata, function(resp, status) {
+                appModal.comment.text = "";
+                appModal.show.comment = false;
+                appModal.showModal = false;
+            })
+        },
+        cancelComment: function() {
+            this.comment.text = "";
+            this.show.comment = false;
+            this.showModal = false;
+        },
         toSmartFresh: function() {
             this.show.freshhintbox = false;
             this.show.freshbox = true;
@@ -1244,6 +1280,10 @@ function navEventBind() {
                 combiMsgRequest(2, 1)
             }
         }
+        //校企合作
+        if ($(this).attr("paneid") == "uni-coop") {
+            coopRequest(appCont.coop.applystatus, 1);
+        }
         if ($(this).attr("paneid")) {
             $(".content").children().hide();
             $(".content").children("." + $(this).attr("paneid")).show();
@@ -1522,5 +1562,30 @@ function recruitMsgRequest(page) {
             appCont.message.recruit.results = [];
             appCont.message.recruit.totalitems = 0;
         }
+    });
+}
+//校企合作一览
+function coopRequest(applyindex, page) {
+    appCont.coop.curpage = page;
+    var postdata = {
+        userId: parObj.userId,
+        loginIdentifier: parObj.loginId,
+        index: page,
+        count: 3,
+        applyStatus: applyindex
+    }
+    console.log(postdata);
+    EventUtils.ajaxReq("/demand/getDemandApplyList", "get", postdata, function(resp, status) {
+        console.log(resp);
+        if (resp && resp.data) {
+            appCont.coop.totalitems = resp.data.totalRow;
+            appCont.coop.totalpages = resp.data.totalPage;
+            appCont.coop.results = resp.data.list;
+        } else {
+            appCont.coop.results = [];
+            appCont.coop.totalitems = 0;
+            appCont.coop.totalpages = 1;
+        }
+        appCont.coop.applystatus = applyindex;
     });
 }
