@@ -32,20 +32,11 @@ function infoRequest() {
         }
     });
     if (parObj.userId) {
-        var getdata = {
-            userId: parObj.userId
-        }
-        console.log(getdata);
-        EventUtils.ajaxReq("/center/user/getInfo", "get", getdata, function(resp, status) {
+        EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function(resp, status) {
             accountObj = resp.data;
             appTop.userName = accountObj.userName;
             appTop.isLogin = true;
             appTop.userType = accountObj.userType;
-            appResult.loginInfo = {
-                userId: accountObj.userId,
-                userType: accountObj.userType,
-                loginId: accountObj.loginId
-            }
             console.log(resp)
         })
     }
@@ -70,28 +61,34 @@ var appTop = new Vue({
         publish: function() {
             switch (this.userType) {
                 case "1":
-                    var link = "uniRequire.html?new=1&userId=" + respObj.userId + "&loginId=" + respObj.loginId;
+                    var link = "uniRequire.html?new=1";
                     break;
                 case "2":
-                    var link = "incRequire.html?new=1&userId=" + respObj.userId + "&loginId=" + respObj.loginId;
+                    var link = "incRequire.html?new=1";
                     break;
                 default:
+            };
+            if (accountObj.userId) {
+                link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
             }
             window.open(link, '_blank');
         },
         toCenter: function(theme) {
             switch (this.userType) {
                 case "0":
-                    var link = "pCenter.html?loginId=" + respObj.loginId + "&userId=" + respObj.userId + "&theme=" + theme;
+                    var link = "pCenter.html?theme=" + theme;
                     break;
                 case "1":
-                    var link = "uniCenter.html?loginId=" + respObj.loginId + "&userId=" + respObj.userId + "&theme=" + theme;
+                    var link = "uniCenter.html?theme=" + theme;
                     break;
                 case "2":
-                    var link = "incCenter.html?loginId=" + respObj.loginId + "&userId=" + respObj.userId + "&theme=" + theme;
+                    var link = "incCenter.html?theme=" + theme;
                     break;
                 default:
 
+            };
+            if (accountObj.userId) {
+                link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
             }
             window.open(link, '_blank');
         },
@@ -99,6 +96,17 @@ var appTop = new Vue({
             this.isLogin = false;
             appModal.login.account = "";
             appModal.login.password = "";
+            accountObj = {};
+            //复原合作按钮
+            $("button.btn-apply[disabled]").text("投个简历");
+            $("button.btn-apply[disabled]").attr("disabled", false);
+            var state = {
+                title: document.title,
+                url: document.location.href,
+                otherkey: null
+            };
+            //无刷新页面替换URL
+            history.replaceState(state, document.title, "display-position.html");
         }
     }
 })
@@ -363,14 +371,14 @@ var appResult = new Vue({
             }
             return link
         },
-        coApply: function(id) {
+        coApply: function(id, obj) {
             if (appTop.isLogin) {
                 if (accountObj.userType != "0") {
                     alert("抱歉，您不能投递该职位！");
                     return false;
                 }
                 var postdata = {
-                    userId: parObj.userId,
+                    userId: accountObj.userId,
                     recruitId: id
                 }
                 console.log(postdata);
@@ -385,9 +393,10 @@ var appResult = new Vue({
                         appModal.showSucc = true;
                     } else {
                         alert(resp.info)
-                    }
+                    };
+                    //投递后避免重复点击         
+                    $(obj).attr("disabled", true).text("已投递");
                 });
-
             } else {
                 $(".dlg-login").css({
                     top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
@@ -444,15 +453,19 @@ var appModal = new Vue({
                 password: this.login.password
             };
             EventUtils.ajaxReq("/center/user/login", "post", postdata, function(resp, status) {
-                console.log(resp);
-                respObj.userId = resp.data.userId;
-                respObj.loginId = resp.data.loginIdentifier;
+                accountObj = resp.data;
                 appTop.userType = resp.data.userType;
                 appTop.userName = resp.data.name;
                 appTop.isLogin = true;
                 appModal.showModal = false;
                 appModal.showLogin = false;
-                console.log(resp);
+                var state = {
+                    title: document.title,
+                    url: document.location.href,
+                    otherkey: null
+                };
+                //无刷新页面替换URL
+                history.replaceState(state, document.title, "display-position.html?userId=" + resp.data.userId);
             })
         }
     },

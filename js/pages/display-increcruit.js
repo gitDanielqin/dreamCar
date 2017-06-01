@@ -69,28 +69,34 @@ var appTop = new Vue({
         publish: function() {
             switch (this.userType) {
                 case "1":
-                    var link = "uniRequire.html?new=1&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
+                    var link = "uniRequire.html?new=1";
                     break;
                 case "2":
-                    var link = "incRequire.html?new=1&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
+                    var link = "incRequire.html?new=1";
                     break;
                 default:
+            };
+            if (accountObj.userId) {
+                link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
             }
             window.open(link, '_blank');
         },
         toCenter: function(theme) {
             switch (this.userType) {
                 case "0":
-                    var link = "pCenter.html?loginId=" + accountObj.loginIdentifier + "&userId=" + accountObj.userId + "&theme=" + theme;
+                    var link = "pCenter.html?theme=" + theme;
                     break;
                 case "1":
-                    var link = "uniCenter.html?loginId=" + accountObj.loginIdentifier + "&userId=" + accountObj.userId + "&theme=" + theme;
+                    var link = "uniCenter.html?theme=" + theme;
                     break;
                 case "2":
-                    var link = "incCenter.html?loginId=" + accountObj.loginIdentifier + "&userId=" + accountObj.userId + "&theme=" + theme;
+                    var link = "incCenter.html?theme=" + theme;
                     break;
                 default:
 
+            };
+            if (accountObj.userId) {
+                link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
             }
             window.open(link, '_blank');
         },
@@ -99,6 +105,16 @@ var appTop = new Vue({
             appModal.login.account = "";
             appModal.login.password = "";
             accountObj = {};
+            //复原合作按钮
+            $("button.btn-apply[disabled]").text("投个简历");
+            $("button.btn-apply[disabled]").attr("disabled", false);
+            var state = {
+                title: document.title,
+                url: document.location.href,
+                otherkey: null
+            };
+            //无刷新页面替换URL
+            history.replaceState(state, document.title, "display-increcruit.html");
         }
     }
 })
@@ -332,14 +348,14 @@ var appResult = new Vue({
             }
             return link
         },
-        coApply: function(id) {
+        coApply: function(id, obj) {
             if (appTop.isLogin) {
                 if (accountObj.userType != "0") {
                     alert("抱歉，您不能投递该职位！");
                     return false;
                 }
                 var postdata = {
-                    userId: accountObj.userId || parObj.userId,
+                    userId: accountObj.userId,
                     jobFairId: id
                 }
                 EventUtils.ajaxReq("/jobfair/cooperateJobFair", "post", postdata, function(resp, status) {
@@ -354,6 +370,8 @@ var appResult = new Vue({
                     } else {
                         alert(resp.info)
                     }
+                    //投递后避免重复点击         
+                    $(obj).attr("disabled", true).text("已投递");
                 });
             } else {
                 $(".dlg-login").css({

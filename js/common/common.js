@@ -96,6 +96,12 @@ function getViewport() {
 }
 
 var EventUtils = {
+        absCenter: function(obj) {
+            $(obj).css({
+                top: Math.floor(($(window).height() - $(obj).height()) / 2 + document.body.scrollTop),
+                left: Math.floor(($(window).width() - $(obj).width()) / 2)
+            })
+        },
         urlExtrac: function(url) {
             var paraStr = url.search.substr(1);
             var paraArray = paraStr.split("&");
@@ -129,8 +135,8 @@ var EventUtils = {
         },
         ajaxReq: function(url, method, postdata, callback) {
             $.ajax({
-                // url: "http://www.xiaoqiztc.com/easily_xq_WebApi" + url,
-                url: "http://192.168.0.104:8080/easily_xq_WebApi" + url,
+                url: "http://www.xiaoqiztc.com/easily_xq_WebApi" + url,
+                // url: "http://192.168.0.104:8080/easily_xq_WebApi" + url,
                 type: method,
                 data: postdata,
                 success: callback,

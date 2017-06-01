@@ -1,7 +1,6 @@
 /**
  * Created by xuanyuan on 2016/12/31.
  */
-var isLogin = false;
 var parObj = EventUtils.urlExtrac(window.location); //地址参数对象
 var respObj = {}; //页面信息
 var accountObj = {} //登录用户信息
@@ -20,7 +19,6 @@ var subposArray = [];
 })()
 // 初始化页面信息请求
 function infoRequest() {
-
     var postdata = {
         demandType: 1,
         index: 1,
@@ -34,15 +32,14 @@ function infoRequest() {
             appResult.uniList.results = resp.data.list;
         }
     });
-    if (localStorage.userId || parObj.userId) {
-        EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId || localStorage.userId }, function(resp, status) {
-            //  console.log(resp);
+    if (parObj.userId) {
+        EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId }, function(resp, status) {
+            console.log(resp);
             accountObj = resp.data;
-            if (accountObj) {
+            if (resp && resp.data) {
                 appTop.userName = resp.data.userName;
                 appTop.userType = resp.data.userType;
                 appTop.isLogin = true;
-                isLogin = true;
             }
         })
     }
@@ -53,7 +50,7 @@ var appTop = new Vue({
     el: "#app-top",
     data: {
         isLogin: false,
-        userType: "0",
+        userType: "",
         userName: ""
     },
     methods: {
@@ -65,30 +62,35 @@ var appTop = new Vue({
             window.open("login.html?newAcc=1", "_blank");
         },
         publish: function() {
-            switch (this.userType) {
+            switch (accountObj.userType) {
                 case "1":
-                    var link = "uniRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId;
+                    var link = "uniRequire.html?new=1";
                     break;
                 case "2":
-                    var link = "incRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId;
+                    var link = "incRequire.html?new=1";
                     break;
                 default:
+            }
+            if (accountObj.userId) {
+                link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
             }
             window.open(link, '_blank');
         },
         toCenter: function(theme) {
             switch (this.userType) {
                 case "0":
-                    var link = "pCenter.html?loginId=" + parObj.loginId + "&userId=" + parObj.userId + "&theme=" + theme;
+                    var link = "pCenter.html?theme=" + theme;
                     break;
                 case "1":
-                    var link = "uniCenter.html?loginId=" + parObj.loginId + "&userId=" + parObj.userId + "&theme=" + theme;
+                    var link = "uniCenter.html?theme=" + theme;
                     break;
                 case "2":
-                    var link = "incCenter.html?loginId=" + parObj.loginId + "&userId=" + parObj.userId + "&theme=" + theme;
+                    var link = "incCenter.html?theme=" + theme;
                     break;
                 default:
-
+            }
+            if (accountObj.userId) {
+                link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
             }
             window.open(link, '_blank');
         },
@@ -96,11 +98,10 @@ var appTop = new Vue({
             this.isLogin = false;
             appModal.login.account = "";
             appModal.login.password = "";
-            appResult.loginInfo = {
-                userId: "",
-                userType: "",
-                loginId: ""
-            }
+            accountObj = {};
+            //复原合作按钮
+            $("button.btn-apply[disabled] span").text("申请合作");
+            $("button.btn-apply[disabled]").attr("disabled", false);
             var state = {
                 title: document.title,
                 url: document.location.href,
@@ -344,23 +345,15 @@ var appResult = new Vue({
         },
         demandLink: function(demandId) {
             var link = "detail-uni.html?demandId=" + demandId;
-            if (localStorage.userId) {
-                link += "&userId=" + localStorage.userId;
-            } else if (accountObj && accountObj.userId) {
+            if (accountObj.userId) {
                 link += "&userId=" + accountObj.userId;
-            } else if (parObj.userId) {
-                link += "&userId=" + parObj.userId;
             }
             return link;
         },
-        coApply: function(id) {
+        coApply: function(id, obj) {
             if (appTop.isLogin) {
-                if (accountObj.userId == respObj.userId) {
-                    alert("无法申请自己的需求！");
-                    return false;
-                }
                 if (accountObj.userType != "2") {
-                    alert("抱歉，目前您不能申请高校的需求！");
+                    alert("抱歉，您不能申请该需求！");
                     return false;
                 }
                 var postdata = {
@@ -379,7 +372,13 @@ var appResult = new Vue({
                         appModal.showSucc = true;
                     } else {
                         alert(resp.info)
+                    };
+                    //申请后避免重复点击
+                    if (!$(obj).hasClass("btn-apply")) {
+                        obj = obj.parentNode;
                     }
+                    $(obj).attr("disabled", true);
+                    $(obj).children("span").text("已申请");
                 });
             } else {
                 $(".dlg-login").css({
@@ -438,22 +437,23 @@ var appModal = new Vue({
             };
             EventUtils.ajaxReq("/center/user/login", "post", postdata, function(resp, status) {
                 console.log(resp);
-                parObj.userId = resp.data.userId;
-                parObj.userType = resp.data.userType;
-                parObj.loginId = resp.data.loginIdentifier;
-                accountObj = resp.data;
-                appTop.userType = resp.data.userType;
-                appTop.userName = resp.data.name;
-                appTop.isLogin = true;
-                var state = {
-                    title: document.title,
-                    url: document.location.href,
-                    otherkey: null
-                };
-                //无刷新页面替换URL
-                history.replaceState(state, document.title, "display-uni.html?userId=" + resp.data.userId + "&loginId=" + resp.data.loginIdentifier + "&userType=" + resp.data.userType);
-                appModal.showModal = false;
-                appModal.showLogin = false;
+                if (resp.data) {
+                    accountObj = resp.data;
+                    appTop.userName = resp.data.name;
+                    appTop.userType = resp.data.userType;
+                    appTop.isLogin = true;
+                    var state = {
+                        title: document.title,
+                        url: document.location.href,
+                        otherkey: null
+                    };
+                    //无刷新页面替换URL
+                    history.replaceState(state, document.title, "display-uni.html?userId=" + resp.data.userId);
+                    appModal.showModal = false;
+                    appModal.showLogin = false;
+                } else {
+                    alert(resp.info);
+                }
             })
         }
     },

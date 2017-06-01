@@ -1,7 +1,6 @@
 /**
  * Created by xuanyuan on 2016/12/31.
  */
-var isLogin = false;
 var parObj = EventUtils.urlExtrac(window.location); //地址参数对象
 var respObj = {}; //页面信息
 var accountObj = {}; // 登录用户信息
@@ -38,7 +37,6 @@ function infoRequest() {
                 appTop.userName = resp.data.userName;
                 appTop.userType = resp.data.userType;
                 appTop.isLogin = true;
-                isLogin = true;
             }
         })
     }
@@ -47,7 +45,7 @@ function infoRequest() {
 var appTop = new Vue({
     el: "#app-top",
     data: {
-        isLogin: isLogin,
+        isLogin: false,
         userType: "0",
         userName: ""
     },
@@ -62,28 +60,34 @@ var appTop = new Vue({
         publish: function() {
             switch (this.userType) {
                 case "1":
-                    var link = "uniRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId;
+                    var link = "uniRequire.html?new=1";
                     break;
                 case "2":
-                    var link = "incRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId;
+                    var link = "incRequire.html?new=1";
                     break;
                 default:
+            };
+            if (accountObj.userId) {
+                link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
             }
             window.open(link, '_blank');
         },
         toCenter: function(theme) {
             switch (this.userType) {
                 case "0":
-                    var link = "pCenter.html?loginId=" + parObj.loginId + "&userId=" + parObj.userId + "&theme=" + theme;
+                    var link = "pCenter.html?theme=" + theme;
                     break;
                 case "1":
-                    var link = "uniCenter.html?loginId=" + parObj.loginId + "&userId=" + parObj.userId + "&theme=" + theme;
+                    var link = "uniCenter.html?theme=" + theme;
                     break;
                 case "2":
-                    var link = "incCenter.html?loginId=" + parObj.loginId + "&userId=" + parObj.userId + "&theme=" + theme;
+                    var link = "incCenter.html?theme=" + theme;
                     break;
                 default:
 
+            };
+            if (accountObj.userId) {
+                link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
             }
             window.open(link, '_blank');
         },
@@ -92,6 +96,9 @@ var appTop = new Vue({
             appModal.login.account = "";
             appModal.login.password = "";
             accountObj = {};
+            //复原合作按钮
+            $("button.btn-apply[disabled] span").text("申请合作");
+            $("button.btn-apply[disabled]").attr("disabled", false);
             var state = {
                 title: document.title,
                 url: document.location.href,
@@ -317,14 +324,10 @@ var appResult = new Vue({
         infoExtrac: function(info) {
             return EventUtils.infoExtrac(info);
         },
-        coApply: function(id) {
+        coApply: function(id, obj) {
             if (appTop.isLogin) {
-                if (accountObj.userId == respObj.userId) {
-                    alert("无法申请自己的需求！");
-                    return false;
-                };
                 if (accountObj.userType != "1") {
-                    alert("抱歉，目前您不能申请企业的需求！");
+                    alert("抱歉，您不能申请该需求！");
                     return false;
                 }
                 var postdata = {
@@ -344,6 +347,12 @@ var appResult = new Vue({
                     } else {
                         alert(resp.info)
                     }
+                    //申请后避免重复点击
+                    if (!$(obj).hasClass("btn-apply")) {
+                        obj = obj.parentNode;
+                    }
+                    $(obj).attr("disabled", true);
+                    $(obj).children("span").text("已申请");
                 });
             } else {
                 $(".dlg-login").css({
@@ -401,9 +410,6 @@ var appModal = new Vue({
                 password: this.login.password
             };
             EventUtils.ajaxReq("/center/user/login", "post", postdata, function(resp, status) {
-                parObj.userId = resp.data.userId;
-                parObj.userType = resp.data.userType;
-                parObj.loginId = resp.data.loginIdentifier;
                 accountObj = resp.data;
                 console.log(resp.data);
                 appTop.userType = resp.data.userType;
@@ -415,7 +421,7 @@ var appModal = new Vue({
                     otherkey: null
                 };
                 //无刷新页面替换URL
-                history.replaceState(state, document.title, "display-company.html?userId=" + resp.data.userId + "&loginId=" + resp.data.loginIdentifier + "&userType=" + resp.data.userType);
+                history.replaceState(state, document.title, "display-company.html?userId=" + resp.data.userId);
                 appModal.showModal = false;
                 appModal.showLogin = false;
             })

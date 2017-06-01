@@ -67,7 +67,7 @@
                 <div class="fr">
                     <div class="maT64 banner-btns">
                         <button class="btn-collec v-mid bg-white" @click.stop="collect($event.target)"><i class="pic-icon"></i><span class="maR10">收 藏</span></button>
-                        <button class="bg-orange4 color-white v-mid maL26 btn-apply t-left" @click="coApply"><span class="maL10">申请招聘</span><i class="pic-icon maL6"></i></button>
+                        <button class="bg-orange4 color-white v-mid maL26 btn-apply t-left" @click="coApply($event.target)"><span class="maL10">申请招聘</span><i class="pic-icon maL6"></i></button>
                     </div>
                     <p class="share LH-H58 t-right">
                         <span class="fSize14">分享：</span>
@@ -120,45 +120,7 @@
                     </div>
                 </div>
             </div>
-            <ul class="result-tabs lis-inline LH40 t-center color-gray79 fSize16">
-                <li cont="cont-demand" class="on">招聘会描述</li>
-                <li cont="cont-desc">高校简介</li>
-                <li cont="cont-apply">申请记录<i class="msg-info">10</i></li>
-                <li cont="cont-comment">学校评价<i class="msg-info">11</i></li>
-            </ul>
-            <p class="tab-cont fSize14 LH38 color-gray6 cont-demand" style="display:block ">{{unirecdata.jobfairDesc}}</p>
-            <p class="tab-cont LH42 fSize14 color-gray6 cont-desc">{{unirecdata.userDesc}}</p>
-            <div class="cont-apply tab-cont">
-                <table class="LH48 fSize12 result-table">
-                    <tr class="bg-gray-f2 color-gray79 fSize14">
-                        <th class="W200">申请企业</th>
-                        <th class="W400">申请时间</th>
-                        <th class="W200">状态</th>
-                    </tr>
-                    <tr v-for="item in applyRec">
-                        <td>{{item.inc}}</td>
-                        <td>{{item.date}}</td>
-                        <td :class="viewCss(item.state)">{{item.state}}</td>
-                    </tr>
-                </table>
-                <div class="paBot33">
-                    <pagination :showpages="4" :totalpages="8" type="" @topage="topage" class="maT28 fSize14 maL150"></pagination>
-                </div>
-            </div>
-            <ul class="tab-cont cont-comment">
-                <li class="clearfix" v-for="item in uniComment">
-                    <div class="porto fl fSize14 color-gray6 t-center maL28 maR28">
-                        <img :src="item.portUrl" />
-                        <p>XXX</p>
-                    </div>
-                    <div class="fl fSize14">
-                        <h4 class="maT22 LH-H48 color-gray79">[评价]</h4>
-                        <p class="color-gray6 LH25">{{item.cont}}</p>
-                    </div>
-                    <span class="time">{{item.date}}</span>
-                </li>
-            </ul>
-
+            <detail-table tabletype="3" :options="tabledata" @applycallback="applyswitch" @cmtcallback="cmtswitch"></detail-table>
         </div>
     </div>
     <div class="bot paTop8 t-center bot-account">
@@ -223,6 +185,7 @@
     <script src="js/common/common.js"></script>
     <script src="js/components/pagination.js"></script>
     <script src="js/components/dropdown.js"></script>
+    <script src="js/components/detail-table.js"></script>
     <script src="js/pages/detail-unirecruit.js"></script>
 </body>
 

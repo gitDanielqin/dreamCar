@@ -384,10 +384,10 @@ var appCont = new Vue({
         },
         popComment: function(item) {
             if (item.releaseType == "1") { //发布者为高校
-                appModal.comment.cooperId = item.applyUserId;
+                appModal.comment.cooperId = item.userId;
             }
             if (item.releaseType == "2") { //发布者为企业
-                appModal.comment.cooperId = item.userId;
+                appModal.comment.cooperId = item.applyUserId;
             }
             if (!item.releaseType) { // 招聘会
                 appModal.comment.cooperId = item.userId;

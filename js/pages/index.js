@@ -154,7 +154,7 @@ var appFront = new Vue({
                     break;
             };
             if (this.isLogin) {
-                link += "?userId=" + parObj.userId;
+                link += "?userId=" + (parObj.userId || localStorage.userId);
             };
             return link;
         },

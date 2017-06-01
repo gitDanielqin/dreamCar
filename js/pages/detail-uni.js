@@ -1,4 +1,3 @@
-var isLogin = false;
 var parObj = EventUtils.urlExtrac(window.location); //地址参数对象
 var respObj = {}; //页面信息
 var accountObj = {} //用户信息
@@ -12,7 +11,7 @@ function infoRequest() {
     }
     EventUtils.ajaxReq("/demand/getInfo", "get", postdemand, function(resp, status) {
         respObj = resp.data;
-        console.log(respObj);
+        //   console.log(respObj);
         var briefdata = {
             title: respObj.title,
             viewed: respObj.readCount,
@@ -60,11 +59,17 @@ function infoRequest() {
             $("#app-banner .btn-collec").addClass("collected");
             $("#app-banner .btn-collec span").html("已收藏");
         };
+        appMain.tabledata.desc = respObj.discription;
+        appMain.tabledata.userdesc = respObj.userDiscription;
+        //需求申请一览
+        applyRequest(1);
         //评价一览申请
-        commentRequest(respObj.userId, 1);
+        setTimeout(function() {
+            commentRequest(respObj.userId, 1);
+        }, 500)
+
 
     })
-
     if (parObj.userId) {
         EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId }, function(resp, status) {
             //  console.log(resp);
@@ -73,20 +78,9 @@ function infoRequest() {
                 appTop.userName = resp.data.userName;
                 appTop.userType = resp.data.userType;
                 appTop.isLogin = true;
-                isLogin = true;
             }
         })
     }
-
-
-    // var postdata = {
-    //      index:1,
-    //      count:13,
-    //      demandId:parObj.demandId
-    // };
-    // EventUtils.ajaxReq("/demand/getDemandApplyList","get",postdemand,function(resp,status){
-    //      console.log(resp)
-    // })
 }
 
 
@@ -94,7 +88,7 @@ function infoRequest() {
 var appTop = new Vue({
     el: "#app-top",
     data: {
-        isLogin: isLogin,
+        isLogin: false,
         userType: "0",
         userName: ""
     },
@@ -109,29 +103,34 @@ var appTop = new Vue({
         publish: function() {
             switch (this.userType) {
                 case "1":
-                    var link = "uniRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId;
+                    var link = "uniRequire.html?new=1";
                     break;
                 case "2":
-                    var link = "incRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId;
+                    var link = "incRequire.html?new=1";
                     break;
                 default:
+            };
+            if (accountObj.userId) {
+                link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
             }
             window.open(link, '_blank');
         },
         toCenter: function(theme) {
             switch (this.userType) {
                 case "0":
-                    parObj
-                    var link = "pCenter.html?loginId=" + parObj.loginId + "&userId=" + parObj.userId + "&theme=" + theme;
+                    var link = "pCenter.html?theme=" + theme;
                     break;
                 case "1":
-                    var link = "uniCenter.html?loginId=" + parObj.loginId + "&userId=" + parObj.userId + "&theme=" + theme;
+                    var link = "uniCenter.html?theme=" + theme;
                     break;
                 case "2":
-                    var link = "incCenter.html?loginId=" + parObj.loginId + "&userId=" + parObj.userId + "&theme=" + theme;
+                    var link = "incCenter.html?theme=" + theme;
                     break;
                 default:
 
+            };
+            if (accountObj.userId) {
+                link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
             }
             window.open(link, '_blank');
         },
@@ -141,6 +140,16 @@ var appTop = new Vue({
             $("#app-banner .btn-collec span").html("收 藏");
             appModal.login.account = "";
             appModal.login.password = "";
+            //复原合作按钮
+            $("button.btn-apply[disabled] span").text("申请合作");
+            $("button.btn-apply[disabled]").attr("disabled", false);
+            var state = {
+                title: document.title,
+                url: document.location.href,
+                otherkey: null
+            };
+            //无刷新页面替换URL
+            history.replaceState(state, document.title, "detail-uni.html");
         }
     }
 });
@@ -183,27 +192,23 @@ var appBanner = new Vue({
                     })
                 }
             } else { //未登录状态下
-                $(".dlg-login").css({
-                    top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
-                })
+                // $(".dlg-login").css({
+                //     top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
+                // })
                 appModal.showModal = true;
                 appModal.showLogin = true;
                 appModal.showSucc = false;
             }
         },
-        coApply: function() {
+        coApply: function(obj) {
             if (appTop.isLogin) {
-                if (parObj.userId == respObj.userId) {
-                    alert("无法申请自己的需求！");
-                    return false;
-                }
                 if (accountObj.userType != "2") {
-                    alert("抱歉，目前您不能申请高校的需求！");
+                    alert("抱歉，您不能申请该需求！");
                     return false;
                 }
                 var postdata = {
-                    userId: parObj.userId,
-                    loginIdentifier: parObj.loginId,
+                    userId: accountObj.userId,
+                    loginIdentifier: accountObj.loginId,
                     demandId: parObj.demandId
                 }
                 EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
@@ -217,12 +222,18 @@ var appBanner = new Vue({
                     } else {
                         alert(resp.info)
                     }
+                    //申请后避免重复点击
+                    if (!$(obj).hasClass("btn-apply")) {
+                        obj = obj.parentNode;
+                    }
+                    $(obj).attr("disabled", true);
+                    $(obj).children("span").text("已申请");
                 });
 
             } else {
-                $(".dlg-login").css({
-                    top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
-                })
+                // $(".dlg-login").css({
+                //     top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
+                // })
                 appModal.showModal = true;
                 appModal.showLogin = true;
                 appModal.showSucc = false;
@@ -259,38 +270,22 @@ var appMain = new Vue({
                 discription: "啦啦啦"
             }
         },
-        applyRec: [
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "未查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "未查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "未查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "未查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "未查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "未查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
-        ],
-        uniComment: {
-            totalpages: 1,
-            results: []
+        tabledata: {
+            desc: "",
+            userdesc: "",
+            applyRec: {
+                totalpages: 1,
+                totalitems: 0,
+                results: []
+            },
+            comment: {
+                totalpages: 1,
+                totalitems: 0,
+                results: []
+            }
         }
     },
     methods: {
-        viewCss: function(state) {
-            if (state == "查看") {
-                return "viewed";
-            } else if (state == "预约面试") {
-                return "interview";
-            } else if (state == "邀请合作") {
-                return "coop";
-            } else if (state == "邀请参会") {
-                return "interview";
-            }
-        },
         showContact: function(contact) {
             if (isLogin) {
                 return contact;
@@ -303,20 +298,13 @@ var appMain = new Vue({
         showAllContact: function(contact) {
             $(".descript .contact-phone").text(contact);
         },
-        showpage: function(totalpages) {
-            if (totalpages > 3) {
-                return 3;
-            } else {
-                return totalpages;
-            }
+        applyswitch: function(page) {
+            applyRequest(page);
         },
-        topage: function() {
-            //console.log(1);
+        cmtswitch: function(page) {
+            commentRequest(respObj.userId, page);
         }
     },
-    components: {
-        'pagination': pagination
-    }
 });
 var appModal = new Vue({
     el: "#app-modal",
@@ -348,9 +336,6 @@ var appModal = new Vue({
                 password: this.login.password
             };
             EventUtils.ajaxReq("/center/user/login", "post", postdata, function(resp, status) {
-                parObj.userId = resp.data.userId;
-                parObj.loginId = resp.data.loginIdentifier;
-                parObj.userType = resp.data.userType;
                 accountObj = resp.data;
                 appTop.userType = resp.data.userType;
                 appTop.userName = resp.data.name;
@@ -370,14 +355,13 @@ var appModal = new Vue({
                         $("#app-banner .btn-collec span").html("已收藏");
                     }
                 });
-
                 var state = {
                     title: document.title,
                     url: document.location.href,
                     otherkey: null
                 };
                 //无刷新页面替换URL
-                history.replaceState(state, document.title, "detail-uni.html?userId=" + resp.data.userId + "&loginId=" + resp.data.loginIdentifier + "&demandId=" + respObj.demandId);
+                history.replaceState(state, document.title, "detail-uni.html?userId=" + resp.data.userId);
                 console.log(resp);
             })
         }
@@ -385,8 +369,9 @@ var appModal = new Vue({
     watch: {
         'showLogin': function(curval) {
             if (curval) {
-                var dis_top = Math.floor(EventUtils.getViewport().height * 0.2) + document.body.scrollTop + "px";
-                $(".dlg-login").css("top", dis_top);
+                // var dis_top = Math.floor(EventUtils.getViewport().height * 0.2) + document.body.scrollTop + "px";
+                // $(".dlg-login").css("top", dis_top);
+                EventUtils.absCenter($(".dlg-login"));
             }
         }
     }
@@ -409,12 +394,6 @@ function _init() {
 _init();
 
 function initEventBind() {
-    $(".result-tabs li").bind("click", function() {
-        $(".result-tabs li").removeClass("on");
-        $(this).addClass("on");
-        $(".tab-cont").hide();
-        $("." + $(this).attr("cont")).show();
-    });
     $(".account li").mouseenter(function() {
         if ($(this).find("dl").length > 0) {
             $(this).find("dl").slideDown();
@@ -426,21 +405,45 @@ function initEventBind() {
     })
 };
 
+function applyRequest(page) {
+    var applydata = {
+        demandId: parObj.userId,
+        index: page,
+        count: 13
+    }
+    console.log(applydata);
+    EventUtils.ajaxReq("/demand/getDemandApply", "get", applydata, function(resp, status) {
+        console.log(resp);
+        if (resp && resp.data) {
+            appMain.tabledata.applyRec.totalpages = resp.data.totalPage;
+            appMain.tabledata.applyRec.results = resp.data.list;
+            appMain.tabledata.applyRec.totalitems = resp.data.totalRow;
+        } else {
+            appMain.tabledata.applyRec.totalpages = 1;
+            appMain.tabledata.applyRec.results = [];
+            appMain.tabledata.applyRec.totalitems = 0;
+        }
+    })
+}
+
 function commentRequest(id, page) {
     var commentdata = {
         reportUserId: id,
         index: page,
         count: 6
     }
+    console.log(commentdata);
     EventUtils.ajaxReq("/sys/getCommentList", "post", commentdata, function(resp, status) {
+        //  console.log(resp);
         console.log(resp);
         if (resp && resp.data) {
-            appMain.uniComment.results = resp.data.list;
-            appMain.uniComment.totalpages = resp.data.totalPage;
+            appMain.tabledata.comment.results = resp.data.list;
+            appMain.tabledata.comment.totalpages = resp.data.totalPage;
+            appMain.tabledata.comment.totalitems = resp.data.totalRow;
         } else {
-            appMain.uniComment.results = [];
-            appMain.uniComment.totalpages = 1;
+            appMain.tabledata.comment.results = [];
+            appMain.tabledata.comment.totalpages = 1;
+            appMain.tabledata.comment.totalitems = 0;
         }
-
     });
 }

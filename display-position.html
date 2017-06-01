@@ -133,7 +133,7 @@
                                 <p class="fSize12">{{item.userProperty}}<span class="maL16">{{item.userScale}}</span></p>
                                 <p class="fSize12 pubdate">发布日期：{{item.updateTime.split(" ")[0]}}</p>
                             </div>
-                            <button class="btn-apply color-blueL" @click="coApply(item.recruitId)">投个简历</button>
+                            <button class="btn-apply color-blueL" @click="coApply(item.recruitId,$event.target)">投个简历</button>
                         </div>
                     </li>
                     <li v-show="posList.results.length==0">

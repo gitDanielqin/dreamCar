@@ -128,7 +128,7 @@
                                 <p class="fSize12">{{item.userProperty}}</p>
                                 <p class="fSize12 pubdate">{{item.updateTime}}</p>
                             </div>
-                            <button class="btn-apply color-blueL t-left" @click="coApply(item.demandId)"><span class="maL21">申请合作</span><i class="pic-icon maL6"></i></button>
+                            <button class="btn-apply color-blueL t-left" @click="coApply(item.demandId,$event.target)"><span class="maL21">申请合作</span><i class="pic-icon maL6"></i></button>
                         </div>
                     </li>
                     <li v-show="uniList.results.length==0">

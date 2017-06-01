@@ -1,4 +1,3 @@
-var isLogin = false;
 var parObj = EventUtils.urlExtrac(window.location); //地址参数对象
 var respObj = {}; //页面信息
 var accountObj = {} //用户信息
@@ -59,6 +58,12 @@ function infoRequest() {
             $("#app-banner .btn-collec").addClass("collected");
             $("#app-banner .btn-collec span").html("已收藏");
         }
+        appMain.tabledata.desc = respObj.discription;
+        appMain.tabledata.userdesc = respObj.userDiscription;
+        //招聘会申请一览
+        //  applyRequest(1);
+        //获取评价一览
+        commentRequest(respObj.userId, 1);
     })
 
     if (parObj.userId) {
@@ -70,7 +75,6 @@ function infoRequest() {
                 appTop.userName = resp.data.userName;
                 appTop.userType = resp.data.userType;
                 appTop.isLogin = true;
-                isLogin = true;
             }
         })
     }
@@ -96,29 +100,34 @@ var appTop = new Vue({
         publish: function() {
             switch (this.userType) {
                 case "1":
-                    var link = "uniRequire.html?new=1&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
+                    var link = "uniRequire.html?new=1";
                     break;
                 case "2":
-                    var link = "incRequire.html?new=1&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
+                    var link = "incRequire.html?new=1";
                     break;
                 default:
+            };
+            if (accountObj.userId) {
+                link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
             }
             window.open(link, '_blank');
         },
         toCenter: function(theme) {
             switch (this.userType) {
                 case "0":
-                    parObj
-                    var link = "pCenter.html?loginId=" + accountObj.loginIdentifier + "&userId=" + accountObj.userId + "&theme=" + theme;
+                    var link = "pCenter.html?theme=" + theme;
                     break;
                 case "1":
-                    var link = "uniCenter.html?loginId=" + accountObj.loginIdentifier + "&userId=" + accountObj.userId + "&theme=" + theme;
+                    var link = "uniCenter.html?theme=" + theme;
                     break;
                 case "2":
-                    var link = "incCenter.html?loginId=" + accountObj.loginIdentifier + "&userId=" + accountObj.userId + "&theme=" + theme;
+                    var link = "incCenter.html?theme=" + theme;
                     break;
                 default:
 
+            };
+            if (accountObj.userId) {
+                link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
             }
             window.open(link, '_blank');
         },
@@ -128,6 +137,16 @@ var appTop = new Vue({
             $("#app-banner .btn-collec span").html("收 藏");
             appModal.login.account = "";
             appModal.login.password = "";
+            //复原合作按钮
+            $("button.btn-apply[disabled] span").text("申请招聘");
+            $("button.btn-apply[disabled]").attr("disabled", false);
+            var state = {
+                title: document.title,
+                url: document.location.href,
+                otherkey: null
+            };
+            //无刷新页面替换URL
+            history.replaceState(state, document.title, "detail-unirecruit.html");
         }
     }
 });
@@ -176,12 +195,8 @@ var appBanner = new Vue({
                 appModal.showSucc = false;
             }
         },
-        coApply: function() {
+        coApply: function(obj) {
             if (appTop.isLogin) {
-                if (accountObj.userId == respObj.userId) {
-                    alert("无法申请自己的需求！");
-                    return false;
-                }
                 if (accountObj.userType != "2") {
                     alert("抱歉，您不能申请该需求！");
                     return false;
@@ -203,6 +218,12 @@ var appBanner = new Vue({
                     } else {
                         alert(resp.info);
                     }
+                    //申请后避免重复点击
+                    if (!$(obj).hasClass("btn-apply")) {
+                        obj = obj.parentNode;
+                    }
+                    $(obj).attr("disabled", true);
+                    $(obj).children("span").text("已申请");
                 });
             } else {
                 $(".dlg-login").css({
@@ -239,40 +260,22 @@ var appMain = new Vue({
             contactP: "江老师"
         },
         showMobile: false,
-        applyRec: [
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "未查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "未查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "未查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "未查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "未查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "未查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
-            { inc: "宁波市xx有限公司", date: "2016-12-11 20:56:10", state: "查看" },
-        ],
-        uniComment: [
-            { portUrl: "images/porto01.jpg", cont: "挺好的，还不错，恩，呵呵", date: "2016-12-11 22:33" },
-            { portUrl: "images/porto02.jpg", cont: "挺好的，还不错，恩，呵呵", date: "2016-12-11 22:33" },
-            { portUrl: "images/porto01.jpg", cont: "挺好的，还不错，恩，呵呵", date: "2016-12-11 22:33" },
-            { portUrl: "images/porto02.jpg", cont: "挺好的，还不错，恩，呵呵", date: "2016-12-11 22:33" },
-        ]
+        tabledata: {
+            desc: "",
+            userdesc: "",
+            applyRec: {
+                totalpages: 1,
+                totalitems: 0,
+                results: []
+            },
+            comment: {
+                totalpages: 1,
+                totalitems: 0,
+                results: []
+            }
+        }
     },
     methods: {
-        viewCss: function(state) {
-            if (state == "查看") {
-                return "viewed";
-            } else if (state == "预约面试") {
-                return "interview";
-            } else if (state == "邀请合作") {
-                return "coop";
-            } else if (state == "邀请参会") {
-                return "interview";
-            }
-        },
         showContact: function(contact) {
             if (this.showMobile && appTop.isLogin) {
                 return contact;
@@ -291,8 +294,11 @@ var appMain = new Vue({
                 this.showMobile = true;
             }
         },
-        topage: function() {
-            //console.log(1);
+        applyswitch: function(page) {
+            //   applyRequest(page);
+        },
+        cmtswitch: function(page) {
+            commentRequest(respObj.userId, page);
         }
     },
     components: {
@@ -331,7 +337,6 @@ var appModal = new Vue({
             console.log(postdata);
             EventUtils.ajaxReq("/center/user/login", "post", postdata, function(resp, status) {
                 accountObj = resp.data;
-                console.log(resp.data);
                 appTop.userType = resp.data.userType;
                 appTop.userName = resp.data.name;
                 appTop.isLogin = true;
@@ -356,7 +361,7 @@ var appModal = new Vue({
                     otherkey: null
                 };
                 //无刷新页面替换URL
-                //  history.replaceState(state, document.title, "detail-unirecruit.html?userId=" + accountObj.userId);
+                history.replaceState(state, document.title, "detail-unirecruit.html?userId=" + accountObj.userId);
             })
         }
     },
@@ -378,12 +383,6 @@ function _init() {
 _init();
 
 function initEventBind() {
-    $(".result-tabs li").bind("click", function() {
-        $(".result-tabs li").removeClass("on");
-        $(this).addClass("on");
-        $(".tab-cont").hide();
-        $("." + $(this).attr("cont")).show();
-    });
     $(".account li").mouseenter(function() {
         if ($(this).find("dl").length > 0) {
             $(this).find("dl").slideDown();
@@ -394,3 +393,24 @@ function initEventBind() {
         }
     })
 };
+
+//评价获取
+function commentRequest(id, page) {
+    var commentdata = {
+        reportUserId: id,
+        index: page,
+        count: 6
+    }
+    EventUtils.ajaxReq("/sys/getCommentList", "post", commentdata, function(resp, status) {
+        //  console.log(resp);
+        if (resp && resp.data) {
+            appMain.tabledata.comment.results = resp.data.list;
+            appMain.tabledata.comment.totalpages = resp.data.totalPage;
+            appMain.tabledata.comment.totalitems = resp.data.totalRow;
+        } else {
+            appMain.tabledata.comment.results = [];
+            appMain.tabledata.comment.totalpages = 1;
+            appMain.tabledata.comment.totalitems = 0;
+        }
+    });
+}
