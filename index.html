@@ -72,10 +72,10 @@
         <ul class="lis-inline inner show-pics">
             <li class="pic-box t-center" v-for="(item,index) in showInfos" :class="cssrotate(index)" @click="showSwitch(index)">
                 <i class="pic-wrapper show-frame"><img :src="item.imgsrc" /></i>
-                <p class="fSize18">{{item.txt}}-{{index}}</p>
             </li>
         </ul>
-        <i class="turn-left"><</i>
+        <i class="dir-arrow turn-left"><</i>
+        <i class="dir-arrow turn-right">></i>
     </div>
     <div class="about-us H742 mod-page" id="app-about" v-cloak>
         <div class="inner paTop100">
@@ -90,66 +90,45 @@
             </ul>
         </div>
     </div>
-    <div class="mod-page">
-        <div class="coop H433" id="app-coop" v-cloak>
-            <div class="inner paTop58 t-center">
-                <ul class="coop-navs LH66 fSize22 lis-inline disInline">
-                    <li :class="{'on':showinc}" @click="showinc=true">合作企业</li>
-                    <li :class="{'on':!showinc}" @click="showinc=false">合作高校</li>
-                </ul>
-                <ul class="lis-inline coop-lis coop-inc" v-show="showinc">
-                    <li v-for="item in coopInc">
-                        <a class="pic-wrapper"><img :src="item.imgsrc" /></a>
-                    </li>
-                </ul>
-                <ul class="lis-inline coop-lis" v-show="!showinc">
-                    <li v-for="item in coopUni">
-                        <a class="pic-wrapper"><img :src="item.imgsrc" /></a>
-                    </li>
-                </ul>
-                <!-- <div class="clearfix">
-                         <h3 class="fl fSize22 LH40 paTop40 t-center">合作企业<span class="LH30 fSize14 color-gray-c coop-sub">COOPERATION</span></h3>
-                         <i class="pic-wrapper fl maT34 maL22" @click.stop="incLeft"><img src="images/left-arrow.png" /></i>
-                         <div class="fl coop-frame">
-                              <ul class="lis-inline coop-lis fl coop-inc">
-                                   <li v-for="item in coopInc"><a class="pic-wrapper"><img :src="item.imgsrc" /></a></li>
-                              </ul>
-                         </div>
-                         <i class="pic-wrapper fl maT34" @click.stop="incRight"><img src="images/right-arrow.png" /></i>
-                    </div>
-                    <div class="clearfix maT20">
-                         <h3 class="fl fSize22 LH40 paTop40 t-center">合作高校<span class="LH30 fSize14 color-gray-c coop-sub">COOPERATION</span></h3>
-                         <i class="pic-wrapper fl maT34 maL22" @click.stop="uniLeft"><img src="images/left-arrow.png" /></i>
-                         <div class="fl coop-frame">
-                              <ul class="lis-inline coop-lis fl coop-uni">
-                                   <li v-for="item in coopInc"><a class="pic-wrapper"><img :src="item.imgsrc" /></a></li>
-                              </ul>
-                         </div>
-                         <i class="pic-wrapper fl maT34" @click.stop="uniRight"><img src="images/right-arrow.png" /></i>
-                    </div> -->
-            </div>
+
+    <div class="coop" id="app-coop" v-cloak>
+        <div class="inner paTop58 t-center">
+            <ul class="coop-navs LH66 fSize22 lis-inline disInline">
+                <li :class="{'on':showinc}" @click="showinc=true">合作企业</li>
+                <li :class="{'on':!showinc}" @click="showinc=false">合作高校</li>
+            </ul>
+            <ul class="lis-inline coop-lis coop-inc" v-show="showinc">
+                <li v-for="item in coopInc">
+                    <a class="pic-wrapper"><img :src="item.imgsrc" /></a>
+                </li>
+            </ul>
+            <ul class="lis-inline coop-lis" v-show="!showinc">
+                <li v-for="item in coopUni">
+                    <a class="pic-wrapper"><img :src="item.imgsrc" /></a>
+                </li>
+            </ul>
         </div>
-        <div class="footer H238" id="app-footer" v-cloak>
-            <div class="inner clearfix">
-                <div class="logo fl clearfix paTop64">
-                    <img src="images/logo.png" class="fl maR21" />
-                    <h2 class="fl LH-H63 fSize30 color-white">校企职通车</h2>
-                </div>
-                <ul class="lis-inline footer-lis fl">
-                    <li v-for="item in fBlocks">
-                        <dt>{{item.title}}</dt>
-                        <dd v-for="subitem in item.sublis" @click="linkFoo(item.title)">{{subitem}}</dd>
-                    </li>
-                </ul>
-                <div class="fr paTop28">
-                    <h3 class="fSize18 LH50 t-center color-white">关注我们</h3>
-                    <i class="pic-wrapper"><img src="images/barcode.png" /></i>
-                </div>
+    </div>
+    <div class="footer" id="app-footer" v-cloak>
+        <div class="inner clearfix paBot25">
+            <div class="logo fl clearfix paTop64">
+                <img src="images/logo.png" class="fl maR21" />
+                <h2 class="fl LH-H63 fSize30 color-white">校企职通车</h2>
+            </div>
+            <ul class="lis-inline footer-lis fl">
+                <li v-for="item in fBlocks">
+                    <dt>{{item.title}}</dt>
+                    <dd v-for="subitem in item.sublis" @click="linkFoo(item.title)">{{subitem}}</dd>
+                </li>
+            </ul>
+            <div class="fr paTop28">
+                <h3 class="fSize18 LH50 t-center color-white">关注我们</h3>
+                <i class="pic-wrapper"><img src="images/barcode.png" /></i>
             </div>
         </div>
     </div>
     <div class="bot">
-        <p class="inner LH50 t-center">校企职通车版权所有©2016 XxiaoQi 浙ICP备17007975号-2 浙公网安备3481464号</p>
+        <p class="inner LH50 t-center">校企职通车版权所有©2017XIAOQI 浙ICP备17007975号-2 浙公网安备3481464号</p>
     </div>
     <script src="js/libs/jquery-3.1.0.min.js"></script>
     <script src="js/libs/vue.js"></script>

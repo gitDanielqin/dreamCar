@@ -323,10 +323,12 @@ body {
 .show-frame {
     border: 6px solid #cdcbcc;
     width: 500px;
+    height: 300px;
 }
 
 .show-frame img {
     width: 100%;
+    height: 100%;
 }
 
 .show-pics li:first-child {
@@ -368,15 +370,24 @@ body {
     position: relative;
 }
 
-.turn-left {
-    position: absolute;
-    left: 0;
-    top: 10px;
+.dir-arrow {
     font-size: 100px;
-    color: #666;
+    color: #ccc;
     display: inline-block;
     font-family: consolas;
     cursor: pointer;
+}
+
+.turn-left {
+    position: absolute;
+    left: 70px;
+    top: 255px;
+}
+
+.turn-right {
+    position: absolute;
+    right: 70px;
+    top: 255px;
 }
 
 .about-us {
@@ -405,6 +416,10 @@ body {
 
 
 /*合作伙伴*/
+
+.coop {
+    height: 472px;
+}
 
 .coop-frame {
     width: 740px;

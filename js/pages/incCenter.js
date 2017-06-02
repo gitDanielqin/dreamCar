@@ -108,7 +108,7 @@ var appPorto = new Vue({
     methods: {
         uploading: function() {
             appModal.showModal = true;
-            appModal.showUpload = true;
+            appModal.show.upload = true;
         },
         save: function() {
             this.briefInfo.address.province = $(".edit-brief .sel-province input").val();
@@ -397,7 +397,7 @@ var appCont = new Vue({
         },
         popTrade: function() {
             appModal.showModal = true;
-            appModal.showTrade = true;
+            appModal.show.trade = true;
         },
         submajors: function(major) {
             var arr = [];
@@ -797,12 +797,11 @@ var appModal = new Vue({
             email: false,
             wechat: false,
             preImg: false,
-            comment: false
+            comment: false,
+            trade: false,
+            upload: false
         },
         showModal: false,
-        showTrade: false,
-        showPreview: false,
-        showUpload: false,
         preImgUrl: "",
         cardInfo: {
             cardtype: "inc",
@@ -1007,7 +1006,7 @@ var appModal = new Vue({
             }
         },
         closeTrade: function() {
-            this.showTrade = false;
+            this.show.trade = false;
             this.showModal = false;
         },
         checkfunc: function(item, target) {
@@ -1022,17 +1021,15 @@ var appModal = new Vue({
         },
         submitTrade: function() {
             appCont.resume.trade = $(".trade-single-table input[type='radio']:checked").val();
-            this.showTrade = false;
+            this.show.trade = false;
             this.showModal = false;
         },
         cancelTrade: function() {
-            this.showTrade = false;
+            this.show.trade = false;
             this.showModal = false;
         },
         hidemodal: function() {
             this.showModal = false;
-            this.showTrade = false;
-            this.showPreview = false;
             for (var key in appModal.show) {
                 appModal.show[key] = false;
             }
@@ -1042,7 +1039,7 @@ var appModal = new Vue({
             return false;
         },
         closePorto: function() {
-            this.showUpload = false;
+            this.show.upload = false;
             this.showModal = false;
         },
         closeMobile: function() {
@@ -1101,46 +1098,84 @@ var appModal = new Vue({
     watch: {
         "show.minicard": function(curval) {
             if (curval) {
-                $(".minicard").css({
-                    "margin-top": Math.floor(($(window).height() - $(".minicard").height()) / 2 + document.body.scrollTop)
-                })
+                EventUtils.absCenter($(".minicard"));
             }
         },
         "show.preImg": function(curval) {
             if (curval) {
-                var top = Math.floor($(window).height() * 0.5 + $("body").scrollTop()) + "px";
-                console.log(top);
-                $("#app-modal .preview-file").css("top", top);
+                if (curval) {
+                    EventUtils.absCenter($("#app-modal .preview-file"));
+                }
             }
         },
-        'showTrade': function(curval) {
+        "show.upload": function(curval) {
             if (curval) {
-                var top = Math.floor($(window).height() * 0.15 + $("body").scrollTop()) + "px";
-                $(".trade-box-single").css("margin-top", top);
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .porto-upload"));
+                })
+            }
+        },
+        'show.trade': function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .trade-box"));
+                })
+            }
+        },
+        "show.mobile": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .mobile-bind"));
+                })
+            }
+        },
+        "show.email": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .email-bind"));
+                })
+            }
+        },
+        "show.wechat": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .wechat-bind"));
+                })
+            }
+        },
+        "show.comment": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .comment-box"));
+                })
             }
         },
         "show.stickybox": function(curval) {
             if (curval) {
-                var top = Math.floor($(window).height() * 0.15 + $("body").scrollTop()) + "px";
-                $("#app-modal .refresh-box").css("top", top);
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .refresh-box"));
+                })
             }
         },
         "show.stickyhintbox": function(curval) {
             if (curval) {
-                var top = Math.floor($(window).height() * 0.15 + $("body").scrollTop()) + "px";
-                $("#app-modal .refresh-hint-box").css("top", top);
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .refresh-hint-box"));
+                })
             }
         },
         "show.freshbox": function(curval) {
             if (curval) {
-                var top = Math.floor($(window).height() * 0.15 + $("body").scrollTop()) + "px";
-                $("#app-modal .refresh-box").css("top", top);
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .refresh-box"));
+                })
             }
         },
         "show.freshhintbox": function(curval) {
             if (curval) {
-                var top = Math.floor($(window).height() * 0.15 + $("body").scrollTop()) + "px";
-                $("#app-modal .refresh-hint-box").css("top", top);
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .refresh-hint-box"));
+                })
             }
         },
         "sticky.sum": function(curval) {
@@ -1218,7 +1253,7 @@ function uploadEventBind() {
         EventUtils.ajaxReq("/center/user/uploadIcon", "post", postdata, function(resp, status) {
             $("#avatar-box").html("<img src='" + resp.data + "' />");
         });
-        appModal.showUpload = false;
+        appModal.show.upload = false;
         appModal.showModal = false;
     })
 }

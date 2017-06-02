@@ -5,7 +5,7 @@ var parObj = EventUtils.urlExtrac(window.location);
 var appTop = new Vue({
     el: "#app-top",
     data: {
-        displayCity: parObj.addr != undefined ? decodeURI(parObj.addr) : "杭州市"
+        displayCity: parObj.addr ? decodeURI(parObj.addr) : "杭州市"
     }
 })
 var appCont = new Vue({
@@ -132,7 +132,7 @@ var appCont = new Vue({
                 domainUrl = "incCenter.html?";
             }
             EventUtils.ajaxReq(posturl, 'post', postdata, function(resp, status) {
-                var parstring = "userId=" + parObj.userId + "&loginId=" + parObj.loginIdentifier;
+                var parstring = "userId=" + parObj.userId + "&loginId=" + parObj.loginId;
                 window.location.href = domainUrl + parstring;
             })
 

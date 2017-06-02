@@ -21,13 +21,13 @@
             <i class="pic-wrapper entry-porto"><img src="images/porto-uni-recruit.png" /></i>
             <p class="t-center color-white fSize16 LH32 maT37">校园招聘会<br />为企业招聘主开通具针对性的<br />应届毕业生招聘通道，<br />在这里，<br />集结了全中国各个学院的优秀的人才，<br />各位企业招聘主可以尽情挑选！
             </p>
-            <a href="display-unirecruit.html" class="entry-btn">校园招聘会</a>
+            <button id="entry-uni" class="entry-btn">校园招聘会</button>
         </div>
         <div class="fr entry-box inc-entry t-center">
             <i class="pic-wrapper entry-porto"><img src="images/porto-inc-recruit.png" /></i>
             <p class="t-center color-white fSize16 LH32 maT37">企业招聘会<br />全国各大优秀企业的招聘启事应有尽有，<br />无论你怀才不遇还是职场精英，<br />在这里，<br />你都能找到独属于你的人生巅峰，<br />各位求职小生还不赶紧看过来！
             </p>
-            <a href="display-increcruit.html" class="entry-btn">企业招聘会</a>
+            <button id="entry-company" class="entry-btn">企业招聘会</button>
         </div>
     </div>
     <div class="bot paTop6 t-center bg-black7 H110">
@@ -55,7 +55,21 @@
     </div>
     <script src="js/common/common.js"></script>
     <script>
-        //  document.getElementById("main-content").style.height = getViewport().height - 216 + "px";
+        var parObj = EventUtils.urlExtrac(window.location);
+        document.getElementById("entry-uni").onclick = function() {
+            var link = "display-unirecruit.html?";
+            if (parObj.userId) {
+                link += "userId=" + parObj.userId;
+            }
+            window.location.href = link;
+        }
+        document.getElementById("entry-company").onclick = function() {
+            var link = "display-increcruit.html?";
+            if (parObj.userId) {
+                link += "userId=" + parObj.userId;
+            }
+            window.location.href = link;
+        }
     </script>
 </body>
 

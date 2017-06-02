@@ -8,8 +8,8 @@ var respObj = {}; //请求的本页面的数据集合
 
 function infoRequest() {
     var postdata = {
-        userId: localStorage.userId || parObj.userId,
-        loginIdentifier: localStorage.loginId || parObj.loginId
+        userId: parObj.userId || localStorage.userId,
+        loginIdentifier: parObj.loginId || localStorage.loginId
     };
     EventUtils.ajaxReq("/user/user/getInfo", "get", postdata, function(resp, status) {
         respObj = resp.data;
@@ -153,14 +153,14 @@ function infoRequest() {
             }
             var cvInfo = {
                 firstEdit: false,
-                realName: respObj.userInfo.realName,
-                family: familyStatus,
-                phone: respObj.userInfo.mobile,
-                email: respObj.userInfo.email,
-                nativePlace: respObj.userInfo.nativePlace,
-                nation: respObj.userInfo.nation,
+                realName: respObj.userInfo.realName, //5 
+                family: familyStatus, //5
+                phone: respObj.userInfo.mobile, //5
+                email: respObj.userInfo.email, //5
+                nativePlace: respObj.userInfo.nativePlace, //5
+                nation: respObj.userInfo.nation, //5
                 curWorksIndex: 1,
-                expect: {
+                expect: { //20
                     tradeItems: respObj.cvInfo.expJob,
                     posItems: respObj.cvInfo.expJobFunction,
                     province: respObj.cvInfo.expPlace ? respObj.cvInfo.expPlace.split(";")[0] : "",
@@ -168,14 +168,46 @@ function infoRequest() {
                     district: respObj.cvInfo.expPlace ? respObj.cvInfo.expPlace.split(";")[2] : "",
                     salary: respObj.cvInfo.expSalary
                 },
-                worksExps: worksExps,
-                edus: edus,
-                projects: projects,
-                laSkills: respObj.cvInfo.languages,
-                selfEval: respObj.cvInfo.evaluation,
-                psInfo: respObj.cvInfo.anymore,
-                skills: respObj.cvInfo.speciality
+                worksExps: worksExps, //10
+                edus: edus, //10
+                projects: projects, //10
+                laSkills: respObj.cvInfo.languages, //5
+                selfEval: respObj.cvInfo.evaluation, //5
+                psInfo: respObj.cvInfo.anymore, //5
+                skills: respObj.cvInfo.speciality //5
             };
+            //计算简历完成度
+            var resumePercent = 0;
+            for (var key in cvInfo) {
+                if (key == "expect") {
+                    if (cvInfo[key].tradeItems && cvInfo[key].tradeItems != "") {
+                        resumePercent += 20;
+                    }
+                } else if (key == "worksExps") {
+                    if (cvInfo[key][0].firma && cvInfo[key][0].firma != "") {
+                        resumePercent += 10;
+                    }
+                } else if (key == "edus") {
+                    if (cvInfo[key][0].uni && cvInfo[key][0].uni != "") {
+                        resumePercent += 10;
+                    }
+                } else if (key == "projects") {
+                    if (cvInfo[key][0].name && cvInfo[key][0].name != "") {
+                        resumePercent += 10;
+                    }
+                } else if (key == "firstEdit" || key == "curWorksIndex") {
+                    //排除这两种情况
+                } else {
+                    resumePercent += 5;
+                }
+            }
+            if (resumePercent > 100) { resumePercent = 100 };
+            appPorto.resumePercent = resumePercent;
+            $("#app-porto .progress-real").css("width", resumePercent + "%");
+            if (cvInfo.realName && cvInfo.realName != "") {
+                resumePercent += 5;
+            }
+
             appModal.resumeInfo = appCont.resume = cvInfo;
             $(".edit").hide();
             $(".view").show();
@@ -207,7 +239,7 @@ infoRequest();
 var appTop = new Vue({
     el: "#app-top",
     data: {
-        homeLink: "index.html?userId=" + parObj.userId
+        homeLink: "index.html?userId=" + (parObj.userId || localStorage.userId)
     }
 })
 
@@ -220,18 +252,19 @@ var appPorto = new Vue({
         },
         viewInfo: true,
         briefInfo: {
-            gender: "男",
-            birthyear: "1988",
-            birthmonth: "1",
-            birthday: "1",
+            gender: "",
+            birthyear: "",
+            birthmonth: "",
+            birthday: "",
             address: {
-                province: "浙江",
-                city: "杭州",
-                district: "滨江"
+                province: "",
+                city: "",
+                district: ""
             },
-            phone: "15264598745",
-            state: "中国"
+            phone: "",
+            state: ""
         },
+        resumePercent: 0,
         cloneInfo: {},
         initAddress: {
             province: "",
@@ -285,7 +318,7 @@ var appPorto = new Vue({
             appModal.showModal = true;
             appModal.show.upload = true;
         }
-    },
+    }
 })
 
 var provinceArray = [];
@@ -304,8 +337,8 @@ var appCont = new Vue({
             date: date,
             address: {
                 province: provinceArray,
-                city: ["杭州", "新乡"],
-                district: ["滨江区", "红旗区"]
+                city: ["", ""],
+                district: ["", ""]
             },
             addrData: addArray,
             nations: nations,
@@ -321,8 +354,8 @@ var appCont = new Vue({
             firstEdit: true,
             realName: "",
             family: "",
-            phone: "15264598745",
-            email: "xqztc@163.com",
+            phone: "",
+            email: "",
             nativePlace: "",
             nation: "",
             curWorksIndex: 1,
@@ -436,7 +469,6 @@ var appCont = new Vue({
             safeLevel: "80%",
             bind: { mobile: "", email: "" }
         }
-
     },
     methods: {
         posLink: function(item) {
@@ -708,7 +740,6 @@ var appCont = new Vue({
                     var postdata = {
                         id: id
                     };
-                    console.log(postdata);
                     EventUtils.ajaxReq("/recruit/delMarkInfo", "post", postdata, function(resp, status) {
                         if (appCont.colPosList.results.length == 1 && appCont.colPosList.curpage > 1) {
                             appCont.colPosList.curpage -= 1;
@@ -934,25 +965,51 @@ var appModal = new Vue({
     watch: {
         "show.upload": function(curval) {
             if (curval) {
-
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .porto-upload"));
+                })
+            }
+        },
+        "show.mobile": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .mobile-bind"));
+                })
+            }
+        },
+        "show.email": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .email-bind"));
+                })
+            }
+        },
+        "show.wechat": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .wechat-bind"));
+                })
             }
         },
         'show.tradeSingle': function(curval) {
             if (curval) {
-                var top = Math.floor($(window).height() * 0.15 + $("body").scrollTop()) + "px";
-                $(".trade-box-single").css("margin-top", top);
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .trade-box-single"));
+                })
             }
         },
         'show.trade': function(curval) {
             if (curval) {
-                var top = Math.floor($(window).height() * 0.15 + $("body").scrollTop()) + "px";
-                $(".trade-box-multi").css("margin-top", top);
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .trade-box-multi"));
+                })
             }
         },
         'show.position': function(curval) {
             if (curval) {
-                var top = Math.floor($(window).height() * 0.15 + $("body").scrollTop()) + "px";
-                $(".pos-pop-box").css("margin-top", top);
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .pos-pop-box"));
+                })
             }
         }
     }

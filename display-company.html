@@ -52,8 +52,7 @@
         </div>
     </div>
     <div class="main-top inner" id="app-query" v-cloak>
-        <h2 class="maT30 fSize30 LH47 color-grayH">
-            <a :href="homeLink"><img class="H47 maR17 v-mid" src="images/logo.png" /></a>校企职通车</h2>
+        <h2 class="maT30 fSize30 LH47 color-grayH"><img class="H47 maR17 v-mid cur-pointer" src="images/logo.png" @click.stop="homeLink" />校企职通车</h2>
         <div class="search maT15 t-center">
             <input class="LH-H37 v-mid paLeft50 fSize18" type="text" placeholder="请在此输入搜索关键词"><button class="fSize18 color-white v-mid H39 W145 bg-orange4">搜索</button>
         </div>
@@ -68,6 +67,7 @@
                         <li class="fSize12 dis-label">分区：</li>
                         <li v-for="cont in database.conts" @click="selDistict($event.target)">{{cont}}</li>
                     </ul>
+                    <button type="button" class="btn-all-address" @click.stop="selAllDistrict">不限地市</button>
                 </div>
             </div>
             <div class="clearfix maB16">

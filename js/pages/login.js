@@ -74,13 +74,25 @@ var appCont = new Vue({
         },
         loginEv: function() {
             if (this.login.account == "") {
-                alert("请输入用户名");
+                swal({
+                    title: "",
+                    text: "请输入用户名！",
+                    type: "warning"
+                })
                 return false;
             } else if (!regExp.mobile.test(this.login.account) && !regExp.email.test(this.login.account)) {
-                alert("用户名格式错误");
+                swal({
+                    title: "",
+                    text: "用户名格式错误!",
+                    type: "error"
+                })
                 return false;
             } else if (this.login.password == "") {
-                alert("请输入密码");
+                swal({
+                    title: "",
+                    text: "请输入密码！",
+                    type: "warning"
+                })
                 return false;
             }
             var postdata = {

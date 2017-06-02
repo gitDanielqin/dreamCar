@@ -77,11 +77,6 @@
             denyEv: function() {
                 this.$emit("deny");
             }
-        },
-        mounted: function() {
-            $(".minicard").css({
-                "margin-top": Math.floor(($(window).height() - $(".minicard").height()) / 2 + document.body.scrollTop) + "px"
-            })
         }
     });
 })()

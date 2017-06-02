@@ -160,6 +160,10 @@ table th {
     position: relative;
 }
 
+.pAbs {
+    position: absolute;
+}
+
 .modal {
     position: absolute;
     left: 0;
@@ -1739,6 +1743,10 @@ input.hint-nullable {
 
 .paBot20 {
     padding-bottom: 20px;
+}
+
+.paBot25 {
+    padding-bottom: 25px;
 }
 
 .paBot33 {

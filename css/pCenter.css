@@ -936,9 +936,6 @@
 
 .bind-change {
     position: absolute;
-    left: 50%;
-    top: 256px;
-    margin-left: -250px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5)
 }
 
@@ -976,9 +973,6 @@
 
 .wechat-bind {
     position: absolute;
-    left: 50%;
-    top: 256px;
-    margin-left: -250px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5)
 }
 
@@ -1007,9 +1001,6 @@
 
 .porto-upload {
     position: absolute;
-    left: 50%;
-    top: 256px;
-    margin-left: -250px;
 }
 
 .porto-upload .close {
@@ -1222,7 +1213,7 @@
 .progress-real {
     display: inline-block;
     background: #f7aa00;
-    width: 87%;
+    width: 0;
     position: absolute;
     left: 0;
     top: 0;
@@ -1314,7 +1305,7 @@ input.edit-phone {
 /*行业弹框*/
 
 .trade-box {
-    margin-top: 15%;
+    position: absolute
 }
 
 .trade-box .closer img {

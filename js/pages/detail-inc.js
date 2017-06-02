@@ -26,7 +26,7 @@ function infoRequest() {
             publicDate: respObj.updateTime ? respObj.updateTime.split(" ")[0] : []
         };
         appBanner.incdata = briefdata;
-        if (respObj.schoolAddress) {
+        if (respObj.schoolAddress && respObj.schoolAddress.indexOf(";") >= 0) {
             var address = respObj.schoolAddress.split(';')[0] + respObj.schoolAddress.split(';')[1];
         } else {
             var address = "";
@@ -151,7 +151,8 @@ var appTop = new Vue({
                 otherkey: null
             };
             //无刷新页面替换URL
-            history.replaceState(state, document.title, "detail-company.html");
+            var originalurl = state.url.slice(0, state.url.indexOf("&userId"));
+            history.replaceState(state, document.title, originalurl);
         }
     }
 });
@@ -193,9 +194,6 @@ var appBanner = new Vue({
                 }
 
             } else {
-                $(".dlg-login").css({
-                    top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
-                })
                 appModal.showModal = true;
                 appModal.showLogin = true;
                 appModal.showSucc = false;
@@ -215,9 +213,6 @@ var appBanner = new Vue({
                 EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
                     console.log(resp);
                     if (resp.data.isApply == "0") {
-                        $(".dlg-success").css({
-                            top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
-                        });
                         appModal.showModal = true;
                         appModal.showLogin = false;
                         appModal.showSucc = true;
@@ -232,18 +227,13 @@ var appBanner = new Vue({
                     $(obj).children("span").text("已申请");
                 });
             } else {
-                $(".dlg-login").css({
-                    top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
-                })
                 appModal.showModal = true;
                 appModal.showLogin = true;
                 appModal.showSucc = false;
             }
-        }
-    },
-    computed: {
+        },
         homeLink: function() {
-            return appTop.isLogin ? "index.html?userId=" + parObj.userId : "index.html"
+            window.location.href = appTop.isLogin ? "index.html?userId=" + accountObj.userId : "index.html"
         }
     }
 });
@@ -361,15 +351,23 @@ var appModal = new Vue({
                     otherkey: null
                 };
                 //无刷新页面替换URL
-                history.replaceState(state, document.title, "detail-company.html?userId=" + resp.data.userId);
+                history.replaceState(state, document.title, state.url + "&userId=" + resp.data.userId);
             })
         }
     },
     watch: {
         'showLogin': function(curval) {
             if (curval) {
-                var dis_top = Math.floor(EventUtils.getViewport().height * 0.2) + document.body.scrollTop + "px";
-                $(".dlg-login").css("top", dis_top);
+                this.$nextTick(function() {
+                    EventUtils.absCenter($(".dlg-login"));
+                })
+            }
+        },
+        'showSucc': function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($(".dlg-success"));
+                })
             }
         }
     }

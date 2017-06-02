@@ -96,6 +96,17 @@ function getViewport() {
 }
 
 var EventUtils = {
+        filterReqdata: function(postdata) { // 清除发送数据对象值为空或不限的属性
+            for (var key in postdata) {
+                if (typeof(postdata[key]) == "string" && postdata[key].indexOf(";") >= 0 && postdata[key].split(";")[0] == "不限") {
+                    delete postdata[key];
+                }
+                if (postdata[key] == "" || postdata[key] == "不限") {
+                    delete postdata[key];
+                }
+            }
+            return postdata;
+        },
         absCenter: function(obj) {
             $(obj).css({
                 top: Math.floor(($(window).height() - $(obj).height()) / 2 + document.body.scrollTop),

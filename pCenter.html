@@ -34,7 +34,7 @@
                     <p><span class="maR33 age">{{age(briefInfo.birthyear)}}岁</span><span class="gender">{{briefInfo.gender}}</span><span class="state maL22">{{briefInfo.state}}</span></p>
                     <p>{{briefInfo.address.province}}-{{briefInfo.address.city}}-{{briefInfo.address.district}}</p>
                     <p class="phone">手机：{{briefInfo.phone}}</p>
-                    <p>简历完成度<span class="progress pRel W124 H7 b-Radius8"><span class="progress-real W124 H7 b-Radius8"></span></span><span class="fullgrad">87%</span></p>
+                    <p>简历完成度<span class="progress pRel W124 H7 b-Radius8"><span class="progress-real W124 H7 b-Radius8"></span></span><span class="fullgrad">{{resumePercent}}%</span></p>
                     <span class="preview-btn" @click="showPre">预览简历</span>
                     <i class="LH30 t-center btn-edit pic-icon icon-edit" @click="edit"></i>
                 </div>
@@ -758,7 +758,7 @@
             </div>
             <div class="H26 bg-white-ec"></div>
         </div>
-        <div class="bind-change W500" v-show="show.mobile" @click.stop="">
+        <div class="bind-change W500 mobile-bind" v-show="show.mobile" @click.stop="">
             <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换手机号<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13" @click.stop="closeMobile"><i class="pic-icon icon-close"></i></i>
             </h2>
             <div class="bg-white paTop8 paBot60">
@@ -769,7 +769,7 @@
                 <div class="btn-submit t-center paTop20"><button class="bg-blueM">完成绑定</button><button class="bg-orange2 maL40" @click.stop="closeMobile">返回</button></div>
             </div>
         </div>
-        <div class="bind-change W500" v-show="show.email" @click.stop="">
+        <div class="bind-change W500 email-bind" v-show="show.email" @click.stop="">
             <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换绑定邮箱<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13" @click.stop="closeEmail"><i class="pic-icon icon-close"></i></i>
             </h2>
             <div class="bg-white paTop8 paBot60">
@@ -820,7 +820,7 @@
             </div>
         </div>
         <!--期望行业选择弹框  -->
-        <div class="trade-box W770 H420 maCenter trade-box-multi" v-show="show.trade" @click="stayshow($event)">
+        <div class="trade-box W770 H420 maCenter trade-box-multi pAbs" v-show="show.trade" @click="stayshow($event)">
             <h3 class="bg-gray-e6 fSize14 LH-H36 paLeft30 paRight30 color-black">选择行业分类<i class="pic-wrapper W26 LH-H26 maT5 closer t-center fr cur-pointer" @click="closeTrade"><i class="pic-icon icon-close"></i></i>
             </h3>
             <div class="H328 bg-white paLeft35 cont">
@@ -843,7 +843,7 @@
             </div>
         </div>
         <!--工作经历行业选择框单选  -->
-        <div class="trade-box W770 H420 maCenter trade-box-single" v-show="show.tradeSingle" @click="stayshow($event)">
+        <div class="trade-box W770 H420 maCenter trade-box-single pAbs" v-show="show.tradeSingle" @click="stayshow($event)">
             <h3 class="bg-gray-e6 fSize14 LH-H36 paLeft30 paRight30 color-black">选择行业分类<i class="pic-wrapper W26 LH-H26 maT5 closer t-center fr cur-pointer" @click="closeTrade"><i class="pic-icon icon-close"></i></i>
             </h3>
             <div class="H328 bg-white paLeft35 cont paTop14">
@@ -865,7 +865,7 @@
             </div>
         </div>
         <!-- 期望职能选择弹框 -->
-        <pop-position :posdata="database.posdata" class="maCenter" v-show="show.position" @confirm="submitPos" @cancel="cancelPos"></pop-position>
+        <pop-position :posdata="database.posdata" class="maCenter pAbs" v-show="show.position" @confirm="submitPos" @cancel="cancelPos"></pop-position>
     </div>
     <div class="bot paTop8 t-center bot-account">
         <div class="inner clearfix">
@@ -879,11 +879,11 @@
                     <li><a href="footer-page.html">教育网</a></li>
                 </ul>
                 <ul class="lis-inline fSize12 bot-infos">
-                    <li class="maR100"><i class="pic-icon icon-phone"></i>电话：152 6706 8921</li>
+                    <li class="maR100"><i class="pic-icon icon-phone"></i>电话：0571-28277417-818 </li>
                     <li class="maR100"><i class="pic-icon icon-address"></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
-                    <li><i class="pic-icon icon-email"></i>邮箱：xiaoqiztc@yeah.net</li>
+                    <li><i class="pic-icon icon-email"></i>邮箱：market@xiaoqiztc.com</li>
                 </ul>
-                <p class="fSize14 t-center LH-H40 color-gray79">©2016 XxiaoQi 京ICP备456123789号-2 京公网安备12465789123号</p>
+                <p class="fSize14 t-center LH-H40 color-gray79">校企职通车版权所有©2017XIAOQI 浙ICP备17007975号-2 浙公网安备3481464号</p>
             </div>
             <div class="fr">
                 <p class="fSize14 W15 barcode-text">关注我们</p>

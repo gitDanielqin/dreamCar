@@ -800,7 +800,6 @@
 
 .comment-box {
     width: 765px;
-    margin: 15% auto 0;
     background: white;
 }
 
@@ -843,9 +842,6 @@
 
 .bind-change {
     position: absolute;
-    left: 50%;
-    top: 256px;
-    margin-left: -250px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5)
 }
 
@@ -883,9 +879,6 @@
 
 .wechat-bind {
     position: absolute;
-    left: 50%;
-    top: 256px;
-    margin-left: -250px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5)
 }
 
@@ -910,9 +903,6 @@
 
 .porto-upload {
     position: absolute;
-    left: 50%;
-    top: 256px;
-    margin-left: -250px;
 }
 
 .porto-upload .close {
@@ -1238,9 +1228,6 @@
 
 .refresh-box {
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translateX(-50%);
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
 }
 

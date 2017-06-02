@@ -19,9 +19,9 @@ function infoRequest() {
             publicDate: respObj.updateTime.split(" ")[0]
         };
         appBanner.unidata = briefdata;
-        var incAddArray = respObj.companyAddress.split(";");
+        var incAddArray = respObj.companyAddress ? respObj.companyAddress.split(";") : "";
         var demandinfo = {
-            address: incAddArray[0] + " - " + incAddArray[1],
+            address: incAddArray != "" ? incAddArray[0] + " - " + incAddArray[1] : "",
             type: EventUtils.infoExtrac(respObj.companyType),
             property: respObj.companyProperty,
             job: EventUtils.infoExtrac(respObj.job),
@@ -33,12 +33,12 @@ function infoRequest() {
             discription: respObj.discription,
         };
         appMain.unidata.demand = demandinfo;
-        var userAddArray = respObj.userAddress.split(";");
+        var userAddArray = respObj.userAddress ? respObj.userAddress.split(";") : "";
         var baseinfo = {
             uni: respObj.userName,
             uniprops: respObj.userProperty,
             uniscale: respObj.userScale,
-            address: userAddArray[1] + "-" + userAddArray[2],
+            address: userAddArray != "" ? userAddArray[1] + "-" + userAddArray[2] : "",
             discription: respObj.userDiscription
         };
         appMain.unidata.baseinfo = baseinfo;
@@ -149,7 +149,8 @@ var appTop = new Vue({
                 otherkey: null
             };
             //无刷新页面替换URL
-            history.replaceState(state, document.title, "detail-uni.html");
+            var originalurl = state.url.slice(0, state.url.indexOf("&userId"));
+            history.replaceState(state, document.title, originalurl);
         }
     }
 });
@@ -192,9 +193,6 @@ var appBanner = new Vue({
                     })
                 }
             } else { //未登录状态下
-                // $(".dlg-login").css({
-                //     top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
-                // })
                 appModal.showModal = true;
                 appModal.showLogin = true;
                 appModal.showSucc = false;
@@ -213,9 +211,6 @@ var appBanner = new Vue({
                 }
                 EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
                     if (resp.data.isApply == "0") {
-                        $(".dlg-success").css({
-                            top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
-                        });
                         appModal.showModal = true;
                         appModal.showLogin = false;
                         appModal.showSucc = true;
@@ -231,20 +226,15 @@ var appBanner = new Vue({
                 });
 
             } else {
-                // $(".dlg-login").css({
-                //     top: Math.floor(($(window).height() - 412) / 2 + document.body.scrollTop)
-                // })
                 appModal.showModal = true;
                 appModal.showLogin = true;
                 appModal.showSucc = false;
             }
+        },
+        homeLink: function() {
+            window.location.href = appTop.isLogin ? "index.html?userId=" + accountObj.userId : "index.html"
         }
     },
-    computed: {
-        homeLink: function() {
-            return appTop.isLogin ? "index.html?userId=" + parObj.userId : "index.html"
-        }
-    }
 });
 var appMain = new Vue({
     el: "#app-main",
@@ -361,17 +351,23 @@ var appModal = new Vue({
                     otherkey: null
                 };
                 //无刷新页面替换URL
-                history.replaceState(state, document.title, "detail-uni.html?userId=" + resp.data.userId);
-                console.log(resp);
+                history.replaceState(state, document.title, state.url + "&userId=" + resp.data.userId);
             })
         }
     },
     watch: {
         'showLogin': function(curval) {
             if (curval) {
-                // var dis_top = Math.floor(EventUtils.getViewport().height * 0.2) + document.body.scrollTop + "px";
-                // $(".dlg-login").css("top", dis_top);
-                EventUtils.absCenter($(".dlg-login"));
+                this.$nextTick(function() {
+                    EventUtils.absCenter($(".dlg-login"));
+                })
+            }
+        },
+        'showSucc': function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($(".dlg-success"));
+                })
             }
         }
     }

@@ -92,6 +92,7 @@
     float: left;
     font-size: 12px;
     line-height: 24px;
+    position: relative
 }
 
 .queryform .label-val select {
@@ -231,6 +232,13 @@
     background: url("../images/dashline.png") no-repeat left center;
 }
 
+.btn-all-address {
+    position: absolute;
+    right: 14px;
+    top: 0px;
+    color: orange;
+}
+
 .btn-apply {
     position: absolute;
     right: 20px;
@@ -240,6 +248,10 @@
     width: 125px;
     height: 40px;
     background: #ffa800;
+}
+
+.btn-apply[disabled] {
+    background: cadetblue;
 }
 
 .btn-apply .pic-icon {
@@ -253,6 +265,10 @@
 
 .btn-apply:hover {
     background: #48c1e4;
+}
+
+.btn-apply[disabled]:hover {
+    background: cadetblue;
 }
 
 .item-name {
@@ -513,17 +529,11 @@
 
 .dlg-success {
     position: absolute;
-    top: 580px;
-    left: 50%;
-    transform: translateX(-50%);
     background: #fcb62e;
 }
 
 .dlg-login {
     position: absolute;
-    top: 580px;
-    left: 50%;
-    transform: translateX(-50%);
     background: #fcb62e;
 }
 

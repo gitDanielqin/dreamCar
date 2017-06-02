@@ -3,15 +3,12 @@ var respObj = {}; //请求的本页面的数据集合
 // 请求本页面数据
 (function() {
     var postdata = {
-        userId: localStorage.userId || parObj.userId,
-        loginIdentifier: localStorage.userId || parObj.loginId
+        userId: parObj.userId || localStorage.userId,
+        loginIdentifier: parObj.loginId || localStorage.userId
     };
 
     EventUtils.ajaxReq('/user/school/getInfo', 'get', postdata, function(resp, status) {
-        console.log(resp.data);
         respObj = resp.data;
-        //  console.log(respObj.userIcon);
-        // appCont.require.testIcon = respObj.userIcon;
         $("#avatar-box").html("<img src='" + respObj.userIcon + "' />");
         //如果高校信息存在，则对简历信息进行初始化
         if (respObj) {
@@ -124,7 +121,7 @@ var appPorto = new Vue({
     methods: {
         uploading: function() {
             appModal.showModal = true;
-            appModal.showUpload = true;
+            appModal.show.upload = true;
         },
         save: function() {
             this.briefInfo.address.province = $(".edit-brief .sel-province input").val();
@@ -803,26 +800,24 @@ var appModal = new Vue({
             preImg: false,
             minicard: false,
             comment: false,
+            upload: false
         },
         preImgUrl: "",
         showModal: false,
-        showTrade: false,
-        showPreview: false,
-        showUpload: false,
         cardInfo: {
             cardtype: "uni",
             applyId: "",
             infosets: {
-                userName: "百度",
+                userName: "",
                 imgsrc: "",
-                userProperty: "国企",
-                userScale: "99人",
-                tel: "15265458785",
-                email: "pheonixqin@gmail.com",
-                address: "杭州市-滨江区-六和桥",
-                userType: "综合类",
-                profession: "电子信息技术",
-                description: "百度（Nasdaq：BIDU）是全球最大的中文搜索引擎，2000年1月由李彦宏、徐勇两人创立于北京中关村，百度致力于向人们提供“简单，可依赖”的信息 获取方式。“百度”二字源于中国宋朝词人辛弃疾的《青玉案》诗句：“众里寻他千百度”，象征着百度对中文信息检索技术的执著追求。于2005年8月5日在 纳斯达克上市。2016年4月13日下午，百度董事长兼CEO李彦宏通过内部邮件宣布百度业务架构重组",
+                userProperty: "",
+                userScale: "",
+                tel: "",
+                email: "",
+                address: "",
+                userType: "",
+                profession: "",
+                description: "",
             }
         },
         trades: [
@@ -1030,7 +1025,7 @@ var appModal = new Vue({
             return false;
         },
         closePorto: function() {
-            this.showUpload = false;
+            this.show.upload = false;
             this.showModal = false;
         },
         remainText: function(text) {
@@ -1083,47 +1078,75 @@ var appModal = new Vue({
     watch: {
         "show.minicard": function(curval) {
             if (curval) {
-                $(".minicard").css({
-                    "margin-top": Math.floor(($(window).height() - $(".minicard").height()) / 2 + document.body.scrollTop)
-                })
+                EventUtils.absCenter($(".minicard"));
             }
         },
         "show.preImg": function(curval) {
-            // console.log(curval);
             if (curval) {
-                var top = Math.floor($(window).height() * 0.5 + $("body").scrollTop()) + "px";
-                // console.log(top);
-                $("#app-modal .preview-file").css("top", top);
+                EventUtils.absCenter($("#app-modal .preview-file"));
+            }
+        },
+        "show.upload": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .porto-upload"));
+                })
+            }
+        },
+        "show.mobile": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .mobile-bind"));
+                })
+            }
+        },
+        "show.email": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .email-bind"));
+                })
+            }
+        },
+        "show.wechat": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .wechat-bind"));
+                })
             }
         },
         "show.comment": function(curval) {
             if (curval) {
-                var top = Math.floor($(window).height() * 0.15 + $("body").scrollTop()) + "px";
-                $("#app-modal .comment-box").css("margin-top", top);
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .comment-box"));
+                })
             }
         },
         "show.stickybox": function(curval) {
             if (curval) {
-                var top = Math.floor($(window).height() * 0.15 + $("body").scrollTop()) + "px";
-                $("#app-modal .refresh-box").css("top", top);
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .refresh-box"));
+                })
             }
         },
         "show.stickyhintbox": function(curval) {
             if (curval) {
-                var top = Math.floor($(window).height() * 0.15 + $("body").scrollTop()) + "px";
-                $("#app-modal .refresh-hint-box").css("top", top);
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .refresh-hint-box"));
+                })
             }
         },
         "show.freshbox": function(curval) {
             if (curval) {
-                var top = Math.floor($(window).height() * 0.15 + $("body").scrollTop()) + "px";
-                $("#app-modal .refresh-box").css("top", top);
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .refresh-box"));
+                })
             }
         },
         "show.freshhintbox": function(curval) {
             if (curval) {
-                var top = Math.floor($(window).height() * 0.15 + $("body").scrollTop()) + "px";
-                $("#app-modal .refresh-hint-box").css("top", top);
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .refresh-hint-box"));
+                })
             }
         },
         "sticky.sum": function(curval) {
@@ -1194,7 +1217,7 @@ function uploadEventBind() {
         EventUtils.ajaxReq("/center/user/uploadIcon", "post", postdata, function(resp, status) {
             $("#avatar-box").html("<img src='" + resp.data + "' />");
         });
-        appModal.showUpload = false;
+        appModal.show.upload = false;
         appModal.showModal = false;
     })
 }

@@ -11,14 +11,13 @@ function infoRequest() {
             console.log(resp.data);
             var account = {
                 userName: resp.data.userName,
-                userId: parObj.userId,
+                userId: resp.data.userId,
                 userType: resp.data.userType,
                 loginId: resp.data.loginIdentifier
             }
             appFront.account = account;
             appFront.isLogin = true;
         })
-
     }
 }
 
@@ -60,6 +59,12 @@ function turnEventBind() {
         $(".show-pics").append($(".show-pics li:first-child"));
         $(".show-pics .rotate-center").removeClass("rotate-center").addClass("rotate-left");
         $(".show-pics .rotate-right:nth-child(4)").removeClass("rotate-right").addClass("rotate-center");
+    });
+    $(".class-show .turn-right").click(function() {
+        $(".show-pics li:last-child").removeClass("rotate-right").addClass("rotate-left");
+        $(".show-pics li:first-child").before($(".show-pics li:last-child"));
+        $(".show-pics .rotate-center").removeClass("rotate-center").addClass("rotate-right");
+        $(".show-pics .rotate-left:nth-of-type(4)").removeClass("rotate-left").addClass("rotate-center");
     })
 };
 
@@ -261,13 +266,13 @@ var appShow = new Vue({
     el: "#app-show",
     data: {
         showInfos: [
-            { imgsrc: "images/pic-class1.jpg", txt: "解决大学生从学习到就业的信息" },
-            { imgsrc: "images/photo05.jpg", txt: "解决大学生从学习到就业的信息" },
-            { imgsrc: "images/pic-class1.jpg", txt: "解决大学生从学习到就业的信息" },
-            { imgsrc: "images/photo05.jpg", txt: "解决大学生从学习到就业的信息" },
-            { imgsrc: "images/pic-class1.jpg", txt: "解决大学生从学习到就业的信息" },
-            { imgsrc: "images/photo05.jpg", txt: "解决大学生从学习到就业的信息" },
-            { imgsrc: "images/pic-class1.jpg", txt: "解决大学生从学习到就业的信息" },
+            { imgsrc: "images/case1.jpg", txt: "解决大学生从学习到就业的信息" },
+            { imgsrc: "images/case2.jpg", txt: "解决大学生从学习到就业的信息" },
+            { imgsrc: "images/case3.jpg", txt: "解决大学生从学习到就业的信息" },
+            { imgsrc: "images/case4.jpg", txt: "解决大学生从学习到就业的信息" },
+            { imgsrc: "images/case5.jpg", txt: "解决大学生从学习到就业的信息" },
+            { imgsrc: "images/case6.jpg", txt: "解决大学生从学习到就业的信息" },
+            { imgsrc: "images/case7.jpg", txt: "解决大学生从学习到就业的信息" },
         ]
     },
     methods: {
@@ -306,24 +311,28 @@ var appCoop = new Vue({
     el: "#app-coop",
     data: {
         coopInc: [
-            { imgsrc: "images/coLogo02.jpg" },
-            { imgsrc: "images/coLogo03.jpg" },
-            { imgsrc: "images/coLogo04.jpg" },
-            { imgsrc: "images/coLogo02.jpg" },
-            { imgsrc: "images/coLogo03.jpg" },
-            { imgsrc: "images/coLogo03.jpg" },
-            { imgsrc: "images/coLogo03.jpg" },
+            { imgsrc: "images/logo-vipabc.jpg" },
+            { imgsrc: "images/logo-unicom.jpg" },
+            { imgsrc: "images/logo-hikvision.jpg" },
+            { imgsrc: "images/logo-ishangzu.jpg" },
+            { imgsrc: "images/logo-tonghua.jpg" },
+            { imgsrc: "images/logo-hundsn.jpg" },
+            { imgsrc: "images/logo-tax.png" },
+            { imgsrc: "images/logo-telecom.gif" },
+            { imgsrc: "images/logo-chinamobile.png" },
+            { imgsrc: "images/logo-pandora.jpg" },
         ],
         coopUni: [
-            { imgsrc: "images/coLogo02.jpg" },
-            { imgsrc: "images/coLogo03.jpg" },
-            { imgsrc: "images/coLogo04.jpg" },
-            { imgsrc: "images/coLogo02.jpg" },
-            { imgsrc: "images/coLogo03.jpg" },
-            { imgsrc: "images/coLogo04.jpg" },
-            { imgsrc: "images/coLogo02.jpg" },
-            { imgsrc: "images/coLogo03.jpg" },
-            { imgsrc: "images/coLogo04.jpg" },
+            { imgsrc: "images/杭州师范大学.jpg" },
+            { imgsrc: "images/杭州职业技术学院.jpg" },
+            { imgsrc: "images/合肥学院.jpg" },
+            { imgsrc: "images/宿州学院.jpg" },
+            { imgsrc: "images/深圳大学.jpg" },
+            { imgsrc: "images/浙江机电学院.jpg" },
+            { imgsrc: "images/浙江农林大学.jpg" },
+            { imgsrc: "images/浙江育英职业技术学院.jpg" },
+            { imgsrc: "images/郑州大学.jpg" },
+            { imgsrc: "images/中国美术学院.jpg" }
         ],
         showinc: true
     },
@@ -354,7 +363,7 @@ var appCoop = new Vue({
         }
     },
     mounted: function() {
-        $("#app-coop").height(getViewport().height - 238);
+        // $("#app-coop").height(getViewport().height - 238);
     }
 });
 
