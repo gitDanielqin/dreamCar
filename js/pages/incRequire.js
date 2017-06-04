@@ -1,3 +1,18 @@
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../common/common")
+require("../components/dropdown")
+require("../components/major-pop")
+require("../components/foundation-datepicker")
+require("../../data/commondata")
+require("../../data/position")
+require("../../data/major")
+require("../../data/address")
+require("../../data/workareas")
+require("../../css/base.css")
+require("../../css/widget.css")
+require("../../css/foundation-datepicker.min.css")
+require("../../css/require.css")
 var parObj = EventUtils.urlExtrac(window.location);
 var isNewRequire = true;
 var respObj = {};

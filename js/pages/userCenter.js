@@ -1,7 +1,22 @@
 /**
  * Created by xuanyuan on 2016/11/27.
  */
-
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../common/common")
+require("../common/cropbox")
+require("../components/dropdown")
+require("../components/pagination")
+require("../components/major-pop")
+require("../components/pos-pop")
+require("../../data/commondata")
+require("../../data/address")
+require("../../data/workareas")
+require("../../data/position")
+require("../../data/major")
+require("../../css/base.css")
+require("../../css/widget.css")
+require("../../css/pCenter.css")
 var objMe = this;
 var parObj = EventUtils.urlExtrac(window.location);
 var respObj = {}; //请求的本页面的数据集合
@@ -294,12 +309,12 @@ var appPorto = new Vue({
             })
         },
         cancel: function() {
-            this.briefInfo = cloneObj(this.cloneInfo);
+            this.briefInfo = EventUtils.cloneObj(this.cloneInfo);
             this.viewInfo = true;
         },
         edit: function() {
-            this.cloneInfo = cloneObj(this.briefInfo);
-            this.initAddress = cloneObj(this.briefInfo.address);
+            this.cloneInfo = EventUtils.cloneObj(this.briefInfo);
+            this.initAddress = EventUtils.cloneObj(this.briefInfo.address);
             this.viewInfo = false;
             this.$nextTick(function() {
                 selectInitInput();
@@ -576,7 +591,7 @@ var appCont = new Vue({
             for (var i = 0; i < this.resume.worksExps.length; i++) {
                 this.resume.worksExps[i].show = false;
             }
-            var worksexp = cloneObj(this.resume.worksExps[0]);
+            var worksexp = EventUtils.cloneObj(this.resume.worksExps[0]);
             for (var key in worksexp) {
                 worksexp[key] = "";
             }
@@ -1076,7 +1091,7 @@ function uploadEventBind() {
 
 // 页面编辑事件绑定
 function editEventBind() {
-    var oldResume = cloneObj(appCont.resume);
+    var oldResume = EventUtils.cloneObj(appCont.resume);
 
     $(".resumeBox .btn-edit").click(function() {
         var editName = $(this).closest(".view-item").attr("name");
@@ -1100,7 +1115,7 @@ function editEventBind() {
         $(this).closest(".view-item").hide();
         $(".resumeBox .edit-item[name=" + editName + "]").show();
         selectInitPos();
-        oldResume = cloneObj(appCont.resume);
+        oldResume = EventUtils.cloneObj(appCont.resume);
     });
     $(".resumeBox .edit-item .buttons button:nth-of-type(1)").click(function() {
         var editBlock = $(this).closest(".edit-item");
@@ -1162,7 +1177,7 @@ function editEventBind() {
         $(".resumeBox .view-item[name=" + viewName + "]").show();
     });
     $(".resumeBox .edit-item .buttons button:nth-of-type(2)").click(function() {
-        appCont.resume = cloneObj(oldResume);
+        appCont.resume = EventUtils.cloneObj(oldResume);
         var viewName = $(this).closest(".edit-item").attr("name");
         $(this).closest(".edit-item").hide();
         $(".resumeBox .view-item[name=" + viewName + "]").show();

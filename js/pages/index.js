@@ -1,3 +1,12 @@
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../common/common")
+require("../components/dropdown")
+require("../../data/address")
+require("../../css/base.css")
+require("../../css/index.css")
+
+
 var parObj = EventUtils.urlExtrac(window.location);
 var respObj = {}; //请求的本页面的数据集合
 // 请求本页面数据
@@ -23,7 +32,7 @@ function infoRequest() {
 
 //初始化首屏的尺寸和元素位置
 function init_pos() {
-    var winH = getViewport().height;
+    var winH = EventUtils.getViewport().height;
     $(".mod-page").height(winH);
     $(".center-teil").css({
         "margin-top": Math.floor(winH * 0.135) + "px"
@@ -81,13 +90,13 @@ function wheelEventBind(element, index) {
             };
             console.log(wheelValue);
             if (wheelValue < 0) {
-                if (document.body.scrollTop < getViewport().height * (index - 1)) {
+                if (document.body.scrollTop < EventUtils.getViewport().height * (index - 1)) {
                     $("body").animate({
-                        scrollTop: getViewport().height * (index - 1)
+                        scrollTop: EventUtils.getViewport().height * (index - 1)
                     }, 500)
                 } else {
                     $("body").animate({
-                        scrollTop: getViewport().height * index
+                        scrollTop: EventUtils.getViewport().height * index
                     }, 500)
                 }
             }
@@ -102,13 +111,13 @@ function wheelEventBind(element, index) {
                 wheelValue = ev.detail
             };
             if (wheelValue < 0) {
-                if (document.body.scrollTop < getViewport().height * (index - 1)) {
+                if (document.body.scrollTop < EventUtils.getViewport().height * (index - 1)) {
                     $("body").animate({
-                        scrollTop: getViewport().height * (index - 1)
+                        scrollTop: EventUtils.getViewport().height * (index - 1)
                     }, 500)
                 } else {
                     $("body").animate({
-                        scrollTop: getViewport().height * index
+                        scrollTop: EventUtils.getViewport().height * index
                     }, 500)
                 }
             }
@@ -169,7 +178,7 @@ var appFront = new Vue({
         },
         downwards: function() {
             $("body").animate({
-                scrollTop: getViewport().height
+                scrollTop: EventUtils.getViewport().height
             }, 500)
         },
         selectAction: function(obj) {
@@ -260,7 +269,7 @@ var appFront = new Vue({
                 this.address.displayCity = curval;
             }
         }
-    }
+    },
 })
 var appShow = new Vue({
     el: "#app-show",
@@ -287,7 +296,7 @@ var appShow = new Vue({
         },
         showSwitch: function(index) {
             if (index != 3) {
-                var activeItem = cloneObj(this.showInfos[index]);
+                var activeItem = EventUtils.cloneObj(this.showInfos[index]);
                 this.showInfos.splice(index, 1);
                 this.showInfos.splice(3, 0, activeItem);
             }
@@ -303,7 +312,7 @@ var appShow = new Vue({
 var appAbout = new Vue({
     el: "#app-about",
     mounted: function() {
-        $("#app-about").height(getViewport().height);
+        $("#app-about").height(EventUtils.getViewport().height);
         //     wheelEventBind("app-about",3);
     }
 })
@@ -363,7 +372,7 @@ var appCoop = new Vue({
         }
     },
     mounted: function() {
-        // $("#app-coop").height(getViewport().height - 238);
+        // $("#app-coop").height(EventUtils.getViewport().height - 238);
     }
 });
 

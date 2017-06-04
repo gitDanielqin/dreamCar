@@ -1,3 +1,8 @@
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../common/common")
+require("../../css/base.css")
+require("../../css/password.css")
 var regExp = {
     mobile: /^1[34578]\d{9}$/,
     email: /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/,

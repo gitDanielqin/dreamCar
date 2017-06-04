@@ -1,6 +1,18 @@
 /**
  * Created by xuanyuan on 2016/12/31.
  */
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../common/common")
+require("../components/dropdown")
+require("../components/pagination")
+require("../../data/commondata")
+require("../../data/major")
+require("../../data/position")
+require("../../data/workareas")
+require("../../css/base.css")
+require("../../css/widget.css")
+require("../../css/display-comm.css")
 var isLogin = false;
 var parObj = EventUtils.urlExtrac(window.location); //地址参数对象
 var respObj = {}; //页面信息

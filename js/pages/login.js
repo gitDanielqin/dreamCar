@@ -2,6 +2,14 @@
  * Created by xuanyuan on 2016/11/6.
  */
 
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../libs/sweetalert.min");
+require("../common/common")
+require("../../css/base.css")
+require("../../css/sweetalert.css")
+require("../../css/login.css")
+
 var parObj = EventUtils.urlExtrac(window.location);
 var regExp = {
     mobile: /^1[34578]\d{9}$/,

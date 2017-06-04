@@ -1,41 +1,4 @@
-// 克隆对象函数
-function cloneObj(obj) {
-    var o;
-    switch (typeof obj) {
-        case 'undefined':
-            break;
-        case 'string':
-            o = obj + '';
-            break;
-        case 'number':
-            o = obj - 0;
-            break;
-        case 'boolean':
-            o = obj;
-            break;
-        case 'object':
-            if (obj === null) {
-                o = null;
-            } else {
-                if (obj instanceof Array) {
-                    o = [];
-                    for (var i = 0, len = obj.length; i < len; i++) {
-                        o.push(cloneObj(obj[i]));
-                    }
-                } else {
-                    o = {};
-                    for (var k in obj) {
-                        o[k] = cloneObj(obj[k]);
-                    }
-                }
-            }
-            break;
-        default:
-            o = obj;
-            break;
-    }
-    return o;
-};
+// import $ from '../libs/jquery-3.1.0.min'
 
 //Firefox获取文件路径方法
 function readFileFirefox(fileBrowser) {
@@ -62,40 +25,61 @@ function readFileFirefox(fileBrowser) {
     }
     return file.path;
 }
-
+window.readFileFirefox = readFileFirefox;
 var variableUtils = {
-        regExp: {
-            mobile: /^1[34578]\d{9}$/,
-            email: /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/,
-            password: /^[a-zA-Z0-9]{6,16}$/,
-            phone: /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/
-        }
-    }
-    // 计算日期差值
-function diffDay(dateObj) {
-    var nowDate = new Date();
-    aDate = dateObj.split("-");
-    var oldDate = new Date(aDate[1] + "-" + aDate[2] + "-" + aDate[0]);
-    var iDays = parseInt(Math.abs(nowDate - oldDate) / 1000 / 60 / 60 / 24);
-    return iDays;
-}
-
-//取得屏幕高度
-function getViewport() {
-    if (document.compatMode == 'BackCompat') {
-        return {
-            width: document.body.clientWidth,
-            height: document.body.clientHeight
-        };
-    } else {
-        return {
-            width: document.documentElement.clientWidth,
-            height: document.documentElement.clientHeight
-        }
+    regExp: {
+        mobile: /^1[34578]\d{9}$/,
+        email: /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/,
+        password: /^[a-zA-Z0-9]{6,16}$/,
+        phone: /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/
     }
 }
-
-var EventUtils = {
+window.variableUtils = variableUtils;
+window.EventUtils = {
+        cloneObj: function(obj) { // 克隆对象函数
+            var o;
+            switch (typeof obj) {
+                case 'undefined':
+                    break;
+                case 'string':
+                    o = obj + '';
+                    break;
+                case 'number':
+                    o = obj - 0;
+                    break;
+                case 'boolean':
+                    o = obj;
+                    break;
+                case 'object':
+                    if (obj === null) {
+                        o = null;
+                    } else {
+                        if (obj instanceof Array) {
+                            o = [];
+                            for (var i = 0, len = obj.length; i < len; i++) {
+                                o.push(EventUtils.cloneObj(obj[i]));
+                            }
+                        } else {
+                            o = {};
+                            for (var k in obj) {
+                                o[k] = EventUtils.cloneObj(obj[k]);
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    o = obj;
+                    break;
+            }
+            return o;
+        },
+        diffDay: function(date) { // 计算日期差值
+            var nowDate = new Date();
+            aDate = date.split("-");
+            var oldDate = new Date(aDate[1] + "-" + aDate[2] + "-" + aDate[0]);
+            var iDays = parseInt(Math.abs(nowDate - oldDate) / 1000 / 60 / 60 / 24);
+            return iDays
+        },
         filterReqdata: function(postdata) { // 清除发送数据对象值为空或不限的属性
             for (var key in postdata) {
                 if (typeof(postdata[key]) == "string" && postdata[key].indexOf(";") >= 0 && postdata[key].split(";")[0] == "不限") {
@@ -125,7 +109,7 @@ var EventUtils = {
         },
         infoExtrac: function(info) {
             if (info) {
-                infoArray = info.split(";");
+                var infoArray = info.split(";");
                 for (var i = infoArray.length - 1; i >= 0; i--) {
                     if (i == 0) {
                         return infoArray[0];
@@ -224,7 +208,7 @@ var EventUtils = {
             }
             return file_url;
         },
-        getViewport: function() {
+        getViewport: function() { //取得屏幕宽高
             if (document.compatMode == 'BackCompat') {
                 return {
                     width: document.body.clientWidth,

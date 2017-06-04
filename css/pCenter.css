@@ -1588,6 +1588,10 @@ input.edit-phone {
     width: 40px;
 }
 
+.bot-infos li {
+    margin: 0 30px;
+}
+
 .bot-infos .pic-icon {
     margin-right: 15px;
 }

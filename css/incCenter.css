@@ -809,6 +809,10 @@
     background: #f7a14a;
 }
 
+.bot-infos li {
+    margin: 0 30px;
+}
+
 .bot-infos .pic-icon {
     margin-right: 15px;
 }

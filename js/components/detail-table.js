@@ -1,3 +1,4 @@
+var Vue = require("../libs/vue");
 (function() {
     var detailTableTempl = '<div id="app-table">\
         <ul class="result-tabs lis-inline LH40 t-center color-gray79 fSize16" @click.stop="selectTab($event.target)">\

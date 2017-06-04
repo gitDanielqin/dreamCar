@@ -1,3 +1,4 @@
+var Vue = require("../libs/vue");
 (function() {
     var templCard = '<div class="minicard" v-cloak>\
         <h2 class="card-header"><span class="card-header-title" v-show="cardtype==\'inc\'">企业名片</span><span class="card-header-title" v-show="cardtype==\'uni\'">高校名片</span></h2>\

@@ -1,3 +1,4 @@
+var Vue = require("../libs/vue");
 (function() {
     let tem = '<div class="pagination">' +
         '<ul>' +

@@ -1,6 +1,8 @@
 /**
  * Created by xuanyuan on 2016/11/7.
  */
+
+
 var parObj = EventUtils.urlExtrac(window.location);
 var appTop = new Vue({
     el: "#app-top",
@@ -157,6 +159,6 @@ var appCont = new Vue({
     mounted: function() {
         selectInitInput();
         selectInitPos();
-        $(".main").css("height", getViewport().height - 246 + "px");
+        $(".main").css("height", EventUtils.getViewport().height - 246 + "px");
     }
 })

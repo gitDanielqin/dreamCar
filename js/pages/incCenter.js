@@ -1,3 +1,17 @@
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../common/common")
+require("../common/ajaxfileupload")
+require("../common/cropbox")
+require("../components/dropdown")
+require("../components/pagination")
+require("../components/minicard")
+require("../../data/commondata")
+require("../../data/address")
+require("../../data/workareas")
+require("../../css/base.css")
+require("../../css/widget.css")
+require("../../css/incCenter.css")
 var parObj = EventUtils.urlExtrac(window.location);
 var respObj = {}; //请求的本页面的数据集合
 
@@ -131,12 +145,12 @@ var appPorto = new Vue({
             })
         },
         cancel: function() {
-            this.briefInfo = cloneObj(this.cloneInfo);
+            this.briefInfo = EventUtils.cloneObj(this.cloneInfo);
             this.viewInfo = true;
         },
         edit: function() {
-            this.cloneInfo = cloneObj(this.briefInfo);
-            this.initAddress = cloneObj(this.briefInfo.address);
+            this.cloneInfo = EventUtils.cloneObj(this.briefInfo);
+            this.initAddress = EventUtils.cloneObj(this.briefInfo.address);
             this.viewInfo = false;
             this.$nextTick(function() {
                 selectInitInput();
@@ -766,7 +780,7 @@ var appCont = new Vue({
         combimsg: function() {
             var total = 0;
             for (var i = 0; i < this.message.combi.items.length; i++) {
-                if (this.message.combi.items[i].code == 01) {
+                if (this.message.combi.items[i].code == "01") {
                     total++;
                 }
             };
