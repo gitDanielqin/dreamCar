@@ -191,7 +191,7 @@
 .form-cont label {
     line-height: 26px;
     font-size: 14px;
-    width: 90px;
+    width: 100px;
     text-align: right;
     display: inline-block;
     margin-right: 18px;
@@ -289,8 +289,11 @@ input.dis-Addr {
     margin-bottom: 48px;
 }
 
-.inc-addr input.dis-Addr {
+.dis-Addr {
     background: white;
+}
+
+.inc-addr input.dis-Addr {
     width: 388px;
 }
 

@@ -1,4 +1,4 @@
-var Vue = require("../libs/vue");
+// var Vue = require("../libs/vue");
 (function() {
     var scrollTmpl = '<p class="scrollbar"><i class="scroll-btn" @mousedown.stop="slide($event)"></i></p>';
     Vue.component("scrollbar", {

@@ -1,18 +1,18 @@
-import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
-require("../common/common")
-require("../components/dropdown")
-require("../components/major-pop")
-require("../components/foundation-datepicker")
-require("../../data/commondata")
-require("../../data/position")
-require("../../data/major")
-require("../../data/address")
-require("../../data/workareas")
-require("../../css/base.css")
-require("../../css/widget.css")
-require("../../css/foundation-datepicker.min.css")
-require("../../css/require.css")
+// import $ from "../libs/jquery-3.1.0.min";
+// var Vue = require("../libs/vue");
+// require("../common/common")
+// require("../components/dropdown")
+// require("../components/major-pop")
+// require("../components/foundation-datepicker")
+// require("../../data/commondata")
+// require("../../data/position")
+// require("../../data/major")
+// require("../../data/address")
+// require("../../data/workareas")
+// require("../../css/base.css")
+// require("../../css/widget.css")
+// require("../../css/foundation-datepicker.min.css")
+// require("../../css/require.css")
 
 // 获取字段判断是否为首次发布还是修改
 var parObj = EventUtils.urlExtrac(window.location);
@@ -180,9 +180,9 @@ var appMain = new Vue({
             datatype: "combi",
             header: "",
             initPosition: {
-                pos_1: "不限",
-                pos_2: "不限",
-                pos_3: "不限"
+                pos_1: "",
+                pos_2: "",
+                pos_3: ""
             },
             initAddress: {
                 province: "不限",
@@ -190,11 +190,11 @@ var appMain = new Vue({
                 district: "不限"
             },
             uniApply: {
-                stuScale: "不限",
-                trainWay: "不限",
+                stuScale: "",
+                trainWay: "企业高管到校",
             },
             incApply: {
-                posAmount: "不限",
+                posAmount: "",
                 incProps: "不限",
                 incScale: "不限",
             },
@@ -212,11 +212,16 @@ var appMain = new Vue({
                 incScale: "不限",
                 incProps: "不限",
                 initPosition: {
-                    pos_1: "不限",
-                    pos_2: "不限",
-                    pos_3: "不限"
+                    pos_1: "",
+                    pos_2: "",
+                    pos_3: ""
                 },
                 posAmount: "不限",
+            },
+            initAddress: {
+                province: "不限",
+                city: "不限",
+                district: "不限"
             },
             stuScale: "不限",
             date: "",
@@ -282,27 +287,74 @@ var appMain = new Vue({
             }
         },
         publish: function(type) {
-            var isValid = true;
+            var isFilled = true;
             // 对联系方式的输入检测
-            $(".phone-input:visible").each(function() {
-                if (!variableUtils.regExp.phone.test(this.value) && !variableUtils.regExp.mobile.test(this.value)) {
+            // $(".phone-input:visible").each(function() {
+            //     if (!variableUtils.regExp.phone.test(this.value) && !variableUtils.regExp.mobile.test(this.value)) {
+            //         $(this).addClass("hint-nullable");
+            //         isValid = false;
+            //     }
+            // });
+
+            $(".must-input:visible").each(function() {
+                if ($(this).val() == "") {
                     $(this).addClass("hint-nullable");
-                    isValid = false;
+                    isFilled = false;
+                } else {
+                    $(this).removeClass("hint-nullable");
                 }
             });
-            //标题栏不能为空
-            if ($(".head-input:visible input").val() == "") {
-                $(".head-input:visible input").addClass("hint-nullable");
-                isValid = false;
-            } else {
-                $(".head-input:visible input").removeClass("hint-nullable");
-            }
-
-            if (!isValid) {
-                alert("请检查信息是否完整或格式是否正确！");
+            $(".must-item:visible").each(function() {
+                var oInput = $(this).find("input:first-child");
+                if (oInput.val() == "") {
+                    oInput.addClass("hint-nullable");
+                    isFilled = false;
+                } else {
+                    oInput.removeClass("hint-nullable");
+                }
+            })
+            if (!isFilled) {
+                alert("请完成所有必填信息！");
                 return false;
             }
             if (type == "combi") {
+                //检查信息是否符合正确的格式
+                if ($(".cont-combi .sel-pos-1 input").val() == "不限") { //岗位信息不能为不限
+                    $(".sel-position:visible input").addClass("hint-nullable");
+                    alert("请选择一个具体岗位！");
+                    return false;
+                } else {
+                    $(".sel-position:visible input").removeClass("hint-nullable");
+                }
+                if (this.combiData.incApply.posAmount == "不限") {
+                    $(".pos-item input").addClass("hint-nullable");
+                    alert("请选择岗位数区间！");
+                    return false;
+                } else {
+                    $(".pos-item input").removeClass("hint-nullable");
+                }
+                if ($(".cont-combi .major-input-1 input").val() == "不限") {
+                    $(".cont-combi .major-input input").addClass("hint-nullable");
+                    alert("请选择一个具体专业！");
+                    return false;
+                } else {
+                    $(".cont-combi .major-input input").removeClass("hint-nullable");
+                }
+                if (this.combiData.uniApply.stuScale == "不限") {
+                    $(".cont-combi .pro-count input").addClass("hint-nullable");
+                    alert("请选择专业人数范围！");
+                    return false;
+                } else {
+                    $(".cont-combi .pro-count input").removeClass("hint-nullable");
+                }
+                if (!variableUtils.regExp.phone.test(this.combiData.contact.phone) && !variableUtils.regExp.mobile.test(this.combiData.contact.phone)) {
+                    $(".phone-input:visible").addClass("hint-nullable");
+                    alert("联系方式格式有误！");
+                    return false;
+                } else {
+                    $(".phone-input:visible").removeClass("hint-nullable");
+                }
+                //准备发送数据
                 if ($(".cont-combi .time-table").find("td.on").length > 0) {
                     var timestring = "";
                     $(".cont-combi .time-table .time-tr").each(function() {
@@ -348,6 +400,36 @@ var appMain = new Vue({
                     })
                 }
             } else if (type == "jobfair") {
+                //检测发送的数据
+                if ($(".cont-recruit .sel-pos-1 input").val() == "不限") {
+                    $(".cont-recruit .sel-position input").addClass("hint-nullable");
+                    alert("请选择一个具体岗位！");
+                    return false;
+                } else {
+                    $(".cont-recruit .sel-position input").removeClass("hint-nullable");
+                }
+                if ($(".cont-recruit .major-input-1 input").val() == "不限") {
+                    $(".cont-recruit .major-input input").addClass("hint-nullable");
+                    alert("请选择一个具体专业!");
+                    return false;
+                } else {
+                    $(".cont-recruit .major-input input").removeClass("hint-nullable");
+                }
+                if (this.recruitData.stuScale == "不限") {
+                    $(".cont-recruit .pro-count input").addClass("hint-nullable");
+                    alert("请选择专业人数范围！");
+                    return false;
+                } else {
+                    $(".cont-recruit .pro-count input").removeClass("hint-nullable");
+                }
+                if (!variableUtils.regExp.phone.test(this.recruitData.contact.phone) && !variableUtils.regExp.mobile.test(this.recruitData.contact.phone)) {
+                    $(".phone-input:visible").addClass("hint-nullable");
+                    alert("联系方式格式有误！");
+                    return false;
+                } else {
+                    $(".phone-input:visible").removeClass("hint-nullable");
+                }
+                //准备发送数据
                 var postdata = {
                     userId: parObj.userId,
                     jobFairType: 1,
@@ -386,8 +468,8 @@ var appMain = new Vue({
         }
     },
     mounted: function() {
-        $(".selectee input").val("不限");
-        $(".major-input input").val("不限");
+        // $(".selectee input").val("不限");
+        // $(".major-input input").val("不限");
         $(".form-cont input").focus(function() {
             $(".steps li:nth-of-type(1)").addClass("past");
             $(".steps li:nth-of-type(2)").addClass("on");

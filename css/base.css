@@ -164,6 +164,11 @@ table th {
     position: absolute;
 }
 
+.must-mark {
+    color: red;
+    margin-right: 5px;
+}
+
 .modal {
     position: absolute;
     left: 0;
@@ -226,11 +231,26 @@ table th {
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
 }
 
+.check-box {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #999;
+    vertical-align: middle;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.check-box.selected {
+    background: url("../images/icon-checked3.png") no-repeat center center
+}
+
 input[readonly='readonly'] {
     background: #e4e4e4;
 }
 
-input.hint-nullable {
+input.hint-nullable,
+textarea.hint-nullable {
     background-color: #ffd2d2;
 }
 

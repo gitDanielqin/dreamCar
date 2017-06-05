@@ -1,18 +1,18 @@
-import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
-require("../common/common")
-require("../components/dropdown")
-require("../components/major-pop")
-require("../components/foundation-datepicker")
-require("../../data/commondata")
-require("../../data/position")
-require("../../data/major")
-require("../../data/address")
-require("../../data/workareas")
-require("../../css/base.css")
-require("../../css/widget.css")
-require("../../css/foundation-datepicker.min.css")
-require("../../css/require.css")
+// import $ from "../libs/jquery-3.1.0.min";
+// var Vue = require("../libs/vue");
+// require("../common/common")
+// require("../components/dropdown")
+// require("../components/major-pop")
+// require("../components/foundation-datepicker")
+// require("../../data/commondata")
+// require("../../data/position")
+// require("../../data/major")
+// require("../../data/address")
+// require("../../data/workareas")
+// require("../../css/base.css")
+// require("../../css/widget.css")
+// require("../../css/foundation-datepicker.min.css")
+// require("../../css/require.css")
 var parObj = EventUtils.urlExtrac(window.location);
 var isNewRequire = true;
 var respObj = {};
@@ -244,18 +244,18 @@ var appMain = new Vue({
                 district: "不限"
             },
             initPosition: {
-                pos_1: "不限",
-                pos_2: "不限",
-                pos_3: "不限"
+                pos_1: "",
+                pos_2: "",
+                pos_3: ""
             },
             incReq: {
-                stuScale: "不限",
+                stuScale: "",
                 uniLevel: "不限",
                 uniClassific: "不限",
             },
             incApply: {
-                posAmount: "不限",
-                trainWay: "不限",
+                posAmount: "",
+                trainWay: "企业高管到校",
             },
             requireDesc: "",
             contact: {
@@ -268,11 +268,11 @@ var appMain = new Vue({
             datatype: "recruit",
             header: "",
             postype: "不限",
-            jobAmount: "不限",
+            jobAmount: "",
             scolar: "不限",
             gender: "不限",
             worksexp: "不限",
-            salary: "不限",
+            salary: "",
             date: "",
             desc: "",
             contact: {
@@ -284,12 +284,12 @@ var appMain = new Vue({
         directData: {
             datatype: "direct",
             header: "",
-            postype: "不限",
-            amount: "不限",
+            postype: "",
+            amount: "",
             scolar: "不限",
             gender: "不限",
             worksexp: "不限",
-            salary: "不限",
+            salary: "",
             desc: "",
             contact: {
                 person: "",
@@ -348,18 +348,68 @@ var appMain = new Vue({
             addBox.hide();
         },
         publish: function(type) {
-            var isValid = true;
-            $(".phone-input:visible").each(function() {
-                if (!variableUtils.regExp.phone.test(this.value) && !variableUtils.regExp.mobile.test(this.value)) {
+            //必填项不能为空！
+            var isFilled = true;
+            $(".must-input:visible").each(function() {
+                if ($(this).val() == "") {
                     $(this).addClass("hint-nullable");
-                    isValid = false;
+                    isFilled = false;
+                } else {
+                    $(this).removeClass("hint-nullable");
                 }
             });
-            if (!isValid) {
-                alert("请检查信息是否正确！");
+            $(".must-item:visible").each(function() {
+                var oInput = $(this).find("input:first-child");
+                if (oInput.val() == "") {
+                    oInput.addClass("hint-nullable");
+                    isFilled = false;
+                } else {
+                    oInput.removeClass("hint-nullable");
+                }
+            })
+            if (!isFilled) {
+                alert("请完成所有必填信息！");
                 return false;
             }
+
             if (type == "combi") {
+                //检查字段是否规范
+                if ($(".cont-combi .major-input-1 input").val() == "不限") {
+                    $(".cont-combi .major-input input").addClass("hint-nullable");
+                    alert("请选择一个具体专业！");
+                    return false;
+                } else {
+                    $(".cont-combi .major-input input").removeClass("hint-nullable");
+                }
+                if (this.combiData.incReq.stuScale == "不限") {
+                    $(".cont-combi .pro-count input").addClass("hint-nullable");
+                    alert("请选择专业人数范围！");
+                    return false;
+                } else {
+                    $(".cont-combi .pro-count input").removeClass("hint-nullable");
+                }
+                if (this.combiData.incApply.posAmount == "不限") {
+                    $(".cont-combi .job-count input").addClass("hint-nullable");
+                    alert("请选择岗位数范围！");
+                    return false;
+                } else {
+                    $(".cont-combi .job-count input").removeClass("hint-nullable");
+                }
+                if ($(".cont-combi .sel-pos-1 input").val() == "不限") {
+                    $(".cont-combi .sel-position input").addClass("hint-nullable");
+                    alert("请选择一个具体岗位！");
+                    return false;
+                } else {
+                    $(".cont-combi .sel-position input").removeClass("hint-nullable");
+                }
+                if (!variableUtils.regExp.phone.test(this.combiData.contact.phone) && !variableUtils.regExp.mobile.test(this.combiData.contact.phone)) {
+                    $(".phone-input:visible").addClass("hint-nullable");
+                    alert("联系方式格式有误！");
+                    return false;
+                } else {
+                    $(".phone-input:visible").removeClass("hint-nullable");
+                }
+                //准备发送数据
                 if ($(".cont-combi .time-table").find("td.on").length > 0) {
                     var timestring = "";
                     $(".cont-combi .time-table .time-tr").each(function() {
@@ -409,6 +459,40 @@ var appMain = new Vue({
                 }
 
             } else if (type == "jobfair") {
+                //检测数据是否合规
+                if ($(".cont-recruit .sel-pos-1 input").val() == "不限") {
+                    $(".cont-recruit .sel-position input").addClass("hint-nullable");
+                    alert("请选择具体的招聘岗位！");
+                    return false;
+                } else {
+                    $(".cont-recruit .sel-position input").removeClass("hint-nullable");
+                }
+
+                if (this.recruitData.jobAmount == "不限") {
+                    $(".cont-recruit .job-count input").addClass("hint-nullable");
+                    alert("请选择具体的招聘人数！");
+                    return false;
+                } else {
+                    $(".cont-recruit .job-count input").removeClass("hint-nullable");
+                }
+
+                if (this.recruitData.salary == "不限") {
+                    $(".cont-recruit .salary-item input").addClass("hint-nullable");
+                    alert("请选择一个薪资范围！");
+                    return false;
+                } else {
+                    $(".cont-recruit .salary-item input").removeClass("hint-nullable");
+                }
+
+                if (!variableUtils.regExp.phone.test(this.recruitData.contact.phone) && !variableUtils.regExp.mobile.test(this.recruitData.contact.phone)) {
+                    $(".phone-input:visible").addClass("hint-nullable");
+                    alert("联系方式格式有误！");
+                    return false;
+                } else {
+                    $(".phone-input:visible").removeClass("hint-nullable");
+                }
+
+                //准备发送数据
                 var welfare = "";
                 $(".cont-recruit .welfare-lis li").each(function() {
                     if ($(this).children("i.check-box").hasClass("on")) {
@@ -448,6 +532,41 @@ var appMain = new Vue({
                 }
 
             } else if (type == "recruit") {
+
+                //检查数据是否合规
+                if ($(".cont-direct .sel-pos-1 input").val() == "不限") {
+                    $(".cont-direct .sel-position input").addClass("hint-nullable");
+                    alert("请选择一个具体岗位！");
+                    return false;
+                } else {
+                    $(".cont-direct .sel-position input").removeClass("hint-nullable");
+                }
+
+                if (this.directData.postype == "不限") {
+                    $(".cont-direct .pos-type input").addClass("hint-nullable");
+                    alert("请选择一个具体的职位类别！");
+                    return false;
+                } else {
+                    $(".cont-direct .pos-type input").removeClass("hint-nullable");
+                }
+
+                if (this.directData.salary == "不限") {
+                    $(".cont-direct .salary-item input").addClass("hint-nullable");
+                    alert("请选择薪资范围！");
+                    return false;
+                } else {
+                    $(".cont-direct .salary-item input").removeClass("hint-nullable");
+                }
+
+                if (!variableUtils.regExp.phone.test(this.directData.contact.phone) && !variableUtils.regExp.mobile.test(this.directData.contact.phone)) {
+                    $(".phone-input:visible").addClass("hint-nullable");
+                    alert("联系方式格式有误！");
+                    return false;
+                } else {
+                    $(".phone-input:visible").removeClass("hint-nullable");
+                }
+
+                //准备发送数据
                 var sex = 1;
                 if (this.directData.gender == "女") {
                     sex = 2;
@@ -494,9 +613,16 @@ var appMain = new Vue({
             }
         }
     },
+    watch: {
+        'directData.amount': function(curval) {
+            if (!/^\d+$/.test(curval) || curval.length > 5) {
+                this.directData.amount = curval.slice(0, -1);
+            }
+        }
+    },
     mounted: function() {
-        $(".selectee input").val("不限");
-        $(".major-input input").val("不限");
+        // $(".selectee input").val("不限");
+        // $(".major-input input").val("不限");
         $(".form-cont input").focus(function() {
             $(".steps li:nth-of-type(1)").addClass("past");
             $(".steps li:nth-of-type(2)").addClass("on");

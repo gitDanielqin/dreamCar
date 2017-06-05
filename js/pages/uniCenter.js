@@ -1,19 +1,19 @@
-import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
-require("../common/common")
-require("../common/ajaxfileupload")
-require("../common/cropbox")
-require("../components/dropdown")
-require("../components/foundation-datepicker")
-require("../components/pagination")
-require("../components/major-pop")
-require("../components/minicard")
-require("../../data/commondata")
-require("../../data/address")
-require("../../data/major")
-require("../../css/base.css")
-require("../../css/widget.css")
-require("../../css/uniCenter.css")
+// import $ from "../libs/jquery-3.1.0.min";
+// var Vue = require("../libs/vue");
+// require("../common/common")
+// require("../common/ajaxfileupload")
+// require("../common/cropbox")
+// require("../components/dropdown")
+// require("../components/foundation-datepicker")
+// require("../components/pagination")
+// require("../components/major-pop")
+// require("../components/minicard")
+// require("../../data/commondata")
+// require("../../data/address")
+// require("../../data/major")
+// require("../../css/base.css")
+// require("../../css/widget.css")
+// require("../../css/uniCenter.css")
 
 var parObj = EventUtils.urlExtrac(window.location);
 var respObj = {}; //请求的本页面的数据集合
@@ -52,20 +52,12 @@ var respObj = {}; //请求的本页面的数据集合
                 majorArray.push({ major: "", submajor: "" });
             }
             var specialLevel = "";
-            if (respObj.propertyType && respObj.propertyType != "") {
-                $(".uni-level input[value='" + respObj.propertyType + "']").attr("checked", "true");
-                if (respObj.propertyType == "0") {
-                    specialLevel = "985";
-                } else {
-                    specialLevel = "211";
-                }
-            }
             var resumedata = {
                 uni: respObj.name,
                 classific: respObj.type,
                 amount: respObj.scale,
                 level: respObj.property,
-                specialLv: specialLevel,
+                specialLv: respObj.propertyType,
                 specialmajor: majorArray,
                 intro: respObj.discription != undefined ? respObj.discription : "",
                 comLicense: "",
@@ -351,20 +343,31 @@ var appCont = new Vue({
             }
             this.resume.uniLicense = obj.value
         },
-        showFile: function(fid) {
-            appModal.preImgUrl = EventUtils.getLocalImgUrl(fid);
+        showFile: function(type, fid) {
+            if (type == "busi") {
+                if (this.resume.comLicense != "") {
+                    appModal.preImgUrl = EventUtils.getLocalImgUrl(fid);
+                } else {
+                    appModal.preImgUrl = this.resume.comLicenseUrl;
+                }
+            }
+            if (type == "uni") {
+                if (this.resume.uniLicense != "") {
+                    appModal.preImgUrl = EventUtils.getLocalImgUrl(fid);
+                } else {
+                    appModal.preImgUrl = this.resume.uniLicenseUrl;
+                }
+            }
             appModal.showModal = true;
             appModal.show.preImg = true;
         },
         showPrefile: function(type) {
             if (type == "com") {
                 appModal.preImgUrl = appCont.resume.comLicenseUrl;
-                console.log(appCont.resume.comLicenseUrl, 1)
                 appModal.showModal = true;
                 appModal.show.preImg = true;
             } else if (type == "uni") {
                 appModal.preImgUrl = appCont.resume.uniLicenseUrl;
-                console.log(appCont.resume.uniLicenseUrl, 2)
                 appModal.showModal = true;
                 appModal.show.preImg = true;
             }
@@ -445,6 +448,11 @@ var appCont = new Vue({
             }
         },
         editSwipe: function() {
+            if (this.resume.specialLv == "0") {
+                $(".uni-level .lv985").addClass("selected");
+            } else if (this.resume.specialLv == "1") {
+                $(".uni-level .lv211").addClass("selected");
+            }
             this.resume.edit = true;
             this.resume.view = false;
         },
@@ -457,14 +465,21 @@ var appCont = new Vue({
                     appCont.resume.specialmajor[index].submajor = $(this).find(".major-input-2 input").val();
                 }
             });
-            this.resume.hasBusLicense = this.resume.comLicense == "" ? false : true;
-            this.resume.hasUniLicense = this.resume.uniLicense == "" ? false : true;
-            this.resume.edit = false;
-            this.resume.view = true;
+            if (this.resume.comLicense != "" || this.resume.comLicenseUrl != "") {
+                this.resume.hasBusLicense = true;
+            } else {
+                this.resume.hasBusLicense = false;
+            }
+            if (this.resume.uniLicense != "" || this.resume.uniLicenseUrl != "") {
+                this.resume.hasUniLicense = true;
+            } else {
+                this.resume.hasUniLicense = false;
+            }
+            // this.resume.edit = false;
+            // this.resume.view = true;
             //上传许可证等图片文件
             if (this.resume.comLicense != "") {
                 var hascomUrl = false;
-                console.log(appCont.resume.comLicense);
                 $.ajaxFileUpload({
                     url: 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload', //提交的路径
                     secureuri: false, // 是否启用安全提交，默认为false
@@ -476,9 +491,10 @@ var appCont = new Vue({
                         fileName: appCont.resume.comLicense //传递参数，用于解析出文件名
                     }, // 键:值，传递文件名
                     success: function(data, status) {
+                        console.log(1);
                         hascomUrl = true;
                         appCont.resume.comLicenseUrl = data.data;
-                        console.log(data.data);
+                        // console.log(data.data);
                         //     alert(1);
                     },
                     error: function(data, status) {
@@ -489,7 +505,6 @@ var appCont = new Vue({
 
             if (this.resume.uniLicense != "") {
                 var hasuniUrl = false;
-                console.log(appCont.resume.uniLicense);
                 $.ajaxFileUpload({
                     url: 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload', //提交的路径
                     secureuri: false, // 是否启用安全提交，默认为false
@@ -501,9 +516,9 @@ var appCont = new Vue({
                         fileName: appCont.resume.uniLicense //传递参数，用于解析出文件名
                     }, // 键:值，传递文件名
                     success: function(data, status) {
+                        console.log(2);
                         hasuniUrl = true;
                         appCont.resume.uniLicenseUrl = data.data;
-                        console.log(data.data);
                     },
                     error: function(data, status) {
                         //	console.log(data,2);
@@ -537,7 +552,7 @@ var appCont = new Vue({
                             name: appCont.resume.uni,
                             type: appCont.resume.classific,
                             property: appCont.resume.level,
-                            propertyType: appCont.resume.specialLv == "211" ? 1 : 0,
+                            propertyType: appCont.resume.specialLv,
                             scale: appCont.resume.amount,
                             profession: majorstring,
                             imgUrlBus: appCont.resume.comLicenseUrl,
@@ -545,18 +560,20 @@ var appCont = new Vue({
                             discription: appCont.resume.intro
                         };
                         EventUtils.ajaxReq('/user/school/modifyInfo', 'post', postdata, function(resp, status) {
-                            console.log(resp);
+                            appCont.resume.edit = false;
+                            appCont.resume.view = true;
                         })
                     }
-                }, 1500)
+                }, 500)
             } else {
+                console.log(2);
                 var postdata = {
                     userId: parObj.userId,
                     schoolId: respObj.schoolId,
                     name: appCont.resume.uni,
                     type: appCont.resume.classific,
                     property: appCont.resume.level,
-                    propertyType: appCont.resume.specialLv == "211" ? 1 : 0,
+                    propertyType: appCont.resume.specialLv,
                     scale: appCont.resume.amount,
                     profession: majorstring,
                     imgUrlBus: appCont.resume.comLicenseUrl,
@@ -565,14 +582,30 @@ var appCont = new Vue({
                 };
                 console.log(postdata);
                 EventUtils.ajaxReq('/user/school/modifyInfo', 'post', postdata, function(resp, status) {
-                    //  console.log(resp);
+                    appCont.resume.edit = false;
+                    appCont.resume.view = true;
                 })
             }
 
 
         },
-        checkExlv: function() {
-            this.resume.specialLv = $(".uni-level input[type='radio']:checked").val() == "0" ? "985" : "211";
+        lvswitch: function(lv) {
+            if (lv == "0") {
+                return "985";
+            } else if (lv == "1") {
+                return "211"
+            }
+        },
+        checkExlv: function(obj) {
+            $(obj).toggleClass("selected");
+            console.log(1);
+            if ($(".uni-level .lv985").hasClass("selected")) {
+                this.resume.specialLv = "0";
+            } else if ($(".uni-level .lv211").hasClass("selected")) {
+                this.resume.specialLv = "1";
+            } else {
+                this.resume.specialLv = "";
+            }
         },
         modItem: function(item) {
             var pageurl = "uniRequire.html?new=0&userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandSrc=" + appCont.require.demandSrc;

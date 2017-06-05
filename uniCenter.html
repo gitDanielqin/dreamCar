@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <title>高校中心</title>
     <link href="css/base.css" rel="stylesheet">
+    <link href="css/sweetalert.css" rel="stylesheet">
     <link href="css/widget.css" rel="stylesheet">
     <link href="css/foundation-datepicker.min.css" rel="stylesheet">
     <link href="css/uniCenter.css" rel="stylesheet">
@@ -89,7 +90,7 @@
                         <dropdown placeholder="请选择高校类别" :options="database.classific" v-model="resume.classific" classes="W138"></dropdown>
                     </p>
                     <p class="LH-H26 paLeft7 resume-item uni-level"><i class="pic-icon W30 icon-imp"></i><label>高校性质</label>
-                        <dropdown placeholder="高校性质" :options="database.unilevel" v-model="resume.level" classes="W138"></dropdown><input type="radio" name="level" value="0" @click="checkExlv" />985<input type="radio" name="level" value="1" @click="checkExlv" />211</p>
+                        <dropdown placeholder="高校性质" :options="database.unilevel" v-model="resume.level" class="maR10"></dropdown><i class="check-box lv985" @click="checkExlv($event.target)"></i>985<i class="check-box lv211" @click="checkExlv($event.target)"></i>211</p>
                     <p class="LH-H26 paLeft7 resume-item"><i class="pic-icon W30 icon-imp"></i><label>在校人数</label>
                         <dropdown placeholder="请选择在校人数" :options="database.amount" v-model="resume.amount" classes="W138"></dropdown>
                     </p>
@@ -97,7 +98,7 @@
                         <p class="fl"><i class="pic-icon W30 icon-imp"></i><label>重点专业</label></p>
                         <ul class="fl maL4 edit-major-list W534">
                             <li v-for="(spmajor,index) in resume.specialmajor" class="maB14">
-                                <major-pop :majordata="database.majors" class="disInline"></major-pop><button class="btn-del-major" v-show="index<resume.specialmajor.length-1" @click="delMajor(index)">- 删除</button>
+                                <major-pop :majordata="database.majors" :initmajors="{major:spmajor.major}" class="disInline"></major-pop><button class="btn-del-major" v-show="index<resume.specialmajor.length-1" @click="delMajor(index)">- 删除</button>
                                 <p class="fSize12 color-gray6 block-add-major disInline" :style="{top:(resume.specialmajor.length-1)*40+'px'}" v-show="index==resume.specialmajor.length-1"><button class="color-blueL btn-add-major" @click="addMajors">+ 添加</button>（最多可添加5个重点专业）</p>
                             </li>
                         </ul>
@@ -107,12 +108,12 @@
                         <ul class="fl valid-upload color-gray6 fSize12">
                             <li><a href="javascript:void(0)"><label for="comlicense">重新上传营业执照</label><i class="pic-icon icon-upload"></i></a>
                                 <span>{{resume.comLicense}}</span>
-                                <button v-show="resume.comLicense!=''" class="color-orange" @click="showFile('file-busi')">（查看营业执照）</button>
+                                <button v-show="resume.comLicense!=''||resume.comLicenseUrl!=''" class="color-orange" @click="showFile('busi','file-busi')">（查看营业执照）</button>
                                 <input type="file" name="image" id="file-busi" @change="changeComLicense($event.target)" />
                             </li>
                             <li><a href="javascript:void(0)"><label for="unilicense">重新上传办学许可证</label><i class="pic-icon icon-upload"></i></a>
                                 <span>{{resume.uniLicense}}</span>
-                                <button v-show="resume.uniLicense!=''" class="color-orange" @click="showFile('file-uni')">（查看办学许可证）</button>
+                                <button v-show="resume.uniLicense!=''||resume.uniLicenseUrl!=''" class="color-orange" @click="showFile('uni','file-uni')">（查看办学许可证）</button>
                                 <input type="file" name="image" id="file-uni" @change="changeUniLicense($event.target)" />
                             </li>
                         </ul>
@@ -133,7 +134,7 @@
                     <div class="paLeft40 paRight40 LH33 fSize14">
                         <p><label>高校名称：</label>{{resume.uni}}</p>
                         <p><label>高校类别：</label>{{resume.classific}}</p>
-                        <p><label>高校性质：</label>{{resume.level}}<span v-if="resume.specialLv">（{{resume.specialLv}}）</span></p>
+                        <p><label>高校性质：</label>{{resume.level}}<span v-if="resume.specialLv">（{{lvswitch(resume.specialLv)}}）</span></p>
                         <p><label>在校人数：</label>{{resume.amount}}人</p>
                         <div class="clearfix">
                             <label class="fl">重点专业：</label>
@@ -806,6 +807,7 @@
     <script src="js/libs/jquery-3.1.0.min.js"></script>
     <!-- <script src="js/libs/jquery.min.js"></script> -->
     <script src="js/libs/vue.js"></script>
+    <script src="js/libs/sweetalert.min.js"></script>
     <script src="js/common/common.js"></script>
     <script src="js/common/ajaxfileupload.js"></script>
     <script src="js/common/cropbox.js"></script>

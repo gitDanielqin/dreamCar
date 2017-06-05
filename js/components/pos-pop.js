@@ -1,4 +1,4 @@
-var Vue = require("../libs/vue");
+// var Vue = require("../libs/vue");
 (function() {
     var templpos = '<div class="pos-pop-box W770">\
           <h3 class="LH-H36 bg-gray-e6 fSize14 paLeft30">选择职能<i class="pic-wrapper pos-closer fr maR30"><i class="pic-icon icon-close"></i></i></h3>\

@@ -1,10 +1,10 @@
-import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
-require("../common/common")
-require("../components/dropdown")
-require("../../data/address")
-require("../../css/base.css")
-require("../../css/index.css")
+// import $ from "../libs/jquery-3.1.0.min";
+// var Vue = require("../libs/vue");
+// require("../common/common")
+// require("../components/dropdown")
+// require("../../data/address")
+// require("../../css/base.css")
+// require("../../css/index.css")
 
 
 var parObj = EventUtils.urlExtrac(window.location);

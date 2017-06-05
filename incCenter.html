@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>企业中心</title>
     <link href="css/base.css" rel="stylesheet">
+    <link href="css/sweetalert.css" rel="stylesheet">
     <link href="css/widget.css" rel="stylesheet">
     <link href="css/incCenter.css" rel="stylesheet">
 </head>
@@ -93,7 +94,8 @@
                         <span @click="popTrade"><input type="text" class="career-input"  disabled v-model="resume.trade" /></span>
                     </p>
                     <p class="LH-H26 paLeft7 resume-item uni-level"><i class="pic-icon W30 icon-imp"></i><label>企业性质</label>
-                        <dropdown placeholder="企业性质" :options="database.IncProps" v-model="resume.props" classes="W138"></dropdown><input type="radio" name="level" value="0" @click="checkExlv" />世界500强<input type="radio" name="level" value="1" @click="checkExlv" />中国500强</p>
+                        <dropdown placeholder="企业性质" :options="database.IncProps" v-model="resume.props" classes="W138"></dropdown><i class="check-box lv-world" @click="checkExlv($event.target)"></i>世界500强<i class="check-box lv-china" @click="checkExlv($event.target)"></i>中国500强
+                    </p>
                     <p class="LH-H26 paLeft7 resume-item"><i class="pic-icon W30 icon-imp"></i><label>企业规模</label>
                         <dropdown placeholder="企业规模" :options="database.IncScale" v-model="resume.scale" classes="W138"></dropdown>
                     </p>
@@ -102,7 +104,7 @@
                         <ul class="fl valid-upload color-gray6 fSize12">
                             <li><a href="javascript:void(0)"><label for="comlicense">重新上传营业执照</label><i class="pic-icon icon-upload"></i></a>
                                 <span>{{resume.comLicense}}</span>
-                                <button v-show="resume.comLicense!=''" class="color-orange" @click="showFile('file-busi')">（查看营业执照）</button>
+                                <button v-show="resume.hasBusLicense" class="color-orange" @click="showFile('file-busi')">（查看营业执照）</button>
                                 <input type="file" name="image" id="file-busi" @change="changeComLicense($event.target)" />
                             </li>
                         </ul>
@@ -896,6 +898,7 @@
     </div>
     <script src="js/libs/jquery-3.1.0.min.js"></script>
     <script src="js/libs/vue.js"></script>
+    <script src="js/libs/sweetalert.min.js"></script>
     <script src="data/commondata.js"></script>
     <script src="data/address.js"></script>
     <script src="data/workareas.js"></script>

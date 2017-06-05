@@ -1,24 +1,24 @@
-import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
-require("../common/common")
-require("../common/ajaxfileupload")
-require("../common/cropbox")
-require("../components/dropdown")
-require("../components/pagination")
-require("../components/minicard")
-require("../../data/commondata")
-require("../../data/address")
-require("../../data/workareas")
-require("../../css/base.css")
-require("../../css/widget.css")
-require("../../css/incCenter.css")
+// import $ from "../libs/jquery-3.1.0.min";
+// var Vue = require("../libs/vue");
+// require("../common/common")
+// require("../common/ajaxfileupload")
+// require("../common/cropbox")
+// require("../components/dropdown")
+// require("../components/pagination")
+// require("../components/minicard")
+// require("../../data/commondata")
+// require("../../data/address")
+// require("../../data/workareas")
+// require("../../css/base.css")
+// require("../../css/widget.css")
+// require("../../css/incCenter.css")
 var parObj = EventUtils.urlExtrac(window.location);
 var respObj = {}; //请求的本页面的数据集合
 
 function infoRequest() {
     var postdata = {
-        userId: localStorage.userId || parObj.userId,
-        loginIdentifier: localStorage.loginId || parObj.loginId
+        userId: parObj.userId || localStorage.userId,
+        loginIdentifier: parObj.loginId || localStorage.loginId
     };
     console.log(postdata);
     EventUtils.ajaxReq('/user/company/getInfo', 'get', postdata, function(resp, status) {
@@ -413,33 +413,25 @@ var appCont = new Vue({
             appModal.showModal = true;
             appModal.show.trade = true;
         },
-        submajors: function(major) {
-            var arr = [];
-            if (major) {
-                for (var i = 0; i < this.database.majors.length; i++) {
-                    if (this.database.majors[i].major == major) {
-                        return this.database.majors[i].submajor;
-                    }
-                }
-            }
-        },
-        addMajors: function() {
-            if (this.resume.specialmajor.length < 5) {
-                this.resume.specialmajor.push({ major: "", submajor: "" });
-            } else {
-                return false;
-            }
-
-        },
         editSwipe: function() {
+            if (appCont.resume.specialLv == "世界500强") {
+                $(".lv-world").addClass("selected");
+            } else if (appCont.resume.specialLv == "中国500强") {
+                $(".lv-china").addClass("selected");
+            }
             this.resume.firstEdit = false;
             this.resume.edit = true;
             this.resume.view = false;
         },
         saveResume: function() {
-            this.resume.hasBusLicense = this.resume.comLicense == "" ? false : true;
-            this.resume.edit = false;
-            this.resume.view = true;
+            if (this.resume.comLicense != "" || this.resume.comLicenseUrl != "") {
+                this.resume.hasBusLicense = true;
+            } else {
+                this.resume.hasBusLicense = false;
+            }
+            console.log(this.resume.comLicense, 1);
+            // this.resume.edit = false;
+            // this.resume.view = true;
             //上传许可证等图片文件
             if (this.resume.comLicense != "") {
                 var hascomUrl = false;
@@ -464,9 +456,9 @@ var appCont = new Vue({
                     }
                 });
             };
-            if (this.resume.hasBusLicense) { //如果用户有上传文件
+            if (this.resume.comLicense != "") { //如果用户有上传文件
                 setTimeout(function() {
-                    if (!hascomUrl) {
+                    if (this.resume.comLicense != "" && !hascomUrl) {
                         alert("文件上传失败，请重新上传！");
                     } else {
                         var postdata = {
@@ -482,10 +474,11 @@ var appCont = new Vue({
                             isCountry: appCont.resume.specialLv == "中国500强" ? 1 : 0,
                         };
                         EventUtils.ajaxReq('/user/company/modifyInfo', 'post', postdata, function(resp, status) {
-                            console.log(resp);
+                            appCont.resume.edit = false;
+                            appCont.resume.view = true;
                         })
                     }
-                }, 1500)
+                }, 500)
             } else {
                 var postdata = {
                     userId: parObj.userId,
@@ -500,18 +493,20 @@ var appCont = new Vue({
                     isCountry: appCont.resume.specialLv == "中国500强" ? 1 : 0,
                 };
                 EventUtils.ajaxReq('/user/company/modifyInfo', 'post', postdata, function(resp, status) {
-                    console.log(resp);
+                    appCont.resume.edit = false;
+                    appCont.resume.view = true;
                 })
             }
         },
-        checkExlv: function() {
-            var exLevel = $(".uni-level input[type='radio']:checked").val();
-            if (exLevel == "0") {
+        checkExlv: function(obj) {
+            $(obj).toggleClass("selected");
+            if ($(".lv-world").hasClass("selected")) {
                 this.resume.specialLv = "世界500强";
-            } else if (exLevel == "1") {
+            } else if ($(".lv-china").hasClass("selected")) {
                 this.resume.specialLv = "中国500强";
+            } else {
+                this.resume.specialLv = "";
             }
-
         },
         delItem: function(item) {
             if (item.demandId) {
@@ -661,7 +656,11 @@ var appCont = new Vue({
             this.resume.comLicense = obj.value
         },
         showFile: function(fid) {
-            appModal.preImgUrl = EventUtils.getLocalImgUrl(fid);
+            if (this.resume.comLicense != "") {
+                appModal.preImgUrl = EventUtils.getLocalImgUrl(fid);
+            } else if (this.resume.comLicenseUrl != "") {
+                appModal.preImgUrl = this.resume.comLicenseUrl;
+            }
             appModal.showModal = true;
             appModal.show.preImg = true;
         },

@@ -1,12 +1,12 @@
-import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
-require("../common/common")
-require("../components/dropdown")
-require("../components/pagination")
-require("../components/detail-table")
-require("../../css/base.css")
-require("../../css/widget.css")
-require("../../css/detail-comm.css")
+// import $ from "../libs/jquery-3.1.0.min";
+// var Vue = require("../libs/vue");
+// require("../common/common")
+// require("../components/dropdown")
+// require("../components/pagination")
+// require("../components/detail-table")
+// require("../../css/base.css")
+// require("../../css/widget.css")
+// require("../../css/detail-comm.css")
 var parObj = EventUtils.urlExtrac(window.location); //地址参数对象
 var respObj = {}; //页面信息
 var accountObj = {} //用户信息

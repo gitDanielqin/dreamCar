@@ -2,13 +2,13 @@
  * Created by xuanyuan on 2016/11/6.
  */
 
-import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
-require("../libs/sweetalert.min");
-require("../common/common")
-require("../../css/base.css")
-require("../../css/sweetalert.css")
-require("../../css/login.css")
+// import $ from "../libs/jquery-3.1.0.min";
+// var Vue = require("../libs/vue");
+// require("../libs/sweetalert.min");
+// require("../common/common")
+// require("../../css/base.css")
+// require("../../css/sweetalert.css")
+// require("../../css/login.css")
 
 var parObj = EventUtils.urlExtrac(window.location);
 var regExp = {
@@ -57,7 +57,11 @@ var appCont = new Vue({
         },
         regisEv: function() {
             if (!$(".check-agreement .check-box").hasClass("selected")) {
-                alert("请接受我们的服务条款");
+                swal({
+                    title: "",
+                    text: "请接受我们的服务条款",
+                    type: "warning"
+                })
                 return;
             }
             var postdata = {
@@ -72,7 +76,11 @@ var appCont = new Vue({
                     var parstring = "userType=" + appCont.register.userType + "&userId=" + resp.data.userId + "&loginId=" + resp.data.loginIdentifier + "&addr=" + parObj.address;
                     window.location.href = "vCards.html?" + parstring;
                 } else {
-                    alert(resp.info);
+                    swal({
+                        title: "",
+                        text: resp.info,
+                        type: "error"
+                    })
                     appCont.register.account = "";
                     appCont.register.password = "";
                     appCont.register.validcode = "";
@@ -110,7 +118,11 @@ var appCont = new Vue({
 
             var callback = function(resp, status) {
                 if (resp.code == "10002") {
-                    alert(resp.info);
+                    swal({
+                        title: "",
+                        text: resp.info,
+                        type: "error"
+                    })
                     return false;
                 }
                 if (localStorage) {

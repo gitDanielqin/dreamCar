@@ -1081,6 +1081,23 @@
 }
 
 
+/*checkbox样式*/
+
+.check-box {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin: 0 7px;
+    border: 2px solid #999;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.check-box.selected {
+    background: url("../images/icon-checked3.png") no-repeat center center
+}
+
+
 /*图标样式*/
 
 #app-porto .btn-edit {

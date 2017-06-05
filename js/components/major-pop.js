@@ -1,4 +1,4 @@
-var Vue = require("../libs/vue");
+// var Vue = require("../libs/vue");
 (function() {
     var templMajor = '<div style="position:relative" class="pop-major-box">\
           <span @click.stop="pop(1,$event.target)" class="major-input major-input-1"><input type="text" placeholder="一级学科" disabled v-model="selMajor" ></span>\

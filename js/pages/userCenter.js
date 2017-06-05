@@ -1,22 +1,22 @@
 /**
  * Created by xuanyuan on 2016/11/27.
  */
-import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
-require("../common/common")
-require("../common/cropbox")
-require("../components/dropdown")
-require("../components/pagination")
-require("../components/major-pop")
-require("../components/pos-pop")
-require("../../data/commondata")
-require("../../data/address")
-require("../../data/workareas")
-require("../../data/position")
-require("../../data/major")
-require("../../css/base.css")
-require("../../css/widget.css")
-require("../../css/pCenter.css")
+// import $ from "../libs/jquery-3.1.0.min";
+// var Vue = require("../libs/vue");
+// require("../common/common")
+// require("../common/cropbox")
+// require("../components/dropdown")
+// require("../components/pagination")
+// require("../components/major-pop")
+// require("../components/pos-pop")
+// require("../../data/commondata")
+// require("../../data/address")
+// require("../../data/workareas")
+// require("../../data/position")
+// require("../../data/major")
+// require("../../css/base.css")
+// require("../../css/widget.css")
+// require("../../css/pCenter.css")
 var objMe = this;
 var parObj = EventUtils.urlExtrac(window.location);
 var respObj = {}; //请求的本页面的数据集合
