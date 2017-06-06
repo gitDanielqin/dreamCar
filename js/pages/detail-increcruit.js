@@ -171,12 +171,12 @@ var appBanner = new Vue({
     methods: {
         collect: function(obj) {
             if (appTop.isLogin) { //登录状态下
-                if (accountObj.userId == respObj.userId) {
-                    alert("无法收藏自己的职位！");
-                    return false;
-                }
                 if (accountObj.userType != "0") {
-                    alert("抱歉，您不能收藏该职位！");
+                    swal({
+                        title: "",
+                        text: "抱歉，您不能收藏该职位！",
+                        type: "warning"
+                    })
                     return false;
                 }
                 if (!$(obj).hasClass("btn-collec")) {
@@ -203,7 +203,11 @@ var appBanner = new Vue({
         coApply: function(obj) {
             if (appTop.isLogin) {
                 if (accountObj.userType != "0") {
-                    alert("抱歉，您不能投递该职位！");
+                    swal({
+                        title: "",
+                        text: "抱歉，您不能投递该职位！",
+                        type: "warning"
+                    })
                     return false;
                 }
                 var postdata = {
@@ -218,7 +222,11 @@ var appBanner = new Vue({
                         appModal.showLogin = false;
                         appModal.showSucc = true;
                     } else {
-                        alert(resp.info);
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "error"
+                        })
                     }
                     //申请后避免重复点击
                     $(obj).attr("disabled", true).text("已投递");

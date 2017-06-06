@@ -60,25 +60,25 @@
                 <p class="LH-H25">实时了解最新动态</p>
             </div>
         </div>
-        <div class="fl W178 maL20 maT20" id="app-side" v-cloak>
+        <div class="fl W178 maL20 maT20" id="app-side" v-cloak @click="selnav($event.target)">
             <button class="hr-entry-btn" onclick="window.open('HR-center.html')">HR中心</button>
             <ul class="sideBox paTop20 fSize18 color-gray3 bg-white">
-                <li class="on" paneid="resumeBox"><i class="pic-icon icon-resume"></i>企业简介</li>
-                <li paneid="requireBox"><i class="pic-icon icon-study"></i>企业需求</li>
-                <li class="myCollect" paneid="collectBox"><i class="pic-icon icon-collect"></i>企业收藏</li>
-                <li paneid="combi-msg"><i class="pic-icon icon-apply"></i>消息中心
+                <li class="on sider-li" paneid="resumeBox"><i class="pic-icon icon-resume"></i>企业简介</li>
+                <li class="sider-li" paneid="requireBox"><i class="pic-icon icon-study"></i>企业需求</li>
+                <li class="myCollect sider-li" paneid="collectBox"><i class="pic-icon icon-collect"></i>企业收藏</li>
+                <li class="sider-li"><i class="pic-icon icon-apply"></i>消息中心
                     <div class="sub-li LH37">
-                        <p class="on" paneid="combi-msg">校企合作</p>
-                        <p paneid="jobfair-msg">招聘会</p>
-                        <p paneid="recruit-msg">企业直聘</p>
+                        <p class="on sub-item" paneid="combi-msg">校企合作</p>
+                        <p class="sub-item" paneid="jobfair-msg">招聘会</p>
+                        <p class="sub-item" paneid="recruit-msg">企业直聘</p>
                     </div>
                 </li>
-                <li paneid="vip-center"><i class="pic-icon icon-apply"></i>VIP中心</li>
-                <li paneid="uni-coop"><i class="pic-icon icon-apply"></i>校企合作</li>
-                <li class="myConfig"><i class="pic-icon icon-config"></i>设置
+                <li class="sider-li" paneid="vip-center"><i class="pic-icon icon-apply"></i>VIP中心</li>
+                <li class="sider-li" paneid="uni-coop"><i class="pic-icon icon-apply"></i>校企合作</li>
+                <li class="myConfig sider-li"><i class="pic-icon icon-config"></i>设置
                     <div class="sub-li paTop2 paBot2 LH30">
-                        <p class="on" paneid="conf-keyword">修改密码</p>
-                        <p paneid="conf-account">绑定账号</p>
+                        <p class="on sub-item" paneid="conf-keyword">修改密码</p>
+                        <p class="sub-item" paneid="conf-account">绑定账号</p>
                     </div>
                 </li>
             </ul>
@@ -113,7 +113,7 @@
                         <p class="fl"><i class="pic-icon W30 icon-imp"></i><label>企业简介</label></p>
                         <div class="fl">
                             <textarea class="fl" v-model="resume.intro"></textarea>
-                            <p class="t-right">你还可以输入{{wordscal}}字</p>
+                            <p class="t-right">你还可以输入{{wordscal(resume.intro)}}字</p>
                         </div>
                     </div>
                     <div class="t-center">
@@ -412,12 +412,12 @@
                 </div>
             </div>
             <div class="vip-center">
-                <ul class="vip-navs lis-inline LH-H37 fSize18 color-gray6 t-center">
-                    <li class="on">信息刷新<i class="nav-line"></i></li>
-                    <li>信息置顶<i class="nav-line"></i></li>
-                    <li>信息匹配<i class="nav-line"></i></li>
-                    <li>品牌推广<i class="nav-line"></i></li>
-                    <li>VIP中心<i class="nav-line"></i></li>
+                <ul class="vip-navs lis-inline LH-H37 fSize18 color-gray6 t-center" @click="selvipnav($event.target)">
+                    <li class="on vip-li">信息刷新<i class="nav-line"></i></li>
+                    <li class="vip-li">信息置顶<i class="nav-line"></i></li>
+                    <li class="vip-li">信息匹配<i class="nav-line"></i></li>
+                    <li class="vip-li">品牌推广<i class="nav-line"></i></li>
+                    <li class="vip-li">VIP中心<i class="nav-line"></i></li>
                 </ul>
                 <div class="vip-cont vip-service clearfix on">
                     <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic01.jpg"/></i>
@@ -610,7 +610,8 @@
                 <div class="submit-btns t-center maT28"><button class="bg-blueL" id="btnSubmit">确定</button><button class="bg-orange2" @click="closePorto">取消</button></div>
             </div>
         </div>
-        <div class="bind-change W500 mobile-bind" v-show="show.mobile" @click.stop="">
+        <bind-mobile-box v-show="show.mobile" :userid="account.userId" @closebox="closeMobile" @click=""></bind-mobile-box>
+        <!--<div class="bind-change W500 mobile-bind" v-show="show.mobile" @click.stop="">
             <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换手机号<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13" @click.stop="closeMobile"><i class="pic-icon icon-close"></i></i>
             </h2>
             <div class="bg-white paTop8 paBot60">
@@ -620,7 +621,7 @@
                 <p><input type="text" placeholder="确认登入密码" class="W290"></p>
                 <div class="btn-submit t-center paTop20"><button class="bg-blueM">完成绑定</button><button class="bg-orange2 maL40" @click.stop="closeMobile">返回</button></div>
             </div>
-        </div>
+        </div>-->
         <div class="bind-change W500 email-bind" v-show="show.email" @click.stop="">
             <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换绑定邮箱<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13" @click.stop="closeEmail"><i class="pic-icon icon-close"></i></i>
             </h2>
@@ -908,6 +909,7 @@
     <script src="js/components/pagination.js"></script>
     <script src="js/components/dropdown.js"></script>
     <script src="js/components/minicard.js"></script>
+    <script src="js/components/bind-mobile-box.js"></script>
     <script src="js/pages/incCenter.js"></script>
 </body>
 

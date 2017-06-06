@@ -36,6 +36,20 @@ var variableUtils = {
 }
 window.variableUtils = variableUtils;
 window.EventUtils = {
+        limitWords: function(wordslimit, str) {
+            if (str.length < wordslimit) {
+                return str;
+            } else {
+                return str.slice(0, wordslimit);
+            }
+        },
+        remainWords: function(wordslimit, str) {
+            if (wordslimit - str.length > 0) {
+                return (wordslimit - str.length);
+            } else {
+                return "0";
+            }
+        },
         cloneObj: function(obj) { // 克隆对象函数
             var o;
             switch (typeof obj) {

@@ -506,3 +506,105 @@
 .minicard .button-deny {
     background: #de0b0b;
 }
+
+
+/*更换手机邮箱弹框*/
+
+.bind-change {
+    width: 500px;
+    position: absolute;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5)
+}
+
+.bind-title {
+    height: 60px;
+    line-height: 60px;
+    font-size: 24px;
+    color: white;
+    padding-left: 30px;
+    background: #a7d7ef
+}
+
+.bind-change .close {
+    float: right;
+    line-height: 40px;
+    height: 40px;
+    width: 40px;
+    margin: 13px 10px 0 0;
+}
+
+.bind-change .close:hover {
+    background: #999;
+}
+
+.bind-form {
+    background: white;
+    padding: 8px 0 60px;
+}
+
+.bind-form-title {
+    height: 83px;
+    line-height: 83px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.bind-change input {
+    height: 44px;
+    background: #f3f3f3;
+    font-size: 14px;
+    padding-left: 10px;
+}
+
+.bind-change .input-mobile,
+.bind-change .input-password {
+    width: 290px;
+}
+
+.bind-change .input-code {
+    width: 194px;
+}
+
+.bind-change .code-request {
+    width: 96px;
+    height: 44px;
+    font-size: 14px;
+    background: #a7d7ef;
+    color: white;
+}
+
+.bind-change p {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.bind-change .btn-submit {
+    padding-top: 20px;
+    text-align: center;
+}
+
+.bind-change button[disabled] {
+    background: #ccc;
+}
+
+.bind-change .btn-submit button {
+    width: 120px;
+    height: 40px;
+    font-size: 18px;
+    color: #fff;
+}
+
+.bind-change .btn-submit button:first-child {
+    background: #a7d7ef;
+}
+
+.bind-change .btn-submit button:last-child {
+    background: #f7a14a;
+    margin-left: 40px;
+}
+
+.bind-change .icon-close {
+    background: url("../images/icon-bind-close.png") no-repeat center center;
+    width: 26px;
+    height: 25px;
+}

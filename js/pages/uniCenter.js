@@ -170,7 +170,67 @@ var appPorto = new Vue({
 
 var appSider = new Vue({
     el: "#app-side",
-    data: {}
+    data: {},
+    methods: {
+        selnav: function(obj) {
+            if ($(obj).hasClass("sider-li")) {
+                $(".sideBox .sider-li.on").removeClass("on");
+                $(".sideBox .sub-li").hide();
+                $(obj).addClass("on");
+                if ($(obj).children(".sub-li").length > 0) {
+                    $(obj).children(".sub-li").show();
+                    $(obj).find(".sub-item.on").trigger("click");
+                }
+                if ($(obj).attr("paneid")) {
+                    $(".content").children().hide();
+                    $(".content").children("." + $(obj).attr("paneid")).show();
+                }
+                //需求面板请求结果
+                if ($(obj).attr("paneid") == "requireBox") {
+                    //默认请求校企合作的数据
+                    demandRequest(appCont.require.demandSrc, 1);
+                }
+
+                // 收藏面板请求结果
+                if ($(obj).attr("paneid") == "collectBox") {
+                    collectRequest(appCont.collect.timeindex, 1);
+                }
+                //消息中心
+                if ($(obj).attr("paneid") == "combi-msg") {
+                    //请求校企合作消息
+                    if (appCont.message.combi.state == "发出的邀请") {
+                        combiMsgRequest(1, 1)
+                    } else {
+                        combiMsgRequest(2, 1)
+                    }
+                }
+                //校企合作
+                if ($(obj).attr("paneid") == "uni-coop") {
+                    coopRequest(appCont.coop.applystatus, 1);
+                }
+                selectInitPos();
+            }
+            if ($(obj).hasClass("sub-item")) {
+                $(obj).siblings(".sub-item.on").removeClass("on");
+                $(obj).addClass("on");
+                $(".content").children().hide();
+                $(".content").children("." + $(obj).attr("paneid")).show();
+                if ($(obj).attr("paneid") == "combi-msg") {
+                    //请求校企合作消息
+                    if (appCont.message.combi.state == "发出的邀请") {
+                        combiMsgRequest(1, 1)
+                    } else {
+                        combiMsgRequest(2, 1)
+                    }
+                }
+                if ($(obj).attr("paneid") == "recruit-msg") {
+                    //请求招聘会消息
+                    recruitMsgRequest(1)
+                }
+                selectInitPos();
+            }
+        },
+    }
 })
 
 var appCont = new Vue({
@@ -328,9 +388,22 @@ var appCont = new Vue({
         }
     },
     methods: {
+        selvipnav: function(obj) {
+            if ($(obj).hasClass("vip-li")) {
+                var index = $(obj).index();
+                $(".vip-navs li.on").removeClass("on");
+                $(obj).addClass("on");
+                $(".vip-cont").removeClass("on");
+                $(".vip-center .vip-cont").eq(index).addClass("on");
+            }
+        },
         changeComLicense: function(obj) {
             if (obj.files[0].size > 3 * 1024 * 1204) {
-                alert("请上传小于3M的文件！");
+                swal({
+                    title: "",
+                    text: "请上传小于3M的文件！",
+                    type: "warning"
+                })
                 obj.value = "";
             }
             this.resume.comLicense = obj.value
@@ -338,7 +411,11 @@ var appCont = new Vue({
         changeUniLicense: function(obj) {
             //     console.log(obj.files[0].size);
             if (obj.files[0].size > 3 * 1024 * 1024) {
-                alert("请上传小于3M的文件！");
+                swal({
+                    title: "",
+                    text: "请上传小于3M的文件！",
+                    type: "warning"
+                })
                 obj.value = "";
             }
             this.resume.uniLicense = obj.value
@@ -495,10 +572,9 @@ var appCont = new Vue({
                         hascomUrl = true;
                         appCont.resume.comLicenseUrl = data.data;
                         // console.log(data.data);
-                        //     alert(1);
                     },
                     error: function(data, status) {
-                        //	alert(2);
+
                     }
                 });
             };
@@ -543,7 +619,11 @@ var appCont = new Vue({
             if (this.resume.comLicense != "" || this.resume.uniLicense != "") { //如果用户有上传文件
                 setTimeout(function() {
                     if (appCont.resume.comLicense != "" && !hascomUrl || appCont.resume.uniLicense != "" && !hasuniUrl) {
-                        alert("文件上传失败，请重新上传！");
+                        swal({
+                            title: "",
+                            text: "文件上传失败，请重新上传！",
+                            type: "error"
+                        })
                     } else {
                         console.log(appCont.resume.comLicenseUrl, appCont.resume.uniLicenseUrl);
                         var postdata = {
@@ -729,7 +809,11 @@ var appCont = new Vue({
             if (type == "resumeintro") {
                 var len = this.resume.intro.length;
                 if (1000 - len < 0) {
-                    alert("最多只能输入1000字！");
+                    swal({
+                        title: "",
+                        text: "最多只能输入1000字！",
+                        type: "warning"
+                    })
                     this.resume.intro = this.resume.intro.slice(0, 1000);
                 }
             }
@@ -758,9 +842,17 @@ var appCont = new Vue({
             EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
                 console.log(resp);
                 if (resp.data) {
-                    alert("申请已发送！");
+                    swal({
+                        title: "",
+                        text: "申请已发送！",
+                        type: "success"
+                    })
                 } else {
-                    alert(resp.info);
+                    swal({
+                        title: "",
+                        text: resp.info,
+                        type: "error"
+                    })
                 }
             })
         },
@@ -1088,7 +1180,11 @@ var appModal = new Vue({
             if (type == "comment") {
                 var len = this.comment.text.length;
                 if (len > 400) {
-                    alert("最多只能输入400字！");
+                    swal({
+                        title: "",
+                        text: "最多只能输入400字！",
+                        type: "warning"
+                    })
                     this.comment.text = this.comment.text.slice(0, 400);
                 }
             }
@@ -1215,11 +1311,26 @@ var appModal = new Vue({
 });
 
 function init_center() {
-    // selectInit();
+    //如果有主题跳转信息
+    if (parObj.theme) {
+        switch (parObj.theme) {
+            case "vip":
+                $(".sideBox li[paneid='vip-center']").trigger("click");
+                break;
+            case "require":
+                $(".sideBox li[paneid='requireBox']").trigger("click");
+                break;
+            case "combi":
+                $(".sideBox li[paneid='uni-coop']").trigger("click");
+                break;
+            case "collect":
+                $(".sideBox li[paneid='collectBox']").trigger("click");
+                break;
+        }
+    }
     selectInitInput();
     selectInitPos();
-    navEventBind();
-    vipEventBind();
+    //  vipEventBind();
     modalEventBind();
     uploadEventBind();
     refreshEventBind();
@@ -1257,7 +1368,11 @@ function uploadEventBind() {
         var imgsrc = cropper.getDataURL();
         // console.log(imgsrc.length);
         if (imgsrc.length > 500 * 1024) {
-            alert("请上传小于500K的头像！");
+            swal({
+                title: "",
+                text: "请上传小于500K的头像！",
+                type: "warning"
+            })
             return
         }
         var postdata = {
@@ -1272,86 +1387,6 @@ function uploadEventBind() {
     })
 }
 
-
-function navEventBind() {
-
-    $(".sideBox .sub-li p").unbind("click").bind("click", function() {
-        $(this).siblings("p.on").removeClass("on");
-        $(this).addClass("on");
-        $(".content").children().hide();
-        $(".content").children("." + $(this).attr("paneid")).show();
-        if ($(this).attr("paneid") == "combi-msg") {
-            //请求校企合作消息
-            if (appCont.message.combi.state == "发出的邀请") {
-                combiMsgRequest(1, 1)
-            } else {
-                combiMsgRequest(2, 1)
-            }
-        }
-        if ($(this).attr("paneid") == "recruit-msg") {
-            //请求招聘会消息
-            recruitMsgRequest(1)
-        }
-        selectInitPos();
-        return false;
-    });
-
-    $(".sideBox>li").unbind("click").bind("click", function() {
-        $(".sideBox").children("li.on").removeClass("on");
-        $(this).addClass("on");
-        $(".sideBox .sub-li").hide();
-        if ($(this).find(".sub-li").length > 0) {
-            $(this).find(".sub-li").show();
-            $(".content").children().hide();
-            $(".content").children("." + $(this).find(".sub-li .on").attr("paneid")).show();
-        }
-        //需求面板请求结果
-        if ($(this).attr("paneid") == "requireBox") {
-            //默认请求校企合作的数据
-            demandRequest(appCont.require.demandSrc, 1);
-        }
-
-        // 收藏面板请求结果
-        if ($(this).attr("paneid") == "collectBox") {
-            collectRequest(appCont.collect.timeindex, 1);
-        }
-        //消息中心
-        if ($(this).attr("paneid") == "combi-msg") {
-            //请求校企合作消息
-            if (appCont.message.combi.state == "发出的邀请") {
-                combiMsgRequest(1, 1)
-            } else {
-                combiMsgRequest(2, 1)
-            }
-        }
-        //校企合作
-        if ($(this).attr("paneid") == "uni-coop") {
-            coopRequest(appCont.coop.applystatus, 1);
-        }
-        if ($(this).attr("paneid")) {
-            $(".content").children().hide();
-            $(".content").children("." + $(this).attr("paneid")).show();
-        }
-        selectInitPos();
-    });
-};
-//如果有主题跳转信息
-if (parObj.theme) {
-    switch (parObj.theme) {
-        case "vip":
-            $(".sideBox li[paneid='vip-center']").trigger("click");
-            break;
-        case "require":
-            $(".sideBox li[paneid='requireBox']").trigger("click");
-            break;
-        case "combi":
-            $(".sideBox li[paneid='uni-coop']").trigger("click");
-            break;
-        case "collect":
-            $(".sideBox li[paneid='collectBox']").trigger("click");
-            break;
-    }
-}
 
 function vipEventBind() {
     $(".vip-navs li").each(function(index) {

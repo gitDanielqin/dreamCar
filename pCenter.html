@@ -69,21 +69,21 @@
                     <p class="LH-H25">实时了解最新动态</p>
                 </div>
             </div>
-            <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3 bg-white" id="app-side" v-cloak>
-                <li class="on" paneid="resumeBox"><i class="pic-icon icon-resume"></i>个人简历</li>
-                <li paneid="classBox"><i class="pic-icon icon-study"></i>我的学习</li>
-                <li class="myCollect" paneid="collec-study"><i class="pic-icon icon-collect"></i>我的收藏
+            <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3 bg-white" id="app-side" @click="selnav($event.target)" v-cloak>
+                <li class="on sider-li" paneid="resumeBox"><i class="pic-icon icon-resume"></i>个人简历</li>
+                <li class="sider-li" paneid="classBox"><i class="pic-icon icon-study"></i>我的学习</li>
+                <li class="myCollect sider-li"><i class="pic-icon icon-collect"></i>我的收藏
                     <div class="sub-li LH37">
-                        <p class="on" paneid="collec-study">学习收藏</p>
-                        <p paneid="collec-job">职位收藏</p>
-                        <p paneid="collec-recruitment">招聘会收藏</p>
+                        <p class="on sub-item" paneid="collec-study">学习收藏</p>
+                        <p class="sub-item" paneid="collec-job">职位收藏</p>
+                        <p class="sub-item" paneid="collec-recruitment">招聘会收藏</p>
                     </div>
                 </li>
-                <li paneid="jobBox"><i class="pic-icon icon-apply"></i>我的求职</li>
-                <li class="myConfig" paneid="conf-keyword"><i class="pic-icon icon-config"></i>设置
+                <li class="sider-li" paneid="jobBox"><i class="pic-icon icon-apply"></i>我的求职</li>
+                <li class="myConfig sider-li"><i class="pic-icon icon-config"></i>设置
                     <div class="sub-li paTop2 paBot2 LH30">
-                        <p class="on" paneid="conf-keyword">修改密码</p>
-                        <p paneid="conf-account">绑定账号</p>
+                        <p class="on sub-item" paneid="conf-keyword">修改密码</p>
+                        <p class="sub-item" paneid="conf-account">绑定账号</p>
                     </div>
                 </li>
             </ul>

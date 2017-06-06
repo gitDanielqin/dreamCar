@@ -73,12 +73,13 @@ var appCont = new Vue({
                 type: 3
             };
             var callback = function(data, status) {
-                $(obj).html("获取验证码");
-                $(obj).attr("disabled", false);
-                alert(data.info);
+                swal({
+                    title: "",
+                    text: data.info,
+                    type: "warning"
+                })
             };
             EventUtils.ajaxReq('/sys/mobileCode', 'post', postdata, callback);
-
         },
         selectGender: function(obj) {
             $(".gender .on").removeClass("on");

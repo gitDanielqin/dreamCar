@@ -138,7 +138,7 @@
             <div class="nav-cont cont-recruit" v-show="showpage.page2">
                 <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写招聘会信息</h2>
                 <div class="form-cont paLeft68">
-                    <p class="maT39 head-input"><label>标　　题</label><input type="text" class="must-input" v-model="recruitData.header" maxlength="12" /><span class="color-red">（请小于12个字）</span></p>
+                    <p class="maT39 head-input"><label><span class="must-mark">*</span>标　　题</label><input type="text" class="must-input" v-model="recruitData.header" maxlength="12" /><span class="color-red">（请小于12个字）</span></p>
                     <p class="form-item maT28"><label><span class="must-mark">*</span>岗位名称</label>
                         <pos-select class="must-item" :posdata="database.posdata" :initpos="recruitData.initPosition"></pos-select>
                     </p>

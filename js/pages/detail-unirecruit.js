@@ -173,12 +173,12 @@ var appBanner = new Vue({
     methods: {
         collect: function(obj) {
             if (appTop.isLogin) { //登录状态下
-                if (accountObj.userId == respObj.userId) {
-                    alert("无法收藏自己的需求！");
-                    return false;
-                }
                 if (accountObj.userType != "2") {
-                    alert("抱歉，您不能收藏该需求！");
+                    swal({
+                        title: "",
+                        text: "抱歉，您不能收藏该需求！",
+                        type: "warning"
+                    })
                     return false;
                 }
                 if (!$(obj).hasClass("btn-collec")) {
@@ -205,7 +205,11 @@ var appBanner = new Vue({
         coApply: function(obj) {
             if (appTop.isLogin) {
                 if (accountObj.userType != "2") {
-                    alert("抱歉，您不能申请该需求！");
+                    swal({
+                        title: "",
+                        text: "抱歉，您不能申请该需求！",
+                        type: "warning"
+                    })
                     return false;
                 }
                 var postdata = {
@@ -220,7 +224,11 @@ var appBanner = new Vue({
                         appModal.showLogin = false;
                         appModal.showSucc = true;
                     } else {
-                        alert(resp.info);
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "error"
+                        })
                     }
                     //申请后避免重复点击
                     if (!$(obj).hasClass("btn-apply")) {

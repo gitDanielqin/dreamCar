@@ -343,7 +343,43 @@ for (var i = 0; i < addArray.length; i++) {
 
 var appSider = new Vue({
     el: "#app-side",
-    data: {}
+    data: {},
+    methods: {
+        selnav: function(obj) {
+            if ($(obj).hasClass("sider-li")) {
+                $(".sideBox .sider-li.on").removeClass("on");
+                $(".sideBox .sub-li").hide();
+                $(obj).addClass("on");
+                if ($(obj).children(".sub-li").length > 0) {
+                    $(obj).children(".sub-li").show();
+                    $(obj).find(".sub-item.on").trigger("click");
+                }
+                if ($(obj).attr("paneid")) {
+                    $(".content").children().hide();
+                    $(".content").children("." + $(obj).attr("paneid")).show();
+                }
+                //我的求职数据请求
+                if ($(obj).attr("paneid") == "jobBox") {
+                    posRequest(appCont.myPosList.jobsrc, appCont.myPosList.jobstate, 1);
+                }
+                selectInitPos();
+            }
+            if ($(obj).hasClass("sub-item")) {
+                $(obj).siblings(".sub-item.on").removeClass("on");
+                $(obj).addClass("on");
+                $(".content").children().hide();
+                $(".content").children("." + $(obj).attr("paneid")).show();
+                //我的收藏数据请求
+                if ($(obj).attr("paneid") == "collec-job") {
+                    colposRequest(appCont.colPosList.applyindex, 1);
+                }
+                if ($(obj).attr("paneid") == "collec-recruitment") {
+                    colrecRequest(appCont.colRecList.applyindex, 1);
+                }
+                selectInitPos();
+            }
+        }
+    }
 })
 var appCont = new Vue({
     el: "#app-content",
@@ -527,43 +563,71 @@ var appCont = new Vue({
             if (type == "worksresp") {
                 var len = this.resume.worksExps[index].resp.length;
                 if (len > 1000) {
-                    alert("最多只能输入1000字！");
+                    swal({
+                        title: "",
+                        text: "最多只能输入1000字！",
+                        type: "warning"
+                    })
                     this.resume.worksExps[index].resp = this.resume.worksExps[index].resp.slice(0, 1000);
                 }
             } else if (type == "prodesc") {
                 var len = this.resume.projects[index].desc.length;
                 if (len > 1000) {
-                    alert("最多只能输入1000字！");
+                    swal({
+                        title: "",
+                        text: "最多只能输入1000字！",
+                        type: "warning"
+                    })
                     this.resume.projects[index].desc = this.resume.projects[index].desc.slice(0, 1000);
                 }
             } else if (type == "proresp") {
                 var len = this.resume.projects[index].resp.length;
                 if (len > 1000) {
-                    alert("最多只能输入1000字！");
+                    swal({
+                        title: "",
+                        text: "最多只能输入1000字！",
+                        type: "warning"
+                    })
                     this.resume.projects[index].resp = this.resume.projects[index].resp.slice(0, 1000);
                 }
             } else if (type == "proachiev") {
                 var len = this.resume.projects[index].achiev.length;
                 if (len > 1000) {
-                    alert("最多只能输入1000字！");
+                    swal({
+                        title: "",
+                        text: "最多只能输入1000字！",
+                        type: "warning"
+                    })
                     this.resume.projects[index].achiev = this.resume.projects[index].achiev.slice(0, 1000);
                 }
             } else if (type == "selfeval") {
                 var len = this.resume.selfEval.length;
                 if (len > 1000) {
-                    alert("最多只能输入1000字！");
+                    swal({
+                        title: "",
+                        text: "最多只能输入1000字！",
+                        type: "warning"
+                    })
                     this.resume.selfEval = this.resume.selfEval.slice(0, 1000);
                 }
             } else if (type == "psinfo") {
                 var len = this.resume.psInfo.length;
                 if (len > 1000) {
-                    alert("最多只能输入1000字！");
+                    swal({
+                        title: "",
+                        text: "最多只能输入1000字！",
+                        type: "warning"
+                    })
                     this.resume.psInfo = this.resume.psInfo.slice(0, 1000);
                 }
             } else if (type == "skill") {
                 var len = this.resume.skills.length;
                 if (len > 1000) {
-                    alert("最多只能输入1000字！");
+                    swal({
+                        title: "",
+                        text: "最多只能输入1000字！",
+                        type: "warning"
+                    })
                     this.resume.skills = this.resume.skills.slice(0, 1000);
                 }
             }
@@ -685,7 +749,11 @@ var appCont = new Vue({
                 }
             });
             if (!isFilled) {
-                alert("请完成必填信息！");
+                swal({
+                    title: "",
+                    text: "请完成必填信息！",
+                    type: "warning"
+                })
                 return false;
             }
             this.resume.firstEdit = false;
@@ -699,21 +767,33 @@ var appCont = new Vue({
                     delItem("work", appCont.resume.worksExps[index].cvCpyId);
                     this.resume.worksExps.splice(index, 1);
                 } else {
-                    alert("至少保留一项！");
+                    swal({
+                        title: "",
+                        text: "至少保留一项！",
+                        type: "warning"
+                    })
                 }
             } else if (type == "edu") {
                 if (this.resume.edus.length > 1) {
                     delItem("edu", appCont.resume.edus[index].cvEduId);
                     this.resume.edus.splice(index, 1);
                 } else {
-                    alert("至少保留一项！");
+                    swal({
+                        title: "",
+                        text: "至少保留一项！",
+                        type: "warning"
+                    })
                 }
             } else if (type == "project") {
                 if (this.resume.projects.length > 1) {
                     delItem("project", appCont.resume.projects[index].cvProId);
                     this.resume.projects.splice(index, 1);
                 } else {
-                    alert("至少保留一项！");
+                    swal({
+                        title: "",
+                        text: "至少保留一项！",
+                        type: "warning"
+                    })
                 }
             }
         },
@@ -794,9 +874,17 @@ var appCont = new Vue({
                 EventUtils.ajaxReq("/recruit/cooperateRecruit", "post", postdata, function(resp, status) {
                     console.log(resp);
                     if (resp.data && resp.data.isApply == "0") {
-                        alert("投递成功！")
+                        swal({
+                            title: "",
+                            text: "投递成功！",
+                            type: "success"
+                        })
                     } else {
-                        alert(resp.info)
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "error"
+                        })
                     }
                 });
             }
@@ -808,9 +896,17 @@ var appCont = new Vue({
                 EventUtils.ajaxReq("/jobfair/cooperateJobFair", "post", postdata, function(resp, status) {
                     console.log(resp);
                     if (resp.data && resp.data.isApply == "0") {
-                        alert("投递成功！")
+                        swal({
+                            title: "",
+                            text: "投递成功！",
+                            type: "success"
+                        })
                     } else {
-                        alert(resp.info)
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "error"
+                        })
                     }
                 });
             }
@@ -1034,10 +1130,8 @@ var appModal = new Vue({
 function init_center() {
     selectInitInput();
     selectInitPos();
-    // selectEventBind();
     init_safepos();
     editEventBind();
-    navEventBind();
     if (parObj.theme) {
         $(".sideBox li[paneid='" + parObj.theme + "']").trigger("click");
     }
@@ -1073,7 +1167,11 @@ function uploadEventBind() {
     $('#btnSubmit').on('click', function() {
         var imgsrc = cropper.getDataURL();
         if (imgsrc.length > 500 * 1024) {
-            alert("请上传小于500K的头像！");
+            swal({
+                title: "",
+                text: "请上传小于500K的头像！",
+                type: "warning"
+            })
             return
         }
         var postdata = {
@@ -1193,41 +1291,6 @@ function init_safepos(percent) {
     var p_left = Math.floor($(".safe-range").width() * percent / 100) - 16 + "px";
     $(".r-pointer").css("left", p_left);
     $("#safe-progress").css("width", percent + "%");
-}
-
-
-function navEventBind() {
-    $(".sideBox .sub-li p").unbind("click").bind("click", function() {
-        $(".sideBox .sub-li .on").removeClass("on");
-        $(this).addClass("on");
-        if ($(this).attr("paneid") == "collec-job") {
-            colposRequest(appCont.colPosList.applyindex, 1);
-        }
-        if ($(this).attr("paneid") == "collec-recruitment") {
-            colrecRequest(appCont.colRecList.applyindex, 1);
-        }
-        $(".content").children().hide();
-        $(".content").children("." + $(this).attr("paneid")).show();
-        selectInitPos();
-        return false;
-    });
-
-    $(".sideBox>li").unbind("click").bind("click", function() {
-        $(".sideBox").children("li.on").removeClass("on");
-        $(this).addClass("on");
-        $(".sideBox .sub-li").hide();
-        if ($(this).find(".sub-li").length > 0) {
-            $(this).find(".sub-li").show();
-            $(".content").children().hide();
-            $(".content").children("." + $(this).find(".sub-li .on").attr("paneid")).show();
-        }
-        if ($(this).attr("paneid") == "jobBox") {
-            posRequest(appCont.myPosList.jobsrc, appCont.myPosList.jobstate, 1);
-        }
-        $(".content").children().hide();
-        $(".content").children("." + $(this).attr("paneid")).show();
-        selectInitPos();
-    });
 }
 
 function modalEventBind() {

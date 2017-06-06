@@ -61,22 +61,22 @@
                 <p class="LH-H25">实时了解最新动态</p>
             </div>
         </div>
-        <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3 bg-white" id="app-side" v-cloak>
-            <li class="on" paneid="resumeBox"><i class="pic-icon icon-resume"></i>高校简介</li>
-            <li paneid="requireBox"><i class="pic-icon icon-study"></i>高校需求</li>
-            <li class="myCollect" paneid="collectBox"><i class="pic-icon icon-collect"></i>高校收藏</li>
-            <li paneid="combi-msg"><i class="pic-icon icon-apply"></i>消息中心
+        <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3 bg-white" id="app-side" @click="selnav($event.target)" v-cloak>
+            <li class="on sider-li" paneid="resumeBox"><i class="pic-icon icon-resume"></i>高校简介</li>
+            <li class="sider-li" paneid="requireBox"><i class="pic-icon icon-study"></i>高校需求</li>
+            <li class="myCollect sider-li" paneid="collectBox"><i class="pic-icon icon-collect"></i>高校收藏</li>
+            <li class="sider-li"><i class="pic-icon icon-apply"></i>消息中心
                 <div class="sub-li LH37">
-                    <p class="on" paneid="combi-msg">校企合作</p>
-                    <p paneid="recruit-msg">招聘会</p>
+                    <p class="on sub-item" paneid="combi-msg">校企合作</p>
+                    <p class="sub-item" paneid="recruit-msg">招聘会</p>
                 </div>
             </li>
-            <li paneid="vip-center"><i class="pic-icon icon-apply"></i>VIP中心</li>
-            <li paneid="uni-coop"><i class="pic-icon icon-apply"></i>校企合作</li>
-            <li class="myConfig"><i class="pic-icon icon-config"></i>设置
+            <li class="sider-li" paneid="vip-center"><i class="pic-icon icon-apply"></i>VIP中心</li>
+            <li class="sider-li" paneid="uni-coop"><i class="pic-icon icon-apply"></i>校企合作</li>
+            <li class="myConfig sider-li"><i class="pic-icon icon-config"></i>设置
                 <div class="sub-li paTop2 paBot2 LH30">
-                    <p class="on" paneid="conf-keyword">修改密码</p>
-                    <p paneid="conf-account">绑定账号</p>
+                    <p class="on sub-item" paneid="conf-keyword">修改密码</p>
+                    <p class="sub-item" paneid="conf-account">绑定账号</p>
                 </div>
             </li>
         </ul>
@@ -343,12 +343,12 @@
                 </div>
             </div>
             <div class="vip-center">
-                <ul class="vip-navs lis-inline LH-H37 fSize18 color-gray6 t-center">
-                    <li class="on">信息刷新<i class="nav-line"></i></li>
-                    <li>信息置顶<i class="nav-line"></i></li>
-                    <li>信息匹配<i class="nav-line"></i></li>
-                    <li>品牌推广<i class="nav-line"></i></li>
-                    <li>VIP中心<i class="nav-line"></i></li>
+                <ul class="vip-navs lis-inline LH-H37 fSize18 color-gray6 t-center" @click="selvipnav($event.target)">
+                    <li class="on vip-li">信息刷新<i class="nav-line"></i></li>
+                    <li class="vip-li">信息置顶<i class="nav-line"></i></li>
+                    <li class="vip-li">信息匹配<i class="nav-line"></i></li>
+                    <li class="vip-li">品牌推广<i class="nav-line"></i></li>
+                    <li class="vip-li">VIP中心<i class="nav-line"></i></li>
                 </ul>
                 <div class="vip-cont vip-service clearfix on">
                     <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic01.jpg"/></i>

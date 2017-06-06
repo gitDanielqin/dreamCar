@@ -254,7 +254,11 @@ var appMain = new Vue({
             if (str.length <= 1000) {
                 return (1000 - str.length);
             } else {
-                alert("已超出最大可输入字数！");
+                swal({
+                    title: "",
+                    text: "已超出最大可输入字数！",
+                    type: "warning"
+                })
                 if (type == "combi") {
                     this.combiData.requireDesc = this.combiData.requireDesc.substr(0, 1000);
                 } else if (type == "recruit") {
@@ -314,42 +318,59 @@ var appMain = new Vue({
                 }
             })
             if (!isFilled) {
-                alert("请完成所有必填信息！");
+                swal({
+                    title: "",
+                    text: "请完成所有必填信息！",
+                    type: "warning"
+                })
                 return false;
             }
             if (type == "combi") {
-                //检查信息是否符合正确的格式
+                //检查信息是否符合正确的格式(不能为不限)
+                var isValid = true;
                 if ($(".cont-combi .sel-pos-1 input").val() == "不限") { //岗位信息不能为不限
                     $(".sel-position:visible input").addClass("hint-nullable");
-                    alert("请选择一个具体岗位！");
-                    return false;
+                    isValid = false;
                 } else {
                     $(".sel-position:visible input").removeClass("hint-nullable");
                 }
+
                 if (this.combiData.incApply.posAmount == "不限") {
                     $(".pos-item input").addClass("hint-nullable");
-                    alert("请选择岗位数区间！");
-                    return false;
+                    isValid = false;
                 } else {
                     $(".pos-item input").removeClass("hint-nullable");
                 }
+
                 if ($(".cont-combi .major-input-1 input").val() == "不限") {
                     $(".cont-combi .major-input input").addClass("hint-nullable");
-                    alert("请选择一个具体专业！");
-                    return false;
+                    isValid = false;
                 } else {
                     $(".cont-combi .major-input input").removeClass("hint-nullable");
                 }
+
                 if (this.combiData.uniApply.stuScale == "不限") {
                     $(".cont-combi .pro-count input").addClass("hint-nullable");
-                    alert("请选择专业人数范围！");
-                    return false;
+                    isValid = false;
                 } else {
                     $(".cont-combi .pro-count input").removeClass("hint-nullable");
                 }
+                if (!isValid) {
+                    swal({
+                        title: "",
+                        text: "必填选项不能为不限！",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
                 if (!variableUtils.regExp.phone.test(this.combiData.contact.phone) && !variableUtils.regExp.mobile.test(this.combiData.contact.phone)) {
                     $(".phone-input:visible").addClass("hint-nullable");
-                    alert("联系方式格式有误！");
+                    swal({
+                        title: "",
+                        text: "联系方式格式有误！",
+                        type: "warning"
+                    })
                     return false;
                 } else {
                     $(".phone-input:visible").removeClass("hint-nullable");
@@ -401,30 +422,41 @@ var appMain = new Vue({
                 }
             } else if (type == "jobfair") {
                 //检测发送的数据
+                var isValid = true;
                 if ($(".cont-recruit .sel-pos-1 input").val() == "不限") {
                     $(".cont-recruit .sel-position input").addClass("hint-nullable");
-                    alert("请选择一个具体岗位！");
-                    return false;
+                    isValid = false;
                 } else {
                     $(".cont-recruit .sel-position input").removeClass("hint-nullable");
                 }
                 if ($(".cont-recruit .major-input-1 input").val() == "不限") {
                     $(".cont-recruit .major-input input").addClass("hint-nullable");
-                    alert("请选择一个具体专业!");
-                    return false;
+                    isValid = false;
                 } else {
                     $(".cont-recruit .major-input input").removeClass("hint-nullable");
                 }
                 if (this.recruitData.stuScale == "不限") {
                     $(".cont-recruit .pro-count input").addClass("hint-nullable");
-                    alert("请选择专业人数范围！");
-                    return false;
+                    isValid = false;
                 } else {
                     $(".cont-recruit .pro-count input").removeClass("hint-nullable");
                 }
+                if (!isValid) {
+                    swal({
+                        title: "",
+                        text: "必填选项不能为不限！",
+                        type: "warning"
+                    });
+                    return false;
+                }
+
                 if (!variableUtils.regExp.phone.test(this.recruitData.contact.phone) && !variableUtils.regExp.mobile.test(this.recruitData.contact.phone)) {
                     $(".phone-input:visible").addClass("hint-nullable");
-                    alert("联系方式格式有误！");
+                    swal({
+                        title: "",
+                        text: "联系方式格式有误！",
+                        type: "warning"
+                    })
                     return false;
                 } else {
                     $(".phone-input:visible").removeClass("hint-nullable");

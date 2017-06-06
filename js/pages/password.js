@@ -9,18 +9,20 @@ var regExp = {
     password: /^[a-zA-Z0-9]{6,16}$/
 }
 var imgHtml = ""
-EventUtils.ajaxReq("/sys/img", "GET", {}, function(resp, status) {
+    // EventUtils.ajaxReq("/sys/img", "GET", {}, function(resp, status) {
+    //     $(".code-pic")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img";
     // imgHtml = "<img src='http://192.168.0.104:8080/easily_xq_WebApi/sys/img'/>";
+    // $(".step-cont-1 .pic-code")[0].src = 
     // imgHtml = "<img style='" + resp + "' />"
-    $(".step-cont-1 .pic-code").text(resp);
-})
+    // $(".step-cont-1 .pic-code").text(resp);
+    // })
 
 var appCont = new Vue({
     el: "#app-content",
     data: {
         show: {
-            step1: false,
-            step2: true,
+            step1: true,
+            step2: false,
             step3: false,
             email: true,
             mobile: false,
@@ -45,9 +47,11 @@ var appCont = new Vue({
     },
     methods: {
         switchcode: function() {
+            // console.log(1);
             EventUtils.ajaxReq("/sys/img", "get", {}, function(resp, status) {
-                // imgHtml = "<img src='"++"'/>";
-                $(".step-cont-1 .pic-code").html(resp);
+                // // imgHtml = "<img src='"++"'/>";
+                // $(".step-cont-1 .pic-code").html(resp);
+                $(".code-pic")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img";
             })
         },
         nextstep: function(index) {
@@ -68,13 +72,16 @@ var appCont = new Vue({
                     return false;
                 }
                 var postdata = {
-                    loginName: this.userInfo.account,
-                    inputRandomCode: this.userInfo.picCode
-                }
-                console.log(postdata);
-                EventUtils.ajaxReq("/sys/checkImg", "post", postdata, function(resp, status) {
+                        loginName: this.userInfo.account,
+                        inputRandomCode: this.userInfo.picCode
+                    }
+                    // console.log(postdata);
+                EventUtils.ajaxReq("/sys/getOldConection?", "get", postdata, function(resp, status) {
                     console.log(resp);
-                })
+                });
+                // EventUtils.ajaxReq("/sys/getOldConection?loginName=" + this.userInfo.account + "&inputRandomCode=" + this.userInfo.picCode, "get", null, function(resp, status) {
+                //     console.log(resp);
+                // })
             }
         },
         postcode: function(type, obj) {
@@ -250,5 +257,8 @@ var appCont = new Vue({
             this.hint = "";
             this.show.hint = false;
         }
+    },
+    mounted: function() {
+        $(".code-pic")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img";
     }
 })

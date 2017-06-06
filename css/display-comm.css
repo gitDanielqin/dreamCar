@@ -537,7 +537,7 @@
     background: #fcb62e;
 }
 
-.confirm {
+.dlg-success .confirm {
     background: url("../images/icon-sure.png") no-repeat 86% center #fcb62e;
 }
 

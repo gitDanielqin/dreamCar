@@ -396,7 +396,11 @@ var appResult = new Vue({
         coApply: function(id, obj) {
             if (appTop.isLogin) {
                 if (accountObj.userType != "0") {
-                    alert("抱歉，您不能投递该职位！");
+                    swal({
+                        title: "",
+                        text: "抱歉，您不能投递该职位！",
+                        type: "warning"
+                    })
                     return false;
                 }
                 var postdata = {
@@ -411,7 +415,11 @@ var appResult = new Vue({
                         appModal.showLogin = false;
                         appModal.showSucc = true;
                     } else {
-                        alert(resp.info)
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "error"
+                        })
                     };
                     //投递后避免重复点击         
                     $(obj).attr("disabled", true).text("已投递");
