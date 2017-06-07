@@ -133,8 +133,10 @@ var appTop = new Vue({
         "isLogin": function(curval) {
             if (curval) {
                 appResult.accountId = accountObj.userId;
+                appFooter.userId = accountObj.userId;
             } else {
                 appResult.accountId = "";
+                appFooter.userId = "";
             }
         }
     }
@@ -171,6 +173,7 @@ var appQuery = new Vue({
             ],
             conts: ["滨江区", "淳安县", "富阳市", "拱墅区", "江干区", "建德市", "临安市", "上城区", "桐庐县", "西湖区", "下城区", "萧山区", "余杭区", "不限"]
         },
+        keywords: "",
         incRecruit: {
             scolar: "",
             major: "",
@@ -190,6 +193,13 @@ var appQuery = new Vue({
         showWelBox: false
     },
     methods: {
+        search: function() {
+            if (this.keywords != "") {
+                searchRequest(1);
+            } else {
+                resultsRequest(1);
+            }
+        },
         selCity: function(index, obj) {
             $(".address .on").removeClass("on");
             $(".queryform .district .on").removeClass("on");
@@ -351,7 +361,8 @@ var appResult = new Vue({
             curpage: 1,
             results: [],
         },
-        accountId: ""
+        accountId: "",
+        resultType: 0
     },
     methods: {
         infoExtrac: function(info) {
@@ -412,7 +423,11 @@ var appResult = new Vue({
             }
         },
         topage: function(page, type) {
-            resultsRequest(page);
+            if (this.resultType == 0) {
+                resultsRequest(page);
+            } else {
+                searchRequest(page);
+            }
         }
 
     },
@@ -421,6 +436,12 @@ var appResult = new Vue({
     }
 })
 
+var appFooter = new Vue({
+    el: "#app-footer",
+    data: {
+        userId: parObj.userId
+    }
+})
 var appModal = new Vue({
     el: "#app-modal",
     data: {
@@ -527,6 +548,7 @@ function _initEventBind() {
 
 // 筛选结果请求
 function resultsRequest(page) {
+    appResult.resultType = 0;
     var timeIndex = "";
     switch (appQuery.incRecruit.publicTime) {
         case "三天内":
@@ -574,4 +596,33 @@ function resultsRequest(page) {
         }
     });
     appResult.increcruitList.curpage = page;
+}
+
+//搜索结果请求
+function searchRequest(page) {
+    appResult.resultType = 1;
+    var postdata = {
+        title: appQuery.keywords,
+        index: page,
+        count: 8
+    }
+    EventUtils.ajaxReq("/demand/searchDemand?", "get", postdata, function(resp, status) {
+        console.log(resp);
+        if (resp.data) {
+            appResult.increcruitList.totalpages = resp.data.totalPage;
+            appResult.increcruitList.results = resp.data.list;
+            appResult.increcruitList.totalitems = resp.data.totalRow;
+            //背景图像
+            if (resp.data.list.length <= 1) {
+                $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
+            } else {
+                $(".results").css("background", "none");
+            }
+        } else {
+            appResult.increcruitList.results = [];
+            appResult.increcruitList.totalitems = 0;
+            //背景图像
+            $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
+        }
+    })
 }

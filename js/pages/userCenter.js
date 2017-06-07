@@ -255,6 +255,12 @@ var appTop = new Vue({
     el: "#app-top",
     data: {
         homeLink: "index.html?userId=" + (parObj.userId || localStorage.userId)
+    },
+    methods: {
+        showMsgbox: function() {
+            appModal.show.message = true;
+            appModal.showModal = true;
+        }
     }
 })
 
@@ -983,6 +989,12 @@ var appCont = new Vue({
     },
 });
 
+var appFooter = new Vue({
+    el: "#app-footer",
+    data: {
+        userId: parObj.userId
+    }
+})
 var appModal = new Vue({
     el: "#app-modal",
     data: {
@@ -994,7 +1006,11 @@ var appModal = new Vue({
             position: false,
             mobile: false,
             email: false,
-            wechat: false
+            wechat: false,
+            message: false
+        },
+        account: {
+            userId: parObj.userId
         },
         checkedTrades: [],
         showModal: false,
@@ -1050,15 +1066,13 @@ var appModal = new Vue({
             this.show.position = false;
             this.showModal = false;
         },
-        hidemodal: function() {
-            for (var key in this.show) {
-                this.show[key] = false;
+        hidemodal: function(obj) {
+            if ($(obj).hasClass("modal")) {
+                for (var key in this.show) {
+                    this.show[key] = false;
+                }
+                this.showModal = false;
             }
-            this.showModal = false;
-        },
-        stayshow: function(ev) {
-            ev.stopPropagation();
-            return false;
         },
         closeMobile: function() {
             this.show.mobile = false;
@@ -1071,9 +1085,20 @@ var appModal = new Vue({
         closeEmail: function() {
             this.show.email = false;
             this.showModal = false;
+        },
+        closeMsg: function() {
+            this.show.message = false;
+            this.showModal = false;
         }
     },
     watch: {
+        "show.message": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .msg-box"));
+                })
+            }
+        },
         "show.upload": function(curval) {
             if (curval) {
                 this.$nextTick(function() {
@@ -1294,21 +1319,6 @@ function init_safepos(percent) {
 }
 
 function modalEventBind() {
-    $(".msg-center").click(function() {
-        $(".modal").show();
-        $(".modal").children().hide();
-        $(".modal .msg-box").show();
-    })
-    $(".msg-body li").bind("click", function() {
-        $(".show01").hide();
-        $(".show02").show();
-        $(".msg-head").text("系统消息");
-    })
-    $(".back").click(function() {
-        $(".show02").hide();
-        $(".show01").show();
-        $(".msg-head").text("消息中心");
-    })
     $(".close").unbind("click").bind("click", function() {
         $(this).closest("div").hide();
         $(".modal").hide();

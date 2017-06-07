@@ -127,8 +127,10 @@ var appTop = new Vue({
         "isLogin": function(curval) {
             if (curval) {
                 appResult.accountId = accountObj.userId;
+                appFooter.userId = accountObj.userId;
             } else {
                 appResult.accountId = "";
+                appFooter.userId = "";
             }
         }
     }
@@ -165,6 +167,7 @@ var appQuery = new Vue({
             ],
             conts: ["滨江区", "淳安县", "富阳市", "拱墅区", "江干区", "建德市", "临安市", "上城区", "桐庐县", "西湖区", "下城区", "萧山区", "余杭区", "不限"]
         },
+        keywords: "",
         uniQuery: {
             major: "",
             majorsum: "",
@@ -191,6 +194,13 @@ var appQuery = new Vue({
         showWelBox: false
     },
     methods: {
+        search: function() {
+            if (this.keywords != "") {
+                searchRequest(1);
+            } else {
+                resultsRequest(1);
+            }
+        },
         selCity: function(index, obj) {
             $(".address .on").removeClass("on");
             $(".queryform .district .on").removeClass("on");
@@ -362,7 +372,8 @@ var appResult = new Vue({
             totalpages: 1,
             results: []
         },
-        accountId: ""
+        accountId: "",
+        resultType: 0 // 0 查询条件筛选结果 1 搜索结果
     },
     methods: {
         infoExtrac: function(info) {
@@ -421,7 +432,12 @@ var appResult = new Vue({
             }
         },
         topage: function(page, type) {
-            resultsRequest(page);
+            if (this.resultType == 0) {
+                resultsRequest(page);
+            } else {
+                searchRequest(page);
+            }
+
         }
 
     },
@@ -430,6 +446,12 @@ var appResult = new Vue({
     }
 })
 
+var appFooter = new Vue({
+    el: "#app-footer",
+    data: {
+        userId: parObj.userId
+    }
+})
 var appModal = new Vue({
     el: "#app-modal",
     data: {
@@ -546,6 +568,7 @@ function _initEventBind() {
 
 // 筛选结果请求
 function resultsRequest(page) {
+    appResult.resultType = 0;
     //     日期选择变量转化
     var dateindex = "";
     switch (appQuery.uniQuery.publicTime) {
@@ -578,6 +601,34 @@ function resultsRequest(page) {
         // 清楚发送数据对象值为空的属性
     postdata = EventUtils.filterReqdata(postdata);
     EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
+        console.log(resp);
+        if (resp.data) {
+            appResult.uniList.totalpages = resp.data.totalPage;
+            appResult.uniList.results = resp.data.list;
+            //背景图像
+            if (resp.data.list.length <= 1) {
+                $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
+            } else {
+                $(".results").css("background", "none");
+            }
+        } else {
+            appResult.uniList.totalpages = 1;
+            appResult.uniList.results = [];
+            //背景图像
+            $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
+        }
+    })
+}
+
+//搜索结果请求
+function searchRequest(page) {
+    appResult.resultType = 1;
+    var postdata = {
+        title: appQuery.keywords,
+        index: page,
+        count: 8
+    }
+    EventUtils.ajaxReq("/demand/searchDemand?", "get", postdata, function(resp, status) {
         console.log(resp);
         if (resp.data) {
             appResult.uniList.totalpages = resp.data.totalPage;

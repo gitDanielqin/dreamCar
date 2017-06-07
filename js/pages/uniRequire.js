@@ -535,12 +535,22 @@ var appMain = new Vue({
 var appModal = new Vue({
     el: "#app-modal",
     data: {
+        account: { userId: parObj.userId },
         show: { modal: false, message: false }
     },
     methods: {
         closeMsg: function() {
             this.show.message = false;
             this.show.modal = false;
+        }
+    },
+    watch: {
+        "show.message": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .msg-box"));
+                })
+            }
         }
     }
 })

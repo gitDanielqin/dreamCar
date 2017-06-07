@@ -991,43 +991,6 @@
 }
 
 
-/*手机邮箱弹框样式*/
-
-.bind-change {
-    position: absolute;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5)
-}
-
-.bind-change .close:hover {
-    background: #999;
-}
-
-.bind-change input {
-    height: 44px;
-    background: #f3f3f3;
-    font-size: 14px;
-    padding-left: 10px;
-}
-
-.bind-change p {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.bind-change .btn-submit button {
-    width: 120px;
-    height: 40px;
-    font-size: 18px;
-    color: #fff;
-}
-
-.bind-change .icon-close {
-    background: url("../images/icon-bind-close.png") no-repeat center center;
-    width: 26px;
-    height: 25px;
-}
-
-
 /*微信弹框样式*/
 
 .wechat-bind {
@@ -1248,48 +1211,6 @@
 
 .bot-account {
     border-top: 2px solid #9d9d9d;
-}
-
-
-/*页码样式*/
-
-.pagination ul {
-    overflow: hidden;
-}
-
-.pagination ul li {
-    float: left;
-    margin-left: 10px;
-    cursor: pointer;
-}
-
-.pagination a {
-    display: inline-block;
-    background: #999;
-    color: #fff;
-    line-height: 30px;
-    height: 30px;
-    text-align: center;
-}
-
-.pagination a.highLight {
-    background: #333;
-}
-
-.pagination a:hover {
-    background: #333;
-}
-
-.pagination .lastPage {
-    width: 60px;
-}
-
-.pagination .nextPage {
-    width: 60px;
-}
-
-.pagination .page {
-    width: 30px;
 }
 
 

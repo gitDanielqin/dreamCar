@@ -100,6 +100,12 @@ var appTop = new Vue({
     el: "#app-top",
     data: {
         homeLink: "index.html?userId=" + parObj.userId
+    },
+    methods: {
+        showMsgbox: function() {
+            appModal.show.message = true;
+            appModal.showModal = true;
+        }
     }
 })
 var appPorto = new Vue({
@@ -923,10 +929,18 @@ var appCont = new Vue({
     }
 });
 
+var appFooter = new Vue({
+    el: "#app-footer",
+    data: {
+        userId: parObj.userId
+    }
+})
+
 var appModal = new Vue({
     el: "#app-modal",
     data: {
         account: {
+            userId: parObj.userId,
             money: 0,
             freeFreshTimes: 1
         },
@@ -942,7 +956,8 @@ var appModal = new Vue({
             preImg: false,
             minicard: false,
             comment: false,
-            upload: false
+            upload: false,
+            message: false
         },
         preImgUrl: "",
         showModal: false,
@@ -1154,12 +1169,14 @@ var appModal = new Vue({
             this.showTrade = false;
             this.showModal = false;
         },
-        hidemodal: function() {
-            this.showModal = false;
-            this.showTrade = false;
-            this.showPreview = false;
-            for (var key in appModal.show) {
-                appModal.show[key] = false;
+        hidemodal: function(obj) {
+            if ($(obj).hasClass("modal")) {
+                this.showModal = false;
+                this.showTrade = false;
+                this.showPreview = false;
+                for (var key in appModal.show) {
+                    appModal.show[key] = false;
+                }
             }
         },
         stayshow: function(ev) {
@@ -1219,9 +1236,20 @@ var appModal = new Vue({
         closeEmail: function() {
             this.show.email = false;
             this.showModal = false;
+        },
+        closeMsg: function() {
+            this.show.message = false;
+            this.showModal = false;
         }
     },
     watch: {
+        "show.message": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .msg-box"));
+                })
+            }
+        },
         "show.minicard": function(curval) {
             if (curval) {
                 EventUtils.absCenter($(".minicard"));
@@ -1309,6 +1337,7 @@ var appModal = new Vue({
         this.fresh.smartBtn = 4 > this.account.money ? "立即充值" : "立即刷新";
     }
 });
+
 
 function init_center() {
     //如果有主题跳转信息
@@ -1406,21 +1435,6 @@ function init_safepos(percent) {
 }
 
 function modalEventBind() {
-    $(".msg-center").click(function() {
-        $(".modal").show();
-        $(".modal").children().hide();
-        $(".modal .msg-box").show();
-    })
-    $(".msg-body li").bind("click", function() {
-        $(".show01").hide();
-        $(".show02").show();
-        $(".msg-head").text("系统消息");
-    })
-    $(".back").click(function() {
-        $(".show02").hide();
-        $(".show01").show();
-        $(".msg-head").text("消息中心");
-    })
     $(".close").unbind("click").bind("click", function() {
         $(this).closest("div").hide();
         $(".modal").hide();

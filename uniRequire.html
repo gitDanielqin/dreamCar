@@ -208,37 +208,7 @@
         </div>
     </div>
     <div class="modal" id="app-modal" v-show="show.modal" v-cloak>
-        <div class="msg-box W888 maCenter" v-show="show.message">
-            <h3 class="bg-orange4 LH-H86 fSize30 color-white t-center msg-box-head"><i class="pic-icon fl maL30 back show02 disNo msg-back icon-return"></i><i class="pic-icon maR21 show01 icon-email"></i><span class="msg-head">消息提醒</span><span class="icon-wrapper fr maR10" @click.stop="closeMsg"><i class="close pic-icon W40 icon-close"></i></span></h3>
-            <div class="msg-lis show01">
-                <ul class="msg-body ">
-                    <li class="msg-date">今天</li>
-                    <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-                    <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-                    <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-                    <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-                    <li class="msg-date">2016-6-1</li>
-                    <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-                    <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-                </ul>
-                <div class="msg-bot LH-H70 fSize14 bg-white t-center">
-                    <ul class="page-bot lis-inline fSize14">
-                        <li class="side-page first-page">首页</li>
-                        <li class="prev side-page">上一页</li>
-                        <li class="page-index">1</li>
-                        <li class="page-index">2</li>
-                        <li class="page-index">3</li>
-                        <li class="next side-page">下一页</li>
-                        <li class="side-page last-page">尾页</li>
-                    </ul>
-                    <span class="fr maR40">全部清空</span>
-                </div>
-            </div>
-            <div class="msg-detail fSize14 disNo show02">
-                <p class="H266 bg-white paTop25 LH25">校企2.0上线啦上线啦上线啦</p>
-                <p class="bg-gray-e0 LH-H50 t-center"><span class="date">2016-12-17</span><span class="time">12:12</span></p>
-            </div>
-        </div>
+        <message-box :userid="account.userId" @closebox="closeMsg" v-show="show.message"></message-box>
     </div>
 
 
@@ -249,6 +219,8 @@
     <script src="js/components/dropdown.js"></script>
     <script src="js/components/major-pop.js"></script>
     <script src="js/components/foundation-datepicker.js"></script>
+    <script src="js/components/pagination.js"></script>
+    <script src="js/components/message-box.js"></script>
     <script src="data/address.js"></script>
     <script src="data/position.js"></script>
     <script src="data/major.js"></script>

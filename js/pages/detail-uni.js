@@ -161,6 +161,15 @@ var appTop = new Vue({
             var originalurl = state.url.slice(0, state.url.indexOf("&userId"));
             history.replaceState(state, document.title, originalurl);
         }
+    },
+    watch: {
+        "isLogin": function(curval) {
+            if (curval) {
+                appFooter.userId = accountObj.userId;
+            } else {
+                appFooter.userId = "";
+            }
+        }
     }
 });
 
@@ -313,6 +322,13 @@ var appMain = new Vue({
         }
     },
 });
+
+var appFooter = new Vue({
+    el: "#app-footer",
+    data: {
+        userId: parObj.userId
+    }
+})
 var appModal = new Vue({
     el: "#app-modal",
     data: {

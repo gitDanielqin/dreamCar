@@ -6,6 +6,19 @@
 // require("../../css/base.css")
 // require("../../css/widget.css")
 // require("../../css/hrCenter.css")
+
+var parObj = EventUtils.urlExtrac(window.location);
+var respObj = {};
+var appTop = new Vue({
+    el: "#app-top",
+    data: {},
+    methods: {
+        showMsg: function() {
+            appModal.show.message = true;
+            appModal.show.modal = true;
+        }
+    }
+})
 var hrApp = new Vue({
     el: "#hr-app",
     data: {
@@ -260,6 +273,33 @@ var hrApp = new Vue({
     }
 })
 
+var appModal = new Vue({
+    el: "#app-modal",
+    data: {
+        show: {
+            modal: false,
+            message: false
+        },
+        account: {
+            userId: parObj.userId
+        },
+    },
+    methods: {
+        closeMsg: function() {
+            this.show.message = false;
+            this.show.modal = false;
+        }
+    },
+    watch: {
+        "show.message": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .msg-box"));
+                })
+            }
+        }
+    }
+})
 
 function init_center() {
     selectInitPos();

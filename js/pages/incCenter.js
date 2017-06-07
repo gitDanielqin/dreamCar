@@ -88,6 +88,12 @@ var appTop = new Vue({
     el: "#app-top",
     data: {
         homeLink: "index.html?userId=" + parObj.userId
+    },
+    methods: {
+        showMsgbox: function() {
+            appModal.show.message = true;
+            appModal.showModal = true;
+        }
     }
 })
 
@@ -774,6 +780,12 @@ var appSider = new Vue({
     el: "#app-side",
     data: {},
     methods: {
+        toHR: function() {
+            if (parObj.userId) {
+                var link = "HR-center.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId;
+            }
+            window.open(link);
+        },
         selnav: function(obj) {
             if ($(obj).hasClass("sider-li")) {
                 $(".sideBox .sider-li.on").removeClass("on");
@@ -830,6 +842,13 @@ var appSider = new Vue({
         }
     }
 })
+
+var appFooter = new Vue({
+    el: "#app-footer",
+    data: {
+        userId: parObj.userId
+    }
+})
 var appModal = new Vue({
     el: "#app-modal",
     data: {
@@ -850,7 +869,8 @@ var appModal = new Vue({
             preImg: false,
             comment: false,
             trade: false,
-            upload: false
+            upload: false,
+            message: false
         },
         showModal: false,
         preImgUrl: "",
@@ -912,6 +932,10 @@ var appModal = new Vue({
         // resumeInfo: appCont.resume
     },
     methods: {
+        closeMsg: function() {
+            this.show.message = false;
+            this.showModal = false;
+        },
         remainText: function(text) {
             return EventUtils.remainWords(400, text);
         },
@@ -1072,15 +1096,13 @@ var appModal = new Vue({
             this.show.trade = false;
             this.showModal = false;
         },
-        hidemodal: function() {
-            this.showModal = false;
-            for (var key in appModal.show) {
-                appModal.show[key] = false;
+        hidemodal: function(obj) {
+            if ($(obj).hasClass("modal")) {
+                this.showModal = false;
+                for (var key in appModal.show) {
+                    appModal.show[key] = false;
+                }
             }
-        },
-        stayshow: function(ev) {
-            ev.stopPropagation();
-            return false;
         },
         closePorto: function() {
             this.show.upload = false;
@@ -1140,6 +1162,13 @@ var appModal = new Vue({
         }
     },
     watch: {
+        "show.message": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .msg-box"));
+                })
+            }
+        },
         "show.minicard": function(curval) {
             if (curval) {
                 EventUtils.absCenter($(".minicard"));
@@ -1260,8 +1289,6 @@ function init_center() {
     selectInitInput();
     selectInitPos();
     refreshEventBind();
-    showContact();
-    modalEventBind();
     uploadEventBind();
 }
 init_center();
@@ -1326,52 +1353,6 @@ function init_safepos(percent) {
     $("#safe-progress").css("width", percent + "%");
 }
 
-function modalEventBind() {
-
-    $(".msg-center").click(function() {
-        $(".modal").show();
-        $(".modal").children().hide();
-        $(".modal .msg-box").show();
-    })
-    $(".msg-body li").bind("click", function() {
-        $(".show01").hide();
-        $(".show02").show();
-        $(".msg-head").text("系统消息");
-    })
-    $(".back").click(function() {
-        $(".show02").hide();
-        $(".show01").show();
-        $(".msg-head").text("消息中心");
-    })
-    $(".close").unbind("click").bind("click", function() {
-        $(this).closest("div").hide();
-        $(".modal").hide();
-    })
-}
-
-function showContact() {
-    $(".message-btn .to-contact").bind({
-        "mouseover": function() {
-            $(this).siblings(".contact-box").show();
-        },
-        "mouseout": function() {
-            $(this).siblings(".contact-box").hide();
-        }
-    });
-    $(".state-line .to-contact").bind({
-        "mouseover": function() {
-            if ($(this).hasClass("on")) {
-                $(this).parent().siblings(".contact-box").show();
-            }
-        },
-        "mouseout": function() {
-            if ($(this).hasClass("on")) {
-                $(this).parent().siblings(".contact-box").hide();
-            }
-
-        }
-    })
-}
 
 function refreshEventBind() {
     $(".plan-sticky-table td").click(function() {

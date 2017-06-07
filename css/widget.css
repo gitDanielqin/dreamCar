@@ -90,6 +90,74 @@
 }
 
 
+/*公共底部样式*/
+
+.common-footer .barcode-text {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 12px;
+}
+
+.footer-nav {
+    display: inline-block;
+    color: #797979;
+    height: 34px;
+    line-height: 34px;
+}
+
+.footer-nav a {
+    color: #797979;
+}
+
+.footer-nav a:hover {
+    color: orange;
+    cursor: pointer
+}
+
+.footer-contact li {
+    margin: 0 30px;
+}
+
+.footer-contact .pic-icon {
+    margin-right: 15px;
+}
+
+.footer-contact .icon-phone {
+    width: 20px;
+    height: 14px;
+    background: url("../images/sprite.png") no-repeat -27px -3px;
+}
+
+.footer-contact .icon-address {
+    width: 20px;
+    height: 20px;
+    background: url("../images/sprite.png") no-repeat -89px -102px;
+}
+
+.footer-contact .icon-email {
+    width: 20px;
+    height: 14px;
+    background: url("../images/sprite.png") no-repeat -117px -34px;
+}
+
+.footer-rights {
+    font-size: 14px;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    color: #797979;
+}
+
+.barcode-text {
+    width: 15px;
+    font-size: 14px;
+}
+
+.footer-barcode .pic-wrapper {
+    margin-left: 16px;
+}
+
+
 /*专业弹框样式*/
 
 .pop-major {
@@ -303,26 +371,35 @@
 /*消息弹框样式*/
 
 .msg-box {
-    margin-top: 15%;
+    width: 888px;
+    position: absolute;
+    top: 20px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
 }
 
+.msg-box-head {
+    background: #ffa800;
+    height: 86px;
+    line-height: 86px;
+    font-size: 30px;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
 .msg-box-head .icon-wrapper {
+    float: right;
+    position: absolute;
+    top: 25px;
+    right: 18px;
     width: 40px;
     height: 40px;
     line-height: 40px;
-    margin-top: 25px;
-    margin-right: 18px;
     cursor: pointer;
 }
 
 .msg-box-head .icon-wrapper:hover {
     background: #ef8f30;
-}
-
-.msg-box i.closer {
-    display: inline-block;
-    font-family: Consolas;
 }
 
 .msg-box .msg-date {
@@ -331,14 +408,18 @@
 }
 
 .msg-box-head .icon-return {
+    position: absolute;
+    top: 30px;
+    left: 30px;
     background: url("../images/sprite.png") no-repeat -191px -2px;
     width: 32px;
     height: 29px;
-    margin-top: 30px;
+    cursor: pointer;
 }
 
 .msg-box-head .icon-email {
     background: url("../images/sprite.png") no-repeat -147px -5px;
+    margin-right: 21px;
     width: 28px;
     height: 20px;
 }
@@ -347,16 +428,15 @@
     background: url("../images/icon-fresh-close.png") no-repeat center center;
     width: 26px;
     height: 25px;
-}
-
-.msg-back {
     cursor: pointer;
 }
 
 .msg-body li {
     font-size: 14px;
+    padding-left: 30px;
     border-top: 1px solid #fbd0a4;
-    line-height: 39px;
+    line-height: 40px;
+    height: 40px;
     cursor: pointer;
 }
 
@@ -365,22 +445,27 @@
     vertical-align: middle;
 }
 
-.msg-body li span:first-child {
-    width: 135px;
-    padding-left: 30px;
+.msg-body li .msg-name {
+    width: 15%;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.msg-body li span:nth-of-type(2) {
-    width: 534px;
+.msg-body li .msg-cont {
+    width: 60%;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.msg-body li span:nth-child(3) {
-    width: 92px;
+.msg-body li .msg-time {
+    width: 12%;
     text-align: center
 }
 
-.msg-body li span:nth-child(4) {
-    width: 97px;
+.msg-body li .msg-delete {
+    width: 7%;
     text-align: center
 }
 
@@ -396,20 +481,76 @@
     border-bottom: 1px solid #fbd0a4;
 }
 
-.msg-detail p {
-    padding-left: 42px;
+.msg-detail p.msg-detail-cont {
+    font-size: 14px;
+    padding: 10px 42px;
 }
 
-.msg-bot .page-bot {
-    display: inline-block;
+.msg-box .pagination {
+    height: 70px;
+    line-height: 70px;
+    font-size: 14px;
+    background: white;
+    text-align: center;
 }
 
-.msg-bot .page-bot li {
-    margin: 0 10px;
+.msg-box .pagination ul {
+    margin-left: 230px;
 }
 
-.close {
+.msg-box .pagination ul li {
+    float: left;
+    margin-left: 10px;
     cursor: pointer;
+}
+
+.msg-box .pagination a {
+    background: none;
+    color: black;
+    display: inline-block;
+    line-height: 30px;
+    height: 30px;
+    text-align: center;
+}
+
+.msg-box .pagination a.highLight {
+    color: orange;
+    background: none;
+}
+
+.msg-box .pagination a:hover {
+    color: orange
+}
+
+.msg-box .pagination .page {
+    width: 10px;
+}
+
+.msg-bot {
+    position: relative;
+}
+
+.msg-bot .clear-all {
+    position: absolute;
+    color: orange;
+    cursor: pointer;
+    right: 40px;
+    bottom: 25px;
+    font-size: 16px;
+}
+
+.msg-detail-cont {
+    height: 266px;
+    background: white;
+    padding-top: 25px;
+    line-height: 25px;
+}
+
+.msg-detail-bot {
+    background: #e0ded7;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
 }
 
 
@@ -557,6 +698,7 @@
 }
 
 .bind-change .input-mobile,
+.bind-change .input-email,
 .bind-change .input-password {
     width: 290px;
 }

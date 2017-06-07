@@ -19,7 +19,7 @@
             <div class="fr navs maT42">
                 <a :href="homeLink"><i class="pic-icon icon-home"></i></a>
                 <a href="#"><i class="pic-icon icon-account"></i></a>
-                <a class="msg-center pRel" href="#"><i class="pic-icon icon-msg"></i><i class="msg-info">99</i></a>
+                <a class="msg-center pRel" href="#" @click.stop="showMsgbox"><i class="pic-icon icon-msg"></i><i class="msg-info">99</i></a>
             </div>
         </div>
     </div>
@@ -616,8 +616,8 @@
             </div>
         </div>
     </div>
-    <div class="modal" id="app-modal" v-show="showModal" @click="hidemodal" v-cloak>
-        <div class="porto-upload W500" v-show="show.upload" @click="stayshow($event)">
+    <div class="modal" id="app-modal" v-show="showModal" @click="hidemodal($event.target)" v-cloak>
+        <div class="porto-upload W500" v-show="show.upload">
             <h2 class="LH-H60 fSize24 color-white t-left bg-blueM paLeft30">编辑头像<i class="pic-wrapper LH-H40 W40 close" @click="closePorto"><i class="pic-icon icon-close"></i></i>
             </h2>
             <div class="edit-area H407 bg-white">
@@ -647,7 +647,7 @@
                 <div class="submit-btns t-center maT28"><button class="bg-blueL" id="btnSubmit">确定</button><button class="bg-orange2" @click="closePorto">取消</button></div>
             </div>
         </div>
-        <div class="preView W800 bg-white" v-show="show.preview" @click="stayshow($event)">
+        <div class="preView W800 bg-white" v-show="show.preview">
             <div class="H200 baseInfo bg-white-ec paLeft80">
                 <div class="paTop60">
                     <div class="porto fl">
@@ -759,29 +759,9 @@
             </div>
             <div class="H26 bg-white-ec"></div>
         </div>
-        <div class="bind-change W500 mobile-bind" v-show="show.mobile" @click.stop="">
-            <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换手机号<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13" @click.stop="closeMobile"><i class="pic-icon icon-close"></i></i>
-            </h2>
-            <div class="bg-white paTop8 paBot60">
-                <h3 class="LH-H83 fSize18 t-center">请输入新的手机号，完成手机号绑定</h3>
-                <p><input type="text" placeholder="完成手机号" class="W290"></p>
-                <p><input type="text" placeholder="请输入短信认证码" class="W194"><button class="W96 H44 bg-blueM fSize14 color-white">获取验证码</button></p>
-                <p><input type="text" placeholder="确认登入密码" class="W290"></p>
-                <div class="btn-submit t-center paTop20"><button class="bg-blueM">完成绑定</button><button class="bg-orange2 maL40" @click.stop="closeMobile">返回</button></div>
-            </div>
-        </div>
-        <div class="bind-change W500 email-bind" v-show="show.email" @click.stop="">
-            <h2 class="LH-H60 fSize24 color-white paLeft30 bg-blueM">更换绑定邮箱<i class="pic-wrapper LH-H40 W40 fr maR10 close maT13" @click.stop="closeEmail"><i class="pic-icon icon-close"></i></i>
-            </h2>
-            <div class="bg-white paTop8 paBot60">
-                <h3 class="LH-H83 fSize18 t-center">请输入新的邮箱，完成邮箱绑定</h3>
-                <p><input type="text" placeholder="请输入邮箱" class="W290"></p>
-                <p><input type="text" placeholder="请输入验证码" class="W194"><button class="W96 H44 bg-blueM fSize14 color-white">获取验证码</button></p>
-                <p><input type="text" placeholder="确认登入密码" class="W290"></p>
-                <div class="btn-submit t-center paTop20"><button class="bg-blueM">完成绑定</button><button class="bg-orange2 maL40" @click.stop="closeEmail">返回</button></div>
-            </div>
-        </div>
-        <div class="wechat-bind W500" v-show="show.wechat" @click.stop="">
+        <bind-mobile-box v-show="show.mobile" :userid="account.userId" @closebox="closeMobile"></bind-mobile-box>
+        <bind-email-box v-show="show.email" :userid="account.userId" @closebox="closeEmail"></bind-email-box>
+        <div class="wechat-bind W500" v-show="show.wechat">
             <h2 class="LH-H60 fSize24 color-white t-center bg-blueM">微信登录<i class="pic-wrapper LH-H40 W40 close" @click.stop="closeWechat"><i class="pic-icon icon-close"></i></i>
             </h2>
             <div class="bg-white paTop14 t-center paBot53">
@@ -789,39 +769,9 @@
                 <p class="LH-H40 W220 t-center bg-orange2 color-white maCenter" style="border-radius: 20px;">请使用微信扫一扫二维码登录</p>
             </div>
         </div>
-        <div class="msg-box  W888 maCenter disNo">
-            <h3 class="bg-orange4 LH-H86 fSize30 color-white t-center msg-box-head"><i class="pic-icon fl maL30 back show02 disNo msg-back icon-return"></i><i class="pic-icon maR21 show01 icon-email"></i><span class="msg-head">消息提醒</span> <i class="close pic-icon fr maR10 LH-H86 W40 icon-close"></i></h3>
-            <div class="msg-lis show01">
-                <ul class="msg-body ">
-                    <li class="msg-date">今天</li>
-                    <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-                    <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-                    <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-                    <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-                    <li class="msg-date">2016-6-1</li>
-                    <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-                    <li><span>消息名称</span><span>消息内容</span><span>时间</span><span>删除</span></li>
-                </ul>
-                <div class="msg-bot LH-H70 fSize14 bg-white t-center">
-                    <ul class="page-bot lis-inline fSize14">
-                        <li class="side-page first-page">首页</li>
-                        <li class="prev side-page">上一页</li>
-                        <li class="page-index">1</li>
-                        <li class="page-index">2</li>
-                        <li class="page-index">3</li>
-                        <li class="next side-page">下一页</li>
-                        <li class="side-page last-page">尾页</li>
-                    </ul>
-                    <span class="fr maR40">全部清空</span>
-                </div>
-            </div>
-            <div class="msg-detail fSize14 disNo show02">
-                <p class="H266 bg-white paTop25 LH25">校企2.0上线啦上线啦上线啦</p>
-                <p class="bg-gray-e0 LH-H50 t-center"><span class="date">2016-12-17</span><span class="time">12:12</span></p>
-            </div>
-        </div>
+        <message-box :userid="account.userId" @closebox="closeMsg" v-show="show.message"></message-box>
         <!--期望行业选择弹框  -->
-        <div class="trade-box W770 H420 maCenter trade-box-multi pAbs" v-show="show.trade" @click="stayshow($event)">
+        <div class="trade-box W770 H420 maCenter trade-box-multi pAbs" v-show="show.trade">
             <h3 class="bg-gray-e6 fSize14 LH-H36 paLeft30 paRight30 color-black">选择行业分类<i class="pic-wrapper W26 LH-H26 maT5 closer t-center fr cur-pointer" @click="closeTrade"><i class="pic-icon icon-close"></i></i>
             </h3>
             <div class="H328 bg-white paLeft35 cont">
@@ -844,7 +794,7 @@
             </div>
         </div>
         <!--工作经历行业选择框单选  -->
-        <div class="trade-box W770 H420 maCenter trade-box-single pAbs" v-show="show.tradeSingle" @click="stayshow($event)">
+        <div class="trade-box W770 H420 maCenter trade-box-single pAbs" v-show="show.tradeSingle">
             <h3 class="bg-gray-e6 fSize14 LH-H36 paLeft30 paRight30 color-black">选择行业分类<i class="pic-wrapper W26 LH-H26 maT5 closer t-center fr cur-pointer" @click="closeTrade"><i class="pic-icon icon-close"></i></i>
             </h3>
             <div class="H328 bg-white paLeft35 cont paTop14">
@@ -868,31 +818,8 @@
         <!-- 期望职能选择弹框 -->
         <pop-position :posdata="database.posdata" class="maCenter pAbs" v-show="show.position" @confirm="submitPos" @cancel="cancelPos"></pop-position>
     </div>
-    <div class="bot paTop8 t-center bot-account">
-        <div class="inner clearfix">
-            <div class="fl">
-                <ul class="lis-inline bot-nav color-gray79 LH-H34 fSize12">
-                    <li><a href="footer-page.html?descript">关于校企</a>-</li>
-                    <li><a href="footer-page.html?coop">网站合作</a>-</li>
-                    <li><a href="footer-page.html?help">帮助中心</a>-</li>
-                    <li><a href="footer-page.html?employ">招贤纳士</a>-</li>
-                    <li><a href="footer-page.html">友情链接</a>-</li>
-                    <li><a href="footer-page.html">教育网</a></li>
-                </ul>
-                <ul class="lis-inline fSize12 bot-infos">
-                    <li><i class="pic-icon icon-phone"></i>电话：0571-28277417-818 </li>
-                    <li><i class="pic-icon icon-address"></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
-                    <li><i class="pic-icon icon-email"></i>邮箱：market@xiaoqiztc.com</li>
-                </ul>
-                <p class="fSize14 t-center LH-H40 color-gray79">校企职通车版权所有©2017XIAOQI 浙ICP备17007975号-2 浙公网安备3481464号</p>
-            </div>
-            <div class="fr">
-                <p class="fSize14 W15 barcode-text">关注我们</p>
-                <div class="pic-wrapper maL16">
-                    <img src="images/barcode.png" />
-                </div>
-            </div>
-        </div>
+    <div class="bot paTop8 t-center bot-account" id="app-footer" v-cloak>
+        <common-footer :userid="userId"></common-footer>
     </div>
     <script src="js/libs/jquery-3.1.0.min.js"></script>
     <script src="js/libs/vue.js"></script>
@@ -903,6 +830,10 @@
     <script src="js/components/dropdown.js"></script>
     <script src="js/components/major-pop.js"></script>
     <script src="js/components/pos-pop.js"></script>
+    <script src="js/components/bind-mobile-box.js"></script>
+    <script src="js/components/bind-email-box.js"></script>
+    <script src="js/components/message-box.js"></script>
+    <script src="js/components/common-footer.js"></script>
     <script src="data/address.js"></script>
     <script src="data/commondata.js"></script>
     <script src="data/position.js"></script>

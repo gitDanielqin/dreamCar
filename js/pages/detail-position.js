@@ -154,6 +154,15 @@ var appTop = new Vue({
             var originalurl = state.url.slice(0, state.url.indexOf("&userId"));
             history.replaceState(state, document.title, originalurl);
         }
+    },
+    watch: {
+        "isLogin": function(curval) {
+            if (curval) {
+                appFooter.userId = accountObj.userId;
+            } else {
+                appFooter.userId = "";
+            }
+        }
     }
 });
 var appBanner = new Vue({
@@ -307,6 +316,12 @@ var appMain = new Vue({
         }
     }
 });
+var appFooter = new Vue({
+    el: "#app-footer",
+    data: {
+        userId: parObj.userId
+    }
+})
 var appModal = new Vue({
     el: "#app-modal",
     data: {
@@ -337,12 +352,9 @@ var appModal = new Vue({
                 password: this.login.password
             };
             EventUtils.ajaxReq("/center/user/login", "post", postdata, function(resp, status) {
-                parObj.userId = resp.data.userId;
-                parObj.loginId = resp.data.loginIdentifier;
-                parObj.userType = resp.data.userType;
                 accountObj = resp.data;
                 appTop.userType = accountObj.userType;
-                appTop.userName = accountObj.userName;
+                appTop.userName = accountObj.name;
                 appTop.isLogin = true;
                 appModal.showModal = false;
                 appModal.showLogin = false;

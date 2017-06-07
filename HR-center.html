@@ -11,7 +11,7 @@
 </head>
 
 <body class="bg-gray-f2">
-    <div class="top bg-gray3 H100 color-white">
+    <div class="top bg-gray3 H100 color-white" id="app-top">
         <div class="inner">
             <img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" />
             <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
@@ -19,7 +19,7 @@
             <div class="fr navs maT42">
                 <a href="index.html"><i class="pic-icon icon-home"></i></a>
                 <a href="#"><i class="pic-icon icon-account"></i></a>
-                <a class="msg-center pRel" href="#"><i class="pic-icon icon-msg"></i><i class="msg-info">99</i></a>
+                <a class="msg-center pRel" href="#" @click.stop="showMsg"><i class="pic-icon icon-msg"></i><i class="msg-info">99</i></a>
             </div>
         </div>
     </div>
@@ -216,12 +216,16 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="app-modal" v-show="show.modal" v-cloak>
+        <message-box :userid="account.userId" @closebox="closeMsg" v-show="show.message"></message-box>
+    </div>
     <script src="js/libs/jquery-3.1.0.min.js"></script>
     <script src="js/libs/vue.js"></script>
     <script src="js/libs/sweetalert.min.js"></script>
     <script src="js/common/common.js"></script>
     <script src="js/components/dropdown.js"></script>
     <script src="js/components/pagination.js"></script>
+    <script src="js/components/message-box.js"></script>
     <script src="js/pages/hrCenter.js"></script>
 </body>
 

@@ -125,31 +125,8 @@
             </div>
         </div>
     </div>
-    <div class="bot paTop8 t-center bot-account">
-        <div class="inner clearfix">
-            <div class="fl">
-                <ul class="lis-inline bot-nav color-gray79 LH-H34 fSize12">
-                    <li><a href="footer-page.html?descript">关于校企</a>-</li>
-                    <li><a href="footer-page.html?coop">网站合作</a>-</li>
-                    <li><a href="footer-page.html?help">帮助中心</a>-</li>
-                    <li><a href="footer-page.html?employ">招贤纳士</a>-</li>
-                    <li><a href="footer-page.html">友情链接</a>-</li>
-                    <li><a href="footer-page.html">教育网</a></li>
-                </ul>
-                <ul class="lis-inline fSize12 bot-infos">
-                    <li class="maR100"><i class="pic-icon icon-phone"></i>电话：152 6706 8921</li>
-                    <li class="maR100"><i class="pic-icon icon-address"></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
-                    <li><i class="pic-icon icon-email"></i>邮箱：xiaoqiztc@yeah.net</li>
-                </ul>
-                <p class="fSize12 t-center LH-H40 color-gray79">©2016 XxiaoQi 京ICP备456123789号-2 京公网安备12465789123号</p>
-            </div>
-            <div class="fr">
-                <p class="fSize14 W15 barcode-text">关注我们</p>
-                <div class="pic-wrapper maL16">
-                    <img src="images/barcode.png" />
-                </div>
-            </div>
-        </div>
+    <div class="bot paTop8 t-center bot-account" id="app-footer" v-cloak>
+        <common-footer :userid="userId"></common-footer>
     </div>
     <div class="modal" id="app-modal" v-show="showModal" v-cloak>
         <div class="dlg-success dlg W670 paBot4  b-Radius5" v-show="showSucc">
@@ -188,6 +165,7 @@
     <script src="js/components/pagination.js"></script>
     <script src="js/components/dropdown.js"></script>
     <script src="js/components/detail-table.js"></script>
+    <script src="js/components/common-footer.js"></script>
     <script src="js/pages/detail-increcruit.js"></script>
 </body>
 
