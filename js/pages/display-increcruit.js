@@ -603,10 +603,11 @@ function searchRequest(page) {
     appResult.resultType = 1;
     var postdata = {
         title: appQuery.keywords,
+        jobFairType: 2,
         index: page,
         count: 8
     }
-    EventUtils.ajaxReq("/demand/searchDemand?", "get", postdata, function(resp, status) {
+    EventUtils.ajaxReq("/jobfair/searchJobFair?", "get", postdata, function(resp, status) {
         console.log(resp);
         if (resp.data) {
             appResult.increcruitList.totalpages = resp.data.totalPage;

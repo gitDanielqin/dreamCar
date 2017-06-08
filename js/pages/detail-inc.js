@@ -427,11 +427,11 @@ function initEventBind() {
 
 function applyRequest(page) {
     var applydata = {
-        demandId: parObj.userId,
+        demandId: parObj.demandId,
         index: page,
         count: 13
     }
-    EventUtils.ajaxReq("/demand/getDemandApply", "get", applydata, function(resp, status) {
+    EventUtils.ajaxReq("/demand/getApplyRecord", "get", applydata, function(resp, status) {
         console.log(resp);
         if (resp && resp.data) {
             appMain.tabledata.applyRec.totalpages = resp.data.totalPage;

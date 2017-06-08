@@ -584,6 +584,7 @@ function resultsRequest(page) {
 function searchRequest(page) {
     appResult.resultType = 1;
     var postdata = {
+        demandType: 2,
         title: appQuery.keywords,
         index: page,
         count: 8

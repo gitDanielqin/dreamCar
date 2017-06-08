@@ -308,20 +308,6 @@ function init_center() {
 }
 init_center();
 
-function selectInitPos() {
-    $(".selectee input").each(function() {
-        var bgPos = $(this).width() - 10 + "px center";
-        $(this).attr("disabled", "true").css("background-position", bgPos);
-    });
-    $(".selectee ul").each(function() {
-        var sibInput = $(this).siblings("input")
-        $(this).width(sibInput.width() + 10);
-        $(this).css({
-            left: sibInput.css("margin-left"),
-            top: sibInput.height()
-        })
-    });
-}
 
 function selectEventBind() {
     $(".selectee ul li").bind({

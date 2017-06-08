@@ -21,7 +21,7 @@
                     <th class="W200">状态</th>\
                 </tr>\
                 <tr v-for="item in options.applyRec.results">\
-                    <td>{{item.applyUserName}}</td>\
+                    <td>{{item.userName}}</td>\
                     <td>{{item.createTime}}</td>\
                     <td :class="viewCss(item.readStatus,item.status)">{{statetext(item.readStatus,item.status)}}</td>\
                 </tr>\

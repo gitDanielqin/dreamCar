@@ -583,17 +583,7 @@
                     </ul>
                     <pagination :showpages="showpage(myPosList.totalpages)" :totalpages="myPosList.totalpages" type="my-pos" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
-                <div class="conf-keyword ListBox">
-                    <h2 class="paTop14 LH-H52 fSize24 paLeft40">修改密码</h2>
-                    <form class="paLeft40 fSize16 LH40">
-                        <div><label>登陆账号</label><span>1234567890</span></div>
-                        <div><label>当前密码</label><input type="password" placeholder="6-16字母、数字、无空格" /></div>
-                        <div><label>新密码</label><input type="password" placeholder="6-16字母、数字、无空格" /></div>
-                        <div><label>确认密码</label><input type="password" placeholder="6-16字母、数字、无空格" /></div>
-                        <div><label>验证码</label><input type="password" /><i class="varify-code W100 LH-H40 bg-pinkL maL10 t-center">验证码</i></div>
-                        <div class="t-center paTop20 "><button class="LH-H40 W100 bg-orange2 fSize18 color-white maB40">保存</button></div>
-                    </form>
-                </div>
+                <config-password :account="config" usertype="0" class="conf-keyword ListBox"></config-password>
                 <div class="conf-account paLeft40 paRight40">
                     <h2 class="fSize24 LH-H63 maT9">绑定账号</h2>
                     <div class="safeLevel maB12 H80 bg-gray-f7 pRel">
@@ -606,10 +596,10 @@
                         <i class="pic-wrapper trigle-up"><img src="images/trigle-up02.jpg"/></i>
                     </div>
                     <p class="fSize14 LH-H35">登录账号：{{config.loginName}}</p>
-                    <p class="fSize14 LH-H35 maB22">绑定后，你可以同时使用以下方式登录</p>
+                    <p class="fSize14 LH-H35 maB22">绑定后，你可以同时使用以下方式找回密码</p>
                     <ul class="bind-acc fSize16">
-                        <li><i class="pic-icon icon-phone"></i>{{config.bind.mobile}}<button class="maL20 chg-phone" @click.stop="modifyMobile">更换手机号</button></li>
-                        <li><i class="pic-icon icon-email"></i>{{config.bind.email}}<button class="maL20" @click.stop="modifyEmail">更换邮箱</button></li>
+                        <li><i class="pic-icon icon-phone"></i>{{config.bind.mobile}}<button class="maL20 chg-phone" v-show="config.bind.mobile!=''" @click.stop="modifyMobile">更换绑定手机号</button><button class="chg-phone" v-show="config.bind.mobile==''" @click.stop="modifyMobile">绑定手机号</button></li>
+                        <li><i class="pic-icon icon-email"></i>{{config.bind.email}}<button class="maL20" @click.stop="modifyEmail" v-show="config.bind.email!=''">更换绑定邮箱</button><button @click.stop="modifyEmail" v-show="config.bind.email==''">绑定邮箱</button></li>
                         <li><i class="pic-icon icon-wechat"></i><button class="wechatBind" @click.stop="bindWechat">绑定微信账号</button></li>
                     </ul>
                 </div>
@@ -834,6 +824,7 @@
     <script src="js/components/bind-email-box.js"></script>
     <script src="js/components/message-box.js"></script>
     <script src="js/components/common-footer.js"></script>
+    <script src="js/components/conf-password.js"></script>
     <script src="data/address.js"></script>
     <script src="data/commondata.js"></script>
     <script src="data/position.js"></script>

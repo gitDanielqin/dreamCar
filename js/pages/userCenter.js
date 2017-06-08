@@ -227,25 +227,31 @@ function infoRequest() {
             $(".edit").hide();
             $(".view").show();
         }
+    });
+
+
+    //获取用户平台信息
+    EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function(resp, status) {
         // 账户信息
         var percent = 0;
-        if (respObj.userInfo.mobile != "") {
+        if (resp.data.mobile != "") {
             percent += 50;
         }
-        if (respObj.userInfo.email != "") {
+        if (resp.data.email != "") {
             percent += 30;
         }
         init_safepos(percent);
         var configdata = {
-            loginName: respObj.userInfo.loginName,
+            loginName: resp.data.loginName,
             safeLevel: percent + "%",
+            userId: parObj.userId,
             bind: {
-                mobile: respObj.userInfo.mobile,
-                email: respObj.userInfo.email
+                mobile: resp.data.mobile,
+                email: resp.data.email
             }
         }
         appCont.config = configdata;
-    });
+    })
 
 }
 
@@ -523,6 +529,7 @@ var appCont = new Vue({
         },
         config: {
             loginName: "",
+            userId: parObj.userId,
             safeLevel: "80%",
             bind: { mobile: "", email: "" }
         }
@@ -1512,6 +1519,7 @@ function colposRequest(index, page) {
         count: 3,
         applyStatus: index
     }
+    console.log(postdata);
     EventUtils.ajaxReq("/recruit/getMarkList", "get", postdata, function(resp, status) {
         console.log(resp);
         if (resp.data) {

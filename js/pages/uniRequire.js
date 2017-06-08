@@ -532,6 +532,18 @@ var appMain = new Vue({
     }
 })
 
+var appFooter = new Vue({
+    el: "#app-footer",
+    methods: {
+        homeLink: function() {
+            var link = "index.html?";
+            if (parObj.userId) {
+                link += "userId=" + parObj.userId;
+            }
+            window.location.href = link;
+        }
+    }
+})
 var appModal = new Vue({
     el: "#app-modal",
     data: {

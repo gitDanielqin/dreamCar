@@ -61,25 +61,30 @@ function infoRequest() {
                 view: respObj.infoStatus != "0"
             };
             appCont.resume = resumedata;
-            var percent = 0;
-            if (respObj.mobile != "") {
-                percent += 50;
-            }
-            if (respObj.email != "") {
-                percent += 30;
-            }
-            init_safepos(percent);
-            var configdata = {
-                loginName: respObj.loginName,
-                safeLevel: percent + "%",
-                bind: {
-                    mobile: respObj.mobile,
-                    email: respObj.email
-                }
-            }
-            appCont.config = configdata;
         }
+    })
 
+    //获取用户平台信息
+    EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function(resp, status) {
+        // 账户信息
+        var percent = 0;
+        if (resp.data.mobile != "") {
+            percent += 50;
+        }
+        if (resp.data.email != "") {
+            percent += 30;
+        }
+        init_safepos(percent);
+        var configdata = {
+            loginName: resp.data.loginName,
+            userId: parObj.userId,
+            safeLevel: percent + "%",
+            bind: {
+                mobile: resp.data.mobile,
+                email: resp.data.email
+            }
+        }
+        appCont.config = configdata;
     })
 
 }
@@ -256,6 +261,7 @@ var appCont = new Vue({
         },
         config: {
             loginName: "",
+            userId: parObj.userId,
             safeLevel: "80%",
             bind: { mobile: "", email: "" }
         }

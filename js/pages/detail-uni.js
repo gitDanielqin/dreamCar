@@ -441,7 +441,7 @@ function applyRequest(page) {
         count: 13
     }
     console.log(applydata);
-    EventUtils.ajaxReq("/demand/getDemandApply", "get", applydata, function(resp, status) {
+    EventUtils.ajaxReq("/demand/getApplyRecord", "get", applydata, function(resp, status) {
         console.log(resp);
         if (resp && resp.data) {
             appMain.tabledata.applyRec.totalpages = resp.data.totalPage;

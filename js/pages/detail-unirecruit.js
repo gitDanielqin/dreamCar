@@ -70,7 +70,7 @@ function infoRequest() {
         appMain.tabledata.desc = respObj.discription;
         appMain.tabledata.userdesc = respObj.userDiscription;
         //招聘会申请一览
-        //  applyRequest(1);
+        applyRequest(1);
         //获取评价一览
         commentRequest(respObj.userId, 1);
     })
@@ -311,7 +311,7 @@ var appMain = new Vue({
             }
         },
         applyswitch: function(page) {
-            //   applyRequest(page);
+            applyRequest(page);
         },
         cmtswitch: function(page) {
             commentRequest(respObj.userId, page);
@@ -423,6 +423,28 @@ function initEventBind() {
         }
     })
 };
+
+// 申请记录请求
+function applyRequest(page) {
+    var applydata = {
+        jobFairId: parObj.jobfairId,
+        index: page,
+        count: 13
+    }
+    console.log(applydata);
+    EventUtils.ajaxReq("/jobfair/getApplyRecord", "get", applydata, function(resp, status) {
+        console.log(resp);
+        if (resp && resp.data) {
+            appMain.tabledata.applyRec.totalpages = resp.data.totalPage;
+            appMain.tabledata.applyRec.results = resp.data.list;
+            appMain.tabledata.applyRec.totalitems = resp.data.totalRow;
+        } else {
+            appMain.tabledata.applyRec.totalpages = 1;
+            appMain.tabledata.applyRec.results = [];
+            appMain.tabledata.applyRec.totalitems = 0;
+        }
+    })
+}
 
 //评价获取
 function commentRequest(id, page) {

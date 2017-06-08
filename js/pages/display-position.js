@@ -633,7 +633,7 @@ function searchRequest(page) {
         index: page,
         count: 8
     }
-    EventUtils.ajaxReq("/demand/searchDemand?", "get", postdata, function(resp, status) {
+    EventUtils.ajaxReq("/recruit/searchRecruit?", "get", postdata, function(resp, status) {
         console.log(resp);
         if (resp.data) {
             appResult.posList.totalpages = resp.data.totalPage;

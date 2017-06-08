@@ -979,24 +979,6 @@
 
 /*底部样式，与首页基本*/
 
-.bot-nav {
-    display: inline-block;
-}
-
-.bot-nav a {
-    color: #797979;
-}
-
-.bot-nav a:hover {
-    color: #f00;
-    cursor: pointer
-}
-
-.bot .barcode-text {
-    display: inline-block;
-    vertical-align: middle;
-}
-
 .bot-account {
     border-top: 2px solid #9d9d9d;
 }
@@ -1127,32 +1109,6 @@
     background: url("../images/sprite.png") no-repeat -210px -264px;
     width: 41px;
     height: 25px;
-}
-
-.bot-infos li {
-    margin: 0 30px;
-}
-
-.bot-infos .pic-icon {
-    margin-right: 15px;
-}
-
-.bot-infos .icon-phone {
-    width: 20px;
-    height: 14px;
-    background: url("../images/sprite.png") no-repeat -27px -3px;
-}
-
-.bot-infos .icon-address {
-    width: 20px;
-    height: 20px;
-    background: url("../images/sprite.png") no-repeat -89px -102px;
-}
-
-.bot-infos .icon-email {
-    width: 20px;
-    height: 14px;
-    background: url("../images/sprite.png") no-repeat -117px -34px;
 }
 
 .pop-major .icon-close {

@@ -72,28 +72,31 @@ var respObj = {}; //请求的本页面的数据集合
             console.log(resumedata);
             //console.log(resumedata);
             appCont.resume = resumedata;
-
-            // 账户信息
-            var percent = 0;
-            if (respObj.mobile != "") {
-                percent += 50;
-            }
-            if (respObj.email != "") {
-                percent += 30;
-            }
-            init_safepos(percent);
-            var configdata = {
-                loginName: respObj.loginName,
-                safeLevel: percent + "%",
-                bind: {
-                    mobile: respObj.mobile,
-                    email: respObj.email
-                }
-            }
-            appCont.config = configdata;
         }
     });
 
+    //获取用户平台信息
+    EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function(resp, status) {
+        // 账户信息
+        var percent = 0;
+        if (resp.data.mobile != "") {
+            percent += 50;
+        }
+        if (resp.data.email != "") {
+            percent += 30;
+        }
+        init_safepos(percent);
+        var configdata = {
+            loginName: resp.data.loginName,
+            userId: parObj.userId,
+            safeLevel: percent + "%",
+            bind: {
+                mobile: resp.data.mobile,
+                email: resp.data.email
+            }
+        }
+        appCont.config = configdata;
+    })
 })()
 
 var appTop = new Vue({
@@ -326,6 +329,7 @@ var appCont = new Vue({
         },
         config: {
             loginName: "",
+            userId: parObj.userId,
             safeLevel: "80%",
             bind: { mobile: "", email: "" }
         }
@@ -394,6 +398,9 @@ var appCont = new Vue({
         }
     },
     methods: {
+        saveNewpass: function() {
+
+        },
         selvipnav: function(obj) {
             if ($(obj).hasClass("vip-li")) {
                 var index = $(obj).index();
@@ -1207,6 +1214,14 @@ var appModal = new Vue({
             }
         },
         confirmComment: function() {
+            if (this.comment.text == "") {
+                swal({
+                    title: "",
+                    text: "发送内容不能为空！",
+                    type: "warning"
+                });
+                return false;
+            }
             var postdata = {
                 userId: parObj.userId,
                 loginIdentifier: parObj.loginId,
@@ -1215,6 +1230,7 @@ var appModal = new Vue({
             }
             console.log(postdata);
             EventUtils.ajaxReq("/sys/comment", "post", postdata, function(resp, status) {
+                console.log(resp);
                 appModal.comment.text = "";
                 appModal.show.comment = false;
                 appModal.showModal = false;

@@ -750,3 +750,49 @@
     width: 26px;
     height: 25px;
 }
+
+
+/*用户中心修改密码样式*/
+
+.conf-psw-title {
+    padding: 14px 0 0 40px;
+    height: 52px;
+    line-height: 52px;
+    font-size: 24px;
+}
+
+.conf-psw-form {
+    padding-left: 40px;
+    font-size: 16px;
+    line-height: 40px;
+}
+
+.conf-psw-varifycode {
+    height: 36px;
+    line-height: 36px;
+    background: #f2f0f0;
+    margin-left: 10px;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    width: 74px;
+}
+
+.conf-psw-varifycode img {
+    height: 100%;
+}
+
+.conf-psw-confirm {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.conf-psw-confirm button {
+    height: 40px;
+    line-height: 40px;
+    width: 100px;
+    font-size: 18px;
+    color: white;
+    margin-bottom: 40px;
+    background: #f7a14a;
+}

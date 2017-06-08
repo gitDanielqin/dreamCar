@@ -633,11 +633,12 @@ function resultsRequest(page) {
 function searchRequest(page) {
     appResult.resultType = 1;
     var postdata = {
+        jobFairType: 1,
         title: appQuery.keywords,
         index: page,
         count: 8
     }
-    EventUtils.ajaxReq("/demand/searchDemand?", "get", postdata, function(resp, status) {
+    EventUtils.ajaxReq("/jobfair/searchJobFair?", "get", postdata, function(resp, status) {
         console.log(resp);
         if (resp.data) {
             appResult.unirecruitList.totalpages = resp.data.totalPage;

@@ -1077,24 +1077,6 @@
 
 /*底部样式，与首页基本*/
 
-.bot-nav {
-    display: inline-block;
-}
-
-.bot-nav a {
-    color: #797979;
-}
-
-.bot-nav a:hover {
-    color: #f00;
-    cursor: pointer
-}
-
-.bot .barcode-text {
-    display: inline-block;
-    vertical-align: middle;
-}
-
 .progress {
     display: inline-block;
     background: #fcfbf9;
@@ -1435,32 +1417,6 @@ input.edit-phone {
     background: url("../images/sprite.png") no-repeat -243px -125px;
     height: 40px;
     width: 40px;
-}
-
-.bot-infos li {
-    margin: 0 30px;
-}
-
-.bot-infos .pic-icon {
-    margin-right: 15px;
-}
-
-.bot-infos .icon-phone {
-    width: 20px;
-    height: 14px;
-    background: url("../images/sprite.png") no-repeat -27px -3px;
-}
-
-.bot-infos .icon-address {
-    width: 20px;
-    height: 20px;
-    background: url("../images/sprite.png") no-repeat -89px -102px;
-}
-
-.bot-infos .icon-email {
-    width: 20px;
-    height: 14px;
-    background: url("../images/sprite.png") no-repeat -117px -34px;
 }
 
 .porto-upload .close .icon-close {

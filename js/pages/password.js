@@ -8,6 +8,7 @@ var regExp = {
     email: /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/,
     password: /^[a-zA-Z0-9]{6,16}$/
 }
+var parObj = EventUtils.urlExtrac(window.location);
 var imgHtml = ""
     // EventUtils.ajaxReq("/sys/img", "GET", {}, function(resp, status) {
     //     $(".code-pic")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img";
@@ -29,8 +30,9 @@ var appCont = new Vue({
             hint: false
         },
         account: {
-            email: "pheonixqin@qq.com",
-            mobile: "18868965654",
+            email: "",
+            mobile: "",
+            userId: "",
         },
         hint: "",
         userInfo: {
@@ -41,16 +43,13 @@ var appCont = new Vue({
             emailValidCode: "",
             mobileValidCode: "",
             newPass: "",
-            repeatPass: "",
-            picCodePass: ""
+            repeatPass: ""
         },
     },
     methods: {
         switchcode: function() {
             // console.log(1);
             EventUtils.ajaxReq("/sys/img", "get", {}, function(resp, status) {
-                // // imgHtml = "<img src='"++"'/>";
-                // $(".step-cont-1 .pic-code").html(resp);
                 $(".code-pic")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img";
             })
         },
@@ -78,10 +77,20 @@ var appCont = new Vue({
                     // console.log(postdata);
                 EventUtils.ajaxReq("/sys/getOldConection?", "get", postdata, function(resp, status) {
                     console.log(resp);
+                    if (resp.data) {
+                        appCont.account.email = resp.data.email;
+                        appCont.account.mobile = resp.data.mobile;
+                        appCont.account.userId = resp.data.userId;
+                        appCont.show.step1 = false;
+                        appCont.show.step2 = true;
+                    } else {
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "error"
+                        })
+                    }
                 });
-                // EventUtils.ajaxReq("/sys/getOldConection?loginName=" + this.userInfo.account + "&inputRandomCode=" + this.userInfo.picCode, "get", null, function(resp, status) {
-                //     console.log(resp);
-                // })
             }
         },
         postcode: function(type, obj) {
@@ -211,6 +220,18 @@ var appCont = new Vue({
                 this.show.hint = true;
                 return false;
             }
+            var postdata = {
+                loginName: this.userInfo.mobile,
+                type: 3,
+                code: this.userInfo.mobileValidCode
+            }
+            EventUtils.ajaxReq("/sys/checkCode", "get", postdata, function(resp, status) {
+                console.log(resp);
+                if (resp.data.result == "1") {
+                    appCont.show.step2 = false;
+                    appCont.show.step3 = true;
+                }
+            })
             this.hint = "";
             this.show.hint = false;
         },
@@ -235,11 +256,11 @@ var appCont = new Vue({
         },
         resetPsw: function() {
             if (appCont.userInfo.newPass == "") {
-                this.hint = "验证码不能为空！";
+                this.hint = "新密码不能为空！";
                 this.show.hint = true;
                 return false;
             }
-            if (variableUtils.regExp.password.test(this.userInfo.newPass)) {
+            if (!variableUtils.regExp.password.test(this.userInfo.newPass)) {
                 this.hint = "密码格式不正确！";
                 this.show.hint = true;
                 return false;
@@ -249,16 +270,33 @@ var appCont = new Vue({
                 this.show.hint = true;
                 return false;
             }
-            if (this.userInfo.picCodePass == "") {
-                this.hint = "验证码不能为空！";
-                this.show.hint = true;
-                return false;
+            var postdata = {
+                userId: this.account.userId,
+                password: this.userInfo.newPass,
+                dbPassword: this.userInfo.repeatPass
             }
+            console.log(postdata);
+            EventUtils.ajaxReq("/center/user/resetPassword", "post", postdata, function(resp, status) {
+                console.log(resp);
+            })
             this.hint = "";
             this.show.hint = false;
         }
     },
     mounted: function() {
         $(".code-pic")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img";
+    }
+})
+
+var appFooter = new Vue({
+    el: "#app-footer",
+    methods: {
+        homeLink: function() {
+            var link = "index.html?";
+            if (parObj.userId) {
+                link += "userId=" + parObj.userId;
+            }
+            window.location.href = link;
+        }
     }
 })

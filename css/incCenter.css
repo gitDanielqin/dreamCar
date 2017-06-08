@@ -809,32 +809,6 @@
     background: #f7a14a;
 }
 
-.bot-infos li {
-    margin: 0 30px;
-}
-
-.bot-infos .pic-icon {
-    margin-right: 15px;
-}
-
-.bot-infos .icon-phone {
-    width: 20px;
-    height: 14px;
-    background: url("../images/sprite.png") no-repeat -27px -3px;
-}
-
-.bot-infos .icon-address {
-    width: 20px;
-    height: 20px;
-    background: url("../images/sprite.png") no-repeat -89px -102px;
-}
-
-.bot-infos .icon-email {
-    width: 20px;
-    height: 14px;
-    background: url("../images/sprite.png") no-repeat -117px -34px;
-}
-
 
 /*个人设置*/
 
@@ -864,12 +838,6 @@
     background: #f2f0f0;
     height: 36px;
     line-height: 36px;
-}
-
-.conf-keyword .varify-code {
-    display: inline-block;
-    vertical-align: middle;
-    width: 74px;
 }
 
 .conf-account {
