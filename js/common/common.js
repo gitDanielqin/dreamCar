@@ -127,7 +127,7 @@ window.EventUtils = {
                 for (var i = infoArray.length - 1; i >= 0; i--) {
                     if (i == 0) {
                         return infoArray[0];
-                    } else if (infoArray[i] != "不限") {
+                    } else if (infoArray[i] != "不限" && infoArray[i] != "") {
                         return infoArray[i];
                     }
                 }
@@ -144,8 +144,8 @@ window.EventUtils = {
         },
         ajaxReq: function(url, method, postdata, callback) {
             $.ajax({
-                url: "http://www.xiaoqiztc.com/easily_xq_WebApi" + url,
-                // url: "http://192.168.0.104:8080/easily_xq_WebApi" + url,
+                // url: "http://www.xiaoqiztc.com/easily_xq_WebApi" + url,
+                url: "http://192.168.0.104:8080/easily_xq_WebApi" + url,
                 type: method,
                 data: postdata,
                 success: callback,

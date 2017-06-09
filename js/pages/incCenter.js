@@ -768,6 +768,15 @@ var appCont = new Vue({
         wordscal: function(str) { //简介还剩多少字
             return EventUtils.remainWords(1000, str)
         },
+        checkCvs: function(item) {
+            if (item.jobFairId) {
+                window.location.href = "HR-center.html?jobfairId=" + item.jobFairId + "&userId=" + parObj.userId;
+            }
+            if (item.recruitId) {
+                window.location.href = "HR-center.html?recruitId=" + item.recruitId + "&userId=" + parObj.userId;
+            }
+
+        }
     },
     computed: {
         // majorArr: function() {
@@ -1146,26 +1155,6 @@ var appModal = new Vue({
                 appModal.showModal = false;
             })
         },
-        checkCvs: function(item) {
-            if (item.jobFairId) {
-                var postdata = {
-                    infoStatus: 1,
-                    jobFairId: item.jobFairId,
-                    userId: parObj.userId,
-                }
-            }
-            if (item.recruitId) {
-                var postdata = {
-                    infoStatus: 2,
-                    recruitId: item.recruitId,
-                    userId: parObj.userId,
-                    job: EventUtils.infoExtrac(item.job),
-                    index: 1,
-                    count: 3
-                }
-            }
-
-        }
     },
     watch: {
         "show.message": function(curval) {

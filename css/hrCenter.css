@@ -151,7 +151,7 @@
 }
 
 .depart {
-    margin: 0 12px;
+    margin: 0 8px;
 }
 
 .item-block-left p {
@@ -314,4 +314,171 @@
     width: 20px;
     height: 14px;
     background: url("../images/sprite.png") no-repeat -117px -34px;
+}
+
+
+/*简历样式*/
+
+.preView {
+    margin: 130px auto 0;
+}
+
+.porto-img {
+    border: 2px dashed #999;
+    background: url("../images/cross.png") no-repeat center center;
+}
+
+.porto-img img {
+    width: 100%;
+}
+
+.title .icon-basic {
+    width: 16px;
+    height: 16px;
+    background: url("../images/sprite.png") no-repeat -59px -30px;
+}
+
+.title .icon-career {
+    width: 18px;
+    height: 18px;
+    background: url("../images/sprite.png") no-repeat -88px -31px;
+}
+
+.title .icon-work {
+    width: 18px;
+    height: 16px;
+    background: url("../images/sprite.png") no-repeat -58px -3px;
+}
+
+.title .icon-college {
+    width: 18px;
+    height: 16px;
+    background: url("../images/sprite.png") no-repeat 0 -77px;
+}
+
+.title .icon-language {
+    width: 18px;
+    height: 18px;
+    background: url("../images/sprite.png") no-repeat -89px -77px;
+}
+
+.title .icon-project {
+    width: 15px;
+    height: 15px;
+    background: url("../images/sprite.png") no-repeat -120px -56px;
+}
+
+.title .icon-comment {
+    width: 16px;
+    height: 16px;
+    background: url("../images/sprite.png") no-repeat -31px -77px;
+}
+
+.title .icon-attach {
+    width: 16px;
+    height: 16px;
+    background: url("../images/sprite.png") no-repeat -30px -31px;
+}
+
+.title .icon-skills {
+    width: 18px;
+    height: 18px;
+    background: url("../images/sprite.png") no-repeat -34px -175px;
+}
+
+#app-content .btn-edit .icon-edit {
+    width: 17px;
+    height: 18px;
+    background: url("../images/sprite.png") no-repeat -119px -3px;
+}
+
+.preView .itemBox .title {
+    margin-bottom: 6px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 18px;
+}
+
+.preView .itemBox .item-row {
+    padding-left: 40px;
+    height: 26px;
+    line-height: 26px;
+}
+
+.itemBox .title i.pic-wrapper {
+    display: inline-block;
+    width: 30px;
+    height: 28px;
+    line-height: 25px;
+    text-align: center;
+    font-size: 0;
+    margin-right: 10px;
+}
+
+.preView .itemBox .works-title .pane-tabs {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.preView .itemBox .works-title .pane-tabs li {
+    width: 48px;
+    height: 16px;
+    line-height: 16px;
+    text-align: right;
+    padding-right: 10px;
+    background: url("../images/bg-work.png") no-repeat right center;
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer
+}
+
+.preView .itemBox .item-row label span {
+    margin-left: 10px;
+}
+
+.preView .baseInfo .infoTxt p {
+    float: left;
+    width: 50%;
+}
+
+.preView .alleInfo table .la-l {
+    width: 92px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.preView .alleInfo table .val-l {
+    width: 250px;
+}
+
+.preView .alleInfo table .la-r {
+    width: 56px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.preView .alleInfo .itemBox {
+    padding-bottom: 17px;
+    padding-top: 30px;
+    border-bottom: 1px dotted #ccc;
+}
+
+.preView .alleInfo .item-basic {
+    padding-top: 40px;
+}
+
+.headmark {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    height: 100%;
+    width: 4px;
+    background-color: #f7a14a;
+}
+
+.preView .infopane p {
+    line-height: 27px;
+    height: 27px;
+    padding-left: 40px;
 }
