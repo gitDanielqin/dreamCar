@@ -54,6 +54,27 @@ body {
     width: 284px;
 }
 
+.search-nav {
+    color: dodgerblue;
+    position: absolute;
+    font-size: 16px;
+    line-height: 25px;
+    top: 52px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.search-nav li {
+    padding: 5px;
+    margin: 0 36px;
+    cursor: pointer;
+    border-radius: 7px;
+}
+
+.search-nav li.on {
+    color: orange;
+}
+
 .search-btn {
     width: 130px;
     height: 48px;

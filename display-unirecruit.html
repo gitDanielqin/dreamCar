@@ -117,7 +117,7 @@
                 <ul class="results paTop10 fl">
                     <li v-for="(item,index) in unirecruitList.results">
                         <div class="paLeft29 clearfix H108 pRel">
-                            <div class="W78 H70 logo-pic bg-brown disInline v-mid fl maT20"></div>
+                            <div class="W78 H70 logo-pic disInline v-mid fl maT20"><img :src="item.userIcon" /></div>
                             <div class="item-block-left fl paTop20 W321 maL25">
                                 <h2 class="color-blueL fSize16 LH-H24">
                                     <a :href="detailLink(item.jobFairId)">{{item.title}}</a></h2>

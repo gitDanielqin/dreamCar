@@ -197,6 +197,14 @@ table th {
     font-size: 0;
 }
 
+.logo-pic {
+    margin-top: 18px;
+}
+
+.logo-pic img {
+    width: 100%;
+}
+
 .pic-icon {
     display: inline-block;
     vertical-align: middle;

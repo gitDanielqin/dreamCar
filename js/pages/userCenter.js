@@ -44,7 +44,7 @@ function infoRequest() {
             state: respObj.userInfo.liveStatus
         };
         appPorto.briefInfo = briefdata;
-        if (respObj.userInfo.cvStatus == "0") { //首次编辑页面信息
+        if (!respObj.userInfo.cvStatus || respObj.userInfo.cvStatus == "0") { //首次编辑页面信息
             appCont.resume.firstEdit = true;
             $(".view").hide();
             $(".edit").show();

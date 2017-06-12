@@ -14,7 +14,8 @@
         <div class="inner">
             <a href="index.html"><img src="images/logo.png" class="fl maR21 maT20" /></a>
             <h2 class="fl LH-H80 fSize30 maT17">校企职通车</h2>
-            <h3 id="sel-add" class="city fl LH-H80 fSize18 maT16 maL60"><b>{{displayCity}}</b></h3>
+            <!--地址信息暂时不做-->
+            <!--<h3 id="sel-add" class="city fl LH-H80 fSize18 maT16 maL60"><b>{{displayCity}}</b></h3>-->
         </div>
     </div>
     <div class="banner H573 bg-purpleL" id="app-content" v-cloak>
@@ -43,7 +44,7 @@
                     <input class="account" type="text" placeholder="手机号/邮箱" v-model="login.account" />
                     <input class="maT22" type="password" placeholder="密码 (6-16字母、数字、无空格)" v-model="login.password" />
                     <button id="logBtn" class="LH-H50 W305 bg-orange fSize24 color-white maT24 maB17" @click.prevent="loginEv">登录</button>
-                    <p class="LH-H30 fSize16 t-left W305 maCenter"><label class="color-gray6"><i class="check-box selected"></i>下次自动登录</label><a class="fr color-red cur-pointer" href="password.html">忘记密码？</a></p>
+                    <p class="LH-H30 fSize16 t-left W305 maCenter"><label class="color-gray6"><i class="check-box"></i>下次自动登录</label><a class="fr color-red cur-pointer" href="password.html">忘记密码？</a></p>
                     <div class="quicklogin">
                         <h3 class="LH-H30 fSize16 pRel color-gray6">快捷登录<span class="line-l"></span><span class="line-r"></span></h3>
                         <div class="quick-icon H45 maT7">

@@ -537,7 +537,6 @@ var appCont = new Vue({
                     loginIdentifier: parObj.loginId,
                     demandId: item.demandId
                 }
-
                 EventUtils.ajaxReq("/demand/delInfo", "post", postdata, function(resp, status) {
                     if (appCont.require.results.length == 1 && appCont.require.curpage > 1) {
                         appCont.require.curpage -= 1;
@@ -564,7 +563,6 @@ var appCont = new Vue({
                     loginIdentifier: parObj.loginId,
                     recruitId: item.recruitId
                 }
-
                 EventUtils.ajaxReq("/recruit/delInfo", "post", postdata, function(resp, status) {
                     if (appCont.require.results.length == 1 && appCont.require.curpage > 1) {
                         appCont.require.curpage -= 1;
@@ -589,6 +587,7 @@ var appCont = new Vue({
             window.open(link, "_blank");
         },
         freshItem: function(item) {
+            appModal.fresh.freshItem = item;
             appModal.showModal = true;
             appModal.show.freshbox = true;
         },
@@ -756,6 +755,7 @@ var appCont = new Vue({
                 applyId: applyId,
             }
             EventUtils.ajaxReq("/readcard/getCardInfo", "get", postdata, function(resp, status) {
+                console.log(resp);
                 appModal.cardInfo.cardtype = "uni";
                 appModal.cardInfo.applyId = resp.data.applyId;
                 var infosets = resp.data.viewReadCard;
@@ -770,10 +770,10 @@ var appCont = new Vue({
         },
         checkCvs: function(item) {
             if (item.jobFairId) {
-                window.location.href = "HR-center.html?jobfairId=" + item.jobFairId + "&userId=" + parObj.userId;
+                window.location.href = "HR-center.html?jobfairId=" + item.jobFairId + "&userId=" + parObj.userId + "&loginId=" + parObj.loginId;
             }
             if (item.recruitId) {
-                window.location.href = "HR-center.html?recruitId=" + item.recruitId + "&userId=" + parObj.userId;
+                window.location.href = "HR-center.html?recruitId=" + item.recruitId + "&userId=" + parObj.userId + "&loginId=" + parObj.loginId;
             }
 
         }
@@ -922,20 +922,7 @@ var appModal = new Vue({
             sofort: true
         },
         fresh: {
-            content: [
-                { duration: "刷新4次（1天）", price: 4, hint: "(无折扣仅1元/次)" },
-                { duration: "刷新12次（3天）", price: 10.8, hint: "(9折仅0.9元/次)" },
-                { duration: "刷新20次（5天）", price: 16, hint: "(8折仅0.8元/次)" },
-                { duration: "刷新40次（10天）", price: 28, hint: "(7折仅0.7元/次)" },
-            ],
-            sum: 4,
-            presum: 4,
-            date: "2016-12-30",
-            time: "16:08:02",
-            discount: "9折",
-            smartBtn: "立即充值",
-            sofortBtn: "立即刷新",
-            smart: true
+            freshItem: null,
         },
         comment: {
             cooperId: 0,
@@ -977,10 +964,6 @@ var appModal = new Vue({
             this.comment.text = "";
             this.show.comment = false;
             this.showModal = false;
-        },
-        toSmartFresh: function() {
-            this.show.freshhintbox = false;
-            this.show.freshbox = true;
         },
         toPlanSticky: function() {
             this.show.stickyhintbox = false;
@@ -1140,17 +1123,19 @@ var appModal = new Vue({
                 applyId: applyId,
                 result: 1
             }
-            EventUtils.ajaxReq("/readcard/operationApply", "get", postdata, function(resp, status) {
+            console.log(postdata);
+            EventUtils.ajaxReq("/readcard/disposeDemand", "get", postdata, function(resp, status) {
                 appModal.show.minicard = false;
                 appModal.showModal = false;
             })
+
         },
         denyApply: function(applyId) {
             var postdata = {
                 applyId: applyId,
                 result: 2
             }
-            EventUtils.ajaxReq("/readcard/operationApply", "get", postdata, function(resp, status) {
+            EventUtils.ajaxReq("/readcard/disposeDemand", "get", postdata, function(resp, status) {
                 appModal.show.minicard = false;
                 appModal.showModal = false;
             })

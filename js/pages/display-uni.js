@@ -42,6 +42,10 @@ function infoRequest() {
         if (resp.data) {
             appResult.uniList.totalpages = resp.data.totalPage;
             appResult.uniList.results = resp.data.list;
+            if (parObj.searchtext) {
+                appQuery.keywords = decodeURI(parObj.searchtext);
+                searchRequest(1);
+            }
         }
     });
     if (parObj.userId) {

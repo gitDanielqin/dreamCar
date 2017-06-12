@@ -142,6 +142,7 @@ var appFront = new Vue({
             userType: "1",
             loginId: ""
         },
+        searchText: "",
         isLogin: false,
         showAddr: false,
         address: {
@@ -151,6 +152,31 @@ var appFront = new Vue({
         }
     },
     methods: {
+        selectSearchLabel: function(obj) {
+            if (!$(obj).hasClass("search-nav")) {
+                $(".search-nav .on").removeClass("on");
+                $(obj).addClass("on");
+            }
+        },
+        search: function() {
+            if (this.searchText == "") {
+                return false;
+            }
+            var searchObj = $(".search-nav .on");
+            if (searchObj.hasClass("search-uni")) {
+                var Link = "display-uni.html?searchtext=" + encodeURI(this.searchText);
+            }
+            if (searchObj.hasClass("search-inc")) {
+                var Link = "display-company.html?searchtext=" + encodeURI(this.searchText);
+            }
+            if (searchObj.hasClass("search-pos")) {
+                var Link = "display-position.html?searchtext=" + encodeURI(this.searchText);
+            }
+            if (this.account.userId) {
+                Link += "&userId=" + this.account.userId;
+            }
+            window.location.href = Link;
+        },
         modLink: function(name) {
             var link = "";
             switch (name) {

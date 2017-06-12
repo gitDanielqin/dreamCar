@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="EXVPJyqdhf" />
     <title>首页</title>
     <link href="css/base.css" rel="stylesheet" />
     <link href="css/index.css" rel="stylesheet" />
@@ -15,7 +16,7 @@
                 <div class="logo fl clearfix">
                     <img src="images/logo.png" class="fl maR21" />
                     <h2 class="fl LH-H63 fSize30">校企职通车</h2>
-                    <h3 id="sel-add" class="cur-pointer fl LH-H47 fSize14 paTop14 maL30" @click.stop="showAddr=true"><b>{{address.displayCity}}</b><span class="maL18">[切换城市]<i class="pic-icon maL6"></i></span></h3>
+                    <!--<h3 id="sel-add" class="cur-pointer fl LH-H47 fSize14 paTop14 maL30" @click.stop="showAddr=true"><b>{{address.displayCity}}</b><span class="maL18">[切换城市]<i class="pic-icon maL6"></i></span></h3>-->
                 </div>
                 <div class="login fr paTop10" v-show="!isLogin">
                     <a :href="encodeURI('login.html?newAcc=1&address='+address.displayCity)" class="b-Radius5">注册</a>
@@ -36,7 +37,8 @@
                         <li name="logout"><i class="pic-icon icon-logout"></i>退出</li>
                     </ul>
                 </div>
-                <div id="address" class="banner-address LH-H60 v-mid clearfix" v-show="showAddr" @click.stop="">
+                <!--地址暂时去掉-->
+                <!--<div id="address" class="banner-address LH-H60 v-mid clearfix" v-show="showAddr" @click.stop="">
                     <h2 class="fl maL50 fSize18">省
                         <dropdown :options="database.address.provinces" v-model="address.selProvince"></dropdown>
                     </h2>
@@ -48,12 +50,19 @@
                             <li v-for="city in database.address.hotcitys" @click.stop="selhotcity(city)">{{city}}</li>
                         </ul>
                     </p>
-                </div>
+                </div>-->
             </div>
             <div class="center-teil t-center">
                 <p class="subtitle fSize16 W260 LH-H35 t-center">加强大学生实践学习经验</p>
                 <h2 class="maT28 fSize0"><img src="images/title-txt.png" /></h2>
-                <p class="maT38"><input type="text" placeholder="岗位名称/学校名称/企业名称" class="search LH-H48 v-top" /><button class="search-btn">搜索</button></p>
+                <div class="maT38 pRel">
+                    <input type="text" placeholder="岗位名称/学校名称/企业名称" class="search LH-H48 v-top" v-model="searchText" /><button class="search-btn" @click="search">搜索</button>
+                    <ul class="lis-inline search-nav" @click="selectSearchLabel($event.target)">
+                        <li class="on search-uni">高校需求</li>
+                        <li class="search-inc">企业需求</li>
+                        <li class="search-pos">校企岗位</li>
+                    </ul>
+                </div>
             </div>
             <ul class="lis-inline module-entry">
                 <li><a :href="modLink('uni')" class="mod-entry"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>高校需求</b></a></li>
@@ -74,8 +83,8 @@
                 <i class="pic-wrapper show-frame"><img :src="item.imgsrc" /></i>
             </li>
         </ul>
-        <i class="dir-arrow turn-left"><</i>
-        <i class="dir-arrow turn-right">></i>
+        <button class="dir-arrow turn-left"><</button>
+        <button class="dir-arrow turn-right">></button>
     </div>
     <div class="about-us H742 mod-page" id="app-about" v-cloak>
         <div class="inner paTop100">

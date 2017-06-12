@@ -13,24 +13,24 @@
 <body class="bg-gray-f2">
     <div class="top bg-gray3 H100 color-white" id="app-top">
         <div class="inner">
-            <img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" />
+            <a :href="homeLink"><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" /></a>
             <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
             <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">企业中心</h2>
             <div class="fr navs maT42">
-                <a href="index.html"><i class="pic-icon icon-home"></i></a>
-                <a href="#"><i class="pic-icon icon-account"></i></a>
-                <a class="msg-center pRel" href="#" @click.stop="showMsg"><i class="pic-icon icon-msg"></i><i class="msg-info">99</i></a>
+                <a :href="homeLink"><i class="pic-icon icon-home"></i></a>
+                <a :href="centerLink"><i class="pic-icon icon-account"></i></a>
+                <a class="msg-center pRel" href="javascript:void(0)" @click.stop="showMsg"><i class="pic-icon icon-msg"></i><i class="msg-info">99</i></a>
             </div>
         </div>
     </div>
     <div class="main inner paTop20" id="hr-app">
         <h2 class="LH-H50 bg-gray-e6 paLeft45 W915"><span class="fSize24 color-blueL">HR中心</span>
-            <ul class="lis-inline disInline v-top maL80 hr-navs">
-                <li class="on">应聘管理</li>
-                <li>职位管理</li>
-            </ul><button class="pub-pos">发布职位</button></h2>
+            <ul class="lis-inline disInline v-top maL80 hr-navs" @click="hrnav($event.target)">
+                <li class="on cv-manager">应聘管理</li>
+                <li class="pos-manager">职位管理</li>
+            </ul><button class="pub-pos" @click="publish">发布职位</button></h2>
         <!--招聘管理内容 -->
-        <div class="mainCont maT20 clearfix maB60">
+        <div class="mainCont maT20 clearfix maB60" v-show="show.cvmanager">
             <dl class="W178 sider fl" @click="selnav($event.target)">
                 <dt class="on resume-box">待处理简历<span class="hint" v-show="resumes.handleCount>0">{{resumes.handleCount}}</span></dt>
                 <dd class="resume-unview">未查看</dd>
@@ -77,133 +77,64 @@
                         </li>
                         <li v-show="resumes.cvList.length==0" class="fSize20 LH144 t-center">暂无数据~</li>
                     </ul>
-                    <pagination :showpages="showpage(resumes.totalpages)" :totalpages="resumes.totalpages" type="course" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                    <pagination :showpages="showpage(resumes.totalpages)" :totalpages="resumes.totalpages" type="cv" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
             </div>
         </div>
         <!--职位管理内容  -->
-        <div class="mainCont maT20 clearfix maB60 posCont disNo">
-            <ul class="W178 pos-sider fSize18 fl">
-                <li class="on">直聘职位</li>
-                <li>高校招聘会</li>
-                <li>校企合作职位</li>
+        <div class="mainCont maT20 clearfix maB60 posCont" v-show="!show.cvmanager">
+            <ul class="W178 pos-sider fSize18 fl" @click="selpos($event.target)">
+                <li class="on pos-jobfair">招聘会</li>
+                <li class="pos-recruit">企业直聘</li>
             </ul>
-            <div class="resumeBox pos-resume fl maL10 W770">
-                <!-- 企业直聘 -->
-                <div class="ListBox direcpos-box">
-                    <div class="hd LH-H58 bg-white">
-                        <dropdown classes="state" :options="['全部类型','招聘会','企业直聘']" v-model="direcPos.posType"></dropdown>
-                        <p class="disInline fSize14 maL195">我发布的简历<span class="color-orange2 maL10 maR10">{{direcPos.items.length}}</span>个</p>
-                        <dropdown classes="state-right fr" :options="database.posList" v-model="direcPos.pos"></dropdown>
-                    </div>
-                    <ul class="info-items">
-                        <li v-for="item in direcPos.items" :pos="item.pos" :type="item.type">
-                            <div class="paLeft29 clearfix H128 pRel">
-                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                <div class="item-block-left fl paTop22 W315 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H32">{{item.pos}}</h2>
-                                    <p><span class="color-orange-f7">{{item.salary}}</span><i class="depart">|</i>{{item.major}}<i class="depart">|</i>{{item.worksexp}}<i class="depart">|</i>{{item.scolar}}</p>
-                                    <p>【{{item.IncAddress.district}}】岗位数：{{item.posAmount}}人</p>
-                                </div>
-                                <div class="item-block-right fl fSize14 LH25 maT11">
-                                    <p>{{item.IncName}}</p>
-                                    <p>{{item.IncProps}} {{item.IncScale}}</p>
-                                    <p class="fSize12">{{item.publicDate}} {{item.publicTime}}</p>
-                                </div>
-                                <div class="operations color-blueL">
-                                    <p><span>修改</span><span @click="delItem(item)">删除</span></p>
-                                    <p><span>刷新</span><span>置顶</span></p>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <pagination :showpages="3" :totalpages="6" type="course" @topage="topage" class="maT28 fSize14 fr"></pagination>
+            <div class="ListBox fl maL10 W770">
+                <div class="hd LH-H58 bg-white">
+                    <p class="fSize14 t-center">我发布的职位<span class="color-orange2 maL10 maR10">{{position.totalitems}}</span>个</p>
                 </div>
-                <!-- 招聘会 -->
-                <div class="ListBox recruit-box disNo">
-                    <div class="hd LH-H58 bg-white">
-                        <dropdown classes="state" :options="['全部状态','合作中','不符合','待反馈']" v-model="recruitMeeting.state"></dropdown>
-                        <p class="disInline fSize14 maL195">我合作的专业<span class="color-orange2 maL10 maR10">{{recruitMeeting.items.length}}</span>个</p>
-                        <dropdown classes="state-right fr" :options="database.posList" v-model="recruitMeeting.pos"></dropdown>
-                    </div>
-                    <ul class="info-items">
-                        <li v-for="item in recruitMeeting.items" :state="item.coState" :pos="item.pos">
-                            <div class="paLeft29 clearfix H128 pRel">
-                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                <div class="item-block-left fl paTop22 W254 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H32">{{item.uniname}}</h2>
-                                    <p>{{item.major}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.UniAddress.city}}-{{item.UniAddress.district}}</p>
-                                    <p>招聘会时间：{{item.date}}</p>
-                                </div>
-                                <div class="item-block-right fl fSize14 LH25 maT10">
-                                    <p>高校对企业要求</p>
-                                    <p>{{item.IncScale}}<i class="depart">|</i>{{item.IncProps}}<i class="depart">|</i>{{item.pos}}</p>
-                                    <p class="fSize12">{{item.publicDate}} {{item.publicTime}}</p>
-                                </div>
-                                <span class="co-state W100 fSize18" :style="colorState(item.coState)">{{item.coState}}</span>
+                <ul class="info-items">
+                    <li v-for="item in position.results">
+                        <div class="paLeft29 clearfix H128 pRel" v-if="position.posType==0">
+                            <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                            <div class="item-block-left fl paTop22 W315 maL20">
+                                <h2 class="color-blueL fSize18 LH-H32"><a :href="requireLink(item)">{{infoExtrac(item.job)}}</a></h2>
+                                <p><span class="color-orange-f7">{{item.salary}}</span><i class="depart">|</i>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.workTime}}<i class="depart">|</i>{{item.education}}</p>
+                                <p>【{{cityExtrac(item.companyAddress)}}】岗位数：{{item.recruitCount}}人</p>
                             </div>
-                        </li>
-                    </ul>
-                    <pagination :showpages="3" :totalpages="6" type="course" @topage="topage" class="maT28 fSize14 fr"></pagination>
-                </div>
-                <!-- 校企合作岗位 -->
-                <div class="ListBox combipos-box disNo">
-                    <div class="hd LH-H58 bg-white">
-                        <dropdown classes="state" :options="['全部类型','招聘会','企业直聘']" v-model="direcPos.posType"></dropdown>
-                        <p class="disInline fSize14 maL195">我合作的专业<span class="color-orange2 maL10 maR10">{{combiPos.items.length}}</span>个</p>
-                        <dropdown classes="state-right fr" :options="database.posList" v-model="direcPos.pos"></dropdown>
-                    </div>
-                    <ul class="info-items">
-                        <li v-for="item in combiPos.items" :pos="item.pos" :state="item.state">
-                            <div class="paLeft29 clearfix H128 pRel">
-                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
-                                <div class="item-block-left fl paTop22 W250 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H32">{{item.pos}}</h2>
-                                    <p>{{item.coMajor}}<i class="depart">|</i>{{item.stuScale}}<i class="depart">|</i>{{item.uniLevel}}</p>
-                                    <p>联合培养方式：{{item.trainway}}</p>
-                                </div>
-                                <div class="item-block-right fl fSize14 LH25 maT11 W242">
-                                    <p>{{item.IncName}}</p>
-                                    <p>{{item.IncProps}}<i class="depart">|</i>{{item.IncScale}}<i class="depart">|</i>{{item.IncArea}}</p>
-                                    <p class="fSize12">{{item.publicDate}} {{item.publicTime}}</p>
-                                </div>
-                                <div class="operations color-blueL">
-                                    <p><span>修改</span><span @click="delItem(item)">删除</span></p>
-                                    <p><span>刷新</span><span>置顶</span></p>
-                                </div>
+                            <div class="item-block-right fl fSize14 LH25 maT11">
+                                <p>{{item.companyName}}</p>
+                                <p>{{item.companyProperty}}</p>
+                                <p class="fSize12">发布时间：{{item.updateTime.split(" ")[0]}}</p>
                             </div>
-                        </li>
-                    </ul>
-                    <pagination :showpages="3" :totalpages="6" type="course" @topage="topage" class="maT28 fSize14 fr"></pagination>
-                </div>
+                            <div class="operations color-blueL">
+                                <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>
+                                <p><span @click="freshItem(item)">刷新</span><span @click="stickItem(item)">置顶</span></p>
+                            </div>
+                        </div>
+                        <div v-else-if="position.posType==1" class="paLeft29 clearfix H128 pRel">
+                            <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                            <div class="item-block-left fl paTop22 W300 maL20">
+                                <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item)">{{item.title}}</a></h2>
+                                <p><span class="maR17 color-orange-f7">{{item.cvSalary}}</span>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.cvProject}}<i class="depart">|</i>{{item.cvEducation}}</p>
+                                <p>招聘会时间：{{item.startTime}}</p>
+                            </div>
+                            <div class="item-block-right fl fSize14 LH25 maT10">
+                                <p>{{item.userName}}</p>
+                                <p>{{item.userProperty}}<i class="depart">|</i>岗位数：{{item.jobCount}}人</p>
+                                <p>发布日期： {{item.updateTime.split(" ")[0]}}</p>
+                            </div>
+                            <div class="operations color-blueL">
+                                <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>
+                                <p><span @click="freshItem(item)">刷新</span><span @click="stickItem(item)">置顶</span></p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <pagination :showpages="showpage(position.totalpages)" :totalpages="position.totalpages" type="position" @topage="topage" class="maT28 fSize14 fr"></pagination>
             </div>
         </div>
     </div>
-    <div class="bot paTop8 t-center bot-account">
-        <div class="inner clearfix">
-            <div class="fl">
-                <ul class="lis-inline bot-nav color-gray79 LH-H34 fSize12">
-                    <li><a href="footer-page.html?descript">关于校企</a>-</li>
-                    <li><a href="footer-page.html?coop">网站合作</a>-</li>
-                    <li><a href="footer-page.html?help">帮助中心</a>-</li>
-                    <li><a href="footer-page.html?employ">招贤纳士</a>-</li>
-                    <li><a href="footer-page.html">友情链接</a>-</li>
-                    <li><a href="footer-page.html">教育网</a></li>
-                </ul>
-                <ul class="lis-inline fSize12 bot-infos">
-                    <li class="maR100"><i class="pic-icon icon-phone"></i>电话：152 6706 8921</li>
-                    <li class="maR100"><i class="pic-icon icon-address"></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
-                    <li><i class="pic-icon icon-email"></i>邮箱：xiaoqiztc@yeah.net</li>
-                </ul>
-                <p class="fSize12 t-center LH-H40 color-gray79">©2016 XxiaoQi 京ICP备456123789号-2 京公网安备12465789123号</p>
-            </div>
-            <div class="fr">
-                <p class="fSize14 W15 barcode-text">关注我们</p>
-                <div class="pic-wrapper maL16">
-                    <img src="images/barcode.png" />
-                </div>
-            </div>
-        </div>
+    <div class="bot paTop8 t-center bot-account" id="app-footer" v-cloak>
+        <common-footer :userid="userId"></common-footer>
     </div>
     <div class="modal" id="app-modal" v-show="show.modal" @click="hideModal($event.target)" v-cloak>
         <div class="preView W800 bg-white" v-show="show.cv">
@@ -319,6 +250,7 @@
             <div class="H26 bg-white-ec"></div>
         </div>
         <message-box :userid="account.userId" @closebox="closeMsg" v-show="show.message"></message-box>
+        <fresh-box :freshitem="fresh.freshItem" :userid="account.userId" :showfresh="show.freshbox" @closefresh="closeFresh" v-show="show.freshbox"></fresh-box>
     </div>
     <script src="js/libs/jquery-3.1.0.min.js"></script>
     <script src="js/libs/vue.js"></script>
@@ -327,6 +259,8 @@
     <script src="js/components/dropdown.js"></script>
     <script src="js/components/pagination.js"></script>
     <script src="js/components/message-box.js"></script>
+    <script src="js/components/freshbox.js"></script>
+    <script src="js/components/common-footer.js"></script>
     <script src="js/pages/hrCenter.js"></script>
 </body>
 

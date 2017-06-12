@@ -34,17 +34,20 @@ function infoRequest() {
         console.log(resp);
     })
     if (parObj.jobfairId) {
-        jobfairRequest(parObj.jobfairId, 0, parObj.jobfairId);
+        jobfairRequest(parObj.jobfairId, 0, 1, parObj.jobfairId);
 
     };
     if (parObj.recruitId) {
-        recruitRequest(parObj.recruitId, 0, parObj.recruitId);
+        recruitRequest(parObj.recruitId, 0, 1, parObj.recruitId);
 
     }
 }
 var appTop = new Vue({
     el: "#app-top",
-    data: {},
+    data: {
+        homeLink: "index.html?userId=" + parObj.userId,
+        centerLink: "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.userId
+    },
     methods: {
         showMsg: function() {
             appModal.show.message = true;
@@ -59,54 +62,45 @@ var hrApp = new Vue({
             posList: [],
             jobfairList: []
         },
+        show: {
+            cvmanager: true,
+        },
         resumes: {
             totalitems: 0,
             totalpages: 1,
-            handleCount: 0,
-            resultIndex: 0,
+            curpage: 1,
+            handleCount: 0, //新投递消息参数
+            resultIndex: 0, //侧边栏点击参数 0-5
             resumeType: "企业直聘",
-            resumePos: "",
-            jobfairDate: "",
+            resumePos: "", //招聘岗位下拉框选项
+            jobfairDate: "", //招聘会日期下拉框选项
             cvList: []
         },
         interItems: [],
         resumeItems: [],
-        direcPos: {
+        position: {
             show: false,
-            posType: "全部类型",
-            pos: "全部职位",
-            items: [
-                { type: "招聘会", pos: "岗位名称", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, posAmount: 2, IncName: "杭州煌巢信息科技有限公司", IncProps: "民营", IncScale: "100-150人", publicDate: "2010-11-11", publicTime: "24:00" },
-                { type: "企业直聘", pos: "前端开发", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, posAmount: 2, IncName: "杭州煌巢信息科技有限公司", IncProps: "民营", IncScale: "100-150人", publicDate: "2010-11-11", publicTime: "24:00" },
-                { type: "企业直聘", pos: "岗位名称", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, posAmount: 2, IncName: "杭州煌巢信息科技有限公司", IncProps: "民营", IncScale: "100-150人", publicDate: "2010-11-11", publicTime: "24:00" },
-                { type: "招聘会", pos: "前端开发", salary: "7k-9k", major: "设计相关专业", worksexp: "1-3年经验", scolar: "本科", IncAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, posAmount: 2, IncName: "杭州煌巢信息科技有限公司", IncProps: "民营", IncScale: "100-150人", publicDate: "2010-11-11", publicTime: "24:00" },
-            ]
+            totalpages: 1,
+            totalitems: 0,
+            curpage: 1,
+            posType: 0, //0 企业直聘 1 招聘会
+            results: []
         },
-        recruitMeeting: {
-            show: false,
-            state: "全部状态",
-            pos: "全部职位",
-            items: [
-                { uniname: "浙江大学", major: "工业设计", stuScale: "50人", UniAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, date: "2017-01-28", IncScale: "50-100人", IncProps: "上市", pos: "岗位名称", publicDate: "2017-11-11", publicTime: "24:00", coState: "合作中" },
-                { uniname: "武汉大学", major: "工业设计", stuScale: "50人", UniAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, date: "2017-01-28", IncScale: "50-100人", IncProps: "上市", pos: "前端开发", publicDate: "2017-11-11", publicTime: "24:00", coState: "合作中" },
-                { uniname: "浙江大学", major: "工业设计", stuScale: "50人", UniAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, date: "2017-01-28", IncScale: "50-100人", IncProps: "上市", pos: "岗位名称", publicDate: "2017-11-11", publicTime: "24:00", coState: "待反馈" },
-                { uniname: "中国地质大学", major: "工业设计", stuScale: "50人", UniAddress: { province: "浙江省", city: "杭州市", district: "滨江区" }, date: "2017-01-28", IncScale: "50-100人", IncProps: "上市", pos: "前端开发", publicDate: "2017-11-11", publicTime: "24:00", coState: "不符合" },
-            ]
-        },
-        combiPos: {
-            show: true,
-            state: "全部状态",
-            pos: "全部职位",
-            items: [
-                { pos: "岗位名称", coMajor: "合作专业", stuScale: "合作人数", uniLevel: "高校性质", trainway: "高管到校", IncName: "企业名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", publicDate: "2017-1-1", publicTime: "24:00" },
-                { pos: "岗位名称", coMajor: "合作专业", stuScale: "合作人数", uniLevel: "高校性质", trainway: "高管到校", IncName: "企业名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业企业所属行业", publicDate: "2017-1-1", publicTime: "24:00" },
-                { pos: "岗位名称", coMajor: "合作专业", stuScale: "合作人数", uniLevel: "高校性质", trainway: "高管到校", IncName: "企业名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", publicDate: "2017-1-1", publicTime: "24:00" },
-                { pos: "岗位名称", coMajor: "合作专业", stuScale: "合作人数", uniLevel: "高校性质", trainway: "高管到校", IncName: "企业名称", IncProps: "企业性质", IncScale: "企业规模", IncArea: "企业所属行业", publicDate: "2017-1-1", publicTime: "24:00" },
-            ]
-        }
-
     },
     methods: {
+        hrnav: function(obj) {
+            if (!$(obj).hasClass("hr-navs")) {
+                $(".hr-navs .on").removeClass("on");
+                $(obj).addClass("on");
+            }
+            if ($(obj).hasClass("cv-manager")) {
+                this.show.cvmanager = true;
+            }
+            if ($(obj).hasClass("pos-manager")) {
+                this.show.cvmanager = false;
+                $(".pos-sider .on").trigger("click");
+            }
+        },
         showpage: function(totalpages) {
             if (totalpages > 3) {
                 return 3;
@@ -117,23 +111,25 @@ var hrApp = new Vue({
         infoExtrac: function(text) {
             return EventUtils.infoExtrac(text);
         },
-        colorState: function(state) {
-            var mystyle;
-            switch (state) {
-                case "合作中":
-                    mystyle = { color: "#ff9933" };
-                    break;
-                case "待反馈":
-                    mystyle = { color: "#59b7e9" };
-                    break;
-                case "不符合":
-                    mystyle = { color: "#ff3333" };
-                    break;
-            };
-            return mystyle;
+        cityExtrac: function(text) {
+            if (text) {
+                return text.split(";")[1]
+            } else {
+                return "";
+            }
         },
-        topage: function(index) {
-
+        topage: function(page, type) {
+            if (type == "cv") {
+                if (this.resumes.resumeType == "企业直聘") {
+                    recruitRequest(this.resumes.resumePos, this.resumes.resultIndex, page);
+                }
+                if (this.resumes.resumeType == "招聘会") {
+                    jobfairRequest(this.resumes.jobfairDate, this.resumes.resultIndex, page);
+                }
+            };
+            if (type == "position") {
+                positionRequest(this.position.posType, page);
+            }
         },
         selnav: function(obj) {
             if (!$(obj).hasClass("sider")) {
@@ -142,44 +138,44 @@ var hrApp = new Vue({
             }
             if ($(obj).hasClass("resume-box")) {
                 if (this.resumes.resumeType == "招聘会") {
-                    jobfairRequest(this.resumes.jobfairDate, 0);
+                    jobfairRequest(this.resumes.jobfairDate, 0, 1);
                 } else {
-                    recruitRequest(this.resumes.resumePos, 0);
+                    recruitRequest(this.resumes.resumePos, 0, 1);
                 }
             }
             if ($(obj).hasClass("resume-unview")) {
                 if (this.resumes.resumeType == "招聘会") {
-                    jobfairRequest(this.resumes.jobfairDate, 1);
+                    jobfairRequest(this.resumes.jobfairDate, 1, 1);
                 } else {
-                    recruitRequest(this.resumes.resumePos, 1);
+                    recruitRequest(this.resumes.resumePos, 1, 1);
                 }
             };
             if ($(obj).hasClass("resume-viewed")) {
                 if (this.resumes.resumeType == "招聘会") {
-                    jobfairRequest(this.resumes.jobfairDate, 2);
+                    jobfairRequest(this.resumes.jobfairDate, 2, 1);
                 } else {
-                    recruitRequest(this.resumes.resumePos, 2);
+                    recruitRequest(this.resumes.resumePos, 2, 1);
                 }
             };
             if ($(obj).hasClass("interview-box")) {
                 if (this.resumes.resumeType == "招聘会") {
-                    jobfairRequest(this.resumes.jobfairDate, 3);
+                    jobfairRequest(this.resumes.jobfairDate, 3, 1);
                 } else {
-                    recruitRequest(this.resumes.resumePos, 3);
+                    recruitRequest(this.resumes.resumePos, 3, 1);
                 }
             };
             if ($(obj).hasClass("inter-unsuit")) {
                 if (this.resumes.resumeType == "招聘会") {
-                    jobfairRequest(this.resumes.jobfairDate, 4);
+                    jobfairRequest(this.resumes.jobfairDate, 4, 1);
                 } else {
-                    recruitRequest(this.resumes.resumePos, 4);
+                    recruitRequest(this.resumes.resumePos, 4, 1);
                 }
             }
             if ($(obj).hasClass("inter-suit")) {
                 if (this.resumes.resumeType == "招聘会") {
-                    jobfairRequest(this.resumes.jobfairDate, 5);
+                    jobfairRequest(this.resumes.jobfairDate, 5, 1);
                 } else {
-                    recruitRequest(this.resumes.resumePos, 5);
+                    recruitRequest(this.resumes.resumePos, 5, 1);
                 }
             }
         },
@@ -190,7 +186,10 @@ var hrApp = new Vue({
                     result: 3
                 };
                 EventUtils.ajaxReq("/hrcenter/modifyJobFairInfo", "post", postdata, function(resp, status) {
-                    jobfairRequest(item.jobFairId, hrApp.resumes.resultIndex, item.jobFairId);
+                    if (hrApp.resumes.cvList.length == 1 && hrApp.resumes.curpage > 1) {
+                        hrApp.resumes.curpage--;
+                    }
+                    $(".posCont .pagination a.page").eq(hrApp.resumes.curpage - 1).parent().trigger("click");
                 })
             };
             if (item.recruitId) {
@@ -199,7 +198,10 @@ var hrApp = new Vue({
                     result: 3
                 };
                 EventUtils.ajaxReq("/hrcenter/modifyRecruitInfo", "post", postdata, function(resp, status) {
-                    recruitRequest(item.recruitId, hrApp.resumes.resultIndex, item.recruitId);
+                    if (hrApp.resumes.cvList.length == 1 && hrApp.resumes.curpage > 1) {
+                        hrApp.resumes.curpage--;
+                    }
+                    $(".resumeBox .pagination a.page").eq(hrApp.resumes.curpage - 1).parent().trigger("click");
                 })
             }
         },
@@ -210,7 +212,10 @@ var hrApp = new Vue({
                     result: 2
                 };
                 EventUtils.ajaxReq("/hrcenter/modifyJobFairInfo", "post", postdata, function(resp, status) {
-                    jobfairRequest(item.jobFairId, hrApp.resumes.resultIndex, item.jobFairId);
+                    if (hrApp.resumes.cvList.length == 1 && hrApp.resumes.curpage > 1) {
+                        hrApp.resumes.curpage--;
+                    }
+                    $(".posCont .pagination a.page").eq(hrApp.resumes.curpage - 1).parent().trigger("click");
                 })
             };
             if (item.recruitId) {
@@ -219,7 +224,10 @@ var hrApp = new Vue({
                     result: 2
                 };
                 EventUtils.ajaxReq("/hrcenter/modifyRecruitInfo", "post", postdata, function(resp, status) {
-                    recruitRequest(item.recruitId, hrApp.resumes.resultIndex, item.recruitId);
+                    if (hrApp.resumes.cvList.length == 1 && hrApp.resumes.curpage > 1) {
+                        hrApp.resumes.curpage--;
+                    }
+                    $(".resumeBox .pagination a.page").eq(hrApp.resumes.curpage - 1).parent().trigger("click");
                 })
             }
         },
@@ -230,7 +238,10 @@ var hrApp = new Vue({
                     result: 1
                 };
                 EventUtils.ajaxReq("/hrcenter/modifyJobFairInfo", "post", postdata, function(resp, status) {
-                    jobfairRequest(item.jobFairId, hrApp.resumes.resultIndex, item.jobFairId);
+                    if (hrApp.resumes.cvList.length == 1 && hrApp.resumes.curpage > 1) {
+                        hrApp.resumes.curpage--;
+                    }
+                    $(".posCont .pagination a.page").eq(hrApp.resumes.curpage - 1).parent().trigger("click");
                 })
             };
             if (item.recruitId) {
@@ -239,7 +250,10 @@ var hrApp = new Vue({
                     result: 1
                 };
                 EventUtils.ajaxReq("/hrcenter/modifyRecruitInfo", "post", postdata, function(resp, status) {
-                    recruitRequest(item.recruitId, hrApp.resumes.resultIndex, item.recruitId);
+                    if (hrApp.resumes.cvList.length == 1 && hrApp.resumes.curpage > 1) {
+                        hrApp.resumes.curpage--;
+                    }
+                    $(".resumeBox .pagination a.page").eq(hrApp.resumes.curpage - 1).parent().trigger("click");
                 })
             }
         },
@@ -374,6 +388,77 @@ var hrApp = new Vue({
 
                 })
             }
+        },
+        modItem: function(item) {
+            var link = "incRequire.html?new=0&userId=" + parObj.userId + "&loginId=" + parObj.loginId;
+            if (item.jobFairId) {
+                link += "&jobfairId=" + item.jobFairId + "&demandSrc=1";
+            }
+            if (item.recruitId) {
+                link += "&recruitId=" + item.recruitId + "&demandSrc=2";
+            }
+            window.open(link, "_blank");
+        },
+        delItem: function(item) {
+            if (item.jobFairId) {
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    jobFairId: item.jobFairId
+                }
+                EventUtils.ajaxReq("/jobfair/delInfo", "post", postdata, function(resp, status) {
+                    if (hrApp.position.results.length == 1 && hrApp.position.curpage > 1) {
+                        hrApp.position.curpage -= 1;
+                    }
+                    $(".posCont .pagination a.page").eq(hrApp.position.curpage - 1).parent().trigger("click");
+                })
+            }
+            if (item.recruitId) {
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    recruitId: item.recruitId
+                }
+
+                EventUtils.ajaxReq("/recruit/delInfo", "post", postdata, function(resp, status) {
+                    if (hrApp.position.results.length == 1 && hrApp.position.curpage > 1) {
+                        hrApp.position.curpage -= 1;
+                    }
+                    $(".posCont .pagination a.page").eq(hrApp.position.curpage - 1).parent().trigger("click");
+                })
+            }
+        },
+        freshItem: function(item) {
+            appModal.fresh.freshItem = item;
+            appModal.show.freshbox = true;
+            appModal.show.modal = true;
+        },
+        stickItem: function(item) {
+
+        },
+        selpos: function(obj) {
+            if ($(obj).hasClass("pos-jobfair")) {
+                positionRequest(0, 1);
+                $(".pos-sider .on").removeClass("on");
+                $(obj).addClass("on");
+            }
+            if ($(obj).hasClass("pos-recruit")) {
+                positionRequest(1, 1);
+                $(".pos-sider .on").removeClass("on");
+                $(obj).addClass("on");
+            }
+        },
+        requireLink: function(item) {
+            if (item.recruitId) {
+                return "detail-position.html?userId=" + parObj.userId + "&recruitId=" + item.recruitId;
+            }
+            if (item.jobFairId) {
+                return "detail-increcruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
+            }
+        },
+        publish: function() {
+            var link = "incRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId;
+            window.open(link, "_blank");
         }
     },
     watch: {
@@ -382,13 +467,13 @@ var hrApp = new Vue({
                 if (this.resumes.jobfairDate == "") {
                     this.resumes.jobfairDate = this.database.jobfairList[0];
                 } else {
-                    jobfairRequest(this.resumes.jobfairDate, this.resumes.resultIndex);
+                    jobfairRequest(this.resumes.jobfairDate, this.resumes.resultIndex, 1);
                 }
             } else if (curval == "企业直聘") {
                 if (this.resumes.resumePos == "") {
                     this.resumes.resumePos = this.database.posList[0];
                 } else {
-                    recruitRequest(this.resumes.resumePos, this.resumes.resultIndex);
+                    recruitRequest(this.resumes.resumePos, this.resumes.resultIndex, 1);
                 }
 
             }
@@ -397,110 +482,31 @@ var hrApp = new Vue({
             })
         },
         'resumes.resumePos': function(curval) {
-            recruitRequest(curval, this.resumes.resultIndex);
+            recruitRequest(curval, this.resumes.resultIndex, 1);
         },
         'resumes.jobfairDate': function(curval) {
-            jobfairRequest(curval, this.resumes.resultIndex);
+            jobfairRequest(curval, this.resumes.resultIndex, 1);
         },
-        "interview.interType": function(curval, oldval) {
-            if (curval == "全部类型") {
-                if (this.interview.interPos == "全部职位") {
-                    $(".interview-box .info-items li").show();
-                } else {
-                    $(".interview-box .info-items li").hide();
-                    $(".interview-box .info-items li[pos='" + this.interview.interPos + "']").show();
-                }
-            } else {
-                $(".interview-box .info-items li").hide();
-                if (this.interview.interPos == "全部职位") {
-                    $(".interview-box .info-items li[source='" + curval + "']").show();
-                } else {
-                    $(".interview-box .info-items li[source='" + curval + "'][pos='" + this.interview.interPos + "']").show();
-                }
-
-            }
-        },
-        "direcPos.posType": function(curval, oldval) {
-            if (curval == "全部类型") {
-                if (this.direcPos.pos == "全部职位") {
-                    $(".direcpos-box .info-items li").show();
-                } else {
-                    $(".direcpos-box .info-items li").hide();
-                    $(".direcpos-box .info-items li[pos='" + this.direcPos.pos + "']").show();
-                }
-            } else {
-                $(".direcpos-box .info-items li").hide();
-                if (this.direcPos.pos == "全部职位") {
-                    $(".direcpos-box .info-items li[type='" + curval + "']").show();
-                } else {
-                    $(".direcpos-box .info-items li[type='" + curval + "'][pos='" + this.direcPos.pos + "']").show();
-                }
-            }
-        },
-        "direcPos.pos": function(curval, oldval) {
-            if (curval == "全部职位") {
-                if (this.direcPos.posType == "全部类型") {
-                    $(".direcpos-box .info-items li").show();
-                } else {
-                    $(".direcpos-box .info-items li").hide();
-                    $(".direcpos-box .info-items li[type='" + this.direcPos.posType + "']").show();
-                }
-            } else {
-                $(".direcpos-box .info-items li").hide();
-                if (this.direcPos.posType == "全部类型") {
-                    $(".direcpos-box .info-items li[pos='" + curval + "']").show();
-                } else {
-                    $(".direcpos-box .info-items li[pos='" + curval + "'][type='" + this.direcPos.posType + "']").show();
-                }
-            }
-        },
-        "recruitMeeting.state": function(curval, oldval) {
-            if (curval == "全部状态") {
-                if (this.recruitMeeting.pos == "全部职位") {
-                    $(".recruit-box .info-items li").show();
-                } else {
-                    $(".recruit-box .info-items li").hide();
-                    $(".recruit-box .info-items li[pos='" + this.recruitMeeting.pos + "']").show();
-                }
-            } else {
-                $(".recruit-box .info-items li").hide();
-                if (this.recruitMeeting.pos == "全部职位") {
-                    $(".recruit-box .info-items li[state='" + curval + "']").show();
-                } else {
-                    $(".recruit-box .info-items li[state='" + curval + "'][pos='" + this.recruitMeeting.pos + "']").show();
-                }
-            }
-        },
-        "recruitMeeting.pos": function(curval, oldval) {
-            if (curval == "全部职位") {
-                if (this.recruitMeeting.state == "全部状态") {
-                    $(".recruit-box .info-items li").show();
-                } else {
-                    $(".recruit-box .info-items li").hide();
-                    $(".recruit-box .info-items li[state='" + this.recruitMeeting.state + "']").show();
-                }
-            } else {
-                $(".recruit-box .info-items li").hide();
-                if (this.recruitMeeting.state == "全部状态") {
-                    $(".recruit-box .info-items li[pos='" + curval + "']").show();
-                } else {
-                    $(".recruit-box .info-items li[pos='" + curval + "'][type='" + this.recruitMeeting.state + "']").show();
-                }
-            }
-        }
     },
     components: {
         'pagination': pagination
     }
 })
 
+var appFooter = new Vue({
+    el: "#app-footer",
+    data: {
+        userId: parObj.userId
+    }
+})
 var appModal = new Vue({
     el: "#app-modal",
     data: {
         show: {
             modal: false,
             cv: false,
-            message: false
+            message: false,
+            freshbox: false
         },
         account: {
             userId: parObj.userId
@@ -577,9 +583,16 @@ var appModal = new Vue({
             selfEval: "",
             psInfo: "",
             skills: ""
+        },
+        fresh: {
+            freshItem: null
         }
     },
     methods: {
+        closeFresh: function() {
+            this.show.freshbox = false;
+            this.show.modal = false;
+        },
         closeMsg: function() {
             this.show.message = false;
             this.show.modal = false;
@@ -593,10 +606,24 @@ var appModal = new Vue({
         }
     },
     watch: {
+        "show.freshbox": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .refresh-box"));
+                })
+            }
+        },
         "show.message": function(curval) {
             if (curval) {
                 this.$nextTick(function() {
                     EventUtils.absCenter($("#app-modal .msg-box"));
+                })
+            }
+        },
+        "show.cv": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .preView"));
                 })
             }
         }
@@ -646,7 +673,7 @@ function navEventBind() {
 
 }
 
-function jobfairRequest(date, cvStatus, id) {
+function jobfairRequest(date, cvStatus, page, id) {
     var jobfairId;
     if (id) {
         jobfairId = id;
@@ -661,7 +688,7 @@ function jobfairRequest(date, cvStatus, id) {
     var postdata = {
         jobFairId: jobfairId,
         status: cvStatus,
-        index: 1,
+        index: page,
         count: 4
     };
     EventUtils.ajaxReq("/hrcenter/getJobFairList", "get", postdata, function(resp, status) {
@@ -670,6 +697,7 @@ function jobfairRequest(date, cvStatus, id) {
             var cvData = {
                 totalitems: resp.data.resultList.totalRow,
                 totalpages: resp.data.resultList.totalPage,
+                curpage: page,
                 resultIndex: cvStatus,
                 resumePos: hrApp.resumes.resumePos,
                 resumeType: "招聘会",
@@ -681,6 +709,7 @@ function jobfairRequest(date, cvStatus, id) {
             var cvData = {
                 totalitems: 0,
                 totalpages: 1,
+                curpage: 1,
                 resultIndex: cvStatus,
                 resumePos: hrApp.resumes.resumePos,
                 handleCount: 0,
@@ -693,7 +722,7 @@ function jobfairRequest(date, cvStatus, id) {
     })
 }
 
-function recruitRequest(job, cvStatus, id) {
+function recruitRequest(job, cvStatus, page, id) {
     var recruitId;
     if (id) {
         recruitId = id;
@@ -708,7 +737,7 @@ function recruitRequest(job, cvStatus, id) {
     var postdata = {
         recruitId: recruitId,
         status: cvStatus,
-        index: 1,
+        index: page,
         count: 4
     }
     EventUtils.ajaxReq("/hrcenter/getRecruitList", "get", postdata, function(resp, status) {
@@ -717,6 +746,7 @@ function recruitRequest(job, cvStatus, id) {
             var cvData = {
                 totalitems: resp.data.resultList.totalRow,
                 totalpages: resp.data.resultList.totalPage,
+                curpage: page,
                 resultIndex: cvStatus,
                 resumePos: EventUtils.infoExtrac(resp.data.job),
                 handleCount: resp.data.count,
@@ -728,6 +758,7 @@ function recruitRequest(job, cvStatus, id) {
             var cvData = {
                 totalitems: 0,
                 totalpages: 1,
+                curpage: 1,
                 resultIndex: cvStatus,
                 resumePos: EventUtils.infoExtrac(resp.data.job),
                 handleCount: resp.data.count,
@@ -738,4 +769,51 @@ function recruitRequest(job, cvStatus, id) {
         }
         hrApp.resumes = cvData;
     })
+}
+
+function positionRequest(type, page) {
+    hrApp.position.curpage = page;
+    if (type == 0) { //企业直聘岗位请求
+        var postdata = {
+            userId: parObj.userId,
+            loginIdentifier: parObj.loginId,
+            index: page,
+            count: 4
+        }
+        EventUtils.ajaxReq("/recruit/getList", "get", postdata, function(resp, status) {
+            console.log(resp);
+            if (resp && resp.data) {
+                hrApp.position.totalpages = resp.data.totalPage;
+                hrApp.position.results = resp.data.list;
+                hrApp.position.totalitems = resp.data.totalRow;
+            } else {
+                hrApp.position.results = [];
+                hrApp.position.totalitems = 0;
+                hrApp.position.totalpages = 1;
+            }
+            hrApp.position.posType = 0;
+        })
+    }
+    if (type == 1) { //企业招聘会发布
+        var postdata = {
+            userId: parObj.userId,
+            loginIdentifier: parObj.loginId,
+            jobFairType: 2,
+            index: page,
+            count: 4
+        }
+        EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
+            console.log(resp);
+            if (resp && resp.data) {
+                hrApp.position.totalpages = resp.data.totalPage;
+                hrApp.position.results = resp.data.list;
+                hrApp.position.totalitems = resp.data.totalRow;
+            } else {
+                hrApp.position.results = [];
+                hrApp.position.totalitems = 0;
+                hrApp.position.totalpages = 1;
+            }
+            hrApp.position.posType = 1;
+        })
+    }
 }

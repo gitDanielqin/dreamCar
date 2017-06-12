@@ -174,7 +174,7 @@
                     <ul class="info-items H410">
                         <li v-for="(item,index) in require.results" :name="item.demandType">
                             <div v-if="require.demandSrc==0" class="paLeft29 clearfix H128 pRel">
-                                <div class="W90 H80 logo-pic disInline v-mid fl maT24 bg-brown"><img src="" /></div>
+                                <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                 <div class="item-block-left fl paTop22 W280 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item)">{{item.title}}</a></h2>
                                     <p>{{infoExtrac(item.companyProperty)}}<i class="depart" v-show="infoExtrac(item.companyProperty)!=''">|</i>{{infoExtrac(item.companyScale)}}<i class="depart" v-show="infoExtrac(item.companyScale)!=''">|</i>{{infoExtrac(item.companyType)}}</p>
@@ -191,7 +191,7 @@
                                 </div>
                             </div>
                             <div v-else-if="require.demandSrc==1" class="paLeft29 clearfix H128 pRel">
-                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"><img src="" /></div>
+                                <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                 <div class="item-block-left fl paTop22 W280 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item)">{{item.title}}</a></h2>
                                     <p>{{infoExtrac(item.profession)}}<i class="depart" v-show="item.professionCount">|</i>{{item.professionCount}}<i class="depart" v-show="cityExtrac(item.jobFairAddress)">|</i>{{cityExtrac(item.jobFairAddress)}}</p>
@@ -226,7 +226,7 @@
                     <ul class="info-items H470">
                         <li v-for="(item,index) in collect.results" :name="item.classic">
                             <div class="paLeft29 clearfix H128 pRel">
-                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                 <div class="item-block-left fl paTop22 W280 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-company.html">{{infoExtrac(item.job)}}</a></h2>
                                     <p>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.professionCount}}<i class="depart">|</i>{{item.schoolType}}</p>
@@ -263,7 +263,7 @@
                         <li v-for="(item,index) in message.combi.results" :name="item.code">
                             <template v-if="message.combi.msgsrc==2">
                               <div class="paLeft29 clearfix H128 pRel">
-                                   <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                   <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                    <div class="item-block-left fl paTop22 W328 maL20">
                                        <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="messageLink('combi',item.demandId)">{{item.title}}</a></h2>
                                        <p>{{item.companyProperty}}<i class="depart">|</i>{{item.companyScale}}<i class="depart">|</i>{{infoExtrac(item.companyType)}}</p>
@@ -274,14 +274,14 @@
                                        <p>{{item.userName}}</p>
                                        <p>{{item.userProperty}}</p>
                                        <div class="message-btn LH-H35 pRel">
-                                             <button class="color-orange-f7 to-contact" type="button" @click="popCard(item.applyId,item.applyUserId)">查看对方名片</button>
+                                             <button class="color-orange-f7 to-contact" type="button" @click="popCard(item)">查看对方名片</button>
                                        </div>
                                    </div>
                               </div>
                             </template>
                             <template v-else>
                               <div class="paLeft29 clearfix H128 pRel msg-apply">
-                                   <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                   <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                    <div class="item-block-left fl paTop22 maL20 W312">
                                        <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="messageLink('combi',item.demandId)">{{infoExtrac(item.job)}}</a></h2>
                                        <p>{{infoExtrac(item.profession)}}<i class="depart" v-show="item.professionCount">|</i>{{item.professionCount}}<i class="depart" v-show="item.schoolType">|</i>{{item.schoolType}}</p>
@@ -318,7 +318,7 @@
                     <ul class="info-items H470">
                         <li v-for="(item,index) in message.recruit.results">
                             <div class="paLeft29 clearfix H128 pRel">
-                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                 <div class="item-block-left fl paTop22 W328 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="messageLink('jobfair',item.jobFairId)">{{item.title}}</a></h2>
                                     <p>{{cityExtrac(item.jobFairAddress)}}<i class="depart">|</i>{{item.professionCount}}<i class="depart">|</i>{{infoExtrac(item.profession)}}</p>
@@ -328,7 +328,7 @@
                                     <p>申请企业名称：{{item.applyUserName}}</p>
                                     <p>{{item.applyUserProperty}}<i class="depart">|</i>{{item.applyUserScale}}<i class="depart">|</i>{{item.applyUserType}}</p>
                                     <div class="message-btn LH-H35 pRel">
-                                        <button class="color-orange-f7 to-contact" type="button" @click="popCard(item.applyId,item.applyUserId)">查看对方名片</button>
+                                        <button class="color-orange-f7 to-contact" type="button" @click="popCard(item)">查看对方名片</button>
                                     </div>
                                 </div>
                             </div>
@@ -433,7 +433,7 @@
                     <ul class="info-items H470">
                         <li v-for="(item,index) in coop.results">
                             <div class="paLeft29 clearfix H128 pRel" v-if="coop.applystatus==1">
-                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                 <div class="item-block-left fl paTop22 W275 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="coopLink(item)">{{item.coopName}}</a></h2>
                                     <p>{{item.coopProperty}}<i class="depart">|</i>{{item.coopScale}}<i class="depart">|</i>{{item.coopType}}</p>
@@ -448,7 +448,7 @@
                                 <button class="btn-comment" @click="popComment(item)">评价</button>
                             </div>
                             <div class="paLeft29 clearfix H128 pRel" v-else>
-                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                                <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                 <div class="item-block-left fl paTop22 W275 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="coopLink(item)">{{item.coopName}}</a></h2>
                                     <p>{{item.coopProperty}}<i class="depart">|</i>{{item.coopScale}}<i class="depart">|</i>{{item.coopType}}</p>
@@ -653,70 +653,7 @@
                 </div>
             </div>
         </div>
-        <div class="refresh-box W700" v-show="show.freshbox">
-            <h2 class="LH-H60 paLeft50 refresh-hd">
-                <span class="color-white fSize24 disInline maR23">刷新提示</span>
-                <ul class="lis-inline disInline fSize20 t-center fresh-navs">
-                    <li><span class="on" @click.stop="selectFreshWay('smart',$event.target)">智能刷新</span></li>
-                    <li><span @click.stop="selectFreshWay('sofort',$event.target)">普通刷新</span></li>
-                </ul>
-                <span class="pic-wrapper refresh-closer fr" @click="closeFresh">
-                    <i class="pic-icon"></i>
-               </span>
-            </h2>
-            <div v-show="fresh.smart">
-                <div class="refresh-cont paLeft50 H298">
-                    <p class="LH52 fSize14 color-orange2"><img src="images/fresh-title.png" /></p>
-                    <table class="LH40 fSize18 fresh-smart-list">
-                        <tr v-for="(item,index) in fresh.content">
-                            <td class="W210"><span class="icon-radio" :class="{'on':index==0}" @click="selectFreshItem(index,$event.target)"><i class="pic-icon"></i></span>{{item.duration}}</td>
-                            <td class="W90"><span class="color-orange-fc">{{item.price}}</span>元</td>
-                            <td>{{item.hint}}</td>
-                        </tr>
-                    </table>
-                    <p class="LH40 color-gray79">注：每6小时执行一次，购买后立即执行。</p>
-                </div>
-                <div class="refresh-bot paLeft50 paTop10 fSize18">
-                    <p class="LH50">应付金额<span class="color-orange-fc">{{fresh.sum}}</span>元<span class="maL22 price-pre">原价：{{fresh.presum}}元</span></p>
-                    <p class="LH20"><i class="pic-icon icon-checkbox on" @click="checkAutopay($event.target)"></i>自动续费<span class="color-orange-fc">{{fresh.discount}}</span></p>
-                    <p class="LH36 color-gray79 fSize14">（系统将在智能刷新到期后自动帮您续费，可通过选中自动续费启用或取消）</p>
-                    <button type="button" class="refresh-btn">{{fresh.smartBtn}}</button>
-                </div>
-            </div>
-            <div v-show="!fresh.smart">
-                <div class="refresh-cont paBot10 paTop54 t-center" v-show="account.freeFreshTimes>0">
-                    <p class="LH48 fSize16 color-orange2">信息刷新后：排名靠前，时间显示最新，能获得更多浏览机会</p>
-                    <p class="LH48 fSize16"><span class="color-orange-fc">智能刷新</span>，效果翻倍，每天仅需<span class="color-orange-fc">0.7</span>元</p>
-                    <p class="fSize18 LH123">本次刷新<span class="color-orange-fc">免费</span>，是否确定刷新？</p>
-                </div>
-                <div class="refresh-cont paBot45 paTop26 t-center" v-show="account.freeFreshTimes==0">
-                    <p class="LH50 fSize16 color-orange2">信息刷新后：排名靠前，时间显示最新，能获得更多浏览机会</p>
-                    <p class="LH50 fSize16"><span class="color-orange-fc">智能刷新</span>，效果翻倍，每天仅需<span class="color-orange-fc">0.7</span>元</p>
-                    <p class="fSize18 LH45 maT22 color-gray6">提示：免费刷新次数已经用完，不享有免费刷新。</p>
-                    <p class="fSize18 LH45">本次刷新需要扣除推广金 <span class="color-orange-fc">1.0</span>元，是否确定刷新？</p>
-                </div>
-                <div class="refresh-bot t-center paTop8 fSize18 paBot14 H108">
-                    <span class="maR176" v-show="account.freeFreshTimes==0">您的校企余额：<b class="color-orange-fc">{{account.money.toFixed(1)}}</b>元</span><button type="button" class="refresh-btn fresh-sofort-btn">{{fresh.sofortBtn}}</button>
-                </div>
-            </div>
-        </div>
-        <div class="refresh-hint-box W700" v-show="show.freshhintbox">
-            <h2 class="LH-H60 t-center refresh-hint-hd fSize24 color-white">帖子刷新提示
-                <span class="pic-wrapper refresh-closer fr" @click="closeHintFresh">
-                    <i class="pic-icon"></i>
-               </span>
-            </h2>
-            <div class="refresh-hint-content paLeft50 paTop30 bg-white paBot50">
-                <p class="LH43 fSize18">成功刷新<span class="color-orange-fc">1</span>条信息，并从余额中扣除<span class="color-orange-fc">{{fresh.sum}}</span>元</p>
-                <p class="LH40 fSize14">同类别的信息有刷新间隔限制，必须等上一条信息刷新成功后，系统才能帮您执行刷新请求。</p>
-                <div class="refresh-text-box maT24 paBot10">
-                    <h3 class="LH-H60 fSize20 t-center">刷新内容</h3>
-                    <p class="fSize14 LH43"><span class="stick-name maR33">UI设计招聘</span>您的信息已<span class="color-orange-fc">刷新成功</span>，正在让更多的客户<span class="color-orange-fc">查看</span></p>
-                    <p class="LH30 t-center sticky-time fSize14">执行刷新时间： {{fresh.date}} {{fresh.time}}</p>
-                    <p class="LH58 t-center fSize14">智能刷新，低价获得更多展示，每次刷新<span class="color-orange-fc">0.7</span>元起<button class="color-blue" @click="toSmartFresh">立即使用</button></p>
-                </div>
-            </div>
-        </div>
+        <fresh-box :freshitem="fresh.freshItem" :userid="account.userId" :showfresh="show.freshbox" @closefresh="closeFresh" v-show="show.freshbox"></fresh-box>
     </div>
     <div class="bot paTop8 t-center bot-account" id="app-footer">
         <common-footer :userid="userId"></common-footer>
@@ -736,6 +673,7 @@
     <script src="js/components/bind-mobile-box.js"></script>
     <script src="js/components/bind-email-box.js"></script>
     <script src="js/components/message-box.js"></script>
+    <script src="js/components/freshbox.js"></script>
     <script src="js/components/conf-password.js"></script>
     <script src="js/components/common-footer.js"></script>
     <script src="data/address.js"></script>

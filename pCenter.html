@@ -412,7 +412,7 @@
                             </div>
                         </li>
                         <li v-for="(item,index) in courses.results" v-show="showResult(index,courses.curpage,3)">
-                            <div class="class-pic logo-pic"></div>
+                            <div class="class-pic logo-pic"><img :src="item.userIcon" /></div>
                             <div class="class-txt fl paTop20 W328">
                                 <h2 class="class-name"><b>{{item.name}}</b><span class="LH-H20 score">{{item.score}}</span></h2>
                                 <p>{{item.duration}}<span class="depart">|</span>{{item.fee}}<span class="depart">|</span>{{item.addr}}</p>
@@ -447,7 +447,7 @@
                             </div>
                         </li>
                         <li v-for="(item,index) in colStuList.results" v-show="showResult(index,colStuList.curpage,3)">
-                            <div class="logo-pic"></div>
+                            <div class="logo-pic"><img :src="item.userIcon" /></div>
                             <div class="class-txt fl paTop20 W328">
                                 <h2 class="class-name"><b>{{item.name}}</b></h2>
                                 <p>{{item.duration}}<span class="depart">|</span>{{item.fee}}<span class="depart">|</span>{{item.addr}}</p>
@@ -474,7 +474,7 @@
                             </div>
                         </li>
                         <li v-for="(item,index) in colPosList.results">
-                            <div class="logo-pic"></div>
+                            <div class="logo-pic"><img :src="item.userIcon" /></div>
                             <div class="class-txt fl paTop20 W328">
                                 <h2 class="class-name"><a href="detail-position.html">{{infoExtrac(item.job)}}</a></h2>
                                 <p class="demand"><span class="color-orange-f7">{{item.salary}}</span><i>|</i>{{infoExtrac(item.profession)}}<i>|</i>{{item.education}}<i>|</i>{{item.workTime}}</p>
@@ -507,7 +507,7 @@
                             </div>
                         </li>
                         <li v-for="(item,index) in colRecList.results">
-                            <div class="logo-pic"></div>
+                            <div class="logo-pic"><img :src="item.userIcon" /></div>
                             <div class="class-txt fl paTop20 W328">
                                 <h2 class="class-name"><a href="detail-increcruit.html">{{item.title}}</a></h2>
                                 <p class="demand"><span class="color-orange-f7">{{item.cvSalary}}</span><i>|</i>{{infoExtrac(item.profession)}}<i>|</i>{{item.cvEducation}}<i>|</i>{{item.cvProject}}</p>
@@ -542,7 +542,7 @@
                         </li>
                         <li v-for="(item,index) in myPosList.results">
                             <template v-if="myPosList.jobsrc==1">
-                                <div class="logo-pic"></div>
+                                <div class="logo-pic"><img :src="item.userIcon" /></div>
                                 <div class="class-txt fl paTop20 W328">
                                     <h2 class="class-name"><a :href="posLink(item)">{{infoExtrac(item.job)}}</a></h2>
                                     <p class="teacher">{{item.cvSalary}}<span>|</span>{{cityExtrac(item.jobFairAddress)}}<span>|</span>{{item.cvEducation}}<span>|</span>{{item.cvProject}}</p>
@@ -561,7 +561,7 @@
                                 </div>
                             </template>
                             <template v-else>
-                                <div class="logo-pic"></div>
+                                <div class="logo-pic"><img :src="item.userIcon" /></div>
                                 <div class="class-txt fl paTop20 W328">
                                     <h2 class="class-name"><a :href="posLink(item)">{{infoExtrac(item.job)}}</a></h2>
                                     <p class="teacher">{{item.salary}}<span>|</span>{{cityExtrac(item.jobAddress)}}<span>|</span>{{item.education}}<span>|</span>{{item.workTime}}</p>

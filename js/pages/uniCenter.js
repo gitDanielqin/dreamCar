@@ -53,24 +53,24 @@ var respObj = {}; //请求的本页面的数据集合
             }
             var specialLevel = "";
             var resumedata = {
-                uni: respObj.name,
-                classific: respObj.type,
-                amount: respObj.scale,
-                level: respObj.property,
-                specialLv: respObj.propertyType,
-                specialmajor: majorArray,
-                intro: respObj.discription != undefined ? respObj.discription : "",
-                comLicense: "",
-                uniLicense: "",
-                comLicenseUrl: respObj.imgUrlBus,
-                uniLicenseUrl: respObj.imgUrlAgree,
-                hasBusLicense: respObj.imgUrlBus != "",
-                hasUniLicense: respObj.imgUrlAgree != "",
-                edit: respObj.infoStatus == "0",
-                view: respObj.infoStatus != "0"
-            }
-            console.log(resumedata);
-            //console.log(resumedata);
+                    uni: respObj.name,
+                    classific: respObj.type,
+                    amount: respObj.scale,
+                    level: respObj.property,
+                    specialLv: respObj.propertyType,
+                    specialmajor: majorArray,
+                    intro: respObj.discription != undefined ? respObj.discription : "",
+                    comLicense: "",
+                    uniLicense: "",
+                    comLicenseUrl: respObj.imgUrlBus,
+                    uniLicenseUrl: respObj.imgUrlAgree,
+                    hasBusLicense: respObj.imgUrlBus != "",
+                    hasUniLicense: respObj.imgUrlAgree != "",
+                    edit: respObj.infoStatus == "0",
+                    view: respObj.infoStatus != "0"
+                }
+                //    console.log(resumedata);
+                //console.log(resumedata);
             appCont.resume = resumedata;
         }
     });
@@ -96,7 +96,14 @@ var respObj = {}; //请求的本页面的数据集合
             }
         }
         appCont.config = configdata;
+    });
+    //获取用户账户及免费刷新次数等信息
+    EventUtils.ajaxReq("/center/user/getAccount", "get", { userId: parObj.userId }, function(resp, status) {
+        console.log(resp);
+        appModal.account.money = resp.data.useableBalance;
+        appModal.account.freeFreshTimes = resp.data.freeRefresh;
     })
+
 })()
 
 var appTop = new Vue({
@@ -740,6 +747,7 @@ var appCont = new Vue({
 
         },
         freshItem: function(item) {
+            appModal.fresh.freshItem = item;
             appModal.showModal = true;
             appModal.show.freshbox = true;
         },
@@ -882,12 +890,19 @@ var appCont = new Vue({
             appModal.showModal = true;
             appModal.show.comment = true;
         },
-        popCard: function(applyId, userId) {
+        popCard: function(item) {
             var postdata = {
-                userId: userId,
-                applyId: applyId,
+                userId: item.applyUserId,
+                applyId: item.applyId,
+            }
+            if (item.demandId) {
+                appModal.cardInfo.infosrc = 0;
+            }
+            if (item.jobFairId) {
+                appModal.cardInfo.infosrc = 1;
             }
             EventUtils.ajaxReq("/readcard/getCardInfo", "get", postdata, function(resp, status) {
+                console.log(resp);
                 appModal.cardInfo.cardtype = "inc";
                 appModal.cardInfo.applyId = resp.data.applyId;
                 var infosets = resp.data.viewReadCard;
@@ -949,7 +964,7 @@ var appModal = new Vue({
         account: {
             userId: parObj.userId,
             money: 0,
-            freeFreshTimes: 1
+            freeFreshTimes: 0
         },
         checkedTrades: [],
         show: {
@@ -971,6 +986,7 @@ var appModal = new Vue({
         cardInfo: {
             cardtype: "uni",
             applyId: "",
+            infosrc: 0,
             infosets: {
                 userName: "",
                 imgsrc: "",
@@ -1008,20 +1024,7 @@ var appModal = new Vue({
             sofort: true
         },
         fresh: {
-            content: [
-                { duration: "刷新4次（1天）", price: 4, hint: "(无折扣仅1元/次)" },
-                { duration: "刷新12次（3天）", price: 10.8, hint: "(9折仅0.9元/次)" },
-                { duration: "刷新20次（5天）", price: 16, hint: "(8折仅0.8元/次)" },
-                { duration: "刷新40次（10天）", price: 28, hint: "(7折仅0.7元/次)" },
-            ],
-            sum: 4,
-            presum: 4,
-            date: "2016-12-30",
-            time: "16:08:02",
-            discount: "9折",
-            smartBtn: "立即充值",
-            sofortBtn: "立即刷新",
-            smart: true
+            freshItem: null,
         },
         comment: {
             cooperId: 0,
@@ -1032,28 +1035,40 @@ var appModal = new Vue({
     },
     methods: {
         agreeApply: function(applyId) {
+
             var postdata = {
                 applyId: applyId,
                 result: 1
             }
-            EventUtils.ajaxReq("/readcard/operationApply", "get", postdata, function(resp, status) {
-                appModal.show.minicard = false;
-                appModal.showModal = false;
-            })
+            if (this.cardInfo.infosrc == 0) {
+                EventUtils.ajaxReq("/readcard/disposeDemand", "get", postdata, function(resp, status) {
+                    appModal.show.minicard = false;
+                    appModal.showModal = false;
+                })
+            } else {
+                EventUtils.ajaxReq("/readcard/operationApply", "get", postdata, function(resp, status) {
+                    appModal.show.minicard = false;
+                    appModal.showModal = false;
+                })
+            }
+
         },
         denyApply: function(applyId) {
             var postdata = {
                 applyId: applyId,
                 result: 2
             }
-            EventUtils.ajaxReq("/readcard/operationApply", "get", postdata, function(resp, status) {
-                appModal.show.minicard = false;
-                appModal.showModal = false;
-            })
-        },
-        toSmartFresh: function() {
-            this.show.freshhintbox = false;
-            this.show.freshbox = true;
+            if (this.cardInfo.infosrc == 0) {
+                EventUtils.ajaxReq("/readcard/disposeDemand", "get", postdata, function(resp, status) {
+                    appModal.show.minicard = false;
+                    appModal.showModal = false;
+                })
+            } else {
+                EventUtils.ajaxReq("/readcard/operationApply", "get", postdata, function(resp, status) {
+                    appModal.show.minicard = false;
+                    appModal.showModal = false;
+                })
+            }
         },
         toPlanSticky: function() {
             this.show.stickyhintbox = false;
@@ -1070,13 +1085,6 @@ var appModal = new Vue({
         closeFresh: function() {
             this.show.freshbox = false;
             this.showModal = false;
-        },
-        closeHintFresh: function() {
-            this.show.freshhintbox = false;
-            this.showModal = false;
-        },
-        checkAutopay: function(obj) {
-            $(obj).toggleClass("on")
         },
         selectStickyItem: function(index, obj) {
             $(".sticky-sofort-list .icon-radio").removeClass("on");
@@ -1101,29 +1109,6 @@ var appModal = new Vue({
                 default:
             }
         },
-        selectFreshItem: function(index, obj) {
-            $(".fresh-smart-list .icon-radio").removeClass("on");
-            $(obj).addClass("on");
-            switch (index) {
-                case 0:
-                    this.fresh.presum = 1 * 4;
-                    this.fresh.sum = 4;
-                    break;
-                case 1:
-                    this.fresh.presum = 1 * 4 * 3;
-                    this.fresh.sum = this.fresh.presum * 0.9.toFixed(1);
-                    break;
-                case 2:
-                    this.fresh.presum = 1 * 4 * 5;
-                    this.fresh.sum = Math.floor(this.fresh.presum * 0.8).toFixed(1);
-                    break;
-                case 3:
-                    this.fresh.presum = 1 * 4 * 10;
-                    this.fresh.sum = Math.floor(this.fresh.presum * 0.7).toFixed(1);
-                    break;
-                default:
-            }
-        },
         selectStickWay: function(way, obj) {
             $(".stick-navs .on").removeClass("on");
             $(obj).addClass("on");
@@ -1134,23 +1119,6 @@ var appModal = new Vue({
             } else {
                 this.sticky.sofort = false;
                 this.sticky.sum = autoStickSum();
-            }
-        },
-        selectFreshWay: function(way, obj) {
-            $(".fresh-navs .on").removeClass("on");
-            $(obj).addClass("on");
-            if (way == "smart") {
-                this.fresh.smart = true;
-                this.fresh.sum = 4;
-                this.fresh.presum = 4;
-            } else {
-                this.fresh.smart = false;
-                if (this.account.freeFreshTimes > 0) {
-                    this.fresh.sum = 0;
-                } else {
-                    this.fresh.sum = 1;
-                }
-
             }
         },
         closeTrade: function() {
@@ -1185,10 +1153,6 @@ var appModal = new Vue({
                     appModal.show[key] = false;
                 }
             }
-        },
-        stayshow: function(ev) {
-            ev.stopPropagation();
-            return false;
         },
         closePorto: function() {
             this.show.upload = false;
@@ -1332,26 +1296,11 @@ var appModal = new Vue({
                 })
             }
         },
-        "show.freshhintbox": function(curval) {
-            if (curval) {
-                this.$nextTick(function() {
-                    EventUtils.absCenter($("#app-modal .refresh-hint-box"));
-                })
-            }
-        },
         "sticky.sum": function(curval) {
             this.sticky.sofortBtn = curval > this.account.money ? "立即充值" : "立即置顶";
             this.sticky.planBtn = curval > this.account.money ? "立即充值" : "立即置顶";
         },
-        "fresh.sum": function(curval) {
-            this.fresh.sofortBtn = curval > this.account.money ? "立即充值" : "立即刷新";
-            this.fresh.smartBtn = curval > this.account.money ? "立即充值" : "立即刷新";
-        }
     },
-    mounted: function() {
-        this.sticky.sofortBtn = 10 > this.account.money ? "立即充值" : "立即置顶";
-        this.fresh.smartBtn = 4 > this.account.money ? "立即充值" : "立即刷新";
-    }
 });
 
 
@@ -1668,4 +1617,18 @@ function coopRequest(applyindex, page) {
         }
         appCont.coop.applystatus = applyindex;
     });
+}
+
+//刷新请求
+function freshRequest(pushId, type, tarifId) {
+    var postdata = {
+        userId: parObj.userId,
+        pushId: pushId,
+        contentType: type,
+        id: tarifId
+    }
+    console.log(postdata);
+    EventUtils.ajaxReq("/sys/refresh", "post", postdata, function(resp, status) {
+        console.log(resp);
+    })
 }

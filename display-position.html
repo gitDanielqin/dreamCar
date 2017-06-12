@@ -123,7 +123,7 @@
                 <ul class="results paTop10 fl">
                     <li v-for="(item,index) in posList.results">
                         <div class="paLeft29 clearfix H108 pRel">
-                            <div class="W78 H70 logo-pic bg-brown disInline v-mid fl maT20"></div>
+                            <div class="W78 H70 logo-pic disInline v-mid fl maT20"><img :src="item.userIcon" /></div>
                             <div class="item-block-left fl paTop20 W321 maL25">
                                 <h2 class="color-blueL fSize16 LH-H24"><a :href="positionLink(item.recruitId)">{{infoExtrac(item.job)}}</a></h2>
                                 <p><span class="fSize16 maR24 color-orange-f7">{{item.salary}}</span>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.workTime}}<i class="depart">|</i>{{item.education}}</p>

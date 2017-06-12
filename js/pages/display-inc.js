@@ -39,6 +39,10 @@ function infoRequest() {
         console.log(resp);
         appResult.incList.totalpages = resp.data.totalPage;
         appResult.incList.results = resp.data.list;
+        if (parObj.searchtext) {
+            appQuery.keywords = decodeURI(parObj.searchtext);
+            searchRequest(1);
+        }
     });
     if (parObj.userId) {
         EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId }, function(resp, status) {
