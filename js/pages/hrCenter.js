@@ -12,7 +12,6 @@ var respObj = {};
 var mapper = {}; //岗位,招聘会日期与id的对应表 
 function infoRequest() {
     EventUtils.ajaxReq("/hrcenter/getDownList", "get", { userId: parObj.userId }, function(resp, status) {
-
         for (var i = 0; i < resp.data.recruitList.length; i++) {
             resp.data.recruitList[i].job = EventUtils.infoExtrac(resp.data.recruitList[i].job);
         }
@@ -32,6 +31,9 @@ function infoRequest() {
         hrApp.database.posList = recruitArray;
         hrApp.database.jobfairList = jobfairArray;
         console.log(resp);
+        if (!parObj.jobfairId && !parObj.recruitId) { //既没有招聘ID又没有直聘ID,从HR中心按钮过来的
+            hrApp.resumes.resumePos = recruitArray[0];
+        }
     })
     if (parObj.jobfairId) {
         jobfairRequest(parObj.jobfairId, 0, 1, parObj.jobfairId);
@@ -434,7 +436,9 @@ var hrApp = new Vue({
             appModal.show.modal = true;
         },
         stickItem: function(item) {
-
+            appModal.sticky.stickItem = item;
+            appModal.show.stickybox = true;
+            appModal.show.modal = true;
         },
         selpos: function(obj) {
             if ($(obj).hasClass("pos-jobfair")) {
@@ -506,7 +510,8 @@ var appModal = new Vue({
             modal: false,
             cv: false,
             message: false,
-            freshbox: false
+            freshbox: false,
+            stickybox: false
         },
         account: {
             userId: parObj.userId
@@ -586,11 +591,18 @@ var appModal = new Vue({
         },
         fresh: {
             freshItem: null
+        },
+        sticky: {
+            stickItem: null
         }
     },
     methods: {
         closeFresh: function() {
             this.show.freshbox = false;
+            this.show.modal = false;
+        },
+        closeSticky: function() {
+            this.show.stickybox = false;
             this.show.modal = false;
         },
         closeMsg: function() {
@@ -609,7 +621,14 @@ var appModal = new Vue({
         "show.freshbox": function(curval) {
             if (curval) {
                 this.$nextTick(function() {
-                    EventUtils.absCenter($("#app-modal .refresh-box"));
+                    EventUtils.absCenter($("#app-modal .fresh-box"));
+                })
+            }
+        },
+        "show.stickybox": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    EventUtils.absCenter($("#app-modal .sticky-box"));
                 })
             }
         },

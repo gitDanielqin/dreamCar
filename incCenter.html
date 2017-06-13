@@ -178,7 +178,7 @@
                                 <div class="item-block-right fl fSize14 LH25 maT10">
                                     <p>{{item.userName}}</p>
                                     <p>{{item.userProperty}}<i class="depart">|</i>岗位数：{{item.jobCount}}人</p>
-                                    <p>发布日期： {{item.updateTime.split(" ")[0]}}</p>
+                                    <p>发布日期： {{dateExtrac(item.updateTime)}}</p>
                                 </div>
                                 <div class="operations color-blueL">
                                     <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>
@@ -195,7 +195,7 @@
                                 <div class="item-block-right fl fSize14 LH25 maT10">
                                     <p>{{item.companyName}}</p>
                                     <p>{{item.companyProperty}}</p>
-                                    <p>发布时间：{{item.updateTime.split(" ")[0]}}</p>
+                                    <p>发布时间：{{dateExtrac(item.updateTime)}}</p>
                                 </div>
                                 <div class="operations color-blueL">
                                     <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>
@@ -231,12 +231,12 @@
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="collectLink(item)">{{infoExtrac(item.profession)}}</a></h2>
                                     <p>{{item.companyProperty}}<i class="depart">|</i>{{item.companyScale}}<i class="depart">|</i>{{infoExtrac(item.companyType)}}</p>
                                     <p>联合培养方式：{{item.trainType}}</p>
-                                    <p class="item-date">收藏时间：{{item.collectTime.split(" ")[0]}}</p>
+                                    <p class="item-date">收藏时间：{{dateExtrac(item.collectTime)}}</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH25 maT10">
                                     <p>{{item.userName}}</p>
                                     <p>{{item.userProperty}}</p>
-                                    <p class="pubdate">发布时间：{{item.updateTime.split(" ")[0]}}</p>
+                                    <p class="pubdate">发布时间：{{dateExtrac(item.updateTime)}}</p>
                                     <div class="collect-btn">
                                         <button class="color-blueL" @click.stop="cancelCollect('combi',item.id)">取消收藏</button>
                                         <button class="color-orange-f7" @click.stop="applyCollect(item)">申请合作</button>
@@ -253,7 +253,7 @@
                                 <div class="item-block-right fl fSize14 LH25 maT10 W285">
                                     <p>高校对企业要求</p>
                                     <p>{{item.companyScale}}<i class="depart">|</i>{{item.companyProperty}}<i class="depart">|</i>{{infoExtrac(item.job)}}</p>
-                                    <p class="pubdate">发布日期：{{item.updateTime.split(" ")[0]}}</p>
+                                    <p class="pubdate">发布日期：{{dateExtrac(item.updateTime)}}</p>
                                     <div class="collect-btn">
                                         <button class="color-blueL" @click.stop="cancelCollect('jobfair',item.id)">取消收藏</button>
                                         <button class="color-orange-f7" @click.stop="applyCollect(item)">申请合作</button>
@@ -285,7 +285,7 @@
                                        <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="messageLink('combi',item.demandId)">{{item.title}}</a></h2>
                                        <p>{{item.schoolProperty}}<i class="depart">|</i>{{item.professionCount}}<i class="depart">|</i>{{infoExtrac(item.profession)}}</p>
                                        <p>{{item.trainType}}</p>
-                                       <p class="item-date">申请日期：{{item.createTime.split(" ")[0]}}</p>
+                                       <p class="item-date">申请日期：{{dateExtrac(item.createTime)}}</p>
                                    </div>
                                    <div class="item-block-right fl fSize14 LH30 maT10">
                                        <p>{{item.userName}}</p>
@@ -303,7 +303,7 @@
                                        <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="messageLink('combi',item.demandId)">{{infoExtrac(item.profession)}}</a></h2>
                                        <p>{{item.companyProperty}}<i class="depart">|</i>{{item.companyScale}}<i class="depart">|</i>{{infoExtrac(item.companyType)}}</p>
                                        <p>{{item.trainType}}</p>
-                                       <p class="item-date">申请日期：{{item.createTime.split(" ")[0]}}</p>
+                                       <p class="item-date">申请日期：{{dateExtrac(item.createTime)}}</p>
                                    </div>
                                    <div class="item-block-right fl fSize14 LH30 pRel uni-apply-message">
                                        <p class="t-right">高校名称：{{item.userName}}</p>
@@ -340,7 +340,7 @@
                                    <div class="item-block-left fl paTop22 maL20 W312">
                                        <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="messageLink('jobfair',item.jobFairId)">{{item.title}}</a></h2>
                                        <p>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.professionCount}}<i class="depart">|</i>{{cityExtrac(item.jobFairAddress)}}</p>
-                                       <p class="item-date">申请日期：{{item.createTime.split(" ")[0]}}</p>
+                                       <p class="item-date">申请日期：{{dateExtrac(item.createTime)}}</p>
                                    </div>
                                    <div class="item-block-right fl fSize14 LH30 pRel uni-apply-message">
                                        <p class="t-right">高校名称：{{item.userName}}</p>
@@ -507,7 +507,7 @@
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="coopLink(item)">{{item.coopName}}</a></h2>
                                     <p>{{item.coopProperty}}<i class="depart">|</i>{{item.coopScale}}<i class="depart">|</i>{{item.coopType}}</p>
                                     <p>校企培训方式：{{item.trainWay}}</p>
-                                    <p class="item-date">合作开始日期：{{item.coopCreateTime.split(" ")[0]}}</p>
+                                    <p class="item-date">合作开始日期：{{dateExtrac(item.coopCreateTime)}}</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH28 maT10">
                                     <p>合作专业：</p>
@@ -522,7 +522,7 @@
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="coopLink(item)">{{item.coopName}}</a></h2>
                                     <p>{{item.coopProperty}}<i class="depart">|</i>{{item.coopScale}}<i class="depart">|</i>{{item.coopType}}</p>
                                     <p>招聘会地址：{{item.coopAddress}}</p>
-                                    <p class="item-date">招聘会日期：{{item.startTime.split(" ")[0]}}</p>
+                                    <p class="item-date">招聘会日期：{{dateExtrac(item.startTime)}}</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH28 maT10">
                                     <p>招聘岗位：</p>
@@ -639,110 +639,7 @@
                 <button class="bg-orange2" @click="confirmComment">确定</button><button class="bg-gray-ae" @click="cancelComment">取消</button>
             </div>
         </div>
-        <div class="refresh-box W700" v-show="show.stickybox">
-            <h2 class="LH-H60 paLeft50 refresh-hd">
-                <span class="color-white fSize24 disInline maR23">置顶提示</span>
-                <ul class="lis-inline disInline fSize20 t-center stick-navs">
-                    <li><span class="on" @click.stop="selectStickWay('sofort',$event.target)">立即置顶</span></li>
-                    <li><span @click.stop="selectStickWay('plan',$event.target)">计划置顶</span></li>
-                </ul>
-                <span class="pic-wrapper refresh-closer fr" @click="closeSticky">
-                   <i class="pic-icon"></i>
-              </span>
-            </h2>
-            <div v-show="sticky.sofort">
-                <div class="refresh-cont paLeft50 H298">
-                    <p class="LH52 fSize14 color-orange2">信息置顶，排名提前到第一页，获得海量曝光，效果翻倍，赶快来试试吧！</p>
-                    <table class="LH40 fSize18 sticky-sofort-list">
-                        <tr v-for="(item,index) in sticky.content">
-                            <td class="W210"><span class="icon-radio" :class="{'on':index==0}" @click="selectStickyItem(index,$event.target)"><i class="pic-icon"></i></span>{{item.duration}}</td>
-                            <td class="W90"><span class="color-orange-fc">{{item.price}}</span>元</td>
-                            <td>{{item.hint}}</td>
-                        </tr>
-                    </table>
-                    <p class="LH40 color-gray79">注：每24小时执行一次，购买后立即执行。</p>
-                </div>
-                <div class="refresh-bot paLeft50 paTop10 fSize18">
-                    <p class="LH50">应付金额<span class="color-orange-fc">{{sticky.sum}}</span>元<span class="maL22 price-pre">原价：{{sticky.presum}}元</span></p>
-                    <p class="LH20"><i class="pic-icon icon-checkbox on" @click="checkAutopay($event.target)"></i>自动续费<span class="color-orange-fc">{{sticky.discount}}</span></p>
-                    <p class="LH36 color-gray79 fSize14">（系统将在智能置顶到期后自动帮您续费，可通过选中自动续费启用或取消）</p>
-                    <button type="button" class="refresh-btn">{{sticky.sofortBtn}}</button>
-                </div>
-            </div>
-            <div v-show="!sticky.sofort">
-                <div class="refresh-cont paLeft50 paBot20">
-                    <p class="LH52 fSize14 color-orange2">信息置顶，排名提前到第一页，获得海量曝光，效果翻倍，赶快来试试吧！</p>
-                    <p class="LH26 fSize16"><label class="plan-label">计划时间</label><input type="text" class="date-input" placeholder="2016-12-17" />到<input type="text" class="date-input" placeholder="2016-12-17" /></p>
-                    <p class="maT11 LH34"><label class="plan-label">置顶时段</label></p>
-                    <table class="LH43 fSize14 t-center plan-sticky-table">
-                        <tr>
-                            <th>时间</th>
-                            <th>星期一</th>
-                            <th>星期二</th>
-                            <th>星期三</th>
-                            <th>星期四</th>
-                            <th>星期五</th>
-                            <th>星期六</th>
-                            <th>星期日</th>
-                        </tr>
-                        <tr>
-                            <td class="td-title">全天置顶</td>
-                            <td name="1"></td>
-                            <td name="2"></td>
-                            <td name="3"></td>
-                            <td name="4"></td>
-                            <td name="5"></td>
-                            <td name="6"></td>
-                            <td name="7"></td>
-                        </tr>
-                        <tr>
-                            <td class="td-title">早8点-晚8点</td>
-                            <td name="1"></td>
-                            <td name="2"></td>
-                            <td name="3"></td>
-                            <td name="4"></td>
-                            <td name="5"></td>
-                            <td name="6"></td>
-                            <td name="7"></td>
-                        </tr>
-                        <tr>
-                            <td class="td-title">不置顶</td>
-                            <td name="1"></td>
-                            <td name="2"></td>
-                            <td name="3"></td>
-                            <td name="4"></td>
-                            <td name="5"></td>
-                            <td name="6"></td>
-                            <td name="7"></td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="refresh-bot paLeft50 paTop8 fSize18 paBot14">
-                    <ul class="LH36">
-                        <li>总计价格：<span class="color-orange-fc">{{sticky.sum}}</span>元</li>
-                        <li>账户余额：<span class="color-orange-fc">{{account.money}}</span>元</li>
-                    </ul>
-                    <button type="button" class="refresh-btn plan-btn">{{sticky.planBtn}}</button>
-                </div>
-            </div>
-        </div>
-        <div class="refresh-hint-box W700" v-show="show.stickyhintbox">
-            <h2 class="LH-H60 t-center refresh-hint-hd fSize24 color-white">帖子置顶提示
-                <span class="pic-wrapper refresh-closer fr" @click="closeHintSticky">
-                   <i class="pic-icon"></i>
-              </span>
-            </h2>
-            <div class="refresh-hint-content paLeft50 paTop30 bg-white paBot50">
-                <p class="LH43 fSize18">成功置顶<span class="color-orange-fc">1</span>条信息，并从余额中扣除<span class="color-orange-fc">{{sticky.sum}}</span>元</p>
-                <p class="LH40 fSize14">同类别的信息有置顶间隔限制，必须等上一条信息置顶成功后，系统才能帮您执行置顶请求。</p>
-                <div class="refresh-text-box maT24 paBot10">
-                    <h3 class="LH-H60 fSize20 t-center">置顶内容</h3>
-                    <p class="fSize14 LH43"><span class="stick-name maR33">UI设计招聘</span>您的信息已<span class="color-orange-fc">置顶成功</span>，正在让更多的客户<span class="color-orange-fc">查看</span></p>
-                    <p class="LH30 t-center sticky-time fSize14">执行置顶时间： {{sticky.date}} {{sticky.time}}</p>
-                    <p class="LH58 t-center fSize14">计划置顶，低价获得更多展示，每次置顶<span class="color-orange-fc">7</span>元起<button class="color-blue" @click="toPlanSticky">立即使用</button></p>
-                </div>
-            </div>
-        </div>
+        <stick-box :stickitem="sticky.stickItem" :userid="account.userId" :showsticky="show.stickybox" @closesticky="closeSticky" v-show="show.stickybox"></stick-box>
         <fresh-box :freshitem="fresh.freshItem" :userid="account.userId" :showfresh="show.freshbox" @closefresh="closeFresh" v-show="show.freshbox"></fresh-box>
     </div>
     <div class="bot paTop8 t-center bot-account" id="app-footer" v-cloak>
@@ -764,6 +661,7 @@
     <script src="js/components/bind-email-box.js"></script>
     <script src="js/components/message-box.js"></script>
     <script src="js/components/freshbox.js"></script>
+    <script src="js/components/stickbox.js"></script>
     <script src="js/components/conf-password.js"></script>
     <script src="js/components/common-footer.js"></script>
     <script src="js/pages/incCenter.js"></script>

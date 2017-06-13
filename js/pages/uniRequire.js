@@ -411,13 +411,32 @@ var appMain = new Vue({
                 if (isNewRequire) {
                     EventUtils.ajaxReq('/demand/apply', 'post', postdata, function(resp, status) {
                         console.log(resp);
-                        window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                        if (resp.code == "00000") {
+                            swal({
+                                title: "",
+                                text: "发布成功！",
+                                type: "success",
+                                showConfirmButton: false
+                            });
+                            setTimeout(function() {
+                                window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                            }, 1000);
+                        }
                     })
                 } else {
                     postdata.demandId = parObj.demandId;
                     EventUtils.ajaxReq('/demand/modifyInfo', 'post', postdata, function(resp, status) {
-                        console.log(resp);
-                        window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
+                        if (resp.code == "00000") {
+                            swal({
+                                title: "",
+                                text: "修改成功！",
+                                type: "success",
+                                showConfirmButton: false
+                            });
+                            setTimeout(function() {
+                                window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
+                            }, 1000);
+                        }
                     })
                 }
             } else if (type == "jobfair") {
@@ -484,19 +503,43 @@ var appMain = new Vue({
                 if (isNewRequire) {
                     EventUtils.ajaxReq('/jobfair/apply', 'post', postdata, function(resp, status) {
                         console.log(resp);
-                        window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                        if (resp.code == "00000") {
+                            if (resp.data.status == "0") {
+                                swal({
+                                    title: "",
+                                    text: "不允许同一天发布多场招聘会，请删除后重发！",
+                                    type: "warning"
+                                });
+                            } else {
+                                swal({
+                                    title: "",
+                                    text: "发布成功！",
+                                    type: "success",
+                                    showConfirmButton: false
+                                });
+                                setTimeout(function() {
+                                    window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
+                                }, 1000);
+                            }
+                        }
                     })
                 } else {
                     postdata.jobFairId = parObj.jobfairId;
                     EventUtils.ajaxReq('/jobfair/modifyInfo', 'post', postdata, function(resp, status) {
-                        console.log(resp);
-                        window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                        if (resp.code == "00000") {
+                            swal({
+                                title: "",
+                                text: "修改成功！",
+                                type: "success",
+                                showConfirmButton: false
+                            });
+                            setTimeout(function() {
+                                window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
+                            }, 1000);
+                        }
                     })
                 }
             }
-
-            //var linkAddress = this.combiData.contact.address.split("-").join(";");
-
         }
     },
     mounted: function() {
@@ -519,14 +562,14 @@ var appMain = new Vue({
         selectTime();
     },
     watch: {
-        "combiData.showIncAddr": function(curval) {
-            if (curval == true) {
-                //    selectInitPos();
+        "combiData.contact.phone": function(curval, oldval) {
+            if (!/^\d*$/.test(curval) || curval.length > 11) {
+                this.combiData.contact.phone = oldval;
             }
         },
-        "recruitData.showAddr": function(curval) {
-            if (curval == true) {
-                //   selectInitPos();
+        "recruitData.contact.phone": function(curval, oldval) {
+            if (!/^\d*$/.test(curval) || curval.length > 11) {
+                this.recruitData.contact.phone = oldval;
             }
         }
     }

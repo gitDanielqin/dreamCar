@@ -465,13 +465,32 @@ var appMain = new Vue({
                 // console.log(postdata);
                 if (isNewRequire) {
                     EventUtils.ajaxReq('/demand/apply', 'post', postdata, function(resp, status) {
-                        window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                        if (resp.code == "00000") {
+                            swal({
+                                title: "",
+                                text: "发布成功！",
+                                type: "success",
+                                showConfirmButton: false
+                            });
+                            setTimeout(function() {
+                                window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                            }, 1000);
+                        }
                     })
                 } else {
                     postdata.demandId = parObj.demandId;
                     EventUtils.ajaxReq('/demand/modifyInfo', 'post', postdata, function(resp, status) {
-                        console.log(resp);
-                        window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
+                        if (resp.code == "00000") {
+                            swal({
+                                title: "",
+                                text: "修改成功！",
+                                type: "success",
+                                showConfirmButton: false
+                            });
+                            setTimeout(function() {
+                                window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                            }, 1000);
+                        }
                     })
                 }
 
@@ -548,12 +567,38 @@ var appMain = new Vue({
                 console.log(postdata);
                 if (isNewRequire) {
                     EventUtils.ajaxReq('/jobfair/apply', 'post', postdata, function(resp, status) {
-                        window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                        if (resp.code = "00000") {
+                            if (resp.data.status == "0") {
+                                swal({
+                                    title: "",
+                                    text: "不允许同一天发布多场招聘会，请删除后重发！",
+                                    type: "warning"
+                                });
+                            } else {
+                                swal({
+                                    title: "",
+                                    text: "发布成功！",
+                                    type: "success",
+                                    showConfirmButton: false
+                                });
+                                setTimeout(function() {
+                                    window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                }, 1000);
+                            }
+                        }
                     })
                 } else {
                     postdata.jobFairId = parObj.jobfairId;
                     EventUtils.ajaxReq('/jobfair/modifyInfo', 'post', postdata, function(resp, status) {
-                        window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                        swal({
+                            title: "",
+                            text: "修改成功！",
+                            type: "success",
+                            showConfirmButton: false
+                        });
+                        setTimeout(function() {
+                            window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                        }, 1000);
                     })
                 }
 
@@ -637,13 +682,40 @@ var appMain = new Vue({
                 if (isNewRequire) {
                     EventUtils.ajaxReq('/recruit/apply', 'post', postdata, function(resp, status) {
                         console.log(resp);
-                        window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                        if (resp.code == "00000") {
+                            if (resp.data.status == "0") {
+                                swal({
+                                    title: "",
+                                    text: "您已发布过该岗位，请删除后再发！",
+                                    type: "warning"
+                                })
+                            } else {
+                                swal({
+                                    title: "",
+                                    text: "发布成功！",
+                                    type: "success",
+                                    showConfirmButton: false
+                                })
+                                setTimeout(function() {
+                                    window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                }, 1000);
+                            }
+                        }
                     })
                 } else {
                     postdata.recruitId = parObj.recruitId;
                     EventUtils.ajaxReq('/recruit/modifyInfo', 'post', postdata, function(resp, status) {
-                        console.log(resp);
-                        window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                        if (resp.code == "00000") {
+                            swal({
+                                title: "",
+                                text: "修改成功！",
+                                type: "success",
+                                showConfirmButton: false
+                            });
+                            setTimeout(function() {
+                                window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                            }, 1000);
+                        }
                     })
                 }
             }
@@ -653,6 +725,21 @@ var appMain = new Vue({
         'directData.amount': function(curval) {
             if (!/^\d+$/.test(curval) || curval.length > 5) {
                 this.directData.amount = curval.slice(0, -1);
+            }
+        },
+        "combiData.contact.phone": function(curval, oldval) {
+            if (!/^\d*$/.test(curval) || curval.length > 11) {
+                this.combiData.contact.phone = oldval;
+            }
+        },
+        "recruitData.contact.phone": function(curval, oldval) {
+            if (!/^\d*$/.test(curval) || curval.length > 11) {
+                this.recruitData.contact.phone = oldval;
+            }
+        },
+        "directData.contact.phone": function(curval, oldval) {
+            if (!/^\d*$/.test(curval) || curval.length > 11) {
+                this.directData.contact.phone = oldval;
             }
         }
     },

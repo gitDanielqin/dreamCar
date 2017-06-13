@@ -1,6 +1,6 @@
 (function() {
     var freshTempl = '<div>\
-        <div class="refresh-box" v-show="fresh.show">\
+        <div class="refresh-box fresh-box" v-show="fresh.show">\
             <h2 class="refresh-hd">\
                 <span class="refresh-header">刷新提示</span>\
                 <ul class="lis-inline fresh-navs">\
@@ -25,8 +25,9 @@
                 </div>\
                 <div class="refresh-bot">\
                     <p style="line-height:50px">应付金额<span style="color:#fc4f05;">{{fresh.sum}}</span>元<span class="price-pre">原价：{{fresh.presum}}元</span></p>\
-                    <p style="line-height:20px"><i class="pic-icon icon-checkbox on" @click="checkAutopay($event.target)"></i>自动续费<span style="color:#fc4f05;">{{fresh.discount}}</span></p>\
-                    <p class="fresh-autopay-hint">（系统将在智能刷新到期后自动帮您续费，可通过选中自动续费启用或取消）</p>\
+                    <!--<p style="line-height:20px"><i class="pic-icon icon-checkbox on" @click="checkAutopay($event.target)"></i>自动续费<span style="color:#fc4f05;">{{fresh.discount}}</span></p>-->\
+                    <p style="line-height:20px">账户余额：<span class="color-orange-fc">{{account.money}}</span>元</p>\
+                    <p class="autopay-hint"><span class="disNo">（系统将在智能刷新到期后自动帮您续费，可通过选中自动续费启用或取消）</span></p>\
                     <button type="button" class="refresh-btn" @click="freshAction($event.target)">{{fresh.smartBtn}}</button>\
                 </div>\
             </div>\
@@ -43,23 +44,23 @@
                     <p>本次刷新需要扣除推广金 <span style="color:#fc4f05;">1.0</span>元，是否确定刷新？</p>\
                 </div>\
                 <div class="refresh-bot refresh-bot-normal">\
-                    <span style="display:block;" v-show="account.freeFreshTimes==0">您的校企余额：<b style="color:#fc4f05;">{{account.money.toFixed(2)}}</b>元</span><button type="button" class="refresh-btn fresh-sofort-btn" @click="freshAction($event.target)">{{fresh.sofortBtn}}</button>\
+                    <span style="display:block;" v-show="account.freeFreshTimes==0">您的校企余额：<b style="color:#fc4f05;">{{regMoney(account.money)}}</b>元</span><button type="button" class="fresh-sofort-btn" @click="freshAction($event.target)">{{fresh.sofortBtn}}</button>\
                 </div>\
             </div>\
         </div>\
-        <div class="refresh-hint-box W700" v-show="!fresh.show">\
-            <h2 class="LH-H60 t-center refresh-hint-hd fSize24 color-white">帖子刷新提示\
+        <div class="refresh-hint-box fresh-hint-box" v-show="!fresh.show">\
+            <h2 class="refresh-hint-hd">帖子刷新提示\
                 <span class="pic-wrapper refresh-closer fr" @click="closeFresh">\
                     <i class="pic-icon"></i>\
                </span>\
             </h2>\
-            <div class="refresh-hint-content paLeft50 paTop30 bg-white paBot50">\
+            <div class="refresh-hint-content">\
                 <p class="LH43 fSize18">成功刷新<span class="color-orange-fc">1</span>条信息，并从余额中扣除<span class="color-orange-fc">{{fresh.sum}}</span>元</p>\
                 <p class="LH40 fSize14">同类别的信息有刷新间隔限制，必须等上一条信息刷新成功后，系统才能帮您执行刷新请求。</p>\
-                <div class="refresh-text-box maT24 paBot10">\
-                    <h3 class="LH-H60 fSize20 t-center">刷新内容</h3>\
-                    <p class="fSize14 LH43"><span class="stick-name maR33">{{fresh.title}}</span>您的信息已<span class="color-orange-fc">刷新成功</span>，正在让更多的客户<span class="color-orange-fc">查看</span></p>\
-                    <p class="LH30 t-center sticky-time fSize14">执行刷新时间： {{fresh.time}}</p>\
+                <div class="refresh-text-box">\
+                    <h3>刷新内容</h3>\
+                    <p class="fSize14 LH43"><span class="stick-name">{{fresh.title}}</span>您的信息已<span class="color-orange-fc">刷新成功</span>，正在让更多的客户<span class="color-orange-fc">查看</span></p>\
+                    <p class="sticky-time">执行刷新时间： {{fresh.time}}</p>\
                     <p class="LH58 t-center fSize14">智能刷新，低价获得更多展示，每次刷新<span class="color-orange-fc">0.7</span>元起<button class="color-blue" @click="toSmartFresh">立即使用</button></p>\
                 </div>\
             </div>\
@@ -72,7 +73,7 @@
             var freshObj = {
                 account: {
                     freeFreshTimes: 0,
-                    money: 10
+                    money: 0
                 },
                 fresh: {
                     show: true,
@@ -96,6 +97,7 @@
             },
             freshAction: function(obj) {
                 if ($(obj).html() == "立即刷新") {
+                    console.log(this.freshitem);
                     this.fresh.title = this.freshitem.title;
                     if (this.freshitem.demandId) { //刷新校企合作需求
                         if (!this.fresh.smart) {
@@ -111,7 +113,7 @@
                             freshRequest(this.userid, this.freshitem.jobFairId, 3, this.fresh.tarifId, this)
                         }
                     }
-                    if (this.freshitem.jobFairId) { //刷新直聘需求
+                    if (this.freshitem.recruitId) { //刷新直聘需求
                         if (!this.fresh.smart) {
                             freshRequest(this.userid, this.freshitem.recruitId, 2, 9, this)
                         } else {
@@ -178,8 +180,12 @@
                 this.fresh.smart = true;
                 this.fresh.show = true;
             },
-            freshRequest1: function() {
-                console.log(1);
+            regMoney: function(money) {
+                if (money) {
+                    return money.toFixed(2);
+                } else {
+                    return "";
+                }
             }
         },
         watch: {
@@ -196,7 +202,7 @@
                 if (curval) {
                     var _this = this;
                     EventUtils.ajaxReq("/center/user/getAccount", "get", { userId: this.userid }, function(resp, status) {
-                        console.log(resp);
+                        //  console.log(resp);
                         _this.account.money = resp.data.useableBalance;
                         _this.account.freeFreshTimes = resp.data.freeRefresh;
                         _this.fresh.show = true;
@@ -209,8 +215,8 @@
             },
             "fresh.show": function(curval) {
                 if (!curval) {
-                    console.log(1);
-                    EventUtils.absCenter($("#app-modal .refresh-hint-box"));
+                    //  console.log(1);
+                    EventUtils.absCenter($(".fresh-hint-box"));
                 }
             }
         },
@@ -218,9 +224,11 @@
             //获取用户账户及免费刷新次数等信息
             var _this = this;
             EventUtils.ajaxReq("/center/user/getAccount", "get", { userId: this.userid }, function(resp, status) {
-                console.log(resp);
+                //    console.log(resp);
                 _this.account.money = resp.data.useableBalance;
                 _this.account.freeFreshTimes = resp.data.freeRefresh;
+                _this.fresh.sofortBtn = _this.fresh.sum > _this.account.money ? "立即充值" : "立即刷新";
+                _this.fresh.smartBtn = _this.fresh.sum > _this.account.money ? "立即充值" : "立即刷新";
             });
             //获取刷新模板信息
             var postdata = {
@@ -229,7 +237,7 @@
             }
             EventUtils.ajaxReq("/sys/getRefreshHotInfoList", "post", postdata, function(resp, status) {
                 if (resp.data) {
-                    console.log(resp.data);
+                    //   console.log(resp.data);
                     resp.data.shift();
                     _this.fresh.content = resp.data;
                 }
@@ -245,8 +253,9 @@
             contentType: type,
             id: tarifId
         }
-
+        console.log(postdata);
         EventUtils.ajaxReq("/sys/refresh", "post", postdata, function(resp, status) {
+            //    console.log(resp);
             console.log(resp);
             if (resp.code == "00000") {
                 freshObj.fresh.time = resp.data;

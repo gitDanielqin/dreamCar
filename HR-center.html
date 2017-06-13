@@ -251,6 +251,7 @@
         </div>
         <message-box :userid="account.userId" @closebox="closeMsg" v-show="show.message"></message-box>
         <fresh-box :freshitem="fresh.freshItem" :userid="account.userId" :showfresh="show.freshbox" @closefresh="closeFresh" v-show="show.freshbox"></fresh-box>
+        <stick-box :stickitem="sticky.stickItem" :userid="account.userId" :showsticky="show.stickybox" @closesticky="closeSticky" v-show="show.stickybox"></stick-box>
     </div>
     <script src="js/libs/jquery-3.1.0.min.js"></script>
     <script src="js/libs/vue.js"></script>
@@ -260,6 +261,7 @@
     <script src="js/components/pagination.js"></script>
     <script src="js/components/message-box.js"></script>
     <script src="js/components/freshbox.js"></script>
+    <script src="js/components/stickbox.js"></script>
     <script src="js/components/common-footer.js"></script>
     <script src="js/pages/hrCenter.js"></script>
 </body>

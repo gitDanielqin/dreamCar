@@ -354,8 +354,17 @@ var appCont = new Vue({
         infoExtrac: function(text) {
             if (text) {
                 text = EventUtils.infoExtrac(text);
+                return text
+            } else {
+                return ""
             }
-            return text == "不限" || text == undefined ? "" : text;
+        },
+        dateExtrac: function(date) {
+            if (date) {
+                return date.split(" ")[0];
+            } else {
+                return ""
+            }
         },
         cityExtrac: function(text) {
             if (text) {
@@ -592,6 +601,7 @@ var appCont = new Vue({
             appModal.show.freshbox = true;
         },
         stickItem: function(item) {
+            appModal.sticky.stickItem = item;
             appModal.showModal = true;
             appModal.show.stickybox = true;
         },
@@ -778,15 +788,6 @@ var appCont = new Vue({
 
         }
     },
-    computed: {
-        // majorArr: function() {
-        //     var arr = [];
-        //     for (var i = 0; i < this.database.majors.length; i++) {
-        //         arr.push(this.database.majors[i].major);
-        //     }
-        //     return arr;
-        // },
-    },
     components: {
         'pagination': pagination
     }
@@ -874,9 +875,7 @@ var appModal = new Vue({
         },
         show: {
             stickybox: false,
-            stickyhintbox: false,
             freshbox: false,
-            freshhintbox: false,
             minicard: false,
             mobile: false,
             email: false,
@@ -906,20 +905,7 @@ var appModal = new Vue({
             }
         },
         sticky: {
-            content: [
-                { duration: "置顶1天", price: 10, hint: "(无折扣仅10元/天)" },
-                { duration: "置顶3天", price: 27, hint: "(9折仅9元/天)" },
-                { duration: "置顶5天", price: 40, hint: "(8折仅8元/天)" },
-                { duration: "置顶10天", price: 70, hint: "(7折仅7元/天)" },
-            ],
-            sum: 10,
-            presum: 10,
-            date: "2016-12-30",
-            time: "16:08:02",
-            discount: "9折",
-            sofortBtn: "立即充值",
-            planBtn: "立即置顶",
-            sofort: true
+            stickItem: null
         },
         fresh: {
             freshItem: null,
@@ -965,111 +951,13 @@ var appModal = new Vue({
             this.show.comment = false;
             this.showModal = false;
         },
-        toPlanSticky: function() {
-            this.show.stickyhintbox = false;
-            this.show.stickybox = true;
-        },
         closeSticky: function() {
             this.show.stickybox = false;
-            this.showModal = false;
-        },
-        closeHintSticky: function() {
-            this.show.stickyhintbox = false;
             this.showModal = false;
         },
         closeFresh: function() {
             this.show.freshbox = false;
             this.showModal = false;
-        },
-        closeHintFresh: function() {
-            this.show.freshhintbox = false;
-            this.showModal = false;
-        },
-        checkAutopay: function(obj) {
-            $(obj).toggleClass("on")
-        },
-        selectStickyItem: function(index, obj) {
-            $(".sticky-sofort-list .icon-radio").removeClass("on");
-            $(obj).addClass("on");
-            switch (index) {
-                case 0:
-                    this.sticky.presum = 10;
-                    this.sticky.sum = 10;
-                    break;
-                case 1:
-                    this.sticky.presum = 10 * 3;
-                    this.sticky.sum = Math.floor(this.sticky.presum * 0.9);
-                    break;
-                case 2:
-                    this.sticky.presum = 10 * 5;
-                    this.sticky.sum = Math.floor(this.sticky.presum * 0.8);
-                    break;
-                case 3:
-                    this.sticky.presum = 10 * 10;
-                    this.sticky.sum = Math.floor(this.sticky.presum * 0.7);
-                    break;
-                default:
-            }
-        },
-        selectFreshItem: function(index, obj) {
-            $(".fresh-smart-list .icon-radio").removeClass("on");
-            $(obj).addClass("on");
-            switch (index) {
-                case 0:
-                    this.fresh.presum = 1 * 4;
-                    this.fresh.sum = 4;
-                    break;
-                case 1:
-                    this.fresh.presum = 1 * 4 * 3;
-                    this.fresh.sum = this.fresh.presum * 0.9.toFixed(1);
-                    break;
-                case 2:
-                    this.fresh.presum = 1 * 4 * 5;
-                    this.fresh.sum = Math.floor(this.fresh.presum * 0.8).toFixed(1);
-                    break;
-                case 3:
-                    this.fresh.presum = 1 * 4 * 10;
-                    this.fresh.sum = Math.floor(this.fresh.presum * 0.7).toFixed(1);
-                    break;
-                default:
-            }
-        },
-        selectStickWay: function(way, obj) {
-            $(".stick-navs .on").removeClass("on");
-            $(obj).addClass("on");
-            if (way == "sofort") {
-                this.sticky.sofort = true;
-                this.sticky.sum = 4;
-                this.sticky.presum = 4;
-            } else {
-                this.sticky.sofort = false;
-                var summe = 0;
-                $(".plan-sticky-table tr").each(function(index) {
-                    if (index == 1) {
-                        summe += $(this).find("td.on").length * 70;
-                    } else if (index == 2) {
-                        summe += $(this).find("td.on").length * 50;
-                    };
-                });
-                this.sticky.sum = summe;
-            }
-        },
-        selectFreshWay: function(way, obj) {
-            $(".fresh-navs .on").removeClass("on");
-            $(obj).addClass("on");
-            if (way == "smart") {
-                this.fresh.smart = true;
-                this.fresh.sum = 4;
-                this.fresh.presum = 4;
-            } else {
-                this.fresh.smart = false;
-                if (this.account.freeFreshTimes > 0) {
-                    this.fresh.sum = 0;
-                } else {
-                    this.fresh.sum = 1;
-                }
-
-            }
         },
         closeTrade: function() {
             this.show.trade = false;
@@ -1206,43 +1094,17 @@ var appModal = new Vue({
         "show.stickybox": function(curval) {
             if (curval) {
                 this.$nextTick(function() {
-                    EventUtils.absCenter($("#app-modal .refresh-box"));
-                })
-            }
-        },
-        "show.stickyhintbox": function(curval) {
-            if (curval) {
-                this.$nextTick(function() {
-                    EventUtils.absCenter($("#app-modal .refresh-hint-box"));
+                    EventUtils.absCenter($("#app-modal .sticky-box"));
                 })
             }
         },
         "show.freshbox": function(curval) {
             if (curval) {
                 this.$nextTick(function() {
-                    EventUtils.absCenter($("#app-modal .refresh-box"));
+                    EventUtils.absCenter($("#app-modal .fresh-box"));
                 })
             }
         },
-        "show.freshhintbox": function(curval) {
-            if (curval) {
-                this.$nextTick(function() {
-                    EventUtils.absCenter($("#app-modal .refresh-hint-box"));
-                })
-            }
-        },
-        "sticky.sum": function(curval) {
-            this.sticky.sofortBtn = curval > this.account.money ? "立即充值" : "立即置顶";
-            this.sticky.planBtn = curval > this.account.money ? "立即充值" : "立即置顶";
-        },
-        "fresh.sum": function(curval) {
-            this.fresh.sofortBtn = curval > this.account.money ? "立即充值" : "立即刷新";
-            this.fresh.smartBtn = curval > this.account.money ? "立即充值" : "立即刷新";
-        }
-    },
-    mounted: function() {
-        this.sticky.sofortBtn = 10 > this.account.money ? "立即充值" : "立即置顶";
-        this.fresh.smartBtn = 4 > this.account.money ? "立即充值" : "立即刷新";
     }
 });
 

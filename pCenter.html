@@ -71,10 +71,10 @@
             </div>
             <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3 bg-white" id="app-side" @click="selnav($event.target)" v-cloak>
                 <li class="on sider-li" paneid="resumeBox"><i class="pic-icon icon-resume"></i>个人简历</li>
-                <li class="sider-li" paneid="classBox"><i class="pic-icon icon-study"></i>我的学习</li>
+                <!-- <li class="sider-li" paneid="classBox"><i class="pic-icon icon-study"></i>我的学习</li>-->
                 <li class="myCollect sider-li"><i class="pic-icon icon-collect"></i>我的收藏
                     <div class="sub-li LH37">
-                        <p class="on sub-item" paneid="collec-study">学习收藏</p>
+                        <!-- <p class="on sub-item" paneid="collec-study">学习收藏</p>-->
                         <p class="sub-item" paneid="collec-job">职位收藏</p>
                         <p class="sub-item" paneid="collec-recruitment">招聘会收藏</p>
                     </div>
@@ -103,8 +103,8 @@
                             </div>
                             <div class="item-row">
                                 <div class="item-left">
-                                    <label class="laLeft">手机</label><input type="text" v-model="resume.phone" readonly/>
-                                </div><label class="laRight">邮箱</label><input type="text" v-model="resume.email" readonly/>
+                                    <label class="laLeft">手机</label><input type="text" id="cv-mobile" v-model="resume.phone" />
+                                </div><label class="laRight">邮箱</label><input type="text" id="cv-email" v-model="resume.email" />
                             </div>
                             <div class="item-row">
                                 <div class="item-left">
@@ -425,7 +425,7 @@
                             </div>
                         </li>
                     </ul>
-                    <pagination :showpages="showpage(courses.results.length)" :totalpages="pagesum(courses.results.length)" type="course" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                    <pagination :showpages="showpage(courses.results.length)" :totalpages="6" type="course" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
                 <div class="collec-study ListBox">
                     <div class="hd LH-H58">
@@ -460,7 +460,7 @@
                             </div>
                         </li>
                     </ul>
-                    <pagination :showpages="showpage(colStuList.results.length)" :totalpages="pagesum(colStuList.results.length)" type="col-study" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                    <pagination :showpages="showpage(colStuList.results.length)" :totalpages="5" type="col-study" @topage="topage" class="maT28 fSize14 fr"></pagination>
                 </div>
                 <div class="collec-job ListBox">
                     <div class="hd LH-H58">
@@ -483,7 +483,7 @@
                             <div class="col-company-info fl fSize18">
                                 <p>{{item.userName}}</p>
                                 <p>{{item.userProperty}}<i>|</i>{{item.userScale}}</p>
-                                <p>发布时间：{{item.updateTime.split(" ")[0]}}</p>
+                                <p>发布时间：{{dateExtrac(item.updateTime)}}</p>
                                 <div class="action">
                                     <span @click="cancelCollect('position',item.id)">取消收藏</span>
                                     <span class="post" @click="apply('recruit',item.recruitId)" v-show="!item.status">投递简历</span>
@@ -516,7 +516,7 @@
                             <div class="col-company-info fl fSize18">
                                 <p>{{item.userName}}</p>
                                 <p>{{item.userProperty}}<i>|</i>岗位数：{{item.jobCount}}人</p>
-                                <p>发布日期：{{item.updateTime.split(" ")[0]}}</p>
+                                <p>发布日期：{{dateExtrac(item.updateTime)}}</p>
                                 <div class="action">
                                     <span @click="cancelCollect('jobfair',item.id)">取消收藏</span>
                                     <span class="post" v-show="!item.status" @click="apply('jobfair',item.jobFairId)">投递简历</span>
@@ -546,16 +546,16 @@
                                 <div class="class-txt fl paTop20 W328">
                                     <h2 class="class-name"><a :href="posLink(item)">{{infoExtrac(item.job)}}</a></h2>
                                     <p class="teacher">{{item.cvSalary}}<span>|</span>{{cityExtrac(item.jobFairAddress)}}<span>|</span>{{item.cvEducation}}<span>|</span>{{item.cvProject}}</p>
-                                    <p>投递于： {{item.createTime.split(" ")[0]}}</p>
+                                    <p>投递于： {{dateExtrac(item.createTime)}}</p>
                                 </div>
                                 <div class="feedback fr fSize18">
                                     <h3>公司名称：{{item.userName}}</h3>
                                     <ul class="lis-inline feedState">
                                         <li class="on"><i class="feedstate-icon"></i><span>已投递</span><i :class="{on:item.readStatus==1}" class="feed-icon-bind"></i></li>
                                         <li :class="{on:item.readStatus==1}"><i class="feedstate-icon"></i><span>已查看</span><i :class="{on:item.status!=0}" class="feed-icon-bind"></i></li>
-                                        <li :class="{on:item.status!=0}"><i class="feedstate-icon" @mouseover="feedRes('over',$event.target)" @mouseout="feedRes('out',$event.target)"></i><span>已反馈</span>
-                                            <p class="color-green" v-show="item.status==1">合适</p>
-                                            <p class="color-red" v-show="item.status==2">不合适</p>
+                                        <li :class="{on:item.status!=0}"><i class="feedstate-icon"></i>
+                                            <span class="color-green" v-show="item.status==1">通过</span>
+                                            <span class="color-red" v-show="item.status==2">不合适</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -565,16 +565,16 @@
                                 <div class="class-txt fl paTop20 W328">
                                     <h2 class="class-name"><a :href="posLink(item)">{{infoExtrac(item.job)}}</a></h2>
                                     <p class="teacher">{{item.salary}}<span>|</span>{{cityExtrac(item.jobAddress)}}<span>|</span>{{item.education}}<span>|</span>{{item.workTime}}</p>
-                                    <p>投递于： {{item.createTime.split(" ")[0]}}</p>
+                                    <p>投递于： {{dateExtrac(item.createTime)}}</p>
                                 </div>
                                 <div class="feedback fr fSize18">
                                     <h3>公司名称：{{item.userName}}</h3>
                                     <ul class="lis-inline feedState">
                                         <li class="on"><i class="feedstate-icon"></i><span>已投递</span><i :class="{on:item.readStatus==1}" class="feed-icon-bind"></i></li>
                                         <li :class="{on:item.readStatus==1}"><i class="feedstate-icon"></i><span>已查看</span><i :class="{on:item.status!=0}" class="feed-icon-bind"></i></li>
-                                        <li :class="{on:item.status!=0}"><i class="feedstate-icon" @mouseover="feedRes('over',$event.target)" @mouseout="feedRes('out',$event.target)"></i><span>已反馈</span>
-                                            <p class="color-green" v-show="item.status==1">合适</p>
-                                            <p class="color-red" v-show="item.status==2">不合适</p>
+                                        <li :class="{on:item.status!=0}"><i class="feedstate-icon"></i>
+                                            <span class="color-green" v-show="item.status==1">通过</span>
+                                            <span class="color-red" v-show="item.status==2">不合适</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -644,7 +644,7 @@
                         <div class="porto-img W96 H96"></div>
                     </div>
                     <div class="infoTxt maL54 fl color-gray6 fSize14 LH33 W560">
-                        <h3 class="LH-H30 fSize18 color-gray3 maB9">江玉海<span class="fSize14 maL10">{{baseInfo.gender}}</span></h3>
+                        <h3 class="LH-H30 fSize18 color-gray3 maB9">{{baseInfo.name}}<span class="fSize14 maL10">{{baseInfo.gender}}</span></h3>
                         <p>UI设计师</p>
                         <p>{{baseInfo.address.city}}.{{baseInfo.address.district}}</p>
                         <p>手机：{{baseInfo.phone}}</p>

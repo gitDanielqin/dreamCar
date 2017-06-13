@@ -22,7 +22,7 @@
 .top .navs a .icon-msg {
     width: 31px;
     height: 31px;
-    background: url("../images/sprite.png") no-repeat -6px -262px;
+    background: url("../images/sprite.png") no-repeat -7px -262px;
 }
 
 .sel-addr input {
@@ -105,6 +105,7 @@
 }
 
 .sub-li p {
+    font-size: 16px;
     padding-left: 30px;
 }
 
@@ -448,7 +449,6 @@
 .main .ListBox .contList .logo-pic {
     width: 90px;
     height: 80px;
-    background: #5c3333;
     margin: 24px 20px 0 30px;
     float: left;
 }

@@ -77,12 +77,13 @@ var respObj = {}; //请求的本页面的数据集合
 
     //获取用户平台信息
     EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function(resp, status) {
+        console.log(resp);
         // 账户信息
         var percent = 0;
-        if (resp.data.mobile != "") {
+        if (resp.data.mobile && resp.data.mobile != "") {
             percent += 50;
         }
-        if (resp.data.email != "") {
+        if (resp.data.email && resp.data.email != "") {
             percent += 30;
         }
         init_safepos(percent);
@@ -126,15 +127,15 @@ var appPorto = new Vue({
             addrData: addArray
         },
         viewInfo: true,
-        uni: "大学名称",
+        uni: "",
         briefInfo: {
-            level: "重点大学",
+            level: "",
             address: {
-                province: "河南省",
-                city: "新乡市",
-                district: "红旗区"
+                province: "",
+                city: "",
+                district: ""
             },
-            email: "xqztc@qq.com"
+            email: ""
         },
         initAddress: {
             province: "",
@@ -405,9 +406,6 @@ var appCont = new Vue({
         }
     },
     methods: {
-        saveNewpass: function() {
-
-        },
         selvipnav: function(obj) {
             if ($(obj).hasClass("vip-li")) {
                 var index = $(obj).index();
@@ -473,6 +471,13 @@ var appCont = new Vue({
             if (text) {
                 text = EventUtils.infoExtrac(text);
                 return text
+            } else {
+                return ""
+            }
+        },
+        dateExtrac: function(date) {
+            if (date) {
+                return date.split(" ")[0];
             } else {
                 return ""
             }
@@ -752,6 +757,7 @@ var appCont = new Vue({
             appModal.show.freshbox = true;
         },
         stickItem: function(item) {
+            appModal.sticky.stickItem = item;
             appModal.showModal = true;
             appModal.show.stickybox = true;
         },
@@ -768,37 +774,6 @@ var appCont = new Vue({
             //    if(priceF*10%1==0) priceF+="0";
             if (priceF < 10) priceF += "0";
             return ("." + priceF);
-        },
-        coopSt: function(state) {
-            switch (state) {
-                case "01":
-                    return "合作待开始";
-                case "02":
-                    return "合作进行中";
-                case "03":
-                    return "合作已完成";
-                default:
-                    return "合作待开始"
-            }
-        },
-        coopStyle: function(state) {
-            switch (state) {
-                case "01":
-                    return { color: "#91daef" };
-                case "02":
-                    return { color: "#f7aa00" };
-                case "03":
-                    return { color: "#333" };
-            }
-        },
-        pagesum: function(totalitems) {
-            var totalpage = 1;
-            if (totalitems % 3 == 0) {
-                totalpage = totalitems / 3
-            } else {
-                totalpage = Math.floor(totalitems / 3) + 1;
-            }
-            return totalpage;
         },
         showpage: function(totalpage) {
             if (totalpage < 3) {
@@ -849,9 +824,7 @@ var appCont = new Vue({
                 if (appCont.collect.results.length == 1 && appCont.collect.curpage > 1) {
                     appCont.collect.curpage -= 1;
                 }
-                console.log(resp);
                 $(".collectBox .pagination a.page").eq(appCont.collect.curpage - 1).parent().trigger("click");
-
             })
         },
         applyCollect: function(demandId) {
@@ -891,6 +864,7 @@ var appCont = new Vue({
             appModal.show.comment = true;
         },
         popCard: function(item) {
+            console.log(item)
             var postdata = {
                 userId: item.applyUserId,
                 applyId: item.applyId,
@@ -924,27 +898,6 @@ var appCont = new Vue({
             appModal.show.wechat = true;
             appModal.showModal = true;
         },
-    },
-    computed: {
-        majorArr: function() {
-            var arr = [];
-            for (var i = 0; i < this.database.majors.length; i++) {
-                arr.push(this.database.majors[i].major);
-            }
-            return arr;
-        },
-        wordscal: function() {
-            return (1000 - this.resume.intro.length);
-        },
-        combimsg: function() {
-            var total = 0;
-            for (var i = 0; i < this.message.combi.items.length; i++) {
-                if (this.message.combi.items[i].code == "01") {
-                    total++;
-                }
-            };
-            return total;
-        }
     },
     components: {
         'pagination': pagination
@@ -1008,20 +961,7 @@ var appModal = new Vue({
             { title: "互联网", items: ["互联网/移动互联网/电子商务", "互联网/移动互联网/电子商务", "互联网/移动互联网/电子商务", "互联网/移动互联网/电子商务"] }
         ],
         sticky: {
-            content: [
-                { duration: "置顶1天", price: 10, hint: "(无折扣仅10元/天)" },
-                { duration: "置顶3天", price: 27, hint: "(9折仅9元/天)" },
-                { duration: "置顶5天", price: 40, hint: "(8折仅8元/天)" },
-                { duration: "置顶10天", price: 70, hint: "(7折仅7元/天)" },
-            ],
-            sum: 10,
-            presum: 10,
-            date: "2016-12-30",
-            time: "16:08:02",
-            discount: "9折",
-            sofortBtn: "立即充值",
-            planBtn: "立即置顶",
-            sofort: true
+            stickItem: null
         },
         fresh: {
             freshItem: null,
@@ -1070,56 +1010,13 @@ var appModal = new Vue({
                 })
             }
         },
-        toPlanSticky: function() {
-            this.show.stickyhintbox = false;
-            this.show.stickybox = true;
-        },
         closeSticky: function() {
             this.show.stickybox = false;
-            this.showModal = false;
-        },
-        closeHintSticky: function() {
-            this.show.stickyhintbox = false;
             this.showModal = false;
         },
         closeFresh: function() {
             this.show.freshbox = false;
             this.showModal = false;
-        },
-        selectStickyItem: function(index, obj) {
-            $(".sticky-sofort-list .icon-radio").removeClass("on");
-            $(obj).addClass("on");
-            switch (index) {
-                case 0:
-                    this.sticky.presum = 10;
-                    this.sticky.sum = 10;
-                    break;
-                case 1:
-                    this.sticky.presum = 10 * 3;
-                    this.sticky.sum = Math.floor(this.sticky.presum * 0.9);
-                    break;
-                case 2:
-                    this.sticky.presum = 10 * 5;
-                    this.sticky.sum = Math.floor(this.sticky.presum * 0.8);
-                    break;
-                case 3:
-                    this.sticky.presum = 10 * 10;
-                    this.sticky.sum = Math.floor(this.sticky.presum * 0.7);
-                    break;
-                default:
-            }
-        },
-        selectStickWay: function(way, obj) {
-            $(".stick-navs .on").removeClass("on");
-            $(obj).addClass("on");
-            if (way == "sofort") {
-                this.sticky.sofort = true;
-                this.sticky.sum = 4;
-                this.sticky.presum = 4;
-            } else {
-                this.sticky.sofort = false;
-                this.sticky.sum = autoStickSum();
-            }
         },
         closeTrade: function() {
             this.showTrade = false;
@@ -1192,7 +1089,6 @@ var appModal = new Vue({
                 comment: this.comment.text,
                 reportUserId: this.comment.cooperId
             }
-            console.log(postdata);
             EventUtils.ajaxReq("/sys/comment", "post", postdata, function(resp, status) {
                 console.log(resp);
                 appModal.comment.text = "";
@@ -1278,27 +1174,16 @@ var appModal = new Vue({
         "show.stickybox": function(curval) {
             if (curval) {
                 this.$nextTick(function() {
-                    EventUtils.absCenter($("#app-modal .refresh-box"));
-                })
-            }
-        },
-        "show.stickyhintbox": function(curval) {
-            if (curval) {
-                this.$nextTick(function() {
-                    EventUtils.absCenter($("#app-modal .refresh-hint-box"));
+                    EventUtils.absCenter($("#app-modal .sticky-box"));
                 })
             }
         },
         "show.freshbox": function(curval) {
             if (curval) {
                 this.$nextTick(function() {
-                    EventUtils.absCenter($("#app-modal .refresh-box"));
+                    EventUtils.absCenter($("#app-modal .fresh-box"));
                 })
             }
-        },
-        "sticky.sum": function(curval) {
-            this.sticky.sofortBtn = curval > this.account.money ? "立即充值" : "立即置顶";
-            this.sticky.planBtn = curval > this.account.money ? "立即充值" : "立即置顶";
         },
     },
 });
@@ -1324,8 +1209,6 @@ function init_center() {
     }
     selectInitInput();
     selectInitPos();
-    //  vipEventBind();
-    modalEventBind();
     uploadEventBind();
     refreshEventBind();
     datepickEventBind();
@@ -1399,12 +1282,6 @@ function init_safepos(percent) {
     $("#safe-progress").css("width", percent + "%");
 }
 
-function modalEventBind() {
-    $(".close").unbind("click").bind("click", function() {
-        $(this).closest("div").hide();
-        $(".modal").hide();
-    })
-}
 
 
 function refreshEventBind() {
@@ -1573,7 +1450,7 @@ function combiMsgRequest(applystatus, page) {
         appCont.message.combi.msgsrc = applystatus;
     });
 }
-
+// 招聘会消息数据请求
 function recruitMsgRequest(page) {
     appCont.message.recruit.curpage = page;
     var postdata = {

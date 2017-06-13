@@ -43,7 +43,7 @@ function infoRequest() {
             phone: respObj.userInfo.mobile,
             state: respObj.userInfo.liveStatus
         };
-        appPorto.briefInfo = briefdata;
+        appModal.baseInfo = appPorto.briefInfo = briefdata;
         if (!respObj.userInfo.cvStatus || respObj.userInfo.cvStatus == "0") { //首次编辑页面信息
             appCont.resume.firstEdit = true;
             $(".view").hide();
@@ -228,7 +228,6 @@ function infoRequest() {
             $(".view").show();
         }
     });
-
 
     //获取用户平台信息
     EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function(resp, status) {
@@ -550,20 +549,18 @@ var appCont = new Vue({
                 return ""
             }
         },
+        dateExtrac: function(date) {
+            if (date) {
+                return date.split(" ")[0];
+            } else {
+                return ""
+            }
+        },
         cityExtrac: function(text) {
             if (text) {
                 return text.split(";")[1]
             } else {
                 return "";
-            }
-        },
-        feedRes: function(action, obj) {
-            if ($(obj).parent("li").hasClass("on")) {
-                if (action == "over") {
-                    $(obj).siblings(".feedback-result").show();
-                } else {
-                    $(obj).siblings(".feedback-result").hide();
-                }
             }
         },
         remainText: function(text) {
@@ -754,6 +751,7 @@ var appCont = new Vue({
             });
         },
         submit: function() {
+            //提交之前对数据进行校验
             var isFilled = true;
             $(".edit-must input:visible").each(function(index) {
                 if (this.value == "") {
@@ -768,6 +766,28 @@ var appCont = new Vue({
                     type: "warning"
                 })
                 return false;
+            }
+            if (!variableUtils.regExp.mobile.test(this.resume.phone)) {
+                $("#cv-mobile").addClass("hint-nullable");
+                swal({
+                    title: "",
+                    text: "请检查手机格式是否正确！",
+                    type: "warning"
+                })
+                return false;
+            } else {
+                $("#cv-mobile").removeClass("hint-nullable");
+            }
+            if (!variableUtils.regExp.email.test(this.resume.email)) {
+                $("#cv-email").addClass("hint-nullable");
+                swal({
+                    title: "",
+                    text: "请检查邮箱格式是否正确！",
+                    type: "warning"
+                })
+                return false;
+            } else {
+                $("#cv-email").removeClass("hint-nullable");
             }
             this.resume.firstEdit = false;
             postResume("all");
@@ -825,15 +845,6 @@ var appCont = new Vue({
             } else {
                 return false;
             }
-        },
-        pagesum: function(totalitems) {
-            var totalpage = 1;
-            if (totalitems % 3 == 0) {
-                totalpage = totalitems / 3
-            } else {
-                totalpage = Math.floor(totalitems / 3) + 1;
-            }
-            return totalpage;
         },
         showpage: function(totalpage) {
             if (totalpage < 3) {
@@ -938,6 +949,11 @@ var appCont = new Vue({
         },
     },
     watch: {
+        'resume.phone': function(curval, oldval) {
+            if (!/^\d*$/.test(curval) || curval.length > 11) {
+                this.resume.phone = oldval;
+            }
+        },
         'colPosList.curstate': function(curval) {
             switch (curval) {
                 case "未投递":
@@ -1167,7 +1183,7 @@ function init_center() {
     if (parObj.theme) {
         $(".sideBox li[paneid='" + parObj.theme + "']").trigger("click");
     }
-    modalEventBind();
+    //   modalEventBind();
     uploadEventBind();
 }
 init_center();
@@ -1251,6 +1267,31 @@ function editEventBind() {
         var editBlock = $(this).closest(".edit-item");
         var viewName = editBlock.attr("name");
         var postdata = {};
+        //校验手机和邮箱格式是否正确
+        if (viewName == "basic") {
+            if (!variableUtils.regExp.mobile.test(appCont.resume.phone)) {
+                $("#cv-mobile").addClass("hint-nullable");
+                swal({
+                    title: "",
+                    text: "请检查手机格式是否正确！",
+                    type: "warning"
+                })
+                return false;
+            } else {
+                $("#cv-mobile").removeClass("hint-nullable");
+            }
+            if (!variableUtils.regExp.email.test(appCont.resume.email)) {
+                $("#cv-email").addClass("hint-nullable");
+                swal({
+                    title: "",
+                    text: "请检查邮箱格式是否正确！",
+                    type: "warning"
+                })
+                return false;
+            } else {
+                $("#cv-email").removeClass("hint-nullable");
+            }
+        }
         switch (viewName) {
             case "speech":
                 var skillArray = [];
@@ -1379,6 +1420,8 @@ function postResume(editType, isDel) {
             id: respObj.userInfo.id,
             realName: appCont.resume.realName,
             marryStatus: marryindex,
+            mobile: appCont.resume.phone,
+            email: appCont.resume.email,
             nativePlace: appCont.resume.nativePlace,
             nation: appCont.resume.nation,
             cvStatus: 1
