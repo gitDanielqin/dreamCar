@@ -203,9 +203,9 @@ var appFront = new Vue({
             this.showAddr = false;
         },
         downwards: function() {
-            $("body").animate({
+            $("html,body").animate({ //HTML兼容FF , body 兼容 Chrome
                 scrollTop: EventUtils.getViewport().height
-            }, 500)
+            }, 1000)
         },
         selectAction: function(obj) {
             switch ($(obj).attr("name")) {

@@ -749,6 +749,9 @@
 
 .safe-range p {
     background: -webkit-linear-gradient(left, #f7524a, #f7a14a, #7ebe96);
+    background: -moz-linear-gradient(left, #f7524a, #f7a14a, #7ebe96);
+    background: -o-linear-gradient(left, #f7524a, #f7a14a, #7ebe96);
+    background: -ms-linear-gradient(left, #f7524a, #f7a14a, #7ebe96);
     width: 80%;
     height: 10px;
     border-radius: 8px;
@@ -1270,7 +1273,6 @@ input.edit-phone {
 }
 
 .msg-info {
-    display: inline-block;
     width: 24px;
     height: 24px;
     background: #ef3e3e;

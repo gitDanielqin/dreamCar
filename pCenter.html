@@ -19,7 +19,7 @@
             <div class="fr navs maT42">
                 <a :href="homeLink"><i class="pic-icon icon-home"></i></a>
                 <a href="#"><i class="pic-icon icon-account"></i></a>
-                <a class="msg-center pRel" href="#" @click.stop="showMsgbox"><i class="pic-icon icon-msg"></i><i class="msg-info">99</i></a>
+                <a class="msg-center pRel" href="#" @click.stop="showMsgbox"><i class="pic-icon icon-msg"></i><i class="msg-info disNo">99</i></a>
             </div>
         </div>
     </div>
@@ -151,7 +151,7 @@
                             </div>
                             <div class="item-row">
                                 <label>期望地点</label>
-                                <div class="address exp-address">
+                                <div class="address exp-address" id="exp-address">
                                     <addr-select :addrdata="database.addrData" :initaddress="{province:resume.expect.province}" class="sel-addr disInline"></addr-select>
                                 </div>
                             </div>
@@ -173,7 +173,7 @@
                                 <p>期望职能：<span>{{resume.expect.posItems}}</span></p>
                             </div>
                             <div class="item-row">
-                                <p>期望地点：<span>{{resume.expect.city}} {{resume.expect.district}}</span></p>
+                                <p>期望地点：<span>{{resume.expect.city}}-{{resume.expect.district}}</span></p>
                             </div>
                             <div class="item-row">
                                 <p>期望月薪：<span>{{resume.expect.salary}}</span></p>
@@ -198,7 +198,7 @@
                                 </div>
                                 <div class="item-row">
                                     <label>公司地址</label>
-                                    <div class="address work-address">
+                                    <div class="address work-address" id="work-address">
                                         <addr-select :addrdata="database.addrData" :initaddress="{province:worksExp.province}" class="sel-addr disInline"></addr-select>
                                     </div>
                                 </div>
@@ -250,7 +250,7 @@
                                 </div>
                                 <div class="item-row">
                                     <label>专业名称</label>
-                                    <major-pop :majordata="database.major" :initmajors="{major:edu.major}" class="major-name disInline"></major-pop>
+                                    <major-pop :majordata="database.major" :initmajors="{major:edu.major}" class="major-name disInline" id="major-name"></major-pop>
                                 </div>
                                 <div class="item-row time-interval">
                                     <label>就读时间</label>
@@ -553,7 +553,8 @@
                                     <ul class="lis-inline feedState">
                                         <li class="on"><i class="feedstate-icon"></i><span>已投递</span><i :class="{on:item.readStatus==1}" class="feed-icon-bind"></i></li>
                                         <li :class="{on:item.readStatus==1}"><i class="feedstate-icon"></i><span>已查看</span><i :class="{on:item.status!=0}" class="feed-icon-bind"></i></li>
-                                        <li :class="{on:item.status!=0}"><i class="feedstate-icon"></i>
+                                        <li :class="{on:item.status==1||item.status==2}"><i class="feedstate-icon"></i>
+                                            <span v-show="item.status==0||!item.status">已反馈</span>
                                             <span class="color-green" v-show="item.status==1">通过</span>
                                             <span class="color-red" v-show="item.status==2">不合适</span>
                                         </li>
@@ -572,7 +573,8 @@
                                     <ul class="lis-inline feedState">
                                         <li class="on"><i class="feedstate-icon"></i><span>已投递</span><i :class="{on:item.readStatus==1}" class="feed-icon-bind"></i></li>
                                         <li :class="{on:item.readStatus==1}"><i class="feedstate-icon"></i><span>已查看</span><i :class="{on:item.status!=0}" class="feed-icon-bind"></i></li>
-                                        <li :class="{on:item.status!=0}"><i class="feedstate-icon"></i>
+                                        <li :class="{on:item.status==1||item.status==2}"><i class="feedstate-icon"></i>
+                                            <span v-show="item.status==0||!item.status">已反馈</span>
                                             <span class="color-green" v-show="item.status==1">通过</span>
                                             <span class="color-red" v-show="item.status==2">不合适</span>
                                         </li>
@@ -644,10 +646,10 @@
                         <div class="porto-img W96 H96"></div>
                     </div>
                     <div class="infoTxt maL54 fl color-gray6 fSize14 LH33 W560">
-                        <h3 class="LH-H30 fSize18 color-gray3 maB9">{{baseInfo.name}}<span class="fSize14 maL10">{{baseInfo.gender}}</span></h3>
-                        <p>UI设计师</p>
+                        <h3 class="LH-H30 fSize18 color-gray3 maB9">{{resumeInfo.realName}}<span class="fSize14 maL10">{{baseInfo.gender}}</span></h3>
+                        <p>{{baseInfo.state}}</p>
                         <p>{{baseInfo.address.city}}.{{baseInfo.address.district}}</p>
-                        <p>手机：{{baseInfo.phone}}</p>
+                        <p>手机：{{resumeInfo.phone}}</p>
                         <p>邮箱：{{resumeInfo.email}}</p>
                     </div>
                 </div>
@@ -660,17 +662,17 @@
                             <td class="la-l">出生年月:</td>
                             <td class="val-l">{{baseInfo.birthyear}}年{{baseInfo.birthmonth}}月{{baseInfo.birthday}}日</td>
                             <td class="la-r">婚姻状况:</td>
-                            <td>未婚</td>
+                            <td>{{resumeInfo.family}}</td>
                         </tr>
                         <tr>
                             <td class="la-l">手机:</td>
-                            <td class="val-l">{{baseInfo.phone}}</td>
+                            <td class="val-l">{{resumeInfo.phone}}</td>
                             <td class="la-r">邮箱:</td>
                             <td>{{resumeInfo.email}}</td>
                         </tr>
                         <tr>
                             <td class="la-l">籍贯:</td>
-                            <td class="val-l">{{baseInfo.address.province}}</td>
+                            <td class="val-l">{{resumeInfo.nativePlace}}</td>
                             <td class="la-r">民族:</td>
                             <td>{{resumeInfo.nation}}</td>
                         </tr>
@@ -685,7 +687,7 @@
                         <label>期望职能：<span>{{resumeInfo.expect.posItems}}</span></label>
                     </div>
                     <div class="item-row">
-                        <label>期望地点：<span>{{resumeInfo.expect.city}} {{resumeInfo.expect.district}}</span></label>
+                        <label>期望地点：<span>{{resumeInfo.expect.province}}-{{resumeInfo.expect.city}}-{{resumeInfo.expect.district}}</span></label>
                     </div>
                     <div class="item-row">
                         <label>期望月薪：<span>{{resumeInfo.expect.salary}}</span></label>
@@ -701,7 +703,7 @@
                         <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{worksExp.startyear}}.{{worksExp.startmonth}}--{{worksExp.endyear}}.{{worksExp.endmonth}}</span>{{worksExp.firma}}<i class="headmark"></i></h4>
                         <p>{{worksExp.trade}}</p>
                         <p><span>工作职能：</span>{{worksExp.pos}}</p>
-                        <p><span>工作地点：</span>{{worksExp.city}}-{{worksExp.district}}</p>
+                        <p><span>工作地点：</span>{{worksExp.province}}-{{worksExp.city}}-{{worksExp.district}}</p>
                         <p><span>工作职责：</span>{{worksExp.resp}}</p>
                     </div>
                 </div>
@@ -713,7 +715,7 @@
                     </h3>
                     <div class="infopane maT13 maB16" v-for="edu in resumeInfo.edus">
                         <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{edu.startyear}}.{{edu.startmonth}}--{{edu.endyear}}.{{edu.endmonth}}</span>{{edu.uni}}<i class="headmark"></i></h4>
-                        <p class="LH-H25"><span class="W250 disInline">专业名称：{{edu.submajor}}</span><span>学历：{{edu.qualification}}</span></p>
+                        <p class="LH-H25"><span class="W250 disInline">专业名称：{{edu.major}}/{{edu.submajor}}</span><span>学历：{{edu.qualification}}</span></p>
                     </div>
                 </div>
                 <div class="itemBox">

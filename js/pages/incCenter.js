@@ -23,8 +23,9 @@ function infoRequest() {
     console.log(postdata);
     EventUtils.ajaxReq('/user/company/getInfo', 'get', postdata, function(resp, status) {
         respObj = resp.data;
-        console.log(respObj);
-        $("#avatar-box").html("<img src='" + respObj.userIcon + "' />");
+        if (respObj.userIcon) {
+            $("#avatar-box").html("<img src='" + respObj.userIcon + "' />");
+        }
         if (respObj) {
             var portobrief = {
                 IncProps: respObj.property,
@@ -485,7 +486,7 @@ var appCont = new Vue({
             };
             if (this.resume.comLicense != "") { //如果用户有上传文件
                 setTimeout(function() {
-                    if (this.resume.comLicense != "" && !hascomUrl) {
+                    if (appCont.resume.comLicense != "" && !hascomUrl) {
                         swal({
                             title: "",
                             text: "文件上传失败，请重新上传！",

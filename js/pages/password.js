@@ -50,7 +50,8 @@ var appCont = new Vue({
         switchcode: function() {
             // console.log(1);
             EventUtils.ajaxReq("/sys/img", "get", {}, function(resp, status) {
-                $(".code-pic")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img";
+                //  $(".code-pic")[0].src = "";
+                $(".code-pic")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
             })
         },
         nextstep: function(index) {
@@ -121,6 +122,19 @@ var appCont = new Vue({
                         type: 3
                     }
                     EventUtils.ajaxReq("/sys/emailCode", "post", postdata, function(resp, status) {
+                        if (resp.code == "00000") {
+                            swal({
+                                title: "",
+                                text: "验证码发送成功！",
+                                type: "success",
+                            });
+                        } else {
+                            swal({
+                                title: "",
+                                text: resp.info,
+                                type: "error",
+                            });
+                        }
                         console.log(resp);
                     })
                 }
@@ -152,7 +166,19 @@ var appCont = new Vue({
                         type: 3
                     }
                     EventUtils.ajaxReq("/sys/mobileCode", "post", postdata, function(resp, status) {
-
+                        if (resp.code == "00000") {
+                            swal({
+                                title: "",
+                                text: "验证码发送成功！",
+                                type: "success",
+                            });
+                        } else {
+                            swal({
+                                title: "",
+                                text: resp.info,
+                                type: "error",
+                            });
+                        }
                     })
                 }
             }
@@ -277,6 +303,23 @@ var appCont = new Vue({
             }
             console.log(postdata);
             EventUtils.ajaxReq("/center/user/resetPassword", "post", postdata, function(resp, status) {
+                if (resp.code == "00000") {
+                    swal({
+                        title: "",
+                        text: "密码修改成功，将自动跳转到登陆页面！",
+                        type: "success",
+                        showConfirmButton: false
+                    });
+                    setTimeout(function() {
+                        window.location.href = "login.html?newAcc=0";
+                    }, 1000)
+                } else {
+                    swal({
+                        title: "",
+                        text: resp.info,
+                        type: "error",
+                    });
+                }
                 console.log(resp);
             })
             this.hint = "";

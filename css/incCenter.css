@@ -760,29 +760,60 @@
     line-height: 21px;
 }
 
-.state-icon {
-    height: 20px;
-    display: block;
-    background: url("../images/icon-apply-state.png") no-repeat center center;
-}
 
-.state-line li {
-    width: 70px;
+/*反馈进度条样式*/
+
+.feedState li {
+    margin-top: 0;
     text-align: center;
-    line-height: 34px;
+    width: 50px;
+    font-size: 12px;
+    height: 70px;
+    color: #b8b8b8;
+    border: none;
+    margin-right: 18px;
+    position: relative;
+    overflow: visible;
 }
 
-.state-line li.on {
+.feedstate-icon {
+    width: 22px;
+    height: 22px;
+    font-size: 0;
+    display: inline-block;
+    background: url("../images/icon-feedback-off.png") no-repeat center center;
+}
+
+.feed-icon-bind {
+    position: absolute;
+    top: 10px;
+    left: 34px;
+    display: inline-block;
+    border-top: 4px solid #f2f2f2;
+    width: 48px;
+    height: 0;
+    z-index: 5;
+}
+
+.feed-icon-bind.on {
+    border-color: #f7a14a;
+}
+
+.feedState li span {
+    display: block;
+    line-height: 30px;
+}
+
+.feedState li.on {
     color: #f7a14a;
 }
 
-.state-line li.on .state-icon {
-    background-image: url("../images/icon-apply-state1.png");
+.feedState li.on .feedstate-icon {
+    background-image: url("../images/icon-feedback.png");
 }
 
-.state-line {
-    background: url("../images/msg-line.png") no-repeat 33px 8px;
-}
+
+/**/
 
 .more-info {
     color: #999;
@@ -863,6 +894,9 @@
 
 .safe-range p {
     background: -webkit-linear-gradient(left, #f7524a, #f7a14a, #7ebe96);
+    background: -moz-linear-gradient(left, #f7524a, #f7a14a, #7ebe96);
+    background: -o-linear-gradient(left, #f7524a, #f7a14a, #7ebe96);
+    background: -ms-linear-gradient(left, #f7524a, #f7a14a, #7ebe96);
     width: 80%;
     height: 10px;
     border-radius: 8px;

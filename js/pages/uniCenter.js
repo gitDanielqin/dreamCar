@@ -18,7 +18,7 @@
 var parObj = EventUtils.urlExtrac(window.location);
 var respObj = {}; //请求的本页面的数据集合
 // 请求本页面数据
-(function() {
+function infoRequest() {
     var postdata = {
         userId: parObj.userId || localStorage.userId,
         loginIdentifier: parObj.loginId || localStorage.userId
@@ -26,7 +26,9 @@ var respObj = {}; //请求的本页面的数据集合
 
     EventUtils.ajaxReq('/user/school/getInfo', 'get', postdata, function(resp, status) {
         respObj = resp.data;
-        $("#avatar-box").html("<img src='" + respObj.userIcon + "' />");
+        if (respObj.userIcon) {
+            $("#avatar-box").html("<img src='" + respObj.userIcon + "' />");
+        }
         //如果高校信息存在，则对简历信息进行初始化
         if (respObj) {
             var portobrief = {
@@ -105,7 +107,7 @@ var respObj = {}; //请求的本页面的数据集合
         appModal.account.freeFreshTimes = resp.data.freeRefresh;
     })
 
-})()
+}
 
 var appTop = new Vue({
     el: "#app-top",
@@ -1190,6 +1192,8 @@ var appModal = new Vue({
 
 
 function init_center() {
+    //请求页面数据
+    infoRequest();
     //如果有主题跳转信息
     if (parObj.theme) {
         switch (parObj.theme) {

@@ -539,7 +539,7 @@ _init();
 function selectInitPos() {
     $(".selectee input").each(function() {
         var bgPos = $(this).width() + 10 + "px center";
-        $(this).attr("disabled", "true").css("background-position", bgPos);
+        $(this).css("background-position", bgPos);
     });
     $(".selectee ul").each(function() {
         var sibInput = $(this).siblings("input")

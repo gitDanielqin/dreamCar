@@ -113,7 +113,7 @@
         data: function() {
             return {
                 account: {
-                    money: 50
+                    money: 0
                 },
                 sticky: {
                     content: [],
@@ -233,6 +233,10 @@
             "sticky.sum": function(curval) {
                 this.sticky.sofortBtn = curval > this.account.money ? "立即充值" : "立即置顶";
                 this.sticky.planBtn = curval > this.account.money ? "立即充值" : "立即置顶";
+            },
+            "account.money": function(curval) {
+                this.sticky.sofortBtn = this.sticky.sum > curval ? "立即充值" : "立即置顶";
+                this.sticky.planBtn = this.sticky.sum > curval ? "立即充值" : "立即置顶";
             },
             "sticky.show": function(curval) {
                 if (!curval) {

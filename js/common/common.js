@@ -106,8 +106,9 @@ window.EventUtils = {
             return postdata;
         },
         absCenter: function(obj) {
+            var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
             $(obj).css({
-                top: Math.floor(($(window).height() - $(obj).height()) / 2 + document.body.scrollTop),
+                top: Math.floor(($(window).height() - $(obj).height()) / 2 + scrollTop),
                 left: Math.floor(($(window).width() - $(obj).width()) / 2)
             })
         },
@@ -144,8 +145,8 @@ window.EventUtils = {
         },
         ajaxReq: function(url, method, postdata, callback) {
             $.ajax({
-                // url: "http://www.xiaoqiztc.com/easily_xq_WebApi" + url,
-                url: "http://192.168.0.105:8080/easily_xq_WebApi" + url,
+                url: "http://www.xiaoqiztc.com/easily_xq_WebApi" + url,
+                // url: "http://192.168.0.105:8080/easily_xq_WebApi" + url,
                 type: method,
                 data: postdata,
                 success: callback,

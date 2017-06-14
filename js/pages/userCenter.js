@@ -253,9 +253,6 @@ function infoRequest() {
     })
 
 }
-
-infoRequest();
-
 var appTop = new Vue({
     el: "#app-top",
     data: {
@@ -337,6 +334,26 @@ var appPorto = new Vue({
             return (date.getFullYear() - birthyear);
         },
         showPre: function() {
+            if (appCont.resume.firstEdit) { //如果是首次编辑预览简历要进行一定的处理
+                //期望工作地点              
+                appCont.resume.expect.province = $("#exp-address .sel-province input").val();
+                appCont.resume.expect.city = $("#exp-address .sel-city input").val();
+                appCont.resume.expect.district = $("#exp-address .sel-district input").val();
+                //工作经历地址
+                var worksArray = $("#work-address");
+                for (var i = 0; i < appCont.resume.worksExps.length; i++) {
+                    appCont.resume.worksExps[i].province = worksArray.eq(i).find(".sel-province input").val();
+                    appCont.resume.worksExps[i].city = worksArray.eq(i).find(".sel-city input").val();
+                    appCont.resume.worksExps[i].district = worksArray.eq(i).find(".sel-district input").val();
+                };
+                //专业名称
+                var majorArray = $("#major-name");
+                for (var j = 0; j < appCont.resume.edus.length; j++) {
+                    appCont.resume.edus[j].major = majorArray.eq(j).find(".major-input-1 input").val();
+                    appCont.resume.edus[j].submajor = majorArray.eq(j).find(".major-input-2 input").val();
+                    appCont.resume.edus[j].exmajor = majorArray.eq(j).find(".ex-major").val();
+                }
+            }
             appModal.showModal = true;
             appModal.show.preview = true;
         },
@@ -657,6 +674,26 @@ var appCont = new Vue({
             appModal.show.position = true;
         },
         showPre: function() {
+            if (appCont.resume.firstEdit) { //如果是首次编辑预览简历要进行一定的处理
+                //期望工作地点              
+                appCont.resume.expect.province = $("#exp-address .sel-province input").val();
+                appCont.resume.expect.city = $("#exp-address .sel-city input").val();
+                appCont.resume.expect.district = $("#exp-address .sel-district input").val();
+                //工作经历地址
+                var worksArray = $("#work-address");
+                for (var i = 0; i < appCont.resume.worksExps.length; i++) {
+                    appCont.resume.worksExps[i].province = worksArray.eq(i).find(".sel-province input").val();
+                    appCont.resume.worksExps[i].city = worksArray.eq(i).find(".sel-city input").val();
+                    appCont.resume.worksExps[i].district = worksArray.eq(i).find(".sel-district input").val();
+                };
+                //专业名称
+                var majorArray = $("#major-name");
+                for (var j = 0; j < appCont.resume.edus.length; j++) {
+                    appCont.resume.edus[j].major = majorArray.eq(j).find(".major-input-1 input").val();
+                    appCont.resume.edus[j].submajor = majorArray.eq(j).find(".major-input-2 input").val();
+                    appCont.resume.edus[j].exmajor = majorArray.eq(j).find(".ex-major").val();
+                }
+            }
             appModal.showModal = true;
             appModal.show.preview = true;
             $(window).scrollTop(0);
@@ -1176,6 +1213,7 @@ var appModal = new Vue({
 
 
 function init_center() {
+    infoRequest();
     selectInitInput();
     selectInitPos();
     init_safepos();
@@ -1228,8 +1266,8 @@ function uploadEventBind() {
         }
         EventUtils.ajaxReq("/center/user/uploadIcon", "post", postdata, function(resp, status) {
             $("#avatar-box").html("<img src='" + resp.data + "' />");
+            $(".porto-img").html("<img src='" + resp.data + "' />");
         });
-        $(".porto-img").html("<img src='" + imgsrc + "' />");
         appModal.show.upload = false;
         appModal.showModal = false;
     })
@@ -1366,12 +1404,6 @@ function init_safepos(percent) {
     $("#safe-progress").css("width", percent + "%");
 }
 
-function modalEventBind() {
-    $(".close").unbind("click").bind("click", function() {
-        $(this).closest("div").hide();
-        $(".modal").hide();
-    })
-}
 
 
 function delItem(editType, id) {
@@ -1433,9 +1465,9 @@ function postResume(editType, isDel) {
 
     if (editType == "all" || editType == "trade") {
 
-        appCont.resume.expect.province = $(".exp-address .sel-province input").val();
-        appCont.resume.expect.city = $(".exp-address .sel-city input").val();
-        appCont.resume.expect.district = $(".exp-address .sel-district input").val();
+        appCont.resume.expect.province = $("#exp-address .sel-province input").val();
+        appCont.resume.expect.city = $("#exp-address .sel-city input").val();
+        appCont.resume.expect.district = $("#exp-address .sel-district input").val();
 
         var postCvdata = {
             userId: parObj.userId,
@@ -1451,13 +1483,13 @@ function postResume(editType, isDel) {
         }
         console.log(postCvdata, 2);
         EventUtils.ajaxReq("/user/user/modifyCvBaiscInfo", "post", postCvdata, function(resp, status) {
-            console.log(resp, 2);
+            //  console.log(resp, 2);
         })
     }
 
     if (editType == "all" || editType == "work") {
 
-        var worksArray = $(".work-address");
+        var worksArray = $("#work-address");
         for (var i = 0; i < appCont.resume.worksExps.length; i++) {
             appCont.resume.worksExps[i].province = worksArray.eq(i).find(".sel-province input").val();
             appCont.resume.worksExps[i].city = worksArray.eq(i).find(".sel-city input").val();
@@ -1493,7 +1525,7 @@ function postResume(editType, isDel) {
 
     if (editType == "all" || editType == "edu") {
 
-        var majorArray = $(".major-name");
+        var majorArray = $("#major-name");
         for (var j = 0; j < appCont.resume.edus.length; j++) {
             appCont.resume.edus[j].major = majorArray.eq(j).find(".major-input-1 input").val();
             appCont.resume.edus[j].submajor = majorArray.eq(j).find(".major-input-2 input").val();

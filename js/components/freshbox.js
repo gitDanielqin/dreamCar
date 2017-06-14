@@ -213,6 +213,10 @@
                 this.fresh.sofortBtn = curval > this.account.money ? "立即充值" : "立即刷新";
                 this.fresh.smartBtn = curval > this.account.money ? "立即充值" : "立即刷新";
             },
+            "account.money": function(curval) {
+                this.fresh.sofortBtn = this.fresh.sum > curval ? "立即充值" : "立即刷新";
+                this.fresh.smartBtn = this.fresh.sum > curval ? "立即充值" : "立即刷新";
+            },
             "fresh.show": function(curval) {
                 if (!curval) {
                     //  console.log(1);

@@ -19,7 +19,7 @@
             <div class="fr navs maT42">
                 <a :href="homeLink"><i class="pic-icon icon-home"></i></a>
                 <a href="#"><i class="pic-icon icon-account"></i></a>
-                <a class="msg-center pRel" href="#" @click.stop="showMsgbox"><i class="pic-icon icon-msg"></i><i class="msg-info">99</i></a>
+                <a class="msg-center pRel" href="#" @click.stop="showMsgbox"><i class="pic-icon icon-msg"></i><i class="msg-info disNo">99</i></a>
             </div>
         </div>
     </div>
@@ -307,10 +307,14 @@
                                    </div>
                                    <div class="item-block-right fl fSize14 LH30 pRel uni-apply-message">
                                        <p class="t-right">高校名称：{{item.userName}}</p>
-                                       <ul class="state-line lis-inline maT15">
-                                             <li class="on"><i class="state-icon"></i>已发出</li>
-                                             <li :class="{on:item.readStatus=='1'}"><i class="state-icon"></i>已查看</li>
-                                             <li :class="{on:item.status=='1'||item.status=='2'}"><i class="state-icon"></i>反馈结果</li>
+                                       <ul class="state-line lis-inline maT15 feedState">
+                                            <li class="on"><i class="feedstate-icon"></i><span>已发出</span><i :class="{on:item.readStatus==1}" class="feed-icon-bind"></i></li>
+                                            <li :class="{on:item.readStatus==1}"><i class="feedstate-icon"></i><span>已查看</span><i :class="{on:item.status!=0}" class="feed-icon-bind"></i></li>
+                                            <li :class="{on:item.status==1||item.status==2}"><i class="feedstate-icon"></i>
+                                                <span v-show="item.status==0||!item.status">已反馈</span>
+                                                <span class="color-green" v-show="item.status==1">同意</span>
+                                                <span class="color-red" v-show="item.status==2">不合适</span>
+                                            </li>
                                        </ul>
                                        <p class="apply-feedback fr"><span class="color-green" v-show="item.status=='1'">同意</span><span class="color-red" v-show="item.status=='2'">不同意</span></p>
                                    </div>
@@ -344,10 +348,14 @@
                                    </div>
                                    <div class="item-block-right fl fSize14 LH30 pRel uni-apply-message">
                                        <p class="t-right">高校名称：{{item.userName}}</p>
-                                       <ul class="state-line lis-inline maT15">
-                                             <li class="on"><i class="state-icon"></i>已发出</li>
-                                             <li :class="{on:item.readStatus=='1'}"><i class="state-icon"></i>已查看</li>
-                                             <li :class="{on:item.status=='1'||item.status=='2'}"><i class="state-icon"></i>反馈结果</li>
+                                       <ul class="state-line lis-inline maT15 feedState">
+                                            <li class="on"><i class="feedstate-icon"></i><span>已发出</span><i :class="{on:item.readStatus==1}" class="feed-icon-bind"></i></li>
+                                            <li :class="{on:item.readStatus==1}"><i class="feedstate-icon"></i><span>已查看</span><i :class="{on:item.status!=0}" class="feed-icon-bind"></i></li>
+                                            <li :class="{on:item.status==1||item.status==2}"><i class="feedstate-icon"></i>
+                                                <span v-show="item.status==0||!item.status">已反馈</span>
+                                                <span class="color-green" v-show="item.status==1">同意</span>
+                                                <span class="color-red" v-show="item.status==2">不合适</span>
+                                            </li>
                                        </ul>
                                        <p class="apply-feedback fr"><span class="color-green" v-show="item.status=='1'">同意</span><span class="color-red" v-show="item.status=='2'">不同意</span></p>
                                    </div>

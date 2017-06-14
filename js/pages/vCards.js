@@ -65,8 +65,9 @@ var appCont = new Vue({
                     $(obj).html("获取验证码");
                     $(obj).attr("disabled", false);
                     clearInterval(timer);
+                } else {
+                    $(obj).html("重新获取 (" + (60 - start) + "s)");
                 }
-                $(obj).html("重新获取 (" + (60 - start) + "s)");
             }, 1000);
             var postdata = {
                 mobile: mobile,

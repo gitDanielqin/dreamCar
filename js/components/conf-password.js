@@ -6,7 +6,7 @@
                     <div><label>当前密码</label><input type="password" placeholder="6-16字母、数字、无空格" v-model="oldpsw"/></div>\
                     <div><label>新密码</label><input type="password" placeholder="6-16字母、数字、无空格" v-model="newpsw"/></div>\
                     <div><label>确认密码</label><input type="password" placeholder="6-16字母、数字、无空格" v-model="dbpsw"/></div>\
-                    <div><label>验证码</label><input type="text" v-model="validcode"/><i class="conf-psw-varifycode"><img src="http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img" /></i></div>\
+                    <div><label>验证码</label><input type="text" v-model="validcode"/><i class="conf-psw-varifycode"><img src="http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img" /><span class="conf-psw-codetext" @click="switchCode">看不清？换一张</span></i></div>\
                     <div class="conf-psw-confirm"><button type="button" @click="confirm">确认修改</button></div>\
                 </form>\
         </div>';
@@ -22,6 +22,13 @@
             }
         },
         methods: {
+            switchCode: function() {
+                EventUtils.ajaxReq("/sys/img", "get", {}, function(resp, status) {
+                    //console.log(resp);
+                    // $(".conf-psw-varifycode img")[0].src = resp;
+                    $(".conf-psw-varifycode img")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
+                })
+            },
             confirm: function() {
                 if (this.oldpsw == "") {
                     swal({

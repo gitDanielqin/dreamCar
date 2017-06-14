@@ -36,8 +36,10 @@ var appCont = new Vue({
             isPassValid: false
         },
         login: {
-            account: localStorage.loginName ? localStorage.loginName : "",
-            password: localStorage.password ? localStorage.password : ""
+            account: window.localStorage && localStorage.loginName ? localStorage.loginName : "",
+            // account: "",
+            password: window.localStorage && localStorage.password ? localStorage.password : ""
+                // password: ""
         },
         show: {
             regis: parObj.newAcc == "1",
@@ -168,8 +170,9 @@ var appCont = new Vue({
                     appCont.validText = "获取验证码";
                     $(obj).attr("disabled", false);
                     clearInterval(timer);
+                } else {
+                    appCont.validText = "重新获取 (" + (60 - start) + "s)";
                 }
-                appCont.validText = "重新获取 (" + (60 - start) + "s)";
             }, 1000);
             var postdata;
             var posturl;
@@ -187,8 +190,13 @@ var appCont = new Vue({
                 posturl = "/sys/emailCode?";
             };
             EventUtils.ajaxReq(posturl, 'post', postdata, function(resp, status) {
-                appCont.validText = "获取验证码";
-                $(obj).attr("disabled", false);
+                swal({
+                        title: "",
+                        text: resp.info,
+                        type: "warning"
+                    })
+                    //  appCont.validText = "获取验证码";
+                    //   $(obj).attr("disabled", false);
             });
         }
     },

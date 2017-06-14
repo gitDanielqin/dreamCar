@@ -144,10 +144,10 @@
                         <div class="porto-img W96 H96"></div>
                     </div>
                     <div class="infoTxt maL54 fl color-gray6 fSize14 LH33 W560">
-                        <h3 class="LH-H30 fSize18 color-gray3 maB9">江玉海<span class="fSize14 maL10">{{baseInfo.gender}}</span></h3>
-                        <p>UI设计师</p>
+                        <h3 class="LH-H30 fSize18 color-gray3 maB9">{{resumeInfo.realName}}<span class="fSize14 maL10">{{baseInfo.gender}}</span></h3>
+                        <p>{{baseInfo.state}}</p>
                         <p>{{baseInfo.address.city}}.{{baseInfo.address.district}}</p>
-                        <p>手机：{{baseInfo.phone}}</p>
+                        <p>手机：{{resumeInfo.phone}}</p>
                         <p>邮箱：{{resumeInfo.email}}</p>
                     </div>
                 </div>
@@ -160,17 +160,17 @@
                             <td class="la-l">出生年月:</td>
                             <td class="val-l">{{baseInfo.birthyear}}年{{baseInfo.birthmonth}}月{{baseInfo.birthday}}日</td>
                             <td class="la-r">婚姻状况:</td>
-                            <td>未婚</td>
+                            <td>{{resumeInfo.family}}</td>
                         </tr>
                         <tr>
                             <td class="la-l">手机:</td>
-                            <td class="val-l">{{baseInfo.phone}}</td>
+                            <td class="val-l">{{resumeInfo.phone}}</td>
                             <td class="la-r">邮箱:</td>
                             <td>{{resumeInfo.email}}</td>
                         </tr>
                         <tr>
                             <td class="la-l">籍贯:</td>
-                            <td class="val-l">{{baseInfo.address.province}}</td>
+                            <td class="val-l">{{resumeInfo.nativePlace}}</td>
                             <td class="la-r">民族:</td>
                             <td>{{resumeInfo.nation}}</td>
                         </tr>
@@ -185,7 +185,7 @@
                         <label>期望职能：<span>{{resumeInfo.expect.posItems}}</span></label>
                     </div>
                     <div class="item-row">
-                        <label>期望地点：<span>{{resumeInfo.expect.city}} {{resumeInfo.expect.district}}</span></label>
+                        <label>期望地点：<span>{{resumeInfo.expect.province}}-{{resumeInfo.expect.city}}-{{resumeInfo.expect.district}}</span></label>
                     </div>
                     <div class="item-row">
                         <label>期望月薪：<span>{{resumeInfo.expect.salary}}</span></label>
@@ -201,7 +201,7 @@
                         <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{worksExp.startyear}}.{{worksExp.startmonth}}--{{worksExp.endyear}}.{{worksExp.endmonth}}</span>{{worksExp.firma}}<i class="headmark"></i></h4>
                         <p>{{worksExp.trade}}</p>
                         <p><span>工作职能：</span>{{worksExp.pos}}</p>
-                        <p><span>工作地点：</span>{{worksExp.city}}-{{worksExp.district}}</p>
+                        <p><span>工作地点：</span>{{worksExp.province}}-{{worksExp.city}}-{{worksExp.district}}</p>
                         <p><span>工作职责：</span>{{worksExp.resp}}</p>
                     </div>
                 </div>
@@ -213,7 +213,7 @@
                     </h3>
                     <div class="infopane maT13 maB16" v-for="edu in resumeInfo.edus">
                         <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{edu.startyear}}.{{edu.startmonth}}--{{edu.endyear}}.{{edu.endmonth}}</span>{{edu.uni}}<i class="headmark"></i></h4>
-                        <p class="LH-H25"><span class="W250 disInline">专业名称：{{edu.submajor}}</span><span>学历：{{edu.qualification}}</span></p>
+                        <p class="LH-H25"><span class="W250 disInline">专业名称：{{edu.major}}/{{edu.submajor}}</span><span>学历：{{edu.qualification}}</span></p>
                     </div>
                 </div>
                 <div class="itemBox">

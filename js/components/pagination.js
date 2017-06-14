@@ -28,13 +28,13 @@
                 default: "",
             }
         },
-        data() {
+        data: function() {
             return {
                 curPage: 1
             }
         },
         computed: {
-            pages() {
+            'pages': function() {
                 let left = 1,
                     right = this.totalpages,
                     movePoint = Math.ceil(this.showpages / 2),
@@ -58,7 +58,7 @@
             }
         },
         methods: {
-            controlPage(page) {
+            controlPage: function(page) {
                 if (page > this.totalpages) {
                     return false;
                 } else if (page < 1) {
