@@ -160,6 +160,9 @@
                         }
                     }
                 }
+                if ($(obj).html() == "立即充值") {
+                    window.location.href = "recharge.html?userId=" + this.userid;
+                }
             },
             selectStickWay: function(way, obj) {
                 $(".stick-navs .on").removeClass("on");

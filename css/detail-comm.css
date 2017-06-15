@@ -215,6 +215,7 @@ button.btn-apply[disabled] {
 
 .uni-logo img {
     width: 100%;
+    height: auto;
 }
 
 .porto {
@@ -381,6 +382,7 @@ button.btn-apply[disabled] {
     margin-top: 10px;
     border-radius: 50%;
     width: 60px;
+    height: auto;
 }
 
 .time {
@@ -515,8 +517,18 @@ a.login-link {
     background: #f7eec9;
 }
 
+.dlg-closer {
+    width: 30px;
+    height: 30px;
+}
+
 
 /*账户头部样式*/
+
+.xq-logo {
+    height: 47px;
+    width: auto;
+}
 
 .account .pic-icon {
     margin-left: 9px;

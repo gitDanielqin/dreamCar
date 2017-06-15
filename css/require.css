@@ -24,7 +24,7 @@
 .top .navs a .icon-msg {
     width: 31px;
     height: 31px;
-    background: url("../images/sprite.png") no-repeat -6px -262px;
+    background: url("../images/sprite.png") no-repeat -7px -262px;
 }
 
 .msg-info {
@@ -81,7 +81,7 @@
     background: -webkit-linear-gradient(left, #f7b633, #ccc);
     background: -moz-linear-gradient(left, #f7b633, #ccc);
     background: -o-linear-gradient(left, #f7b633, #ccc);
-    background: linear-gradient(left, #f7b633, #ccc);
+    background: -ms-linear-gradient(left, #f7b633, #ccc);
 }
 
 .steps li.past .bind-line {
@@ -133,6 +133,7 @@
     border: 1px solid #ccc;
     padding-left: 10px;
     line-height: 24px;
+    height: 24px;
     margin-right: 16px;
     width: 148px;
     overflow: hidden;
@@ -166,6 +167,7 @@
 
 .form-cont .head-input input {
     line-height: 31px;
+    height: 31px;
     width: 432px;
 }
 

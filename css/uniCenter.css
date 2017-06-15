@@ -225,6 +225,7 @@
 .recharge-btn {
     width: 100px;
     height: 36px;
+    line-height: 36px;
     color: white;
     border-radius: 5px;
     margin-left: 80px;
@@ -900,9 +901,14 @@
 }
 
 .porto-upload .close {
+    cursor: pointer;
     position: absolute;
     right: 10px;
     top: 13px;
+}
+
+.porto-upload .close:hover {
+    background: #999;
 }
 
 .zoom {

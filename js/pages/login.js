@@ -117,7 +117,7 @@ var appCont = new Vue({
                 loginName: this.login.account,
                 password: this.login.password
             };
-
+            console.log(postdata);
             var callback = function(resp, status) {
                 if (resp.code == "10002") {
                     swal({
@@ -140,7 +140,6 @@ var appCont = new Vue({
                         localStorage.removeItem("loginId");
                     }
                 }
-
                 if (resp.data.cardStatus == "0") {
                     var parstring = "userType=" + resp.data.userType + "&userId=" + resp.data.userId + "&loginId=" + resp.data.loginIdentifier;
                     window.location.href = "vCards.html?" + parstring;
@@ -231,6 +230,9 @@ var appCont = new Vue({
         "regisUnable": function() {
             return !this.register.isAccValid || !this.register.isPassValid || this.register.validcode == "";
         }
+    },
+    mounted: function() {
+        //     EventUtils.placeholderFill();
     }
 })
 
@@ -243,11 +245,18 @@ var appModal = new Vue({
         hideModal: function() {
             this.showModal = false
         },
+    },
+    mounted: function() {
+        $(".agreementBox").height(EventUtils.getViewport().height - 100);
+        EventUtils.absCenter($(".agreementBox"));
     }
 })
 
+//
 
+//
 function _init() {
+
     loginEventBind();
     regisEventBind();
     initSize();

@@ -31,7 +31,13 @@ var variableUtils = {
         mobile: /^1[34578]\d{9}$/,
         email: /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/,
         password: /^[a-zA-Z0-9]{6,16}$/,
-        phone: /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/
+        phone: /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/,
+    },
+    xqInfo: {
+        phone: "0571-28277417-818",
+        address: "杭州市滨江区六合路368号海创基地北三楼B3077",
+        email: "market@xiaoqiztc.com",
+        copyright: "校企职通车版权所有©2017XIAOQI 浙ICP备17007975号-2 浙公网安备3481464号"
     }
 }
 window.variableUtils = variableUtils;
@@ -235,6 +241,27 @@ window.EventUtils = {
                     height: document.documentElement.clientHeight
                 }
             }
+        },
+        placeholderFill: function() { //对无placeholder功能浏览器提供兼容处理
+            var input = document.createElement('input');
+            if ('placeholder' in input) { //如果支持placeholer
+                return;
+            };
+            $("input[type='text']").each(function(index) {
+                // $(this).attr("placeholder");
+                $(this).val($(this).attr("placeholder"));
+                $(this).focus(function() {
+                    console.log(1);
+                    if ($(this).val() == $(this).attr("placeholder")) {
+                        $(this).val("");
+                    }
+                }).blur(function() {
+                    console.log(2);
+                    if ($(this).val() == "") {
+                        $(this).val($(this).attr("placeholder"));
+                    }
+                })
+            })
         }
     }
     // 数组对象功能扩充

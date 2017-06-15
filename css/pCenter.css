@@ -336,7 +336,7 @@
     width: 16px;
     height: 16px;
     background: none;
-    border: 1px solid #ccc;
+    border: none;
     vertical-align: middle;
     margin-right: 5px;
     margin-left: 10px;
@@ -809,7 +809,7 @@
 /*简历样式*/
 
 .preView {
-    margin: 130px auto 0;
+    margin: 102px auto 0;
 }
 
 .preView .itemBox .title {
@@ -829,6 +829,11 @@
 .preView .baseInfo .infoTxt p {
     float: left;
     width: 50%;
+}
+
+.preView .alleInfo {
+    height: 700px;
+    overflow: auto;
 }
 
 .preView .alleInfo table .la-l {
@@ -973,9 +978,14 @@
 }
 
 .porto-upload .close {
+    cursor: pointer;
     position: absolute;
     right: 10px;
     top: 13px;
+}
+
+.porto-upload .close:hover {
+    background: #999;
 }
 
 .zoom {
@@ -1053,6 +1063,7 @@
 .submit-btns button {
     width: 120px;
     height: 40px;
+    line-height: 40px;
     font-size: 18px;
     color: white;
     margin: 0 16px;
@@ -1155,6 +1166,7 @@ input.edit-phone {
 .edit-opera button {
     width: 58px;
     height: 24px;
+    line-height: 24px;
     border-radius: 5px;
     font-size: 14px;
     background: none;
@@ -1224,6 +1236,7 @@ input.edit-phone {
 .trade-box .trade-bot button {
     width: 58px;
     height: 28px;
+    line-height: 28px;
     border: 1px solid #2ea8e6;
     color: #2ea8e6;
     font-size: 14px;
@@ -1275,6 +1288,7 @@ input.edit-phone {
 .msg-info {
     width: 24px;
     height: 24px;
+    display: none;
     background: #ef3e3e;
     line-height: 24px;
     color: white;

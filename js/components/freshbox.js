@@ -121,6 +121,9 @@
                         }
                     }
                 }
+                if ($(obj).html() == "立即充值") {
+                    window.location.href = "recharge.html?userId=" + this.userid;
+                }
             },
             selectfreshitem: function(index, obj) {
                 $(".fresh-smart-list .icon-radio").removeClass("on");
@@ -155,12 +158,6 @@
                 var _this = this;
                 if (way == "smart") {
                     this.fresh.smart = true;
-                    $(".fresh-smart-list .icon-radio").each(function(index) {
-                        if ($(this).hasClass("on")) {
-                            _this.fresh.sum = _this.fresh.content[index].amount;
-                            _this.fresh.presum = _this.fresh.content[index].amount;
-                        }
-                    })
                 } else {
                     this.fresh.smart = false;
                     if (this.account.freeFreshTimes > 0) {
@@ -184,7 +181,7 @@
                 if (money) {
                     return money.toFixed(2);
                 } else {
-                    return "";
+                    return 0;
                 }
             }
         },
@@ -201,12 +198,41 @@
             "showfresh": function(curval) { //初始化
                 if (curval) {
                     var _this = this;
+                    $(".fresh-navs .on").removeClass("on");
+                    $(".fresh-navs .fresh-tab:first").addClass("on");
+                    $(".fresh-smart-list .icon-radio.on").removeClass("on");
+                    $(".fresh-smart-list .icon-radio:first").addClass("on");
                     EventUtils.ajaxReq("/center/user/getAccount", "get", { userId: this.userid }, function(resp, status) {
                         //  console.log(resp);
                         _this.account.money = resp.data.useableBalance;
                         _this.account.freeFreshTimes = resp.data.freeRefresh;
+                        _this.fresh.sum = _this.fresh.content[0].amount;
+                        _this.fresh.presum = 4;
+                        _this.fresh.smart = true;
                         _this.fresh.show = true;
                     });
+                }
+            },
+            "fresh.smart": function(curval) {
+                if (curval) {
+                    var _this = this;
+                    $(".fresh-smart-list .icon-radio").each(function(index) {
+                        if ($(this).hasClass("on")) {
+                            _this.fresh.sum = _this.fresh.content[index].amount;
+                            if (index == 0) {
+                                _this.fresh.presum = 1 * 4;
+                            }
+                            if (index == 1) {
+                                _this.fresh.presum = 1 * 4 * 3;
+                            }
+                            if (index == 2) {
+                                _this.fresh.presum = 1 * 4 * 5;
+                            }
+                            if (index == 3) {
+                                _this.fresh.presum = 1 * 4 * 10;
+                            }
+                        }
+                    })
                 }
             },
             "fresh.sum": function(curval) {

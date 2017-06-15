@@ -138,10 +138,11 @@
             EventUtils.ajaxReq("/message/getMessageList", "get", postdata, function(resp, status) {
                 console.log(resp);
                 var resultList = [];
-                if (resp.data) {
+                if (resp.data && resp.data.resultList) {
                     resultList = resp.data.resultList.list;
                     _this.msgList.totalpages = resp.data.resultList.totalPage;
                 } else {
+                    resultList = [];
                     _this.msgList.totalpages = 1;
                 }
                 if (resultList.length < 8) {

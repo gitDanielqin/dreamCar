@@ -52,7 +52,7 @@
                     <div class="fSize14 maT10">
                         <label>工作状态</label>
                         <dropdown class="sel-career maL13" placeholder="工作状态" v-model="briefInfo.state" v-bind:options="['在职，打算换个新环境','离职，可立即到岗工作','在校学生','应届毕业生','暂时不想找工作']"></dropdown>
-                        <label class="maL44">手机号</label><input type="text" class="maL18 paLeft10 edit-phone" readonly v-model="briefInfo.phone" />
+                        <label class="maL44">手机号</label><input type="text" class="maL18 paLeft10 edit-phone" disabled v-model="briefInfo.phone" />
                     </div>
                     <div class="fSize14 address maT10">
                         <span>所 在 地</span>

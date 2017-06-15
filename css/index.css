@@ -315,6 +315,10 @@ body {
 }
 
 .rotate-left {
+    -webkit-transform: perspective(600px) rotateY(20deg) scale(0.7, 0.7);
+    -moz-transform: perspective(600px) rotateY(20deg) scale(0.7, 0.7);
+    -o-transform: perspective(600px) rotateY(20deg) scale(0.7, 0.7);
+    -ms-transform: perspective(600px) rotateY(20deg) scale(0.7, 0.7);
     transform: perspective(600px) rotateY(20deg) scale(0.7, 0.7);
     margin-right: -448px;
 }
@@ -325,6 +329,10 @@ body {
 }
 
 .rotate-right {
+    -webkit-transform: perspective(600px) rotateY(-20deg) scale(0.7, 0.7);
+    -moz-transform: perspective(600px) rotateY(-20deg) scale(0.7, 0.7);
+    -o-transform: perspective(600px) rotateY(-20deg) scale(0.7, 0.7);
+    -ms-transform: perspective(600px) rotateY(-20deg) scale(0.7, 0.7);
     transform: perspective(600px) rotateY(-20deg) scale(0.7, 0.7);
     margin-right: -448px;
 }
@@ -339,12 +347,15 @@ body {
     margin-left: 90px;
     margin-right: -360px;
     transition: all 0.3s;
+    -ms-transition: all 0.3s;
 }
 
 .show-frame {
     border: 6px solid #cdcbcc;
     width: 500px;
+    width: 400px\0;
     height: 300px;
+    height: 250px\0;
 }
 
 .show-frame img {
@@ -470,6 +481,7 @@ body {
 
 .coop-lis a img {
     height: 80px;
+    width: auto;
 }
 
 

@@ -26,6 +26,7 @@ function infoRequest() {
 
     EventUtils.ajaxReq('/user/school/getInfo', 'get', postdata, function(resp, status) {
         respObj = resp.data;
+        console.log(respObj);
         if (respObj.userIcon) {
             $("#avatar-box").html("<img src='" + respObj.userIcon + "' />");
         }
@@ -326,7 +327,7 @@ var appCont = new Vue({
             tarif: [
                 { level: "初级会员", prior: 1, refresh: 1, mapping: 8, price: 585, icon: "images/crown-junior.png" },
                 { level: "中级会员", prior: 2, refresh: 4, mapping: 12, price: 1040, icon: "images/crown-middle.png" },
-                { level: "初级会员", prior: 4, refresh: 8, mapping: 16, price: 1560, icon: "images/crown-senior.png" },
+                { level: "高级级会员", prior: 4, refresh: 8, mapping: 16, price: 1560, icon: "images/crown-senior.png" },
             ]
         },
         coop: {

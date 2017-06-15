@@ -137,6 +137,7 @@
 .edit-opera button {
     width: 58px;
     height: 24px;
+    line-height: 24px;
     border-radius: 5px;
     font-size: 14px;
     background: none;
@@ -278,6 +279,7 @@
 .recharge-btn {
     width: 100px;
     height: 36px;
+    line-height: 36px;
     color: white;
     border-radius: 5px;
     margin-left: 80px;
@@ -987,6 +989,7 @@
 .comment-operation button {
     width: 120px;
     height: 40px;
+    line-height: 40px;
     color: white;
     margin: 0 16px;
     font-size: 18px;
@@ -1059,6 +1062,7 @@
 .trade-box .trade-bot button {
     width: 58px;
     height: 28px;
+    line-height: 28px;
     border: 1px solid #2ea8e6;
     color: #2ea8e6;
     font-size: 14px;
@@ -1083,9 +1087,14 @@
 }
 
 .porto-upload .close {
+    cursor: pointer;
     position: absolute;
     right: 10px;
     top: 13px;
+}
+
+.porto-upload .close:hover {
+    background: #999;
 }
 
 .zoom {
@@ -1163,6 +1172,7 @@
 .submit-btns button {
     width: 120px;
     height: 40px;
+    line-height: 40px;
     font-size: 18px;
     color: white;
     margin: 0 16px;

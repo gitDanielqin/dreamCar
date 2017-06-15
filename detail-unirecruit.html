@@ -53,7 +53,7 @@
         </div>
     </div>
     <div id="app-banner" v-cloak>
-        <h2 class="inner LH-H110 fSize30 color-grayH maB3 home-link"><img src="images/logo.png" class="v-mid H47 maR17 cur-pointer" @click.stop="homeLink" />校企职通车</h2>
+        <h2 class="inner LH-H110 fSize30 color-grayH maB3 home-link"><img src="images/logo.png" class="v-mid xq-logo maR17 cur-pointer" @click.stop="homeLink" />校企职通车</h2>
         <div class="banner bg-gray-f2 H176">
             <div class="inner clearfix">
                 <div class="fl">
@@ -129,7 +129,7 @@
 
     <div class="modal" id="app-modal" v-show="showModal" v-cloak>
         <div class="dlg-success dlg W670 paBot4  b-Radius5" v-show="showSucc">
-            <h2 class="LH-H54 fSize20 color-white paLeft62">申请状态<i class="pic-wrapper fr maR17 cur-pointer closer" @click="closeSuc"><img src="images/icon-close2.png" class="W30"/> </i></h2>
+            <h2 class="LH-H54 fSize20 color-white paLeft62">申请状态<i class="pic-wrapper fr maR17 cur-pointer closer" @click="closeSuc"><img src="images/icon-close2.png" class="dlg-closer"/> </i></h2>
             <div class="H348 W660 bg-white maCenter t-center succ-msg">
                 <p class="LH-H66 maT6 fSize24">合作已发出，请静候佳音</p>
                 <button class="W182 H48 color-white fSize20 b-Radius8 confirm" @click="confirmSuc">确 定</button>
@@ -140,7 +140,7 @@
             <div class="pic-wrapper stamp"><img src="images/icon-complete.png" height="90" /></div>
         </div>
         <div class="dlg-login dlg W670 paBot4 b-Radius5" v-show="showLogin">
-            <h2 class="LH-H54 fSize20 color-white paLeft43">登录<i class="pic-wrapper fr maR17 cur-pointer closer" @click="closeLog"><img src="images/icon-close2.png" class="W30"/> </i></h2>
+            <h2 class="LH-H54 fSize20 color-white paLeft43">登录<i class="pic-wrapper fr maR17 cur-pointer closer" @click="closeLog"><img src="images/icon-close2.png" class="dlg-closer"/> </i></h2>
             <div class="H348 W660 bg-white maCenter t-center clearfix">
                 <form class="login-form fl paTop4 paRight14">
                     <div><input type="text" placeholder="请输入已验证手机/邮箱" v-model="login.account" /></div>

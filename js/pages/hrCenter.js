@@ -12,6 +12,7 @@ var respObj = {};
 var mapper = {}; //岗位,招聘会日期与id的对应表 
 function infoRequest() {
     EventUtils.ajaxReq("/hrcenter/getDownList", "get", { userId: parObj.userId }, function(resp, status) {
+        console.log(resp);
         for (var i = 0; i < resp.data.recruitList.length; i++) {
             resp.data.recruitList[i].job = EventUtils.infoExtrac(resp.data.recruitList[i].job);
         }
@@ -30,7 +31,7 @@ function infoRequest() {
         }
         hrApp.database.posList = recruitArray;
         hrApp.database.jobfairList = jobfairArray;
-        console.log(resp);
+        //  console.log(resp);
         if (!parObj.jobfairId && !parObj.recruitId) { //既没有招聘ID又没有直聘ID,从HR中心按钮过来的
             hrApp.resumes.resumePos = recruitArray[0];
         }
@@ -217,6 +218,7 @@ var hrApp = new Vue({
                     if (hrApp.resumes.cvList.length == 1 && hrApp.resumes.curpage > 1) {
                         hrApp.resumes.curpage--;
                     }
+                    console.log($(".posCont .pagination a.page").eq(hrApp.resumes.curpage - 1).parent());
                     $(".posCont .pagination a.page").eq(hrApp.resumes.curpage - 1).parent().trigger("click");
                 })
             };
@@ -262,7 +264,7 @@ var hrApp = new Vue({
         showCv: function(item) {
             EventUtils.ajaxReq("/user/user/getInfo", "get", { userId: item.userId }, function(resp, status) {
                 var respObj = resp.data;
-                console.log(respObj);
+                //    console.log(respObj);
                 var briefdata = {
                     name: respObj.userInfo.realName,
                     gender: respObj.userInfo.sex == "1" ? "男" : "女",
@@ -479,7 +481,6 @@ var hrApp = new Vue({
                 } else {
                     recruitRequest(this.resumes.resumePos, this.resumes.resultIndex, 1);
                 }
-
             }
             this.$nextTick(function() {
                 selectInitPos();
@@ -711,7 +712,7 @@ function jobfairRequest(date, cvStatus, page, id) {
         count: 4
     };
     EventUtils.ajaxReq("/hrcenter/getJobFairList", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //  console.log(resp);
         if (resp.data && resp.data.resultList.totalRow >= 0) {
             var cvData = {
                 totalitems: resp.data.resultList.totalRow,
@@ -760,7 +761,7 @@ function recruitRequest(job, cvStatus, page, id) {
         count: 4
     }
     EventUtils.ajaxReq("/hrcenter/getRecruitList", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //   console.log(resp);
         if (resp.data && resp.data.resultList.totalRow >= 0) {
             var cvData = {
                 totalitems: resp.data.resultList.totalRow,
@@ -800,7 +801,7 @@ function positionRequest(type, page) {
             count: 4
         }
         EventUtils.ajaxReq("/recruit/getList", "get", postdata, function(resp, status) {
-            console.log(resp);
+            //     console.log(resp);
             if (resp && resp.data) {
                 hrApp.position.totalpages = resp.data.totalPage;
                 hrApp.position.results = resp.data.list;
@@ -822,7 +823,7 @@ function positionRequest(type, page) {
             count: 4
         }
         EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
-            console.log(resp);
+            //     console.log(resp);
             if (resp && resp.data) {
                 hrApp.position.totalpages = resp.data.totalPage;
                 hrApp.position.results = resp.data.list;

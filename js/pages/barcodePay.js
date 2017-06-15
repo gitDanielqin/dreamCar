@@ -1,13 +1,32 @@
 /**
  * Created by Administrator on 2017/1/21.
  */
+var parObj = EventUtils.urlExtrac(window.location);
 
-function _init(){
-    var payway = window.location.search.substr(1);
-    if(payway=="alibarcode"){
+var postdata = {
+    userId: parObj.userId,
+    amount: parObj.amount
+}
+EventUtils.ajaxReq("/sys/recharge", "post", postdata, function(resp, status) {
+    console.log(resp);
+    if (resp.data) {
+        $("#aliBarcode")[0].src = resp.data.payImg;
+        var amount = parseInt(parObj.amount).toFixed(2);
+        $("#aliAmount").html(amount);
+    } else {
+        swal({
+            title: "",
+            text: resp.info,
+            type: "warning"
+        })
+    }
+});
+
+function _init() {
+    if (parObj.plattform == "alibarcode") {
         $(".pay-box").hide();
         $(".alipay-box").show();
-    }else if(payway=="webarcode"){
+    } else if (parObj.plattform == "webarcode") {
         $(".pay-box").hide();
         $(".wepay-box").show();
     }

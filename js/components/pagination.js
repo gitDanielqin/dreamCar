@@ -1,6 +1,6 @@
 // var Vue = require("../libs/vue");
 (function() {
-    let tem = '<div class="pagination">' +
+    var tem = '<div class="pagination">' +
         '<ul>' +
         '<li @click="controlPage(1)"><a class="lastPage" :class="{darkLight: curPage === 1}">首页</a></li>' +
         '<li @click="controlPage(curPage-1)"><a class="lastPage" :class="{darkLight: curPage === 1}">上一页</a></li>' +
@@ -11,7 +11,7 @@
         '<li @click="controlPage(totalpages)"><a :class="{darkLight: curPage === totalpages}" class="nextPage">尾页</a></li>' +
         '</ul>' +
         '</div>'
-    let pagination = Vue.extend({
+    var pagination = Vue.extend({
         template: tem,
         props: {
             showpages: { //要显示的页码数
@@ -35,10 +35,10 @@
         },
         computed: {
             'pages': function() {
-                let left = 1,
-                    right = this.totalpages,
-                    movePoint = Math.ceil(this.showpages / 2),
-                    pages = [];
+                var left = 1;
+                var right = this.totalpages;
+                var movePoint = Math.ceil(this.showpages / 2);
+                var pages = [];
                 if (this.curPage > movePoint && this.curPage < this.totalpages - movePoint + 1) {
                     left = this.showpages % 2 === 0 ? this.curPage - movePoint : this.curPage - movePoint + 1;
                     right = this.curPage + movePoint - 1;

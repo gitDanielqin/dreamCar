@@ -59,6 +59,7 @@
 
 .pub-pos {
     float: right;
+    line-height: 24px;
     margin-right: 30px;
     margin-top: 14px;
     background: none;
@@ -242,11 +243,11 @@
 .pos-sider {
     border: 1px solid #ccc;
     background: white;
+    padding: 10px 0;
 }
 
 .pos-sider li {
-    line-height: 47px;
-    height: 47px;
+    line-height: 38px;
     padding-left: 34px;
     cursor: pointer;
 }

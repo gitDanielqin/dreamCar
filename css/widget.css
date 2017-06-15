@@ -368,6 +368,7 @@
 .pos-pop-bot button {
     width: 60px;
     height: 30px;
+    line-height: 30px;
     border: 1px solid #2ea8e6;
     color: #2ea8e6;
     background: white;
@@ -663,6 +664,7 @@
 .minicard .card-operations button {
     width: 80px;
     height: 30px;
+    line-height: 30px;
     margin-right: 14px;
     color: white;
     border-radius: 10px;
@@ -760,6 +762,7 @@
 .bind-change .btn-submit button {
     width: 120px;
     height: 40px;
+    line-height: 40px;
     font-size: 18px;
     color: #fff;
 }

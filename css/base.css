@@ -44,6 +44,10 @@ a {
     color: inherit;
 }
 
+a img {
+    border: none;
+}
+
 i {
     font-style: normal;
 }
@@ -203,6 +207,7 @@ table th {
 
 .logo-pic img {
     width: 100%;
+    height: auto;
 }
 
 .pic-icon {
