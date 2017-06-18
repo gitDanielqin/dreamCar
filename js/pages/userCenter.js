@@ -566,6 +566,9 @@ var appCont = new Vue({
                 return ""
             }
         },
+        infoShow: function(text, type) {
+            return EventUtils.infoShow(text, type);
+        },
         dateExtrac: function(date) {
             if (date) {
                 return date.split(" ")[0];
@@ -926,11 +929,11 @@ var appCont = new Vue({
                 posRequest(appCont.myPosList.jobsrc, appCont.myPosList.jobstate, page);
             }
         },
-        apply: function(type, id) {
+        apply: function(type, item) {
             if (type == "recruit") {
                 var postdata = {
                     userId: parObj.userId,
-                    recruitId: id
+                    recruitId: item.recruitId
                 }
                 EventUtils.ajaxReq("/recruit/cooperateRecruit", "post", postdata, function(resp, status) {
                     console.log(resp);
@@ -940,6 +943,7 @@ var appCont = new Vue({
                             text: "投递成功！",
                             type: "success"
                         })
+                        item.status = 1;
                     } else {
                         swal({
                             title: "",
@@ -952,7 +956,7 @@ var appCont = new Vue({
             if (type == "jobfair") {
                 var postdata = {
                     userId: parObj.userId,
-                    jobFairId: id
+                    jobFairId: item.jobFairId
                 }
                 EventUtils.ajaxReq("/jobfair/cooperateJobFair", "post", postdata, function(resp, status) {
                     console.log(resp);
@@ -962,6 +966,7 @@ var appCont = new Vue({
                             text: "投递成功！",
                             type: "success"
                         })
+                        item.status = 1;
                     } else {
                         swal({
                             title: "",
@@ -1219,7 +1224,16 @@ function init_center() {
     init_safepos();
     editEventBind();
     if (parObj.theme) {
-        $(".sideBox li[paneid='" + parObj.theme + "']").trigger("click");
+        if (parObj.theme.indexOf("collec") >= 0) {
+            $(".sideBox .myCollect").trigger("click");
+            $(".sideBox .myCollect .sub-item:first").trigger("click");
+        }
+        if (parObj.theme.indexOf("conf") >= 0) {
+            $(".sideBox .myConfig").trigger("click");
+            $(".sideBox .myConfig .sub-item:first").trigger("click");
+        } else {
+            $(".sideBox li[paneid='" + parObj.theme + "']").trigger("click");
+        }
     }
     //   modalEventBind();
     uploadEventBind();
@@ -1489,7 +1503,7 @@ function postResume(editType, isDel) {
 
     if (editType == "all" || editType == "work") {
 
-        var worksArray = $("#work-address");
+        var worksArray = $(".work-address");
         for (var i = 0; i < appCont.resume.worksExps.length; i++) {
             appCont.resume.worksExps[i].province = worksArray.eq(i).find(".sel-province input").val();
             appCont.resume.worksExps[i].city = worksArray.eq(i).find(".sel-city input").val();
@@ -1525,7 +1539,7 @@ function postResume(editType, isDel) {
 
     if (editType == "all" || editType == "edu") {
 
-        var majorArray = $("#major-name");
+        var majorArray = $(".major-name");
         for (var j = 0; j < appCont.resume.edus.length; j++) {
             appCont.resume.edus[j].major = majorArray.eq(j).find(".major-input-1 input").val();
             appCont.resume.edus[j].submajor = majorArray.eq(j).find(".major-input-2 input").val();
@@ -1589,14 +1603,14 @@ function colposRequest(index, page) {
     appCont.colPosList.applyindex = index;
     appCont.colPosList.curpage = page;
     var postdata = {
-        userId: parObj.userId,
-        index: page,
-        count: 3,
-        applyStatus: index
-    }
-    console.log(postdata);
+            userId: parObj.userId,
+            index: page,
+            count: 3,
+            applyStatus: index
+        }
+        //  console.log(postdata);
     EventUtils.ajaxReq("/recruit/getMarkList", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //   console.log(resp);
         if (resp.data) {
             appCont.colPosList.results = resp.data.list;
             appCont.colPosList.totalpages = resp.data.totalPage;

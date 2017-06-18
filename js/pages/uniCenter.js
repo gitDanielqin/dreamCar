@@ -262,6 +262,10 @@ var appCont = new Vue({
             unilevel: unilevel,
             majors: majorArray,
         },
+        account: {
+            userId: parObj.userId,
+            money: ""
+        },
         resume: {
             uni: "中国美术学院",
             classific: "艺术类",
@@ -317,13 +321,6 @@ var appCont = new Vue({
             }
         },
         vip: {
-            records: [
-                { date: "2017.01.01", action: "信息刷新：4条", price: 0, state: "交易完成" },
-                { date: "2017.01.01", action: "信息置顶：1次", price: 0, state: "交易完成" },
-                { date: "2017.01.01", action: "广告投放：1次", price: 0, state: "交易完成" },
-                { date: "2017.01.01", action: "信息匹配：4条", price: 0, state: "交易完成" },
-                { date: "2017.01.01", action: "账户充值", price: 500.68, state: "交易完成" }
-            ],
             tarif: [
                 { level: "初级会员", prior: 1, refresh: 1, mapping: 8, price: 585, icon: "images/crown-junior.png" },
                 { level: "中级会员", prior: 2, refresh: 4, mapping: 12, price: 1040, icon: "images/crown-middle.png" },
@@ -411,12 +408,30 @@ var appCont = new Vue({
     methods: {
         selvipnav: function(obj) {
             if ($(obj).hasClass("vip-li")) {
+                if (this.account.money == "") {
+                    EventUtils.ajaxReq("/center/user/getAccount", "get", { userId: parObj.userId }, function(resp, status) {
+                        appCont.account.money = resp.data.useableBalance;
+                    })
+                }
                 var index = $(obj).index();
                 $(".vip-navs li.on").removeClass("on");
                 $(obj).addClass("on");
                 $(".vip-cont").removeClass("on");
                 $(".vip-center .vip-cont").eq(index).addClass("on");
             }
+        },
+        recharge: function() { //充值按钮事件
+            var link = "recharge.html?userId=" + parObj.userId;
+            window.location.href = link;
+        },
+        priceInteger: function(val) {
+            return parseInt(val);
+        },
+        priceDecimal: function(val) {
+            var priceF = (parseFloat(val) * 100 - parseInt(val) * 100) % 100;
+            priceF = parseInt(priceF);
+            if (priceF < 10) priceF += "0";
+            return ("." + priceF);
         },
         changeComLicense: function(obj) {
             if (obj.files[0].size > 3 * 1024 * 1204) {
@@ -477,6 +492,9 @@ var appCont = new Vue({
             } else {
                 return ""
             }
+        },
+        infoShow: function(text, type) {
+            return EventUtils.infoShow(text, type)
         },
         dateExtrac: function(date) {
             if (date) {
@@ -764,20 +782,6 @@ var appCont = new Vue({
             appModal.showModal = true;
             appModal.show.stickybox = true;
         },
-        priceCal1: function(val) {
-            var priceInt = parseInt(val);
-            if (priceInt == 0) {
-                return "- " + priceInt;
-            } else if (priceInt > 0) {
-                return "+ " + priceInt;
-            }
-        },
-        priceCal2: function(val) {
-            var priceF = (parseFloat(val) * 100 - parseInt(val) * 100) % 100;
-            //    if(priceF*10%1==0) priceF+="0";
-            if (priceF < 10) priceF += "0";
-            return ("." + priceF);
-        },
         showpage: function(totalpage) {
             if (totalpage < 3) {
                 return totalpage;
@@ -830,7 +834,7 @@ var appCont = new Vue({
                 $(".collectBox .pagination a.page").eq(appCont.collect.curpage - 1).parent().trigger("click");
             })
         },
-        applyCollect: function(demandId) {
+        applyCollect: function(demandId, item) {
             var postdata = {
                 userId: parObj.userId,
                 loginIdentifier: parObj.loginId,
@@ -838,12 +842,13 @@ var appCont = new Vue({
             }
             EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
                 console.log(resp);
-                if (resp.data) {
+                if (resp.data && resp.data.isApply == "0") {
                     swal({
                         title: "",
                         text: "申请已发送！",
                         type: "success"
                     })
+                    item.applyStatus = 1;
                 } else {
                     swal({
                         title: "",
@@ -1371,6 +1376,7 @@ function demandRequest(index, page) {
         var postdata = {
             userId: parObj.userId,
             loginIdentifier: parObj.loginId,
+            isCenter: 1,
             demandType: 1,
             index: page,
             count: 3
@@ -1391,6 +1397,7 @@ function demandRequest(index, page) {
         var postdata = {
             userId: parObj.userId,
             loginIdentifier: parObj.loginId,
+            isCenter: 1,
             jobFairType: 1,
             index: page,
             count: 3

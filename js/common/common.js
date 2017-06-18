@@ -105,7 +105,7 @@ window.EventUtils = {
                 if (typeof(postdata[key]) == "string" && postdata[key].indexOf(";") >= 0 && postdata[key].split(";")[0] == "不限") {
                     delete postdata[key];
                 }
-                if (postdata[key] == "" || postdata[key] == "不限") {
+                if (postdata[key] == "" || postdata[key] == "不限" || !postdata[key]) {
                     delete postdata[key];
                 }
             }
@@ -142,6 +142,28 @@ window.EventUtils = {
                 return "";
             }
         },
+        infoShow: function(info, type) {
+            if (info && info != '不限') {
+                return info;
+            } else {
+                switch (type) {
+                    case "salary":
+                        return "薪资不详";
+                    case "profession":
+                        return "专业不限";
+                    case "edu":
+                        return "学历不限";
+                    case "worktime":
+                        return "工作经验不限";
+                    case "props":
+                        return "性质不限";
+                    case "comscale":
+                        return "规模不限";
+                    case "comtype":
+                        return "行业不限";
+                }
+            }
+        },
         infoToArray: function(info) {
             if (info != undefined || info != "") {
                 return info.split(";")
@@ -151,11 +173,13 @@ window.EventUtils = {
         },
         ajaxReq: function(url, method, postdata, callback) {
             $.ajax({
-                url: "http://www.xiaoqiztc.com/easily_xq_WebApi" + url,
-                // url: "http://192.168.0.105:8080/easily_xq_WebApi" + url,
+                // url: "http://www.xiaoqiztc.com/easily_xq_WebApi" + url,
+                url: "http://192.168.0.105:8080/easily_xq_WebApi" + url,
                 type: method,
                 data: postdata,
-                success: callback,
+                success: function(resp, status) {
+                    callback(resp, status);
+                },
                 error: function(data, status) {
                     alert("请求服务器信息错误！" + data.info);
                 },

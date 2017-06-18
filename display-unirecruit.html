@@ -44,7 +44,7 @@
                 <li><span style="margin:0 12px">|</span><span @click="toCenter('collec-study')">收藏夹</span><span style="margin-left:12px">|</span></li>
                 <li style="padding-left:12px;">{{userName}}<i class="pic-icon maR10 icon-dropdown"></i>
                     <dl>
-                        <dd @click="toCenter('classBox')">我的学习</dd>
+                        <!--<dd @click="toCenter('classBox')">我的学习</dd>-->
                         <dd @click="toCenter('conf-keyword')">账号设置</dd>
                         <dd @click="logout">退出</dd>
                     </dl>
@@ -119,8 +119,7 @@
                         <div class="paLeft29 clearfix H108 pRel">
                             <div class="W78 H70 logo-pic disInline v-mid fl maT20"><img :src="item.userIcon" /></div>
                             <div class="item-block-left fl paTop20 W321 maL25">
-                                <h2 class="color-blueL fSize16 LH-H24">
-                                    <a :href="detailLink(item.jobFairId)">{{item.title}}</a></h2>
+                                <h2 class="color-blueL fSize16 LH-H24 pRel"><a :href="detailLink(item.jobFairId)">{{item.title}}</a><span class="hot" v-show="item.hot>0">置顶</span></h2>
                                 <p>{{infoExtrac(item.profession)}}<i class="depart" v-show="item.professionCount">|</i>{{item.professionCount}}<i class="depart" v-show="regAddress(item.jobFairAddress)">|</i>{{regAddress(item.jobFairAddress)}}</p>
                                 <p class="f-bold fSize14"><span>招聘会时间：</span>{{item.startTime}}</p>
                             </div>
@@ -129,7 +128,8 @@
                                 <p class="fSize12">{{item.companyScale}}<i class="depart" v-show="item.companyProperty">|</i>{{item.companyProperty}}<i class="depart" v-show="infoExtrac(item.job)">|</i>{{infoExtrac(item.job)}}</p>
                                 <p class="fSize12 pubdate">发布日期：{{item.updateTime.split(" ")[0]}}</p>
                             </div>
-                            <button class="btn-apply color-blueL t-left" @click="coApply(item.jobFairId,$event.target)"><span class="maL21">申请招聘</span><i class="pic-icon maL6"></i></button>
+                            <button class="btn-apply color-blueL t-left" @click="coApply(item.jobFairId,$event.target)" v-show="!item.applyStatus||item.applyStatus==0"><span class="maL21">申请招聘</span><i class="pic-icon maL6"></i></button>
+                            <button class="btn-apply color-blueL t-left" disabled v-show="item.applyStatus==1"><span class="maL21">已申请</span><i class="pic-icon maL6"></i></button>
                         </div>
                     </li>
                     <li v-show="unirecruitList.results.length==0">

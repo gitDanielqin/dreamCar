@@ -383,6 +383,20 @@
     border-bottom: 1px solid #f7b632;
 }
 
+.hot {
+    display: inline-block;
+    width: 42px;
+    height: 22px;
+    line-height: 22px;
+    font-size: 12px;
+    text-align: center;
+    background: red;
+    color: white;
+    position: absolute;
+    right: 5px;
+    top: 0;
+}
+
 .main-result .results {
     min-height: 635px;
     width: 810px;

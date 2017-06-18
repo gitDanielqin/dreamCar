@@ -177,7 +177,7 @@
                                 <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                 <div class="item-block-left fl paTop22 W280 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item)">{{item.title}}</a></h2>
-                                    <p>{{infoExtrac(item.companyProperty)}}<i class="depart" v-show="infoExtrac(item.companyProperty)!=''">|</i>{{infoExtrac(item.companyScale)}}<i class="depart" v-show="infoExtrac(item.companyScale)!=''">|</i>{{infoExtrac(item.companyType)}}</p>
+                                    <p>{{infoShow(infoExtrac(item.companyProperty),"props")}}<i class="depart">|</i>{{infoShow(infoExtrac(item.companyScale),"comscale")}}<i class="depart">|</i>{{infoShow(infoExtrac(item.companyType),"comtype")}}</p>
                                     <p v-show="item.trainType!=undefined">培训方式： {{item.trainType}}</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH25 maT10">
@@ -194,7 +194,7 @@
                                 <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                 <div class="item-block-left fl paTop22 W280 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item)">{{item.title}}</a></h2>
-                                    <p>{{infoExtrac(item.profession)}}<i class="depart" v-show="item.professionCount">|</i>{{item.professionCount}}<i class="depart" v-show="cityExtrac(item.jobFairAddress)">|</i>{{cityExtrac(item.jobFairAddress)}}</p>
+                                    <p>{{infoShow(infoExtrac(item.profession),"profession")}}<i class="depart">|</i>{{item.professionCount}}<i class="depart" v-show="cityExtrac(item.jobFairAddress)">|</i>{{cityExtrac(item.jobFairAddress)}}</p>
                                     <p>招聘会时间：{{item.startTime}}</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH25">
@@ -239,7 +239,8 @@
                                     <p class="pubdate">发布日期：{{dateExtrac(item.updateTime)}}</p>
                                     <div class="collect-btn">
                                         <button class="color-blueL" @click.stop="cancelCollect(item.demandId,item.id)">取消收藏</button>
-                                        <button class="color-orange-f7" @click="applyCollect(item.demandId)">申请合作</button>
+                                        <button class="color-orange-f7" @click="applyCollect(item.demandId,item)" v-show="item.applyStatus==0">申请合作</button>
+                                        <button class="color-gray-79" disabled v-show="item.applyStatus==1">已申请</button>
                                     </div>
                                 </div>
                             </div>
@@ -291,8 +292,8 @@
                                    <div class="item-block-right fl fSize14 LH30 pRel uni-apply-message">
                                        <p class="t-right">公司名称：{{item.userName}}</p>
                                        <ul class="state-line lis-inline maT15 feedState">
-                                            <li class="on"><i class="feedstate-icon"></i><span>已发出</span><i :class="{on:item.readStatus==1}" class="feed-icon-bind"></i></li>
-                                            <li :class="{on:item.readStatus==1}"><i class="feedstate-icon"></i><span>已查看</span><i :class="{on:item.status!=0}" class="feed-icon-bind"></i></li>
+                                            <li class="on"><i class="feedstate-icon"></i><span>已发出</span><i :class="{on:item.readStatus!=0}" class="feed-icon-bind"></i></li>
+                                            <li :class="{on:item.readStatus!=0}"><i class="feedstate-icon"></i><span>已查看</span><i :class="{on:item.status!=0}" class="feed-icon-bind"></i></li>
                                             <li :class="{on:item.status==1||item.status==2}"><i class="feedstate-icon"></i>
                                                 <span v-show="item.status==0||!item.status">已反馈</span>
                                                 <span class="color-green" v-show="item.status==1">同意</span>
@@ -396,14 +397,8 @@
                 </div>
                 <div class="vip-cont vip-recharge">
                     <p class="LH-H54"><span class="color-orange-f7">VIP</span>会员享受<span style="color:#d19100">信息刷新</span>优先展示，刷新置顶低至<span class="color-red">7</span>折，是各位小伙伴的首选，目前已有10W+伙伴享受VIP特权服务。</p>
-                    <p class="LH-H60 bg-gray-f7 paLeft20">VIP等级：<span class="color-orange-f7 fSize18 maR80">地主</span>账户余额：<b class="color-red"><span class="fSize18">0</span>.00</b>元<button class="recharge-btn">账户充值</button></p>
-                    <div class="bg-gray-f7 maT2">
-                        <h3 class="LH-H42 maL20 fSize16 vip-record-head">使用记录</h3>
-                        <ul class="vip-records">
-                            <li v-for="record in vip.records"><span class="W182">{{record.date}}</span><span class="W212">{{record.action}}</span><span class="W216"><b class="fSize14">{{priceCal1(record.price)}}</b>{{priceCal2(record.price)}}元</span><span class="">{{record.state}}</span></li>
-                        </ul>
-                        <p class="LH-H36 t-right maR40"><button class="more-records">查看更多使用记录</button></p>
-                    </div>
+                    <p class="LH-H60 bg-gray-f7 paLeft20">VIP等级：<span class="color-orange-f7 fSize18 maR80">地主</span>账户余额：<b class="color-red"><span class="fSize18">{{priceInteger(account.money)}}</span>{{priceDecimal(account.money)}}</b>元<button class="recharge-btn" @click.stop="recharge">账户充值</button></p>
+                    <vip-record :userid="account.userId"></vip-record>
                     <div class="maB38">
                         <h3 class="LH-H50 fSize16 paLeft16">会员权限说明</h3>
                         <ul class="tarif-info">
@@ -575,6 +570,7 @@
     <script src="js/components/freshbox.js"></script>
     <script src="js/components/stickbox.js"></script>
     <script src="js/components/conf-password.js"></script>
+    <script src="js/components/vip-record.js"></script>
     <script src="js/components/common-footer.js"></script>
     <script src="data/address.js"></script>
     <script src="data/major.js"></script>

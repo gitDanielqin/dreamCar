@@ -838,7 +838,5 @@ function maxmajorcalculate() {
             }
         }
     };
-    console.log(maxmajor, maxmajor.length);
-    console.log(maxsubmajor, maxsubmajor.length);
 }
 // maxmajorcalculate();

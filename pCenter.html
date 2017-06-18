@@ -198,7 +198,7 @@
                                 </div>
                                 <div class="item-row">
                                     <label>公司地址</label>
-                                    <div class="address work-address" id="work-address">
+                                    <div class="address work-address">
                                         <addr-select :addrdata="database.addrData" :initaddress="{province:worksExp.province}" class="sel-addr disInline"></addr-select>
                                     </div>
                                 </div>
@@ -250,7 +250,7 @@
                                 </div>
                                 <div class="item-row">
                                     <label>专业名称</label>
-                                    <major-pop :majordata="database.major" :initmajors="{major:edu.major}" class="major-name disInline" id="major-name"></major-pop>
+                                    <major-pop :majordata="database.major" :initmajors="{major:edu.major}" class="major-name disInline"></major-pop>
                                 </div>
                                 <div class="item-row time-interval">
                                     <label>就读时间</label>
@@ -476,8 +476,11 @@
                         <li v-for="(item,index) in colPosList.results">
                             <div class="logo-pic"><img :src="item.userIcon" /></div>
                             <div class="class-txt fl paTop20 W328">
-                                <h2 class="class-name"><a href="detail-position.html">{{infoExtrac(item.job)}}</a></h2>
-                                <p class="demand"><span class="color-orange-f7">{{item.salary}}</span><i>|</i>{{infoExtrac(item.profession)}}<i>|</i>{{item.education}}<i>|</i>{{item.workTime}}</p>
+                                <h2 class="class-name"><a :href="posLink(item)">{{infoExtrac(item.job)}}</a></h2>
+                                <p class="demand"><span class="color-orange-f7" v-if="item.salary&&item.salary!='不限'">{{item.salary}}</span><span class="color-orange-f7" v-else="!item.salary&&item.salary=='不限'">薪资不详</span><i>|</i>
+                                    <span v-if="infoExtrac(item.profession)&&infoExtrac(item.profession)!='不限'">{{infoExtrac(item.profession)}}</span><span v-else>专业不限</span><i>|</i>
+                                    <span v-if="item.education&&item.education!='不限'">{{item.education}}</span><span v-else>学历不限</span><i>|</i>
+                                    <span v-if="item.workTime&&item.workTime!='不限'">{{item.workTime}}</span><span v-else>工作经验不限</span></p>
                                 <p><span class="maR20">【{{cityExtrac(item.companyAddress)}}】</span>岗位数: <span>{{item.recruitCount}}人</span></p>
                             </div>
                             <div class="col-company-info fl fSize18">
@@ -486,7 +489,7 @@
                                 <p>发布时间：{{dateExtrac(item.updateTime)}}</p>
                                 <div class="action">
                                     <span @click="cancelCollect('position',item.id)">取消收藏</span>
-                                    <span class="post" @click="apply('recruit',item.recruitId)" v-show="!item.status">投递简历</span>
+                                    <span class="post" @click="apply('recruit',item)" v-show="!item.status">投递简历</span>
                                     <span class="posted" v-show="item.status&&item.status!=3">已投递</span>
                                     <span class="color-gray offline" v-show="item.status&&item.status==3">已下线</span>
                                 </div>
@@ -509,8 +512,11 @@
                         <li v-for="(item,index) in colRecList.results">
                             <div class="logo-pic"><img :src="item.userIcon" /></div>
                             <div class="class-txt fl paTop20 W328">
-                                <h2 class="class-name"><a href="detail-increcruit.html">{{item.title}}</a></h2>
-                                <p class="demand"><span class="color-orange-f7">{{item.cvSalary}}</span><i>|</i>{{infoExtrac(item.profession)}}<i>|</i>{{item.cvEducation}}<i>|</i>{{item.cvProject}}</p>
+                                <h2 class="class-name"><a :href="posLink(item)">{{item.title}}</a></h2>
+                                <p class="demand"><span class="color-orange-f7" v-if="item.cvSalary&&item.cvSalary!='不限'">{{item.cvSalary}}</span><span v-else>薪资不详</span><i>|</i>
+                                    <span v-if="infoExtrac(item.profession)&&infoExtrac(item.profession)!='不限'">{{infoExtrac(item.profession)}}</span><span v-else>专业不限</span>
+                                    <i>|</i><span v-if="item.cvEducation&&item.cvEducation!='不限'">{{item.cvEducation}}</span><span v-else>学历不限</span>
+                                    <i>|</i><span v-if="item.cvProject&&item.cvProject!='不限'">{{item.cvProject}}</span><span v-else>工作经验不限</span></p>
                                 <p><span>招聘会时间：</span>{{item.startTime}}</p>
                             </div>
                             <div class="col-company-info fl fSize18">
@@ -519,7 +525,7 @@
                                 <p>发布日期：{{dateExtrac(item.updateTime)}}</p>
                                 <div class="action">
                                     <span @click="cancelCollect('jobfair',item.id)">取消收藏</span>
-                                    <span class="post" v-show="!item.status" @click="apply('jobfair',item.jobFairId)">投递简历</span>
+                                    <span class="post" v-show="!item.status" @click="apply('jobfair',item)">投递简历</span>
                                     <span class="posted" v-show="item.status&&item.status!=3">已投递</span>
                                     <span class="color-gray offline" v-show="item.status&&item.status==3">已下线</span>
                                 </div>
@@ -545,18 +551,22 @@
                                 <div class="logo-pic"><img :src="item.userIcon" /></div>
                                 <div class="class-txt fl paTop20 W328">
                                     <h2 class="class-name"><a :href="posLink(item)">{{infoExtrac(item.job)}}</a></h2>
-                                    <p class="teacher">{{item.cvSalary}}<span>|</span>{{cityExtrac(item.jobFairAddress)}}<span>|</span>{{item.cvEducation}}<span>|</span>{{item.cvProject}}</p>
+                                    <p class="teacher"><span>{{infoShow(item.cvSalary,"salary")}}</span><span class="depart">|</span>
+                                    <span>{{cityExtrac(item.jobFairAddress)}}</span><span>|</span>
+                                    <span>{{infoShow(item.cvEducation,"edu")}}</span><span>|</span>
+                                    <span>{{infoShow(item.cvProject,"worktime")}}</span></p>
                                     <p>投递于： {{dateExtrac(item.createTime)}}</p>
                                 </div>
                                 <div class="feedback fr fSize18">
                                     <h3>公司名称：{{item.userName}}</h3>
                                     <ul class="lis-inline feedState">
-                                        <li class="on"><i class="feedstate-icon"></i><span>已投递</span><i :class="{on:item.readStatus==1}" class="feed-icon-bind"></i></li>
-                                        <li :class="{on:item.readStatus==1}"><i class="feedstate-icon"></i><span>已查看</span><i :class="{on:item.status!=0}" class="feed-icon-bind"></i></li>
-                                        <li :class="{on:item.status==1||item.status==2}"><i class="feedstate-icon"></i>
+                                        <li class="on"><i class="feedstate-icon"></i><span>已投递</span><i :class="{on:item.readStatus!=0}" class="feed-icon-bind"></i></li>
+                                        <li :class="{on:item.readStatus!=0}"><i class="feedstate-icon"></i><span>已查看</span><i :class="{on:item.status!=0}" class="feed-icon-bind"></i></li>
+                                        <li :class="{on:item.status!=0}"><i class="feedstate-icon"></i>
                                             <span v-show="item.status==0||!item.status">已反馈</span>
                                             <span class="color-green" v-show="item.status==1">通过</span>
                                             <span class="color-red" v-show="item.status==2">不合适</span>
+                                            <span class="color-green" v-show="item.status==3">邀请面试</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -565,18 +575,19 @@
                                 <div class="logo-pic"><img :src="item.userIcon" /></div>
                                 <div class="class-txt fl paTop20 W328">
                                     <h2 class="class-name"><a :href="posLink(item)">{{infoExtrac(item.job)}}</a></h2>
-                                    <p class="teacher">{{item.salary}}<span>|</span>{{cityExtrac(item.jobAddress)}}<span>|</span>{{item.education}}<span>|</span>{{item.workTime}}</p>
+                                    <p class="teacher">{{infoShow(item.salary,"salary")}}<span>|</span>{{cityExtrac(item.jobAddress)}}<span>|</span>{{infoShow(item.education,"edu")}}<span>|</span>{{infoShow(item.workTime,'worktime')}}</p>
                                     <p>投递于： {{dateExtrac(item.createTime)}}</p>
                                 </div>
                                 <div class="feedback fr fSize18">
                                     <h3>公司名称：{{item.userName}}</h3>
                                     <ul class="lis-inline feedState">
-                                        <li class="on"><i class="feedstate-icon"></i><span>已投递</span><i :class="{on:item.readStatus==1}" class="feed-icon-bind"></i></li>
-                                        <li :class="{on:item.readStatus==1}"><i class="feedstate-icon"></i><span>已查看</span><i :class="{on:item.status!=0}" class="feed-icon-bind"></i></li>
-                                        <li :class="{on:item.status==1||item.status==2}"><i class="feedstate-icon"></i>
+                                        <li class="on"><i class="feedstate-icon"></i><span>已投递</span><i :class="{on:item.readStatus!=0}" class="feed-icon-bind"></i></li>
+                                        <li :class="{on:item.readStatus!=0}"><i class="feedstate-icon"></i><span>已查看</span><i :class="{on:item.status!=0}" class="feed-icon-bind"></i></li>
+                                        <li :class="{on:item.status!=0}"><i class="feedstate-icon"></i>
                                             <span v-show="item.status==0||!item.status">已反馈</span>
                                             <span class="color-green" v-show="item.status==1">通过</span>
                                             <span class="color-red" v-show="item.status==2">不合适</span>
+                                            <span class="color-green" v-show="item.status==3">邀请面试</span>
                                         </li>
                                     </ul>
                                 </div>

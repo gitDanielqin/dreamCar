@@ -36,18 +36,22 @@ function infoRequest() {
         index: 1,
         count: 8
     }
-    EventUtils.ajaxReq("/recruit/getList", "get", postdata, function(resp, status) {
-        console.log(resp);
-        if (resp.data) {
-            appResult.posList.totalpages = resp.data.totalPage;
-            appResult.posList.results = resp.data.list;
-            if (parObj.searchtext) {
-                appQuery.keywords = decodeURI(parObj.searchtext);
-                searchRequest(1);
-            }
-        }
-    });
     if (parObj.userId) {
+        postdata.userId = parObj.userId;
+        EventUtils.ajaxReq("/recruit/getList", "get", postdata, function(resp, status) {
+            console.log(resp);
+            if (resp.data) {
+                appResult.posList.totalpages = resp.data.totalPage;
+                appResult.posList.results = resp.data.list;
+                if (parObj.searchtext) {
+                    appQuery.keywords = decodeURI(parObj.searchtext);
+                    searchRequest(1);
+                }
+            } else {
+                appResult.posList.totalpages = 1;
+                appResult.posList.results = [];
+            }
+        });
         EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function(resp, status) {
             accountObj = resp.data;
             appTop.userName = accountObj.userName;
@@ -55,7 +59,24 @@ function infoRequest() {
             appTop.userType = accountObj.userType;
             console.log(resp)
         })
+    } else {
+        EventUtils.ajaxReq("/recruit/getList", "get", postdata, function(resp, status) {
+            console.log(resp);
+            if (resp.data) {
+                appResult.posList.totalpages = resp.data.totalPage;
+                appResult.posList.results = resp.data.list;
+                if (parObj.searchtext) {
+                    appQuery.keywords = decodeURI(parObj.searchtext);
+                    searchRequest(1);
+                }
+            } else {
+                appResult.posList.totalpages = 1;
+                appResult.posList.results = [];
+            }
+        });
     }
+
+
 }
 
 infoRequest();
@@ -113,9 +134,25 @@ var appTop = new Vue({
             appModal.login.account = "";
             appModal.login.password = "";
             accountObj = {};
-            //复原合作按钮
-            $("button.btn-apply[disabled]").text("投个简历");
-            $("button.btn-apply[disabled]").attr("disabled", false);
+            //登出时重新请求结果
+            var postdata = {
+                index: 1,
+                count: 8
+            }
+            EventUtils.ajaxReq("/recruit/getList", "get", postdata, function(resp, status) {
+                console.log(resp);
+                if (resp.data) {
+                    appResult.posList.totalpages = resp.data.totalPage;
+                    appResult.posList.results = resp.data.list;
+                    if (parObj.searchtext) {
+                        appQuery.keywords = decodeURI(parObj.searchtext);
+                        searchRequest(1);
+                    }
+                } else {
+                    appResult.posList.totalpages = 1;
+                    appResult.posList.results = [];
+                }
+            });
             var state = {
                 title: document.title,
                 url: document.location.href,
@@ -408,7 +445,7 @@ var appResult = new Vue({
             var link = "detail-position.html?recruitId=" + id + (this.accountId ? "&userId=" + this.accountId : "");
             return link
         },
-        coApply: function(id, obj) {
+        coApply: function(id, item) {
             if (appTop.isLogin) {
                 if (accountObj.userType != "0") {
                     swal({
@@ -429,6 +466,7 @@ var appResult = new Vue({
                         appModal.showModal = true;
                         appModal.showLogin = false;
                         appModal.showSucc = true;
+                        item.applyStatus = 1;
                     } else {
                         swal({
                             title: "",
@@ -436,8 +474,6 @@ var appResult = new Vue({
                             type: "error"
                         })
                     };
-                    //投递后避免重复点击         
-                    $(obj).attr("disabled", true).text("已投递");
                 });
             } else {
                 appModal.showModal = true;
@@ -504,18 +540,35 @@ var appModal = new Vue({
             };
             EventUtils.ajaxReq("/center/user/login", "post", postdata, function(resp, status) {
                 accountObj = resp.data;
-                appTop.userType = resp.data.userType;
-                appTop.userName = resp.data.name;
-                appTop.isLogin = true;
-                appModal.showModal = false;
-                appModal.showLogin = false;
-                var state = {
-                    title: document.title,
-                    url: document.location.href,
-                    otherkey: null
-                };
-                //无刷新页面替换URL
-                history.replaceState(state, document.title, "display-position.html?userId=" + resp.data.userId);
+                if (accountObj) {
+                    var postdata = { //重新请求结果
+                        userId: accountObj.userId,
+                        index: 1,
+                        count: 8
+                    }
+                    EventUtils.ajaxReq("/recruit/getList", "get", postdata, function(resp, status) {
+                        console.log(resp);
+                        if (resp.data) {
+                            appResult.posList.totalpages = resp.data.totalPage;
+                            appResult.posList.results = resp.data.list;
+                        } else {
+                            appResult.posList.totalpages = 1;
+                            appResult.posList.results = [];
+                        }
+                    });
+                    appTop.userType = resp.data.userType;
+                    appTop.userName = resp.data.name;
+                    appTop.isLogin = true;
+                    appModal.showModal = false;
+                    appModal.showLogin = false;
+                    var state = {
+                        title: document.title,
+                        url: document.location.href,
+                        otherkey: null
+                    };
+                    //无刷新页面替换URL
+                    history.replaceState(state, document.title, "display-position.html?userId=" + resp.data.userId);
+                }
             })
         }
     },
@@ -595,19 +648,22 @@ function resultsRequest(page) {
         default:
     }
     var postdata = {
-            index: page,
-            count: 8,
-            userAddress: appQuery.posQuery.address,
-            type: appQuery.posQuery.areas.area_1 == "" ? "" : appQuery.posQuery.areas.area_1 + ";" + appQuery.posQuery.areas.area_2,
-            job: appQuery.posQuery.pos.pos_2 == "" ? "" : appQuery.posQuery.pos.pos_1 + ";" + appQuery.posQuery.pos.pos_2,
-            workType: appQuery.posQuery.workstype,
-            workTime: appQuery.posQuery.worksexp,
-            education: appQuery.posQuery.scolar,
-            salary: appQuery.posQuery.salary,
-            welfare: appQuery.posQuery.welfare,
-            timeType: dateindex
-        }
-        // 清除发送数据对象值为空的属性
+        index: page,
+        count: 8,
+        userAddress: appQuery.posQuery.address,
+        type: appQuery.posQuery.areas.area_1 == "" ? "" : appQuery.posQuery.areas.area_1 + ";" + appQuery.posQuery.areas.area_2,
+        job: appQuery.posQuery.pos.pos_2 == "" ? "" : appQuery.posQuery.pos.pos_1 + ";" + appQuery.posQuery.pos.pos_2,
+        workType: appQuery.posQuery.workstype,
+        workTime: appQuery.posQuery.worksexp,
+        education: appQuery.posQuery.scolar,
+        salary: appQuery.posQuery.salary,
+        welfare: appQuery.posQuery.welfare,
+        timeType: dateindex
+    }
+    if (accountObj && accountObj.userId) {
+        postdata.userId = accountObj.userId;
+    }
+    // 清除发送数据对象值为空的属性
     postdata = EventUtils.filterReqdata(postdata);
     EventUtils.ajaxReq("/recruit/getList", "get", postdata, function(resp, status) {
         console.log(resp);
@@ -636,6 +692,9 @@ function searchRequest(page) {
         title: appQuery.keywords,
         index: page,
         count: 8
+    }
+    if (accountObj && accountObj.userId) {
+        postdata.userId = accountObj.userId;
     }
     EventUtils.ajaxReq("/recruit/searchRecruit?", "get", postdata, function(resp, status) {
         console.log(resp);

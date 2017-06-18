@@ -74,7 +74,7 @@
                 if (!variableUtils.regExp.email.test(this.email)) {
                     swal({
                         title: "",
-                        text: "请输入合法的邮箱地址！",
+                        text: "请输入正确的邮箱地址！",
                         type: "warning"
                     });
                     return false;
@@ -86,11 +86,25 @@
                     conection: this.email,
                     type: 1
                 };
-                console.log(postdata);
+                var _this = this;
                 EventUtils.ajaxReq('/sys/modifyConection?', 'post', postdata, function(resp, status) {
-                    console.log(resp);
+                    if (resp.code == "00000") {
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "success",
+                            timer: 1500,
+                            showConfirmButton: false,
+                        });
+                        _this.$emit("closebox");
+                    } else {
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "warning"
+                        });
+                    }
                 });
-                this.$emit("closebox");
             },
             closeBox: function() {
                 this.$emit("closebox");

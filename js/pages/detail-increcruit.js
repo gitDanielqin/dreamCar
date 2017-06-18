@@ -42,6 +42,7 @@ function infoRequest() {
         }
         appBanner.increcdata = briefdata;
         var increcinfo = {
+            userIcon: respObj.userIcon,
             pos: EventUtils.infoExtrac(respObj.job),
             salary: respObj.cvSalary,
             posType: respObj.workType,
@@ -171,6 +172,7 @@ var appBanner = new Vue({
     el: "#app-banner",
     data: {
         increcdata: {
+            userIcon: "",
             title: "",
             viewed: "",
             applied: "",
@@ -255,6 +257,7 @@ var appMain = new Vue({
     el: "#app-main",
     data: {
         increcdata: {
+            userIcon: "",
             pos: "UI设计师",
             salary: "6K-8K",
             posType: "全职",

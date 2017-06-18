@@ -35,26 +35,36 @@ function infoRequest() {
         index: 1,
         count: 8
     }
-    EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-        console.log(resp);
-        appResult.incList.totalpages = resp.data.totalPage;
-        appResult.incList.results = resp.data.list;
-        if (parObj.searchtext) {
-            appQuery.keywords = decodeURI(parObj.searchtext);
-            searchRequest(1);
-        }
-    });
-    if (parObj.userId) {
+    if (parObj.userId) { // 如果是已登录状态
+        postdata.userId = parObj.userId;
+        EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
+            console.log(resp);
+            appResult.incList.totalpages = resp.data.totalPage;
+            appResult.incList.results = resp.data.list;
+            if (parObj.searchtext) {
+                appQuery.keywords = decodeURI(parObj.searchtext);
+                searchRequest(1);
+            }
+        });
         EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId }, function(resp, status) {
             //  console.log(resp);
             accountObj = resp.data;
-            console.log(accountObj);
             if (accountObj) {
                 appTop.userName = resp.data.userName;
                 appTop.userType = resp.data.userType;
                 appTop.isLogin = true;
             }
         })
+    } else {
+        EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
+            console.log(resp);
+            appResult.incList.totalpages = resp.data.totalPage;
+            appResult.incList.results = resp.data.list;
+            if (parObj.searchtext) {
+                appQuery.keywords = decodeURI(parObj.searchtext);
+                searchRequest(1);
+            }
+        });
     }
 }
 
@@ -112,9 +122,30 @@ var appTop = new Vue({
             appModal.login.account = "";
             appModal.login.password = "";
             accountObj = {};
-            //复原合作按钮
-            $("button.btn-apply[disabled] span").text("申请合作");
-            $("button.btn-apply[disabled]").attr("disabled", false);
+
+            //重新请求页面数据
+            var postdata = {
+                demandType: 2,
+                index: 1,
+                count: 8
+            }
+            EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
+                if (resp.code == "00000") {
+                    if (resp.data) {
+                        appResult.incList.totalpages = resp.data.totalPage;
+                        appResult.incList.results = resp.data.list;
+                    } else {
+                        appResult.incList.totalpages = 1;
+                        appResult.incList.results = [];
+                    }
+                } else {
+                    swal({
+                        title: "",
+                        text: resp.info,
+                        type: "error"
+                    })
+                }
+            });
             var state = {
                 title: document.title,
                 url: document.location.href,
@@ -359,7 +390,7 @@ var appResult = new Vue({
         infoExtrac: function(info) {
             return EventUtils.infoExtrac(info);
         },
-        coApply: function(id, obj) {
+        coApply: function(id, item) {
             if (appTop.isLogin) {
                 if (accountObj.userType != "1") {
                     swal({
@@ -377,6 +408,7 @@ var appResult = new Vue({
                 EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
                     console.log(resp);
                     if (resp.data.isApply == "0") {
+                        item.applyStatus = 1;
                         appModal.showModal = true;
                         appModal.showLogin = false;
                         appModal.showSucc = true;
@@ -387,12 +419,6 @@ var appResult = new Vue({
                             type: "error"
                         })
                     }
-                    //申请后避免重复点击
-                    if (!$(obj).hasClass("btn-apply")) {
-                        obj = obj.parentNode;
-                    }
-                    $(obj).attr("disabled", true);
-                    $(obj).children("span").text("已申请");
                 });
             } else {
                 appModal.showModal = true;
@@ -458,20 +484,53 @@ var appModal = new Vue({
                 password: this.login.password
             };
             EventUtils.ajaxReq("/center/user/login", "post", postdata, function(resp, status) {
-                accountObj = resp.data;
-                console.log(resp.data);
-                appTop.userType = resp.data.userType;
-                appTop.userName = resp.data.name;
-                appTop.isLogin = true;
-                var state = {
-                    title: document.title,
-                    url: document.location.href,
-                    otherkey: null
-                };
-                //无刷新页面替换URL
-                history.replaceState(state, document.title, "display-company.html?userId=" + resp.data.userId);
-                appModal.showModal = false;
-                appModal.showLogin = false;
+                if (resp.code == "00000") {
+                    accountObj = resp.data;
+                    //重新请求页面数据
+                    var postdata = {
+                        userId: accountObj.userId,
+                        demandType: 2,
+                        index: 1,
+                        count: 8
+                    }
+                    EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
+                        // console.log(resp);
+                        if (resp.code == "00000") {
+                            if (resp.data) {
+                                appResult.incList.totalpages = resp.data.totalPage;
+                                appResult.incList.results = resp.data.list;
+                            } else {
+                                appResult.incList.totalpages = 1;
+                                appResult.incList.results = [];
+                            }
+                        } else {
+                            swal({
+                                title: "",
+                                text: resp.info,
+                                type: "error"
+                            })
+                        }
+                    });
+                    //头部改变登录状态
+                    appTop.userType = resp.data.userType;
+                    appTop.userName = resp.data.name;
+                    appTop.isLogin = true;
+                    //无刷新页面替换URL
+                    var state = {
+                        title: document.title,
+                        url: document.location.href,
+                        otherkey: null
+                    };
+                    history.replaceState(state, document.title, "display-company.html?userId=" + resp.data.userId);
+                    appModal.showModal = false;
+                    appModal.showLogin = false;
+                } else {
+                    swal({
+                        title: "",
+                        text: resp.info,
+                        type: "error"
+                    })
+                }
             })
         }
     },
@@ -553,6 +612,7 @@ function resultsRequest(page) {
     }
     var postdata = {
             demandType: 2,
+            userId: accountObj && accountObj.userId ? accountObj.userId : "",
             index: page,
             count: 8,
             userAddress: appQuery.incQuery.address,
@@ -565,6 +625,7 @@ function resultsRequest(page) {
             timeType: dateindex
         }
         // 清除发送数据对象值为空的属性
+    console.log(postdata);
     postdata = EventUtils.filterReqdata(postdata);
     EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
         console.log(resp);
@@ -592,6 +653,9 @@ function searchRequest(page) {
         title: appQuery.keywords,
         index: page,
         count: 8
+    }
+    if (accountObj && accountObj.userId) {
+        postdata.userId = accountObj.userId;
     }
     EventUtils.ajaxReq("/demand/searchDemand?", "get", postdata, function(resp, status) {
         console.log(resp);

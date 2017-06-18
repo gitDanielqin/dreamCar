@@ -45,6 +45,7 @@ function infoRequest() {
         var userAddArray = respObj.userAddress ? respObj.userAddress.split(";") : "";
         var baseinfo = {
             uni: respObj.userName,
+            userIcon: respObj.userIcon,
             uniprops: respObj.userProperty,
             uniscale: respObj.userScale,
             address: userAddArray != "" ? userAddArray[1] + "-" + userAddArray[2] : "",
@@ -280,6 +281,7 @@ var appMain = new Vue({
             },
             baseinfo: {
                 uni: "浙江大学",
+                userIcon: "",
                 uniprops: "重点",
                 uniscale: "20000人",
                 address: "下沙大学城",

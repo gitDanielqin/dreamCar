@@ -56,8 +56,8 @@
                 <p class="subtitle fSize16 W260 LH-H35 t-center">加强大学生实践学习经验</p>
                 <h2 class="maT28 fSize0"><img src="images/title-txt.png" /></h2>
                 <div class="maT38 pRel">
-                    <input type="text" placeholder="岗位名称/学校名称/企业名称" class="search LH-H48 v-top" v-model="searchText" /><button class="search-btn" @click="search">搜索</button>
-                    <ul class="lis-inline search-nav" @click="selectSearchLabel($event.target)">
+                    <input type="text" placeholder="岗位名称/学校名称/企业名称" class="search LH-H48 v-top" v-model="searchText" @focus="showSeachOptions" /><button class="search-btn" @click="search">搜索</button>
+                    <ul class="lis-inline search-nav" @click="selectSearchLabel($event.target)" id="search-options">
                         <li class="on search-uni">高校需求</li>
                         <li class="search-inc">企业需求</li>
                         <li class="search-pos">校企岗位</li>

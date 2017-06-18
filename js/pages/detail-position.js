@@ -42,6 +42,7 @@ function infoRequest() {
         }
         appBanner.posdata = briefdata;
         var posinfo = {
+            userIcon: respObj.userIcon,
             pos: EventUtils.infoExtrac(respObj.job),
             salary: respObj.salary,
             posType: respObj.workType,
@@ -253,6 +254,7 @@ var appMain = new Vue({
     el: "#app-main",
     data: {
         posdata: {
+            userIcon: "",
             pos: "UI设计师",
             salary: "6K-8K",
             posType: "全职",

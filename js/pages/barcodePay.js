@@ -7,12 +7,56 @@ var postdata = {
     userId: parObj.userId,
     amount: parObj.amount
 }
+var domainUrl = "";
+EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function(resp, status) {
+    console.log(resp.data);
+    if (resp.data) {
+        switch (resp.data.userType) {
+            case "0":
+                domainUrl = "pCenter.html?userId=" + parObj.userId + "&loginId=" + resp.data.loginIdentifier;
+                break;
+            case "1":
+                domainUrl = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + resp.data.loginIdentifier;
+                break;
+            case "2":
+                domainUrl = "incCenter.html?userId=" + parObj.userId + "&loginId=" + resp.data.loginIdentifier;
+                break;
+        }
+    }
+})
 EventUtils.ajaxReq("/sys/recharge", "post", postdata, function(resp, status) {
     console.log(resp);
     if (resp.data) {
         $("#aliBarcode")[0].src = resp.data.payImg;
         var amount = parseInt(parObj.amount).toFixed(2);
         $("#aliAmount").html(amount);
+        //启动轮询开始检测是否支付成功
+        var paycheckdata = {
+            userId: parObj.userId,
+            orderId: resp.data.orderId
+        }
+        var timer = setInterval(function() {
+            EventUtils.ajaxReq("/sys/getOrderStatus", "get", paycheckdata, function(resp, status) {
+                console.log(resp);
+                if (resp.code == "00000") {
+                    clearInterval(timer);
+                    swal({
+                        title: "",
+                        text: "支付成功！",
+                        type: "success",
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+                    setTimeout(function() {
+                        if (domainUrl) {
+                            window.location.href = domainUrl;
+                        } else {
+                            window.location.href = "index.html?userId=" + parObj.userId;
+                        }
+                    }, 2000)
+                }
+            })
+        }, 1500)
     } else {
         swal({
             title: "",
@@ -29,6 +73,7 @@ function _init() {
     } else if (parObj.plattform == "webarcode") {
         $(".pay-box").hide();
         $(".wepay-box").show();
-    }
+    };
+
 }
 _init();

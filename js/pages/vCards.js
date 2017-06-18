@@ -87,12 +87,38 @@ var appCont = new Vue({
             $(obj).addClass("on");
         },
         submitCard: function(type) {
+            var isFilled = true;
+            $("#app-content input:visible").each(function() {
+                if ($(this).val() == "") {
+                    isFilled = false;
+                    $(this).addClass("hint-nullable");
+                } else {
+                    $(this).removeClass("hint-nullable");
+                }
+            });
+            if (!isFilled) {
+                swal({
+                    title: "",
+                    text: "请完成所有的卡片信息！",
+                    type: "warning"
+                });
+                return false;
+            }
+
             var posturl = "";
             var postdata = {};
             var domainUrl = "";
             if (type == "person") {
                 posturl = "/user/user/createCard"
                 domainUrl = "pCenter.html?";
+                if (!variableUtils.regExp.email.test(this.pInfo.email)) {
+                    swal({
+                        title: "",
+                        text: "邮箱格式不正确！",
+                        type: "warning"
+                    });
+                    return false;
+                }
                 postdata = {
                     userId: parObj.userId,
                     realName: this.pInfo.name,
@@ -106,6 +132,14 @@ var appCont = new Vue({
                 }
 
             } else if (type == "uni") {
+                if (!variableUtils.regExp.mobile.test(this.uniInfo.mobile)) {
+                    swal({
+                        title: "",
+                        text: "手机格式不正确！",
+                        type: "warning"
+                    });
+                    return false;
+                }
                 posturl = "/user/school/createCard";
                 postdata = {
                     userId: parObj.userId,
@@ -120,6 +154,14 @@ var appCont = new Vue({
                 };
                 domainUrl = "uniCenter.html?";
             } else if (type == "inc") {
+                if (!variableUtils.regExp.mobile.test(this.incInfo.mobile)) {
+                    swal({
+                        title: "",
+                        text: "手机格式不正确！",
+                        type: "warning"
+                    });
+                    return false;
+                }
                 posturl = "/user/company/createCard";
                 postdata = {
                     userId: parObj.userId,
@@ -135,9 +177,34 @@ var appCont = new Vue({
                 }
                 domainUrl = "incCenter.html?";
             }
+            if (!parObj.userId) {
+                swal({
+                    title: "",
+                    text: "网页数据出错，请返回注册页重新注册！",
+                    type: "warning"
+                });
+                return false;
+            }
             EventUtils.ajaxReq(posturl, 'post', postdata, function(resp, status) {
-                var parstring = "userId=" + parObj.userId + "&loginId=" + parObj.loginId;
-                window.location.href = domainUrl + parstring;
+                if (resp.code == "00000") {
+                    swal({
+                        title: "",
+                        text: resp.info,
+                        type: "success",
+                        showConfirmButton: false
+                    });
+                    setTimeout(function() {
+                        var parstring = "userId=" + parObj.userId + "&loginId=" + parObj.loginId;
+                        window.location.href = domainUrl + parstring;
+                    }, 1000)
+                } else {
+                    swal({
+                        title: "",
+                        text: resp.info,
+                        type: "error"
+                    });
+                }
+
             })
 
         }

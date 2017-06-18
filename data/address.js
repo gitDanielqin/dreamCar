@@ -514,8 +514,7 @@ var addArray = [{
 //      }
 // }
 // console.log(maxlen);
-
-(function() {
+function addressExtra() { //添加不限选项
     for (var i = 0; i < addArray.length; i++) {
         for (var j = 0; j < addArray[i].citys.length; j++) {
             addArray[i].citys[j].conts.push("不限");
@@ -533,6 +532,7 @@ var addArray = [{
         ]
     };
     addArray.push(exProvince);
-})()
+}
+addressExtra();
 
 window.addArray = addArray;

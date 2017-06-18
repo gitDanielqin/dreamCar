@@ -22,6 +22,7 @@ function infoRequest() {
         respObj = resp.data;
         console.log(respObj);
         var baseinfo = {
+            userIcon: resp.data.userIcon,
             inc: resp.data.userName,
             incprops: resp.data.userProperty,
             incscale: resp.data.userScale,
@@ -280,6 +281,7 @@ var appMain = new Vue({
                 discription: "lalaland", //需求描述
             },
             baseinfo: {
+                userIcon: "",
                 inc: "校企职通车",
                 incprops: "国企",
                 incscale: "20-90人",

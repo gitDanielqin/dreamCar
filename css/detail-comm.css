@@ -218,6 +218,15 @@ button.btn-apply[disabled] {
     height: auto;
 }
 
+.pic-logo {
+    width: 108px;
+}
+
+.pic-logo img {
+    width: 100%;
+    height: auto;
+}
+
 .porto {
     border-left: 1px solid #c4c4c4;
     border-bottom: 1px solid #c4c4c4;

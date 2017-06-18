@@ -36,19 +36,26 @@ function infoRequest() {
         index: 1,
         count: 8
     }
-    console.log(postdata);
-    EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-        console.log(resp);
-        if (resp.data) {
-            appResult.uniList.totalpages = resp.data.totalPage;
-            appResult.uniList.results = resp.data.list;
-            if (parObj.searchtext) {
-                appQuery.keywords = decodeURI(parObj.searchtext);
-                searchRequest(1);
-            }
-        }
-    });
     if (parObj.userId) {
+        postdata.userId = parObj.userId;
+        EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
+            console.log(resp);
+            if (resp.data) {
+                appResult.uniList.totalpages = resp.data.totalPage;
+                appResult.uniList.results = resp.data.list;
+                if (parObj.searchtext) {
+                    appQuery.keywords = decodeURI(parObj.searchtext);
+                    searchRequest(1);
+                }
+            } else {
+                appResult.uniList.totalpages = 1;
+                appResult.uniList.results = [];
+                if (parObj.searchtext) {
+                    appQuery.keywords = decodeURI(parObj.searchtext);
+                    searchRequest(1);
+                }
+            }
+        });
         EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId }, function(resp, status) {
             console.log(resp);
             accountObj = resp.data;
@@ -58,8 +65,26 @@ function infoRequest() {
                 appTop.isLogin = true;
             }
         })
+    } else {
+        EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
+            console.log(resp);
+            if (resp.data) {
+                appResult.uniList.totalpages = resp.data.totalPage;
+                appResult.uniList.results = resp.data.list;
+                if (parObj.searchtext) {
+                    appQuery.keywords = decodeURI(parObj.searchtext);
+                    searchRequest(1);
+                }
+            } else {
+                appResult.uniList.totalpages = 1;
+                appResult.uniList.results = [];
+                if (parObj.searchtext) {
+                    appQuery.keywords = decodeURI(parObj.searchtext);
+                    searchRequest(1);
+                }
+            }
+        });
     }
-
 }
 
 var appTop = new Vue({
@@ -115,9 +140,29 @@ var appTop = new Vue({
             appModal.login.account = "";
             appModal.login.password = "";
             accountObj = {};
-            //复原合作按钮
-            $("button.btn-apply[disabled] span").text("申请合作");
-            $("button.btn-apply[disabled]").attr("disabled", false);
+            var postdata = {
+                demandType: 1,
+                index: 1,
+                count: 8
+            };
+            EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
+                console.log(resp);
+                if (resp.data) {
+                    appResult.uniList.totalpages = resp.data.totalPage;
+                    appResult.uniList.results = resp.data.list;
+                    if (parObj.searchtext) {
+                        appQuery.keywords = decodeURI(parObj.searchtext);
+                        searchRequest(1);
+                    }
+                } else {
+                    appResult.uniList.totalpages = 1;
+                    appResult.uniList.results = [];
+                    if (parObj.searchtext) {
+                        appQuery.keywords = decodeURI(parObj.searchtext);
+                        searchRequest(1);
+                    }
+                }
+            });
             var state = {
                 title: document.title,
                 url: document.location.href,
@@ -387,7 +432,7 @@ var appResult = new Vue({
             var link = "detail-uni.html?demandId=" + demandId + (this.accountId ? "&userId=" + this.accountId : "");
             return link;
         },
-        coApply: function(id, obj) {
+        coApply: function(id, item) {
             if (appTop.isLogin) {
                 if (accountObj.userType != "2") {
                     swal({
@@ -405,6 +450,7 @@ var appResult = new Vue({
                 EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
                     console.log(resp);
                     if (resp.data.isApply == "0") {
+                        item.applyStatus = 1;
                         appModal.showModal = true;
                         appModal.showLogin = false;
                         appModal.showSucc = true;
@@ -415,12 +461,6 @@ var appResult = new Vue({
                             type: "error"
                         })
                     };
-                    //申请后避免重复点击
-                    if (!$(obj).hasClass("btn-apply")) {
-                        obj = obj.parentNode;
-                    }
-                    $(obj).attr("disabled", true);
-                    $(obj).children("span").text("已申请");
                 });
             } else {
                 appModal.showModal = true;
@@ -489,6 +529,30 @@ var appModal = new Vue({
                 console.log(resp);
                 if (resp.data) {
                     accountObj = resp.data;
+                    var postdata = {
+                        demandType: 1,
+                        index: 1,
+                        count: 8,
+                        userId: accountObj.userId
+                    }
+                    EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
+                        console.log(resp);
+                        if (resp.data) {
+                            appResult.uniList.totalpages = resp.data.totalPage;
+                            appResult.uniList.results = resp.data.list;
+                            if (parObj.searchtext) {
+                                appQuery.keywords = decodeURI(parObj.searchtext);
+                                searchRequest(1);
+                            }
+                        } else {
+                            appResult.uniList.totalpages = 1;
+                            appResult.uniList.results = [];
+                            if (parObj.searchtext) {
+                                appQuery.keywords = decodeURI(parObj.searchtext);
+                                searchRequest(1);
+                            }
+                        }
+                    });
                     appTop.userName = resp.data.name;
                     appTop.userType = resp.data.userType;
                     appTop.isLogin = true;
@@ -588,22 +652,26 @@ function resultsRequest(page) {
         default:
     }
     var postdata = {
-            demandType: 1,
-            index: page,
-            count: 8,
-            userAddress: appQuery.uniQuery.address,
-            companyProperty: appQuery.uniQuery.incReq.areas.area_1 == "" ? "" : appQuery.uniQuery.incReq.areas.area_1 + ";" + appQuery.uniQuery.incReq.areas.area_2,
-            companyScale: appQuery.uniQuery.incReq.IncScale,
-            companyType: appQuery.uniQuery.incReq.areas.area_1 == "" ? "" : appQuery.uniQuery.incReq.areas.area_1 + ";" + appQuery.uniQuery.incReq.areas.area_2,
-            profession: $(".queryform .major-input-1 input").val() == "" ? "不限" : appQuery.uniQuery.major,
-            professionCount: appQuery.uniQuery.majorsum,
-            job: appQuery.uniQuery.incReq.pos.pos_1 == "" ? "" : appQuery.uniQuery.incReq.pos.pos_1 + ";" + appQuery.uniQuery.incReq.pos.pos_2,
-            jobCount: appQuery.uniQuery.incReq.posAmount,
-            trainType: appQuery.uniQuery.trainway,
-            timeType: dateindex
-        }
-        // 清楚发送数据对象值为空的属性
+        demandType: 1,
+        index: page,
+        count: 8,
+        userAddress: appQuery.uniQuery.address,
+        companyProperty: appQuery.uniQuery.incReq.IncProps,
+        companyScale: appQuery.uniQuery.incReq.IncScale,
+        companyType: appQuery.uniQuery.incReq.areas.area_1 == "" ? "" : appQuery.uniQuery.incReq.areas.area_1 + ";" + appQuery.uniQuery.incReq.areas.area_2,
+        profession: $(".queryform .major-input-1 input").val() == "" ? "不限" : appQuery.uniQuery.major,
+        professionCount: appQuery.uniQuery.majorsum,
+        job: appQuery.uniQuery.incReq.pos.pos_1 == "" ? "" : appQuery.uniQuery.incReq.pos.pos_1 + ";" + appQuery.uniQuery.incReq.pos.pos_2,
+        jobCount: appQuery.uniQuery.incReq.posAmount,
+        trainType: appQuery.uniQuery.trainway,
+        timeType: dateindex
+    }
+    if (accountObj && accountObj.userId) {
+        postdata.userId = accountObj.userId;
+    }
+    // 清楚发送数据对象值为空的属性
     postdata = EventUtils.filterReqdata(postdata);
+    console.log(postdata);
     EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
         console.log(resp);
         if (resp.data) {
@@ -632,6 +700,9 @@ function searchRequest(page) {
         title: appQuery.keywords,
         index: page,
         count: 8
+    }
+    if (accountObj && accountObj.userId) {
+        postdata.userId = accountObj.userId;
     }
     EventUtils.ajaxReq("/demand/searchDemand?", "get", postdata, function(resp, status) {
         console.log(resp);

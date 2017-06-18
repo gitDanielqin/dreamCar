@@ -55,18 +55,21 @@ body {
 }
 
 .search-nav {
-    color: dodgerblue;
+    color: white;
     position: absolute;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 25px;
-    top: 52px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 48px;
+    background: rgba(0, 0, 0, 0.5);
+    left: 278px;
+    width: 314px;
+    opacity: 0;
+    transition: all 0.5s;
 }
 
 .search-nav li {
     padding: 5px;
-    margin: 0 36px;
+    margin: 0 19px;
     cursor: pointer;
     border-radius: 7px;
 }

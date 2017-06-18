@@ -12,7 +12,7 @@
               </span>\
             </h2>\
             <div v-show="sticky.sofort">\
-                <div class="refresh-cont">\
+                <div class="refresh-cont" v-show="!barcode.sofort">\
                     <p class="stick-cont-title">信息置顶，排名提前到第一页，获得海量曝光，效果翻倍，赶快来试试吧！</p>\
                     <table class="sticky-sofort-list">\
                         <tr v-for="(item,index) in sticky.content">\
@@ -23,12 +23,14 @@
                     </table>\
                     <p class="refresh-ps">注：每24小时执行一次，购买后立即执行。</p>\
                 </div>\
+                <div class="refresh-barcode" v-show="barcode.sofort"><img :src="barcode.imgsrc" /><p>打开支付宝，扫一扫立即支付！</p></div>\
                 <div class="refresh-bot">\
                     <p class="LH50">应付金额<span class="color-orange-fc">{{sticky.sum}}</span>元<span class="price-pre">原价：{{sticky.presum}}元</span></p>\
                     <!--<p class="LH20"><i class="pic-icon icon-checkbox on" @click="checkAutopay($event.target)"></i>自动续费<span class="color-orange-fc">{{sticky.discount}}</span></p>-->\
                     <p class="LH20">账户余额：<span class="color-orange-fc">{{account.money}}</span>元</p>\
                     <p class="autopay-hint"><span class="disNo">（系统将在智能置顶到期后自动帮您续费，可通过选中自动续费启用或取消）</span></p>\
                     <button type="button" class="refresh-btn" @click="stickAction($event.target)">{{sticky.sofortBtn}}</button>\
+                    <button type="button" class="refresh-barcodepay" v-show="sticky.sum>account.money" @click="stickAction($event.target)">扫一扫，立即支付</button>\
                 </div>\
             </div>\
             <div v-show="!sticky.sofort">\
@@ -127,6 +129,10 @@
                     sofortBtn: "立即充值",
                     planBtn: "立即置顶",
                     sofort: true
+                },
+                barcode: {
+                    sofort: false,
+                    imgsrc: ""
                 }
             }
         },
@@ -136,7 +142,7 @@
             },
             stickAction: function(obj) {
                 this.sticky.title = this.stickitem.title;
-                if ($(obj).html() == "立即置顶") {
+                if ($(obj).html() == "立即置顶" || $(obj).hasClass("refresh-barcodepay")) {
                     this.sticky.title = this.stickitem.title;
                     if (this.stickitem.demandId) { //刷新校企合作需求
                         if (!this.sticky.sofort) {
@@ -220,17 +226,10 @@
         },
         watch: {
             "showsticky": function(curval) {
-                if (curval) {
+                if (curval) { //初始化页面信息 
                     $(".sticky-sofort-list .icon-radio.on").removeClass("on");
                     $(".sticky-sofort-list .icon-radio:first").addClass("on");
-                    this.sticky.sofort = true;
-                    this.sticky.sum = parseInt(this.sticky.content[0].amount);
-                    this.sticky.presum = parseInt(this.sticky.content[0].amount);
-                    var _this = this;
-                    EventUtils.ajaxReq("/center/user/getAccount", "get", { userId: this.userid }, function(resp, status) {
-                        _this.account.money = resp.data.useableBalance;
-                        _this.sticky.show = true;
-                    });
+                    initSticky(this);
                 }
             },
             "sticky.sum": function(curval) {
@@ -244,34 +243,35 @@
             "sticky.show": function(curval) {
                 if (!curval) {
                     EventUtils.absCenter($(".stick-hint-box"));
+                } else {
+                    initSticky(this);
                 }
             }
         },
         mounted: function() {
-            //获取用户账户及免费刷新次数等信息
             var _this = this;
-            EventUtils.ajaxReq("/center/user/getAccount", "get", { userId: this.userid }, function(resp, status) {
-                // console.log(resp);
-                // console.log(1);
-                _this.account.money = resp.data.useableBalance;
-            });
             //获取刷新模板信息
             var postdata = {
                 userId: this.userid,
                 type: 2
             }
             EventUtils.ajaxReq("/sys/getRefreshHotInfoList", "post", postdata, function(resp, status) {
-                // console.log(resp);
-                // console.log(2);
                 if (resp.data) {
                     _this.sticky.content = resp.data;
-                    _this.sticky.sum = _this.sticky.presum = parseInt(resp.data[0].amount);
-                    _this.sticky.sofortBtn = _this.sticky.sum > _this.account.money ? "立即充值" : "立即置顶";
-                    _this.sticky.planBtn = _this.sticky.sum > _this.account.money ? "立即充值" : "立即置顶";
                 }
             })
         }
     });
+
+    function initSticky(stickyObj) {
+        stickyObj.sticky.sofort = true;
+        stickyObj.sticky.presum = stickyObj.sticky.sum = stickyObj.sticky.content[0].amount;
+        EventUtils.ajaxReq("/center/user/getAccount", "get", { userId: stickyObj.userid }, function(resp, status) {
+            stickyObj.account.money = resp.data.useableBalance;
+            stickyObj.sticky.show = true;
+            stickyObj.barcode.sofort = false;
+        });
+    }
 
     function stickRequest(userId, pushId, type, tarifId, stickObj) {
         var postdata = {
@@ -283,7 +283,33 @@
         console.log(postdata);
         EventUtils.ajaxReq("/sys/hotUp", "post", postdata, function(resp, statsu) {
             if (resp.code == "00000") {
-                stickObj.sticky.show = false;
+                if (resp.data.payImg) {
+                    stickObj.barcode.sofort = true;
+                    stickObj.barcode.imgsrc = resp.data.payImg;
+                    //轮询查看是否支付成功
+                    var paycheckdata = {
+                        userId: userId,
+                        orderId: resp.data.orderId
+                    }
+                    var timer = setInterval(function() {
+                        EventUtils.ajaxReq("/sys/getOrderStatus", "get", paycheckdata, function(resp, status) {
+                            console.log(resp);
+                            if (resp.code == "00000") {
+                                clearInterval(timer);
+                                swal({
+                                    title: "",
+                                    text: "支付成功！",
+                                    type: "success",
+                                    timer: 2000,
+                                    showConfirmButton: false,
+                                });
+                                stickObj.barcode.sofort = false;
+                            }
+                        })
+                    }, 1500)
+                } else {
+                    stickObj.sticky.show = false;
+                }
             }
         })
     }

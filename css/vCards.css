@@ -65,6 +65,10 @@ i.bind {
     background: url("../images/trigle03.png") no-repeat center right;
 }
 
+.main .card .selectee input.hint-nullable {
+    background: url("../images/trigle03.png") no-repeat center right #ffd2d2;
+}
+
 .main .card .selectee ul {
     position: absolute;
     left: 0;

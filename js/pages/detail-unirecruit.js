@@ -42,6 +42,7 @@ function infoRequest() {
         }
         appBanner.unirecdata = briefdata;
         var unirecinfo = {
+            userIcon: respObj.userIcon,
             IncCity: respObj.companyAddress ? respObj.companyAddress.split(";")[1] : "",
             IncArea: EventUtils.infoExtrac(respObj.companyType),
             IncProps: respObj.companyProperty,
@@ -261,6 +262,7 @@ var appMain = new Vue({
     el: "#app-main",
     data: {
         unirecdata: {
+            userIcon: "",
             IncCity: "杭州",
             IncArea: "互联网",
             IncProps: "国企",

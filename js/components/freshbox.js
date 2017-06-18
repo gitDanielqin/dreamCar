@@ -12,7 +12,7 @@
                </span>\
             </h2>\
             <div v-show="fresh.smart">\
-                <div class="refresh-cont">\
+                <div class="refresh-cont" v-show="!barcode.smart">\
                     <p class="refresh-title"><img src="images/fresh-title.png" /></p>\
                     <table class="fresh-smart-list">\
                         <tr v-for="(item,index) in fresh.content">\
@@ -23,28 +23,32 @@
                     </table>\
                     <p class="refresh-ps">注：每6小时执行一次，购买后立即执行。</p>\
                 </div>\
+                <div class="refresh-barcode" v-show="barcode.smart"><img :src="barcode.imgsrc" /><p>打开支付宝，扫一扫立即支付！</p></div>\
                 <div class="refresh-bot">\
                     <p style="line-height:50px">应付金额<span style="color:#fc4f05;">{{fresh.sum}}</span>元<span class="price-pre">原价：{{fresh.presum}}元</span></p>\
                     <!--<p style="line-height:20px"><i class="pic-icon icon-checkbox on" @click="checkAutopay($event.target)"></i>自动续费<span style="color:#fc4f05;">{{fresh.discount}}</span></p>-->\
                     <p style="line-height:20px">账户余额：<span class="color-orange-fc">{{account.money}}</span>元</p>\
                     <p class="autopay-hint"><span class="disNo">（系统将在智能刷新到期后自动帮您续费，可通过选中自动续费启用或取消）</span></p>\
+                    <button class="refresh-barcodepay" v-show="fresh.sum>account.money" @click.stop="freshAction($event.target)">扫一扫，立即支付</button>\
                     <button type="button" class="refresh-btn" @click="freshAction($event.target)">{{fresh.smartBtn}}</button>\
                 </div>\
             </div>\
             <div v-show="!fresh.smart">\
-                <div class="refresh-cont-normal-free" v-show="account.freeFreshTimes>0">\
+                <div class="refresh-cont-normal-free" v-show="account.freeFreshTimes>0&&!barcode.normal">\
                     <p style="color:#ec7d0e;">信息刷新后：排名靠前，时间显示最新，能获得更多浏览机会</p>\
                     <p><span style="color:#fc4f05;">智能刷新</span>，效果翻倍，每次最低仅需<span style="color:#fc4f05;">0.7</span>元</p>\
                     <p style="font-size:18px; line-height:123px;">本次刷新<span style="color:#fc4f05;">免费</span>，是否确定刷新？</p>\
                 </div>\
-                <div class="refresh-cont-normal" v-show="account.freeFreshTimes==0">\
+                <div class="refresh-cont-normal" v-show="account.freeFreshTimes==0&&!barcode.normal">\
                     <p style="color:#ec7d0e;">信息刷新后：排名靠前，时间显示最新，能获得更多浏览机会</p>\
                     <p><span style="color:#fc4f05;">智能刷新</span>，效果翻倍，每次最低仅需<span style="color:#fc4f05;">0.7</span>元</p>\
                     <p>提示：免费刷新次数已经用完，不享有免费刷新。</p>\
                     <p>本次刷新需要扣除推广金 <span style="color:#fc4f05;">1.0</span>元，是否确定刷新？</p>\
                 </div>\
+                <div class="refresh-barcode" v-show="barcode.normal"><img :src="barcode.imgsrc" /><p>打开支付宝，扫一扫立即支付！</p></div>\
                 <div class="refresh-bot refresh-bot-normal">\
                     <span style="display:block;" v-show="account.freeFreshTimes==0">您的校企余额：<b style="color:#fc4f05;">{{regMoney(account.money)}}</b>元</span><button type="button" class="fresh-sofort-btn" @click="freshAction($event.target)">{{fresh.sofortBtn}}</button>\
+                    <button class="refresh-barcodepay" v-show="fresh.sum>account.money" @click="freshAction($event.target)">扫一扫，立即支付</button>\
                 </div>\
             </div>\
         </div>\
@@ -87,6 +91,11 @@
                     smartBtn: "立即充值",
                     sofortBtn: "立即刷新",
                     smart: true
+                },
+                barcode: {
+                    smart: false,
+                    normal: false,
+                    imgsrc: ""
                 }
             }
             return freshObj;
@@ -96,7 +105,7 @@
                 $(obj).toggleClass("on")
             },
             freshAction: function(obj) {
-                if ($(obj).html() == "立即刷新") {
+                if ($(obj).html() == "立即刷新" || $(obj).hasClass("refresh-barcodepay")) {
                     console.log(this.freshitem);
                     this.fresh.title = this.freshitem.title;
                     if (this.freshitem.demandId) { //刷新校企合作需求
@@ -155,16 +164,10 @@
             selectFreshWay: function(way, obj) {
                 $(".fresh-navs .on").removeClass("on");
                 $(obj).addClass("on");
-                var _this = this;
                 if (way == "smart") {
                     this.fresh.smart = true;
                 } else {
                     this.fresh.smart = false;
-                    if (this.account.freeFreshTimes > 0) {
-                        this.fresh.sum = 0;
-                    } else {
-                        this.fresh.sum = 1;
-                    }
                 }
             },
             closeFresh: function() {
@@ -172,9 +175,6 @@
                 this.$emit("closefresh");
             },
             toSmartFresh: function() {
-                $(".fresh-navs .on").removeClass("on");
-                $(".fresh-navs .fresh-tab:first").addClass("on");
-                this.fresh.smart = true;
                 this.fresh.show = true;
             },
             regMoney: function(money) {
@@ -186,53 +186,26 @@
             }
         },
         watch: {
-            "account.freeFreshTimes": function(curval) {
-                if (!this.fresh.smart) {
-                    if (curval > 0) {
+            "showfresh": function(curval) { //初始化
+                if (curval) {
+                    initFresh(this);
+                } else {
+                    this.fresh.show = true;
+                    this.fresh.smart = true;
+                }
+            },
+            "fresh.smart": function(curval) { //当上面分页切换时，重置总计价格
+                if (curval) {
+                    $(".fresh-smart-list .icon-radio.on").removeClass("on");
+                    $(".fresh-smart-list .icon-radio:first").addClass("on");
+                    this.fresh.sum = this.fresh.content[0].amount;
+                    this.fresh.presum = 4;
+                } else {
+                    if (this.account.freeFreshTimes > 0) {
                         this.fresh.sum = 0;
                     } else {
                         this.fresh.sum = 1;
                     }
-                }
-            },
-            "showfresh": function(curval) { //初始化
-                if (curval) {
-                    var _this = this;
-                    $(".fresh-navs .on").removeClass("on");
-                    $(".fresh-navs .fresh-tab:first").addClass("on");
-                    $(".fresh-smart-list .icon-radio.on").removeClass("on");
-                    $(".fresh-smart-list .icon-radio:first").addClass("on");
-                    EventUtils.ajaxReq("/center/user/getAccount", "get", { userId: this.userid }, function(resp, status) {
-                        //  console.log(resp);
-                        _this.account.money = resp.data.useableBalance;
-                        _this.account.freeFreshTimes = resp.data.freeRefresh;
-                        _this.fresh.sum = _this.fresh.content[0].amount;
-                        _this.fresh.presum = 4;
-                        _this.fresh.smart = true;
-                        _this.fresh.show = true;
-                    });
-                }
-            },
-            "fresh.smart": function(curval) {
-                if (curval) {
-                    var _this = this;
-                    $(".fresh-smart-list .icon-radio").each(function(index) {
-                        if ($(this).hasClass("on")) {
-                            _this.fresh.sum = _this.fresh.content[index].amount;
-                            if (index == 0) {
-                                _this.fresh.presum = 1 * 4;
-                            }
-                            if (index == 1) {
-                                _this.fresh.presum = 1 * 4 * 3;
-                            }
-                            if (index == 2) {
-                                _this.fresh.presum = 1 * 4 * 5;
-                            }
-                            if (index == 3) {
-                                _this.fresh.presum = 1 * 4 * 10;
-                            }
-                        }
-                    })
                 }
             },
             "fresh.sum": function(curval) {
@@ -244,22 +217,15 @@
                 this.fresh.smartBtn = this.fresh.sum > curval ? "立即充值" : "立即刷新";
             },
             "fresh.show": function(curval) {
-                if (!curval) {
-                    //  console.log(1);
+                if (curval) {
+                    initFresh(this);
+                } else {
                     EventUtils.absCenter($(".fresh-hint-box"));
                 }
             }
         },
         mounted: function() {
-            //获取用户账户及免费刷新次数等信息
             var _this = this;
-            EventUtils.ajaxReq("/center/user/getAccount", "get", { userId: this.userid }, function(resp, status) {
-                //    console.log(resp);
-                _this.account.money = resp.data.useableBalance;
-                _this.account.freeFreshTimes = resp.data.freeRefresh;
-                _this.fresh.sofortBtn = _this.fresh.sum > _this.account.money ? "立即充值" : "立即刷新";
-                _this.fresh.smartBtn = _this.fresh.sum > _this.account.money ? "立即充值" : "立即刷新";
-            });
             //获取刷新模板信息
             var postdata = {
                 userId: this.userid,
@@ -288,9 +254,56 @@
             //    console.log(resp);
             console.log(resp);
             if (resp.code == "00000") {
-                freshObj.fresh.time = resp.data;
-                freshObj.fresh.show = false;
+                if (resp.data.payImg) {
+                    if (freshObj.fresh.smart) {
+                        freshObj.barcode.smart = true;
+                    } else {
+                        freshObj.barcode.normal = true;
+                    }
+                    freshObj.barcode.imgsrc = resp.data.payImg;
+                    //轮询查看是否支付成功
+                    var paycheckdata = {
+                        userId: userId,
+                        orderId: resp.data.orderId
+                    }
+                    var timer = setInterval(function() {
+                        EventUtils.ajaxReq("/sys/getOrderStatus", "get", paycheckdata, function(resp, status) {
+                            console.log(resp);
+                            if (resp.code == "00000") {
+                                clearInterval(timer);
+                                swal({
+                                    title: "",
+                                    text: "支付成功！",
+                                    type: "success",
+                                    timer: 2000,
+                                    showConfirmButton: false,
+                                });
+                                freshObj.barcode.smart = false;
+                                freshObj.barcode.normal = false;
+                            }
+                        })
+                    }, 1000)
+                } else {
+                    freshObj.fresh.time = resp.data;
+                    freshObj.fresh.show = false;
+                }
             }
         })
+    }
+    //初始化刷新盒子
+    function initFresh(freshObj) {
+        $(".fresh-navs .on").removeClass("on");
+        $(".fresh-navs .fresh-tab:first").addClass("on");
+        $(".fresh-smart-list .icon-radio.on").removeClass("on");
+        $(".fresh-smart-list .icon-radio:first").addClass("on");
+        EventUtils.ajaxReq("/center/user/getAccount", "get", { userId: freshObj.userid }, function(resp, status) {
+            console.log(resp);
+            freshObj.account.money = resp.data.useableBalance;
+            freshObj.account.freeFreshTimes = resp.data.freeRefresh;
+            freshObj.fresh.sum = freshObj.fresh.content[0].amount;
+            freshObj.fresh.presum = 4;
+            freshObj.fresh.smart = true;
+            freshObj.fresh.show = true;
+        });
     }
 })()

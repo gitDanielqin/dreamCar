@@ -35,18 +35,19 @@ function infoRequest() {
         index: 1,
         count: 8
     }
-    EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
-        console.log(resp);
-        if (resp.data) {
-            appResult.unirecruitList.totalpages = resp.data.totalPage;
-            appResult.unirecruitList.totalitems = resp.data.totalRow;
-            appResult.unirecruitList.results = resp.data.list;
-        } else {
-            appResult.unirecruitList.totalitems = 0;
-            appResult.unirecruitList.results = [];
-        }
-    });
     if (parObj.userId) {
+        postdata.userId = parObj.userId;
+        EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
+            console.log(resp);
+            if (resp.data) {
+                appResult.unirecruitList.totalpages = resp.data.totalPage;
+                appResult.unirecruitList.totalitems = resp.data.totalRow;
+                appResult.unirecruitList.results = resp.data.list;
+            } else {
+                appResult.unirecruitList.totalitems = 0;
+                appResult.unirecruitList.results = [];
+            }
+        });
         EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId }, function(resp, status) {
             //  console.log(resp);
             accountObj = resp.data;
@@ -56,7 +57,21 @@ function infoRequest() {
                 appTop.isLogin = true;
             }
         })
+    } else {
+        EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
+            console.log(resp);
+            if (resp.data) {
+                appResult.unirecruitList.totalpages = resp.data.totalPage;
+                appResult.unirecruitList.totalitems = resp.data.totalRow;
+                appResult.unirecruitList.results = resp.data.list;
+            } else {
+                appResult.unirecruitList.totalitems = 0;
+                appResult.unirecruitList.results = [];
+            }
+        });
     }
+
+
 }
 infoRequest();
 var appTop = new Vue({
@@ -113,9 +128,24 @@ var appTop = new Vue({
             appModal.login.account = "";
             appModal.login.password = "";
             accountObj = {};
-            //复原合作按钮
-            $("button.btn-apply[disabled] span").text("申请招聘");
-            $("button.btn-apply[disabled]").attr("disabled", false);
+            //登出后重新请求结果
+            var postdata = {
+                jobFairType: 1,
+                index: 1,
+                count: 8
+            }
+            EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
+                console.log(resp);
+                if (resp.data) {
+                    appResult.unirecruitList.totalpages = resp.data.totalPage;
+                    appResult.unirecruitList.totalitems = resp.data.totalRow;
+                    appResult.unirecruitList.results = resp.data.list;
+                } else {
+                    appResult.unirecruitList.totalitems = 0;
+                    appResult.unirecruitList.totalpages = 1;
+                    appResult.unirecruitList.results = [];
+                }
+            });
             var state = {
                 title: document.title,
                 url: document.location.href,
@@ -403,7 +433,7 @@ var appResult = new Vue({
             var link = "detail-unirecruit.html?jobfairId=" + id + (this.accountId ? "&userId=" + this.accountId : "");
             return link
         },
-        coApply: function(id, obj) {
+        coApply: function(id, item) {
             if (appTop.isLogin) {
                 if (accountObj.userType != "2") {
                     swal({
@@ -420,6 +450,7 @@ var appResult = new Vue({
                 EventUtils.ajaxReq("/jobfair/cooperateJobFair", "post", postdata, function(resp, status) {
                     console.log(resp);
                     if (resp.data && resp.data.isApply == "0") {
+                        item.applyStatus = 1;
                         appModal.showModal = true;
                         appModal.showLogin = false;
                         appModal.showSucc = true;
@@ -430,12 +461,6 @@ var appResult = new Vue({
                             type: "error"
                         })
                     }
-                    //申请后避免重复点击
-                    if (!$(obj).hasClass("btn-apply")) {
-                        obj = obj.parentNode;
-                    }
-                    $(obj).attr("disabled", true);
-                    $(obj).children("span").text("已申请");
                 });
             } else {
                 appModal.showModal = true;
@@ -503,18 +528,39 @@ var appModal = new Vue({
             };
             EventUtils.ajaxReq("/center/user/login", "post", postdata, function(resp, status) {
                 accountObj = resp.data;
-                appTop.userType = resp.data.userType;
-                appTop.userName = resp.data.name;
-                appTop.isLogin = true;
-                //无刷新页面替换URL
-                var state = {
-                    title: document.title,
-                    url: document.location.href,
-                    otherkey: null
-                };
-                history.replaceState(state, document.title, "display-unirecruit.html?userId=" + resp.data.userId);
-                appModal.showModal = false;
-                appModal.showLogin = false;
+                if (accountObj) {
+                    //登录后重新请求结果
+                    var postdata = {
+                        jobFairType: 1,
+                        index: 1,
+                        count: 8,
+                        userId: accountObj.userId
+                    }
+                    EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
+                        console.log(resp);
+                        if (resp.data) {
+                            appResult.unirecruitList.totalpages = resp.data.totalPage;
+                            appResult.unirecruitList.totalitems = resp.data.totalRow;
+                            appResult.unirecruitList.results = resp.data.list;
+                        } else {
+                            appResult.unirecruitList.totalitems = 0;
+                            appResult.unirecruitList.results = [];
+                        }
+                    });
+                    appTop.userType = resp.data.userType;
+                    appTop.userName = resp.data.name;
+                    appTop.isLogin = true;
+                    //无刷新页面替换URL
+                    var state = {
+                        title: document.title,
+                        url: document.location.href,
+                        otherkey: null
+                    };
+                    history.replaceState(state, document.title, "display-unirecruit.html?userId=" + resp.data.userId);
+                    appModal.showModal = false;
+                    appModal.showLogin = false;
+                }
+
             })
         }
     },
@@ -592,20 +638,23 @@ function resultsRequest(page) {
             break;
     }
     var postdata = {
-            jobFairType: 1,
-            index: page,
-            count: 8,
-            userAddress: appQuery.uniRecruit.address,
-            profession: appQuery.uniRecruit.major,
-            professionCount: appQuery.uniRecruit.majorsum,
-            companyType: appQuery.uniRecruit.incReq.areas.area_1 == "" ? "" : appQuery.uniRecruit.incReq.areas.area_1 + ";" + appQuery.uniRecruit.incReq.areas.area_2,
-            companyProperty: appQuery.uniRecruit.incReq.IncProps,
-            companyScale: appQuery.uniRecruit.incReq.IncScale,
-            job: appQuery.uniRecruit.incReq.pos.pos_1 == "" ? "" : appQuery.uniRecruit.incReq.pos.pos_1 + ";" + appQuery.uniRecruit.incReq.pos.pos_2,
-            jobCount: appQuery.uniRecruit.incReq.posAmount,
-            timeType: timeIndex
-        }
-        // 清楚发送数据对象值为空的属性
+        jobFairType: 1,
+        index: page,
+        count: 8,
+        userAddress: appQuery.uniRecruit.address,
+        profession: appQuery.uniRecruit.major,
+        professionCount: appQuery.uniRecruit.majorsum,
+        companyType: appQuery.uniRecruit.incReq.areas.area_1 == "" ? "" : appQuery.uniRecruit.incReq.areas.area_1 + ";" + appQuery.uniRecruit.incReq.areas.area_2,
+        companyProperty: appQuery.uniRecruit.incReq.IncProps,
+        companyScale: appQuery.uniRecruit.incReq.IncScale,
+        job: appQuery.uniRecruit.incReq.pos.pos_1 == "" ? "" : appQuery.uniRecruit.incReq.pos.pos_1 + ";" + appQuery.uniRecruit.incReq.pos.pos_2,
+        jobCount: appQuery.uniRecruit.incReq.posAmount,
+        timeType: timeIndex
+    }
+    if (accountObj && accountObj.userId) {
+        postdata.userId = accountObj.userId;
+    }
+    // 清楚发送数据对象值为空的属性
     postdata = EventUtils.filterReqdata(postdata);
     EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
         console.log(resp);
@@ -637,6 +686,9 @@ function searchRequest(page) {
         title: appQuery.keywords,
         index: page,
         count: 8
+    }
+    if (accountObj && accountObj.userId) {
+        postdata.userId = accountObj.userId;
     }
     EventUtils.ajaxReq("/jobfair/searchJobFair?", "get", postdata, function(resp, status) {
         console.log(resp);

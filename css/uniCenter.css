@@ -232,34 +232,6 @@
     background: #f33;
 }
 
-.vip-records li {
-    line-height: 34px;
-    font-size: 12px;
-    padding-left: 20px;
-}
-
-.vip-records li span {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.vip-records li:nth-child(2n) {
-    background: #e3e3e3;
-}
-
-.vip-records li:nth-child(2n+1) {
-    background: #eee;
-}
-
-.vip-record-head {
-    background: url("../images/icon-up.jpg") no-repeat 26px 33px;
-}
-
-.more-records {
-    background: none;
-    font-size: 12px;
-}
-
 .tarif-info li {
     padding: 4px 0;
     margin-bottom: 2px;

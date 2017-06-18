@@ -73,7 +73,7 @@
                 if (!variableUtils.regExp.mobile.test(this.mobile)) {
                     swal({
                         title: "",
-                        text: "请输入合法的手机号！",
+                        text: "请输入正确的手机号！",
                         type: "warning"
                     });
                     return false;
@@ -85,11 +85,26 @@
                     conection: this.mobile,
                     type: 0
                 };
-                console.log(postdata);
+                var _this = this;
                 EventUtils.ajaxReq('/sys/modifyConection?', 'post', postdata, function(resp, status) {
-                    console.log(resp);
+                    if (resp.code == "00000") {
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "success",
+                            timer: 2000,
+                            showConfirmButton: false,
+                        });
+                        _this.$emit("closebox");
+                    } else {
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "warning"
+                        });
+                    }
                 });
-                this.$emit("closebox");
+
             },
             closeMobile: function() {
                 this.$emit("closebox");

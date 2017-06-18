@@ -23,6 +23,7 @@ function infoRequest() {
     console.log(postdata);
     EventUtils.ajaxReq('/user/company/getInfo', 'get', postdata, function(resp, status) {
         respObj = resp.data;
+        console.log(resp);
         if (respObj.userIcon) {
             $("#avatar-box").html("<img src='" + respObj.userIcon + "' />");
         }
@@ -87,7 +88,6 @@ function infoRequest() {
         }
         appCont.config = configdata;
     })
-
 }
 
 var appTop = new Vue({
@@ -181,6 +181,10 @@ var appCont = new Vue({
             IncScale: incScale,
             IncProps: incProps,
         },
+        account: {
+            userId: parObj.userId,
+            money: "",
+        },
         resume: {
             Inc: "",
             trade: "",
@@ -239,13 +243,6 @@ var appCont = new Vue({
             }
         },
         vip: {
-            records: [
-                { date: "2017.01.01", action: "信息刷新：4条", price: 0, state: "交易完成" },
-                { date: "2017.01.01", action: "信息置顶：1次", price: 0, state: "交易完成" },
-                { date: "2017.01.01", action: "广告投放：1次", price: 0, state: "交易完成" },
-                { date: "2017.01.01", action: "信息匹配：4条", price: 0, state: "交易完成" },
-                { date: "2017.01.01", action: "账户充值", price: 500.68, state: "交易完成" }
-            ],
             tarif: [
                 { level: "初级会员", prior: 1, refresh: 1, mapping: 8, price: 585, icon: "images/crown-junior.png" },
                 { level: "中级会员", prior: 2, refresh: 4, mapping: 12, price: 1040, icon: "images/crown-middle.png" },
@@ -338,12 +335,30 @@ var appCont = new Vue({
     methods: {
         selvipnav: function(obj) {
             if ($(obj).hasClass("vip-li")) {
+                if (this.account.money == "") {
+                    EventUtils.ajaxReq("/center/user/getAccount", "get", { userId: parObj.userId }, function(resp, status) {
+                        appCont.account.money = resp.data.useableBalance;
+                    })
+                }
                 var index = $(obj).index();
                 $(".vip-navs li.on").removeClass("on");
                 $(obj).addClass("on");
                 $(".vip-cont").removeClass("on");
                 $(".vip-center .vip-cont").eq(index).addClass("on");
             }
+        },
+        recharge: function() {
+            var link = "recharge.html?userId=" + parObj.userId;
+            window.location.href = link;
+        },
+        priceInteger: function(val) {
+            return parseInt(val);
+        },
+        priceDecimal: function(val) {
+            var priceF = (parseFloat(val) * 100 - parseInt(val) * 100) % 100;
+            priceF = parseInt(priceF);
+            if (priceF < 10) priceF += "0";
+            return ("." + priceF);
         },
         regAddress: function(address) {
             if (address) {
@@ -688,7 +703,8 @@ var appCont = new Vue({
                             title: "",
                             text: "申请已发出！",
                             type: "success"
-                        })
+                        });
+                        item.applyStatus = 1;
                     } else {
                         swal({
                             title: "",
@@ -711,7 +727,8 @@ var appCont = new Vue({
                             title: "",
                             text: "申请已发出！",
                             type: "success"
-                        })
+                        });
+                        item.applyStatus = 1;
                     } else {
                         swal({
                             title: "",
@@ -1223,6 +1240,7 @@ function demandRequest(type, page) {
         var postdata = {
             userId: parObj.userId,
             loginIdentifier: parObj.loginId,
+            isCenter: 1,
             demandType: 2,
             index: page,
             count: 3
@@ -1242,6 +1260,7 @@ function demandRequest(type, page) {
         var postdata = {
             userId: parObj.userId,
             loginIdentifier: parObj.loginId,
+            isCenter: 1,
             jobFairType: 2,
             index: page,
             count: 3
@@ -1261,6 +1280,7 @@ function demandRequest(type, page) {
         var postdata = {
             userId: parObj.userId,
             loginIdentifier: parObj.loginId,
+            isCenter: 1,
             index: page,
             count: 3
         }
@@ -1382,6 +1402,7 @@ function recruitMsgRequest(page) {
             appCont.message.recruit.results = resp.data.list;
         } else {
             appCont.message.recruit.results = [];
+            appCont.message.recruit.totalpages = 1;
             appCont.message.recruit.totalitems = 0;
         }
     });

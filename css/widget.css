@@ -474,7 +474,7 @@
 .msg-body li .msg-name {
     width: 15%;
     color: orange;
-    white-space: normal;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -482,7 +482,7 @@
 .msg-body li .msg-cont {
     width: 60%;
     color: #46afe8;
-    white-space: normal;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -840,7 +840,7 @@
 }
 
 
-/*刷新弹框样式000*/
+/*刷新弹框样式*/
 
 .refresh-header {
     color: white;
@@ -905,6 +905,17 @@ ul.fresh-navs li span.on {
     color: #ec7d0e;
 }
 
+.refresh-barcode {
+    background: white;
+    text-align: center;
+    height: 298px;
+}
+
+.refresh-barcode img {
+    width: 256px;
+    height: auto;
+}
+
 .fresh-smart-list {
     line-height: 40px;
     font-size: 18px;
@@ -960,6 +971,14 @@ ul.fresh-navs li span.on {
     height: 36px;
     line-height: 36px;
     color: #797979;
+    font-size: 14px;
+}
+
+.refresh-barcodepay {
+    position: absolute;
+    right: 63px;
+    top: 8px;
+    color: red;
     font-size: 14px;
 }
 
@@ -1220,4 +1239,86 @@ ul.fresh-navs li span.on {
     line-height: 30px;
     text-align: center;
     font-size: 14px;
+}
+
+
+/*vip使用记录样式*/
+
+.vip-records-box {
+    background: #f7f7f7;
+}
+
+.vip-record-head {
+    height: 42px;
+    line-height: 42px;
+    margin-left: 20px;
+    font-size: 16px;
+    background: url("../images/icon-up.jpg") no-repeat 26px 33px;
+}
+
+.vip-records {
+    height: 180px;
+}
+
+.vip-records li {
+    line-height: 34px;
+    font-size: 12px;
+    padding-left: 20px;
+}
+
+.vip-records li span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.vip-records li:nth-child(2n) {
+    background: #e3e3e3;
+}
+
+.vip-records li:nth-child(2n+1) {
+    background: #eee;
+}
+
+.more-records {
+    text-align: right;
+    margin-top: 10px;
+    margin-right: 40px;
+}
+
+.more-records-btn {
+    background: none;
+    font-size: 12px;
+    height: 36px;
+    line-height: 36px;
+}
+
+.vip-records-box .pagination {
+    display: inline-block;
+    line-height: 36px;
+    height: 36px;
+}
+
+.vip-records-box .pagination ul li {
+    margin-left: 5px;
+}
+
+.vip-records-box .pagination a {
+    background: none;
+    color: #666;
+}
+
+.vip-records-box .pagination a.highLight {
+    color: orange;
+}
+
+.vip-records-box .pagination a.lastPage {
+    width: 45px;
+}
+
+.vip-records-box .pagination a.nextPage {
+    width: 45px;
+}
+
+.vip-records-box .pagination a.page {
+    width: 20px;
 }

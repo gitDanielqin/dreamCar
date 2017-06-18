@@ -123,7 +123,7 @@ window.majorSum = majorSum;
     }
     var year = new Date().getFullYear();
     year = parseInt(year);
-    for (var i = 1950; i <= year; i++) {
+    for (var i = year; i >= 1960; i--) {
         date.year.push(i)
     };
     for (var j = 1; j <= 12; j++) {

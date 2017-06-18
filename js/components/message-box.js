@@ -3,7 +3,7 @@
         <h3 class="msg-box-head"><i class="pic-icon icon-return" v-show="!show.list" @click.stop="back"></i><i class="pic-icon icon-email" v-show="show.list"></i><span class="msg-head">消息提醒</span><span class="icon-wrapper" @click.stop="closeBox"><i class="pic-icon icon-close"></i></span></h3>\
         <div v-show="show.list">\
             <ul class="msg-body">\
-                <li v-for="item in msgList.results" @click.stop="showDetail(item)">\
+                <li v-for="item in msgList.results" @click.stop="showDetail(item,$event.target)">\
                     <i class="msg-mark" v-show="item.isRead&&item.isRead!=1"></i>\
                     <span class="msg-name">{{item.messageTitle}}</span>\
                     <span class="msg-cont">{{item.messageContent}}</span>\
@@ -44,6 +44,7 @@
             delItem: function(item) {
                 if (item.messageId) {
                     var _this = this;
+                    console.log(1);
                     EventUtils.ajaxReq("/message/delMessage", "get", { messageId: item.messageId }, function(resp, status) {
                         if (_this.msgList.curpage > 1 && _this.msgList.results.length == 1) {
                             _this.msgList.curpage--;

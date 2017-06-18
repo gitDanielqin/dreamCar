@@ -152,6 +152,9 @@ var appFront = new Vue({
         }
     },
     methods: {
+        showSeachOptions: function() {
+            $("#search-options").css("opacity", 1);
+        },
         selectSearchLabel: function(obj) {
             if (!$(obj).hasClass("search-nav")) {
                 $(".search-nav .on").removeClass("on");
@@ -243,7 +246,7 @@ var appFront = new Vue({
                     }
                     break;
                 case "myjob":
-                    var link = "pCenter.html?userId=" + this.account.userId + "&loginId=" + this.account.loginId + "&theme=job";
+                    var link = "pCenter.html?userId=" + this.account.userId + "&loginId=" + this.account.loginId + "&theme=jobBox";
                     window.open(link, "_blank");
                     break;
                 case "logout":

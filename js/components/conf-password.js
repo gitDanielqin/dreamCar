@@ -30,18 +30,19 @@
                 })
             },
             confirm: function() {
-                if (this.oldpsw == "") {
+                var isFilled = true;
+                $(".conf-psw-form input").each(function(index) {
+                    if ($(this).val() == "") {
+                        $(this).addClass("hint-nullable");
+                        isFilled = false;
+                    } else {
+                        $(this).removeClass("hint-nullable");
+                    }
+                })
+                if (!isFilled) {
                     swal({
                         title: "",
-                        text: "旧密码不能为空！",
-                        type: "warning"
-                    });
-                    return false;
-                }
-                if (this.newpsw == "") {
-                    swal({
-                        title: "",
-                        text: "新密码不能为空！",
+                        text: "请检查信息是否完整！",
                         type: "warning"
                     });
                     return false;
@@ -75,7 +76,9 @@
                         swal({
                             title: "",
                             text: resp.info,
-                            type: "success"
+                            type: "success",
+                            timer: 1500,
+                            showConfirmButton: false
                         });
                     } else {
                         swal({

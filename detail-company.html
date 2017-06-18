@@ -44,7 +44,7 @@
                 <li><span style="margin:0 12px">|</span><span @click="toCenter('collec-study')">收藏夹</span><span style="margin-left:12px">|</span></li>
                 <li style="padding-left:12px;">{{userName}}<i class="pic-icon maR10 icon-dropdown"></i>
                     <dl>
-                        <dd @click="toCenter('classBox')">我的学习</dd>
+                        <!--<dd @click="toCenter('classBox')">我的学习</dd>-->
                         <dd @click="toCenter('conf-keyword')">账号设置</dd>
                         <dd @click="logout">退出</dd>
                     </dl>
@@ -145,7 +145,7 @@
                 </div>
                 <div class="fl">
                     <div class="W170 inc-porto t-center porto">
-                        <div class="pic-wrapper W142 inc-logo maT30"><img src="images/logo.png" /> </div>
+                        <div class="pic-wrapper W142 pic-logo maT30"><img :src="incdata.baseinfo.userIcon" /> </div>
                         <h3 class="LH28 fSize16 color-gray79 t-center W174 disInline" style="margin:9px auto 0">{{incdata.baseinfo.inc}}</h3>
                         <ul class="basic-info t-left fSize14 color-gray79 maT15 inc-basic">
                             <li><i class="pic-icon icon-incprops"></i>企业性质：<span>{{incdata.baseinfo.incprops}}</span> </li>
