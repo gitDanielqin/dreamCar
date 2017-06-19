@@ -228,7 +228,7 @@
                             <div class="paLeft29 clearfix H128 pRel">
                                 <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                 <div class="item-block-left fl paTop22 W280 maL20">
-                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a href="detail-company.html">{{infoExtrac(item.job)}}</a></h2>
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="collectLink(item)">{{infoExtrac(item.job)}}</a></h2>
                                     <p>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.professionCount}}<i class="depart">|</i>{{item.schoolType}}</p>
                                     <p>培训方式：{{item.trainType}}</p>
                                     <p class="item-date">收藏日期：{{dateExtrac(item.collectTime)}}</p>

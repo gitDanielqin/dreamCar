@@ -119,7 +119,7 @@
                         <div class="paLeft29 clearfix H108 pRel">
                             <div class="W78 H70 logo-pic disInline v-mid fl maT20"><img :src="item.userIcon" /></div>
                             <div class="item-block-left fl paTop20 W321 maL25">
-                                <h2 class="color-blueL fSize16 LH-H24 pRel"><a :href="detailLink(item.jobFairId)">{{item.title}}</a><span class="hot" v-show="item.hot>0">置顶</span></h2>
+                                <h2 class="color-blueL fSize16 LH-H24 pRel"><a :href="detailLink(item.jobFairId)">{{item.title}}</a><img class="hot-icon" src="images/icon-hot.png" v-show="item.hot>0" /></h2>
                                 <p>{{infoExtrac(item.profession)}}<i class="depart" v-show="item.professionCount">|</i>{{item.professionCount}}<i class="depart" v-show="regAddress(item.jobFairAddress)">|</i>{{regAddress(item.jobFairAddress)}}</p>
                                 <p class="f-bold fSize14"><span>招聘会时间：</span>{{item.startTime}}</p>
                             </div>

@@ -76,7 +76,7 @@ var appCont = new Vue({
                 console.log(resp);
                 if (resp.data) {
                     var parstring = "userType=" + appCont.register.userType + "&userId=" + resp.data.userId + "&loginId=" + resp.data.loginIdentifier + "&addr=" + parObj.address;
-                    window.location.href = "vCards.html?" + parstring;
+                    window.location.href = "vCards.html?" + window.btoa(parstring);
                 } else {
                     swal({
                         title: "",
@@ -142,17 +142,19 @@ var appCont = new Vue({
                 }
                 if (resp.data.cardStatus == "0") {
                     var parstring = "userType=" + resp.data.userType + "&userId=" + resp.data.userId + "&loginId=" + resp.data.loginIdentifier;
-                    window.location.href = "vCards.html?" + parstring;
+                    window.location.href = "vCards.html?" + window.btoa(parstring);
                 } else {
+                    var urlpars = "userId=" + resp.data.userId + "&loginId=" + resp.data.loginIdentifier;
+                    urlpars = window.btoa(urlpars);
                     switch (resp.data.userType) {
                         case "0":
-                            window.location.href = "pCenter.html?userId=" + resp.data.userId + "&loginId=" + resp.data.loginIdentifier;
+                            window.location.href = "pCenter.html?" + urlpars;
                             break;
                         case "1":
-                            window.location.href = "uniCenter.html?userId=" + resp.data.userId + "&loginId=" + resp.data.loginIdentifier;
+                            window.location.href = "uniCenter.html?" + urlpars;
                             break;
                         case "2":
-                            window.location.href = "incCenter.html?userId=" + resp.data.userId + "&loginId=" + resp.data.loginIdentifier;
+                            window.location.href = "incCenter.html?" + urlpars;
                             break;
                         default:
                     }
@@ -190,12 +192,10 @@ var appCont = new Vue({
             };
             EventUtils.ajaxReq(posturl, 'post', postdata, function(resp, status) {
                 swal({
-                        title: "",
-                        text: resp.info,
-                        type: "warning"
-                    })
-                    //  appCont.validText = "获取验证码";
-                    //   $(obj).attr("disabled", false);
+                    title: "",
+                    text: resp.info,
+                    type: "warning"
+                })
             });
         }
     },

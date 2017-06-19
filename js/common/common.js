@@ -42,6 +42,30 @@ var variableUtils = {
 }
 window.variableUtils = variableUtils;
 window.EventUtils = {
+        submitForm: function(url, data) {　　
+            var eleForm = document.body.appendChild(document.createElement('form'));　　
+            eleForm.action = url;　　
+            for (var property in data)　　 {　　　　
+                var hiddenInput = document.createElement('input');　　　　
+                hiddenInput.type = 'hidden';　　　　
+                hiddenInput.name = property;　　　　
+                hiddenInput.value = data[property];　　　　
+                eleForm.appendChild(hiddenInput);　　
+            }　　
+            this.eleForm = eleForm;　　
+            if (!EventUtils.submitForm._initialized)　　 {　　　　
+                EventUtils.submitForm.prototype.post = function()　　　 {　　　　　　
+                    this.eleForm.method = 'post';　　　　　　
+                    this.eleForm.submit();　　　　
+                };　　
+                EventUtils.submitForm._initialized = true;　　
+            }
+        },
+        securityUrl: function(url) {
+            var urlSections = url.split("?");
+            var secureLink = urlSections[0] + "?" + window.btoa(urlSections[1]);
+            return secureLink;
+        },
         limitWords: function(wordslimit, str) {
             if (str.length < wordslimit) {
                 return str;
@@ -120,6 +144,7 @@ window.EventUtils = {
         },
         urlExtrac: function(url) {
             var paraStr = url.search.substr(1);
+            paraStr = window.atob(paraStr);
             var paraArray = paraStr.split("&");
             var paraObj = {};
             for (var i = 0; i < paraArray.length; i++) {
@@ -173,9 +198,10 @@ window.EventUtils = {
         },
         ajaxReq: function(url, method, postdata, callback) {
             $.ajax({
-                // url: "http://www.xiaoqiztc.com/easily_xq_WebApi" + url,
-                url: "http://192.168.0.105:8080/easily_xq_WebApi" + url,
+                url: "http://www.xiaoqiztc.com/easily_xq_WebApi" + url,
+                // url: "http://192.168.0.105:8080/easily_xq_WebApi" + url,
                 type: method,
+                async: false,
                 data: postdata,
                 success: function(resp, status) {
                     callback(resp, status);

@@ -24,8 +24,6 @@
         methods: {
             switchCode: function() {
                 EventUtils.ajaxReq("/sys/img", "get", {}, function(resp, status) {
-                    //console.log(resp);
-                    // $(".conf-psw-varifycode img")[0].src = resp;
                     $(".conf-psw-varifycode img")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
                 })
             },
@@ -45,6 +43,9 @@
                         text: "请检查信息是否完整！",
                         type: "warning"
                     });
+                    EventUtils.ajaxReq("/sys/img", "get", {}, function(resp, status) {
+                        $(".conf-psw-varifycode img")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
+                    })
                     return false;
                 }
                 if (!variableUtils.regExp.password.test(this.newpsw)) {
@@ -53,6 +54,9 @@
                         text: "新密码格式不正确！",
                         type: "warning"
                     });
+                    EventUtils.ajaxReq("/sys/img", "get", {}, function(resp, status) {
+                        $(".conf-psw-varifycode img")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
+                    })
                     return false;
                 }
                 if (this.newpsw != this.dbpsw) {
@@ -61,6 +65,9 @@
                         text: "两次密码输入不一致！",
                         type: "warning"
                     });
+                    EventUtils.ajaxReq("/sys/img", "get", {}, function(resp, status) {
+                        $(".conf-psw-varifycode img")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
+                    })
                     return false;
                 }
                 var postdata = {

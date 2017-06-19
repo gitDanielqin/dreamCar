@@ -113,7 +113,7 @@ function infoRequest() {
 var appTop = new Vue({
     el: "#app-top",
     data: {
-        homeLink: "index.html?userId=" + parObj.userId
+        homeLink: EventUtils.securityUrl("index.html?userId=" + parObj.userId)
     },
     methods: {
         showMsgbox: function() {
@@ -292,7 +292,7 @@ var appCont = new Vue({
             totalpages: 1,
             totalitems: 0,
             demandSrc: 0, //0：校企合作 1：招聘会
-            newLink: "uniRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId,
+            newLink: EventUtils.securityUrl("uniRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId),
             results: []
         },
         collect: {
@@ -422,7 +422,7 @@ var appCont = new Vue({
         },
         recharge: function() { //充值按钮事件
             var link = "recharge.html?userId=" + parObj.userId;
-            window.location.href = link;
+            window.location.href = EventUtils.securityUrl(link);
         },
         priceInteger: function(val) {
             return parseInt(val);
@@ -512,34 +512,46 @@ var appCont = new Vue({
         },
         requireLink: function(item) {
             if (item.demandId) {
-                return "detail-uni.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + item.demandId + "&userType=1";
+                var link = "detail-uni.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + item.demandId + "&userType=1";
+                return EventUtils.securityUrl(link);
             }
             if (item.jobFairId) {
-                return "detail-unirecruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
+                var link = "detail-unirecruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
+                return EventUtils.securityUrl(link);
             }
+        },
+        collectLink: function(item) {
+            var link = "detail-company.html?userId=" + parObj.userId + "&demandId=" + item.demandId;
+            return EventUtils.securityUrl(link);
         },
         messageLink: function(type, id) {
             if (type == "combi") {
                 if (appCont.message.combi.msgsrc == 1) {
-                    return "detail-company.html?demandId=" + id + "&userId=" + parObj.userId;
+                    var link = "detail-company.html?demandId=" + id + "&userId=" + parObj.userId;
+                    return EventUtils.securityUrl(link);
                 } else {
-                    return "detail-uni.html?demandId=" + id + "&userId=" + parObj.userId;
+                    var link = "detail-uni.html?demandId=" + id + "&userId=" + parObj.userId;
+                    return EventUtils.securityUrl(link);
                 }
             }
             if (type == "jobfair") {
-                return "detail-unirecruit.html?userId=" + parObj.userId + "&jobfairId=" + id;
+                var link = "detail-unirecruit.html?userId=" + parObj.userId + "&jobfairId=" + id;
+                return EventUtils.securityUrl(link);
             }
         },
         coopLink: function(item) {
             if (item.demandId) {
                 if (item.releaseType == "1") {
-                    return "detail-uni.html?demandId=" + item.demandId + "&userId=" + parObj.userId;
+                    var link = "detail-uni.html?demandId=" + item.demandId + "&userId=" + parObj.userId;
+                    return EventUtils.securityUrl(link);
                 } else {
-                    return "detail-company.html?demandId=" + item.demandId + "&userId=" + parObj.userId;
+                    var link = "detail-company.html?demandId=" + item.demandId + "&userId=" + parObj.userId;
+                    return EventUtils.securityUrl(link);
                 }
             }
             if (item.jobFairId) {
-                return "detail-unirecruit.html?jobfairId=" + item.jobFairId + "&userId=" + parObj.userId;
+                var link = "detail-unirecruit.html?jobfairId=" + item.jobFairId + "&userId=" + parObj.userId;
+                return EventUtils.securityUrl(link);
             }
         },
         submajors: function(major) {
@@ -1267,6 +1279,7 @@ function uploadEventBind() {
             userIcon: imgsrc
         }
         EventUtils.ajaxReq("/center/user/uploadIcon", "post", postdata, function(resp, status) {
+            resp.data += "?" + Math.random();
             $("#avatar-box").html("<img src='" + resp.data + "' />");
         });
         appModal.show.upload = false;

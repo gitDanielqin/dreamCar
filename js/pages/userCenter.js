@@ -66,6 +66,12 @@ function infoRequest() {
             }
             var worksExps = [];
             for (var i = 0; i < respObj.companyList.length; i++) {
+                var initdate = {
+                    startyear: respObj.companyList[i].startTime ? respObj.companyList[i].startTime.split("-")[0] : "",
+                    startmonth: respObj.companyList[i].startTime ? respObj.companyList[i].startTime.split("-")[1] : "",
+                    endyear: respObj.companyList[i].endTime ? respObj.companyList[i].endTime.split("-")[0] : "",
+                    endmonth: respObj.companyList[i].endTime ? respObj.companyList[i].endTime.split("-")[1] : "",
+                }
                 var workexp = {
                     show: i == 0,
                     cvCpyId: respObj.companyList[i].cvCpyId,
@@ -76,10 +82,7 @@ function infoRequest() {
                     city: respObj.companyList[i].workAddress ? respObj.companyList[i].workAddress.split(";")[1] : "",
                     district: respObj.companyList[i].workAddress ? respObj.companyList[i].workAddress.split(";")[2] : "",
                     salary: respObj.companyList[i].salary,
-                    startyear: respObj.companyList[i].startTime ? respObj.companyList[i].startTime.split("-")[0] : "",
-                    startmonth: respObj.companyList[i].startTime ? respObj.companyList[i].startTime.split("-")[1] : "",
-                    endyear: respObj.companyList[i].endTime ? respObj.companyList[i].endTime.split("-")[0] : "",
-                    endmonth: respObj.companyList[i].endTime ? respObj.companyList[i].endTime.split("-")[1] : "",
+                    initdate: initdate,
                     resp: respObj.companyList[i].content
                 };
                 worksExps.push(workexp);
@@ -104,6 +107,12 @@ function infoRequest() {
             }
             var edus = [];
             for (var j = 0; j < respObj.eduList.length; j++) {
+                var initdate = {
+                    startyear: respObj.eduList[j].startTime ? respObj.eduList[j].startTime.split("-")[0] : "",
+                    startmonth: respObj.eduList[j].startTime ? respObj.eduList[j].startTime.split("-")[1] : "",
+                    endyear: respObj.eduList[j].endTime ? respObj.eduList[j].endTime.split("-")[0] : "",
+                    endmonth: respObj.eduList[j].endTime ? respObj.eduList[j].endTime.split("-")[1] : "",
+                }
                 var edu = {
                     show: j == 0,
                     cvEduId: respObj.eduList[j].cvEduId,
@@ -111,10 +120,7 @@ function infoRequest() {
                     major: respObj.eduList[j].professional ? respObj.eduList[j].professional.split(";")[0] : "",
                     submajor: respObj.eduList[j].professional ? respObj.eduList[j].professional.split(";")[1] : "",
                     exmajor: respObj.eduList[j].professional ? respObj.eduList[j].professional.split(";")[2] : "",
-                    startyear: respObj.eduList[j].startTime ? respObj.eduList[j].startTime.split("-")[0] : "",
-                    startmonth: respObj.eduList[j].startTime ? respObj.eduList[j].startTime.split("-")[1] : "",
-                    endyear: respObj.eduList[j].endTime ? respObj.eduList[j].endTime.split("-")[0] : "",
-                    endmonth: respObj.eduList[j].endTime ? respObj.eduList[j].endTime.split("-")[1] : "",
+                    initdate: initdate,
                     qualification: respObj.eduList[j].qualification,
                 };
                 edus.push(edu);
@@ -136,15 +142,18 @@ function infoRequest() {
             }
             var projects = [];
             for (var k = 0; k < respObj.projectList.length; k++) {
+                var initdate = {
+                    startyear: respObj.projectList[k].startTime ? respObj.projectList[k].startTime.split("-")[0] : "",
+                    startmonth: respObj.projectList[k].startTime ? respObj.projectList[k].startTime.split("-")[1] : "",
+                    endyear: respObj.projectList[k].endTime ? respObj.projectList[k].endTime.split("-")[0] : "",
+                    endmonth: respObj.projectList[k].endTime ? respObj.projectList[k].endTime.split("-")[1] : "",
+                }
                 var project = {
                     show: k == 0,
                     cvProId: respObj.projectList[k].cvProId,
                     name: respObj.projectList[k].projectName,
                     firma: respObj.projectList[k].companyName,
-                    startyear: respObj.projectList[k].startTime ? respObj.projectList[k].startTime.split("-")[0] : "",
-                    startmonth: respObj.projectList[k].startTime ? respObj.projectList[k].startTime.split("-")[1] : "",
-                    endyear: respObj.projectList[k].endTime ? respObj.projectList[k].endTime.split("-")[0] : "",
-                    endmonth: respObj.projectList[k].endTime ? respObj.projectList[k].endTime.split("-")[1] : "",
+                    initdate: initdate,
                     desc: respObj.projectList[k].description,
                     resp: respObj.projectList[k].position,
                     achiev: respObj.projectList[k].achievement
@@ -256,7 +265,7 @@ function infoRequest() {
 var appTop = new Vue({
     el: "#app-top",
     data: {
-        homeLink: "index.html?userId=" + (parObj.userId || localStorage.userId)
+        homeLink: "index.html?" + window.btoa("userId=" + (parObj.userId || localStorage.userId))
     },
     methods: {
         showMsgbox: function() {
@@ -455,10 +464,7 @@ var appCont = new Vue({
                 city: "",
                 district: "",
                 salary: "",
-                startyear: "",
-                startmonth: "",
-                endyear: "",
-                endmonth: "",
+                initdate: "",
                 resp: ""
             }],
             edus: [{
@@ -467,20 +473,14 @@ var appCont = new Vue({
                 major: "",
                 submajor: "",
                 exmajor: "",
-                startyear: "",
-                startmonth: "",
-                endyear: "",
-                endmonth: "",
+                initdate: "",
                 qualification: "",
             }],
             projects: [{
                 show: true,
                 name: "",
                 firma: "",
-                startyear: "",
-                startmonth: "",
-                endyear: "",
-                endmonth: "",
+                initdate: "",
                 desc: "",
                 resp: "",
                 achiev: ""
@@ -553,10 +553,10 @@ var appCont = new Vue({
     methods: {
         posLink: function(item) {
             if (item.jobFairId) {
-                return "detail-increcruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
+                return "detail-increcruit.html?" + window.btoa("userId=" + parObj.userId + "&jobfairId=" + item.jobFairId);
             }
             if (item.recruitId) {
-                return "detail-position.html?userId=" + parObj.userId + "&recruitId=" + item.recruitId;
+                return "detail-position.html?" + window.btoa("userId=" + parObj.userId + "&recruitId=" + item.recruitId);
             }
         },
         infoExtrac: function(item) {
@@ -583,11 +583,25 @@ var appCont = new Vue({
                 return "";
             }
         },
-        remainText: function(text) {
-            if (1000 - text.length < 0) {
+        remainText: function(text, type) {
+            var wordslimit = 1000;
+            switch (type) {
+                case "selfeval":
+                    wordslimit = 200;
+                    break;
+                case "psinfo":
+                    wordslimit = 200;
+                    break;
+                case "skill":
+                    wordslimit = 100;
+                    break;
+                default:
+                    wordslimit = 1000;
+            }
+            if (wordslimit - text.length < 0) {
                 return 0;
             }
-            return (1000 - text.length)
+            return (wordslimit - text.length)
         },
         checkText: function(type, index) {
             if (type == "worksresp") {
@@ -632,33 +646,33 @@ var appCont = new Vue({
                 }
             } else if (type == "selfeval") {
                 var len = this.resume.selfEval.length;
-                if (len > 1000) {
+                if (len > 200) {
                     swal({
                         title: "",
-                        text: "最多只能输入1000字！",
+                        text: "最多只能输入200字！",
                         type: "warning"
                     })
-                    this.resume.selfEval = this.resume.selfEval.slice(0, 1000);
+                    this.resume.selfEval = this.resume.selfEval.slice(0, 200);
                 }
             } else if (type == "psinfo") {
                 var len = this.resume.psInfo.length;
-                if (len > 1000) {
+                if (len > 200) {
                     swal({
                         title: "",
-                        text: "最多只能输入1000字！",
+                        text: "最多只能输入200字！",
                         type: "warning"
                     })
-                    this.resume.psInfo = this.resume.psInfo.slice(0, 1000);
+                    this.resume.psInfo = this.resume.psInfo.slice(0, 200);
                 }
             } else if (type == "skill") {
                 var len = this.resume.skills.length;
-                if (len > 1000) {
+                if (len > 100) {
                     swal({
                         title: "",
-                        text: "最多只能输入1000字！",
+                        text: "最多只能输入100字！",
                         type: "warning"
                     })
-                    this.resume.skills = this.resume.skills.slice(0, 1000);
+                    this.resume.skills = this.resume.skills.slice(0, 100);
                 }
             }
         },
@@ -736,10 +750,7 @@ var appCont = new Vue({
                 major: "",
                 submajor: "",
                 exmajor: "",
-                startyear: 2010,
-                startmonth: 2,
-                endyear: 2016,
-                endmonth: 10,
+                initdate: "",
                 qualification: "",
             };
             this.resume.edus.push(edusExp);
@@ -766,10 +777,7 @@ var appCont = new Vue({
                 show: true,
                 name: "",
                 firma: "",
-                startyear: "",
-                startmonth: "",
-                endyear: "",
-                endmonth: "",
+                initdate: "",
                 desc: "",
                 resp: "",
                 achiev: ""
@@ -1279,6 +1287,7 @@ function uploadEventBind() {
             userIcon: imgsrc
         }
         EventUtils.ajaxReq("/center/user/uploadIcon", "post", postdata, function(resp, status) {
+            resp.data += "?" + Math.random();
             $("#avatar-box").html("<img src='" + resp.data + "' />");
             $(".porto-img").html("<img src='" + resp.data + "' />");
         });
@@ -1512,6 +1521,13 @@ function postResume(editType, isDel) {
 
         var postCvWorks = [];
         for (var i = 0; i < appCont.resume.worksExps.length; i++) {
+            var worksdateobj = $(".worksexp-date").eq(i);
+            appCont.resume.worksExps[i].initdate = {
+                startyear: worksdateobj.find(".sel-startyear input").val(),
+                startmonth: worksdateobj.find(".sel-startmonth input").val(),
+                endyear: worksdateobj.find(".sel-endyear input").val(),
+                endmonth: worksdateobj.find(".sel-endmonth input").val()
+            }
             var workexp = {
                 userId: parObj.userId,
                 cvCpyId: appCont.resume.worksExps[i].cvCpyId,
@@ -1521,8 +1537,8 @@ function postResume(editType, isDel) {
                 content: appCont.resume.worksExps[i].resp,
                 workAddress: appCont.resume.worksExps[i].province + ";" + appCont.resume.worksExps[i].city + ";" + appCont.resume.worksExps[i].district,
                 salary: appCont.resume.worksExps[i].salary,
-                startTime: appCont.resume.worksExps[i].startyear + "-" + appCont.resume.worksExps[i].startmonth,
-                endTime: appCont.resume.worksExps[i].endyear + "-" + appCont.resume.worksExps[i].endmonth,
+                startTime: appCont.resume.worksExps[i].initdate.startyear + "-" + appCont.resume.worksExps[i].initdate.startmonth,
+                endTime: appCont.resume.worksExps[i].initdate.endyear + "-" + appCont.resume.worksExps[i].initdate.endmonth,
             }
             postCvWorks.push(workexp);
         }
@@ -1548,14 +1564,21 @@ function postResume(editType, isDel) {
 
         var postCvEdus = [];
         for (var j = 0; j < appCont.resume.edus.length; j++) {
+            var edudateobj = $(".edus-date").eq(j);
+            appCont.resume.edus[j].initdate = {
+                startyear: edudateobj.find(".sel-startyear input").val(),
+                startmonth: edudateobj.find(".sel-startmonth input").val(),
+                endyear: edudateobj.find(".sel-endyear input").val(),
+                endmonth: edudateobj.find(".sel-endmonth input").val()
+            }
             var edu = {
                 userId: parObj.userId,
                 cvEduId: appCont.resume.edus[j].cvEduId,
                 schoolName: appCont.resume.edus[j].uni,
                 professional: appCont.resume.edus[j].major + ";" + appCont.resume.edus[j].submajor + ";" + appCont.resume.edus[j].exmajor,
                 qualification: appCont.resume.edus[j].qualification,
-                startTime: appCont.resume.edus[j].startyear + "-" + appCont.resume.edus[j].startmonth,
-                endTime: appCont.resume.edus[j].endyear + "-" + appCont.resume.edus[j].endmonth,
+                startTime: appCont.resume.edus[j].initdate.startyear + "-" + appCont.resume.edus[j].initdate.startmonth,
+                endTime: appCont.resume.edus[j].initdate.endyear + "-" + appCont.resume.edus[j].initdate.endmonth,
             }
             postCvEdus.push(edu);
         }
@@ -1573,6 +1596,13 @@ function postResume(editType, isDel) {
     if (editType == "all" || editType == "project") {
         var postCvProjects = [];
         for (var k = 0; k < appCont.resume.projects.length; k++) {
+            var projectdateobj = $(".projects-date").eq(k);
+            appCont.resume.projects[k].initdate = {
+                startyear: projectdateobj.find(".sel-startyear input").val(),
+                startmonth: projectdateobj.find(".sel-startmonth input").val(),
+                endyear: projectdateobj.find(".sel-endyear input").val(),
+                endmonth: projectdateobj.find(".sel-endmonth input").val()
+            }
             var project = {
                 userId: parObj.userId,
                 cvProId: appCont.resume.projects[k].cvProId,
@@ -1581,8 +1611,8 @@ function postResume(editType, isDel) {
                 description: appCont.resume.projects[k].desc,
                 position: appCont.resume.projects[k].resp,
                 achievement: appCont.resume.projects[k].achiev,
-                startTime: appCont.resume.projects[k].startyear + "-" + appCont.resume.projects[k].startmonth,
-                endTime: appCont.resume.projects[k].endyear + "-" + appCont.resume.projects[k].endmonth
+                startTime: appCont.resume.projects[k].initdate.startyear + "-" + appCont.resume.projects[k].initdate.startmonth,
+                endTime: appCont.resume.projects[k].initdate.endyear + "-" + appCont.resume.projects[k].initdate.endmonth
             };
             postCvProjects.push(project);
         }

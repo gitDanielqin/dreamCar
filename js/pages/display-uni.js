@@ -17,7 +17,6 @@ var parObj = EventUtils.urlExtrac(window.location); //地址参数对象
 var respObj = {}; //页面信息
 var accountObj = {} //登录用户信息
 var subposArray = [];
-
 (function() {
     //提取出二级职位信息
     for (var i = 0; i < posArray.length; i++) {

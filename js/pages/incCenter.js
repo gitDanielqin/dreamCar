@@ -348,7 +348,9 @@ var appCont = new Vue({
             }
         },
         recharge: function() {
-            var link = "recharge.html?userId=" + parObj.userId;
+            var link = "recharge.html?" + window.btoa("userId=" + parObj.userId);
+            //  new EventUtils.submitForm("recharge.html?", { userId: parObj.userId }).post();
+            // new EventUtils.submitForm('/Activity/ActivityInformation', { a_id: "1" }).post();
             window.location.href = link;
         },
         priceInteger: function(val) {
@@ -782,6 +784,7 @@ var appCont = new Vue({
                 userId: userId,
                 applyId: applyId,
             }
+            console.log(postdata);
             EventUtils.ajaxReq("/readcard/getCardInfo", "get", postdata, function(resp, status) {
                 console.log(resp);
                 appModal.cardInfo.cardtype = "uni";
@@ -1200,6 +1203,7 @@ function uploadEventBind() {
             userIcon: imgsrc
         }
         EventUtils.ajaxReq("/center/user/uploadIcon", "post", postdata, function(resp, status) {
+            resp.data += "?" + Math.random();
             $("#avatar-box").html("<img src='" + resp.data + "' />");
         });
         appModal.show.upload = false;

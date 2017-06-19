@@ -208,10 +208,7 @@
                                 </div>
                                 <div class="item-row time-interval">
                                     <label>任职时间</label>
-                                    <dropdown :options="database.date.year" v-model="worksExp.startyear" placeholder="开始年份"></dropdown>
-                                    <dropdown :options="database.date.month" v-model="worksExp.startmonth" placeholder="开始月份"></dropdown><i class="bind-line"></i>
-                                    <dropdown :options="database.date.year" v-model="worksExp.endyear" classes="endyear" placeholder="结束年份"></dropdown>
-                                    <dropdown :options="database.date.month" v-model="worksExp.endmonth" placeholder="结束月份"></dropdown>
+                                    <date-select class="worksexp-date" :startyears="database.date.year" :startmonths="database.date.month" :initdate="worksExp.initdate"></date-select>
                                 </div>
                                 <div class="item-row work-resp">
                                     <label>工作职责</label><textarea placeholder="描述你的工作内容和工作业绩,文字限制1000字以内" v-model="worksExp.resp" @input="checkText('worksresp',index)"></textarea>
@@ -230,7 +227,9 @@
                                 </ul>
                             </h3>
                             <div class="infopane" v-for="(worksExp,index) in resume.worksExps">
-                                <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB12"><span class="maR24">{{worksExp.startyear}}.{{worksExp.startmonth}}--{{worksExp.endyear}}.{{worksExp.endmonth}}</span>{{worksExp.firma}}<span class="fr delItem" @click="deleteItem('worksexp',index)">删除</span><i class="headmark"></i></h4>
+                                <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB12"><span class="maR24">{{worksExp.initdate.startyear}}.{{worksExp.initdate.startmonth}}--{{worksExp.initdate.endyear}}.{{worksExp.initdate.endmonth}}</span>{{worksExp.firma}}<span class="fr delItem" @click="deleteItem('worksexp',index)">删除</span>
+                                    <i class="headmark"></i>
+                                </h4>
                                 <p><span>公司行业：</span>{{worksExp.trade}}</p>
                                 <p><span>工作职位：</span>{{worksExp.pos}}</p>
                                 <p><span>工作地点：</span>{{worksExp.city}}-{{worksExp.district}}</p>
@@ -254,10 +253,7 @@
                                 </div>
                                 <div class="item-row time-interval">
                                     <label>就读时间</label>
-                                    <dropdown :options="database.date.year" v-model="edu.startyear"></dropdown>
-                                    <dropdown :options="database.date.month" v-model="edu.startmonth"></dropdown><i class="bind-line"></i>
-                                    <dropdown :options="database.date.year" v-model="edu.endyear" classes="endyear"></dropdown>
-                                    <dropdown :options="database.date.month" v-model="edu.endmonth"></dropdown>
+                                    <date-select class="edus-date" :startyears="database.date.year" :startmonths="database.date.month" :initdate="edu.initdate"></date-select>
                                 </div>
                                 <div class="item-row">
                                     <label>学历</label>
@@ -276,7 +272,7 @@
                                 </ul>
                             </h3>
                             <div class="infopane" v-for="(edu,index) in resume.edus">
-                                <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB12"><span class="maR24">{{edu.startyear}}.{{edu.startmonth}}--{{edu.endyear}}.{{edu.endmonth}}</span>{{edu.uni}}<span class="fr delItem" @click="deleteItem('edu',index)">删除</span><i class="headmark"></i></h4>
+                                <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB12"><span class="maR24">{{edu.initdate.startyear}}.{{edu.initdate.startmonth}}--{{edu.initdate.endyear}}.{{edu.initdate.endmonth}}</span>{{edu.uni}}<span class="fr delItem" @click="deleteItem('edu',index)">删除</span><i class="headmark"></i></h4>
                                 <p class="LH-H25"><span class="W250 disInline">专业名称：{{edu.submajor}}</span><span>学历：{{edu.qualification}}</span></p>
                             </div>
                             <i class="LH-H30 W30 t-center btn-edit"><span class="pic-icon icon-edit"></span></i>
@@ -310,10 +306,7 @@
                                 </div>
                                 <div class="item-row time-interval">
                                     <label>项目时间</label>
-                                    <dropdown :options="database.date.year" v-model="project.startyear"></dropdown>
-                                    <dropdown :options="database.date.month" v-model="project.startmonth"></dropdown><i class="bind-line"></i>
-                                    <dropdown :options="database.date.year" v-model="project.endyear" classes="endyear"></dropdown>
-                                    <dropdown :options="database.date.month" v-model="project.endmonth"></dropdown>
+                                    <date-select class="projects-date" :startyears="database.date.year" :startmonths="database.date.month" :initdate="project.initdate"></date-select>
                                 </div>
                                 <div class="item-row project-area">
                                     <label>项目描述</label><textarea placeholder="请详细描述项目内容，填写文字限制1000字以内" v-model="project.desc" @input="checkText('prodesc',index)"></textarea>
@@ -340,7 +333,9 @@
                                 </ul>
                             </h3>
                             <div class="infopane" v-for="(project,index) in resume.projects">
-                                <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{project.startyear}}.{{project.startmonth}}--{{project.endyear}}.{{project.endmonth}}</span>{{project.name}}<span class="fr delItem" @click="deleteItem('project',index)">删除</span><i class="headmark"></i></h4>
+                                <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{project.initdate.startyear}}.{{project.initdate.startmonth}}--{{project.initdate.endyear}}.{{project.initdate.endmonth}}</span>{{project.name}}<span class="fr delItem" @click="deleteItem('project',index)">删除</span>
+                                    <i class="headmark"></i>
+                                </h4>
                                 <p>{{project.firma}}</p>
                                 <p><span>项目描述：</span>{{project.desc}}</p>
                                 <p><span>项目职责：</span>{{project.resp}}</p>
@@ -351,7 +346,7 @@
                         <div class="itemBox text-box edit edit-item" name="selfeval">
                             <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-comment"></span></i>自我评价</h3>
                             <textarea placeholder="建议您对自己做一个简短的评价" v-model="resume.selfEval" @input="checkText('selfeval')"></textarea>
-                            <p>你还可以输入<span>{{remainText(resume.selfEval)}}</span>字</p>
+                            <p>你还可以输入<span>{{remainText(resume.selfEval,'selfeval')}}</span>字</p>
                             <div class="buttons" v-show="!resume.firstEdit">
                                 <button>保存</button><button>取消</button>
                             </div>
@@ -364,7 +359,7 @@
                         <div class="itemBox text-box edit edit-item" name="psinfo">
                             <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-attach"></span></i>附加信息</h3>
                             <textarea placeholder="如：获奖、技能资格证书、专利等" v-model="resume.psInfo" @input="checkText('psinfo')"></textarea>
-                            <p>你还可以输入<span>{{remainText(resume.psInfo)}}</span>字</p>
+                            <p>你还可以输入<span>{{remainText(resume.psInfo,'psinfo')}}</span>字</p>
                             <div class="buttons" v-show="!resume.firstEdit">
                                 <button>保存</button><button>取消</button>
                             </div>
@@ -377,7 +372,7 @@
                         <div class="itemBox text-box edit edit-item" name="skill">
                             <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-skills"></span></i>擅长技能</h3>
                             <textarea placeholder="在此添加您擅长的技能" v-model="resume.skills" @input="checkText('skill')"></textarea>
-                            <p>你还可以输入<span>{{remainText(resume.skills)}}</span>字</p>
+                            <p>你还可以输入<span>{{remainText(resume.skills,'skill')}}</span>字</p>
                             <div class="buttons" v-show="!resume.firstEdit">
                                 <button>保存</button><button>取消</button>
                             </div>
@@ -552,8 +547,8 @@
                                 <div class="class-txt fl paTop20 W328">
                                     <h2 class="class-name"><a :href="posLink(item)">{{infoExtrac(item.job)}}</a></h2>
                                     <p class="teacher"><span>{{infoShow(item.cvSalary,"salary")}}</span><span class="depart">|</span>
-                                    <span>{{cityExtrac(item.jobFairAddress)}}</span><span>|</span>
-                                    <span>{{infoShow(item.cvEducation,"edu")}}</span><span>|</span>
+                                    <span>{{cityExtrac(item.jobFairAddress)}}</span><span class="depart">|</span>
+                                    <span>{{infoShow(item.cvEducation,"edu")}}</span><span class="depart">|</span>
                                     <span>{{infoShow(item.cvProject,"worktime")}}</span></p>
                                     <p>投递于： {{dateExtrac(item.createTime)}}</p>
                                 </div>
@@ -575,7 +570,7 @@
                                 <div class="logo-pic"><img :src="item.userIcon" /></div>
                                 <div class="class-txt fl paTop20 W328">
                                     <h2 class="class-name"><a :href="posLink(item)">{{infoExtrac(item.job)}}</a></h2>
-                                    <p class="teacher">{{infoShow(item.salary,"salary")}}<span>|</span>{{cityExtrac(item.jobAddress)}}<span>|</span>{{infoShow(item.education,"edu")}}<span>|</span>{{infoShow(item.workTime,'worktime')}}</p>
+                                    <p class="teacher">{{infoShow(item.salary,"salary")}}<span class="depart">|</span>{{cityExtrac(item.jobAddress)}}<span class="depart">|</span>{{infoShow(item.education,"edu")}}<span class="depart">|</span>{{infoShow(item.workTime,'worktime')}}</p>
                                     <p>投递于： {{dateExtrac(item.createTime)}}</p>
                                 </div>
                                 <div class="feedback fr fSize18">
@@ -711,7 +706,7 @@
                         </ul>
                     </h3>
                     <div class="infopane maB22" v-for="worksExp in resumeInfo.worksExps">
-                        <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{worksExp.startyear}}.{{worksExp.startmonth}}--{{worksExp.endyear}}.{{worksExp.endmonth}}</span>{{worksExp.firma}}<i class="headmark"></i></h4>
+                        <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{worksExp.initdate.startyear}}.{{worksExp.initdate.startmonth}}--{{worksExp.initdate.endyear}}.{{worksExp.initdate.endmonth}}</span>{{worksExp.firma}}<i class="headmark"></i></h4>
                         <p>{{worksExp.trade}}</p>
                         <p><span>工作职能：</span>{{worksExp.pos}}</p>
                         <p><span>工作地点：</span>{{worksExp.province}}-{{worksExp.city}}-{{worksExp.district}}</p>
@@ -725,7 +720,7 @@
                         </ul>
                     </h3>
                     <div class="infopane maT13 maB16" v-for="edu in resumeInfo.edus">
-                        <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{edu.startyear}}.{{edu.startmonth}}--{{edu.endyear}}.{{edu.endmonth}}</span>{{edu.uni}}<i class="headmark"></i></h4>
+                        <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{edu.initdate.startyear}}.{{edu.initdate.startmonth}}--{{edu.initdate.endyear}}.{{edu.initdate.endmonth}}</span>{{edu.uni}}<i class="headmark"></i></h4>
                         <p class="LH-H25"><span class="W250 disInline">专业名称：{{edu.major}}/{{edu.submajor}}</span><span>学历：{{edu.qualification}}</span></p>
                     </div>
                 </div>
@@ -740,7 +735,7 @@
                         </ul>
                     </h3>
                     <div class="infopane maB22" v-for="project in resumeInfo.projects">
-                        <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{project.startyear}}.{{project.startmonth}}--{{project.endyear}}.{{project.endmonth}}</span>{{project.name}}<i class="headmark"></i></h4>
+                        <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{project.initdate.startyear}}.{{project.initdate.startmonth}}--{{project.initdate.endyear}}.{{project.initdate.endmonth}}</span>{{project.name}}<i class="headmark"></i></h4>
                         <p>{{project.firma}}</p>
                         <p><span>项目描述：</span>{{project.desc}}</p>
                         <p><span>项目职责：</span>{{project.resp}}</p>
@@ -832,6 +827,7 @@
     <script src="js/components/pagination.js"></script>
     <script src="js/components/dropdown.js"></script>
     <script src="js/components/major-pop.js"></script>
+    <script src="js/components/date-select.js"></script>
     <script src="js/components/pos-pop.js"></script>
     <script src="js/components/bind-mobile-box.js"></script>
     <script src="js/components/bind-email-box.js"></script>

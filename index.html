@@ -19,8 +19,8 @@
                     <!--<h3 id="sel-add" class="cur-pointer fl LH-H47 fSize14 paTop14 maL30" @click.stop="showAddr=true"><b>{{address.displayCity}}</b><span class="maL18">[切换城市]<i class="pic-icon maL6"></i></span></h3>-->
                 </div>
                 <div class="login fr paTop10" v-show="!isLogin">
-                    <a :href="encodeURI('login.html?newAcc=1&address='+address.displayCity)" class="b-Radius5">注册</a>
-                    <a :href="encodeURI('login.html?newAcc=0&address='+address.displayCity)" class="b-Radius5">登录</a>
+                    <a :href="'login.html?'+ btoa('newAcc=1&address='+encodeURI(address.displayCity))" class="b-Radius5">注册</a>
+                    <a :href="'login.html?'+ btoa('newAcc=0&address='+encodeURI(address.displayCity))" class="b-Radius5">登录</a>
                 </div>
                 <div class="fr account pRel" v-show="isLogin">
                     <button class="account-name fSize16 H33">{{account.userName}}<i class="account-name-icon">></i></button>

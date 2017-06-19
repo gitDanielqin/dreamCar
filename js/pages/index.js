@@ -152,6 +152,9 @@ var appFront = new Vue({
         }
     },
     methods: {
+        btoa: function(text) {
+            return window.btoa(text);
+        },
         showSeachOptions: function() {
             $("#search-options").css("opacity", 1);
         },
@@ -167,18 +170,19 @@ var appFront = new Vue({
             }
             var searchObj = $(".search-nav .on");
             if (searchObj.hasClass("search-uni")) {
-                var Link = "display-uni.html?searchtext=" + encodeURI(this.searchText);
+                var Link = "display-uni.html?";
             }
             if (searchObj.hasClass("search-inc")) {
-                var Link = "display-company.html?searchtext=" + encodeURI(this.searchText);
+                var Link = "display-company.html?";
             }
             if (searchObj.hasClass("search-pos")) {
-                var Link = "display-position.html?searchtext=" + encodeURI(this.searchText);
+                var Link = "display-position.html?";
             }
+            var urlparas = "searchtext=" + encodeURI(this.searchText);
             if (this.account.userId) {
-                Link += "&userId=" + this.account.userId;
+                urlparas += "&userId=" + this.account.userId;
             }
-            window.location.href = Link;
+            window.location.href = Link + window.btoa(urlparas);
         },
         modLink: function(name) {
             var link = "";
@@ -197,7 +201,7 @@ var appFront = new Vue({
                     break;
             };
             if (this.isLogin) {
-                link += "?userId=" + (parObj.userId || localStorage.userId);
+                link += window.btoa("?userId=" + (parObj.userId || localStorage.userId));
             };
             return link;
         },
@@ -215,38 +219,47 @@ var appFront = new Vue({
                 case "center":
                     if (this.account.userType == "0") {
                         var link = "pCenter.html?userId=" + this.account.userId + "&loginId=" + this.account.loginId;
+                        link = EventUtils.securityUrl(link);
                         window.open(link, "_blank");
                     } else if (this.account.userType == "1") {
                         var link = "uniCenter.html?userId=" + this.account.userId + "&loginId=" + this.account.loginId;
+                        link = EventUtils.securityUrl(link);
                         window.open(link, "_blank");
                     } else if (this.account.userType == "2") {
                         var link = "incCenter.html?userId=" + this.account.userId + "&loginId=" + this.account.loginId;
+                        link = EventUtils.securityUrl(link);
                         window.open(link, "_blank");
                     }
                     break;
                 case "collect":
                     if (this.account.userType == "0") {
                         var link = "pCenter.html?userId=" + this.account.userId + "&loginId=" + this.account.loginId + "&theme=collect";
+                        link = EventUtils.securityUrl(link);
                         window.open(link, "_blank");
                     } else if (this.account.userType == "1") {
                         var link = "uniCenter.html?userId=" + this.account.userId + "&loginId=" + this.account.loginId + "&theme=collect";
+                        link = EventUtils.securityUrl(link);
                         window.open(link, "_blank");
                     } else if (this.account.userType == "2") {
                         var link = "incCenter.html?userId=" + this.account.userId + "&loginId=" + this.account.loginId + "&theme=collect";
+                        link = EventUtils.securityUrl(link);
                         window.open(link, "_blank");
                     }
                     break;
                 case "publish":
                     if (this.account.userType == "1") {
                         var link = "uniCenter.html?userId=" + this.account.userId + "&loginId=" + this.account.loginId + "&theme=require";
+                        link = EventUtils.securityUrl(link);
                         window.open(link, "_blank");
                     } else if (this.account.userType == "2") {
                         var link = "incCenter.html?userId=" + this.account.userId + "&loginId=" + this.account.loginId + "&theme=require";
+                        link = EventUtils.securityUrl(link);
                         window.open(link, "_blank");
                     }
                     break;
                 case "myjob":
                     var link = "pCenter.html?userId=" + this.account.userId + "&loginId=" + this.account.loginId + "&theme=jobBox";
+                    link = EventUtils.securityUrl(link);
                     window.open(link, "_blank");
                     break;
                 case "logout":

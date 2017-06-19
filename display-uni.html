@@ -120,7 +120,7 @@
                         <div class="paLeft29 clearfix H108 pRel">
                             <div class="W78 H70 logo-pic disInline v-mid fl maT20"><img :src="item.userIcon" /></div>
                             <div class="item-block-left fl paTop20 W321 maL25">
-                                <h2 class="color-blueL fSize16 LH-H24 pRel"><a :href="demandLink(item.demandId)">{{infoExtrac(item.profession)}}</a><span class="hot" v-show="item.hot>0">置顶</span></h2>
+                                <h2 class="color-blueL fSize16 LH-H24 pRel"><a :href="demandLink(item.demandId)">{{infoExtrac(item.profession)}}</a><img class="hot-icon" src="images/icon-hot.png" v-show="item.hot>0" /></h2>
                                 <p>{{item.companyProperty}}<i class="depart">|</i>{{item.companyScale}}<i class="depart">|</i>{{infoExtrac(item.companyType)}}</p>
                                 <p class="f-bold fSize14"><span>企业提供的培训方式：</span>{{item.trainType}}</p>
                             </div>

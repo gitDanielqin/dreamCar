@@ -410,7 +410,7 @@
                                     <p>{{item.companyProperty}}</p>
                                     <div class="message-btn LH-H35 pRel">
                                         <button class="color-orange-f7 to-contact" @click.stop="checkCvs(item)">收到的简历</button>
-                                        <span class="cv-total">{{item.count}}</span>
+                                        <span class="cv-total" v-show="item.count>0">{{item.count}}</span>
                                     </div>
                                 </div>
                             </div>

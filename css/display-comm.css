@@ -397,6 +397,11 @@
     top: 0;
 }
 
+.hot-icon {
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
 .main-result .results {
     min-height: 635px;
     width: 810px;
