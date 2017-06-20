@@ -339,7 +339,7 @@ var appFooter = new Vue({
             if (parObj.userId) {
                 link += "userId=" + parObj.userId;
             }
-            window.location.href = link;
+            window.location.href = EventUtils.security(link);
         }
     }
 })

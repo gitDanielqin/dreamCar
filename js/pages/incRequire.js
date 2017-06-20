@@ -14,11 +14,11 @@
 // require("../../css/foundation-datepicker.min.css")
 // require("../../css/require.css")
 var parObj = EventUtils.urlExtrac(window.location);
+console.log(parObj);
 var isNewRequire = true;
 var respObj = {};
 if (parObj.new && parObj.new != "1") { //非首次发布
     isNewRequire = false;
-    infoRequest()
 }
 
 function infoRequest() {
@@ -197,8 +197,8 @@ function infoRequest() {
 var appTop = new Vue({
     el: "#app-top",
     data: {
-        homeLink: "index.html?userId=" + parObj.userId,
-        centerLink: "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId
+        homeLink: EventUtils.securityUrl("index.html?userId=" + parObj.userId),
+        centerLink: EventUtils.securityUrl("incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId)
     },
     methods: {
         showMsg: function() {
@@ -426,6 +426,15 @@ var appMain = new Vue({
                 } else {
                     $(".phone-input:visible").removeClass("hint-nullable");
                 }
+                //检测联系人是否符合标准
+                if (this.combiData.contact.person && !variableUtils.regExp.name.test(this.combiData.contact.person)) {
+                    swal({
+                        title: "",
+                        text: "联系人姓名过长或格式有误！",
+                        type: "warning"
+                    });
+                    return false;
+                }
                 //准备发送数据
                 if ($(".cont-combi .time-table").find("td.on").length > 0) {
                     var timestring = "";
@@ -473,7 +482,8 @@ var appMain = new Vue({
                                 showConfirmButton: false
                             });
                             setTimeout(function() {
-                                window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                window.location.href = EventUtils.securityUrl(link);
                             }, 1000);
                         }
                     })
@@ -488,7 +498,8 @@ var appMain = new Vue({
                                 showConfirmButton: false
                             });
                             setTimeout(function() {
-                                window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                window.location.href = EventUtils.securityUrl(link);
                             }, 1000);
                         }
                     })
@@ -537,6 +548,15 @@ var appMain = new Vue({
                     $(".phone-input:visible").removeClass("hint-nullable");
                 }
 
+                //检测联系人是否符合标准
+                if (this.recruitData.contact.person && !variableUtils.regExp.name.test(this.recruitData.contact.person)) {
+                    swal({
+                        title: "",
+                        text: "联系人姓名过长或格式有误！",
+                        type: "warning"
+                    });
+                    return false;
+                }
                 //准备发送数据
                 var welfare = "";
                 $(".cont-recruit .welfare-lis li").each(function() {
@@ -582,7 +602,8 @@ var appMain = new Vue({
                                     showConfirmButton: false
                                 });
                                 setTimeout(function() {
-                                    window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                    var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                    window.location.href = EventUtils.securityUrl(link);
                                 }, 1000);
                             }
                         }
@@ -597,13 +618,13 @@ var appMain = new Vue({
                             showConfirmButton: false
                         });
                         setTimeout(function() {
-                            window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                            var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                            window.location.href = EventUtils.securityUrl(link);
                         }, 1000);
                     })
                 }
 
             } else if (type == "recruit") {
-
                 //检查数据是否合规
                 var isValid = true;
                 if ($(".cont-direct .sel-pos-1 input").val() == "不限") {
@@ -646,7 +667,15 @@ var appMain = new Vue({
                 } else {
                     $(".phone-input:visible").removeClass("hint-nullable");
                 }
-
+                //检测联系人是否符合标准
+                if (this.directData.contact.person && !variableUtils.regExp.name.test(this.directData.contact.person)) {
+                    swal({
+                        title: "",
+                        text: "联系人姓名过长或格式有误！",
+                        type: "warning"
+                    });
+                    return false;
+                }
                 //准备发送数据
                 var sex = 1;
                 if (this.directData.gender == "女") {
@@ -697,7 +726,8 @@ var appMain = new Vue({
                                     showConfirmButton: false
                                 })
                                 setTimeout(function() {
-                                    window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                    var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                    window.location.href = EventUtils.securityUrl(link);
                                 }, 1000);
                             }
                         }
@@ -713,7 +743,8 @@ var appMain = new Vue({
                                 showConfirmButton: false
                             });
                             setTimeout(function() {
-                                window.location.href = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                window.location.href = EventUtils.securityUrl(link);
                             }, 1000);
                         }
                     })
@@ -769,7 +800,7 @@ var appFooter = new Vue({
             if (parObj.userId) {
                 link += "userId=" + parObj.userId;
             }
-            window.location.href = link;
+            window.location.href = EventUtils.securityUrl(link);
         }
     }
 })
@@ -793,10 +824,28 @@ var appModal = new Vue({
                 this.$nextTick(function() {
                     EventUtils.absCenter($("#app-modal .msg-box"));
                 })
+            } else {
+                var postdata = {
+                    userId: parObj.userId,
+                    index: 1,
+                    count: 8
+                }
+                EventUtils.ajaxReq("/message/getMessageList", "get", postdata, function(resp, status) {
+                    if (resp.data && resp.data.count > 0) {
+                        $(".msg-center .msg-info").html(resp.data.count);
+                        $(".msg-center .msg-info").show();
+                    } else {
+                        $(".msg-center .msg-info").hide();
+                    }
+                })
             }
         }
     }
 })
+
+if (parObj.new && parObj.new != "1") { //非首次发布
+    infoRequest()
+}
 
 function selectRepos() {
     $(".selectee ul").each(function() {

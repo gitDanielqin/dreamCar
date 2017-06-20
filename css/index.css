@@ -317,6 +317,11 @@ body {
     line-height: 30px;
 }
 
+.imageflow img {
+    width: 1000px;
+    height: auto;
+}
+
 .rotate-left {
     -webkit-transform: perspective(600px) rotateY(20deg) scale(0.7, 0.7);
     -moz-transform: perspective(600px) rotateY(20deg) scale(0.7, 0.7);

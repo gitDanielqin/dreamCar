@@ -209,9 +209,8 @@
         </div>
     </div>
     <div class="modal" id="app-modal" v-show="show.modal" v-cloak>
-        <message-box :userid="account.userId" @closebox="closeMsg" v-show="show.message"></message-box>
+        <message-box :userid="account.userId" :showmsg="show.message" @closebox="closeMsg" v-show="show.message"></message-box>
     </div>
-
 
     <script src="js/libs/jquery-3.1.0.min.js"></script>
     <script src="js/libs/vue.js"></script>

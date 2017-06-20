@@ -22,7 +22,6 @@ var respObj = {}
 if (parObj.new && parObj.new != "1") { //非新需求
     isNewRequire = false;
     pageindex = parObj.demandSrc;
-    infoRequest(parObj.demandSrc);
 };
 
 function infoRequest(demandSrc) {
@@ -141,8 +140,8 @@ function infoRequest(demandSrc) {
 var appTop = new Vue({
     el: "#app-top",
     data: {
-        centerLink: "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId,
-        homeLink: "index.html?userId=" + parObj.userId
+        centerLink: EventUtils.securityUrl("uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId),
+        homeLink: EventUtils.securityUrl("index.html?userId=" + parObj.userId)
     },
     methods: {
         showMsg: function() {
@@ -292,14 +291,6 @@ var appMain = new Vue({
         },
         publish: function(type) {
             var isFilled = true;
-            // 对联系方式的输入检测
-            // $(".phone-input:visible").each(function() {
-            //     if (!variableUtils.regExp.phone.test(this.value) && !variableUtils.regExp.mobile.test(this.value)) {
-            //         $(this).addClass("hint-nullable");
-            //         isValid = false;
-            //     }
-            // });
-
             $(".must-input:visible").each(function() {
                 if ($(this).val() == "") {
                     $(this).addClass("hint-nullable");
@@ -375,6 +366,15 @@ var appMain = new Vue({
                 } else {
                     $(".phone-input:visible").removeClass("hint-nullable");
                 }
+                //检测联系人是否符合标准
+                if (this.combiData.contact.person && !variableUtils.regExp.name.test(this.combiData.contact.person)) {
+                    swal({
+                        title: "",
+                        text: "联系人姓名过长或格式有误！",
+                        type: "warning"
+                    });
+                    return false;
+                }
                 //准备发送数据
                 if ($(".cont-combi .time-table").find("td.on").length > 0) {
                     var timestring = "";
@@ -419,7 +419,8 @@ var appMain = new Vue({
                                 showConfirmButton: false
                             });
                             setTimeout(function() {
-                                window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                var link = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                window.location.href = EventUtils.securityUrl(link);
                             }, 1000);
                         }
                     })
@@ -434,7 +435,8 @@ var appMain = new Vue({
                                 showConfirmButton: false
                             });
                             setTimeout(function() {
-                                window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
+                                var link = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
+                                window.location.href = EventUtils.securityUrl(link);
                             }, 1000);
                         }
                     })
@@ -480,6 +482,15 @@ var appMain = new Vue({
                 } else {
                     $(".phone-input:visible").removeClass("hint-nullable");
                 }
+                //检测联系人是否符合标准
+                if (this.recruitData.contact.person && !variableUtils.regExp.name.test(this.recruitData.contact.person)) {
+                    swal({
+                        title: "",
+                        text: "联系人姓名过长或格式有误！",
+                        type: "warning"
+                    });
+                    return false;
+                }
                 //准备发送数据
                 var postdata = {
                     userId: parObj.userId,
@@ -518,7 +529,8 @@ var appMain = new Vue({
                                     showConfirmButton: false
                                 });
                                 setTimeout(function() {
-                                    window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
+                                    var link = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
+                                    window.location.href = EventUtils.securityUrl(link);
                                 }, 1000);
                             }
                         }
@@ -534,7 +546,8 @@ var appMain = new Vue({
                                 showConfirmButton: false
                             });
                             setTimeout(function() {
-                                window.location.href = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
+                                var link = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
+                                window.location.href = EventUtils.securityUrl(link);
                             }, 1000);
                         }
                     })
@@ -583,7 +596,7 @@ var appFooter = new Vue({
             if (parObj.userId) {
                 link += "userId=" + parObj.userId;
             }
-            window.location.href = link;
+            window.location.href = EventUtils.securityUrl(link);
         }
     }
 })
@@ -605,11 +618,28 @@ var appModal = new Vue({
                 this.$nextTick(function() {
                     EventUtils.absCenter($("#app-modal .msg-box"));
                 })
+            } else {
+                var postdata = {
+                    userId: parObj.userId,
+                    index: 1,
+                    count: 8
+                }
+                EventUtils.ajaxReq("/message/getMessageList", "get", postdata, function(resp, status) {
+                    if (resp.data && resp.data.count > 0) {
+                        $(".msg-center .msg-info").html(resp.data.count);
+                        $(".msg-center .msg-info").show();
+                    } else {
+                        $(".msg-center .msg-info").hide();
+                    }
+                })
             }
         }
     }
 })
 
+if (parObj.new && parObj.new != "1") { //非新需求
+    infoRequest(parObj.demandSrc);
+};
 datepickEventBind();
 
 function navEventBind() { //头部导航栏事件绑定

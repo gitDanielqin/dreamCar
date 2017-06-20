@@ -93,7 +93,7 @@ function infoRequest() {
 var appTop = new Vue({
     el: "#app-top",
     data: {
-        homeLink: "index.html?userId=" + parObj.userId
+        homeLink: EventUtils.securityUrl("index.html?userId=" + parObj.userId)
     },
     methods: {
         showMsgbox: function() {
@@ -204,7 +204,7 @@ var appCont = new Vue({
             curpage: 1,
             totalpages: 1,
             totalitems: 0,
-            newLink: "incRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId,
+            newLink: EventUtils.securityUrl("incRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId),
             results: [],
             showCombi: true,
             showRecruit: true
@@ -377,6 +377,9 @@ var appCont = new Vue({
                 return ""
             }
         },
+        infoShow: function(text, type) {
+            return EventUtils.infoShow(text, type)
+        },
         dateExtrac: function(date) {
             if (date) {
                 return date.split(" ")[0];
@@ -393,50 +396,62 @@ var appCont = new Vue({
         },
         requireLink: function(item) {
             if (item.demandId) {
-                return "detail-company.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + item.demandId + "&userType=2";
+                var link = "detail-company.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + item.demandId + "&userType=2";
+                return EventUtils.securityUrl(link);
             }
             if (item.recruitId) {
-                return "detail-position.html?userId=" + parObj.userId + "&recruitId=" + item.recruitId;
+                var link = "detail-position.html?userId=" + parObj.userId + "&recruitId=" + item.recruitId;
+                return EventUtils.securityUrl(link);
             }
             if (item.jobFairId) {
-                return "detail-increcruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
+                var link = "detail-increcruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
+                return EventUtils.securityUrl(link);
             }
         },
         collectLink: function(item) {
             if (item.demandId) {
-                return "detail-uni.html?userId=" + parObj.userId + "&demandId=" + item.demandId;
+                var link = "detail-uni.html?userId=" + parObj.userId + "&demandId=" + item.demandId;
+                return EventUtils.securityUrl(link);
             }
             if (item.jobFairId) {
-                return "detail-unirecruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
+                var link = "detail-unirecruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
+                return EventUtils.securityUrl(link);
             }
 
         },
         messageLink: function(type, id) {
             if (type == "combi") {
                 if (appCont.message.combi.msgsrc == 1) {
-                    return "detail-uni.html?demandId=" + id + "&userId=" + parObj.userId;
+                    var link = "detail-uni.html?demandId=" + id + "&userId=" + parObj.userId;
+                    return EventUtils.securityUrl(link);
                 } else {
-                    return "detail-company.html?demandId=" + id + "&userId=" + parObj.userId;
+                    var link = "detail-company.html?demandId=" + id + "&userId=" + parObj.userId;
+                    return EventUtils.securityUrl(link);
                 }
             }
             if (type == "jobfair") {
                 if (appCont.message.jobfair.msgsrc == 1) {
-                    return "detail-unirecruit.html?jobfairId=" + id + "&userId=" + parObj.userId;
+                    var link = "detail-unirecruit.html?jobfairId=" + id + "&userId=" + parObj.userId;
+                    return EventUtils.securityUrl(link);
                 } else {
-                    return "detail-increcruit.html?jobfairId=" + id + "&userId=" + parObj.userId;
+                    var link = "detail-increcruit.html?jobfairId=" + id + "&userId=" + parObj.userId;
+                    return EventUtils.securityUrl(link);
                 }
             }
         },
         coopLink: function(item) {
             if (item.demandId) {
                 if (item.releaseType == "1") {
-                    return "detail-uni.html?demandId=" + item.demandId + "&userId=" + parObj.userId;
+                    var link = "detail-uni.html?demandId=" + item.demandId + "&userId=" + parObj.userId;
+                    return EventUtils.securityUrl(link);
                 } else {
-                    return "detail-company.html?demandId=" + item.demandId + "&userId=" + parObj.userId;
+                    var link = "detail-company.html?demandId=" + item.demandId + "&userId=" + parObj.userId;
+                    return EventUtils.securityUrl(link);
                 }
             }
             if (item.jobFairId) {
-                return "detail-unirecruit.html?jobfairId=" + item.jobFairId + "&userId=" + parObj.userId;
+                var link = "detail-unirecruit.html?jobfairId=" + item.jobFairId + "&userId=" + parObj.userId;
+                return EventUtils.securityUrl(link);
             }
 
         },
@@ -611,6 +626,7 @@ var appCont = new Vue({
             if (item.recruitId) {
                 link += "&recruitId=" + item.recruitId;
             }
+            link = EventUtils.securityUrl(link);
             window.open(link, "_blank");
         },
         freshItem: function(item) {
@@ -779,10 +795,16 @@ var appCont = new Vue({
             appModal.show.wechat = true;
             appModal.showModal = true;
         },
-        showCard: function(applyId, userId) { //查看对方名片
+        showCard: function(item) { //查看对方名片
             var postdata = {
-                userId: userId,
-                applyId: applyId,
+                userId: item.applyUserId,
+                applyId: item.applyId,
+            }
+            if (item.demandId) {
+                postdata.applyType = 1;
+            }
+            if (item.jobFairId) {
+                postdata.applyType = 2;
             }
             console.log(postdata);
             EventUtils.ajaxReq("/readcard/getCardInfo", "get", postdata, function(resp, status) {
@@ -801,12 +823,13 @@ var appCont = new Vue({
         },
         checkCvs: function(item) {
             if (item.jobFairId) {
-                window.location.href = "HR-center.html?jobfairId=" + item.jobFairId + "&userId=" + parObj.userId + "&loginId=" + parObj.loginId;
+                var link = "HR-center.html?jobfairId=" + item.jobFairId + "&userId=" + parObj.userId + "&loginId=" + parObj.loginId;
             }
             if (item.recruitId) {
-                window.location.href = "HR-center.html?recruitId=" + item.recruitId + "&userId=" + parObj.userId + "&loginId=" + parObj.loginId;
+                var link = "HR-center.html?recruitId=" + item.recruitId + "&userId=" + parObj.userId + "&loginId=" + parObj.loginId;
             }
-
+            link = EventUtils.securityUrl(link);
+            window.location.href = link;
         }
     },
     components: {
@@ -821,6 +844,7 @@ var appSider = new Vue({
             if (parObj.userId) {
                 var link = "HR-center.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId;
             }
+            link = EventUtils.securityUrl(link);
             window.open(link);
         },
         selnav: function(obj) {
@@ -954,6 +978,14 @@ var appModal = new Vue({
             }
         },
         confirmComment: function() {
+            if (this.comment.text == "") {
+                swal({
+                    title: "",
+                    text: "评价内容不能为空！",
+                    type: "warning"
+                });
+                return false;
+            }
             var postdata = {
                 userId: parObj.userId,
                 loginIdentifier: parObj.loginId,
@@ -1016,6 +1048,10 @@ var appModal = new Vue({
             this.showModal = false;
         },
         closeMobile: function() {
+            EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function(resp, status) {
+                appCont.config.bind.mobile = resp.data.mobile;
+                appCont.config.bind.email = resp.data.email;
+            })
             this.show.mobile = false;
             this.showModal = false;
         },
@@ -1024,6 +1060,10 @@ var appModal = new Vue({
             this.showModal = false;
         },
         closeEmail: function() {
+            EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function(resp, status) {
+                appCont.config.bind.mobile = resp.data.mobile;
+                appCont.config.bind.email = resp.data.email;
+            })
             this.show.email = false;
             this.showModal = false;
         },
@@ -1032,8 +1072,8 @@ var appModal = new Vue({
                 applyId: applyId,
                 result: 1
             }
-            console.log(postdata);
             EventUtils.ajaxReq("/readcard/disposeDemand", "get", postdata, function(resp, status) {
+                combiMsgRequest(2, 1)
                 appModal.show.minicard = false;
                 appModal.showModal = false;
             })
@@ -1045,6 +1085,7 @@ var appModal = new Vue({
                 result: 2
             }
             EventUtils.ajaxReq("/readcard/disposeDemand", "get", postdata, function(resp, status) {
+                combiMsgRequest(2, 1)
                 appModal.show.minicard = false;
                 appModal.showModal = false;
             })
@@ -1055,6 +1096,20 @@ var appModal = new Vue({
             if (curval) {
                 this.$nextTick(function() {
                     EventUtils.absCenter($("#app-modal .msg-box"));
+                })
+            } else {
+                var postdata = {
+                    userId: parObj.userId,
+                    index: 1,
+                    count: 8
+                }
+                EventUtils.ajaxReq("/message/getMessageList", "get", postdata, function(resp, status) {
+                    if (resp.data && resp.data.count > 0) {
+                        $(".msg-center .msg-info").html(resp.data.count);
+                        $(".msg-center .msg-info").show();
+                    } else {
+                        $(".msg-center .msg-info").hide();
+                    }
                 })
             }
         },

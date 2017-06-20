@@ -165,6 +165,33 @@
     font-size: 0;
 }
 
+.item-block-left {
+    width: 300px;
+    max-width: 300px;
+}
+
+.item-block-left p {
+    line-height: 25px;
+    font-size: 14px;
+    width: 275px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.item-block-right {
+    padding: 18px;
+    max-width: 315px;
+    background: url("../images/dashline.png") no-repeat left center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.jobBox .item-block-right {
+    padding: 0 18px;
+}
+
 .main .major-name {
     margin-left: 10px;
 }
@@ -564,11 +591,6 @@
 
 .main .ListBox .colCompanyList .demand i {
     margin: 0 12px;
-}
-
-.main .ListBox .contList .col-company-info {
-    padding: 30px 18px 0;
-    background: url("../images/dashline.png") no-repeat left 28px;
 }
 
 .main .ListBox .contList .col-company-info i {

@@ -28,6 +28,7 @@ function readFileFirefox(fileBrowser) {
 window.readFileFirefox = readFileFirefox;
 var variableUtils = {
     regExp: {
+        name: /^[\u4E00-\u9FA5A-Za-z]{1,12}$/,
         mobile: /^1[34578]\d{9}$/,
         email: /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/,
         password: /^[a-zA-Z0-9]{6,16}$/,
@@ -176,16 +177,22 @@ window.EventUtils = {
                         return "薪资不详";
                     case "profession":
                         return "专业不限";
+                    case "stuscale":
+                        return "专业人数不限";
                     case "edu":
                         return "学历不限";
                     case "worktime":
-                        return "工作经验不限";
+                        return "经验不限";
                     case "props":
                         return "性质不限";
-                    case "comscale":
+                    case "scale":
                         return "规模不限";
                     case "comtype":
                         return "行业不限";
+                    case "job":
+                        return "岗位不限";
+                    case "uniclass":
+                        return "高校类别不限";
                 }
             }
         },

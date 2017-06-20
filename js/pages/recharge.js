@@ -62,7 +62,8 @@ function initEventBind() {
             return;
         }
         var plattform = $(".barcode-pay .plattform-sel i.on").attr("name");
-        window.location.href = "barcode-pay.html?plattform=" + plattform + "&userId=" + parObj.userId + "&amount=" + $("#chargeAmount").val();
+        var link = "barcode-pay.html?plattform=" + plattform + "&userId=" + parObj.userId + "&amount=" + $("#chargeAmount").val();
+        window.location.href = EventUtils.securityUrl(link);
     });
     $(".checked-agree").click(function() {
         $(this).toggleClass("on");

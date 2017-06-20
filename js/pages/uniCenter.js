@@ -753,6 +753,7 @@ var appCont = new Vue({
             if (item.jobFairId) {
                 pageurl += "&jobfairId=" + item.jobFairId
             }
+            pageurl = EventUtils.securityUrl(pageurl);
             window.open(pageurl, "_blank");
         },
         delItem: function(item) {
@@ -890,9 +891,11 @@ var appCont = new Vue({
                 applyId: item.applyId,
             }
             if (item.demandId) {
+                postdata.applyType = 1;
                 appModal.cardInfo.infosrc = 0;
             }
             if (item.jobFairId) {
+                postdata.applyType = 2;
                 appModal.cardInfo.infosrc = 1;
             }
             EventUtils.ajaxReq("/readcard/getCardInfo", "get", postdata, function(resp, status) {
@@ -995,7 +998,6 @@ var appModal = new Vue({
     },
     methods: {
         agreeApply: function(applyId) {
-
             var postdata = {
                 applyId: applyId,
                 result: 1
@@ -1004,11 +1006,13 @@ var appModal = new Vue({
                 EventUtils.ajaxReq("/readcard/disposeDemand", "get", postdata, function(resp, status) {
                     appModal.show.minicard = false;
                     appModal.showModal = false;
+                    combiMsgRequest(2, 1)
                 })
             } else {
                 EventUtils.ajaxReq("/readcard/operationApply", "get", postdata, function(resp, status) {
                     appModal.show.minicard = false;
                     appModal.showModal = false;
+                    recruitMsgRequest(1);
                 })
             }
 
@@ -1098,7 +1102,7 @@ var appModal = new Vue({
             if (this.comment.text == "") {
                 swal({
                     title: "",
-                    text: "发送内容不能为空！",
+                    text: "评价内容不能为空！",
                     type: "warning"
                 });
                 return false;
@@ -1122,6 +1126,10 @@ var appModal = new Vue({
             this.showModal = false;
         },
         closeMobile: function() {
+            EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function(resp, status) {
+                appCont.config.bind.mobile = resp.data.mobile;
+                appCont.config.bind.email = resp.data.email;
+            })
             this.show.mobile = false;
             this.showModal = false;
         },
@@ -1130,6 +1138,10 @@ var appModal = new Vue({
             this.showModal = false;
         },
         closeEmail: function() {
+            EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function(resp, status) {
+                appCont.config.bind.mobile = resp.data.mobile;
+                appCont.config.bind.email = resp.data.email;
+            })
             this.show.email = false;
             this.showModal = false;
         },
@@ -1143,6 +1155,20 @@ var appModal = new Vue({
             if (curval) {
                 this.$nextTick(function() {
                     EventUtils.absCenter($("#app-modal .msg-box"));
+                })
+            } else {
+                var postdata = {
+                    userId: parObj.userId,
+                    index: 1,
+                    count: 8
+                }
+                EventUtils.ajaxReq("/message/getMessageList", "get", postdata, function(resp, status) {
+                    if (resp.data && resp.data.count > 0) {
+                        $(".msg-center .msg-info").html(resp.data.count);
+                        $(".msg-center .msg-info").show();
+                    } else {
+                        $(".msg-center .msg-info").hide();
+                    }
                 })
             }
         },
@@ -1491,6 +1517,7 @@ function recruitMsgRequest(page) {
             appCont.message.recruit.results = resp.data.list;
         } else {
             appCont.message.recruit.results = [];
+            appCont.message.recruit.totalpages = 1;
             appCont.message.recruit.totalitems = 0;
         }
     });

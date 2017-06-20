@@ -49,9 +49,9 @@ EventUtils.ajaxReq("/sys/recharge", "post", postdata, function(resp, status) {
                     });
                     setTimeout(function() {
                         if (domainUrl) {
-                            window.location.href = domainUrl;
+                            window.location.href = EventUtils.securityUrl(domainUrl);
                         } else {
-                            window.location.href = "index.html?userId=" + parObj.userId;
+                            window.location.href = EventUtils.securityUrl("index.html?userId=" + parObj.userId);
                         }
                     }, 2000)
                 }

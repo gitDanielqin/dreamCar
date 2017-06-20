@@ -19,7 +19,7 @@
             <div class="fr navs maT42">
                 <a :href="homeLink"><i class="pic-icon icon-home"></i></a>
                 <a href="#"><i class="pic-icon icon-account"></i></a>
-                <a class="msg-center pRel" href="#" @click.stop="showMsgbox"><i class="pic-icon icon-msg"></i><i class="msg-info disNo">99</i></a>
+                <a class="msg-center pRel" href="#" @click.stop="showMsgbox"><i class="pic-icon icon-msg"></i><i class="msg-info disNo"></i></a>
             </div>
         </div>
     </div>
@@ -408,12 +408,12 @@
                         </li>
                         <li v-for="(item,index) in courses.results" v-show="showResult(index,courses.curpage,3)">
                             <div class="class-pic logo-pic"><img :src="item.userIcon" /></div>
-                            <div class="class-txt fl paTop20 W328">
+                            <div class="class-txt fl paTop20 item-block-left">
                                 <h2 class="class-name"><b>{{item.name}}</b><span class="LH-H20 score">{{item.score}}</span></h2>
                                 <p>{{item.duration}}<span class="depart">|</span>{{item.fee}}<span class="depart">|</span>{{item.addr}}</p>
                                 <p><button class="eval-btn">学院评价</button></p>
                             </div>
-                            <div class="class-info fl fSize14">
+                            <div class="class-info fl fSize14 item-block-right">
                                 <p><button class="color-orange2">去评价课程</button></p>
                                 <p :class="stateCss(item.state)">{{item.state}}</p>
                                 <p>{{item.comment}}</p>
@@ -443,12 +443,12 @@
                         </li>
                         <li v-for="(item,index) in colStuList.results" v-show="showResult(index,colStuList.curpage,3)">
                             <div class="logo-pic"><img :src="item.userIcon" /></div>
-                            <div class="class-txt fl paTop20 W328">
+                            <div class="class-txt fl paTop20 item-block-left">
                                 <h2 class="class-name"><b>{{item.name}}</b></h2>
                                 <p>{{item.duration}}<span class="depart">|</span>{{item.fee}}<span class="depart">|</span>{{item.addr}}</p>
                                 <p><button class="eval-btn">学院评价</button></p>
                             </div>
-                            <div class="col-class-info fl fSize18">
+                            <div class="col-class-info fl fSize18 item-block-right">
                                 <p>{{item.Institute}}</p>
                                 <p class="fSize16">学院规模：{{item.InScale}}人</p>
                                 <div class="action"><span>取消收藏</span><span>报名学习</span></div>
@@ -470,15 +470,15 @@
                         </li>
                         <li v-for="(item,index) in colPosList.results">
                             <div class="logo-pic"><img :src="item.userIcon" /></div>
-                            <div class="class-txt fl paTop20 W328">
+                            <div class="class-txt fl paTop20 item-block-left">
                                 <h2 class="class-name"><a :href="posLink(item)">{{infoExtrac(item.job)}}</a></h2>
                                 <p class="demand"><span class="color-orange-f7" v-if="item.salary&&item.salary!='不限'">{{item.salary}}</span><span class="color-orange-f7" v-else="!item.salary&&item.salary=='不限'">薪资不详</span><i>|</i>
                                     <span v-if="infoExtrac(item.profession)&&infoExtrac(item.profession)!='不限'">{{infoExtrac(item.profession)}}</span><span v-else>专业不限</span><i>|</i>
                                     <span v-if="item.education&&item.education!='不限'">{{item.education}}</span><span v-else>学历不限</span><i>|</i>
-                                    <span v-if="item.workTime&&item.workTime!='不限'">{{item.workTime}}</span><span v-else>工作经验不限</span></p>
+                                    <span v-if="item.workTime&&item.workTime!='不限'">{{item.workTime}}</span><span v-else>经验不限</span></p>
                                 <p><span class="maR20">【{{cityExtrac(item.companyAddress)}}】</span>岗位数: <span>{{item.recruitCount}}人</span></p>
                             </div>
-                            <div class="col-company-info fl fSize18">
+                            <div class="col-company-info fl fSize18 item-block-right">
                                 <p>{{item.userName}}</p>
                                 <p>{{item.userProperty}}<i>|</i>{{item.userScale}}</p>
                                 <p>发布时间：{{dateExtrac(item.updateTime)}}</p>
@@ -506,7 +506,7 @@
                         </li>
                         <li v-for="(item,index) in colRecList.results">
                             <div class="logo-pic"><img :src="item.userIcon" /></div>
-                            <div class="class-txt fl paTop20 W328">
+                            <div class="class-txt fl paTop20 item-block-left">
                                 <h2 class="class-name"><a :href="posLink(item)">{{item.title}}</a></h2>
                                 <p class="demand"><span class="color-orange-f7" v-if="item.cvSalary&&item.cvSalary!='不限'">{{item.cvSalary}}</span><span v-else>薪资不详</span><i>|</i>
                                     <span v-if="infoExtrac(item.profession)&&infoExtrac(item.profession)!='不限'">{{infoExtrac(item.profession)}}</span><span v-else>专业不限</span>
@@ -514,7 +514,7 @@
                                     <i>|</i><span v-if="item.cvProject&&item.cvProject!='不限'">{{item.cvProject}}</span><span v-else>工作经验不限</span></p>
                                 <p><span>招聘会时间：</span>{{item.startTime}}</p>
                             </div>
-                            <div class="col-company-info fl fSize18">
+                            <div class="col-company-info fl fSize18 item-block-right">
                                 <p>{{item.userName}}</p>
                                 <p>{{item.userProperty}}<i>|</i>岗位数：{{item.jobCount}}人</p>
                                 <p>发布日期：{{dateExtrac(item.updateTime)}}</p>
@@ -544,7 +544,7 @@
                         <li v-for="(item,index) in myPosList.results">
                             <template v-if="myPosList.jobsrc==1">
                                 <div class="logo-pic"><img :src="item.userIcon" /></div>
-                                <div class="class-txt fl paTop20 W328">
+                                <div class="class-txt fl paTop20 item-block-left">
                                     <h2 class="class-name"><a :href="posLink(item)">{{infoExtrac(item.job)}}</a></h2>
                                     <p class="teacher"><span>{{infoShow(item.cvSalary,"salary")}}</span><span class="depart">|</span>
                                     <span>{{cityExtrac(item.jobFairAddress)}}</span><span class="depart">|</span>
@@ -552,7 +552,7 @@
                                     <span>{{infoShow(item.cvProject,"worktime")}}</span></p>
                                     <p>投递于： {{dateExtrac(item.createTime)}}</p>
                                 </div>
-                                <div class="feedback fr fSize18">
+                                <div class="feedback fr fSize18 item-block-right">
                                     <h3>公司名称：{{item.userName}}</h3>
                                     <ul class="lis-inline feedState">
                                         <li class="on"><i class="feedstate-icon"></i><span>已投递</span><i :class="{on:item.readStatus!=0}" class="feed-icon-bind"></i></li>
@@ -568,12 +568,12 @@
                             </template>
                             <template v-else>
                                 <div class="logo-pic"><img :src="item.userIcon" /></div>
-                                <div class="class-txt fl paTop20 W328">
+                                <div class="class-txt fl paTop20 item-block-left">
                                     <h2 class="class-name"><a :href="posLink(item)">{{infoExtrac(item.job)}}</a></h2>
                                     <p class="teacher">{{infoShow(item.salary,"salary")}}<span class="depart">|</span>{{cityExtrac(item.jobAddress)}}<span class="depart">|</span>{{infoShow(item.education,"edu")}}<span class="depart">|</span>{{infoShow(item.workTime,'worktime')}}</p>
                                     <p>投递于： {{dateExtrac(item.createTime)}}</p>
                                 </div>
-                                <div class="feedback fr fSize18">
+                                <div class="feedback fr fSize18 item-block-right">
                                     <h3>公司名称：{{item.userName}}</h3>
                                     <ul class="lis-inline feedState">
                                         <li class="on"><i class="feedstate-icon"></i><span>已投递</span><i :class="{on:item.readStatus!=0}" class="feed-icon-bind"></i></li>
@@ -767,7 +767,7 @@
                 <p class="LH-H40 W220 t-center bg-orange2 color-white maCenter" style="border-radius: 20px;">请使用微信扫一扫二维码登录</p>
             </div>
         </div>
-        <message-box :userid="account.userId" @closebox="closeMsg" v-show="show.message"></message-box>
+        <message-box :userid="account.userId" :showmsg="show.message" @closebox="closeMsg" v-show="show.message"></message-box>
         <!--期望行业选择弹框  -->
         <div class="trade-box W770 H420 maCenter trade-box-multi pAbs" v-show="show.trade">
             <h3 class="bg-gray-e6 fSize14 LH-H36 paLeft30 paRight30 color-black">选择行业分类<i class="pic-wrapper W26 LH-H26 maT5 closer t-center fr cur-pointer" @click="closeTrade"><i class="pic-icon icon-close"></i></i>

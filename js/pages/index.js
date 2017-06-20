@@ -188,20 +188,20 @@ var appFront = new Vue({
             var link = "";
             switch (name) {
                 case "uni":
-                    link = "display-uni.html";
+                    link = "display-uni.html?";
                     break;
                 case "inc":
-                    link = "display-company.html";
+                    link = "display-company.html?";
                     break;
                 case "pos":
-                    link = "display-position.html";
+                    link = "display-position.html?";
                     break;
                 case "recruit":
-                    link = "v-recruit.html";
+                    link = "v-recruit.html?";
                     break;
             };
             if (this.isLogin) {
-                link += window.btoa("?userId=" + (parObj.userId || localStorage.userId));
+                link += window.btoa("userId=" + (parObj.userId || localStorage.userId));
             };
             return link;
         },

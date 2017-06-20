@@ -34,7 +34,7 @@
                 if (this.userid) {
                     link += "userId=" + this.userid;
                 };
-                window.location.href = link;
+                window.location.href = EventUtils.securityUrl(link);
             }
         }
     })

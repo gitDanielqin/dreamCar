@@ -548,6 +548,10 @@
 
 /*左右信息超出部分出现省略号*/
 
+.item-block-left {
+    max-width: 300px;
+}
+
 .item-block-left h2 {
     white-space: nowrap;
     overflow: hidden;
@@ -555,6 +559,8 @@
 }
 
 .item-block-left p {
+    line-height: 25px;
+    font-size: 14px;
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
@@ -630,14 +636,9 @@
     margin: 0 8px;
 }
 
-.item-block-left p {
-    line-height: 25px;
-    font-size: 14px;
-}
-
 .item-block-right {
     padding: 18px;
-    max-width: 630px;
+    max-width: 315px;
     background: url("../images/dashline.png") no-repeat left 26px;
 }
 

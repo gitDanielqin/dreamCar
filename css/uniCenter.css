@@ -484,6 +484,10 @@
     margin: 0 12px;
 }
 
+.item-block-left {
+    max-width: 300px;
+}
+
 .item-block-left h2 {
     white-space: nowrap;
     overflow: hidden;

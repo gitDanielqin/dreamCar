@@ -19,7 +19,7 @@
             <div class="fr navs maT42">
                 <a :href="homeLink"><i class="pic-icon icon-home"></i></a>
                 <a :href="centerLink"><i class="pic-icon icon-account"></i></a>
-                <a class="msg-center pRel" href="javascript:void(0)" @click.stop="showMsg"><i class="pic-icon icon-msg"></i><i class="msg-info">99</i></a>
+                <a class="msg-center pRel" href="javascript:void(0)" @click.stop="showMsg"><i class="pic-icon icon-msg"></i><i class="msg-info"></i></a>
             </div>
         </div>
     </div>
@@ -56,7 +56,7 @@
                     <ul class="info-items">
                         <li v-for="item in resumes.cvList">
                             <div class="paLeft29 clearfix H128 pRel">
-                                <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT34"></div>
+                                <div class="W90 H80 logo-pic disInline v-mid fl maT34"><img :src="item.userIcon" /></div>
                                 <div class="item-block-left fl paTop22 W345 maL20">
                                     <h2 class="color-blueL fSize18 LH-H32">{{item.userName}}<button type="button" class="color-orange2 maL35 fSize14" @click="showCv(item)">查看简历</button></h2>
                                     <p><span v-show="item.schoolName">{{item.schoolName}}</span><span v-show="!item.schoolName">学校不详</span><i class="depart">|</i>
@@ -94,10 +94,10 @@
                 <ul class="info-items">
                     <li v-for="item in position.results">
                         <div class="paLeft29 clearfix H128 pRel" v-if="position.posType==0">
-                            <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                            <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                             <div class="item-block-left fl paTop22 W315 maL20">
                                 <h2 class="color-blueL fSize18 LH-H32"><a :href="requireLink(item)">{{infoExtrac(item.job)}}</a></h2>
-                                <p><span class="color-orange-f7">{{item.salary}}</span><i class="depart">|</i>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.workTime}}<i class="depart">|</i>{{item.education}}</p>
+                                <p><span class="color-orange-f7">{{infoShow(item.salary,'salary')}}</span><i class="depart">|</i>{{infoShow(infoExtrac(item.profession),'profession')}}<i class="depart">|</i>{{infoShow(item.workTime,'worktime')}}<i class="depart">|</i>{{infoShow(item.education,'edu')}}</p>
                                 <p>【{{cityExtrac(item.companyAddress)}}】岗位数：{{item.recruitCount}}人</p>
                             </div>
                             <div class="item-block-right fl fSize14 LH25 maT11">
@@ -111,10 +111,10 @@
                             </div>
                         </div>
                         <div v-else-if="position.posType==1" class="paLeft29 clearfix H128 pRel">
-                            <div class="W90 H80 logo-pic bg-brown disInline v-mid fl maT24"></div>
+                            <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                             <div class="item-block-left fl paTop22 W300 maL20">
                                 <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item)">{{item.title}}</a></h2>
-                                <p><span class="maR17 color-orange-f7">{{item.cvSalary}}</span>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.cvProject}}<i class="depart">|</i>{{item.cvEducation}}</p>
+                                <p><span class="maR17 color-orange-f7">{{infoShow(item.cvSalary,'salary')}}</span>{{infoShow(infoExtrac(item.profession),'profession')}}<i class="depart">|</i>{{infoShow(item.cvProject,'worktime')}}<i class="depart">|</i>{{infoShow(item.cvEducation,'edu')}}</p>
                                 <p>招聘会时间：{{item.startTime}}</p>
                             </div>
                             <div class="item-block-right fl fSize14 LH25 maT10">
@@ -249,7 +249,7 @@
             </div>
             <div class="H26 bg-white-ec"></div>
         </div>
-        <message-box :userid="account.userId" @closebox="closeMsg" v-show="show.message"></message-box>
+        <message-box :userid="account.userId" :showmsg="show.message" @closebox="closeMsg" v-show="show.message"></message-box>
         <fresh-box :freshitem="fresh.freshItem" :userid="account.userId" :showfresh="show.freshbox" @closefresh="closeFresh" v-show="show.freshbox"></fresh-box>
         <stick-box :stickitem="sticky.stickItem" :userid="account.userId" :showsticky="show.stickybox" @closesticky="closeSticky" v-show="show.stickybox"></stick-box>
     </div>

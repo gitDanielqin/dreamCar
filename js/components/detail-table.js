@@ -21,7 +21,7 @@
                     <th class="W200">状态</th>\
                 </tr>\
                 <tr v-for="item in options.applyRec.results">\
-                    <td>{{item.userName}}</td>\
+                    <td>{{nameFilter(item.userName)}}</td>\
                     <td>{{item.createTime}}</td>\
                     <td :class="viewCss(item.readStatus,item.status)">{{statetext(item.readStatus,item.status)}}</td>\
                 </tr>\
@@ -59,6 +59,16 @@
                 } else {
                     return "...";
                 }
+            },
+            nameFilter: function(name) {
+                if (this.tabletype == 1 || this.tabletype == 2 || this.tabletype == 3) { //隐藏名字只针对个人
+                    return name.charAt(0) + "***" + name.charAt(name.length - 1);
+                }
+                var ellipseName = name.charAt(0);
+                for (var i = 0; i < name.length - 1; i++) {
+                    ellipseName += "*";
+                }
+                return ellipseName;
             },
             selectTab: function(obj) {
                 if ($(obj).hasClass("msg-info")) {

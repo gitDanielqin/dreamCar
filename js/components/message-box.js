@@ -23,7 +23,7 @@
     </div>'
     Vue.component("message-box", {
         template: msgTempl,
-        props: ['userid'],
+        props: ['userid', "showmsg"],
         data: function() {
             return {
                 show: {
@@ -90,19 +90,6 @@
                 })
             },
             closeBox: function() {
-                var postdata = {
-                    userId: this.userid,
-                    index: 1,
-                    count: 8
-                }
-                EventUtils.ajaxReq("/message/getMessageList", "get", postdata, function(resp, status) {
-                    if (resp.data) {
-                        $(".msg-center .msg-info").html(resp.data.count);
-                        $(".msg-center .msg-info").show();
-                    } else {
-                        $(".msg-center .msg-info").hide();
-                    }
-                })
                 this.$emit("closebox");
             },
             back: function() {
@@ -123,6 +110,13 @@
                     return 3;
                 } else {
                     return totalpages
+                }
+            }
+        },
+        watch: {
+            "showmsg": function(curval) {
+                if (curval) {
+                    this.show.list = true;
                 }
             }
         },
@@ -158,7 +152,7 @@
                     }
                 }
                 _this.msgList.results = resultList;
-                if (resp.data) {
+                if (resp.data && resp.data.count > 0) {
                     $(".msg-center .msg-info").html(resp.data.count);
                     $(".msg-center .msg-info").show();
                 } else {

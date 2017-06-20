@@ -99,7 +99,8 @@ var appTop = new Vue({
             appModal.showLogin = true;
         },
         regisEv: function() {
-            window.open("login.html?newAcc=1", "_blank");
+            var link = EventUtils.securityUrl("login.html?newAcc=1");
+            window.open(link, "_blank");
         },
         publish: function() {
             switch (accountObj.userType) {
@@ -114,6 +115,7 @@ var appTop = new Vue({
             if (accountObj.userId) {
                 link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
             }
+            link = EventUtils.securityUrl(link);
             window.open(link, '_blank');
         },
         toCenter: function(theme) {
@@ -132,6 +134,7 @@ var appTop = new Vue({
             if (accountObj.userId) {
                 link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
             }
+            link = EventUtils.securityUrl(link);
             window.open(link, '_blank');
         },
         logout: function() {
@@ -336,7 +339,8 @@ var appQuery = new Vue({
             this.showWelBox = false;
         },
         homeLink: function() {
-            window.location.href = appTop.isLogin ? "index.html?userId=" + accountObj.userId : "index.html"
+            var link = appTop.isLogin ? "index.html?userId=" + accountObj.userId : "index.html"
+            window.location.href = EventUtils.securityUrl(link);
         }
     },
     mounted: function() {
@@ -427,8 +431,12 @@ var appResult = new Vue({
         infoExtrac: function(info) {
             return EventUtils.infoExtrac(info);
         },
+        infoShow: function(text, type) {
+            return EventUtils.infoShow(text, type)
+        },
         demandLink: function(demandId) {
             var link = "detail-uni.html?demandId=" + demandId + (this.accountId ? "&userId=" + this.accountId : "");
+            link = EventUtils.securityUrl(link);
             return link;
         },
         coApply: function(id, item) {
@@ -561,7 +569,7 @@ var appModal = new Vue({
                         otherkey: null
                     };
                     //无刷新页面替换URL
-                    history.replaceState(state, document.title, "display-uni.html?userId=" + resp.data.userId);
+                    history.replaceState(state, document.title, EventUtils.securityUrl("display-uni.html?userId=" + resp.data.userId));
                     appModal.showModal = false;
                     appModal.showLogin = false;
                 } else {

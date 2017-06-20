@@ -69,6 +69,11 @@ function infoRequest() {
         }
         appMain.tabledata.desc = respObj.discription;
         appMain.tabledata.userdesc = respObj.userDiscription;
+        //判断是否已申请
+        if (respObj.applyStatus == "1") {
+            $("#app-banner .btn-apply").attr("disabled", true);
+            $("#app-banner .btn-apply span").text("已申请");
+        }
         //招聘会申请一览
         applyRequest(1);
         //获取评价一览
@@ -102,7 +107,7 @@ var appTop = new Vue({
             appModal.showLogin = true;
         },
         regisEv: function() {
-            window.open("login.html?newAcc=1", "_blank");
+            window.open(EventUtils.securityUrl("login.html?newAcc=1"), "_blank");
         },
         publish: function() {
             switch (this.userType) {
@@ -117,6 +122,7 @@ var appTop = new Vue({
             if (accountObj.userId) {
                 link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
             }
+            link = EventUtils.securityUrl(link);
             window.open(link, '_blank');
         },
         toCenter: function(theme) {
@@ -136,6 +142,7 @@ var appTop = new Vue({
             if (accountObj.userId) {
                 link += "&userId=" + accountObj.userId + "&loginId=" + accountObj.loginIdentifier;
             }
+            link = EventUtils.securityUrl(link);
             window.open(link, '_blank');
         },
         logout: function() {
@@ -153,7 +160,7 @@ var appTop = new Vue({
                 otherkey: null
             };
             //无刷新页面替换URL
-            var originalurl = state.url.slice(0, state.url.indexOf("&userId"));
+            var originalurl = EventUtils.securityUrl("detail-increcruit.html?jobfairId=" + parObj.jobfairId);
             history.replaceState(state, document.title, originalurl);
 
         }
@@ -249,7 +256,8 @@ var appBanner = new Vue({
             }
         },
         homeLink: function() {
-            window.location.href = appTop.isLogin ? "index.html?userId=" + accountObj.userId : "index.html"
+            var link = appTop.isLogin ? "index.html?userId=" + accountObj.userId : "index.html"
+            window.location.href = EventUtils.securityUrl(link);
         }
     }
 });
@@ -375,6 +383,11 @@ var appModal = new Vue({
                         $("#app-banner .btn-collec").addClass("collected");
                         $("#app-banner .btn-collec span").html("已收藏");
                     }
+                    //判断是否已申请
+                    if (resp.data.applyStatus == "1") {
+                        $("#app-banner .btn-apply").attr("disabled", true);
+                        $("#app-banner .btn-apply span").text("已申请");
+                    }
                 });
 
                 var state = {
@@ -383,7 +396,7 @@ var appModal = new Vue({
                     otherkey: null
                 };
                 //无刷新页面替换URL
-                history.replaceState(state, document.title, state.url + "&userId=" + accountObj.userId);
+                history.replaceState(state, document.title, EventUtils.securityUrl("detail-increcruit.html?jobfairId=" + parObj.jobfairId + "&userId=" + accountObj.userId));
             })
         }
     },

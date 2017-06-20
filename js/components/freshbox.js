@@ -303,6 +303,8 @@
             freshObj.fresh.sum = freshObj.fresh.content[0].amount;
             freshObj.fresh.presum = 4;
             freshObj.fresh.smart = true;
+            freshObj.barcode.smart = false;
+            freshObj.barcode.normal = false;
             freshObj.fresh.show = true;
         });
     }

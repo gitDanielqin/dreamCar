@@ -93,6 +93,9 @@
                             text: resp.info,
                             type: "error"
                         });
+                        EventUtils.ajaxReq("/sys/img", "get", {}, function(resp, status) {
+                            $(".conf-psw-varifycode img")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
+                        })
                     };
                 });
                 this.oldpsw = "";

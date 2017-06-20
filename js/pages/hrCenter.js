@@ -48,8 +48,8 @@ function infoRequest() {
 var appTop = new Vue({
     el: "#app-top",
     data: {
-        homeLink: "index.html?userId=" + parObj.userId,
-        centerLink: "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.userId
+        homeLink: EventUtils.securityUrl("index.html?userId=" + parObj.userId),
+        centerLink: EventUtils.securityUrl("incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId)
     },
     methods: {
         showMsg: function() {
@@ -113,6 +113,9 @@ var hrApp = new Vue({
         },
         infoExtrac: function(text) {
             return EventUtils.infoExtrac(text);
+        },
+        infoShow: function(text, type) {
+            return EventUtils.infoShow(text, type)
         },
         cityExtrac: function(text) {
             if (text) {
@@ -401,6 +404,7 @@ var hrApp = new Vue({
             if (item.recruitId) {
                 link += "&recruitId=" + item.recruitId + "&demandSrc=2";
             }
+            link = EventUtils.securityUrl(link);
             window.open(link, "_blank");
         },
         delItem: function(item) {
@@ -456,14 +460,17 @@ var hrApp = new Vue({
         },
         requireLink: function(item) {
             if (item.recruitId) {
-                return "detail-position.html?userId=" + parObj.userId + "&recruitId=" + item.recruitId;
+                var link = "detail-position.html?userId=" + parObj.userId + "&recruitId=" + item.recruitId;
             }
             if (item.jobFairId) {
-                return "detail-increcruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
+                var link = "detail-increcruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
             }
+            link = EventUtils.securityUrl(link);
+            return link;
         },
         publish: function() {
             var link = "incRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId;
+            link = EventUtils.securityUrl(link);
             window.open(link, "_blank");
         }
     },
@@ -638,6 +645,20 @@ var appModal = new Vue({
                 this.$nextTick(function() {
                     EventUtils.absCenter($("#app-modal .msg-box"));
                 })
+            } else {
+                var postdata = {
+                    userId: parObj.userId,
+                    index: 1,
+                    count: 8
+                }
+                EventUtils.ajaxReq("/message/getMessageList", "get", postdata, function(resp, status) {
+                    if (resp.data && resp.data.count > 0) {
+                        $(".msg-center .msg-info").html(resp.data.count);
+                        $(".msg-center .msg-info").show();
+                    } else {
+                        $(".msg-center .msg-info").hide();
+                    }
+                })
             }
         },
         "show.cv": function(curval) {
@@ -797,6 +818,7 @@ function positionRequest(type, page) {
         var postdata = {
             userId: parObj.userId,
             loginIdentifier: parObj.loginId,
+            isCenter: 1,
             index: page,
             count: 4
         }
@@ -818,6 +840,7 @@ function positionRequest(type, page) {
         var postdata = {
             userId: parObj.userId,
             loginIdentifier: parObj.loginId,
+            isCenter: 1,
             jobFairType: 2,
             index: page,
             count: 4

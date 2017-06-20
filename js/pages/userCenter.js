@@ -1148,6 +1148,10 @@ var appModal = new Vue({
             }
         },
         closeMobile: function() {
+            EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function(resp, status) {
+                appCont.config.bind.mobile = resp.data.mobile;
+                appCont.config.bind.email = resp.data.email;
+            })
             this.show.mobile = false;
             this.showModal = false;
         },
@@ -1156,6 +1160,10 @@ var appModal = new Vue({
             this.showModal = false;
         },
         closeEmail: function() {
+            EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function(resp, status) {
+                appCont.config.bind.mobile = resp.data.mobile;
+                appCont.config.bind.email = resp.data.email;
+            })
             this.show.email = false;
             this.showModal = false;
         },
@@ -1169,6 +1177,20 @@ var appModal = new Vue({
             if (curval) {
                 this.$nextTick(function() {
                     EventUtils.absCenter($("#app-modal .msg-box"));
+                })
+            } else {
+                var postdata = {
+                    userId: parObj.userId,
+                    index: 1,
+                    count: 8
+                }
+                EventUtils.ajaxReq("/message/getMessageList", "get", postdata, function(resp, status) {
+                    if (resp.data && resp.data.count > 0) {
+                        $(".msg-center .msg-info").html(resp.data.count);
+                        $(".msg-center .msg-info").show();
+                    } else {
+                        $(".msg-center .msg-info").hide();
+                    }
                 })
             }
         },

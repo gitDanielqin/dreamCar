@@ -19,7 +19,7 @@
             <div class="fr navs maT42">
                 <a :href="homeLink"><i class="pic-icon icon-home"></i></a>
                 <a href="#"><i class="pic-icon icon-account"></i></a>
-                <a class="msg-center pRel" href="#" @click.stop="showMsgbox"><i class="pic-icon icon-msg"></i><i class="msg-info disNo">99</i></a>
+                <a class="msg-center pRel" href="#" @click.stop="showMsgbox"><i class="pic-icon icon-msg"></i><i class="msg-info disNo"></i></a>
             </div>
         </div>
     </div>
@@ -155,7 +155,7 @@
                                 <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                 <div class="item-block-left fl paTop22 W250 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item)">{{item.title}}</a></h2>
-                                    <p>{{infoExtrac(item.schoolProperty)}}<i class="depart" v-show="infoExtrac(item.schoolProperty)!=''">|</i>{{infoExtrac(item.professionCount)}}<i class="depart" v-show="infoExtrac(item.professionCount)!=''&&infoExtrac(item.profession)!=''">|</i>{{infoExtrac(item.profession)}}</p>
+                                    <p>{{infoShow(infoExtrac(item.schoolProperty),'props')}}<i class="depart">|</i>{{infoShow(infoExtrac(item.professionCount),"stuscale")}}<i class="depart">|</i>{{infoShow(infoExtrac(item.profession),'profession')}}</p>
                                     <p>联合培养方式：{{item.trainType}}</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH25 maT10 W242">
@@ -172,7 +172,7 @@
                                 <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                 <div class="item-block-left fl paTop22 W300 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item)">{{item.title}}</a></h2>
-                                    <p><span class="maR17 color-orange-f7">{{item.cvSalary}}</span>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.cvProject}}<i class="depart">|</i>{{item.cvEducation}}</p>
+                                    <p><span class="maR17 color-orange-f7">{{infoShow(item.cvSalary,'salary')}}</span>{{infoShow(infoExtrac(item.profession),"profession")}}<i class="depart">|</i>{{infoShow(item.cvProject,'worktime')}}<i class="depart">|</i>{{infoShow(item.cvEducation,'edu')}}</p>
                                     <p>招聘会时间：{{item.startTime}}</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH25 maT10">
@@ -189,7 +189,7 @@
                                 <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                 <div class="item-block-left fl paTop22 W300 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item)">{{infoExtrac(item.job)}}</a></h2>
-                                    <p><span class="maR17 color-orange-f7">{{item.salary}}</span>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.workTime}}<i class="depart">|</i>{{item.education}}</p>
+                                    <p><span class="maR17 color-orange-f7">{{infoShow(item.salary,'salary')}}</span>{{infoShow(infoExtrac(item.profession),'profession')}}<i class="depart">|</i>{{infoShow(item.workTime,'worktime')}}<i class="depart">|</i>{{infoShow(item.education,'edu')}}</p>
                                     <p><span class="maR17">【{{cityExtrac(item.companyAddress)}}】</span>岗位数：{{item.recruitCount}}人</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH25 maT10">
@@ -229,7 +229,7 @@
                                 <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                 <div class="item-block-left fl paTop22 W328 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="collectLink(item)">{{infoExtrac(item.profession)}}</a></h2>
-                                    <p>{{item.companyProperty}}<i class="depart">|</i>{{item.companyScale}}<i class="depart">|</i>{{infoExtrac(item.companyType)}}</p>
+                                    <p>{{infoShow(item.companyProperty,'props')}}<i class="depart">|</i>{{infoShow(item.companyScale,'scale')}}<i class="depart">|</i>{{infoShow(infoExtrac(item.companyType),'comtype')}}</p>
                                     <p>联合培养方式：{{item.trainType}}</p>
                                     <p class="item-date">收藏时间：{{dateExtrac(item.collectTime)}}</p>
                                 </div>
@@ -253,7 +253,7 @@
                                 </div>
                                 <div class="item-block-right fl fSize14 LH25 maT10 W285">
                                     <p>高校对企业要求</p>
-                                    <p>{{item.companyScale}}<i class="depart">|</i>{{item.companyProperty}}<i class="depart">|</i>{{infoExtrac(item.job)}}</p>
+                                    <p>{{infoShow(item.companyScale,'scale')}}<i class="depart">|</i>{{infoShow(item.companyProperty,'props')}}<i class="depart">|</i>{{infoShow(infoExtrac(item.job),'job')}}</p>
                                     <p class="pubdate">发布日期：{{dateExtrac(item.updateTime)}}</p>
                                     <div class="collect-btn">
                                         <button class="color-blueL" @click.stop="cancelCollect('jobfair',item.id)">取消收藏</button>
@@ -285,7 +285,7 @@
                                    <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                    <div class="item-block-left fl paTop22 W328 maL20">
                                        <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="messageLink('combi',item.demandId)">{{item.title}}</a></h2>
-                                       <p>{{item.schoolProperty}}<i class="depart">|</i>{{item.professionCount}}<i class="depart">|</i>{{infoExtrac(item.profession)}}</p>
+                                       <p>{{infoShow(item.schoolProperty,'props')}}<i class="depart">|</i>{{infoShow(item.professionCount,'stuscale')}}<i class="depart">|</i>{{infoShow(infoExtrac(item.profession),'profession')}}</p>
                                        <p>{{item.trainType}}</p>
                                        <p class="item-date">申请日期：{{dateExtrac(item.createTime)}}</p>
                                    </div>
@@ -293,7 +293,7 @@
                                        <p>{{item.userName}}</p>
                                        <p>{{item.userProperty}}<i class="depart">|</i>{{item.userScale}}<i class="depart">|</i>{{infoExtrac(item.userType)}}</p>
                                        <div class="message-btn LH-H35 pRel">
-                                             <button class="color-orange-f7 to-contact" type="button" @click.stop="showCard(item.applyId,item.applyUserId)">查看对方名片</button>
+                                             <button class="color-orange-f7 to-contact" type="button" @click.stop="showCard(item)">查看对方名片</button>
                                        </div>
                                    </div>
                               </div>
@@ -303,7 +303,7 @@
                                    <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                    <div class="item-block-left fl paTop22 maL20 W312">
                                        <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="messageLink('combi',item.demandId)">{{infoExtrac(item.profession)}}</a></h2>
-                                       <p>{{item.companyProperty}}<i class="depart">|</i>{{item.companyScale}}<i class="depart">|</i>{{infoExtrac(item.companyType)}}</p>
+                                       <p>{{infoShow(item.companyProperty,'props')}}<i class="depart">|</i>{{infoShow(item.companyScale,'scale')}}<i class="depart">|</i>{{infoShow(infoExtrac(item.companyType),'comtype')}}</p>
                                        <p>{{item.trainType}}</p>
                                        <p class="item-date">申请日期：{{dateExtrac(item.createTime)}}</p>
                                    </div>
@@ -344,7 +344,7 @@
                                    <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                    <div class="item-block-left fl paTop22 maL20 W312">
                                        <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="messageLink('jobfair',item.jobFairId)">{{item.title}}</a></h2>
-                                       <p>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.professionCount}}<i class="depart">|</i>{{cityExtrac(item.jobFairAddress)}}</p>
+                                       <p>{{infoShow(infoExtrac(item.profession),'profession')}}<i class="depart">|</i>{{infoShow(item.professionCount,'stuscale')}}<i class="depart">|</i>{{cityExtrac(item.jobFairAddress)}}</p>
                                        <p class="item-date">申请日期：{{dateExtrac(item.createTime)}}</p>
                                    </div>
                                    <div class="item-block-right fl fSize14 LH30 pRel uni-apply-message">
@@ -366,7 +366,7 @@
                                     <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                     <div class="item-block-left fl paTop22 W328 maL20">
                                         <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="messageLink('jobfair',item.jobFairId)">{{item.title}}</a></h2>
-                                        <p>{{item.cvSalary}}<i class="depart">|</i>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.cvProject}}</p>
+                                        <p>{{infoShow(item.cvSalary,'salary')}}<i class="depart">|</i>{{infoShow(infoExtrac(item.profession),'profession')}}<i class="depart">|</i>{{infoShow(item.cvProject,'worktime')}}</p>
                                         <p>招聘会地址：{{regAddress(item.jobFairAddress)}}</p>
                                         <p class="item-date">招聘会日期：{{item.startTime}}</p>
                                     </div>
@@ -402,7 +402,7 @@
                                 <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
                                 <div class="item-block-left fl paTop22 W300 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item)">{{infoExtrac(item.job)}}</a></h2>
-                                    <p><span class="maR17 color-orange-f7">{{item.salary}}</span>{{infoExtrac(item.profession)}}<i class="depart">|</i>{{item.workTime}}<i class="depart">|</i>{{item.education}}</p>
+                                    <p><span class="maR17 color-orange-f7">{{infoShow(item.salary,'salary')}}</span>{{infoShow(infoExtrac(item.profession),'profession')}}<i class="depart">|</i>{{infoShow(item.workTime,'worktime')}}<i class="depart">|</i>{{infoShow(item.education,'edu')}}</p>
                                     <p><span class="maR17">【{{cityExtrac(item.companyAddress)}}】</span>岗位数：{{item.recruitCount}}人</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH25 maT10">
@@ -508,7 +508,7 @@
                                 <div class="item-block-left fl paTop22 W275 maL20">
                                     <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="coopLink(item)">{{item.coopName}}</a></h2>
                                     <p>{{item.coopProperty}}<i class="depart">|</i>{{item.coopScale}}<i class="depart">|</i>{{item.coopType}}</p>
-                                    <p>校企培训方式：{{item.trainWay}}</p>
+                                    <p>校企培训方式：{{item.coopTrainType}}</p>
                                     <p class="item-date">合作开始日期：{{dateExtrac(item.coopCreateTime)}}</p>
                                 </div>
                                 <div class="item-block-right fl fSize14 LH28 maT10">
@@ -610,7 +610,7 @@
                 <p class="LH-H40 W220 t-center bg-orange2 color-white maCenter" style="border-radius: 20px;">请使用微信扫一扫二维码登录</p>
             </div>
         </div>
-        <message-box :userid="account.userId" @closebox="closeMsg" v-show="show.message"></message-box>
+        <message-box :userid="account.userId" :showmsg="show.message" @closebox="closeMsg" v-show="show.message"></message-box>
         <!--工作经历行业选择框单选  -->
         <div class="trade-box W770 H420 maCenter trade-box-single pop-box-shadow" v-show="show.trade">
             <h3 class="bg-gray-e6 fSize14 LH-H36 paLeft30 paRight30 color-black">选择行业分类<i class="pic-wrapper W26 LH-H26 maT5 closer t-center fr cur-pointer" @click="closeTrade"><i class="pic-icon icon-close"></i></i>

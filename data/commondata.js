@@ -1,7 +1,6 @@
 // 工资
 var salaryItems = [
     "不限",
-    "<1k",
     "1k-2k",
     "2k-4k",
     "4k-6k",
@@ -37,8 +36,7 @@ var scolarship = [
 window.scolarship = scolarship;
 // 岗位人数
 var positionsum = [
-    "不限",
-    "0—10人",
+    "1—10人",
     "10—20人",
     "21—30人",
     "31—40人",
@@ -103,7 +101,7 @@ var incProps = ["不限",
 ];
 window.incProps = incProps;
 //专业人数
-var majorSum = ["不限",
+var majorSum = [
     "30-40人",
     "41-60人",
     "61-80人",

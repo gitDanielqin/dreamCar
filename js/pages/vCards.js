@@ -195,7 +195,7 @@ var appCont = new Vue({
                     });
                     setTimeout(function() {
                         var parstring = "userId=" + parObj.userId + "&loginId=" + parObj.loginId;
-                        window.location.href = domainUrl + parstring;
+                        window.location.href = EventUtils.securityUrl(domainUrl + parstring);
                     }, 1000)
                 } else {
                     swal({
