@@ -33,17 +33,26 @@ function infoRequest() {
 //初始化首屏的尺寸和元素位置
 function init_pos() {
     var winH = EventUtils.getViewport().height;
+    var winW = EventUtils.getViewport().width;
     $(".mod-page").height(winH);
-    $(".center-teil").css({
-        "margin-top": Math.floor(winH * 0.135) + "px"
-    });
+    //六大板块入口的位置
+    var entryMatop = (winH * 0.35 - $(".module-entry li").width()) / 2;
     $(".module-entry").css({
-        "margin-top": Math.floor(winH * 0.09) + "px"
+        "margin-top": Math.floor(entryMatop) + "px",
+        "margin-bottom": Math.floor(entryMatop) + "px"
+    });
+    //中间部分的位置
+    var centerMatop = (winH - $(".header").outerHeight(true) - $(".center-teil").outerHeight(true) - $(".module-entry").outerHeight(true)) / 2;
+    $(".center-teil").css({
+        "margin-top": Math.floor(centerMatop) + "px"
     });
     $(".weiter").height(Math.floor(winH * 0.065));
     $(".class-show .p-title").css({
-        "padding-top": Math.floor(winH * 0.079) + "px"
-    })
+            "padding-top": Math.floor(winH * 0.079) + "px"
+        })
+        //关于我们图标的显示
+    $(".about-lis").css("top", Math.floor(winH * 0.5));
+    $(".about-lis").css("left", Math.floor(winW * 0.5 - $(".inner").width() * 0.5));
 }
 //init_pos();
 
@@ -154,6 +163,11 @@ var appFront = new Vue({
     methods: {
         btoa: function(text) {
             return window.btoa(text);
+        },
+        clickFront: function(obj) {
+            if (!$(obj).hasClass("search-nav") && !$(obj).hasClass("search-nav")) {
+                $("#search-options").css("opacity", 0);
+            }
         },
         showSeachOptions: function() {
             $("#search-options").css("opacity", 1);

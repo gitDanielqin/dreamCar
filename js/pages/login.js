@@ -41,6 +41,14 @@ var appCont = new Vue({
             password: window.localStorage && localStorage.password ? localStorage.password : ""
                 // password: ""
         },
+        banner: {
+            showindex: 0,
+            images: [
+                { url: "images/bg-2.jpg", website: "http://www.baidu.com" },
+                { url: "images/banner-lanlan.jpg", website: "http://www.xinchuang.sitekc.com/index.jsp" },
+                { url: "images/bg-recruit.jpg", website: "http://www.qq.com" },
+            ]
+        },
         show: {
             regis: parObj.newAcc == "1",
         },
@@ -56,6 +64,10 @@ var appCont = new Vue({
             } else {
                 return "邮箱"
             }
+        },
+        toAdsWebsite: function() {
+            var link = appCont.banner.images[appCont.banner.showindex].website;
+            window.open(link, "_blank");
         },
         regisEv: function() {
             if (!$(".check-agreement .check-box").hasClass("selected")) {
@@ -232,7 +244,12 @@ var appCont = new Vue({
         }
     },
     mounted: function() {
-        //     EventUtils.placeholderFill();
+        var timerindex = 0;
+        setInterval(function() {
+            appCont.banner.showindex = timerindex % 3;
+            timerindex++;
+        }, 5000)
+        EventUtils.placeholderFill();
     }
 })
 
@@ -256,7 +273,6 @@ var appModal = new Vue({
 
 //
 function _init() {
-
     loginEventBind();
     regisEventBind();
     initSize();
@@ -267,6 +283,9 @@ _init();
 function initSize() {
     var contHeight = EventUtils.getViewport().height - $(".top").outerHeight(true) - $(".bot").outerHeight(true);
     $(".banner").height(contHeight);
+    console.log($("body").width(), $("body").height());
+    $(".banner-frame").width(EventUtils.getViewport().width);
+    $(".banner-frame").height($("body").height());
 }
 
 //登录框事件绑定

@@ -104,6 +104,10 @@ var appCont = new Vue({
                     this.hint = "邮箱格式不正确！";
                     this.show.hint = true;
                     return false;
+                } else if (appCont.userInfo.email != appCont.account.email) {
+                    this.hint = "输入的邮箱与绑定邮箱不一致！";
+                    this.show.hint = true;
+                    return false;
                 } else {
                     var start = 0;
                     $(obj).attr("disabled", true);
@@ -146,6 +150,10 @@ var appCont = new Vue({
                     return false;
                 } else if (!variableUtils.regExp.mobile.test(appCont.userInfo.mobile)) {
                     this.hint = "手机号格式不正确！";
+                    this.show.hint = true;
+                    return false;
+                } else if (appCont.userInfo.mobile != appCont.account.mobile) {
+                    this.hint = "您输入的手机号码与绑定手机不一致！";
                     this.show.hint = true;
                     return false;
                 } else {
@@ -311,7 +319,7 @@ var appCont = new Vue({
                         showConfirmButton: false
                     });
                     setTimeout(function() {
-                        window.location.href = "login.html?newAcc=0";
+                        window.location.href = EventUtils.securityUrl("login.html?newAcc=0");
                     }, 1000)
                 } else {
                     swal({

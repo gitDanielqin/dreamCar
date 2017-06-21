@@ -241,6 +241,7 @@
                                         <button class="color-blueL" @click.stop="cancelCollect('combi',item.id)">取消收藏</button>
                                         <button class="color-orange-f7" @click.stop="applyCollect(item)" v-show="item.applyStatus==0">申请合作</button>
                                         <button class="color-gray-79" disabled v-show="item.applyStatus==1">已申请</button>
+                                        <button class="color-gray-79" disabled v-show="item.applyStatus==2">已下线</button>
                                     </div>
                                 </div>
                             </div>
@@ -257,8 +258,9 @@
                                     <p class="pubdate">发布日期：{{dateExtrac(item.updateTime)}}</p>
                                     <div class="collect-btn">
                                         <button class="color-blueL" @click.stop="cancelCollect('jobfair',item.id)">取消收藏</button>
-                                        <button class="color-orange-f7" @click.stop="applyCollect(item)" v-show="item.applyStatus==0">申请合作</button>
-                                        <button class="color-gray-79" disabled v-show="item.applyStatus==1">已申请</button>
+                                        <button class="color-orange-f7" @click.stop="applyCollect(item)" v-show="!item.status">申请合作</button>
+                                        <button class="color-gray-79" disabled v-show="item.status&&item.status!=3">已申请</button>
+                                        <button class="color-gray-79" disabled v-show="item.status&&item.status==3">已下线</button>
                                     </div>
                                 </div>
                             </div>

@@ -590,8 +590,34 @@ var appCont = new Vue({
             }
             this.resume.edit = true;
             this.resume.view = false;
+            this.$nextTick(function() {
+                selectInitPos();
+            })
         },
         saveResume: function() {
+            var isFilled = true;
+            $(".resumeCont input[type='text']:visible").each(function() {
+                if ($(this).val() == "") {
+                    $(this).addClass("hint-nullable");
+                    isFilled = false;
+                } else {
+                    $(this).removeClass("hint-nullable");
+                }
+            });
+            if ($(".resumeCont textarea").val() == "") {
+                $(".resumeCont textarea").addClass("hint-nullable");
+                isFilled = false;
+            } else {
+                $(".resumeCont textarea").removeClass("hint-nullable");
+            }
+            if (!isFilled) {
+                swal({
+                    title: "",
+                    text: "请填写完整您的高校信息！",
+                    type: "warning"
+                });
+                return false;
+            }
             $(".pop-major-box").each(function(index) {
                 appCont.resume.specialmajor[index].major = $(this).find(".major-input-1 input").val();
                 if ($(this).find(".ex-major").val()) {
@@ -1026,11 +1052,13 @@ var appModal = new Vue({
                 EventUtils.ajaxReq("/readcard/disposeDemand", "get", postdata, function(resp, status) {
                     appModal.show.minicard = false;
                     appModal.showModal = false;
+                    combiMsgRequest(2, 1)
                 })
             } else {
                 EventUtils.ajaxReq("/readcard/operationApply", "get", postdata, function(resp, status) {
                     appModal.show.minicard = false;
                     appModal.showModal = false;
+                    recruitMsgRequest(1);
                 })
             }
         },

@@ -487,6 +487,30 @@ var appCont = new Vue({
             })
         },
         saveResume: function() {
+            var isFilled = true;
+            $(".resumeCont input[type='text']:visible").each(function() {
+                if ($(this).val() == "") {
+                    $(this).addClass("hint-nullable");
+                    isFilled = false;
+                } else {
+                    $(this).removeClass("hint-nullable");
+                }
+            });
+            if ($(".resumeCont textarea").val() == "") {
+                $(".resumeCont textarea").addClass("hint-nullable");
+                isFilled = false;
+            } else {
+                $(".resumeCont textarea").removeClass("hint-nullable");
+            }
+            if (!isFilled) {
+                swal({
+                    title: "",
+                    text: "请填写完整您的企业信息！",
+                    type: "warning"
+                });
+                return false;
+            }
+
             if (this.resume.comLicense != "" || this.resume.comLicenseUrl != "") {
                 this.resume.hasBusLicense = true;
             } else {
@@ -746,7 +770,7 @@ var appCont = new Vue({
                             text: "申请已发出！",
                             type: "success"
                         });
-                        item.applyStatus = 1;
+                        item.status = 1;
                     } else {
                         swal({
                             title: "",
@@ -1388,6 +1412,7 @@ function collectRequest(type, page) {
             count: 3
         };
         EventUtils.ajaxReq("/jobfair/getMarkList", "get", postdata, function(resp, status) {
+            console.log(resp);
             if (resp.data) {
                 appCont.collect.totalpages = resp.data.totalPage;
                 appCont.collect.totalitems = resp.data.totalRow;

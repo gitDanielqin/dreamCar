@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="baidu-site-verification" content="EXVPJyqdhf" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>首页</title>
     <link href="css/base.css" rel="stylesheet" />
     <link href="css/imageflow.css" rel="stylesheet" />
@@ -57,7 +58,7 @@
                 <p class="subtitle fSize16 W260 LH-H35 t-center">加强大学生实践学习经验</p>
                 <h2 class="maT28 fSize0"><img src="images/title-txt.png" /></h2>
                 <div class="maT38 pRel">
-                    <input type="text" placeholder="岗位名称/学校名称/企业名称" class="search LH-H48 v-top" v-model="searchText" @focus="showSeachOptions" /><button class="search-btn" @click="search">搜索</button>
+                    <input type="text" placeholder="岗位名称/学校名称/企业名称" class="search LH-H48 v-top" v-model="searchText" @focus.stop="showSeachOptions" /><button class="search-btn" @click="search">搜索</button>
                     <ul class="lis-inline search-nav" @click="selectSearchLabel($event.target)" id="search-options">
                         <li class="on search-uni">高校需求</li>
                         <li class="search-inc">企业需求</li>
@@ -101,7 +102,7 @@
             <h2 class="t-center p-title LH66 color-white">关于我们</h2>
             <h3 class="p-subtitle LH43 fSize24 t-center color-white">ABOUT US</h3>
             <p class="LH30 color-gray9 maT25 fSize14 t-center">校企职通车网站是国内唯一一家专注解决大学生从学习到就业的信息服务平台。<br />校企的服务目标是：让每一个大学生都能专业对口就业。</p>
-            <ul class="lis-inline about-lis color-white maT70">
+            <ul class="lis-inline about-lis color-white">
                 <li><i class="pic-wrapper"><img src="images/about-xq.jpg" /></i><span>校企联合培训</span></li>
                 <li><i class="pic-wrapper"><img src="images/about-major.jpg" /></i><span>专业对口就业</span></li>
                 <li><i class="pic-wrapper"><img src="images/about-train.jpg" /></i><span>职业强化训练</span></li>
@@ -134,7 +135,7 @@
                 <img src="images/logo.png" class="fl maR21" />
                 <h2 class="fl LH-H63 fSize30 color-white">校企职通车</h2>
             </div>
-            <ul class="lis-inline footer-lis fl">
+            <ul class="lis-inline footer-lis">
                 <li v-for="item in fBlocks">
                     <dt>{{item.title}}</dt>
                     <dd v-for="subitem in item.sublis" @click="linkFoo(item.title)">{{subitem}}</dd>

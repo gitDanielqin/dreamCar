@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div class="top H100 bg-purpleD color-white" id="app-top" v-cloak>
+    <div class="top H100 color-white" id="app-top" v-cloak>
         <div class="inner">
             <a href="index.html"><img src="images/logo.png" class="fl maR21 maT20" /></a>
             <h2 class="fl LH-H80 fSize30 maT17">校企职通车</h2>
@@ -18,9 +18,15 @@
             <!--<h3 id="sel-add" class="city fl LH-H80 fSize18 maT16 maL60"><b>{{displayCity}}</b></h3>-->
         </div>
     </div>
-    <div class="banner H573 bg-purpleL" id="app-content" v-cloak>
+    <div class="banner H573" id="app-content" v-cloak>
+        <!--banner背景图片轮播-->
+        <div class="banner-frame" v-for="(image,index) in banner.images">
+            <transition name="fade">
+                <img v-show="banner.showindex==index" :src="image.url" />
+            </transition>
+        </div>
         <div class="inner pRel">
-            <i class="pic-wrapper loginImg"><img src="images/login-banner1.jpg"/></i>
+            <div class="ads-area" @click="toAdsWebsite"></div>
             <div class="logBox regis" id="app-regis" v-show="show.regis">
                 <ul class="pRel log-nav LH-H40 fSize24 color-gray6">
                     <li class="on" @click="register.userType=0">个人</li>
@@ -109,7 +115,7 @@
             </div>
         </div>
     </div>
-    <div class="bot bg-purpleD2 fSize14 paBot16">
+    <div class="bot fSize14">
         <ul class="lis-inline bot-nav color-white LH-H28 fSize12 disInline">
             <li><a href="footer-page.html?descript">关于校企</a>-</li>
             <li><a href="footer-page.html?coop">网站合作</a>-</li>

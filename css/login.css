@@ -2,15 +2,55 @@ body {
     position: relative;
 }
 
-.loginImg {
-    position: absolute;
-    top: 50px;
-    left: 0;
-    width: 433px;
+.top {
+    background: rgba(49, 45, 63, 0.5)
 }
 
-.loginImg img {
+.banner-pic {
+    display: none;
+}
+
+.banner-frame {
+    position: absolute;
+    font-size: 0;
+    left: 0;
+    top: 0;
+    z-index: -99;
+}
+
+.banner-frame img {
+    vertical-align: middle;
     width: 100%;
+    height: 100%;
+}
+
+
+/*banner过渡淡入淡出动画*/
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s
+}
+
+.fade-enter,
+.fade-leave-to
+/* .fade-leave-active in <2.1.8 */
+
+{
+    opacity: 0
+}
+
+.ads-area {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    cursor: pointer;
+    left: 0;
+    top: 0;
+}
+
+.bot {
+    background: rgba(0, 0, 0, 0.5)
 }
 
 #sel-add .pic-icon {

@@ -205,8 +205,8 @@ window.EventUtils = {
         },
         ajaxReq: function(url, method, postdata, callback) {
             $.ajax({
-                url: "http://www.xiaoqiztc.com/easily_xq_WebApi" + url,
-                // url: "http://192.168.0.105:8080/easily_xq_WebApi" + url,
+                // url: "http://www.xiaoqiztc.com/easily_xq_WebApi" + url,
+                url: "http://192.168.0.105:8080/easily_xq_WebApi" + url,
                 type: method,
                 async: false,
                 data: postdata,

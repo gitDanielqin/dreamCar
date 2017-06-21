@@ -3,6 +3,7 @@ body {
 }
 
 .mod-page {
+    position: relative;
     min-height: 600px;
 }
 
@@ -443,15 +444,13 @@ body {
 }
 
 .about-lis {
-    padding-left: 28px;
+    position: absolute;
+    left: 0;
+    top: 20px;
 }
 
 .about-lis li {
-    margin-right: 110px;
-}
-
-.about-lis li:last-child {
-    margin-right: 0;
+    margin: 0 48px;
 }
 
 
@@ -502,7 +501,9 @@ body {
 .footer-lis {
     margin-top: 28px;
     text-align: center;
-    margin-left: 36px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .footer-lis li {
@@ -537,5 +538,29 @@ body {
     }
     to {
         transform: translate(-50%, 20px);
+    }
+}
+
+@media screen and (min-width:1200px) {
+    .inner {
+        width: 1200px
+    }
+    .search {
+        width: 350px;
+    }
+    .search-nav {
+        left: 344px;
+        width: 382px;
+    }
+    .search-nav li {
+        margin: 0 28px;
+    }
+    .module-entry li {
+        width: 160px;
+        height: 160px;
+        margin: 0 20px;
+    }
+    .about-lis li {
+        margin: 0 73px;
     }
 }

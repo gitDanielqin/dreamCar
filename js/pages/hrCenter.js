@@ -125,11 +125,13 @@ var hrApp = new Vue({
             }
         },
         topage: function(page, type) {
+            console.log(type);
             if (type == "cv") {
                 if (this.resumes.resumeType == "企业直聘") {
                     recruitRequest(this.resumes.resumePos, this.resumes.resultIndex, page);
                 }
                 if (this.resumes.resumeType == "招聘会") {
+                    console.log(2);
                     jobfairRequest(this.resumes.jobfairDate, this.resumes.resultIndex, page);
                 }
             };
@@ -186,6 +188,7 @@ var hrApp = new Vue({
             }
         },
         invite: function(item) {
+            console.log(item);
             if (item.jobFairId) {
                 var postdata = {
                     applyId: item.applyId,
@@ -195,7 +198,7 @@ var hrApp = new Vue({
                     if (hrApp.resumes.cvList.length == 1 && hrApp.resumes.curpage > 1) {
                         hrApp.resumes.curpage--;
                     }
-                    $(".posCont .pagination a.page").eq(hrApp.resumes.curpage - 1).parent().trigger("click");
+                    $(".resumeBox .pagination a.page").eq(hrApp.resumes.curpage - 1).parent().trigger("click");
                 })
             };
             if (item.recruitId) {
@@ -221,8 +224,7 @@ var hrApp = new Vue({
                     if (hrApp.resumes.cvList.length == 1 && hrApp.resumes.curpage > 1) {
                         hrApp.resumes.curpage--;
                     }
-                    console.log($(".posCont .pagination a.page").eq(hrApp.resumes.curpage - 1).parent());
-                    $(".posCont .pagination a.page").eq(hrApp.resumes.curpage - 1).parent().trigger("click");
+                    $(".resumeBox .pagination a.page").eq(hrApp.resumes.curpage - 1).parent().trigger("click");
                 })
             };
             if (item.recruitId) {
@@ -248,7 +250,7 @@ var hrApp = new Vue({
                     if (hrApp.resumes.cvList.length == 1 && hrApp.resumes.curpage > 1) {
                         hrApp.resumes.curpage--;
                     }
-                    $(".posCont .pagination a.page").eq(hrApp.resumes.curpage - 1).parent().trigger("click");
+                    $(".resumeBox .pagination a.page").eq(hrApp.resumes.curpage - 1).parent().trigger("click");
                 })
             };
             if (item.recruitId) {
@@ -733,7 +735,7 @@ function jobfairRequest(date, cvStatus, page, id) {
         count: 4
     };
     EventUtils.ajaxReq("/hrcenter/getJobFairList", "get", postdata, function(resp, status) {
-        //  console.log(resp);
+        console.log(resp);
         if (resp.data && resp.data.resultList.totalRow >= 0) {
             var cvData = {
                 totalitems: resp.data.resultList.totalRow,
@@ -782,7 +784,7 @@ function recruitRequest(job, cvStatus, page, id) {
         count: 4
     }
     EventUtils.ajaxReq("/hrcenter/getRecruitList", "get", postdata, function(resp, status) {
-        //   console.log(resp);
+        console.log(resp);
         if (resp.data && resp.data.resultList.totalRow >= 0) {
             var cvData = {
                 totalitems: resp.data.resultList.totalRow,

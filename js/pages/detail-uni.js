@@ -20,7 +20,7 @@ function infoRequest() {
     }
     EventUtils.ajaxReq("/demand/getInfo", "get", postdemand, function(resp, status) {
         respObj = resp.data;
-        //   console.log(respObj);
+        console.log(respObj);
         var briefdata = {
             title: respObj.title,
             viewed: respObj.readCount,
