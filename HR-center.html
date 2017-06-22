@@ -11,7 +11,7 @@
 </head>
 
 <body class="bg-gray-f2">
-    <div class="top bg-gray3 H100 color-white" id="app-top">
+    <div class="top bg-gray3 H100 color-white" id="app-top" v-cloak>
         <div class="inner">
             <a :href="homeLink"><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" /></a>
             <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>
-    <div class="main inner paTop20" id="hr-app">
+    <div class="main inner paTop20" id="hr-app" v-cloak>
         <h2 class="LH-H50 bg-gray-e6 paLeft45 W915"><span class="fSize24 color-blueL">HR中心</span>
             <ul class="lis-inline disInline v-top maL80 hr-navs" @click="hrnav($event.target)">
                 <li class="on cv-manager">应聘管理</li>

@@ -50,8 +50,10 @@ function infoRequest() {
             $(".edit").show();
         } else { //已注册用户进入页面请求简历信息
             appCont.resume.firstEdit = false;
-            $("#avatar-box").html("<img src='" + respObj.userInfo.userIcon + "' />");
-            $(".porto-img").html("<img src='" + respObj.userInfo.userIcon + "' />");
+            if (respObj.userInfo.userIcon) {
+                $("#avatar-box").html("<img src='" + respObj.userInfo.userIcon + "' />");
+                $(".porto-img").html("<img src='" + respObj.userInfo.userIcon + "' />");
+            }
             var familyStatus = "";
             switch (respObj.userInfo.marryStatus) {
                 case "0":
@@ -201,37 +203,7 @@ function infoRequest() {
                 skills: respObj.cvInfo.speciality //5
             };
             //计算简历完成度
-            var resumePercent = 0;
-            for (var key in cvInfo) {
-                if (key == "expect") {
-                    if (cvInfo[key].tradeItems && cvInfo[key].tradeItems != "") {
-                        resumePercent += 20;
-                    }
-                } else if (key == "worksExps") {
-                    if (cvInfo[key][0].firma && cvInfo[key][0].firma != "") {
-                        resumePercent += 10;
-                    }
-                } else if (key == "edus") {
-                    if (cvInfo[key][0].uni && cvInfo[key][0].uni != "") {
-                        resumePercent += 10;
-                    }
-                } else if (key == "projects") {
-                    if (cvInfo[key][0].name && cvInfo[key][0].name != "") {
-                        resumePercent += 10;
-                    }
-                } else if (key == "firstEdit" || key == "curWorksIndex") {
-                    //排除这两种情况
-                } else {
-                    resumePercent += 5;
-                }
-            }
-            if (resumePercent > 100) { resumePercent = 100 };
-            appPorto.resumePercent = resumePercent;
-            $("#app-porto .progress-real").css("width", resumePercent + "%");
-            if (cvInfo.realName && cvInfo.realName != "") {
-                resumePercent += 5;
-            }
-
+            resumePercentCalculate(cvInfo);
             appModal.resumeInfo = appCont.resume = cvInfo;
             $(".edit").hide();
             $(".view").show();
@@ -279,7 +251,7 @@ var appPorto = new Vue({
     el: "#app-porto",
     data: {
         database: {
-            date: date,
+            date: xqdatabase.date,
             addrData: addArray
         },
         viewInfo: true,
@@ -349,19 +321,51 @@ var appPorto = new Vue({
                 appCont.resume.expect.city = $("#exp-address .sel-city input").val();
                 appCont.resume.expect.district = $("#exp-address .sel-district input").val();
                 //工作经历地址
-                var worksArray = $("#work-address");
+                var worksArray = $(".work-address");
+                var worksDate = $(".worksexp-date");
                 for (var i = 0; i < appCont.resume.worksExps.length; i++) {
                     appCont.resume.worksExps[i].province = worksArray.eq(i).find(".sel-province input").val();
                     appCont.resume.worksExps[i].city = worksArray.eq(i).find(".sel-city input").val();
                     appCont.resume.worksExps[i].district = worksArray.eq(i).find(".sel-district input").val();
+                    appCont.resume.worksExps[i].initdate = {
+                        startyear: worksDate.eq(i).find(".sel-startyear input").val(),
+                        startmonth: worksDate.eq(i).find(".sel-startmonth input").val(),
+                        endyear: worksDate.eq(i).find(".sel-endyear input").val(),
+                        endmonth: worksDate.eq(i).find(".sel-endmonth input").val(),
+                    }
                 };
                 //专业名称
-                var majorArray = $("#major-name");
+                var majorArray = $(".major-name");
+                var edusDate = $(".edus-date");
                 for (var j = 0; j < appCont.resume.edus.length; j++) {
                     appCont.resume.edus[j].major = majorArray.eq(j).find(".major-input-1 input").val();
                     appCont.resume.edus[j].submajor = majorArray.eq(j).find(".major-input-2 input").val();
                     appCont.resume.edus[j].exmajor = majorArray.eq(j).find(".ex-major").val();
+                    appCont.resume.edus[j].initdate = {
+                        startyear: edusDate.eq(j).find(".sel-startyear input").val(),
+                        startmonth: edusDate.eq(j).find(".sel-startmonth input").val(),
+                        endyear: edusDate.eq(j).find(".sel-endyear input").val(),
+                        endmonth: edusDate.eq(j).find(".sel-endmonth input").val(),
+                    }
                 }
+                //项目预处理
+                var proDate = $(".projects-date");
+                for (var k = 0; k < appCont.resume.projects.length; k++) {
+                    appCont.resume.projects[k].initdate = {
+                        startyear: proDate.eq(k).find(".sel-startyear input").val(),
+                        startmonth: proDate.eq(k).find(".sel-startmonth input").val(),
+                        endyear: proDate.eq(k).find(".sel-endyear input").val(),
+                        endmonth: proDate.eq(k).find(".sel-endmonth input").val(),
+                    }
+                }
+                //语言选项
+                var skillArray = [];
+                $(".language-skills input[type='checkbox']").each(function() {
+                    if (this.checked) {
+                        skillArray.push(this.value);
+                    }
+                });
+                appCont.resume.laSkills = skillArray;
             }
             appModal.showModal = true;
             appModal.show.preview = true;
@@ -422,17 +426,17 @@ var appCont = new Vue({
     el: "#app-content",
     data: {
         database: {
-            date: date,
+            date: xqdatabase.date,
             address: {
                 province: provinceArray,
                 city: ["", ""],
                 district: ["", ""]
             },
             addrData: addArray,
-            nations: nations,
-            salary: salaryItems,
+            nations: xqdatabase.nations,
+            salary: xqdatabase.salary,
             major: majorArray,
-            qualification: scolarship,
+            qualification: xqdatabase.scolarship,
             posData: posArray,
             languages: [
                 "英语", "法语", "日语", "韩语", "德语", "俄语", "西班牙语", "葡萄牙语", "阿拉伯语", "其他"
@@ -697,19 +701,52 @@ var appCont = new Vue({
                 appCont.resume.expect.city = $("#exp-address .sel-city input").val();
                 appCont.resume.expect.district = $("#exp-address .sel-district input").val();
                 //工作经历地址
-                var worksArray = $("#work-address");
+                var worksArray = $(".work-address");
+                var worksDate = $(".worksexp-date");
                 for (var i = 0; i < appCont.resume.worksExps.length; i++) {
                     appCont.resume.worksExps[i].province = worksArray.eq(i).find(".sel-province input").val();
                     appCont.resume.worksExps[i].city = worksArray.eq(i).find(".sel-city input").val();
                     appCont.resume.worksExps[i].district = worksArray.eq(i).find(".sel-district input").val();
+                    appCont.resume.worksExps[i].initdate = {
+                            startyear: worksDate.eq(i).find(".sel-startyear input").val(),
+                            startmonth: worksDate.eq(i).find(".sel-startmonth input").val(),
+                            endyear: worksDate.eq(i).find(".sel-endyear input").val(),
+                            endmonth: worksDate.eq(i).find(".sel-endmonth input").val(),
+                        }
+                        // console.log(appCont.resume.worksExps[i].initdate);
                 };
                 //专业名称
-                var majorArray = $("#major-name");
+                var majorArray = $(".major-name");
+                var edusDate = $(".edus-date");
                 for (var j = 0; j < appCont.resume.edus.length; j++) {
                     appCont.resume.edus[j].major = majorArray.eq(j).find(".major-input-1 input").val();
                     appCont.resume.edus[j].submajor = majorArray.eq(j).find(".major-input-2 input").val();
                     appCont.resume.edus[j].exmajor = majorArray.eq(j).find(".ex-major").val();
+                    appCont.resume.edus[j].initdate = {
+                        startyear: edusDate.eq(j).find(".sel-startyear input").val(),
+                        startmonth: edusDate.eq(j).find(".sel-startmonth input").val(),
+                        endyear: edusDate.eq(j).find(".sel-endyear input").val(),
+                        endmonth: edusDate.eq(j).find(".sel-endmonth input").val(),
+                    }
                 }
+                //项目预处理
+                var proDate = $(".projects-date");
+                for (var k = 0; k < appCont.resume.projects.length; k++) {
+                    appCont.resume.projects[k].initdate = {
+                        startyear: proDate.eq(k).find(".sel-startyear input").val(),
+                        startmonth: proDate.eq(k).find(".sel-startmonth input").val(),
+                        endyear: proDate.eq(k).find(".sel-endyear input").val(),
+                        endmonth: proDate.eq(k).find(".sel-endmonth input").val(),
+                    }
+                }
+                //语言选项
+                var skillArray = [];
+                $(".language-skills input[type='checkbox']").each(function() {
+                    if (this.checked) {
+                        skillArray.push(this.value);
+                    }
+                });
+                appCont.resume.laSkills = skillArray;
             }
             appModal.showModal = true;
             appModal.show.preview = true;
@@ -839,6 +876,7 @@ var appCont = new Vue({
             }
             this.resume.firstEdit = false;
             postResume("all");
+            resumePercentCalculate(appCont.resume);
             $(".edit").hide();
             $(".view").show();
         },
@@ -1724,4 +1762,39 @@ function posRequest(type, state, page) {
         }
         appCont.myPosList.jobsrc = type;
     })
+}
+
+//我的简历完成度计算
+function resumePercentCalculate(cvInfo) {
+    //计算简历完成度
+    var resumePercent = 0;
+    for (var key in cvInfo) {
+        if (key == "expect") {
+            if (cvInfo[key].tradeItems && cvInfo[key].tradeItems != "") {
+                resumePercent += 20;
+            }
+        } else if (key == "worksExps") {
+            if (cvInfo[key][0].firma && cvInfo[key][0].firma != "") {
+                resumePercent += 10;
+            }
+        } else if (key == "edus") {
+            if (cvInfo[key][0].uni && cvInfo[key][0].uni != "") {
+                resumePercent += 10;
+            }
+        } else if (key == "projects") {
+            if (cvInfo[key][0].name && cvInfo[key][0].name != "") {
+                resumePercent += 10;
+            }
+        } else if (key == "firstEdit" || key == "curWorksIndex") {
+            //排除这两种情况
+        } else {
+            resumePercent += 5;
+        }
+    }
+    if (cvInfo.realName && cvInfo.realName != "") {
+        resumePercent += 5;
+    }
+    if (resumePercent > 100) { resumePercent = 100 };
+    appPorto.resumePercent = resumePercent;
+    $("#app-porto .progress-real").css("width", resumePercent + "%");
 }

@@ -71,8 +71,8 @@
                     <p class="sub-item" paneid="recruit-msg">招聘会</p>
                 </div>
             </li>
-            <li class="sider-li" paneid="vip-center"><i class="pic-icon icon-apply"></i>VIP中心</li>
-            <li class="sider-li" paneid="uni-coop"><i class="pic-icon icon-apply"></i>校企合作</li>
+            <li class="sider-li" paneid="vip-center"><i class="pic-icon icon-vip"></i>VIP中心</li>
+            <li class="sider-li" paneid="uni-coop"><i class="pic-icon icon-coop"></i>校企合作</li>
             <li class="myConfig sider-li"><i class="pic-icon icon-config"></i>设置
                 <div class="sub-li paTop2 paBot2 LH30">
                     <p class="on sub-item" paneid="conf-keyword">修改密码</p>
@@ -241,6 +241,7 @@
                                         <button class="color-blueL" @click.stop="cancelCollect(item.demandId,item.id)">取消收藏</button>
                                         <button class="color-orange-f7" @click="applyCollect(item.demandId,item)" v-show="item.applyStatus==0">申请合作</button>
                                         <button class="color-gray-79" disabled v-show="item.applyStatus==1">已申请</button>
+                                        <button class="color-gray-79" disabled v-show="item.applyStatus==2">已下线</button>
                                     </div>
                                 </div>
                             </div>

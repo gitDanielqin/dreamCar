@@ -129,20 +129,20 @@ var workareas = [{
 })()
 window.workareas = workareas;
 
-function maxareacalculate() {
-    var maxarea = "";
-    var maxsubarea = "";
-    for (var i = 0; i < workareas.length; i++) {
-        if (workareas[i].title.length > maxarea.length) {
-            maxarea = workareas[i].title;
-        }
-        for (var j = 0; j < workareas[i].subareas.length; j++) {
-            if (workareas[i].subareas[j].length > maxsubarea.length) {
-                maxsubarea = workareas[i].subareas[j];
-            }
-        }
-    }
-    console.log(maxarea, maxarea.length);
-    console.log(maxsubarea, maxsubarea.length);
-}
+// function maxareacalculate() {
+//     var maxarea = "";
+//     var maxsubarea = "";
+//     for (var i = 0; i < workareas.length; i++) {
+//         if (workareas[i].title.length > maxarea.length) {
+//             maxarea = workareas[i].title;
+//         }
+//         for (var j = 0; j < workareas[i].subareas.length; j++) {
+//             if (workareas[i].subareas[j].length > maxsubarea.length) {
+//                 maxsubarea = workareas[i].subareas[j];
+//             }
+//         }
+//     }
+//     console.log(maxarea, maxarea.length);
+//     console.log(maxsubarea, maxsubarea.length);
+// }
 // maxareacalculate();

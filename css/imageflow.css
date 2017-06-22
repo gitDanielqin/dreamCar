@@ -21,6 +21,8 @@
 .imageflow img {
     border: none;
     position: absolute;
+    border: 1px solid orange;
+    box-shadow: 0 0 10px orange;
     top: 0px;
     visibility: hidden;
     -ms-interpolation-mode: bicubic

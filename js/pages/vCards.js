@@ -14,12 +14,12 @@ var appCont = new Vue({
     el: "#app-content",
     data: {
         database: {
-            workstates: workstates,
+            workstates: xqdatabase.workstates,
             addrData: addArray,
-            uniLevel: unilevel,
-            incProps: incProps,
-            incScales: incScale,
-            date: date
+            uniLevel: xqdatabase.unilevel,
+            incProps: xqdatabase.incProps,
+            incScales: xqdatabase.incScale,
+            date: xqdatabase.date
         },
         pInfo: {
             name: "",
@@ -57,6 +57,14 @@ var appCont = new Vue({
     },
     methods: {
         codequery: function(mobile, obj) {
+            if (!variableUtils.regExp.mobile.test(mobile)) {
+                swal({
+                    title: "",
+                    text: "手机格式不正确！",
+                    type: "warning"
+                });
+                return false;
+            }
             $(obj).attr("disabled", true);
             var start = 0;
             var timer = setInterval(function() {
@@ -104,7 +112,6 @@ var appCont = new Vue({
                 });
                 return false;
             }
-
             var posturl = "";
             var postdata = {};
             var domainUrl = "";

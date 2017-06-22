@@ -58,7 +58,7 @@ function infoRequest() {
                 intro: respObj.discription != undefined ? respObj.discription : "",
                 comLicense: "",
                 comLicenseUrl: respObj.imgUrl,
-                hasBusLicense: respObj.imgUrl != "",
+                hasBusLicense: respObj.imgUrl && respObj.imgUrl != "",
                 edit: respObj.infoStatus == "0",
                 view: respObj.infoStatus != "0"
             };
@@ -110,8 +110,8 @@ var appPorto = new Vue({
         viewInfo: true,
         inc: "企业名称",
         database: {
-            incprops: incProps,
-            incscale: incScale,
+            incprops: xqdatabase.incProps,
+            incscale: xqdatabase.incScale,
             addrData: addArray
         },
         briefInfo: {
@@ -172,14 +172,14 @@ var appPorto = new Vue({
     }
 });
 // 移除多余的两项
-incProps.remove("中国500强");
-incProps.remove("世界500强");
+xqdatabase.incProps.remove("中国500强");
+xqdatabase.incProps.remove("世界500强");
 var appCont = new Vue({
     el: "#app-content",
     data: {
         database: {
-            IncScale: incScale,
-            IncProps: incProps,
+            IncScale: xqdatabase.incScale,
+            IncProps: xqdatabase.incProps,
         },
         account: {
             userId: parObj.userId,

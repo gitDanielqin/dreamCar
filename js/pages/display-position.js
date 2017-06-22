@@ -19,6 +19,8 @@ var respObj = {}; //页面信息
 var accountObj = {} //用户信息
 var subposArray = [];
 (function() {
+    //初始化数据库信息
+    EventUtils.initDatabase();
     //提取出二级职位信息
     for (var i = 0; i < posArray.length; i++) {
         for (var j = 0; j < posArray[i].subpos.length; j++) {
@@ -181,18 +183,18 @@ var appQuery = new Vue({
         database: {
             uni: {
                 majors: majorArray,
-                majorAmount: majorSum,
-                props: unilevel,
-                scolars: scolarship
+                majorAmount: xqdatabase.majorSum,
+                props: xqdatabase.unilevel,
+                scolars: xqdatabase.scolarship
             },
             inc: {
-                IncScale: incScale,
-                IncProps: incProps,
-                posAmount: positionsum,
-                worksExp: worksexp,
+                IncScale: xqdatabase.incScale,
+                IncProps: xqdatabase.incProps,
+                posAmount: xqdatabase.positionsum,
+                worksExp: xqdatabase.worksexp,
                 workType: ["全职", "兼职", "实习", "校园", "不限"],
-                salary: salaryItems,
-                welfare: welfares
+                salary: xqdatabase.salary,
+                welfare: xqdatabase.welfares
             },
             navcitys: [
                 { "province": "浙江省", "city": "杭州", "conts": ["滨江区", "淳安县", "富阳市", "拱墅区", "江干区", "建德市", "临安市", "上城区", "桐庐县", "西湖区", "下城区", "萧山区", "余杭区", "不限"] },

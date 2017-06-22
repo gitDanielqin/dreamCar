@@ -23,6 +23,8 @@ if (parObj.new && parObj.new != "1") { //非新需求
     isNewRequire = false;
     pageindex = parObj.demandSrc;
 };
+//初始化数据库信息
+EventUtils.initDatabase();
 
 function infoRequest(demandSrc) {
     if (demandSrc == "0") { //如果是校企合作需求详情
@@ -158,22 +160,22 @@ var appMain = new Vue({
         database: {
             addrData: addArray,
             uni: {
-                classific: ["综合类", "理工类", "师范类", "艺术类", "体育类", "职业技术类"],
-                amount: majorSum,
-                unilevel: ["重点", "本科", "大专", "高职"],
-                scolars: ["博士", "硕士", "本科", "大专", "高中", "EMBA", "其他"],
+                classific: xqdatabase.uniclassific,
+                amount: xqdatabase.majorSum,
+                unilevel: xqdatabase.unilevel,
+                scolars: xqdatabase.scolarship,
                 majors: majorArray
             },
             inc: {
-                props: incProps,
-                scale: incScale,
+                props: xqdatabase.incProps,
+                scale: xqdatabase.incScale,
                 areas: workareas,
-                posAmount: positionsum,
+                posAmount: xqdatabase.positionsum,
                 posData: posArray
             },
             trainway: ["企业高管到校", "学生入企", "面议"],
             postype: ["电气信息类", "电子信息科学类", "仪器仪表类", "工商管理类", "管理科学与工程类", "金融类", "其他"],
-            welfares: ["五险一金", "包住", "包吃", "年底双薪", "双休", "交通补助", "加班补助", "话补", "房补"]
+            welfares: xqdatabase.welfares
         },
         combiData: {
             datatype: "combi",
@@ -300,12 +302,14 @@ var appMain = new Vue({
                 }
             });
             $(".must-item:visible").each(function() {
-                var oInput = $(this).find("input:first-child");
-                if (oInput.val() == "") {
-                    oInput.addClass("hint-nullable");
-                    isFilled = false;
-                } else {
-                    oInput.removeClass("hint-nullable");
+                var oInput = $(this).find("input");
+                if (oInput.eq(0).length >= 0) {
+                    if (oInput.val() == "") {
+                        oInput.addClass("hint-nullable");
+                        isFilled = false;
+                    } else {
+                        oInput.removeClass("hint-nullable");
+                    }
                 }
             })
             if (!isFilled) {

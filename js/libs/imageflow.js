@@ -4,7 +4,7 @@ function ImageFlow() {
     this.defaults = {
         animationSpeed: 50,
         /* Animation speed in ms */
-        aspectRatio: 2.3,
+        aspectRatio: 2.5,
         /* Aspect ratio of the ImageFlow container (width divided by height) */
         buttons: true,
         /* Toggle navigation buttons */
@@ -26,7 +26,7 @@ function ImageFlow() {
         /* Toggle image scaling */
         imagesHeight: 0.6,
         /* 高宽比例 */
-        imagesM: 0.8,
+        imagesM: 1.0,
         /* 图片深度 */
         onClick: function() { document.location = this.url; },
         /* Onclick behaviour */
@@ -44,13 +44,13 @@ function ImageFlow() {
         /* Toggle reflections */
         reflectionGET: '',
         /* Pass variables via the GET method to the reflect_.php script */
-        reflectionP: 0.5,
+        reflectionP: 0.3,
         /* Height of the reflection in percent of the source image */
         reflectionPNG: false,
         /* Toggle reflect2.php or reflect3.php */
         reflectPath: '',
         /* Path to the reflect_.php script */
-        scrollbarP: 0.6,
+        scrollbarP: 1.0,
         /* Width of the scrollbar in percent */
         slider: true,
         /* Toggle slider */
@@ -68,9 +68,11 @@ function ImageFlow() {
         /* Image ID to begin with */
         glideToStartID: true,
         /* Toggle glide animation to start ID */
-        startAnimation: false,
+        startAnimation: true,
         /* Animate images moving in from the right on startup */
-        xStep: 90 /* Step width on the x-axis in px */
+        xStep: 60,
+        /* Step width on the x-axis in px */
+        cycle: false
     };
 
 

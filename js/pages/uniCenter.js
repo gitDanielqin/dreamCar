@@ -126,7 +126,7 @@ var appPorto = new Vue({
     el: "#app-porto",
     data: {
         database: {
-            unilevel: unilevel,
+            unilevel: xqdatabase.unilevel,
             addrData: addArray
         },
         viewInfo: true,
@@ -257,9 +257,9 @@ var appCont = new Vue({
     el: "#app-content",
     data: {
         database: {
-            classific: uniclassific,
+            classific: xqdatabase.uniclassific,
             amount: ["1-10000", "10001-20000", "20001-30000", "30001-40000", "40000以上", ],
-            unilevel: unilevel,
+            unilevel: xqdatabase.unilevel,
             majors: majorArray,
         },
         account: {

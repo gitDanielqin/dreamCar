@@ -73,8 +73,8 @@
                         <p class="sub-item" paneid="recruit-msg">企业直聘</p>
                     </div>
                 </li>
-                <li class="sider-li" paneid="vip-center"><i class="pic-icon icon-apply"></i>VIP中心</li>
-                <li class="sider-li" paneid="uni-coop"><i class="pic-icon icon-apply"></i>校企合作</li>
+                <li class="sider-li" paneid="vip-center"><i class="pic-icon icon-vip"></i>VIP中心</li>
+                <li class="sider-li" paneid="uni-coop"><i class="pic-icon icon-coop"></i>校企合作</li>
                 <li class="myConfig sider-li"><i class="pic-icon icon-config"></i>设置
                     <div class="sub-li paTop2 paBot2 LH30">
                         <p class="on sub-item" paneid="conf-keyword">修改密码</p>
@@ -102,7 +102,7 @@
                     <div class="LH26 paLeft7 resume-item clearfix">
                         <p class="fl"><i class="pic-icon W30 icon-imp"></i><label>企业认证</label></p>
                         <ul class="fl valid-upload color-gray6 fSize12">
-                            <li><a href="javascript:void(0)"><label for="comlicense">重新上传营业执照</label><i class="pic-icon icon-upload"></i></a>
+                            <li><a href="javascript:void(0)"><label for="comlicense" v-show="resume.hasBusLicense">重新上传营业执照</label><label for="comlicense" v-show="!resume.hasBusLicense">上传营业执照</label><i class="pic-icon icon-upload"></i></a>
                                 <span>{{resume.comLicense}}</span>
                                 <button v-show="resume.hasBusLicense" class="color-orange" @click="showFile('file-busi')">（查看营业执照）</button>
                                 <input type="file" name="image" id="file-busi" @change="changeComLicense($event.target)" />

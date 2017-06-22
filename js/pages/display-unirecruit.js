@@ -18,6 +18,8 @@ var respObj = {}; //页面信息
 var accountObj = {} //登录用户信息
 var subposArray = [];
 (function() {
+    //初始化数据库信息
+    EventUtils.initDatabase();
     //提取出二级职位信息
     for (var i = 0; i < posArray.length; i++) {
         for (var j = 0; j < posArray[i].subpos.length; j++) {
@@ -175,20 +177,20 @@ var appQuery = new Vue({
         database: {
             uni: {
                 majors: majorArray,
-                majorAmount: majorSum,
-                props: unilevel,
-                scolars: scolarship
+                majorAmount: xqdatabase.majorSum,
+                props: xqdatabase.unilevel,
+                scolars: xqdatabase.scolarship
             },
             inc: {
-                IncScale: incScale,
-                IncProps: incProps,
-                posAmount: positionsum,
-                worksExp: worksexp,
+                IncScale: xqdatabase.incScale,
+                IncProps: xqdatabase.incProps,
+                posAmount: xqdatabase.positionsum,
+                worksExp: xqdatabase.worksexp,
                 pos1: [],
                 pos2: [],
                 area1: [],
                 area2: [],
-                salary: salaryItems,
+                salary: xqdatabase.salary,
                 welfare: ["五险一金", "双休", "餐补", "交通补", "带薪年假", "节日聚餐"]
             },
             navcitys: [

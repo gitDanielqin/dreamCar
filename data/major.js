@@ -825,18 +825,18 @@ var majorArray = [{
 })()
 window.majorArray = majorArray;
 
-function maxmajorcalculate() {
-    var maxmajor = "";
-    var maxsubmajor = "";
-    for (var i = 0; i < majorArray.length; i++) {
-        if (majorArray[i].major.length > maxmajor.length) {
-            maxmajor = majorArray[i].major;
-        }
-        for (var j = 0; j < majorArray[i].submajor.length; j++) {
-            if (majorArray[i].submajor[j].length > maxsubmajor.length) {
-                maxsubmajor = majorArray[i].submajor[j];
-            }
-        }
-    };
-}
+// function maxmajorcalculate() {
+//     var maxmajor = "";
+//     var maxsubmajor = "";
+//     for (var i = 0; i < majorArray.length; i++) {
+//         if (majorArray[i].major.length > maxmajor.length) {
+//             maxmajor = majorArray[i].major;
+//         }
+//         for (var j = 0; j < majorArray[i].submajor.length; j++) {
+//             if (majorArray[i].submajor[j].length > maxsubmajor.length) {
+//                 maxsubmajor = majorArray[i].submajor[j];
+//             }
+//         }
+//     };
+// }
 // maxmajorcalculate();

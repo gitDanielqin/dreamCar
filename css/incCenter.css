@@ -397,6 +397,14 @@
     background: url("../images/sprite.png") no-repeat -2px -32px;
 }
 
+.sideBox .icon-vip {
+    background: url("../images/icon-vip.png") no-repeat 0 0;
+}
+
+.sideBox .icon-coop {
+    background: url("../images/icon-coop.png") no-repeat 0 0;
+}
+
 .sideBox .icon-config {
     background: url("../images/sprite.png") no-repeat -59px -79px;
 }

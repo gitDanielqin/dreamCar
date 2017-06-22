@@ -143,6 +143,10 @@
     background: none;
 }
 
+.form-cont input[readonly='readonly'].hint-nullable {
+    background: #ffd2d2;
+}
+
 .form-cont .major-input input {
     margin-right: 6px;
 }

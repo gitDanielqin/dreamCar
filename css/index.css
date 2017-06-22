@@ -318,10 +318,11 @@ body {
     line-height: 30px;
 }
 
-.imageflow img {
+
+/*.imageflow img {
     width: 1000px;
     height: auto;
-}
+}*/
 
 .rotate-left {
     -webkit-transform: perspective(600px) rotateY(20deg) scale(0.7, 0.7);
@@ -561,6 +562,6 @@ body {
         margin: 0 20px;
     }
     .about-lis li {
-        margin: 0 73px;
+        margin: 0 65px;
     }
 }

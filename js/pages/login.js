@@ -33,7 +33,8 @@ var appCont = new Vue({
             validcode: "",
             userType: 0,
             isAccValid: false,
-            isPassValid: false
+            isPassValid: false,
+            unableCode: false,
         },
         login: {
             account: window.localStorage && localStorage.loginName ? localStorage.loginName : "",
@@ -42,7 +43,7 @@ var appCont = new Vue({
                 // password: ""
         },
         banner: {
-            showindex: 0,
+            showindex: Math.floor(3 * Math.random()),
             images: [
                 { url: "images/bg-2.jpg", website: "http://www.baidu.com" },
                 { url: "images/banner-lanlan.jpg", website: "http://www.xinchuang.sitekc.com/index.jsp" },
@@ -175,13 +176,14 @@ var appCont = new Vue({
             EventUtils.ajaxReq('/center/user/login', 'post', postdata, callback);
         },
         reqValidCode: function(obj) {
-            $(obj).attr("disabled", true);
+            this.register.unableCode = true;
+            // $(obj).attr("disabled", true);
             var start = 0;
             var timer = setInterval(function() {
                 start++;
                 if (start == 60) {
                     appCont.validText = "获取验证码";
-                    $(obj).attr("disabled", false);
+                    appCont.register.unableCode = false;
                     clearInterval(timer);
                 } else {
                     appCont.validText = "重新获取 (" + (60 - start) + "s)";
@@ -244,11 +246,11 @@ var appCont = new Vue({
         }
     },
     mounted: function() {
-        var timerindex = 0;
+        var timerindex = Math.floor(3 * Math.random());
         setInterval(function() {
             appCont.banner.showindex = timerindex % 3;
             timerindex++;
-        }, 5000)
+        }, 10000)
         EventUtils.placeholderFill();
     }
 })
