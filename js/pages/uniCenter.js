@@ -1,19 +1,30 @@
-// import $ from "../libs/jquery-3.1.0.min";
-// var Vue = require("../libs/vue");
-// require("../common/common")
-// require("../common/ajaxfileupload")
-// require("../common/cropbox")
-// require("../components/dropdown")
-// require("../components/foundation-datepicker")
-// require("../components/pagination")
-// require("../components/major-pop")
-// require("../components/minicard")
-// require("../../data/commondata")
-// require("../../data/address")
-// require("../../data/major")
-// require("../../css/base.css")
-// require("../../css/widget.css")
-// require("../../css/uniCenter.css")
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../libs/sweetalert.min");
+require("../common/common")
+require("../common/ajaxfileupload")
+require("../common/cropbox")
+require("../components/dropdown")
+require("../components/foundation-datepicker")
+require("../components/pagination")
+require("../components/major-pop")
+require("../components/minicard")
+require("../components/bind-mobile-box")
+require("../components/bind-email-box")
+require("../components/message-box")
+require("../components/freshbox")
+require("../components/stickbox")
+require("../components/conf-password")
+require("../components/vip-record")
+require("../components/common-footer")
+require("../../data/commondata")
+require("../../data/address")
+require("../../data/major")
+require("../../css/base.css")
+require("../../css/sweetalert.css")
+require("../../css/widget.css")
+require("../../css/foundation-datepicker.min.css")
+require("../../css/uniCenter.css")
 
 var parObj = EventUtils.urlExtrac(window.location);
 var respObj = {}; //请求的本页面的数据集合
@@ -292,7 +303,6 @@ var appCont = new Vue({
             totalpages: 1,
             totalitems: 0,
             demandSrc: 0, //0：校企合作 1：招聘会
-            newLink: EventUtils.securityUrl("uniRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId),
             results: []
         },
         collect: {
@@ -406,6 +416,18 @@ var appCont = new Vue({
         }
     },
     methods: {
+        newRequire: function() {
+            if (!respObj.cvStatus || respObj.cvStatus == "0") {
+                swal({
+                    title: "",
+                    text: "请先完善您的高校信息！",
+                    type: "warning"
+                });
+                return false;
+            }
+            var link = EventUtils.securityUrl("uniRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId);
+            window.location.href = link
+        },
         selvipnav: function(obj) {
             if ($(obj).hasClass("vip-li")) {
                 if (this.account.money == "") {
@@ -726,11 +748,11 @@ var appCont = new Vue({
                         EventUtils.ajaxReq('/user/school/modifyInfo', 'post', postdata, function(resp, status) {
                             appCont.resume.edit = false;
                             appCont.resume.view = true;
+                            respObj.cvStatus = 1;
                         })
                     }
                 }, 500)
             } else {
-                console.log(2);
                 var postdata = {
                     userId: parObj.userId,
                     schoolId: respObj.schoolId,
@@ -744,10 +766,10 @@ var appCont = new Vue({
                     imgUrlAgree: appCont.resume.uniLicenseUrl,
                     discription: appCont.resume.intro
                 };
-                console.log(postdata);
                 EventUtils.ajaxReq('/user/school/modifyInfo', 'post', postdata, function(resp, status) {
                     appCont.resume.edit = false;
                     appCont.resume.view = true;
+                    respObj.cvStatus = 1;
                 })
             }
 
@@ -1455,6 +1477,7 @@ function demandRequest(index, page) {
                 appCont.require.results = resp.data.list;
                 appCont.require.totalitems = resp.data.totalRow;
             } else {
+                appCont.require.totalpages = 1;
                 appCont.require.results = [];
                 appCont.require.totalitems = 0;
             };
@@ -1476,6 +1499,7 @@ function demandRequest(index, page) {
                 appCont.require.results = resp.data.list;
                 appCont.require.totalitems = resp.data.totalRow;
             } else {
+                appCont.require.totalpages = 1;
                 appCont.require.results = [];
                 appCont.require.totalitems = 0;
             };
@@ -1502,6 +1526,7 @@ function collectRequest(timeindex, page) {
             appCont.collect.totalitems = resp.data.totalRow;
             appCont.collect.results = resp.data.list;
         } else {
+            appCont.collect.totalpages = 1;
             appCont.collect.results = [];
             appCont.collect.totalitems = 0;
         }
@@ -1525,6 +1550,7 @@ function combiMsgRequest(applystatus, page) {
         } else {
             appCont.message.combi.results = [];
             appCont.message.combi.totalitems = 0;
+            appCont.message.combi.totalpages = 1;
         }
         appCont.message.combi.msgsrc = applystatus;
     });

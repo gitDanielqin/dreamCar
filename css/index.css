@@ -324,6 +324,19 @@ body {
     height: auto;
 }*/
 
+.swiper-container {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.swiper-slide {
+    /*background-position: center;
+    background-size: cover;*/
+    width: 300px;
+    height: 300px;
+    border: 2px solid orange;
+}
+
 .rotate-left {
     -webkit-transform: perspective(600px) rotateY(20deg) scale(0.7, 0.7);
     -moz-transform: perspective(600px) rotateY(20deg) scale(0.7, 0.7);

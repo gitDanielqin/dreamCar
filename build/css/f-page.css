@@ -1,0 +1,207 @@
+.main-left li {
+    height: 42px;
+    line-height: 42px;
+    border-bottom: 1px solid #e4e4e4;
+}
+
+.main-left li:last-child {
+    border-bottom: none;
+}
+
+.main-left li.on {
+    background: #f8f7f4;
+    color: #f7a14a;
+}
+
+.nav-content h2 {
+    border-bottom: 1px dashed #e4e4e4;
+}
+
+.descript p {
+    text-indent: 4em;
+}
+
+.recruit h3 {
+    line-height: 43px;
+    height: 43px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 18px;
+}
+
+.recruit h4 {
+    margin-bottom: 10px;
+    margin-top: 23px;
+}
+
+.recruit h4:first-of-type {
+    margin-top: 0;
+}
+
+.cooperation h3.title {
+    line-height: 74px;
+    color: #333;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+.co-table {
+    border: 1px solid #a09f9f;
+}
+
+.co-table .navs li {
+    width: 190px;
+    border-right: 1px solid #cac1b0;
+    background: #f9e7c3;
+    font-size: 18px;
+}
+
+.co-table .navs li.on {
+    background: #f7b632;
+    color: white;
+}
+
+.co-table .navs li:last-child {
+    border: none;
+    width: 189px;
+}
+
+.coway-once h3 {
+    line-height: 363px;
+    height: 363px;
+    border-top: 1px solid #cac1b0;
+}
+
+.co-table table td {
+    border-top: 1px solid #cac1b0;
+    border-left: 1px solid #cac1b0;
+    padding: 12px;
+    color: #333;
+}
+
+.coway-once table tr td:first-of-type {
+    width: 107px;
+    line-height: 47px;
+}
+
+.coway-once table tr td:nth-of-type(2) {
+    width: 95px;
+    line-height: 47px;
+}
+
+.coway-once table tr td:nth-of-type(3) {
+    line-height: 25px;
+    text-align: left;
+}
+
+.coway-vip table tr td:first-of-type {
+    border-left: none;
+    width: 116px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.coway-vip table tr td:nth-of-type(2) {
+    width: 407px;
+}
+
+.coway-vip table tr td:nth-of-type(3) {
+    width: 165px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.help-center h3 {
+    line-height: 27px;
+    height: 27px;
+    margin-top: 22px;
+}
+
+.employment h3 {
+    line-height: 46px;
+    height: 46px;
+    margin-top: 13px;
+}
+
+.align-v {
+    width: 1em;
+    display: inline-block;
+    line-height: 1em;
+}
+
+
+/*底部样式*/
+
+.bot {
+    background: #252525;
+    color: #f5f5f5;
+    padding-top: 15px;
+}
+
+.bg-main {
+    background: url(../images/bg-cards.png) no-repeat center center;
+    background-size: cover;
+}
+
+.us-model {
+    margin-left: 70px;
+    color: white;
+    text-align: left;
+}
+
+.us-model h3 {
+    height: 55px;
+    line-height: 55px;
+    font-size: 16px;
+}
+
+.contact p {
+    line-height: 32px;
+}
+
+.contact i.pic-icon {
+    margin-right: 12px;
+}
+
+.contact .icon-phone {
+    vertical-align: middle;
+    width: 22px;
+    height: 18px;
+    background: url(../images/sprite.png) no-repeat -119px -131px;
+}
+
+.contact .icon-email {
+    vertical-align: middle;
+    width: 22px;
+    height: 18px;
+    background: url(../images/sprite.png) no-repeat -152px -132px;
+}
+
+.contact .icon-gps {
+    vertical-align: middle;
+    width: 22px;
+    height: 22px;
+    background: url(../images/sprite.png) no-repeat -150px -32px;
+}
+
+.bot-nav {
+    border-top: 1px solid #8e8e8e;
+}
+
+.site-nav {
+    display: inline-block;
+}
+
+.site-nav span {
+    margin: 0 13px;
+}
+
+.site-nav a {
+    color: #666;
+}
+
+.site-nav a:hover {
+    color: orange;
+    cursor: pointer;
+}

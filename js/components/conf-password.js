@@ -1,3 +1,4 @@
+var Vue = require("../libs/vue");
 (function() {
     var pswTempl = '<div>\
                 <h2 class="conf-psw-title">修改密码</h2>\
@@ -79,6 +80,7 @@
                     userType: this.usertype
                 };
                 EventUtils.ajaxReq("/center/user/modifyPassword", "post", postdata, function(resp, status) {
+                    console.log(resp);
                     if (resp.code == "00000") {
                         swal({
                             title: "",

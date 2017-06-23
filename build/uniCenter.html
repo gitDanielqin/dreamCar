@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta charset="utf-8">
+    <title>高校中心</title>
+    <link href="css/commons.css" rel="stylesheet">
+    <link href="css/uniCenter.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-f2">
+    <div class="top bg-gray3 H100 color-white" id="app-top" v-cloak>
+        <div class="inner">
+            <a :href="homeLink"><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" /></a>
+            <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
+            <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">高校中心</h2>
+            <div class="fr navs maT42">
+                <a :href="homeLink"><i class="pic-icon icon-home"></i></a>
+                <a href="#"><i class="pic-icon icon-account"></i></a>
+                <a class="msg-center pRel" href="#" @click.stop="showMsgbox"><i class="pic-icon icon-msg"></i><i class="msg-info disNo"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="main inner paTop20 clearfix maB60">
+        <div class="W958 H198 sInfo maCenter bg-white" id="app-porto" v-cloak>
+            <div class="porto fl maL60 maT30">
+                <div class="porto-img W96 H96" id="avatar-box" @click="uploading"></div>
+                <h3 class="LH-H58 fSize18 t-center color-gray3">编辑头像</h3>
+            </div>
+            <div class="infoTxt maT24 maL54 fl color-gray6 W300" v-show="viewInfo">
+                <h3 class="LH-H47 fSize18 color-gray3">{{uni}}</h3>
+                <p><label>学校性质：</label>{{briefInfo.level}}</p>
+                <p><label>所在地：</label>{{briefInfo.address.province}}-{{briefInfo.address.city}}-{{briefInfo.address.district}}</p>
+                <p><label>邮箱：</label>{{briefInfo.email}}</p>
+                <i class="LH30 t-center btn-edit pic-icon icon-edit" @click="edit"></i>
+            </div>
+            <div class="edit-brief maT24 maL54 fl color-gray6 W530 pRel" v-show="!viewInfo">
+                <h3 class="LH-H47 fSize18 color-gray3">{{uni}}</h3>
+                <p><label>学校性质</label>
+                    <dropdown :options="database.unilevel" v-model="briefInfo.level" class="brief-unilevel"></dropdown>
+                </p>
+                <p><label>所在地</label>
+                    <addr-select :addrdata="database.addrData" :initaddress="initAddress" class="sel-addr disInline"></addr-select>
+                </p>
+                <p><label class="brief-email">邮箱</label>
+                    <input type="email" v-model="briefInfo.email" readonly/>
+                </p>
+                <div class="edit-opera fSize0">
+                    <button class="maR15 btn-save" @click="save">保存</button>
+                    <button class="btn-cancel" @click="cancel">取消</button>
+                </div>
+            </div>
+            <div class="barCodeBox maT14 W168 fr color-gray6 fSize14">
+                <p class="LH-H37">扫一扫微信公众号</p>
+                <img class="maL6 v-mid" src="images/barcode.png" />
+                <p class="LH-H25">实时了解最新动态</p>
+            </div>
+        </div>
+        <ul class="sideBox fl W178 maL20 maT20 paTop20 fSize18 color-gray3 bg-white" id="app-side" @click="selnav($event.target)" v-cloak>
+            <li class="on sider-li" paneid="resumeBox"><i class="pic-icon icon-resume"></i>高校简介</li>
+            <li class="sider-li" paneid="requireBox"><i class="pic-icon icon-study"></i>高校需求</li>
+            <li class="myCollect sider-li" paneid="collectBox"><i class="pic-icon icon-collect"></i>高校收藏</li>
+            <li class="sider-li"><i class="pic-icon icon-apply"></i>消息中心
+                <div class="sub-li LH37">
+                    <p class="on sub-item" paneid="combi-msg">校企合作</p>
+                    <p class="sub-item" paneid="recruit-msg">招聘会</p>
+                </div>
+            </li>
+            <li class="sider-li" paneid="uni-coop"><i class="pic-icon icon-coop"></i>校企合作</li>
+            <li class="sider-li" paneid="vip-center"><i class="pic-icon icon-vip"></i>VIP中心</li>
+            <li class="myConfig sider-li"><i class="pic-icon icon-config"></i>设置
+                <div class="sub-li paTop2 paBot2 LH30">
+                    <p class="on sub-item" paneid="conf-keyword">修改密码</p>
+                    <p class="sub-item" paneid="conf-account">绑定账号</p>
+                </div>
+            </li>
+        </ul>
+        <div class="content W770 fl maL10 maT20" id="app-content" v-cloak>
+            <div class="resumeBox" style="display:block">
+                <div class="resumeCont bg-white" v-show="resume.edit">
+                    <p class="LH-H88 fSize18 color-gray3" v-show="resume.firstEdit">亲爱的校友，您需要完善高校简介</p>
+                    <h3 class="fSize18 LH-H30 maB17" v-show="!resume.firstEdit"><i class="pic-icon icon-resume hd-icon"></i>高校简介</h3>
+                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-icon W30 icon-imp"></i><label>高校名称</label><input type="text" v-model="resume.uni" class="W298" /></p>
+                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-icon W30 icon-imp"></i><label>高校类别</label>
+                        <dropdown placeholder="请选择高校类别" :options="database.classific" v-model="resume.classific" classes="W138"></dropdown>
+                    </p>
+                    <p class="LH-H26 paLeft7 resume-item uni-level"><i class="pic-icon W30 icon-imp"></i><label>高校性质</label>
+                        <dropdown placeholder="高校性质" :options="database.unilevel" v-model="resume.level" class="maR10"></dropdown><i class="check-box lv985" @click="checkExlv($event.target)"></i>985<i class="check-box lv211" @click="checkExlv($event.target)"></i>211</p>
+                    <p class="LH-H26 paLeft7 resume-item"><i class="pic-icon W30 icon-imp"></i><label>在校人数</label>
+                        <dropdown placeholder="请选择在校人数" :options="database.amount" v-model="resume.amount" classes="W138"></dropdown>
+                    </p>
+                    <div class="LH26 paLeft7 resume-item clearfix pRel">
+                        <p class="fl"><i class="pic-icon W30 icon-imp"></i><label>重点专业</label></p>
+                        <ul class="fl maL4 edit-major-list W534">
+                            <li v-for="(spmajor,index) in resume.specialmajor" class="maB14">
+                                <major-pop :majordata="database.majors" :initmajors="{major:spmajor.major}" class="disInline"></major-pop><button class="btn-del-major" v-show="index<resume.specialmajor.length-1" @click="delMajor(index)">- 删除</button>
+                                <p class="fSize12 color-gray6 block-add-major disInline" :style="{top:(resume.specialmajor.length-1)*40+'px'}" v-show="index==resume.specialmajor.length-1"><button class="color-blueL btn-add-major" @click="addMajors">+ 添加</button>（最多可添加5个重点专业）</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="LH26 paLeft7 resume-item clearfix">
+                        <p class="fl"><i class="pic-icon W30 icon-imp"></i><label>高校认证</label><br /><span class="fSize12 color-red maL16">（各小于3M）</span></p>
+                        <ul class="fl valid-upload color-gray6 fSize12">
+                            <li><a href="javascript:void(0)"><label for="comlicense">重新上传营业执照</label><i class="pic-icon icon-upload"></i></a>
+                                <span>{{resume.comLicense}}</span>
+                                <button v-show="resume.comLicense!=''||resume.comLicenseUrl!=''" class="color-orange" @click="showFile('busi','file-busi')">（查看营业执照）</button>
+                                <input type="file" name="image" id="file-busi" @change="changeComLicense($event.target)" />
+                            </li>
+                            <li><a href="javascript:void(0)"><label for="unilicense">重新上传办学许可证</label><i class="pic-icon icon-upload"></i></a>
+                                <span>{{resume.uniLicense}}</span>
+                                <button v-show="resume.uniLicense!=''||resume.uniLicenseUrl!=''" class="color-orange" @click="showFile('uni','file-uni')">（查看办学许可证）</button>
+                                <input type="file" name="image" id="file-uni" @change="changeUniLicense($event.target)" />
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="uni-intro LH26 paLeft7 resume-item clearfix">
+                        <p class="fl"><i class="pic-icon W30 icon-imp"></i><label>高校简介</label></p>
+                        <div class="fl">
+                            <textarea v-model="resume.intro" @input="checkText('resumeintro')"></textarea>
+                            <p class="t-right">你还可以输入{{remainText(resume.intro)}}字</p>
+                        </div>
+                    </div>
+                    <div class="t-center">
+                        <button type="button" class="W150 H50 color-white bg-orange3 fSize18 maT26" @click="saveResume">保存</button>
+                    </div>
+                </div>
+                <div class="resumeCont bg-white pRel" v-show="resume.view">
+                    <h3 class="fSize18 LH-H30 maB17"><i class="pic-icon icon-resume hd-icon"></i>高校简介</h3>
+                    <div class="paLeft40 paRight40 LH33 fSize14">
+                        <p><label>高校名称：</label>{{resume.uni}}</p>
+                        <p><label>高校类别：</label>{{resume.classific}}</p>
+                        <p><label>高校性质：</label>{{resume.level}}<span v-if="resume.specialLv">（{{lvswitch(resume.specialLv)}}）</span></p>
+                        <p><label>在校人数：</label>{{resume.amount}}人</p>
+                        <div class="clearfix">
+                            <label class="fl">重点专业：</label>
+                            <ul class="fl LH25 paTop5">
+                                <li v-for="spmajor in resume.specialmajor">
+                                    <span v-if="spmajor!=''&&spmajor.submajor!=''">{{spmajor.major}} - {{spmajor.submajor}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="clearfix">
+                            <p class="fl"><label>高校认证：</label></p>
+                            <ul class="fl valid-upload color-gray6 fSize12 paTop5">
+                                <li><span v-show="resume.hasBusLicense" class="view-valid-label">已上传营业执照</span><span v-show="!resume.hasBusLicense" class="view-valid-label color-gray9">未上传营业执照</span>
+                                    <p class="disInline pRel">
+                                        <button class="color-blueL" v-show="resume.hasBusLicense" @click.stop="showPrefile('com')">（查看之前上传的营业执照）</button>
+                                    </p>
+                                </li>
+                                <li><span v-show="resume.hasUniLicense" class="view-valid-label">已上传办学许可证</span><span v-show="!resume.hasUniLicense" class="view-valid-label color-gray9">未上传办学许可证</span>
+                                    <p class="disInline pRel">
+                                        <button class="color-blueL" v-show="resume.hasUniLicense" @click.stop="showPrefile('uni')">（查看之前上传的办学许可证）</button>
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="LH22"><label>高校简介：</label>{{resume.intro}}</p>
+                    </div>
+                    <i class="LH30 t-center btn-edit pic-icon icon-edit" @click="editSwipe"></i>
+                </div>
+            </div>
+            <div class="uni-require requireBox">
+                <div class="ListBox pRel">
+                    <span class="new-require color-orange-f7 fSize16"><a href="javascript:void(0)" @click.prevent="newRequire"><img src="images/icon-require.png" /></a></span>
+                    <div class="hd LH-H58 bg-white">
+                        <dropdown classes="state" :options="['校企合作','招聘会']" v-model="require.state"></dropdown>
+                        <p class="fr fSize14 maR120">我发布过的需求<span class="color-orange2 maL10 maR10">{{require.totalitems}}</span>个</p>
+                    </div>
+                    <ul class="info-items H410">
+                        <li v-for="(item,index) in require.results" :name="item.demandType">
+                            <div v-if="require.demandSrc==0" class="paLeft29 clearfix H128 pRel">
+                                <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
+                                <div class="item-block-left fl paTop22 W280 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item)">{{item.title}}</a></h2>
+                                    <p>{{infoShow(infoExtrac(item.companyProperty),"props")}}<i class="depart">|</i>{{infoShow(infoExtrac(item.companyScale),"scale")}}<i class="depart">|</i>{{infoShow(infoExtrac(item.companyType),"comtype")}}</p>
+                                    <p v-show="item.trainType!=undefined">培训方式： {{item.trainType}}</p>
+                                </div>
+                                <div class="item-block-right fl fSize14 LH25 maT10">
+                                    <p>{{resume.uni}}</p>
+                                    <p>{{resume.level}}</p>
+                                    <p>{{item.updateTime}}</p>
+                                </div>
+                                <div class="operations color-blueL">
+                                    <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>
+                                    <p><span @click="freshItem(item)">刷新</span><span @click="stickItem(item)">置顶</span></p>
+                                </div>
+                            </div>
+                            <div v-else-if="require.demandSrc==1" class="paLeft29 clearfix H128 pRel">
+                                <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
+                                <div class="item-block-left fl paTop22 W280 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item)">{{item.title}}</a></h2>
+                                    <p>{{infoShow(infoExtrac(item.profession),"profession")}}<i class="depart">|</i>{{item.professionCount}}<i class="depart">|</i>{{cityExtrac(item.jobFairAddress)}}</p>
+                                    <p>招聘会时间：{{item.startTime}}</p>
+                                </div>
+                                <div class="item-block-right fl fSize14 LH25">
+                                    <p>高校对企要求</p>
+                                    <p>{{infoShow(item.companyScale,"scale")}}<i class="depart">|</i>{{infoShow(item.companyProperty,"props")}}<i class="depart">|</i>{{infoShow(infoExtrac(item.job),"job")}}</p>
+                                    <p>发布日期：{{dateExtrac(item.updateTime)}}</p>
+                                </div>
+                                <div class="operations color-blueL">
+                                    <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>
+                                    <p><span @click="freshItem(item)">刷新</span><span @click="stickItem(item)">置顶</span></p>
+                                </div>
+                            </div>
+                        </li>
+                        <li v-show="require.results.length==0">
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <pagination :showpages="showpage(require.totalpages)" :totalpages="require.totalpages" type="require" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                </div>
+            </div>
+            <div class="uni-collect collectBox">
+                <div class="ListBox">
+                    <div class="hd LH-H58 bg-white">
+                        <dropdown classes="state" :options="['全部状态','近三天','近一个星期','近一个月']" v-model="collect.state"></dropdown>
+                        <p class="fr fSize14 maR30">我收藏的需求<span class="color-orange2 maL10 maR10">{{collect.totalitems}}</span>个</p>
+                    </div>
+                    <ul class="info-items H470">
+                        <li v-for="(item,index) in collect.results" :name="item.classic">
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
+                                <div class="item-block-left fl paTop22 W280 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="collectLink(item)">{{infoExtrac(item.job)}}</a></h2>
+                                    <p>{{infoShow(infoExtrac(item.profession),"profession")}}<i class="depart">|</i>{{infoShow(item.professionCount,"stuscale")}}<i class="depart">|</i>{{infoShow(item.schoolType,'uniclass')}}</p>
+                                    <p>培训方式：{{item.trainType}}</p>
+                                    <p class="item-date">收藏日期：{{dateExtrac(item.collectTime)}}</p>
+                                </div>
+                                <div class="item-block-right fl fSize14 LH25 maT10">
+                                    <p>{{item.userName}}</p>
+                                    <p>{{item.userProperty}}<i class="depart">|</i>{{item.userScale}}<i class="depart">|</i>{{infoExtrac(item.userType)}}</p>
+                                    <p class="pubdate">发布日期：{{dateExtrac(item.updateTime)}}</p>
+                                    <div class="collect-btn">
+                                        <button class="color-blueL" @click.stop="cancelCollect(item.demandId,item.id)">取消收藏</button>
+                                        <button class="color-orange-f7" @click="applyCollect(item.demandId,item)" v-show="item.applyStatus==0">申请合作</button>
+                                        <button class="color-gray-79" disabled v-show="item.applyStatus==1">已申请</button>
+                                        <button class="color-gray-79" disabled v-show="item.applyStatus==2">已下线</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li v-show="collect.results.length==0">
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <pagination :showpages="showpage(collect.totalpages)" :totalpages="collect.totalpages" type="collect" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                </div>
+            </div>
+            <div class="uni-message combi-msg">
+                <div class="ListBox">
+                    <div class="hd LH-H58 bg-white">
+                        <dropdown classes="state" :options="['发出的邀请','收到的邀请']" v-model="message.combi.state"></dropdown>
+                        <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{message.combi.totalitems}}</span>个</p>
+                    </div>
+                    <ul class="info-items H470">
+                        <li v-for="(item,index) in message.combi.results" :name="item.code">
+                            <template v-if="message.combi.msgsrc==2">
+                              <div class="paLeft29 clearfix H128 pRel">
+                                   <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
+                                   <div class="item-block-left fl paTop22 W328 maL20">
+                                       <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="messageLink('combi',item.demandId)">{{item.title}}</a></h2>
+                                       <p>{{infoShow(item.companyProperty,"props")}}<i class="depart">|</i>{{infoShow(item.companyScale,'scale')}}<i class="depart">|</i>{{infoShow(infoExtrac(item.companyType),'comtype')}}</p>
+                                       <p>培养方式：{{item.trainType}}</p>
+                                       <p class="item-date">申请日期：{{dateExtrac(item.createTime)}}</p>
+                                   </div>
+                                   <div class="item-block-right fl fSize14 LH30 maT10">
+                                       <p>{{item.userName}}</p>
+                                       <p>{{item.userProperty}}</p>
+                                       <div class="message-btn LH-H35 pRel">
+                                             <button class="color-orange-f7 to-contact" type="button" @click="popCard(item)">查看对方名片</button>
+                                       </div>
+                                   </div>
+                              </div>
+                            </template>
+                            <template v-else>
+                              <div class="paLeft29 clearfix H128 pRel msg-apply">
+                                   <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
+                                   <div class="item-block-left fl paTop22 maL20 W312">
+                                       <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="messageLink('combi',item.demandId)">{{infoExtrac(item.job)}}</a></h2>
+                                       <p>{{infoShow(infoExtrac(item.profession),'profession')}}<i class="depart">|</i>{{infoShow(item.professionCount,'stuscale')}}<i class="depart">|</i>{{infoShow(item.schoolType,'uniclass')}}</p>
+                                       <p>培养方式：{{item.trainType}}</p>
+                                       <p class="item-date">申请日期：{{dateExtrac(item.createTime)}}</p>
+                                   </div>
+                                   <div class="item-block-right fl fSize14 LH30 pRel uni-apply-message">
+                                       <p class="t-right">公司名称：{{item.userName}}</p>
+                                       <ul class="state-line lis-inline maT15 feedState">
+                                            <li class="on"><i class="feedstate-icon"></i><span>已发出</span><i :class="{on:item.readStatus!=0}" class="feed-icon-bind"></i></li>
+                                            <li :class="{on:item.readStatus!=0}"><i class="feedstate-icon"></i><span>已查看</span><i :class="{on:item.status!=0}" class="feed-icon-bind"></i></li>
+                                            <li :class="{on:item.status==1||item.status==2}"><i class="feedstate-icon"></i>
+                                                <span v-show="item.status==0||!item.status">已反馈</span>
+                                                <span class="color-green" v-show="item.status==1">同意</span>
+                                                <span class="color-red" v-show="item.status==2">不合适</span>
+                                            </li>
+                                       </ul>
+                                   </div>
+                              </div>
+                         </template>
+                        </li>
+                        <li v-show="message.combi.results.length==0">
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <pagination :showpages="showpage(message.combi.totalpages)" :totalpages="message.combi.totalpages" type="msg-combi" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                </div>
+            </div>
+            <div class="uni-message recruit-msg">
+                <div class="ListBox">
+                    <div class="hd LH-H58 bg-white">
+                        <!--<dropdown classes="state" :options="['发出的邀请','收到的邀请']" v-model="message.combi.state"></dropdown>-->
+                        <p class="fr fSize14 maR30">我收到的消息<span class="color-orange2 maL10 maR10">{{message.recruit.totalitems}}</span>个</p>
+                    </div>
+                    <ul class="info-items H470">
+                        <li v-for="(item,index) in message.recruit.results">
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
+                                <div class="item-block-left fl paTop22 W328 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="messageLink('jobfair',item.jobFairId)">{{item.title}}</a></h2>
+                                    <p>{{cityExtrac(item.jobFairAddress)}}<i class="depart">|</i>{{infoShow(item.professionCount,'stuscale')}}<i class="depart">|</i>{{infoShow(infoExtrac(item.profession),"profession")}}</p>
+                                    <p class="item-date">招聘会时间：{{item.startTime}}</p>
+                                </div>
+                                <div class="item-block-right fl fSize14 LH25 maT10">
+                                    <p>申请企业名称：{{item.applyUserName}}</p>
+                                    <p>{{item.applyUserProperty}}<i class="depart">|</i>{{item.applyUserScale}}<i class="depart">|</i>{{item.applyUserType}}</p>
+                                    <div class="message-btn LH-H35 pRel">
+                                        <button class="color-orange-f7 to-contact" type="button" @click="popCard(item)">查看对方名片</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li v-show="message.recruit.results.length==0">
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <pagination :showpages="showpage(message.recruit.totalpages)" :totalpages="message.recruit.totalpages" type="msg-recruit" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                </div>
+            </div>
+            <div class="vip-center">
+                <ul class="vip-navs lis-inline LH-H37 fSize18 color-gray6 t-center" @click="selvipnav($event.target)">
+                    <li class="on vip-li">信息刷新<i class="nav-line"></i></li>
+                    <li class="vip-li">信息置顶<i class="nav-line"></i></li>
+                    <li class="vip-li">信息匹配<i class="nav-line"></i></li>
+                    <li class="vip-li">品牌推广<i class="nav-line"></i></li>
+                    <li class="vip-li">VIP中心<i class="nav-line"></i></li>
+                </ul>
+                <div class="vip-cont vip-service clearfix on">
+                    <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic01.jpg"/></i>
+                    <div class="fl fSize14 vip-cont-text maL33">
+                        <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-1"></i>刷新</h2>
+                        <p class="LH30 maB20">让老的信息重新往前排，同时可以突破橱窗的显示限制，让你的信息排名重新往前排。</p>
+                        <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-2"></i>价格</h2>
+                        <p class="LH30">信息刷新校企每一个用户每一个类目有三次免费刷新机会。</p>
+                        <p class="LH30">单次购买刷新<span class="color-red">1</span>元/次，可在发布的信息页面进行操作刷新。</p>
+                        <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
+                    </div>
+                </div>
+                <div class="vip-cont vip-service clearfix">
+                    <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic02.jpg"/></i>
+                    <div class="fl fSize14 vip-cont-text maL33">
+                        <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-1"></i>置顶</h2>
+                        <p class="LH30 maB20">让您的信息排在列表页最上方，比刷新信息还要靠前！更可点亮专属<span class="color-red">王冠图标</span>让信息更醒目，效果翻至3.5倍。</p>
+                        <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-2"></i>价格</h2>
+                        <p class="LH30">单次购买置顶<span class="color-red">10</span>元/次，可在发布的信息息页面进行操作置顶。</p>
+                        <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
+                    </div>
+                </div>
+                <div class="vip-cont vip-service clearfix">
+                    <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic03.jpg"/></i>
+                    <div class="fl fSize14 vip-cont-text maL33">
+                        <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-3"></i>信息匹配</h2>
+                        <p class="LH30 maB20">根据高校详细需求，平台为你第一时间进行配对，企业需求信息匹配，无需手动搜索，一键解决需求配对。</p>
+                        <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-2"></i>价格</h2>
+                        <p class="LH30">单次购买匹配<span class="color-red">10</span>元/条，可在会员中心进行操作购买。</p>
+                        <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
+                    </div>
+                </div>
+                <div class="vip-cont vip-service clearfix">
+                    <i class="pic-wrapper fl vip-cont-disp"><img src="images/vip-pic04.jpg"/></i>
+                    <div class="fl fSize14 vip-cont-text maL33">
+                        <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-4"></i>品牌推广</h2>
+                        <p class="LH30 maB20">根据高校详细需求，平台为你第一时间进行配对，企业需求信息匹配，无需手动搜索，一键解决需求配对。</p>
+                        <h2 class="fSize18 LH-H45"><i class="pic-icon maR10 icon-vip-2"></i>价格</h2>
+                        <p class="LH30">单次购买推广展位<span class="color-red">500</span>元/月，会员特权购买当中，会在每一个类目中展示。</p>
+                        <p class="LH30"><span class="color-orange-f7">会员</span>购买更优惠哦，低至<span class="color-red">7</span>折每次。</p>
+                    </div>
+                </div>
+                <div class="vip-cont vip-recharge">
+                    <p class="LH-H54"><span class="color-orange-f7">VIP</span>会员享受<span style="color:#d19100">信息刷新</span>优先展示，刷新置顶低至<span class="color-red">7</span>折，是各位小伙伴的首选，目前已有10W+伙伴享受VIP特权服务。</p>
+                    <p class="LH-H60 bg-gray-f7 paLeft20">VIP等级：<span class="color-orange-f7 fSize18 maR80">地主</span>账户余额：<b class="color-red"><span class="fSize18">{{priceInteger(account.money)}}</span>{{priceDecimal(account.money)}}</b>元<button class="recharge-btn" @click.stop="recharge">账户充值</button></p>
+                    <vip-record :userid="account.userId"></vip-record>
+                    <div class="maB38">
+                        <h3 class="LH-H50 fSize16 paLeft16">会员权限说明</h3>
+                        <ul class="tarif-info">
+                            <li v-for="(item,index) in vip.tarif" class="clearfix">
+                                <div class="fl W160 t-center">
+                                    <i class="pic-icon maT32" :class="'icon-crown-'+(index+1)"></i>
+                                    <p class="LH52">{{item.level}}</p>
+                                </div>
+                                <div class="fl LH30 fSize12 paLeft12">
+                                    <p>1.信息置顶（每周{{item.prior}}次）</p>
+                                    <p>2.刷新（每天{{item.refresh}}次）</p>
+                                    <p>3.广告投放（一个版面展示，每次5分钟，会员内每天展示）</p>
+                                    <p>4.高校匹配信息优先（每月{{item.mapping}}条）</p>
+                                </div>
+                                <div class="fr paTop5 t-center W185 tarif-buy">
+                                    <p class="LH56 fSize14">收费：{{item.price}}/月</p>
+                                    <button type="button" class="tarif-btn">购买</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="uni-coop">
+                <div class="ListBox">
+                    <div class="hd LH-H58 bg-white">
+                        <dropdown classes="state" :options="['校企合作','招聘会']" v-model="coop.state"></dropdown>
+                        <p class="fr fSize14 maR30">我合作的企业<span class="color-orange2 maL10 maR10">{{coop.totalitems}}</span>个</p>
+                    </div>
+                    <ul class="info-items H470">
+                        <li v-for="(item,index) in coop.results">
+                            <div class="paLeft29 clearfix H128 pRel" v-if="coop.applystatus==1">
+                                <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
+                                <div class="item-block-left fl paTop22 W275 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="coopLink(item)">{{item.coopName}}</a></h2>
+                                    <p>{{item.coopProperty}}<i class="depart">|</i>{{item.coopScale}}<i class="depart">|</i>{{item.coopType}}</p>
+                                    <p>校企培训方式：{{item.coopTrainType}}</p>
+                                    <p class="item-date">合作开始日期：{{dateExtrac(item.coopCreateTime)}}</p>
+                                </div>
+                                <div class="item-block-right fl fSize14 LH28 maT10">
+                                    <p>合作专业：</p>
+                                    <p>{{infoExtrac(item.coopProfession)}}</p>
+                                    <a class="more-info" :href="coopLink(item)">了解更多<i>>></i></a>
+                                </div>
+                                <button class="btn-comment" @click="popComment(item)">评价</button>
+                            </div>
+                            <div class="paLeft29 clearfix H128 pRel" v-else>
+                                <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
+                                <div class="item-block-left fl paTop22 W275 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="coopLink(item)">{{item.coopName}}</a></h2>
+                                    <p>{{item.coopProperty}}<i class="depart">|</i>{{item.coopScale}}<i class="depart">|</i>{{item.coopType}}</p>
+                                    <p>招聘会地址：{{item.coopAddress}}</p>
+                                    <p class="item-date">招聘会日期：{{dateExtrac(item.startTime)}}</p>
+                                </div>
+                                <div class="item-block-right fl fSize14 LH28 maT10">
+                                    <p>招聘岗位：</p>
+                                    <p>{{infoExtrac(item.coopJob)}}</p>
+                                    <a class="more-info" :href="coopLink(item)">了解更多<i>>></i></a>
+                                </div>
+                                <button class="btn-comment" @click="popComment(item)">评价</button>
+                            </div>
+                        </li>
+                        <li v-show="coop.results.length==0">
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <p class="t-center fSize18 LH128">暂无数据，请速去添加~</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <pagination :showpages="showpage(coop.totalpages)" :totalpages="coop.totalpages" type="coop" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                </div>
+            </div>
+            <config-password :account="config" usertype="1" class="conf-keyword ListBox"></config-password>
+            <div class="conf-account paLeft40 paRight40">
+                <h2 class="fSize24 LH-H63 maT9">绑定账号</h2>
+                <div class="safeLevel maB12 H80 bg-gray-f7 pRel">
+                    <h3 class="paLeft40 fSize18 LH-H40"><i class="pic-icon W20 maR10 icon-safe"></i>安全等级</h3>
+                    <div class="LH-H30 paLeft80 fSize14"><span class="maR12 color-red2">危险</span>
+                        <div class="safe-range pRel">
+                            <p id="safe-progress"></p>
+                            <div class="r-pointer LH26 H40 t-center W46 color-white">{{config.safeLevel}}</div>
+                        </div><span class="maL12 color-green">安全</span></div>
+                    <i class="trigle-up"><img src="images/trigle-up02.jpg"/></i>
+                </div>
+                <p class="fSize14 LH-H35">登录账号：{{config.loginName}}</p>
+                <p class="fSize14 LH-H35 maB22">绑定后，你可以同时使用以下方式找回密码</p>
+                <ul class="bind-acc fSize16">
+                    <li><i class="pic-icon icon-phone"></i>{{config.bind.mobile}}<button class="maL20 chg-phone" v-show="config.bind.mobile!=''" @click.stop="modifyMobile">更换绑定手机号</button><button class="chg-phone" v-show="config.bind.mobile==''" @click.stop="modifyMobile">绑定手机号</button></li>
+                    <li><i class="pic-icon icon-email"></i>{{config.bind.email}}<button class="maL20" @click.stop="modifyEmail" v-show="config.bind.email!=''">更换绑定邮箱</button><button @click.stop="modifyEmail" v-show="config.bind.email==''">绑定邮箱</button></li>
+                    <li><i class="pic-icon icon-wechat"></i><button class="wechatBind" @click.stop="bindWechat">绑定微信账号</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="app-modal" v-show="showModal" @click="hidemodal($event.target)" v-cloak>
+        <minicard class="pop-box-shadow pAbs" v-show="show.minicard" :cardtype="cardInfo.cardtype" :infosets="cardInfo.infosets" @agree="agreeApply(cardInfo.applyId)" @deny="denyApply(cardInfo.applyId)"></minicard>
+        <div class="preview-file" v-show="show.preImg">
+            <img :src="preImgUrl" />
+        </div>
+        <div class="porto-upload W500" v-show="show.upload">
+            <h2 class="LH-H60 fSize24 color-white t-left bg-blueM paLeft30">编辑头像<i class="pic-wrapper LH-H40 W40 close" @click.stop="closePorto"><i class="pic-icon icon-close"></i></i>
+            </h2>
+            <div class="edit-area H407 bg-white">
+                <div class="clearfix">
+                    <div class="fl">
+                        <div class="imgBox W240 H248">
+                            <div class="thumbBox">
+
+                            </div>
+                            <div class="spinner disNo">Loading...</div>
+                        </div>
+                        <div class="img-handle t-center LH-H36 maT8 paLeft20">
+                            <button class="zoom zoom-out">-</button>
+                            <button class="zoom zoom-in">+</button>
+                        </div>
+                    </div>
+                    <div class="fl upload-block">
+                        <div class="pRel">
+                            <a href="javascript:void(0)" class="upload-img">
+                                <label for="upload-file"><span>+</span>选择照片</label>
+                            </a>
+                            <input type="file" class="upload-input" name="upload-file" id="upload-file" />
+                        </div>
+                        <p class="maT13 LH30 fSize16 color-gray6">支持jpg、gif、png格式，文件小于5M</p>
+                    </div>
+                </div>
+                <div class="submit-btns t-center maT28"><button class="bg-blueL" id="btnSubmit">确定</button><button class="bg-orange2" @click="closePorto">取消</button></div>
+            </div>
+        </div>
+        <bind-mobile-box v-show="show.mobile" :userid="account.userId" @closebox="closeMobile"></bind-mobile-box>
+        <bind-email-box v-show="show.email" :userid="account.userId" @closebox="closeEmail"></bind-email-box>
+        <div class="wechat-bind W500" v-show="show.wechat">
+            <h2 class="LH-H60 fSize24 color-white t-center bg-blueM">微信登录<i class="pic-wrapper LH-H40 W40 close" @click.stop="closeWechat"><i class="pic-icon icon-close"></i></i>
+            </h2>
+            <div class="bg-white paTop14 t-center paBot53">
+                <i class="barCode pic-wrapper W284 LH-H284 bg-grayC maB22"></i>
+                <p class="LH-H40 W220 t-center bg-orange2 color-white maCenter" style="border-radius: 20px;">请使用微信扫一扫二维码登录</p>
+            </div>
+        </div>
+        <message-box :userid="account.userId" :showmsg="show.message" @closebox="closeMsg" v-show="show.message"></message-box>
+        <div class="comment-box pRel pop-box-shadow pAbs" v-show="show.comment">
+            <h2 class="comment-header">评价</h2>
+            <textarea class="comment-cont" v-model="comment.text" placeholder="请输入400字以内的评价" @input="checkText('comment')"></textarea>
+            <p class="LH30 t-right paRight20 fSize14">您还可以输入 {{remainText(comment.text)}} 字</p>
+            <div class="comment-operation">
+                <button class="bg-orange2" @click="confirmComment">确定</button><button class="bg-gray-ae" @click="cancelComment">取消</button>
+            </div>
+        </div>
+        <stick-box :stickitem="sticky.stickItem" :userid="account.userId" :showsticky="show.stickybox" @closesticky="closeSticky" v-show="show.stickybox"></stick-box>
+        <fresh-box :freshitem="fresh.freshItem" :userid="account.userId" :showfresh="show.freshbox" @closefresh="closeFresh" v-show="show.freshbox"></fresh-box>
+    </div>
+    <div class="bot paTop8 t-center bot-account" id="app-footer">
+        <common-footer :userid="userId"></common-footer>
+    </div>
+    <script src="js/commons.js"></script>
+    <script src="js/uniCenter.js"></script>
+</body>
+
+</html>

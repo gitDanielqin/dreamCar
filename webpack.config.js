@@ -19,7 +19,7 @@ module.exports = {
     entry: entries(),
     output: {
         filename: "js/[name].js",
-        path: __dirname + '/dist',
+        path: __dirname + '/build',
     },
     module: {
         // rules: [{
@@ -47,7 +47,8 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg|gif)$/,
-                loader: 'url-loader?limit=10240&name=../images/[hash:8].[name].[ext]'
+                // loader: 'url-loader?limit=10240&name=../images/[hash:8].[name].[ext]'
+                loader: 'url-loader?limit=10240&name=../images/[name].[ext]'
             },
             {
                 test: /\.vue$/,
@@ -75,7 +76,7 @@ module.exports = {
         }
     },
     devServer: {
-        contentBase: "./dist", //本地服务器所加载的页面所在的目录
+        contentBase: "./build", //本地服务器所加载的页面所在的目录
         historyApiFallback: true, //不跳转
         inline: true //实时刷新
     }

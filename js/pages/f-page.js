@@ -1,10 +1,10 @@
 /**
  * Created by Administrator on 2017/1/14.
  */
-// import $ from "../libs/jquery-3.1.0.min";
-// require("../../css/base.css")
-// require("../../css/widget.css")
-// require("../../css/footer.css")
+import $ from "../libs/jquery-3.1.0.min";
+require("../../css/base.css")
+require("../../css/widget.css")
+require("../../css/footer.css")
 $(function() {
     function _init() {
         initEventBind();

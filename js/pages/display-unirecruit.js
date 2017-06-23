@@ -1,18 +1,21 @@
 /**
  * Created by xuanyuan on 2016/12/31.
  */
-// import $ from "../libs/jquery-3.1.0.min";
-// var Vue = require("../libs/vue");
-// require("../common/common")
-// require("../components/dropdown")
-// require("../components/pagination")
-// require("../../data/commondata")
-// require("../../data/major")
-// require("../../data/position")
-// require("../../data/workareas")
-// require("../../css/base.css")
-// require("../../css/widget.css")
-// require("../../css/display-comm.css")
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../libs/sweetalert.min");
+require("../common/common")
+require("../components/dropdown")
+require("../components/pagination")
+require("../components/common-footer")
+require("../../data/commondata")
+require("../../data/major")
+require("../../data/position")
+require("../../data/workareas")
+require("../../css/base.css")
+require("../../css/sweetalert.css")
+require("../../css/widget.css")
+require("../../css/display-comm.css")
 var parObj = EventUtils.urlExtrac(window.location); //地址参数对象
 var respObj = {}; //页面信息
 var accountObj = {} //登录用户信息
@@ -46,6 +49,7 @@ function infoRequest() {
                 appResult.unirecruitList.totalitems = resp.data.totalRow;
                 appResult.unirecruitList.results = resp.data.list;
             } else {
+                appResult.unirecruitList.totalpages = 1;
                 appResult.unirecruitList.totalitems = 0;
                 appResult.unirecruitList.results = [];
             }
@@ -67,6 +71,7 @@ function infoRequest() {
                 appResult.unirecruitList.totalitems = resp.data.totalRow;
                 appResult.unirecruitList.results = resp.data.list;
             } else {
+                appResult.unirecruitList.totalpages = 1
                 appResult.unirecruitList.totalitems = 0;
                 appResult.unirecruitList.results = [];
             }
@@ -552,6 +557,7 @@ var appModal = new Vue({
                             appResult.unirecruitList.totalitems = resp.data.totalRow;
                             appResult.unirecruitList.results = resp.data.list;
                         } else {
+                            appResult.unirecruitList.totalpages = 1;
                             appResult.unirecruitList.totalitems = 0;
                             appResult.unirecruitList.results = [];
                         }
@@ -679,6 +685,7 @@ function resultsRequest(page) {
                 $(".results").css("background", "none");
             }
         } else {
+            appResult.unirecruitList.totalpages = 1;
             appResult.unirecruitList.results = [];
             appResult.unirecruitList.totalitems = 0;
             //背景图像

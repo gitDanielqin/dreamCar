@@ -67,7 +67,6 @@
 }
 
 .imageflow .slider {
-    background-image: url(../../Images/Index/slider.png);
     background-repeat: no-repeat;
     height: 14px;
     margin: -6px 0 0 -7px;
@@ -89,13 +88,11 @@
 }
 
 .imageflow .previous {
-    background: url(../../Images/Index/button_left.png) top left no-repeat;
     float: left;
     margin: -7px 0 0 -30px
 }
 
 .imageflow .next {
-    background: url(../../Images/Index/button_right.png) top left no-repeat;
     float: right;
     margin: -7px -30px 0 30px
 }

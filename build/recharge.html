@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>充值中心</title>
+    <link href="css/commons.css" rel="stylesheet">
+    <link href="css/recharge.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="top bg-gray3 H100 color-white">
+        <div class="inner">
+            <img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" />
+            <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
+            <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">充值中心</h2>
+        </div>
+    </div>
+    <div class="bg-gray-f2">
+        <div class="inner bg-white fSize18 paBot53">
+            <p class="LH-H78 paLeft130"><label>公告：</label><span class="color-orange">【特别提示】用于刷新信息、信息置顶、智能推广、等在线服务充值到VIP中心推广余额中。</span></p>
+            <div class="paLeft130 LH-H68 pRel"><label>充值金额：</label><input type="text" id="chargeAmount" class="LH-H38 paLeft10 W108 charge-val fSize20" />元
+                <p class="charge-hint fSize14 W170 disNo"><i class="pic-icon icon-exclame maR5"></i>充值金额不能修改</p>
+            </div>
+            <div class="paLeft130 LH40 pRel"><label>支付方式：</label>
+                <ul class="lis-inline disInline maL10 pay-way v-mid fSize14">
+                    <!--<li name="bank-pay">网银支付<span class="border-bot"></span></li>
+                    <li name="fast-pay">快捷支付<span class="border-bot"></span></li>
+                    <li name="plattform-pay">平台支付<span class="border-bot"></span></li>-->
+                    <li class="on" name="barcode-pay">扫码支付<span class="border-bot"></span></li>
+                    <!--<li name="bank-pay">余额支付<span class="border-bot"></span></li>-->
+                </ul>
+            </div>
+            <div class="W796 pay-content maL90">
+                <div class="bank-pay paLeft38 disNo">
+                    <h2 class="fSize14 LH-H50 ">请选择支付的银行卡<span class="color-orange-fc">（请确保您的银行卡已开通网银）</span></h2>
+                    <table class="t-center">
+                        <tr class="bank-name">
+                            <td><img src="images/logo-bank1.png" /><span>工商银行</span></td>
+                            <td><img src="images/logo-bank2.png" /><span>农业银行</span></td>
+                            <td><img src="images/logo-bank3.png" /><span>中国银行</span></td>
+                            <td><img src="images/logo-bank4.png" /><span>建设银行</span></td>
+                        </tr>
+                        <tr class="LH40">
+                            <td><input type="radio" name="bank" /></td>
+                            <td><input type="radio" name="bank" /></td>
+                            <td><input type="radio" name="bank" /></td>
+                            <td><input type="radio" name="bank" /></td>
+                        </tr>
+                    </table>
+                    <button class="LH40 W150 bg-orange2 color-white maT40 fSize18">立即支付</button>
+                    <p class="LH-H60 pay-agreement fSize14"><span class="disInline checked-agree"></span>我已阅读同意<a href="#" class="color-orange-fc maL6">校企推广余额服务协议</a> </p>
+                </div>
+                <div class="fast-pay paLeft38 disNo">
+                    <h2 class="fSize14 LH-H50 ">请选择支付的银行卡<span class="color-orange-fc">（请确保您的银行卡已开通网银）</span></h2>
+                    <h2 class="fSize14 LH-H35 maB7">借记卡快捷（需根据银行预留手机号确认支付）</h2>
+                    <ul class="lis-inline maB9">
+                        <li><input type="radio" name="fast-bank"><i class="pic-wrapper"><img src="images/logo-bank1.png"/></i>工商银行</li>
+                        <li><input type="radio" name="fast-bank"><i class="pic-wrapper"><img src="images/logo-bank2.png"/></i>农业银行</li>
+                        <li><input type="radio" name="fast-bank"><i class="pic-wrapper"><img src="images/logo-bank3.png"/></i>中国银行</li>
+                        <li><input type="radio" name="fast-bank"><i class="pic-wrapper"><img src="images/logo-bank4.png"/></i>建设银行</li>
+                        <li style="border-right: none;"><input type="radio" name="fast-bank"><i class="pic-wrapper"><img src="images/icon-bank5.png"/></i>招商银行</li>
+                    </ul>
+                    <h2 class="fSize14 LH-H35 maB7">借记卡快捷（需根据银行预留手机号确认支付）</h2>
+                    <ul class="lis-inline maB9">
+                        <li><input type="radio" name="fast-credit"><i class="pic-wrapper"><img src="images/logo-bank1.png"/></i>工商银行</li>
+                        <li><input type="radio" name="fast-credit"><i class="pic-wrapper"><img src="images/logo-bank2.png"/></i>农业银行</li>
+                        <li><input type="radio" name="fast-credit"><i class="pic-wrapper"><img src="images/logo-bank3.png"/></i>中国银行</li>
+                        <li><input type="radio" name="fast-credit"><i class="pic-wrapper"><img src="images/logo-bank4.png"/></i>建设银行</li>
+                        <li style="border-right: none;"><input type="radio" name="fast-credit"><i class="pic-wrapper"><img src="images/icon-bank5.png"/></i>招商银行</li>
+                    </ul>
+                    <button class="LH40 W150 bg-orange2 color-white maT20 fSize18">立即支付</button>
+                    <p class="LH-H60 pay-agreement fSize14"><span class="disInline checked-agree"></span>我已阅读同意<a href="#" class="color-orange-fc maL6">校企推广余额服务协议</a> </p>
+                </div>
+                <div class="plattform-pay paLeft38 disNo">
+                    <h2 class="LH-H50 fSize14">请选择以下合作平台进行支付</h2>
+                    <div class="maT10 plattform-sel"><i class="pic-wrapper W150 LH-H50 maR30 on"><img src="images/logo-alipay.jpg"/></i><i class="pic-wrapper"><img src="images/logo-wepay.jpg"/></i> </div>
+                    <button class="LH40 W150 bg-orange2 color-white maT40 fSize18">立即支付</button>
+                    <p class="LH-H60 pay-agreement fSize14"><span class="disInline checked-agree"></span>我已阅读同意<a href="#" class="color-orange-fc maL6">校企推广余额服务协议</a> </p>
+                </div>
+                <div class="barcode-pay paLeft38">
+                    <h2 class="LH-H50 fSize14">请选择以下合作平台进行支付</h2>
+                    <div class="maT10 plattform-sel">
+                        <i class="pic-wrapper W150 LH-H50 maR30 on" name="alibarcode"><img src="images/logo-alipay.jpg"/></i>
+                        <i class="pic-wrapper" name="webarcode"><img src="images/logo-wepay.jpg"/></i>
+                    </div>
+                    <button class="LH40 W150 bg-orange2 color-white maT40 fSize18" id="payBtn">立即支付</button>
+                    <p class="LH-H60 pay-agreement fSize14"><span class="disInline checked-agree"></span>我已阅读同意<a href="#" class="color-orange-fc maL6" id="payAgreebox">校企推广余额服务协议</a> </p>
+                </div>
+            </div>
+            <div class="paLeft130 LH32 fSize14">
+                <h3 class="fSize18 LH40 maT30">温馨提示
+                    <hr class="maL14 W685 line disInline v-mid" style="border:1px solid #ccc;" />
+                </h3>
+                <h4 class="fSize14">网银使用须知</h4>
+                <ul class="lis-inline color-gray79">
+                    <li>1.尽量使用ie浏览器</li>
+                    <li>2.过程中请勿按浏览器“后退”键</li>
+                    <li>3.提交支付后，将转入银行的网站，请根据页面提示操作</li>
+                </ul>
+                <h4 class="fSize14">如果提交后页面打不开，可以尝试</h4>
+                <ul class="lis-inline color-gray79">
+                    <li>1.过3分钟后再刷新页面</li>
+                    <li>2.清理IE缓存</li>
+                    <li>3.卸载3721或google工具条4.换个浏览器或换个上网环境</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="bot-nav H70 t-center color-gray79 paBot14 bg-gray3">
+        <ul class="lis-inline LH-H20 site-nav paTop18 ">
+            <li><a href="index.html">校企首页</a><span>|</span></li>
+            <li><a href="footer-page.html?descript">关于校企</a><span>|</span></li>
+            <li><a href="footer-page.html?coop">网站合作</a><span>|</span></li>
+            <li><a href="footer-page.html?help">帮助中心</a><span>|</span></li>
+            <li><a href="footer-page.html?employ">招贤纳士</a><span>|</span></li>
+            <li><a href="footer-page.html">友情链接</a><span>|</span></li>
+            <li><a href="footer-page.html">联系我们</a></li>
+        </ul>
+        <p class="LH-H20">校企职通车版权所有©2017XIAOQI 浙ICP备17007975号-2 浙公网安备3481464号</p>
+    </div>
+    <div class="modal disNo">
+        <div class="recharge-agreement">
+            <div class="H57 maB42" style="border-bottom: 2px solid #2ea8e6; position: relative;">
+                <h2 class="title bg-white LH-H47 W242 t-center fSize18">校企推广余额服务协议</h2>
+            </div>
+            <div style="padding: 0 25px;">
+                <h3>欢迎使用校企职通车的服务</h3>
+                <p>充值校企职通车余额前，请您仔细阅读以下条款，你需要理解并同意以下条款所述事项才能完成充值、享受校企职通车网的校企职通车余额服务功能。本协议是《校企职通车使用协议》的有效组成部分，本协议未涉及的事项依照《校企职通车使用协议》处理。校企职通车网的校企职通车余额不适用于校企职通车团购业务的充值和款项结算。</p>
+                <h3>一、校企职通车网的权利义务：</h3>
+                <p>1、校企职通车网余额服务的运作权由杭州煌巢信息科技有限公司享有并行使。校企职通车网按照《校企职通车余额服务协议》及余额管理页面其他相关操作规则为广大用户提供余额服务。</p>
+                <p>2、校企职通车网有权根据市场需求、内部管理需要修改《校企职通车余额服务协议》及相关余额操作规则。上述协议及规则等发生变更的，校企职通车网会提前在余额管理页面向用户发布公告。公告一旦发布，则视为用户已经完全知悉并需要遵守新的服务协议或使用规则。</p>
+                <p>3、校企职通车网将尽力维护余额服务的安全性和方便性，但对用户使用余额过程中出现的信息删除或储存失败等不承担任何责任（如：用户手动自主删除置顶信息，余额不予返还）。</p>
+                <p>4、校企职通车网保留判定用户的行为是否符合校企职通车余额服务条款要求的权利，如果用户违背了余额服务条款的规定，校企职通车网有权终止提供余额服务。</p>
+                <p>5、校企职通车网不提供用户间的余额互转服务。特殊情况下经校企职通车网认定可以转余额的情况下，用户有责任出示原账户内校企职通车余额的来源证明，并由用户自身承担余额互转可能引发的任何风险。</p>
+                <p>6、对于任何用户从非校企职通车网官方渠道获得的校企职通车余额，校企职通车不予承认，并保持随时清零的权利。校企职通车网官方渠道指<br/>(1)用户在校企职通车网上进行的在线充值。<br/> (2)用户从杭州煌巢信息科技有限公司工作人员处购买，并能提供有效合同、发票等由杭州煌巢信息科技有限公司出具的合法凭证。
+                </p>
+                <h3>二、用户的权利与义务</h3>
+                <p>1、校企职通车余额用户单独承担发布内容的责任。用户保证对校企职通车余额服务的使用是符合所有适用于服务的地方法律、国家法律和国际法律标准的。用户承诺：(1)在校企职通车网的网页上发布信息或者使用校企职通车网的余额服务时必须遵守中国有关法律法规，不得在校企职通车网的网页上或者使用校企职通车网的余额服务制作、复制、发布、传播以下信息：<br/> (a) 反对宪法所确定的基本原则的；<br/> (b) 危害国家安全，泄露国家秘密，颠覆国家政权，破坏国家统一的；<br/> (c)
+                    损害国家荣誉和利益的；
+                    <br/> (d) 煽动民族仇恨、民族歧视，破坏民族团结的；<br/> (e) 破坏国家宗教政策，宣扬邪教和封建迷信的；<br/> (f) 散布谣言，扰乱社会秩序，破坏社会稳定的；<br/> (g) 散布淫秽、色情、赌博、暴力、凶杀、恐怖或者教唆犯罪的；<br/> (h) 侮辱或者诽谤他人，侵害他人合法权益的；<br/> (I) 含有法律、行政法规禁止的其他内容的。<br/> (2)在校企职通车网的网页上发布信息或者使用校企职通车网的余额服务时还必须符合其他有关国家和地区的法律规定以及国际法的有关规定。
+                    <br/> (3)不利用校企职通车网的余额服务从事以下活动：
+                    <br/> (a) 未经允许，进入计算机信息网络或者使用计算机信息网络资源的；<br/> (b) 未经允许，对计算机信息网络功能进行删除、修改或者增加的；<br/> (c) 未经允许，对进入计算机信息网络中存储、处理或者传输的数据和应用程序进行删除、修改或者增加的；<br/> (d) 故意制作、传播计算机病毒等破坏性程序的；<br/> (e) 其他危害计算机信息网络安全的行为。<br/> (4)不以任何方式干扰校企职通车网的校企职通车余额服务。
+                    <br/> (5)遵守校企职通车网的所有其他规定和程序。
+                    <br/> 用户需对自己在使用校企职通车网的校企职通车余额服务过程中的行为承担法律责任。用户理解，如果校企职通车网发现其网站传输的置顶信息明显属于上段第(1)条所列内容之一，依据中国法律，校企职通车网有义务立即停止传输，保存有关记录，向国家有关机关报告，并且删除含有该内容的地址、目录或关闭服务器。
+                    <br/> 若用户的行为违反上述其他承诺条款的，校企职通车网将作出独立判断立即取消余额用户服务帐号，同时余额不予退还。
+                </p>
+                <p>2、用户使用校企职通车网的余额服务属于自愿行为，用户明确同意不管以何种方式购买余额后均不可要求退款，也不可兑换成现金，只能用于校企职通车网产品的消费抵扣。特殊情况下校企职通车余额兑换成现金的，校企职通车网有权收取合理的手续费。</p>
+                <p>3、用户需及时向校企职通车网提供准确、有效的个人信息。因用户提供信息失实或违反以上规定的，校企职通车网有权终止提供校企职通车余额服务。</p>
+                <p>4、用户对余额账户负有妥善保管的义务，因用户自身的不当行为，如对登陆密码保护不善，将自己账户交由他人使用等情况造成余额损失的，用户应当自行承担损失。<br/> 用户的不当行为包括但不限于以下行为：
+                    <br /> (1)用户不正当使用余额产品服务的行为；
+                    <br /> (2)用户私自进行余额交易的行为；
+                    <br /> (3)用户非法使用余额服务的行为等。
+                </p>
+                <p>5、为了保证用户使用校企职通车网的校企职通车余额的便捷性和安全性，用户在使用网上银行的充值方式时，校企职通车网可能会随机提供不同的第三方支付平台完成充值，用户对此表示同意和接受。</p>
+            </div>
+        </div>
+    </div>
+    <script src="js/commons.js"></script>
+    <script src="js/recharge.js"></script>
+</body>
+
+</html>

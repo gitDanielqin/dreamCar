@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>HR中心</title>
+    <link href="css/commons.css" rel="stylesheet">
+    <link href="css/hrCenter.css" rel="stylesheet" />
+</head>
+
+<body class="bg-gray-f2">
+    <div class="top bg-gray3 H100 color-white" id="app-top" v-cloak>
+        <div class="inner">
+            <a :href="homeLink"><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" /></a>
+            <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
+            <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">企业中心</h2>
+            <div class="fr navs maT42">
+                <a :href="homeLink"><i class="pic-icon icon-home"></i></a>
+                <a :href="centerLink"><i class="pic-icon icon-account"></i></a>
+                <a class="msg-center pRel" href="javascript:void(0)" @click.stop="showMsg"><i class="pic-icon icon-msg"></i><i class="msg-info"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="main inner paTop20" id="hr-app" v-cloak>
+        <h2 class="LH-H50 bg-gray-e6 paLeft45 W915"><span class="fSize24 color-blueL">HR中心</span>
+            <ul class="lis-inline disInline v-top maL80 hr-navs" @click="hrnav($event.target)">
+                <li class="on cv-manager">应聘管理</li>
+                <li class="pos-manager">职位管理</li>
+            </ul><button class="pub-pos" @click="publish">发布职位</button></h2>
+        <!--招聘管理内容 -->
+        <div class="mainCont maT20 clearfix maB60" v-show="show.cvmanager">
+            <dl class="W178 sider fl" @click="selnav($event.target)">
+                <dt class="on resume-box">待处理简历<span class="hint" v-show="resumes.handleCount>0">{{resumes.handleCount}}</span></dt>
+                <dd class="resume-unview">未查看</dd>
+                <dd class="resume-viewed">已查看</dd>
+                <dt class="interview-box">已通知面试</dt>
+                <dd class="inter-unsuit">不合适</dd>
+                <dd class="inter-suit">已录用</dd>
+            </dl>
+            <div class="resumeBox fl maL10 W770">
+                <div class="ListBox resume-box">
+                    <div class="hd LH-H58 bg-white">
+                        <dropdown classes="state" :options="['招聘会','企业直聘']" v-model="resumes.resumeType"></dropdown>
+                        <p class="disInline fSize14 maL195">收到的简历<span class="color-orange2 maL10 maR10">{{resumes.totalitems}}</span>个</p>
+                        <p class="fr" v-show="resumes.resumeType=='企业直聘'">
+                            <span class="fSize14 maR5">岗位名称</span>
+                            <dropdown classes="state-right" :options="database.posList" v-model="resumes.resumePos"></dropdown>
+                        </p>
+                        <p class="fr" v-show="resumes.resumeType=='招聘会'">
+                            <span class="fSize14 maR5">招聘会日期</span>
+                            <dropdown classes="state-right" :options="database.jobfairList" v-model="resumes.jobfairDate"></dropdown>
+                        </p>
+                    </div>
+                    <ul class="info-items">
+                        <li v-for="item in resumes.cvList">
+                            <div class="paLeft29 clearfix H128 pRel">
+                                <div class="W90 H80 logo-pic disInline v-mid fl maT34"><img :src="item.userIcon" /></div>
+                                <div class="item-block-left fl paTop22 W345 maL20">
+                                    <h2 class="color-blueL fSize18 LH-H32">{{item.userName}}<button type="button" class="color-orange2 maL35 fSize14" @click="showCv(item)">查看简历</button></h2>
+                                    <p><span v-show="item.schoolName">{{item.schoolName}}</span><span v-show="!item.schoolName">学校不详</span><i class="depart">|</i>
+                                        <span v-show="infoExtrac(item.professional)">{{infoExtrac(item.professional)}}</span><span v-show="!infoExtrac(item.professional)">专业不详</span><i class="depart">|</i>
+                                        <span v-show="item.workTime!='0'">{{item.workTime}} 年工作经验</span><span v-show="item.workTime=='0'">暂无工作经验</span><i class="depart">|</i>
+                                        <span v-show="item.qualification">{{item.qualification}}</span><span v-show="!item.qualification">学历不详</span>
+                                    </p>
+                                    <p>申请职位：{{infoExtrac(item.job)}}</p>
+                                </div>
+                                <div class="item-block-right fl fSize14 LH25 maT10">
+                                    <p v-show="resumes.resultIndex<=2"><button type="button" class="invite-btn color-blueL" @click="invite(item)">邀请面试</button><button type="button" class="refuse-btn color-orange-f7" @click="deny(item)">不合适</button></p>
+                                    <p v-show="resumes.resultIndex==3"><button type="button" class="invite-btn color-blueL" @click="passCv(item)">录用</button><button type="button" class="refuse-btn color-orange-f7" @click="deny(item)">不合适</button></p>
+                                    <p v-show="resumes.resultIndex==4" class="fSize18 maT11"><span class="color-red">不合适</span></p>
+                                    <p v-show="resumes.resultIndex==5" class="fSize18 maT11"><span class="color-green">面试通过</span></p>
+                                    <p class="maT14">申请时间：{{item.createTime.split(" ")[0]}}</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li v-show="resumes.cvList.length==0" class="fSize20 LH144 t-center">暂无数据~</li>
+                    </ul>
+                    <pagination :showpages="showpage(resumes.totalpages)" :totalpages="resumes.totalpages" type="cv" @topage="topage" class="maT28 fSize14 fr"></pagination>
+                </div>
+            </div>
+        </div>
+        <!--职位管理内容  -->
+        <div class="mainCont maT20 clearfix maB60 posCont" v-show="!show.cvmanager">
+            <ul class="W178 pos-sider fSize18 fl" @click="selpos($event.target)">
+                <li class="on pos-jobfair">企业直聘</li>
+                <li class="pos-recruit">招聘会</li>
+            </ul>
+            <div class="ListBox fl maL10 W770">
+                <div class="hd LH-H58 bg-white">
+                    <p class="fSize14 t-center">我发布的职位<span class="color-orange2 maL10 maR10">{{position.totalitems}}</span>个</p>
+                </div>
+                <ul class="info-items">
+                    <li v-for="item in position.results">
+                        <div class="paLeft29 clearfix H128 pRel" v-if="position.posType==0">
+                            <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
+                            <div class="item-block-left fl paTop22 W315 maL20">
+                                <h2 class="color-blueL fSize18 LH-H32"><a :href="requireLink(item)">{{infoExtrac(item.job)}}</a></h2>
+                                <p><span class="color-orange-f7">{{infoShow(item.salary,'salary')}}</span><i class="depart">|</i>{{infoShow(infoExtrac(item.profession),'profession')}}<i class="depart">|</i>{{infoShow(item.workTime,'worktime')}}<i class="depart">|</i>{{infoShow(item.education,'edu')}}</p>
+                                <p>【{{cityExtrac(item.companyAddress)}}】岗位数：{{item.recruitCount}}人</p>
+                            </div>
+                            <div class="item-block-right fl fSize14 LH25 maT11">
+                                <p>{{item.companyName}}</p>
+                                <p>{{item.companyProperty}}</p>
+                                <p class="fSize12">发布时间：{{item.updateTime.split(" ")[0]}}</p>
+                            </div>
+                            <div class="operations color-blueL">
+                                <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>
+                                <p><span @click="freshItem(item)">刷新</span><span @click="stickItem(item)">置顶</span></p>
+                            </div>
+                        </div>
+                        <div v-else-if="position.posType==1" class="paLeft29 clearfix H128 pRel">
+                            <div class="W90 H80 logo-pic disInline v-mid fl maT24"><img :src="item.userIcon" /></div>
+                            <div class="item-block-left fl paTop22 W300 maL20">
+                                <h2 class="color-blueL fSize18 LH-H30 class-name"><a :href="requireLink(item)">{{item.title}}</a></h2>
+                                <p><span class="maR17 color-orange-f7">{{infoShow(item.cvSalary,'salary')}}</span>{{infoShow(infoExtrac(item.profession),'profession')}}<i class="depart">|</i>{{infoShow(item.cvProject,'worktime')}}<i class="depart">|</i>{{infoShow(item.cvEducation,'edu')}}</p>
+                                <p>招聘会时间：{{item.startTime}}</p>
+                            </div>
+                            <div class="item-block-right fl fSize14 LH25 maT10">
+                                <p>{{item.userName}}</p>
+                                <p>{{item.userProperty}}<i class="depart">|</i>岗位数：{{item.jobCount}}人</p>
+                                <p>发布日期： {{item.updateTime.split(" ")[0]}}</p>
+                            </div>
+                            <div class="operations color-blueL">
+                                <p><span @click="modItem(item)">修改</span><span @click="delItem(item)">删除</span></p>
+                                <p><span @click="freshItem(item)">刷新</span><span @click="stickItem(item)">置顶</span></p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <pagination :showpages="showpage(position.totalpages)" :totalpages="position.totalpages" type="position" @topage="topage" class="maT28 fSize14 fr"></pagination>
+            </div>
+        </div>
+    </div>
+    <div class="bot paTop8 t-center bot-account" id="app-footer" v-cloak>
+        <common-footer :userid="userId"></common-footer>
+    </div>
+    <div class="modal" id="app-modal" v-show="show.modal" @click="hideModal($event.target)" v-cloak>
+        <div class="preView W800 bg-white" v-show="show.cv">
+            <div class="H200 baseInfo bg-white-ec paLeft80">
+                <div class="paTop60">
+                    <div class="porto fl">
+                        <div class="porto-img W96 H96"></div>
+                    </div>
+                    <div class="infoTxt maL54 fl color-gray6 fSize14 LH33 W560">
+                        <h3 class="LH-H30 fSize18 color-gray3 maB9">{{resumeInfo.realName}}<span class="fSize14 maL10">{{baseInfo.gender}}</span></h3>
+                        <p>{{baseInfo.state}}</p>
+                        <p>{{baseInfo.address.city}}.{{baseInfo.address.district}}</p>
+                        <p>手机：{{resumeInfo.phone}}</p>
+                        <p>邮箱：{{resumeInfo.email}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="alleInfo paLeft80 paRight80">
+                <div class="itemBox item-basic">
+                    <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-basic"></span></i>基本资料</h3>
+                    <table class="fSize12 LH-H25">
+                        <tr>
+                            <td class="la-l">出生年月:</td>
+                            <td class="val-l">{{baseInfo.birthyear}}年{{baseInfo.birthmonth}}月{{baseInfo.birthday}}日</td>
+                            <td class="la-r">婚姻状况:</td>
+                            <td>{{resumeInfo.family}}</td>
+                        </tr>
+                        <tr>
+                            <td class="la-l">手机:</td>
+                            <td class="val-l">{{resumeInfo.phone}}</td>
+                            <td class="la-r">邮箱:</td>
+                            <td>{{resumeInfo.email}}</td>
+                        </tr>
+                        <tr>
+                            <td class="la-l">籍贯:</td>
+                            <td class="val-l">{{resumeInfo.nativePlace}}</td>
+                            <td class="la-r">民族:</td>
+                            <td>{{resumeInfo.nation}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="itemBox">
+                    <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-career"></span></i>职业意向</h3>
+                    <div class="item-row">
+                        <label>期望行业：<span>{{resumeInfo.expect.tradeItems}}</span></label>
+                    </div>
+                    <div class="item-row">
+                        <label>期望职能：<span>{{resumeInfo.expect.posItems}}</span></label>
+                    </div>
+                    <div class="item-row">
+                        <label>期望地点：<span>{{resumeInfo.expect.province}}-{{resumeInfo.expect.city}}-{{resumeInfo.expect.district}}</span></label>
+                    </div>
+                    <div class="item-row">
+                        <label>期望月薪：<span>{{resumeInfo.expect.salary}}</span></label>
+                    </div>
+                </div>
+                <div class="itemBox">
+                    <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-work"></span></i>工作经历
+                        <ul class="lis-inline pane-tabs">
+                            <li v-for="(worksExp,index) in resumeInfo.worksExps">经历{{index+1}}</li>
+                        </ul>
+                    </h3>
+                    <div class="infopane maB22" v-for="worksExp in resumeInfo.worksExps">
+                        <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{worksExp.startyear}}.{{worksExp.startmonth}}--{{worksExp.endyear}}.{{worksExp.endmonth}}</span>{{worksExp.firma}}<i class="headmark"></i></h4>
+                        <p>{{worksExp.trade}}</p>
+                        <p><span>工作职能：</span>{{worksExp.pos}}</p>
+                        <p><span>工作地点：</span>{{worksExp.province}}-{{worksExp.city}}-{{worksExp.district}}</p>
+                        <p><span>工作职责：</span>{{worksExp.resp}}</p>
+                    </div>
+                </div>
+                <div class="itemBox">
+                    <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-college"></span></i>教育经历
+                        <ul class="lis-inline pane-tabs">
+                            <li v-for="(edu,index) in resumeInfo.edus">经历{{index+1}}</li>
+                        </ul>
+                    </h3>
+                    <div class="infopane maT13 maB16" v-for="edu in resumeInfo.edus">
+                        <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{edu.startyear}}.{{edu.startmonth}}--{{edu.endyear}}.{{edu.endmonth}}</span>{{edu.uni}}<i class="headmark"></i></h4>
+                        <p class="LH-H25"><span class="W250 disInline">专业名称：{{edu.major}}/{{edu.submajor}}</span><span>学历：{{edu.qualification}}</span></p>
+                    </div>
+                </div>
+                <div class="itemBox">
+                    <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-language"></span></i>语言能力</h3>
+                    <p class="LH-H32 paLeft40">{{resumeInfo.laSkills}}</p>
+                </div>
+                <div class="itemBox">
+                    <h3 class="title works-title"><i class="pic-wrapper"><span class="pic-icon icon-project"></span></i>项目经历
+                        <ul class="lis-inline pane-tabs">
+                            <li v-for="(project,index) in resumeInfo.projects">经历{{index+1}}</li>
+                        </ul>
+                    </h3>
+                    <div class="infopane maB22" v-for="project in resumeInfo.projects">
+                        <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{project.startyear}}.{{project.startmonth}}--{{project.endyear}}.{{project.endmonth}}</span>{{project.name}}<i class="headmark"></i></h4>
+                        <p>{{project.firma}}</p>
+                        <p><span>项目描述：</span>{{project.desc}}</p>
+                        <p><span>项目职责：</span>{{project.resp}}</p>
+                        <p><span>项目业绩：</span>{{project.achiev}}</p>
+                    </div>
+                </div>
+                <div class="itemBox text-box">
+                    <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-comment"></span></i>自我评价</h3>
+                    <p class="LH-H20 maT9 paLeft40">{{resumeInfo.selfEval}}</p>
+                </div>
+                <div class="itemBox text-box">
+                    <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-attach"></span></i>附加信息</h3>
+                    <p class="LH-H20 maT9 paLeft40">{{resumeInfo.psInfo}}</p>
+                </div>
+                <div class="itemBox text-box" style="border-bottom:none">
+                    <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-skills"></span></i>擅长技能</h3>
+                    <p class="LH-H20 maT9 paLeft40">{{resumeInfo.skills}}</p>
+                </div>
+            </div>
+            <div class="H26 bg-white-ec"></div>
+        </div>
+        <message-box :userid="account.userId" :showmsg="show.message" @closebox="closeMsg" v-show="show.message"></message-box>
+        <fresh-box :freshitem="fresh.freshItem" :userid="account.userId" :showfresh="show.freshbox" @closefresh="closeFresh" v-show="show.freshbox"></fresh-box>
+        <stick-box :stickitem="sticky.stickItem" :userid="account.userId" :showsticky="show.stickybox" @closesticky="closeSticky" v-show="show.stickybox"></stick-box>
+    </div>
+    <script src="js/commons.js"></script>
+    <script src="js/hrCenter.js"></script>
+</body>
+
+</html>

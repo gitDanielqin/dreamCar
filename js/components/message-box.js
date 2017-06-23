@@ -1,3 +1,4 @@
+var Vue = require("../libs/vue");
 (function() {
     var msgTempl = '<div class="msg-box">\
         <h3 class="msg-box-head"><i class="pic-icon icon-return" v-show="!show.list" @click.stop="back"></i><i class="pic-icon icon-email" v-show="show.list"></i><span class="msg-head">消息提醒</span><span class="icon-wrapper" @click.stop="closeBox"><i class="pic-icon icon-close"></i></span></h3>\
@@ -129,7 +130,7 @@
                 index: 1,
                 count: 8
             }
-            _this = this;
+            var _this = this;
             EventUtils.ajaxReq("/message/getMessageList", "get", postdata, function(resp, status) {
                 console.log(resp);
                 var resultList = [];

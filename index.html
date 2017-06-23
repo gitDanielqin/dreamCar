@@ -8,7 +8,7 @@
     <title>首页</title>
     <link href="css/base.css" rel="stylesheet" />
     <link href="css/sweetalert.css" rel="stylesheet">
-    <link href="css/imageflow.css" rel="stylesheet" />
+    <link href="css/swiper-3.4.2.min.css" rel="stylesheet" />
     <link href="css/index.css" rel="stylesheet" />
 </head>
 
@@ -82,21 +82,16 @@
         <h2 class="t-center p-title LH56">案例展示</h2>
         <h3 class="p-subtitle LH37 fSize24 t-center">CASE SHOW</h3>
         <!--效果html开始-->
-        <div id="LoopDiv">
-            <input id="S_Num" type="hidden" value="8" />
-            <div id="starsIF" class="imageflow">
-                <img v-for="item in showInfos" :src="item.imgsrc" longdesc="#" width="500" height="300" />
+        <div class="swiper-container inner">
+            <div class="swiper-wrapper">
+                <!--<div class="swiper-slide" v-for="item in showInfos"><img class="swiper-slide" :src="item.imgsrc" longdesc="#" /></div>-->
+                <img class="swiper-slide" v-for="item in showInfos" :src="item.imgsrc" />
             </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
         </div>
         <!--效果html结束-->
         <div class="clear"></div>
-        <!--<ul class="lis-inline inner show-pics">
-            <li class="pic-box t-center" v-for="(item,index) in showInfos" :class="cssrotate(index)" @click="showSwitch(index)">
-                <i class="pic-wrapper show-frame"><img :src="item.imgsrc" /></i>
-            </li>
-        </ul>
-        <button class="dir-arrow turn-left"><</button>
-        <button class="dir-arrow turn-right">></button>-->
     </div>
     <div class="about-us H742 mod-page" id="app-about" v-cloak>
         <div class="inner paTop100">
@@ -158,7 +153,7 @@
     <script src="js/libs/jquery-3.1.0.min.js"></script>
     <script src="js/libs/vue.js"></script>
     <script src="js/libs/sweetalert.min.js"></script>
-    <script src="js/libs/imageflow.js"></script>
+    <script src="js/libs/swiper-3.4.2.jquery.min.js"></script>
     <script src="js/common/common.js"></script>
     <script src="js/components/dropdown.js"></script>
     <script src="data/address.js"></script>

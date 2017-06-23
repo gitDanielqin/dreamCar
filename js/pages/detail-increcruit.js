@@ -1,12 +1,15 @@
-// import $ from "../libs/jquery-3.1.0.min";
-// var Vue = require("../libs/vue");
-// require("../common/common")
-// require("../components/dropdown")
-// require("../components/pagination")
-// require("../components/detail-table")
-// require("../../css/base.css")
-// require("../../css/widget.css")
-// require("../../css/detail-comm.css")
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../libs/sweetalert.min");
+require("../common/common")
+require("../components/dropdown")
+require("../components/pagination")
+require("../components/detail-table")
+require("../components/common-footer")
+require("../../css/base.css")
+require("../../css/sweetalert.css")
+require("../../css/widget.css")
+require("../../css/detail-comm.css")
 var parObj = EventUtils.urlExtrac(window.location); //地址参数对象
 var respObj = {}; //页面信息
 var accountObj = {} //用户信息
@@ -72,7 +75,7 @@ function infoRequest() {
         //判断是否已申请
         if (respObj.applyStatus == "1") {
             $("#app-banner .btn-apply").attr("disabled", true);
-            $("#app-banner .btn-apply span").text("已申请");
+            $("#app-banner .btn-apply").text("已投递");
         }
         //招聘会申请一览
         applyRequest(1);

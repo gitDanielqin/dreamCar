@@ -1,18 +1,21 @@
 /**
  * Created by xuanyuan on 2016/12/31.
  */
-// import $ from "../libs/jquery-3.1.0.min";
-// var Vue = require("../libs/vue");
-// require("../common/common")
-// require("../components/dropdown")
-// require("../components/pagination")
-// require("../../data/commondata")
-// require("../../data/major")
-// require("../../data/position")
-// require("../../data/workareas")
-// require("../../css/base.css")
-// require("../../css/widget.css")
-// require("../../css/display-comm.css")
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../libs/sweetalert.min");
+require("../common/common")
+require("../components/dropdown")
+require("../components/pagination")
+require("../components/common-footer")
+require("../../data/commondata")
+require("../../data/major")
+require("../../data/position")
+require("../../data/workareas")
+require("../../css/base.css")
+require("../../css/sweetalert.css")
+require("../../css/widget.css")
+require("../../css/display-comm.css")
 var parObj = EventUtils.urlExtrac(window.location); //地址参数对象
 var respObj = {}; //页面信息
 var accountObj = {}
@@ -651,6 +654,7 @@ function resultsRequest(page) {
             }
         } else {
             appResult.increcruitList.results = [];
+            appResult.increcruitList.totalpages = 1;
             appResult.increcruitList.totalitems = 0;
             //背景图像
             $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
@@ -684,6 +688,7 @@ function searchRequest(page) {
                 $(".results").css("background", "none");
             }
         } else {
+            appResult.increcruitList.totalpages = 1;
             appResult.increcruitList.results = [];
             appResult.increcruitList.totalitems = 0;
             //背景图像

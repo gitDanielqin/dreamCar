@@ -1,3 +1,4 @@
+var Vue = require("../libs/vue");
 (function() {
     var vipRecTempl = '<div class="vip-records-box">\
                         <h3 class="vip-record-head">使用记录</h3>\

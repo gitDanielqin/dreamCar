@@ -1,17 +1,27 @@
-// import $ from "../libs/jquery-3.1.0.min";
-// var Vue = require("../libs/vue");
-// require("../common/common")
-// require("../common/ajaxfileupload")
-// require("../common/cropbox")
-// require("../components/dropdown")
-// require("../components/pagination")
-// require("../components/minicard")
-// require("../../data/commondata")
-// require("../../data/address")
-// require("../../data/workareas")
-// require("../../css/base.css")
-// require("../../css/widget.css")
-// require("../../css/incCenter.css")
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../libs/sweetalert.min");
+require("../common/common")
+require("../common/ajaxfileupload")
+require("../common/cropbox")
+require("../components/dropdown")
+require("../components/pagination")
+require("../components/minicard")
+require("../components/bind-mobile-box")
+require("../components/bind-email-box")
+require("../components/message-box")
+require("../components/freshbox")
+require("../components/stickbox")
+require("../components/vip-record")
+require("../components/conf-password")
+require("../components/common-footer")
+require("../../data/commondata")
+require("../../data/address")
+require("../../data/workareas")
+require("../../css/base.css")
+require("../../css/sweetalert.css")
+require("../../css/widget.css")
+require("../../css/incCenter.css")
 var parObj = EventUtils.urlExtrac(window.location);
 var respObj = {}; //请求的本页面的数据集合
 
@@ -204,7 +214,6 @@ var appCont = new Vue({
             curpage: 1,
             totalpages: 1,
             totalitems: 0,
-            newLink: EventUtils.securityUrl("incRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId),
             results: [],
             showCombi: true,
             showRecruit: true
@@ -333,6 +342,18 @@ var appCont = new Vue({
         }
     },
     methods: {
+        newRequire: function() {
+            if (!respObj.cvStatus || respObj.cvStatus == "0") {
+                swal({
+                    title: "",
+                    text: "请先完善您的企业信息！",
+                    type: "warning"
+                });
+                return false;
+            }
+            var link = EventUtils.securityUrl("incRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId);
+            window.location.href = link
+        },
         selvipnav: function(obj) {
             if ($(obj).hasClass("vip-li")) {
                 if (this.account.money == "") {
@@ -1334,6 +1355,7 @@ function demandRequest(type, page) {
                 appCont.require.results = resp.data.list;
                 appCont.require.totalitems = resp.data.totalRow;
             } else {
+                appCont.require.totalpages = 1;
                 appCont.require.results = [];
                 appCont.require.totalitems = 0;
             }
@@ -1354,6 +1376,7 @@ function demandRequest(type, page) {
                 appCont.require.results = resp.data.list;
                 appCont.require.totalitems = resp.data.totalRow;
             } else {
+                appCont.require.totalpages = 1;
                 appCont.require.results = [];
                 appCont.require.totalitems = 0;
             }
@@ -1374,6 +1397,7 @@ function demandRequest(type, page) {
                 appCont.require.results = resp.data.list;
                 appCont.require.totalitems = resp.data.totalRow;
             } else {
+                appCont.require.totalpages = 1;
                 appCont.require.results = [];
                 appCont.require.totalitems = 0;
             }
@@ -1399,6 +1423,7 @@ function collectRequest(type, page) {
                 appCont.collect.totalitems = resp.data.totalRow;
                 appCont.collect.results = resp.data.list;
             } else {
+                appCont.collect.totalpages = 1;
                 appCont.collect.results = [];
                 appCont.collect.totalitems = 0;
             }
@@ -1418,6 +1443,7 @@ function collectRequest(type, page) {
                 appCont.collect.totalitems = resp.data.totalRow;
                 appCont.collect.results = resp.data.list;
             } else {
+                appCont.collect.totalpages = 1;
                 appCont.collect.results = [];
                 appCont.collect.totalitems = 0;
             }
@@ -1443,6 +1469,7 @@ function combiMsgRequest(applystatus, page) {
         } else {
             appCont.message.combi.results = [];
             appCont.message.combi.totalitems = 0;
+            appCont.message.combi.totalpages = 1;
         }
         appCont.message.combi.msgsrc = applystatus;
     });
@@ -1465,6 +1492,7 @@ function jobfairMsgRequest(applystatus, page) {
         } else {
             appCont.message.jobfair.results = [];
             appCont.message.jobfair.totalitems = 0;
+            appCont.message.jobfair.totalpages = 1;
         }
         appCont.message.jobfair.msgsrc = applystatus;
     });

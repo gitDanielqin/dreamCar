@@ -1,0 +1,279 @@
+body {
+    position: relative;
+}
+
+.top {
+    background: rgba(49, 45, 63, 0.5)
+}
+
+.banner-pic {
+    display: none;
+}
+
+.banner-frame {
+    position: absolute;
+    font-size: 0;
+    left: 0;
+    top: 0;
+    z-index: -99;
+}
+
+.banner-frame img {
+    vertical-align: middle;
+    width: 100%;
+    height: 100%;
+}
+
+
+/*banner过渡淡入淡出动画*/
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s
+}
+
+.fade-enter,
+.fade-leave-to
+/* .fade-leave-active in <2.1.8 */
+
+{
+    opacity: 0
+}
+
+.ads-area {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    cursor: pointer;
+    left: 0;
+    top: 0;
+}
+
+.bot {
+    background: rgba(0, 0, 0, 0.5)
+}
+
+#sel-add .pic-icon {
+    background: url(../images/sprite.png) no-repeat -143px -186px;
+    width: 11px;
+    height: 8px;
+}
+
+.banner {
+    min-height: 550px;
+}
+
+.banner .logBox {
+    position: absolute;
+    top: 75px;
+    right: 0;
+}
+
+.banner .logBox .log-nav {
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+}
+
+.banner .logBox .log-nav li {
+    width: 126px;
+    border: 1px solid #d6d6d6;
+    background: #e6e6e6;
+    position: absolute;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px 10px 0 0;
+    border-bottom: none;
+    cursor: pointer
+}
+
+.banner .logBox .log-nav li:first-child {
+    left: 0;
+    top: 0;
+    z-index: 3;
+}
+
+.banner .logBox .log-nav li:nth-child(2) {
+    left: 118px;
+    top: 0;
+    z-index: 2;
+}
+
+.banner .logBox .log-nav li:last-child {
+    right: 0;
+    top: 0;
+    z-index: 1
+}
+
+.banner .logBox .log-nav li.on {
+    background: #fff;
+    z-index: 4;
+}
+
+.logBox input {
+    border-radius: 5px;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 12px;
+    border: 1px solid #999;
+    font-size: 16px;
+    width: 293px;
+}
+
+.logBox .valid input {
+    width: 166px;
+}
+
+.banner .logBox button {
+    background: #f39330;
+}
+
+.banner .logBox button[disabled="disabled"] {
+    background: #ccc;
+}
+
+.banner .logBox button {
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.banner .logBox .login-footer {
+    cursor: pointer;
+}
+
+.account-hint {
+    display: inline-block;
+    width: 99px;
+    position: absolute;
+    height: 20px;
+    top: 45px;
+    font-size: 13px;
+    right: 29px;
+    color: red;
+}
+
+.agreement {
+    color: orange;
+}
+
+.agree-modal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.agree-modal .agreementBox {
+    position: absolute;
+    overflow: auto;
+}
+
+.agree-modal .agreementBox h3 {
+    height: 40px;
+    line-height: 40px;
+    color: #333;
+    font-size: 14px;
+}
+
+.agree-modal .agreementBox p {
+    line-height: 18px;
+    margin: 9px 0;
+    color: #777;
+    font-size: 12px;
+}
+
+.agree-modal .agreementBox .title {
+    position: absolute;
+    left: 50%;
+    top: 35px;
+    transform: translateX(-50%);
+}
+
+.quicklogin h3 span {
+    position: absolute;
+    top: 15px;
+    display: inline-block;
+    height: 0;
+    border-top: 1px dashed #999;
+    width: 100px;
+}
+
+.quicklogin h3 span.line-l {
+    left: 8px;
+}
+
+.quicklogin h3 span.line-r {
+    right: 8px;
+}
+
+.quicklogin i.pic-icon {
+    margin: 0 22px;
+}
+
+.quicklogin .icon-qq {
+    background: url(../images/sprite.png) no-repeat -192px -112px;
+    width: 26px;
+    height: 29px;
+}
+
+.quicklogin .icon-weibo {
+    background: url(../images/sprite.png) no-repeat -190px -152px;
+    width: 32px;
+    height: 26px;
+}
+
+.quicklogin .icon-wechat {
+    background: url(../images/sprite.png) no-repeat -192px -77px;
+    width: 34px;
+    height: 27px;
+    margin-top: 3px;
+}
+
+.check-box {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #999;
+    vertical-align: middle;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.check-box.selected {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAATCAYAAACdkl3yAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA39pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDowM2FiMjQwMy0yMTc1LTQ3MWYtYTI2OS01ZWYxNmExNGUyZDMiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NTg1MjVDQ0MwOThCMTFFN0EzRTJCNEFBMTYzMkQzRUIiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NTg1MjVDQ0IwOThCMTFFN0EzRTJCNEFBMTYzMkQzRUIiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjQ5ZGI0YzYzLWFlYmMtNDBiZi1iZDg1LTJhNDg5MzYyNGZjNCIgc3RSZWY6ZG9jdW1lbnRJRD0iYWRvYmU6ZG9jaWQ6cGhvdG9zaG9wOjRmYmUyMTNiLWU0ZDctMTE3OS04NmUxLWZmZjY3MjhiMmViMSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PpeAJlIAAAEtSURBVHjaYklLS2OgBmChghn2QOzGRKEh5UC8F4i5KHFRLxAXQdnvyHVRLZIhIPCeHINCgLgRTYyfVIMUgHguEDOiieuTYhBI8xwg5kMT/w/CuAxixyKWAsTOaGJvgdgfiMOZsNiaCMT3gVgGSVwAiFvR1D4CYmsg3gziIBukCcQHgXgeEEsCcRWSXDUQiyLxnwCxHRDfhAkwISWsC0Bsi6Q4GYjlgFgciLOQxF8DsQcQP8SWRWZBNeQjGc4GdRUoHLigYr+AOAKIr+LKa++hCWwHEC8EYgmoOCi8fiCpB6nZhy120AN7FxCbI/mdDSm6VwDxVFxpA1v0P4Lm6PNIYg+AGG95gysdvQRidyC+A01woID/TI5BsNjxBOIpuMKFWIMYoC7KIyb/AAQYAPQnM0v62SGJAAAAAElFTkSuQmCC) no-repeat center center
+}
+
+
+/*底部样式，与首页基本*/
+
+.bot {
+    color: #f5f5f5;
+    text-align: center;
+}
+
+.bot-nav {
+    margin: 10px auto 0;
+}
+
+.bot-nav li:hover {
+    color: orange;
+}
+
+.bot .contact p {
+    display: inline-block;
+}
+
+.bot .contact p:first-child {
+    margint-left: 22px;
+}
+
+.bot .contact p:nth-child(2) {
+    margin-left: 152px;
+}
+
+.bot .contact p:nth-child(3) {
+    margin-left: 156px;
+}

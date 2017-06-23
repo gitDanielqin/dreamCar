@@ -1,10 +1,14 @@
-// import $ from "../libs/jquery-3.1.0.min";
-// var Vue = require("../libs/vue");
-// require("../common/common")
-// require("../components/dropdown")
-// require("../../data/address")
-// require("../../css/base.css")
-// require("../../css/index.css")
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../libs/sweetalert.min");
+require("../libs/swiper-3.4.2.jquery.min");
+require("../common/common")
+require("../components/dropdown")
+require("../../data/address")
+require("../../css/base.css")
+require("../../css/sweetalert.css")
+require("../../css/swiper-3.4.2.min.css")
+require("../../css/index.css")
 
 
 var parObj = EventUtils.urlExtrac(window.location);
@@ -336,8 +340,6 @@ var appShow = new Vue({
             { imgsrc: "images/case3.jpg", txt: "解决大学生从学习到就业的信息" },
             { imgsrc: "images/case4.jpg", txt: "解决大学生从学习到就业的信息" },
             { imgsrc: "images/case5.jpg", txt: "解决大学生从学习到就业的信息" },
-            { imgsrc: "images/case6.jpg", txt: "解决大学生从学习到就业的信息" },
-            { imgsrc: "images/case7.jpg", txt: "解决大学生从学习到就业的信息" },
         ]
     },
     methods: {
@@ -469,3 +471,25 @@ var appFooter = new Vue({
 })
 
 infoRequest();
+
+//轮播动画
+var swiper = new Swiper('.swiper-container', {
+    pagination: '.swiper-pagination',
+    effect: 'coverflow',
+    loop: true,
+    mousewheelControl: true,
+    grabCursor: true,
+    centeredSlides: true,
+    slidesPerView: 3,
+    coverflow: {
+        rotate: 30,
+        stretch: 10,
+        depth: 60,
+        modifier: 2,
+        slideShadows: true
+    }
+});
+
+// 对轮播图片进行位置设定
+var swiperMaTop = (EventUtils.getViewport().height - $("#app-show .p-title").outerHeight(true) - $("#app-show .p-subtitle").outerHeight(true) - $("#app-show .swiper-container").outerHeight()) / 2;
+$(".swiper-container").css("margin-top", swiperMaTop + "px");

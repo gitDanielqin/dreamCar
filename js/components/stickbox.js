@@ -1,3 +1,4 @@
+var Vue = require("../libs/vue");
 (function() {
     var stickTempl = '<div>\
         <div class="refresh-box sticky-box" v-show="sticky.show">\
@@ -167,7 +168,7 @@
                     }
                 }
                 if ($(obj).html() == "立即充值") {
-                    window.location.href = "recharge.html?userId=" + this.userid;
+                    window.location.href = EventUtils.securityUrl("recharge.html?userId=" + this.userid);
                 }
             },
             selectStickWay: function(way, obj) {

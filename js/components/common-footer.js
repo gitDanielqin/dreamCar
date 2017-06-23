@@ -1,3 +1,4 @@
+var Vue = require("../libs/vue");
 (function() {
     var footerTempl = '<div class="inner clearfix common-footer">\
             <div class="fl">\

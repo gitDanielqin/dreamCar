@@ -1,8 +1,10 @@
-// import $ from "../libs/jquery-3.1.0.min";
-// var Vue = require("../libs/vue");
-// require("../common/common")
-// require("../../css/base.css")
-// require("../../css/password.css")
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../libs/sweetalert.min");
+require("../common/common")
+require("../../css/base.css")
+require("../../css/sweetalert.css")
+require("../../css/password.css")
 var regExp = {
     mobile: /^1[34578]\d{9}$/,
     email: /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/,
@@ -50,7 +52,6 @@ var appCont = new Vue({
         switchcode: function() {
             // console.log(1);
             EventUtils.ajaxReq("/sys/img", "get", {}, function(resp, status) {
-                //  $(".code-pic")[0].src = "";
                 $(".code-pic")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
             })
         },
@@ -139,7 +140,6 @@ var appCont = new Vue({
                                 type: "error",
                             });
                         }
-                        console.log(resp);
                     })
                 }
             }

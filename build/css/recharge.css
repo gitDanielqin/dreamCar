@@ -1,0 +1,189 @@
+.charge-val {
+    border: 1px solid #ccc;
+    margin: 0 8px 0 12px;
+    box-shadow: 0 0 5px #ccc inset
+}
+
+.charge-hint {
+    position: absolute;
+    left: 374px;
+    top: 0;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALwAAAAwCAYAAACrOxAIAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA39pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDozZDYzZWUxNC01ZjExLTQyODgtYWI3Yi00YzBjMmJjNDQ2ZGQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OTk1MDg2OTRERjFEMTFFNjhEMDVGMjNDMDc4MDUwRjgiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OTk1MDg2OTNERjFEMTFFNjhEMDVGMjNDMDc4MDUwRjgiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjdhZmRiNDdjLTg5MWYtNDQwMS04MWQ1LTUwMDI0M2M4ODA5ZiIgc3RSZWY6ZG9jdW1lbnRJRD0iYWRvYmU6ZG9jaWQ6cGhvdG9zaG9wOmZhNmI4ZTRhLWViZTUtMTE3OS05NDcxLTk1NjA4NjdjOWM2NCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PmGEKXwAAAITSURBVHja7J3LK0RhGIc/l3Eblwy5SyzsZGFh5S+w8uf4q2yUPRvJQpEFUUKUCUlD4/p7O+/USSmXM+bM8Tz1JAsW33lmfFOf92tYXj8PAP+F5ir+7l5ZcLtkXra7Rots4BHAN3mSr/JZPsiSvJc3blGW/yL4JjkhJ+VILGyAJMn511Z/E/3Im7ySp/JQ3iUdfKOckbOyjecBNcZ2DQPunDyTm/K6Eutvt0SLcp7YIaWMySXfffw6+Gk5zJpCyrHt9kISwXeyllAndCQRPEBdQfBA8AAED0DwAAQPQPAABA9A8AAED0DwAAQPQPAABA8ED0DwAAQPQPAABA+QjeDt/1m7WUKoJ746l8ZmffTJoRDN+7BJBXmWD7ISfM7DHopFnmO5ICvB5/1duxJ5X2DuI2R4D2+Dalp8X95D7JD1d3gbOLnv2otgUI7KcdnPCwCyvIe3UcQX7naIZkZa/GMuH1Yhcx9a4zzKI9fojcU/HKo7Yx6gKnv472BD53flmtxjCSHrwQMQPADBAxA8AMEDEDwAwQPUMPh7lhDqhFISwR/IS9YSUs6L3EgieLv+e1VuhegIAkDasIuJV+SJfZPEORg7bLYTouMGdvnrVIiunueiYqgFlavnz3wHkvjV8/E/G8euYYfMCm5XiE5ZtrtGK88GfrireHFLrn2WvA3R9fJFWf7sh6t50vHGPeIZQVp4F2AA6MZH+vMa0VQAAAAASUVORK5CYII=) no-repeat 0 center;
+    padding-left: 27px;
+}
+
+.pay-way {
+    position: absolute;
+}
+
+.pay-way li {
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    padding: 0 24px;
+    line-height: 40px;
+    border-bottom: none;
+    position: relative;
+    cursor: pointer;
+}
+
+.pay-way li span {
+    display: none
+}
+
+.pay-way li.on {
+    border: 2px solid #f7b632;
+    box-shadow: 0 0 5px #f7b632;
+    border-bottom: none;
+}
+
+.pay-way li.on span.border-bot {
+    display: inline-block;
+    width: 104px;
+    height: 10px;
+    position: absolute;
+    left: 0;
+    top: 33px;
+    background: white;
+}
+
+.pay-content {
+    border: 2px solid #f7b632;
+    box-shadow: 0 0 5px #f7b632, 0 0 5px #f7b632 inset;
+}
+
+.bank-pay table {
+    border: 1px solid #7f7f7f;
+}
+
+.bank-pay table td {
+    width: 170px;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+}
+
+.bank-name img {
+    margin-top: 14px;
+}
+
+.bank-name span {
+    line-height: 46px;
+    display: block;
+}
+
+.pay-agreement .checked-agree {
+    border: 1px solid #7f7f7f;
+    width: 18px;
+    height: 18px;
+    margin-right: 6px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.pay-agreement span.on {
+    background: url(../images/sprite.png) no-repeat -3px -53px;
+}
+
+.bot-nav {
+    border-top: 1px solid #8e8e8e;
+}
+
+.site-nav {
+    display: inline-block;
+}
+
+.site-nav span {
+    margin: 0 13px;
+}
+
+.site-nav a {
+    color: #666;
+}
+
+.site-nav a:hover {
+    color: orange;
+}
+
+.fast-pay i.pic-wrapper {
+    width: 25px;
+    margin-right: 6px;
+}
+
+.fast-pay input[type="radio"] {
+    margin-left: 17px;
+    margin-right: 12px;
+    vertical-align: middle
+}
+
+.fast-pay ul {
+    border: 1px solid #666;
+    line-height: 38px;
+    width: 694px;
+}
+
+.fast-pay ul li {
+    border-right: 1px solid #666;
+    font-size: 12px;
+    padding-right: 17px;
+}
+
+.fast-pay .pic-wrapper img {
+    width: 22px;
+}
+
+.plattform-pay i.pic-wrapper {
+    border: 1px solid #ccc;
+    cursor: pointer
+}
+
+.barcode-pay i.pic-wrapper {
+    border: 1px solid #ccc;
+    cursor: pointer
+}
+
+.plattform-sel i.on {
+    border: 1px solid #f7b632
+}
+
+
+/*图标*/
+
+.icon-exclame {
+    background: url(../images/sprite.png) no-repeat -152px -84px;
+    width: 20px;
+    height: 20px;
+}
+
+
+/*协议样式*/
+
+.recharge-agreement {
+    position: absolute;
+    padding: 5px 10px;
+    background: white;
+    width: 800px;
+    height: 500px;
+    overflow: auto;
+    line-height: 24px;
+    font-size: 12px;
+}
+
+.recharge-agreement h3 {
+    height: 40px;
+    line-height: 40px;
+    color: #333;
+    font-size: 14px;
+}
+
+.recharge-agreement p {
+    line-height: 18px;
+    margin: 9px 0;
+    color: #777;
+    font-size: 12px;
+}
+
+.recharge-agreement .title {
+    position: absolute;
+    left: 50%;
+    top: 35px;
+    transform: translateX(-50%);
+}

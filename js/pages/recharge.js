@@ -1,6 +1,13 @@
 /**
  * Created by Administrator on 2017/1/21.
  */
+
+import $ from "../libs/jquery-3.1.0.min";
+require("../libs/sweetalert.min");
+require("../common/common")
+require("../../css/base.css")
+require("../../css/sweetalert.css")
+require("../../css/recharge.css")
 var parObj = EventUtils.urlExtrac(window.location);
 
 function initEventBind() {

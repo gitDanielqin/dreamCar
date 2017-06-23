@@ -1,3 +1,4 @@
+var Vue = require("../libs/vue");
 (function() {
     var dateTempl = '<div style="display:inline-block;">\
         <dropdown :options="startyears" class="sel-startyear" v-model="date.startyear" placeholder="开始年份"></dropdown>\

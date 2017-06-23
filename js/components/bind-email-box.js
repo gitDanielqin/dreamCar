@@ -1,3 +1,4 @@
+var Vue = require("../libs/vue");
 (function() {
     var emailTempl = '<div class="bind-change email-bind">\
         <h2 class="bind-title">更换绑定邮箱<i class="pic-wrapper close" @click.stop="closeBox"><i class="pic-icon icon-close"></i></i>\

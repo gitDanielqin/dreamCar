@@ -1,22 +1,30 @@
 /**
  * Created by xuanyuan on 2016/11/27.
  */
-// import $ from "../libs/jquery-3.1.0.min";
-// var Vue = require("../libs/vue");
-// require("../common/common")
-// require("../common/cropbox")
-// require("../components/dropdown")
-// require("../components/pagination")
-// require("../components/major-pop")
-// require("../components/pos-pop")
-// require("../../data/commondata")
-// require("../../data/address")
-// require("../../data/workareas")
-// require("../../data/position")
-// require("../../data/major")
-// require("../../css/base.css")
-// require("../../css/widget.css")
-// require("../../css/pCenter.css")
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../libs/sweetalert.min");
+require("../common/common")
+require("../common/cropbox")
+require("../components/dropdown")
+require("../components/pagination")
+require("../components/major-pop")
+require("../components/date-select")
+require("../components/pos-pop")
+require("../components/bind-mobile-box")
+require("../components/bind-email-box")
+require("../components/message-box")
+require("../components/common-footer")
+require("../components/conf-password")
+require("../../data/commondata")
+require("../../data/address")
+require("../../data/workareas")
+require("../../data/position")
+require("../../data/major")
+require("../../css/base.css")
+require("../../css/sweetalert.css")
+require("../../css/widget.css")
+require("../../css/pCenter.css")
 var objMe = this;
 var parObj = EventUtils.urlExtrac(window.location);
 var respObj = {}; //请求的本页面的数据集合
@@ -601,6 +609,9 @@ var appCont = new Vue({
                     break;
                 default:
                     wordslimit = 1000;
+            }
+            if (!text) {
+                return wordslimit;
             }
             if (wordslimit - text.length < 0) {
                 return 0;
@@ -1551,7 +1562,13 @@ function postResume(editType, isDel) {
         appCont.resume.expect.province = $("#exp-address .sel-province input").val();
         appCont.resume.expect.city = $("#exp-address .sel-city input").val();
         appCont.resume.expect.district = $("#exp-address .sel-district input").val();
-
+        var skillArray = [];
+        $(".language-skills input[type='checkbox']").each(function() {
+            if (this.checked) {
+                skillArray.push(this.value);
+            }
+        });
+        appCont.resume.laSkills = JSON.stringify(skillArray);
         var postCvdata = {
             userId: parObj.userId,
             cvId: respObj.cvInfo.cvId,

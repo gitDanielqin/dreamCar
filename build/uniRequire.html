@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>发布需求</title>
+    <link href="css/commons.css" rel="stylesheet">
+    <link href="css/uniRequire.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="top bg-gray3 H100 color-white" id="app-top" v-cloak>
+        <div class="inner">
+            <a :href="homeLink"><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" /></a>
+            <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
+            <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">高校中心</h2>
+            <div class="fr navs maT42">
+                <a :href="homeLink"><i class="pic-icon icon-home"></i></a>
+                <a :href="centerLink"><i class="pic-icon icon-account"></i></a>
+                <a class="msg-center pRel" href="#" @click.prevent="showMsg"><i class="pic-icon icon-msg"></i><i class="msg-info">99</i></a>
+            </div>
+        </div>
+    </div>
+    <div class="main" id="app-main" v-cloak>
+        <div class="inner W960">
+            <div class="req-progress bg-gray-ef maT20 color-gray6">
+                <ul class="lis-inline steps">
+                    <li class="on"><span>1</span>
+                        <p>选择信息</p><i class="bind-line"></i></li>
+                    <li><span>2</span>
+                        <p>填写信息</p><i class="bind-line"></i></li>
+                    <li><span>3</span>
+                        <p>完成发布</p>
+                    </li>
+                </ul>
+                <i class="pic-wrapper progress-txt"><img src="images/require-txt.png" /></i>
+            </div>
+            <div class="navs clearfix" v-show="newRequire">
+                <ul class="lis-inline fl">
+                    <li class="on" name="combi">校企合作</li>
+                    <li name="recruit">招聘会</li>
+                </ul>
+                <p class="W810 bg-gray-ef fl H32"></p>
+            </div>
+            <div class="navs maT20" v-show="!newRequire"></div>
+            <div class="nav-cont cont-combi" v-show="showCombi">
+                <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写校企合作信息</h2>
+                <div class="form-cont paLeft68">
+                    <p class="maT39 head-input"><label><span class="must-mark">*</span>标　　题</label><input type="text" class="must-input" v-model="combiData.header" maxlength="12" /><span class="color-red">（请小于12个字）</span></p>
+                    <h3 class="LH-H75 fSize18 maT11">我对企业的要求</h3>
+                    <p class="form-item"><label><span class="must-mark">*</span>提供岗位名称</label>
+                        <pos-select class="must-item" :posdata="database.inc.posData" :initpos="combiData.initPosition"></pos-select>
+                    </p>
+                    <p class="form-item"><label><span class="must-mark">*</span>岗位人数</label>
+                        <dropdown class="must-item pos-item" :options="database.inc.posAmount" placeholder="请选择岗位人数" v-model="combiData.incApply.posAmount"></dropdown>
+                    </p>
+                    <p class="form-item"><label>企业性质</label>
+                        <dropdown :options="database.inc.props" placeholder="" v-model="combiData.incApply.incProps">
+                    </p>
+                    <p class="form-item"><label>企业规模</label>
+                        <dropdown :options="database.inc.scale" placeholder="" v-model="combiData.incApply.incScale">
+                    </p>
+                    <p class="form-item"><label>企业行业</label>
+                        <area-select :areadata="database.inc.areas"></area-select>
+                    </p>
+                    <p class="form-item"><label>所在地</label>
+                        <addr-select :addrdata="database.addrData" :initaddress="combiData.initAddress" class="sel-addr disInline"></addr-select>
+                    </p>
+                    <h3 class="LH-H75 fSize18 maT11">我可以提供</h3>
+                    <p class="form-item"><label><span class="must-mark">*</span>专业名称</label>
+                        <major-pop :majordata="database.uni.majors" class="disInline must-item"></major-pop>
+                    </p>
+                    <p class="form-item"><label><span class="must-mark">*</span>专业人数</label>
+                        <dropdown class="must-item pro-count" :options="database.uni.amount" placeholder="请选择专业人数" v-model="combiData.uniApply.stuScale"></dropdown>
+                    </p>
+                    <p class="form-item"><label><span class="must-mark">*</span>联合培养方式</label>
+                        <dropdown class="must-item" :options="database.trainway" placeholder="" v-model="combiData.uniApply.trainWay"></dropdown>
+                    </p>
+                    <div class="form-item clearfix"><label class="fl">培养时间</label>
+                        <table class="fl time-table">
+                            <tr>
+                                <td></td>
+                                <td>周一</td>
+                                <td>周二</td>
+                                <td>周三</td>
+                                <td>周四</td>
+                                <td>周五</td>
+                                <td>周六</td>
+                                <td>周日</td>
+                            </tr>
+                            <tr class="time-tr">
+                                <td>上午</td>
+                                <td class="t-cell on"></td>
+                                <td class="t-cell"></td>
+                                <td class="t-cell"></td>
+                                <td class="t-cell"></td>
+                                <td class="t-cell"></td>
+                                <td class="t-cell"></td>
+                                <td class="t-cell"></td>
+                            </tr>
+                            <tr class="time-tr">
+                                <td>下午</td>
+                                <td class="t-cell"></td>
+                                <td class="t-cell"></td>
+                                <td class="t-cell"></td>
+                                <td class="t-cell"></td>
+                                <td class="t-cell"></td>
+                                <td class="t-cell"></td>
+                                <td class="t-cell"></td>
+                            </tr>
+                            <tr class="time-tr">
+                                <td>晚上</td>
+                                <td class="t-cell"></td>
+                                <td class="t-cell"></td>
+                                <td class="t-cell"></td>
+                                <td class="t-cell"></td>
+                                <td class="t-cell"></td>
+                                <td class="t-cell"></td>
+                                <td class="t-cell"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <p class="form-item pRel"><label><span class="must-mark">*</span>需求描述</label><textarea v-model="combiData.requireDesc" class="form-desc must-input"></textarea><span class="fSize14 LH40 color-gray-c desc-hint">你还可以输入{{fontCal(combiData.requireDesc,combiData.datatype)}} 字</span></p>
+                    <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
+                    <p class="form-item"><label>联系人</label><input type="text" v-model="combiData.contact.person" /></p>
+                    <p class="form-item"><label><span class="must-mark">*</span>联系电话</label><input type="text" class="phone-input must-input" v-model="combiData.contact.phone" /></p>
+                    <div class="form-item inc-addr pRel"><label><span class="must-mark">*</span>高校地址</label><input type="text" v-model="combiData.contact.address" class="dis-Addr must-input" disabled/><span class="color-red maL18 cur-pointer" @click.stop="popAddrBox($event.target)">请完善地址</span>
+                        <div class="addr-box disNo" @click.stop="">
+                            <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
+                            <input type="text" class="maT20 addr-ex" placeholder="请输入详细地址" />
+                            <p><button class="confirm-btn" @click.stop="confirmIncAddr($event.target,combiData.datatype)">确认</button></p>
+                        </div>
+                    </div>
+                    <button class="confirm-publish-btn" @click.prevent="publish('combi')">确认发布</button>
+                </div>
+            </div>
+            <div class="nav-cont cont-recruit" v-show="!showCombi">
+                <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写招聘会信息</h2>
+                <div class="form-cont paLeft68">
+                    <p class="maT39 head-input"><label><span class="must-mark">*</span>标　　题</label><input class="must-input" type="text" v-model="recruitData.header" maxlength="12" /><span class="color-red">（请小于12个字）</span></p>
+                    <h3 class="LH-H75 fSize18 maT11">对参聘企业的要求</h3>
+                    <p class="form-item"><label>企业行业</label>
+                        <area-select :areadata="database.inc.areas"></area-select>
+                    </p>
+                    <p class="form-item"><label>企业规模</label>
+                        <dropdown :options="database.inc.scale" placeholder="" v-model="recruitData.incReq.incScale" />
+                    </p>
+                    <p class="form-item"><label>企业性质</label>
+                        <dropdown :options="database.inc.props" placeholder="" v-model="recruitData.incReq.incProps" />
+                    </p>
+                    <p class="form-item"><label><span class="must-mark">*</span>岗位名称</label>
+                        <pos-select class="must-item" :posdata="database.inc.posData" :initpos="recruitData.incReq.initPosition"></pos-select>
+                    </p>
+                    <p class="form-item"><label>岗位数</label>
+                        <dropdown :options="database.inc.posAmount" placeholder="" v-model="recruitData.incReq.posAmount"></dropdown>
+                    </p>
+                    <p class="form-item company-address"><label>所在地</label>
+                        <addr-select :addrdata="database.addrData" :initaddress="recruitData.initAddress" class="sel-addr disInline"></addr-select>
+                    </p>
+                    <h3 class="LH-H75 fSize18 maT11">高校参与应聘专业</h3>
+                    <p class="form-item"><label><span class="must-mark">*</span>专业名称</label>
+                        <major-pop class="must-item disInline" :majordata="database.uni.majors"></major-pop>
+                    </p>
+                    <p class="form-item"><label><span class="must-mark">*</span>专业人数</label>
+                        <dropdown class="must-item pro-count" :options="database.uni.amount" placeholder="" v-model="recruitData.stuScale"></dropdown>
+                    </p>
+                    <p class="form-item"><label><span class="must-mark">*</span>举办时间</label><input class="must-input" type="text" id="jobfair-date" placeholder="格式：2017-01-30" readonly/></p>
+                    <p class="form-item pRel"><label><span class="must-mark">*</span>招聘会描述</label><textarea v-model="recruitData.desc" class="form-desc must-input"></textarea><span class="fSize14 LH40 color-gray-c desc-hint">你还可以输入{{fontCal(recruitData.desc,recruitData.datatype)}} 字</span></p>
+                    <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
+                    <p class="form-item"><label>联系人</label><input type="text" v-model="recruitData.contact.person" /></p>
+                    <p class="form-item"><label><span class="must-mark">*</span>联系电话</label><input type="text" class="phone-input must-input" v-model="recruitData.contact.phone" /></p>
+                    <div class="form-item inc-addr pRel"><label><span class="must-mark">*</span>招聘会地点</label><input type="text" v-model="recruitData.contact.address" class="dis-Addr must-input" disabled/><span class="color-red maL18 cur-pointer" @click.stop="popAddrBox($event.target)">请完善地址</span>
+                        <div class="addr-box disNo" @click.stop="">
+                            <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
+                            <input type="text" class="maT20 addr-ex" placeholder="请输入详细地址" />
+                            <p><button class="confirm-btn" @click.stop="confirmIncAddr($event.target,recruitData.datatype)">确认</button></p>
+                        </div>
+                    </div>
+                    <button class="confirm-publish-btn" @click.prevent="publish('jobfair')">确认发布</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bot paTop6 t-center bg-gray3 H110" id="app-footer" v-cloak>
+        <div class="inner pRel">
+            <div class=" W920 color-white fSize12">
+                <ul class="lis-inline bot-nav LH-H34">
+                    <li @click="homeLink"><a href="javascript:void(0)">校企首页</a>-</li>
+                    <li><a href="footer-page.html?descript">关于校企</a>-</li>
+                    <li><a href="footer-page.html?coop">网站合作</a>-</li>
+                    <li><a href="footer-page.html?help">帮助中心</a>-</li>
+                    <li><a href="footer-page.html?employ">招贤纳士</a>-</li>
+                    <li><a href="footer-page.html">友情链接</a>-</li>
+                    <li><a href="footer-page.html">教育网</a></li>
+                </ul>
+                <ul class="lis-inline bot-infos">
+                    <li class="maR100"><i class="pic-icon maR15 icon-phone"></i>电话：0571-28277417-818</li>
+                    <li class="maR100"><i class="pic-icon maR15 icon-address"></i>杭州市滨江区六合路368号海创基地北三楼B3077</li>
+                    <li><i class="pic-icon maR15 icon-email"></i>邮箱：market@xiaoqiztc.com</li>
+                </ul>
+                <p class="fSize12 t-center LH-H40 color-gray79">校企职通车版权所有©2017XIAOQI 浙ICP备17007975号-2 浙公网安备3481464号</p>
+            </div>
+            <div class="pic-wrapper pic-barcode">
+                <img src="images/barcode.png" />
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="app-modal" v-show="show.modal" v-cloak>
+        <message-box :userid="account.userId" :showmsg="show.message" @closebox="closeMsg" v-show="show.message"></message-box>
+    </div>
+    <script src="js/commons.js"></script>
+    <script src="js/uniRequire.js"></script>
+</body>
+
+</html>

@@ -166,7 +166,7 @@
             </div>
             <div class="uni-require requireBox">
                 <div class="ListBox pRel">
-                    <span class="new-require color-orange-f7 fSize16"><a :href="require.newLink"><img src="images/icon-require.png" /></a></span>
+                    <span class="new-require color-orange-f7 fSize16"><a href="javascript:void(0);" @click.prevent="newRequire"><img src="images/icon-require.png" /></a></span>
                     <div class="hd LH-H58 bg-white">
                         <dropdown classes="state" :options="['校企合作','招聘会']" v-model="require.state"></dropdown>
                         <p class="fr fSize14 maR120">我发布过的需求<span class="color-orange2 maL10 maR10">{{require.totalitems}}</span>个</p>
@@ -554,7 +554,6 @@
         <common-footer :userid="userId"></common-footer>
     </div>
     <script src="js/libs/jquery-3.1.0.min.js"></script>
-    <!-- <script src="js/libs/jquery.min.js"></script> -->
     <script src="js/libs/vue.js"></script>
     <script src="js/libs/sweetalert.min.js"></script>
     <script src="js/common/common.js"></script>

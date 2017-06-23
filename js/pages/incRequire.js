@@ -1,18 +1,22 @@
-// import $ from "../libs/jquery-3.1.0.min";
-// var Vue = require("../libs/vue");
-// require("../common/common")
-// require("../components/dropdown")
-// require("../components/major-pop")
-// require("../components/foundation-datepicker")
-// require("../../data/commondata")
-// require("../../data/position")
-// require("../../data/major")
-// require("../../data/address")
-// require("../../data/workareas")
-// require("../../css/base.css")
-// require("../../css/widget.css")
-// require("../../css/foundation-datepicker.min.css")
-// require("../../css/require.css")
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../libs/sweetalert.min");
+require("../common/common")
+require("../components/dropdown")
+require("../components/major-pop")
+require("../components/pagination")
+require("../components/message-box")
+require("../components/foundation-datepicker")
+require("../../data/commondata")
+require("../../data/position")
+require("../../data/major")
+require("../../data/address")
+require("../../data/workareas")
+require("../../css/base.css")
+require("../../css/sweetalert.css")
+require("../../css/widget.css")
+require("../../css/foundation-datepicker.min.css")
+require("../../css/require.css")
 var parObj = EventUtils.urlExtrac(window.location);
 console.log(parObj);
 var isNewRequire = true;
@@ -337,6 +341,14 @@ var appMain = new Vue({
             var incAddress = "";
             var addBox = $(target).closest(".addr-box");
             addBox.find(".sel-addr input").each(function() {
+                if ($(this).val() == "不限") {
+                    swal({
+                        title: "",
+                        text: "请填写详细的地址信息！",
+                        type: "warning"
+                    });
+                    return false;
+                }
                 incAddress += $(this).val() + "-";
             });
             if (addBox.find(".addr-ex").val() != "") {

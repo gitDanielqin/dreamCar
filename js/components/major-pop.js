@@ -1,8 +1,8 @@
-// var Vue = require("../libs/vue");
+var Vue = require("../libs/vue");
 (function() {
     var templMajor = '<div style="position:relative" class="pop-major-box">\
-          <span @click.stop="pop(1,$event.target)" class="major-input major-input-1"><input type="text" placeholder="一级学科" readonly v-model="selMajor" ></span>\
-          <span @click.stop="pop(2,$event.target)" class="major-input major-input-2"><input type="text" placeholder="二级学科" readonly v-model="selSubMajor"></span>\
+          <span @click.stop="pop(1,$event.target)" class="major-input major-input-1"><input type="text" placeholder="一级专业" readonly v-model="selMajor" ></span>\
+          <span @click.stop="pop(2,$event.target)" class="major-input major-input-2"><input type="text" placeholder="二级专业" readonly v-model="selSubMajor"></span>\
           <input type="text" class="ex-major" placeholder="请输入专业名称" v-model="exMajor" v-show="showExMajor"/>\
           <div class="pop-major-1 pop-major" v-show="showMajor1">\
                <h3 class="pop-major-title">专业名称<i class="pic-wrapper major-closer" @click=closePop><span class="pic-icon icon-close"></span></i></h3>\

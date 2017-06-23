@@ -144,7 +144,7 @@
             </div>
             <div class="uni-require requireBox">
                 <div class="ListBox pRel">
-                    <span class="new-require color-orange-f7 fSize16"><a :href="require.newLink"><img src="images/icon-require.png" /></a></span>
+                    <span class="new-require color-orange-f7 fSize16"><a href="javascript:void(0)" @click.prevent="newRequire"><img src="images/icon-require.png" /></a></span>
                     <div class="hd LH-H58 bg-white pRel">
                         <dropdown classes="state" :options="['校企合作','招聘会','企业直聘']" v-model="require.state"></dropdown>
                         <p class="disInline fSize14 maL195">我发布过的需求<span class="color-orange2 maL10 maR10">{{require.totalitems}}</span>个</p>

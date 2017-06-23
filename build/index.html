@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="EXVPJyqdhf" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>首页</title>
+    <link href="css/commons.css" rel="stylesheet" />
+    <link href="css/index.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="front-page pRel mod-page" id="app-front" v-cloak>
+        <div class="inner" style="height:770px">
+            <div class="header clearfix color-white">
+                <div class="logo fl clearfix">
+                    <img src="images/logo.png" class="fl maR21" />
+                    <h2 class="fl LH-H63 fSize30">校企职通车</h2>
+                    <!--<h3 id="sel-add" class="cur-pointer fl LH-H47 fSize14 paTop14 maL30" @click.stop="showAddr=true"><b>{{address.displayCity}}</b><span class="maL18">[切换城市]<i class="pic-icon maL6"></i></span></h3>-->
+                </div>
+                <div class="login fr paTop10" v-show="!isLogin">
+                    <a :href="'login.html?'+ btoa('newAcc=1&address='+encodeURI(address.displayCity))" class="b-Radius5">注册</a>
+                    <a :href="'login.html?'+ btoa('newAcc=0&address='+encodeURI(address.displayCity))" class="b-Radius5">登录</a>
+                </div>
+                <div class="fr account pRel" v-show="isLogin">
+                    <button class="account-name fSize16 H33">{{account.userName}}<i class="account-name-icon">></i></button>
+                    <ul class="account-options" v-if="account.userType=='0'" @click="selectAction($event.target)">
+                        <li name="center"><i class="pic-icon icon-center"></i>个人中心</li>
+                        <li name="collect"><i class="pic-icon icon-collect"></i>我的收藏</li>
+                        <li name="myjob"><i class="pic-icon icon-job"></i>我的求职</li>
+                        <li name="logout"><i class="pic-icon icon-logout"></i>退出</li>
+                    </ul>
+                    <ul class="account-options" v-if="account.userType!='0'" @click="selectAction($event.target)">
+                        <li name="center"><i class="pic-icon icon-center"></i>校企中心</li>
+                        <li name="publish"><i class="pic-icon icon-publish"></i>我的发布</li>
+                        <li name="collect"><i class="pic-icon icon-collect"></i>我的收藏</li>
+                        <li name="logout"><i class="pic-icon icon-logout"></i>退出</li>
+                    </ul>
+                </div>
+                <!--地址暂时去掉-->
+                <!--<div id="address" class="banner-address LH-H60 v-mid clearfix" v-show="showAddr" @click.stop="">
+                    <h2 class="fl maL50 fSize18">省
+                        <dropdown :options="database.address.provinces" v-model="address.selProvince"></dropdown>
+                    </h2>
+                    <h2 class="fl maL40 fSize18">市
+                        <dropdown :options="database.address.citys" v-model="address.selCity" @callback="showAddr=false"></dropdown>
+                    </h2>
+                    <p class="maL50 fl LH-H50 paTop10 fSize14"><span class="color-yellow">热门城市：</span>
+                        <ul class="lis-inline disInline paTop10 LH50 hotcity-list">
+                            <li v-for="city in database.address.hotcitys" @click.stop="selhotcity(city)">{{city}}</li>
+                        </ul>
+                    </p>
+                </div>-->
+            </div>
+            <div class="center-teil t-center">
+                <p class="subtitle fSize16 W260 LH-H35 t-center">加强大学生实践学习经验</p>
+                <h2 class="maT28 fSize0"><img src="images/title-txt.png" /></h2>
+                <div class="maT38 pRel">
+                    <input type="text" placeholder="岗位名称/学校名称/企业名称" class="search LH-H48 v-top" v-model="searchText" @focus.stop="showSeachOptions" /><button class="search-btn" @click="search">搜索</button>
+                    <ul class="lis-inline search-nav" @click="selectSearchLabel($event.target)" id="search-options">
+                        <li class="on search-uni">高校需求</li>
+                        <li class="search-inc">企业需求</li>
+                        <li class="search-pos">校企岗位</li>
+                    </ul>
+                </div>
+            </div>
+            <ul class="lis-inline module-entry">
+                <li><a :href="modLink('uni')" class="mod-entry"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>高校需求</b></a></li>
+                <li><a :href="modLink('inc')" class="mod-entry"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>企业需求</b></a></li>
+                <li><a href="#" class="mod-entry"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>充电站</b></a></li>
+                <li><a :href="modLink('recruit')" class="mod-entry"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>招聘会</b></a></li>
+                <li><a :href="modLink('pos')" class="mod-entry"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>校企岗位</b></a></li>
+                <li><a href="#" class="mod-entry"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>职业规划</b></a></li>
+            </ul>
+            <i class="pic-wrapper weiter" @click="downwards"><img src="images/icon-weiter.png" /></i>
+        </div>
+    </div>
+    <div class="mod-page class-show" id="app-show" v-cloak>
+        <h2 class="t-center p-title LH56">案例展示</h2>
+        <h3 class="p-subtitle LH37 fSize24 t-center">CASE SHOW</h3>
+        <!--效果html开始-->
+        <div class="swiper-container inner">
+            <div class="swiper-wrapper">
+                <img class="swiper-slide" v-for="item in showInfos" :src="item.imgsrc" />
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <!--效果html结束-->
+        <div class="clear"></div>
+    </div>
+    <div class="about-us H742 mod-page" id="app-about" v-cloak>
+        <div class="inner paTop100">
+            <h2 class="t-center p-title LH66 color-white">关于我们</h2>
+            <h3 class="p-subtitle LH43 fSize24 t-center color-white">ABOUT US</h3>
+            <p class="LH30 color-gray9 maT25 fSize14 t-center">校企职通车网站是国内唯一一家专注解决大学生从学习到就业的信息服务平台。<br />校企的服务目标是：让每一个大学生都能专业对口就业。</p>
+            <ul class="lis-inline about-lis color-white">
+                <li><i class="pic-wrapper"><img src="images/1.png" /></i></li>
+                <li><i class="pic-wrapper"><img src="images/2.png" /></i></li>
+                <li><i class="pic-wrapper"><img src="images/3.png" /></i></li>
+                <li><i class="pic-wrapper"><img src="images/4.png" /></i></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="coop" id="app-coop" v-cloak>
+        <div class="inner paTop58 t-center">
+            <ul class="coop-navs LH66 fSize22 lis-inline disInline">
+                <li :class="{'on':showinc}" @click="showinc=true">合作企业</li>
+                <li :class="{'on':!showinc}" @click="showinc=false">合作高校</li>
+            </ul>
+            <ul class="lis-inline coop-lis coop-inc" v-show="showinc">
+                <li v-for="item in coopInc">
+                    <a class="pic-wrapper"><img :src="item.imgsrc" /></a>
+                </li>
+            </ul>
+            <ul class="lis-inline coop-lis" v-show="!showinc">
+                <li v-for="item in coopUni">
+                    <a class="pic-wrapper"><img :src="item.imgsrc" /></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer" id="app-footer" v-cloak>
+        <div class="inner clearfix paBot25">
+            <div class="logo fl clearfix paTop64">
+                <img src="images/logo.png" class="fl maR21" />
+                <h2 class="fl LH-H63 fSize30 color-white">校企职通车</h2>
+            </div>
+            <ul class="lis-inline footer-lis">
+                <li v-for="item in fBlocks">
+                    <dt>{{item.title}}</dt>
+                    <dd v-for="subitem in item.sublis" @click="linkFoo(item.title)">{{subitem}}</dd>
+                </li>
+            </ul>
+            <div class="fr paTop28">
+                <h3 class="fSize18 LH50 t-center color-white">关注我们</h3>
+                <i class="pic-wrapper"><img src="images/barcode.png" /></i>
+            </div>
+        </div>
+    </div>
+    <div class="bot">
+        <p class="inner LH50 t-center">校企职通车版权所有©2017XIAOQI 浙ICP备17007975号-2 浙公网安备3481464号</p>
+    </div>
+    <script src="js/commons.js"></script>
+    <script src="js/index.js"></script>
+</body>
+
+</html>

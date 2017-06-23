@@ -1,4 +1,4 @@
-// import $ from '../libs/jquery-3.1.0.min'
+import $ from '../libs/jquery-3.1.0.min'
 
 //Firefox获取文件路径方法
 function readFileFirefox(fileBrowser) {
@@ -45,8 +45,18 @@ window.variableUtils = variableUtils;
 window.EventUtils = {
         initDatabase: function() {
             for (var key in xqdatabase) {
-                xqdatabase[key].push("不限");
+                if (key != "date") {
+                    xqdatabase[key].push("不限");
+                }
             }
+            for (var i = 0; i < majorArray.length; i++) {
+                majorArray[i].submajor.push("不限");
+            };
+            var exMajor = {
+                major: "不限",
+                submajor: ["不限"]
+            };
+            majorArray.push(exMajor);
         },
         submitForm: function(url, data) {　　
             var eleForm = document.body.appendChild(document.createElement('form'));　　
@@ -216,10 +226,28 @@ window.EventUtils = {
                 async: false,
                 data: postdata,
                 success: function(resp, status) {
-                    callback(resp, status);
+                    if (resp.code == "00000" || resp.code == "10005") {
+                        callback(resp, status);
+                    } else if (resp.code == "10002") {
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "error"
+                        })
+                    } else {
+                        swal({
+                            title: "",
+                            text: "系统错误，请稍后重试！如果错误多次出现，请联系我们，我们将尽快为您解决!",
+                            type: "warning"
+                        })
+                    }
                 },
                 error: function(data, status) {
-                    alert("请求服务器信息错误！" + data.info);
+                    swal({
+                        title: "",
+                        text: "请求服务器数据错误，请稍后重试！",
+                        type: "warning"
+                    })
                 },
                 timeout: 100000
             })

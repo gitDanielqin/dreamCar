@@ -1,6 +1,7 @@
 /*主体样式*/
 
 .main {
+    min-height: 570px;
     background: url("../images/bg-recruit.jpg") no-repeat center center;
     background-size: cover;
 }

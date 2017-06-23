@@ -2,13 +2,13 @@
  * Created by xuanyuan on 2016/11/6.
  */
 
-// import $ from "../libs/jquery-3.1.0.min";
-// var Vue = require("../libs/vue");
-// require("../libs/sweetalert.min");
-// require("../common/common")
-// require("../../css/base.css")
-// require("../../css/sweetalert.css")
-// require("../../css/login.css")
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../libs/sweetalert.min");
+require("../common/common")
+require("../../css/base.css")
+require("../../css/sweetalert.css")
+require("../../css/login.css")
 
 var parObj = EventUtils.urlExtrac(window.location);
 var regExp = {
@@ -33,6 +33,7 @@ var appCont = new Vue({
             validcode: "",
             userType: 0,
             isAccValid: false,
+            isRegis: false,
             isPassValid: false,
             unableCode: false,
         },
@@ -56,6 +57,17 @@ var appCont = new Vue({
         validText: "获取验证码"
     },
     methods: {
+        checkAccount: function() {
+            if (this.register.account != "") {
+                EventUtils.ajaxReq("/center/user/checkLoginName", "post", { loginName: this.register.account }, function(resp, status) {
+                    if (resp.data.result == "1") {
+                        appCont.register.isRegis = true;
+                    } else {
+                        appCont.register.isRegis = false;
+                    }
+                })
+            }
+        },
         showAgreement: function() {
             appModal.showModal = true;
         },
@@ -86,7 +98,6 @@ var appCont = new Vue({
                 userType: this.register.userType
             };
             var callback = function(resp, status) {
-                console.log(resp);
                 if (resp.data) {
                     var parstring = "userType=" + appCont.register.userType + "&userId=" + resp.data.userId + "&loginId=" + resp.data.loginIdentifier + "&addr=" + parObj.address;
                     window.location.href = "vCards.html?" + window.btoa(parstring);
@@ -177,7 +188,6 @@ var appCont = new Vue({
         },
         reqValidCode: function(obj) {
             this.register.unableCode = true;
-            // $(obj).attr("disabled", true);
             var start = 0;
             var timer = setInterval(function() {
                 start++;
@@ -208,7 +218,7 @@ var appCont = new Vue({
                 swal({
                     title: "",
                     text: resp.info,
-                    type: "warning"
+                    type: "success"
                 })
             });
         }

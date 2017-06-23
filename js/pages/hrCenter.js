@@ -1,11 +1,17 @@
-// import $ from "../libs/jquery-3.1.0.min";
-// var Vue = require("../libs/vue");
-// require("../common/common")
-// require("../components/dropdown")
-// require("../components/pagination")
-// require("../../css/base.css")
-// require("../../css/widget.css")
-// require("../../css/hrCenter.css")
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../libs/sweetalert.min");
+require("../common/common")
+require("../components/dropdown")
+require("../components/pagination")
+require("../components/message-box")
+require("../components/freshbox")
+require("../components/stickbox")
+require("../components/common-footer")
+require("../../css/base.css")
+require("../../css/sweetalert.css")
+require("../../css/widget.css")
+require("../../css/hrCenter.css")
 
 var parObj = EventUtils.urlExtrac(window.location);
 var respObj = {};

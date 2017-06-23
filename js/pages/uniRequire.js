@@ -1,18 +1,22 @@
-// import $ from "../libs/jquery-3.1.0.min";
-// var Vue = require("../libs/vue");
-// require("../common/common")
-// require("../components/dropdown")
-// require("../components/major-pop")
-// require("../components/foundation-datepicker")
-// require("../../data/commondata")
-// require("../../data/position")
-// require("../../data/major")
-// require("../../data/address")
-// require("../../data/workareas")
-// require("../../css/base.css")
-// require("../../css/widget.css")
-// require("../../css/foundation-datepicker.min.css")
-// require("../../css/require.css")
+import $ from "../libs/jquery-3.1.0.min";
+var Vue = require("../libs/vue");
+require("../libs/sweetalert.min");
+require("../common/common")
+require("../components/dropdown")
+require("../components/major-pop")
+require("../components/pagination")
+require("../components/foundation-datepicker")
+require("../components/message-box")
+require("../../data/commondata")
+require("../../data/position")
+require("../../data/major")
+require("../../data/address")
+require("../../data/workareas")
+require("../../css/base.css")
+require("../../css/sweetalert.css")
+require("../../css/widget.css")
+require("../../css/foundation-datepicker.min.css")
+require("../../css/require.css")
 
 // 获取字段判断是否为首次发布还是修改
 var parObj = EventUtils.urlExtrac(window.location);
@@ -575,7 +579,7 @@ var appMain = new Vue({
         navEventBind();
         // selectRepos();
         datepickEventBind();
-        selectInit();
+        // selectInit();
         selectTime();
     },
     watch: {
@@ -664,7 +668,7 @@ function selectInit() {
         $(this).width($(this).width() - 20);
         $(this).css("padding-right", 20 + "px");
         var bgPos = $(this).width() + 10 + "px center";
-        $(this).attr("disabled", "true").css("background-position", bgPos);
+        $(this).css("background-position", bgPos);
     })
 }
 // 选择时间表事件

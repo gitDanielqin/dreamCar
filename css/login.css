@@ -141,6 +141,17 @@ body {
     cursor: pointer;
 }
 
+.account-hint {
+    display: inline-block;
+    width: 99px;
+    position: absolute;
+    height: 20px;
+    top: 45px;
+    font-size: 13px;
+    right: 29px;
+    color: red;
+}
+
 .agreement {
     color: orange;
 }

@@ -1,5 +1,5 @@
-// import $ from '../libs/jquery-3.1.0.min'
-// var Vue = require("../libs/vue");
+import $ from '../libs/jquery-3.1.0.min'
+var Vue = require("../libs/vue");
 (function() {
     var tempDrop = '<div :class="classStyle" @click.stop="clickEv($event.target)" style="display:inline-block"><span class="input-frame"></span><input type="text" :placeholder="placeholder" :value="value" disabled/><ul>' +
         '<li v-for="option in options" @click="selectItem(option,$event.target)" @mouseover="overItem($event.target)" @mouseout="outItem($event.target)">{{option}}</li>' +
@@ -264,8 +264,8 @@
         })
         // 学科选择
     var templMajor = '<div>\
-          <dropdown placeholder="一级学科" :options="major" class="major-input-1" v-model="selMajor"></dropdown>\
-          <dropdown placeholder="二级学科" :options="submajor" class="major-input-2" v-model="selsubMajor"></dropdown>\
+          <dropdown placeholder="一级专业" :options="major" class="major-input-1" v-model="selMajor"></dropdown>\
+          <dropdown placeholder="二级专业" :options="submajor" class="major-input-2" v-model="selsubMajor"></dropdown>\
      </div>';
     Vue.component("major-select", {
             template: templMajor,

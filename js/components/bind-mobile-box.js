@@ -1,3 +1,4 @@
+var Vue = require("../libs/vue");
 (function() {
     var mobileTempl = '<div class="bind-change mobile-bind">\
         <h2 class="bind-title">更换手机号<i class="pic-wrapper close" @click.stop="closeMobile"><i class="pic-icon icon-close"></i></i>\
