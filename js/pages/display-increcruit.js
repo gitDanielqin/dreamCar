@@ -285,6 +285,7 @@ var appQuery = new Vue({
             this.showPosBox = false;
         },
         clickPos: function() {
+            $(".selectee ul").hide();
             this.showPosBox = true;
         },
         selArea: function(area, type) {
@@ -299,9 +300,11 @@ var appQuery = new Vue({
             this.showAreaBox = false;
         },
         clickArea: function() {
+            $(".selectee ul").hide();
             this.showAreaBox = true;
         },
         clickWel: function() {
+            $(".selectee ul").hide();
             this.showWelBox = true;
         },
         checkEv: function(obj) {
@@ -494,6 +497,9 @@ var appModal = new Vue({
         }
     },
     methods: {
+        securityUrl: function(url) {
+            return EventUtils.securityUrl(url);
+        },
         confirmSuc: function() {
             this.showSucc = false;
             this.showModal = false;

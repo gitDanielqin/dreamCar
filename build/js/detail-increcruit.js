@@ -210,6 +210,11 @@ function infoRequest() {
                 break;
         }
         appBanner.increcdata = briefdata;
+        if (respObj.jobFairAddress && respObj.jobFairAddress.indexOf(";") >= 0) {
+            var address = respObj.jobFairAddress.split(';')[1];
+        } else {
+            var address = "";
+        }
         var increcinfo = {
             userIcon: respObj.userIcon,
             pos: EventUtils.infoExtrac(respObj.job),
@@ -221,7 +226,7 @@ function infoRequest() {
             posAmount: respObj.jobCount,
             contact: respObj.mobile,
             contactP: respObj.linkMan,
-            recruitAddr: respObj.jobFairAddress ? respObj.jobFairAddress.split(";").join("-") : "",
+            recruitAddr: address,
             welfare: respObj.cvWelfare ? respObj.cvWelfare.split(";") : "",
             inc: respObj.userName,
             incProps: respObj.userProperty,
@@ -516,6 +521,9 @@ var appModal = new Vue({
         }
     },
     methods: {
+        securityUrl: function securityUrl(url) {
+            return EventUtils.securityUrl(url);
+        },
         confirmSuc: function confirmSuc() {
             this.showSucc = false;
             this.showModal = false;

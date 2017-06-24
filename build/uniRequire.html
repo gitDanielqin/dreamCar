@@ -120,7 +120,7 @@
                             </tr>
                         </table>
                     </div>
-                    <p class="form-item pRel"><label><span class="must-mark">*</span>需求描述</label><textarea v-model="combiData.requireDesc" class="form-desc must-input"></textarea><span class="fSize14 LH40 color-gray-c desc-hint">你还可以输入{{fontCal(combiData.requireDesc,combiData.datatype)}} 字</span></p>
+                    <p class="form-item pRel"><label><span class="must-mark">*</span>需求描述</label><textarea placeholder="温馨提示：请把未说完的话在这里说完，描述越详细成功率越高。如：合作专业、专业人数、岗位名称、企业性质等" v-model="combiData.requireDesc" class="form-desc must-input"></textarea><span class="fSize14 LH40 color-gray-c desc-hint">你还可以输入{{fontCal(combiData.requireDesc,combiData.datatype)}} 字</span></p>
                     <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
                     <p class="form-item"><label>联系人</label><input type="text" v-model="combiData.contact.person" /></p>
                     <p class="form-item"><label><span class="must-mark">*</span>联系电话</label><input type="text" class="phone-input must-input" v-model="combiData.contact.phone" /></p>
@@ -165,7 +165,7 @@
                         <dropdown class="must-item pro-count" :options="database.uni.amount" placeholder="" v-model="recruitData.stuScale"></dropdown>
                     </p>
                     <p class="form-item"><label><span class="must-mark">*</span>举办时间</label><input class="must-input" type="text" id="jobfair-date" placeholder="格式：2017-01-30" readonly/></p>
-                    <p class="form-item pRel"><label><span class="must-mark">*</span>招聘会描述</label><textarea v-model="recruitData.desc" class="form-desc must-input"></textarea><span class="fSize14 LH40 color-gray-c desc-hint">你还可以输入{{fontCal(recruitData.desc,recruitData.datatype)}} 字</span></p>
+                    <p class="form-item pRel"><label><span class="must-mark">*</span>招聘会描述</label><textarea placeholder="温馨提示：请把未说完的话在这里说完，描述越详细成功率越高。如：高校专业、专业人数、企业性质、岗位名称、岗位数等" v-model="recruitData.desc" class="form-desc must-input"></textarea><span class="fSize14 LH40 color-gray-c desc-hint">你还可以输入{{fontCal(recruitData.desc,recruitData.datatype)}} 字</span></p>
                     <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
                     <p class="form-item"><label>联系人</label><input type="text" v-model="recruitData.contact.person" /></p>
                     <p class="form-item"><label><span class="must-mark">*</span>联系电话</label><input type="text" class="phone-input must-input" v-model="recruitData.contact.phone" /></p>

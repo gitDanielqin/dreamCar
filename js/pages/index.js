@@ -168,6 +168,13 @@ var appFront = new Vue({
         btoa: function(text) {
             return window.btoa(text);
         },
+        notReady: function() {
+            swal({
+                title: "",
+                text: "该模块即将上线，敬请期待！",
+                type: "warning"
+            })
+        },
         clickFront: function(obj) {
             if (!$(obj).hasClass("search-nav") && !$(obj).hasClass("search-nav")) {
                 $("#search-options").css("opacity", 0);

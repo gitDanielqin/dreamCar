@@ -210,7 +210,7 @@ var appCont = new Vue({
         },
         require: {
             state: "校企合作",
-            demandSrc: 0,
+            demandSrc: 0, //0 校企合作 1 招聘会 2 企业
             curpage: 1,
             totalpages: 1,
             totalitems: 0,
@@ -523,21 +523,33 @@ var appCont = new Vue({
             } else {
                 $(".resumeCont textarea").removeClass("hint-nullable");
             }
+            if (this.resume.comLicense != "" || this.resume.comLicenseUrl != "") {
+                this.resume.hasBusLicense = true;
+            } else {
+                this.resume.hasBusLicense = false;
+                isFilled = false;
+            }
+
             if (!isFilled) {
                 swal({
                     title: "",
-                    text: "请填写完整您的企业信息！",
+                    text: "请完善您的企业信息！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if (this.resume.comLicense != "" || this.resume.comLicenseUrl != "") {
+                this.resume.hasBusLicense = true;
+            } else {
+                this.resume.hasBusLicense = false;
+                swal({
+                    title: "",
+                    text: "请上传您的营业执照！",
                     type: "warning"
                 });
                 return false;
             }
 
-            if (this.resume.comLicense != "" || this.resume.comLicenseUrl != "") {
-                this.resume.hasBusLicense = true;
-            } else {
-                this.resume.hasBusLicense = false;
-            }
-            console.log(this.resume.comLicense, 1);
             // this.resume.edit = false;
             // this.resume.view = true;
             //上传许可证等图片文件
@@ -1239,6 +1251,9 @@ function init_center() {
                 $(".sideBox li[paneid='vip-center']").trigger("click");
                 break;
             case "require":
+                if (parObj.demandSrc) {
+                    appCont.require.demandSrc = parObj.demandSrc;
+                }
                 $(".sideBox li[paneid='requireBox']").trigger("click");
                 break;
             case "combi":
@@ -1255,15 +1270,6 @@ function init_center() {
     uploadEventBind();
 }
 init_center();
-
-function selectInit() {
-    $(".major-input input").each(function(index) {
-        $(this).width($(this).width() - 20);
-        $(this).css("padding-right", 20 + "px");
-        var bgPos = $(this).width() + 10 + "px center";
-        $(this).attr("disabled", "true").css("background-position", bgPos);
-    })
-}
 
 function uploadEventBind() {
     var options = {
@@ -1360,6 +1366,7 @@ function demandRequest(type, page) {
                 appCont.require.totalitems = 0;
             }
             appCont.require.demandSrc = 0;
+            appCont.require.state = "校企合作";
         })
     } else if (type == 1) { //招聘会
         var postdata = {
@@ -1381,6 +1388,7 @@ function demandRequest(type, page) {
                 appCont.require.totalitems = 0;
             }
             appCont.require.demandSrc = 1;
+            appCont.require.state = "招聘会";
         })
     } else if (type == 2) { //企业直聘
         var postdata = {
@@ -1402,6 +1410,7 @@ function demandRequest(type, page) {
                 appCont.require.totalitems = 0;
             }
             appCont.require.demandSrc = 2;
+            appCont.require.state = "企业直聘";
         })
     }
 }

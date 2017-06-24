@@ -395,7 +395,19 @@ var appMain = new Vue({
                 })
                 return false;
             }
-
+            //检测联系方式地址信息
+            var linkAddress = $("input.dis-Addr:visible");
+            if (linkAddress.val().split("-")[0] == "" || linkAddress.val().split("-")[1] == "") {
+                swal({
+                    title: "",
+                    text: "请填写完整的地址信息！",
+                    type: "warning"
+                })
+                linkAddress.addClass("hint-nullable");
+                return false;
+            } else {
+                linkAddress.removeClass("hint-nullable");
+            }
             if (type == "combi") {
                 //检查字段是否规范
                 var isValid = true;
@@ -498,7 +510,7 @@ var appMain = new Vue({
                                 showConfirmButton: false
                             });
                             setTimeout(function() {
-                                var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require&demandSrc=0";
                                 window.location.href = EventUtils.securityUrl(link);
                             }, 1000);
                         }
@@ -514,7 +526,7 @@ var appMain = new Vue({
                                 showConfirmButton: false
                             });
                             setTimeout(function() {
-                                var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require&demandSrc=0";
                                 window.location.href = EventUtils.securityUrl(link);
                             }, 1000);
                         }
@@ -618,7 +630,7 @@ var appMain = new Vue({
                                     showConfirmButton: false
                                 });
                                 setTimeout(function() {
-                                    var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                    var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require&demandSrc=1";
                                     window.location.href = EventUtils.securityUrl(link);
                                 }, 1000);
                             }
@@ -634,7 +646,7 @@ var appMain = new Vue({
                             showConfirmButton: false
                         });
                         setTimeout(function() {
-                            var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                            var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require&demandSrc=1";
                             window.location.href = EventUtils.securityUrl(link);
                         }, 1000);
                     })
@@ -742,7 +754,7 @@ var appMain = new Vue({
                                     showConfirmButton: false
                                 })
                                 setTimeout(function() {
-                                    var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                    var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require&demandSrc=2";
                                     window.location.href = EventUtils.securityUrl(link);
                                 }, 1000);
                             }
@@ -759,7 +771,7 @@ var appMain = new Vue({
                                 showConfirmButton: false
                             });
                             setTimeout(function() {
-                                var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require&demandSrc=2";
                                 window.location.href = EventUtils.securityUrl(link);
                             }, 1000);
                         }

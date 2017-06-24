@@ -30,12 +30,6 @@ __webpack_require__(43);
 var parObj = EventUtils.urlExtrac(window.location);
 
 function initEventBind() {
-    (0, _jquery2.default)(".charge-val").focus(function () {
-        (0, _jquery2.default)(".charge-hint").show();
-    }).blur(function () {
-        (0, _jquery2.default)(".charge-hint").hide();
-    });
-
     (0, _jquery2.default)(".pay-way li").unbind("click").bind("click", function () {
         (0, _jquery2.default)(".pay-way li").removeClass("on");
         (0, _jquery2.default)(this).addClass("on");

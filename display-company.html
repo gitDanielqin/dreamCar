@@ -79,7 +79,7 @@
             </div>
             <div class="clearfix maB16">
                 <label>企业提供：</label>
-                <div class="selectee lang-select pos-input" @click.stop="clickPos"><input type="text" placeholder="岗位名称" disabled v-model="incQuery.pos.pos_2" /></div>
+                <div class="selectee lang-select pos-input" @click.stop="clickPos"><span class="input-frame"></span><input type="text" placeholder="岗位名称" readonly v-model="incQuery.pos.pos_2" /></div>
                 <dropdown :options="database.inc.posAmount" placeholder="岗位数量" v-model="incQuery.posAmount"></dropdown>
             </div>
             <div class="clearfix maB16">

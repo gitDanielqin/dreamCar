@@ -76,10 +76,10 @@
             </div>
             <div class="clearfix maB16">
                 <label>对企要求：</label>
-                <div class="selectee lang-select area-input" @click.stop="clickArea"><input type="text" placeholder="需求行业" readonly v-model="uniQuery.incReq.areas.area_2" /></div>
+                <div class="selectee lang-select area-input" @click.stop="clickArea"><span class="input-frame"></span><input type="text" placeholder="需求行业" readonly v-model="uniQuery.incReq.areas.area_2" /></div>
                 <dropdown :options="database.inc.IncProps" placeholder="企业性质" v-model="uniQuery.incReq.IncProps" class="lang-select"></dropdown>
                 <dropdown :options="database.inc.IncScale" placeholder="企业规模" v-model="uniQuery.incReq.IncScale"></dropdown>
-                <div class="selectee lang-select pos-input" @click.stop="clickPos"><input type="text" placeholder="岗位名称" readonly v-model="uniQuery.incReq.pos.pos_2" /></div>
+                <div class="selectee lang-select pos-input" @click.stop="clickPos"><span class="input-frame"></span><input type="text" placeholder="岗位名称" readonly v-model="uniQuery.incReq.pos.pos_2" /></div>
                 <dropdown :options="database.inc.posAmount" placeholder="岗位数量" v-model="uniQuery.incReq.posAmount"></dropdown>
             </div>
             <div class="clearfix maB16">
@@ -174,7 +174,7 @@
                 </form>
                 <div class="regis fl H298 maT11 paLeft28 t-left fSize14 paTop18">
                     <p class="LH-H70">还没有校企账号？</p>
-                    <a class="LH-H26 login-link" href="login.html?newAcc=1">请立即注册<i class="maL14 pic-icon"></i></a>
+                    <a class="LH-H26 login-link" :href="securityUrl('login.html?newAcc=1')">请立即注册<i class="maL14 pic-icon"></i></a>
                     <p class="maT60 LH-H56">使用以下账号直接登录</p>
                     <p class="paTop25 fast-login t-center"><i class="pic-icon icon-qq"></i><i class="pic-icon icon-weibo" style="margin-right:32px;"></i><i class="pic-icon icon-wechat"></i></p>
                 </div>

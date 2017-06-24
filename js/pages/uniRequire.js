@@ -316,6 +316,8 @@ var appMain = new Vue({
                     }
                 }
             })
+
+
             if (!isFilled) {
                 swal({
                     title: "",
@@ -323,6 +325,20 @@ var appMain = new Vue({
                     type: "warning"
                 })
                 return false;
+            }
+
+            //检测联系方式地址信息
+            var linkAddress = $("input.dis-Addr:visible");
+            if (linkAddress.val().split("-")[0] == "" || linkAddress.val().split("-")[1] == "") {
+                swal({
+                    title: "",
+                    text: "请填写完整的地址信息！",
+                    type: "warning"
+                })
+                linkAddress.addClass("hint-nullable");
+                return false;
+            } else {
+                linkAddress.removeClass("hint-nullable");
             }
             if (type == "combi") {
                 //检查信息是否符合正确的格式(不能为不限)
@@ -427,7 +443,7 @@ var appMain = new Vue({
                                 showConfirmButton: false
                             });
                             setTimeout(function() {
-                                var link = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require";
+                                var link = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require&demandSrc=0";
                                 window.location.href = EventUtils.securityUrl(link);
                             }, 1000);
                         }
@@ -443,7 +459,7 @@ var appMain = new Vue({
                                 showConfirmButton: false
                             });
                             setTimeout(function() {
-                                var link = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
+                                var link = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require&demandSrc=0";
                                 window.location.href = EventUtils.securityUrl(link);
                             }, 1000);
                         }
@@ -537,7 +553,7 @@ var appMain = new Vue({
                                     showConfirmButton: false
                                 });
                                 setTimeout(function() {
-                                    var link = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
+                                    var link = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require&demandSrc=1";
                                     window.location.href = EventUtils.securityUrl(link);
                                 }, 1000);
                             }
@@ -554,7 +570,7 @@ var appMain = new Vue({
                                 showConfirmButton: false
                             });
                             setTimeout(function() {
-                                var link = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require";
+                                var link = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require&demandSrc=1";
                                 window.location.href = EventUtils.securityUrl(link);
                             }, 1000);
                         }

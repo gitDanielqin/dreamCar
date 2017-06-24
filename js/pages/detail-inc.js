@@ -42,7 +42,7 @@ function infoRequest() {
         };
         appBanner.incdata = briefdata;
         if (respObj.schoolAddress && respObj.schoolAddress.indexOf(";") >= 0) {
-            var address = respObj.schoolAddress.split(';')[0] + respObj.schoolAddress.split(';')[1];
+            var address = respObj.schoolAddress.split(';')[1];
         } else {
             var address = "";
         }
@@ -356,6 +356,9 @@ var appModal = new Vue({
         }
     },
     methods: {
+        securityUrl: function(url) {
+            return EventUtils.securityUrl(url);
+        },
         confirmSuc: function() {
             this.showSucc = false;
             this.showModal = false;

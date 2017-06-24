@@ -11,12 +11,6 @@ require("../../css/recharge.css")
 var parObj = EventUtils.urlExtrac(window.location);
 
 function initEventBind() {
-    $(".charge-val").focus(function() {
-        $(".charge-hint").show();
-    }).blur(function() {
-        $(".charge-hint").hide();
-    });
-
     $(".pay-way li").unbind("click").bind("click", function() {
         $(".pay-way li").removeClass("on");
         $(this).addClass("on");

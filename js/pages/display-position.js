@@ -300,10 +300,10 @@ var appQuery = new Vue({
             this.showAreaBox = false;
         },
         clickPos: function() {
+            $(".selectee ul").hide();
             this.showAreaBox = false;
             this.showWelBox = false;
             this.showPosBox = true;
-            $(".selectee ul").hide();
         },
         clickArea: function() {
             this.showAreaBox = true;
@@ -530,6 +530,9 @@ var appModal = new Vue({
         }
     },
     methods: {
+        securityUrl: function(url) {
+            return EventUtils.securityUrl(url);
+        },
         confirmSuc: function() {
             this.showSucc = false;
             this.showModal = false;
@@ -609,7 +612,7 @@ _init();
 function selectInitPos() {
     $(".selectee input").each(function() {
         var bgPos = $(this).width() + 10 + "px center";
-        $(this).attr("disabled", "true").css("background-position", bgPos);
+        $(this).attr("readonly", "readonly").css("background-position", bgPos);
     });
     $(".selectee ul").each(function() {
         var sibInput = $(this).siblings("input")

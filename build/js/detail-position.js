@@ -210,6 +210,12 @@ function infoRequest() {
                 break;
         }
         appBanner.posdata = briefdata;
+
+        if (respObj.companyAddress && respObj.companyAddress.indexOf(";") >= 0) {
+            var address = respObj.companyAddress.split(';')[1];
+        } else {
+            var address = "";
+        }
         var posinfo = {
             userIcon: respObj.userIcon,
             pos: EventUtils.infoExtrac(respObj.job),
@@ -220,7 +226,7 @@ function infoRequest() {
             worksexp: respObj.workTime,
             posAmount: respObj.recruitCount,
             contact: respObj.mobile,
-            address: respObj.companyAddress ? respObj.companyAddress.split(";").join("-") : "",
+            address: address,
             welfare: respObj.welfare ? respObj.welfare.split(";") : "",
             inc: respObj.userName,
             incProps: respObj.userProperty,
@@ -513,6 +519,9 @@ var appModal = new Vue({
         }
     },
     methods: {
+        securityUrl: function securityUrl(url) {
+            return EventUtils.securityUrl(url);
+        },
         confirmSuc: function confirmSuc() {
             this.showSucc = false;
             this.showModal = false;

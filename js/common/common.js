@@ -237,7 +237,7 @@ window.EventUtils = {
                     } else {
                         swal({
                             title: "",
-                            text: "系统错误，请稍后重试！如果错误多次出现，请联系我们，我们将尽快为您解决!",
+                            text: "系统错误，请稍后重试!",
                             type: "warning"
                         })
                     }

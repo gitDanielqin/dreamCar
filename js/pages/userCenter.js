@@ -187,14 +187,14 @@ function infoRequest() {
             }
             var cvInfo = {
                 firstEdit: false,
-                realName: respObj.userInfo.realName, //5 
-                family: familyStatus, //5
-                phone: respObj.userInfo.mobile, //5
-                email: respObj.userInfo.email, //5
-                nativePlace: respObj.userInfo.nativePlace, //5
-                nation: respObj.userInfo.nation, //5
+                realName: respObj.userInfo.realName,
+                family: familyStatus,
+                phone: respObj.userInfo.mobile,
+                email: respObj.userInfo.email,
+                nativePlace: respObj.userInfo.nativePlace,
+                nation: respObj.userInfo.nation,
                 curWorksIndex: 1,
-                expect: { //20
+                expect: {
                     tradeItems: respObj.cvInfo.expJob,
                     posItems: respObj.cvInfo.expJobFunction,
                     province: respObj.cvInfo.expPlace ? respObj.cvInfo.expPlace.split(";")[0] : "",
@@ -202,13 +202,13 @@ function infoRequest() {
                     district: respObj.cvInfo.expPlace ? respObj.cvInfo.expPlace.split(";")[2] : "",
                     salary: respObj.cvInfo.expSalary
                 },
-                worksExps: worksExps, //10
-                edus: edus, //10
-                projects: projects, //10
-                laSkills: respObj.cvInfo.languages, //5
-                selfEval: respObj.cvInfo.evaluation, //5
-                psInfo: respObj.cvInfo.anymore, //5
-                skills: respObj.cvInfo.speciality //5
+                worksExps: worksExps,
+                edus: edus,
+                projects: projects,
+                laSkills: respObj.cvInfo.languages,
+                selfEval: respObj.cvInfo.evaluation,
+                psInfo: respObj.cvInfo.anymore,
+                skills: respObj.cvInfo.speciality
             };
             //计算简历完成度
             resumePercentCalculate(cvInfo);
@@ -1399,8 +1399,24 @@ function editEventBind() {
         var editBlock = $(this).closest(".edit-item");
         var viewName = editBlock.attr("name");
         var postdata = {};
+        var isFilled = true;
         //校验手机和邮箱格式是否正确
         if (viewName == "basic") {
+            $(".edit-must[name='basic'] input:visible").each(function(index) {
+                if (this.value == "") {
+                    $(this).addClass("hint-nullable");
+                    isFilled = false;
+                }
+            });
+            if (!isFilled) {
+                swal({
+                    title: "",
+                    text: "请完成所有必填信息！",
+                    type: "warning"
+                })
+                return false;
+            }
+
             if (!variableUtils.regExp.mobile.test(appCont.resume.phone)) {
                 $("#cv-mobile").addClass("hint-nullable");
                 swal({
@@ -1425,6 +1441,23 @@ function editEventBind() {
             }
         }
         switch (viewName) {
+            case "edu":
+                $(".edit-must[name='edu'] input:visible").each(function(index) {
+                    if (this.value == "") {
+                        $(this).addClass("hint-nullable");
+                        isFilled = false;
+                    }
+                });
+                if (!isFilled) {
+                    swal({
+                        title: "",
+                        text: "请完成所有必填信息！",
+                        type: "warning"
+                    })
+                    return false;
+                };
+                postResume(viewName);
+                break;
             case "speech":
                 var skillArray = [];
                 $(".language-skills input[type='checkbox']").each(function() {
@@ -1478,6 +1511,7 @@ function editEventBind() {
         }
         editBlock.hide();
         $(".resumeBox .view-item[name=" + viewName + "]").show();
+        resumePercentCalculate(appCont.resume);
     });
     $(".resumeBox .edit-item .buttons button:nth-of-type(2)").click(function() {
         appCont.resume = EventUtils.cloneObj(oldResume);
@@ -1787,31 +1821,72 @@ function resumePercentCalculate(cvInfo) {
     var resumePercent = 0;
     for (var key in cvInfo) {
         if (key == "expect") {
-            if (cvInfo[key].tradeItems && cvInfo[key].tradeItems != "") {
-                resumePercent += 20;
+            //职业意向 10
+            var isExpect = true;
+            for (var key_1 in cvInfo[key]) {
+                if (!cvInfo[key][key_1]) {
+                    isExpect = false;
+                }
+            }
+            if (isExpect) {
+                resumePercent += 10;
             }
         } else if (key == "worksExps") {
-            if (cvInfo[key][0].firma && cvInfo[key][0].firma != "") {
-                resumePercent += 10;
+            //工作经历 12
+            var isWork = true;
+            for (var key_1 in cvInfo[key]) {
+                if (!cvInfo[key][key_1] && key_1 != "initdate") {
+                    isWork = false;
+                }
+            }
+            if (isWork) {
+                resumePercent += 12;
             }
         } else if (key == "edus") {
-            if (cvInfo[key][0].uni && cvInfo[key][0].uni != "") {
-                resumePercent += 10;
+            //教育经历 12
+            var isEdu = true;
+            for (var key_1 in cvInfo[key]) {
+                if (!cvInfo[key][key_1] && key_1 != "initdate") {
+                    isEdu = false;
+                }
+            }
+            if (isEdu) {
+                resumePercent += 12;
             }
         } else if (key == "projects") {
-            if (cvInfo[key][0].name && cvInfo[key][0].name != "") {
+            //项目经历 10
+            var isProject = true;
+            for (var key_1 in cvInfo[key]) {
+                if (!cvInfo[key][key_1] && key_1 != "initdate") {
+                    isProject = false;
+                }
+            }
+            if (isProject) {
                 resumePercent += 10;
             }
         } else if (key == "firstEdit" || key == "curWorksIndex") {
             //排除这两种情况
-        } else {
-            resumePercent += 5;
+        } else if (key == "realName" || key == "phone" || key == "email") {
+            if (cvInfo[key] && cvInfo[key] != "") {
+                resumePercent += 4;
+            }
+        } else if (key == "family" || key == "nativePlace" || key == "nation") {
+            if (cvInfo[key] && cvInfo[key] != "") {
+                resumePercent += 3;
+            }
+        } else if (key == "laSkills") {
+            if (cvInfo[key] && cvInfo[key] != "") {
+                resumePercent += 5;
+            }
+        } else if (key == "selfEval" || key == "psInfo" || key == "skills") {
+            if (cvInfo[key] && cvInfo[key] != "") {
+                resumePercent += 10;
+            }
         }
     }
-    if (cvInfo.realName && cvInfo.realName != "") {
-        resumePercent += 5;
-    }
-    if (resumePercent > 100) { resumePercent = 100 };
+    if (resumePercent > 100) {
+        resumePercent = 100;
+    };
     appPorto.resumePercent = resumePercent;
     $("#app-porto .progress-real").css("width", resumePercent + "%");
 }

@@ -532,6 +532,9 @@ var appModal = new Vue({
         }
     },
     methods: {
+        securityUrl: function securityUrl(url) {
+            return EventUtils.securityUrl(url);
+        },
         confirmSuc: function confirmSuc() {
             this.showSucc = false;
             this.showModal = false;

@@ -44,13 +44,12 @@ var Vue = require("../libs/vue");
         methods: {
             delItem: function(item) {
                 if (item.messageId) {
-                    var _this = this;
-                    console.log(1);
+                    var thisObj = this;
                     EventUtils.ajaxReq("/message/delMessage", "get", { messageId: item.messageId }, function(resp, status) {
-                        if (_this.msgList.curpage > 1 && _this.msgList.results.length == 1) {
-                            _this.msgList.curpage--;
+                        if (thisObj.msgList.curpage > 1 && thisObj.msgList.results.length == 1) {
+                            thisObj.msgList.curpage--;
                         };
-                        $(".msg-box .pagination a.page").eq(_this.msgList.curpage - 1).parent().trigger("click");
+                        $(".msg-box .pagination a.page").eq(thisObj.msgList.curpage - 1).parent().trigger("click");
                     })
                 }
             },
@@ -67,7 +66,7 @@ var Vue = require("../libs/vue");
                 }
                 console.log(postdata);
                 this.msgList.curpage = page;
-                _this = this;
+                var _this = this;
                 EventUtils.ajaxReq("/message/getMessageList", "get", postdata, function(resp, status) {
                     var resultList = [];
                     if (resp.data) {

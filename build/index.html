@@ -68,10 +68,10 @@
             <ul class="lis-inline module-entry">
                 <li><a :href="modLink('uni')" class="mod-entry"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>高校需求</b></a></li>
                 <li><a :href="modLink('inc')" class="mod-entry"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>企业需求</b></a></li>
-                <li><a href="#" class="mod-entry"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>充电站</b></a></li>
+                <li @click="notReady"><a href="javascript:void(0)" class="mod-entry"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>充电站</b></a></li>
                 <li><a :href="modLink('recruit')" class="mod-entry"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>招聘会</b></a></li>
                 <li><a :href="modLink('pos')" class="mod-entry"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>校企岗位</b></a></li>
-                <li><a href="#" class="mod-entry"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>职业规划</b></a></li>
+                <li @click="notReady"><a href="javascript:void(0)" class="mod-entry"><span class="pic-wrapper"><i class="pic-icon"></i></span><b>职业规划</b></a></li>
             </ul>
             <i class="pic-wrapper weiter" @click="downwards"><img src="images/icon-weiter.png" /></i>
         </div>

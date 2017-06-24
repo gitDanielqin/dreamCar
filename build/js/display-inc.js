@@ -501,6 +501,9 @@ var appModal = new Vue({
         }
     },
     methods: {
+        securityUrl: function securityUrl(url) {
+            return EventUtils.securityUrl(url);
+        },
         confirmSuc: function confirmSuc() {
             this.showSucc = false;
             this.showModal = false;
@@ -589,6 +592,7 @@ var appModal = new Vue({
 
 function _init() {
     infoRequest();
+    // selectInitInput();
     selectInitPos();
     _initEventBind();
 }
@@ -597,7 +601,7 @@ _init();
 function selectInitPos() {
     (0, _jquery2.default)(".selectee input").each(function () {
         var bgPos = (0, _jquery2.default)(this).width() + 10 + "px center";
-        (0, _jquery2.default)(this).attr("disabled", "true").css("background-position", bgPos);
+        (0, _jquery2.default)(this).attr("readonly", "readonly").css("background-position", bgPos);
     });
     (0, _jquery2.default)(".selectee ul").each(function () {
         var sibInput = (0, _jquery2.default)(this).siblings("input");

@@ -143,7 +143,7 @@ var Vue = __webpack_require__(1);
                     }
                 }
                 if ($(obj).html() == "立即充值") {
-                    window.location.href = "recharge.html?userId=" + this.userid;
+                    window.location.href = EventUtils.securityUrl("recharge.html?userId=" + this.userid);
                 }
             },
             selectfreshitem: function selectfreshitem(index, obj) {
@@ -506,7 +506,7 @@ var Vue = __webpack_require__(1);
                     }
                 }
                 if ($(obj).html() == "立即充值") {
-                    window.location.href = "recharge.html?userId=" + this.userid;
+                    window.location.href = EventUtils.securityUrl("recharge.html?userId=" + this.userid);
                 }
             },
             selectStickWay: function selectStickWay(way, obj) {

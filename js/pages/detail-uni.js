@@ -31,9 +31,13 @@ function infoRequest() {
             publicDate: respObj.updateTime.split(" ")[0]
         };
         appBanner.unidata = briefdata;
-        var incAddArray = respObj.companyAddress ? respObj.companyAddress.split(";") : "";
+        if (respObj.companyAddress && respObj.companyAddress.indexOf(";") >= 0) {
+            var address = respObj.companyAddress.split(';')[1];
+        } else {
+            var address = "";
+        }
         var demandinfo = {
-            address: incAddArray != "" ? incAddArray[0] + " - " + incAddArray[1] : "",
+            address: address,
             type: EventUtils.infoExtrac(respObj.companyType),
             property: respObj.companyProperty,
             job: EventUtils.infoExtrac(respObj.job),
@@ -196,18 +200,18 @@ var appBanner = new Vue({
     },
     methods: {
         collect: function(obj) {
-            if (accountObj.userType != "2") {
-                swal({
-                    title: "",
-                    text: "抱歉，您不能收藏该需求！",
-                    type: "warning"
-                })
-                return false;
-            }
-            if (!$(obj).hasClass("btn-collec")) {
-                obj = obj.parentNode;
-            }
             if (appTop.isLogin) { //登录状态下
+                if (accountObj.userType != "2") {
+                    swal({
+                        title: "",
+                        text: "抱歉，您不能收藏该需求！",
+                        type: "warning"
+                    })
+                    return false;
+                }
+                if (!$(obj).hasClass("btn-collec")) {
+                    obj = obj.parentNode;
+                }
                 var isCollected = $(obj).hasClass("collected");
                 if (!isCollected) {
                     var postdata = {
@@ -354,6 +358,9 @@ var appModal = new Vue({
         }
     },
     methods: {
+        securityUrl: function(url) {
+            return EventUtils.securityUrl(url);
+        },
         confirmSuc: function() {
             this.showSucc = false;
             this.showModal = false;

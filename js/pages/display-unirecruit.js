@@ -290,9 +290,11 @@ var appQuery = new Vue({
             this.showPosBox = false;
         },
         clickPos: function() {
+            $(".selectee ul").hide();
             this.showPosBox = true;
         },
         selArea: function(area, type) {
+            $(".selectee ul").hide();
             if (type == "uni") {
                 this.uniQuery.incReq.areas.area_2 = area;
             } else if (type == "pos") {
@@ -304,9 +306,11 @@ var appQuery = new Vue({
             this.showAreaBox = false;
         },
         clickArea: function() {
+            $(".selectee ul").hide();
             this.showAreaBox = true;
         },
         clickWel: function() {
+            $(".selectee ul").hide();
             this.showWelBox = true;
         },
         checkEv: function(obj) {
@@ -523,6 +527,9 @@ var appModal = new Vue({
         }
     },
     methods: {
+        securityUrl: function(url) {
+            return EventUtils.securityUrl(url);
+        },
         confirmSuc: function() {
             this.showSucc = false;
             this.showModal = false;
@@ -607,7 +614,7 @@ _init();
 function selectInitPos() {
     $(".selectee input").each(function() {
         var bgPos = $(this).width() + 10 + "px center";
-        $(this).attr("disabled", "true").css("background-position", bgPos);
+        $(this).attr("readonly", "readonly").css("background-position", bgPos);
     });
     $(".selectee ul").each(function() {
         var sibInput = $(this).siblings("input")

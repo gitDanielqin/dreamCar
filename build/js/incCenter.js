@@ -655,7 +655,7 @@ var Vue = __webpack_require__(1);
                     }
                 }
                 if ($(obj).html() == "立即充值") {
-                    window.location.href = "recharge.html?userId=" + this.userid;
+                    window.location.href = EventUtils.securityUrl("recharge.html?userId=" + this.userid);
                 }
             },
             selectfreshitem: function selectfreshitem(index, obj) {
@@ -1018,7 +1018,7 @@ var Vue = __webpack_require__(1);
                     }
                 }
                 if ($(obj).html() == "立即充值") {
-                    window.location.href = "recharge.html?userId=" + this.userid;
+                    window.location.href = EventUtils.securityUrl("recharge.html?userId=" + this.userid);
                 }
             },
             selectStickWay: function selectStickWay(way, obj) {
@@ -1810,7 +1810,7 @@ var appCont = new Vue({
         },
         require: {
             state: "校企合作",
-            demandSrc: 0,
+            demandSrc: 0, //0 校企合作 1 招聘会 2 企业
             curpage: 1,
             totalpages: 1,
             totalitems: 0,
@@ -2120,21 +2120,33 @@ var appCont = new Vue({
             } else {
                 (0, _jquery2.default)(".resumeCont textarea").removeClass("hint-nullable");
             }
+            if (this.resume.comLicense != "" || this.resume.comLicenseUrl != "") {
+                this.resume.hasBusLicense = true;
+            } else {
+                this.resume.hasBusLicense = false;
+                isFilled = false;
+            }
+
             if (!isFilled) {
                 swal({
                     title: "",
-                    text: "请填写完整您的企业信息！",
+                    text: "请完善您的企业信息！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if (this.resume.comLicense != "" || this.resume.comLicenseUrl != "") {
+                this.resume.hasBusLicense = true;
+            } else {
+                this.resume.hasBusLicense = false;
+                swal({
+                    title: "",
+                    text: "请上传您的营业执照！",
                     type: "warning"
                 });
                 return false;
             }
 
-            if (this.resume.comLicense != "" || this.resume.comLicenseUrl != "") {
-                this.resume.hasBusLicense = true;
-            } else {
-                this.resume.hasBusLicense = false;
-            }
-            console.log(this.resume.comLicense, 1);
             // this.resume.edit = false;
             // this.resume.view = true;
             //上传许可证等图片文件
@@ -2836,6 +2848,9 @@ function init_center() {
                 (0, _jquery2.default)(".sideBox li[paneid='vip-center']").trigger("click");
                 break;
             case "require":
+                if (parObj.demandSrc) {
+                    appCont.require.demandSrc = parObj.demandSrc;
+                }
                 (0, _jquery2.default)(".sideBox li[paneid='requireBox']").trigger("click");
                 break;
             case "combi":
@@ -2852,15 +2867,6 @@ function init_center() {
     uploadEventBind();
 }
 init_center();
-
-function selectInit() {
-    (0, _jquery2.default)(".major-input input").each(function (index) {
-        (0, _jquery2.default)(this).width((0, _jquery2.default)(this).width() - 20);
-        (0, _jquery2.default)(this).css("padding-right", 20 + "px");
-        var bgPos = (0, _jquery2.default)(this).width() + 10 + "px center";
-        (0, _jquery2.default)(this).attr("disabled", "true").css("background-position", bgPos);
-    });
-}
 
 function uploadEventBind() {
     var options = {
@@ -2956,6 +2962,7 @@ function demandRequest(type, page) {
                 appCont.require.totalitems = 0;
             }
             appCont.require.demandSrc = 0;
+            appCont.require.state = "校企合作";
         });
     } else if (type == 1) {
         //招聘会
@@ -2978,6 +2985,7 @@ function demandRequest(type, page) {
                 appCont.require.totalitems = 0;
             }
             appCont.require.demandSrc = 1;
+            appCont.require.state = "招聘会";
         });
     } else if (type == 2) {
         //企业直聘
@@ -3000,6 +3008,7 @@ function demandRequest(type, page) {
                 appCont.require.totalitems = 0;
             }
             appCont.require.demandSrc = 2;
+            appCont.require.state = "企业直聘";
         });
     }
 }

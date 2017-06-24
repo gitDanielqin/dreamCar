@@ -78,10 +78,10 @@
             </div>
             <div class="clearfix maB16">
                 <label>对企要求：</label>
-                <div class="selectee lang-select area-input" @click.stop="clickArea"><input type="text" placeholder="需求行业" disabled v-model="uniRecruit.incReq.areas.area_2" /></div>
+                <div class="selectee lang-select area-input" @click.stop="clickArea"><span class="input-frame"></span><input type="text" placeholder="需求行业" v-model="uniRecruit.incReq.areas.area_2" /></div>
                 <dropdown :options="database.inc.IncProps" placeholder="企业性质" v-model="uniRecruit.incReq.IncProps" class="lang-select"></dropdown>
                 <dropdown :options="database.inc.IncScale" placeholder="企业规模" v-model="uniRecruit.incReq.IncScale"></dropdown>
-                <div class="selectee lang-select pos-input" @click.stop="clickPos"><input type="text" placeholder="岗位名称" disabled v-model="uniRecruit.incReq.pos.pos_2" /></div>
+                <div class="selectee lang-select pos-input" @click.stop="clickPos"><span class="input-frame"></span><input type="text" placeholder="岗位名称" v-model="uniRecruit.incReq.pos.pos_2" /></div>
                 <dropdown :options="database.inc.posAmount" placeholder="岗位数量" v-model="uniRecruit.incReq.posAmount"></dropdown>
             </div>
             <div class="clearfix maB16">

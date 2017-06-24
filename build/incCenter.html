@@ -472,7 +472,7 @@
                     <p class="LH-H54"><span class="color-orange-f7">VIP</span>会员享受<span style="color:#d19100">信息刷新</span>优先展示，刷新置顶低至<span class="color-red">7</span>折，是各位小伙伴的首选，目前已有10W+伙伴享受VIP特权服务。</p>
                     <p class="LH-H60 bg-gray-f7 paLeft20">VIP等级：<span class="color-orange-f7 fSize18 maR80">地主</span>账户余额：<b class="color-red"><span class="fSize18">{{priceInteger(account.money)}}</span>{{priceDecimal(account.money)}}</b>元<button class="recharge-btn" @click.stop="recharge">会员充值</button></p>
                     <vip-record :userid="account.userId"></vip-record>
-                    <div class="maB38">
+                    <!--<div class="maB38">
                         <h3 class="LH-H50 fSize16 paLeft16">会员权限说明</h3>
                         <ul class="tarif-info">
                             <li v-for="(item,index) in vip.tarif" class="clearfix">
@@ -492,7 +492,7 @@
                                 </div>
                             </li>
                         </ul>
-                    </div>
+                    </div>-->
                 </div>
             </div>
             <div class="uni-coop">
