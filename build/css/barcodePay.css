@@ -25,6 +25,18 @@
     height: auto;
 }
 
+.site-nav {
+    display: inline-block;
+}
+
+.site-nav a:hover {
+    color: orange;
+}
+
+.site-nav .depart {
+    margin: 0 5px;
+}
+
 
 /*底部样式*/
 

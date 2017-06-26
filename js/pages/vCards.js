@@ -65,6 +65,9 @@ var appCont = new Vue({
         showInc: parObj.userType == "2"
     },
     methods: {
+        securityUrl: function(url) {
+            return EventUtils.securityUrl(url);
+        },
         codequery: function(mobile, obj) {
             if (!variableUtils.regExp.mobile.test(mobile)) {
                 swal({
@@ -247,3 +250,9 @@ var appCont = new Vue({
         $(".main").css("height", EventUtils.getViewport().height - 246 + "px");
     }
 })
+
+// 清除页面绑定事件
+window.onunload = function() {
+    appTop.$off();
+    appCont.$off();
+}

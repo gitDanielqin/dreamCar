@@ -488,3 +488,13 @@ function commentRequest(id, page) {
         }
     });
 }
+
+//清除页面绑定事件
+
+window.onunload = function() {
+    appTop.$off();
+    appBanner.$off();
+    appMain.$off();
+    appFooter.$off();
+    appModal.$off();
+}

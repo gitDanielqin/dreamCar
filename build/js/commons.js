@@ -11320,13 +11320,6 @@ var Vue = __webpack_require__(1);
 /***/ }),
 
 /***/ 2:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11562,8 +11555,8 @@ window.EventUtils = {
     },
     ajaxReq: function ajaxReq(url, method, postdata, callback) {
         _jquery2.default.ajax({
-            // url: "http://www.xiaoqiztc.com/easily_xq_WebApi" + url,
-            url: "http://192.168.0.105:8080/easily_xq_WebApi" + url,
+            url: "http://www.xiaoqiztc.com/easily_xq_WebApi" + url,
+            //url: "http://192.168.0.105:8080/easily_xq_WebApi" + url,
             type: method,
             async: false,
             data: postdata,
@@ -11767,6 +11760,13 @@ if (mybrowser && mybrowser.indexOf("IE") > -1) {
         });
     };
 }
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -12608,12 +12608,12 @@ var Vue = __webpack_require__(1);
             <div class="fl">\
                 <ul class="lis-inline footer-nav">\
                     <li @click="homeLink"><a href="javascript:void(0)">校企首页</a>-</li>\
-                    <li><a href="footer-page.html?descript">关于校企</a>-</li>\
-                    <li><a href="footer-page.html?coop">网站合作</a>-</li>\
-                    <li><a href="footer-page.html?help">帮助中心</a>-</li>\
-                    <li><a href="footer-page.html?employ">招贤纳士</a>-</li>\
-                    <li><a href="footer-page.html">友情链接</a>-</li>\
-                    <li><a href="footer-page.html">教育网</a></li>\
+                    <li @click="footerLink(\'descript\')"><a href="javascript:void(0)">关于校企</a>-</li>\
+                    <li @click="footerLink(\'coop\')"><a href="javascript:void(0)">网站合作</a>-</li>\
+                    <li @click="footerLink(\'help\')"><a href="javascript:void(0)">帮助中心</a>-</li>\
+                    <li @click="footerLink(\'employ\')"><a href="javascript:void(0)">招贤纳士</a>-</li>\
+                    <li @click="footerLink(\'friend\')"><a href="javascript:void(0)">友情链接</a>-</li>\
+                    <li @click="footerLink(\'descript\')"><a href="javascript:void(0)">教育网</a></li>\
                 </ul>\
                 <ul class="lis-inline footer-contact">\
                     <li><i class="pic-icon icon-phone"></i>电话：0571-28277417-818</li>\
@@ -12640,6 +12640,14 @@ var Vue = __webpack_require__(1);
                     link += "userId=" + this.userid;
                 };
                 window.location.href = EventUtils.securityUrl(link);
+            },
+            footerLink: function footerLink(type) {
+                var link = "footer-page.html?theme=" + type;
+                if (this.userid) {
+                    link += "&userId=" + this.userid;
+                }
+                link = EventUtils.securityUrl(link);
+                window.location.href = link;
             }
         }
     });

@@ -79,7 +79,28 @@ function initEventBind() {
         if ($(oEv.target).hasClass("modal")) {
             $(".modal").hide();
         }
+    });
+    //对链接进行修改
+    var homelink = $(".top a.homepage").attr("href") + "?userId=" + parObj.userId;
+    $(".top a.homepage").attr("href", EventUtils.securityUrl(homelink));
+    $(".site-nav a").each(function() {
+        if ($(this).hasClass("homepage")) {
+            var link = $(this).attr("href") + "?userId=" + parObj.userId;
+        } else {
+            var link = $(this).attr("href") + "&userId=" + parObj.userId;
+        }
+        $(this).attr("href", EventUtils.securityUrl(link));
     })
 }
 
 initEventBind();
+
+// 清除页面绑定事件
+window.onunload = function() {
+    $(".pay-way li").unbind("click");
+    $(".plattform-sel i").click(null)
+    $(".barcode-pay button").click(null);
+    $(".checked-agree").click(null);
+    $("#payAgreebox").click(null);
+    $(".modal").click(null);
+}

@@ -740,8 +740,10 @@ var appCont = new Vue({
                     type: "warning"
                 })
                 obj.value = "";
+                return false;
             }
             this.resume.comLicense = obj.value
+            console.log(obj.value);
         },
         showFile: function(fid) {
             if (this.resume.comLicense != "") {
@@ -1552,4 +1554,14 @@ function coopRequest(applyindex, page) {
         }
         appCont.coop.applystatus = applyindex;
     });
+}
+
+// 清除页面绑定事件
+window.onunload = function() {
+    $(".plan-sticky-table td").click(null);
+    appTop.$off();
+    appPorto.$off();
+    appCont.$off();
+    appSider.$off();
+    appModal.$off();
 }

@@ -723,6 +723,9 @@ function navEventBind() {
 }
 
 function jobfairRequest(date, cvStatus, page, id) {
+    if (mapper.jobfair.length == 0) {
+        return false;
+    }
     var jobfairId;
     if (id) {
         jobfairId = id;
@@ -772,6 +775,9 @@ function jobfairRequest(date, cvStatus, page, id) {
 }
 
 function recruitRequest(job, cvStatus, page, id) {
+    if (mapper.recruit.length == 0) {
+        return false;
+    }
     var recruitId;
     if (id) {
         recruitId = id;
@@ -867,4 +873,17 @@ function positionRequest(type, page) {
             hrApp.position.posType = 1;
         })
     }
+}
+//清除页面绑定事件
+window.onunload = function() {
+    $(".hr-navs li").each(function(index) {
+        $(this).click(null)
+    });
+    $(".pos-sider li").each(function(index) {
+        $(this).click(null)
+    });
+    $(".sider dt").click(null);
+    appTop.$off();
+    hrApp.$off();
+    appModal.$off();
 }

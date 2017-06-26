@@ -75,20 +75,6 @@ function showEventBind() {
     })
 }
 
-function turnEventBind() {
-    $(".class-show .turn-left").click(function() {
-        $(".show-pics li:first-child").removeClass("rotate-left").addClass("rotate-right");
-        $(".show-pics").append($(".show-pics li:first-child"));
-        $(".show-pics .rotate-center").removeClass("rotate-center").addClass("rotate-left");
-        $(".show-pics .rotate-right:nth-child(4)").removeClass("rotate-right").addClass("rotate-center");
-    });
-    $(".class-show .turn-right").click(function() {
-        $(".show-pics li:last-child").removeClass("rotate-right").addClass("rotate-left");
-        $(".show-pics li:first-child").before($(".show-pics li:last-child"));
-        $(".show-pics .rotate-center").removeClass("rotate-center").addClass("rotate-right");
-        $(".show-pics .rotate-left:nth-of-type(4)").removeClass("rotate-left").addClass("rotate-center");
-    })
-};
 
 function wheelEventBind(element, index) {
     var oEl = document.getElementById(element);
@@ -454,25 +440,31 @@ var appFooter = new Vue({
     },
     methods: {
         linkFoo: function(item) {
+            var link;
             switch (item) {
                 case "关于我们":
-                    window.open("footer-page.html?descript");
+                    link = "footer-page.html?theme=descript";
                     break;
                 case "联系我们":
-                    window.open("footer-page.html?contact");
+                    link = "footer-page.html?theme=contact";
                     break;
                 case "网站合作":
-                    window.open("footer-page.html?coop");
+                    link = "footer-page.html?theme=coop";
                     break;
                 case "帮助中心":
-                    window.open("footer-page.html?help");
+                    link = "footer-page.html?theme=help";
                     break;
                 case "招聘中心":
-                    window.open("footer-page.html?employ");
+                    link = "footer-page.html?theme=employ";
                     break;
                 default:
-                    window.open("footer-page.html?descript");
+                    link = "footer-page.html?theme=descript";
             }
+            if (parObj.userId || localStorage.userId) {
+                link += "&userId=" + parObj.userId || localStorage.userId;
+            }
+            link = EventUtils.securityUrl(link);
+            window.location.href = link;
         }
     }
 })
@@ -500,3 +492,9 @@ var swiper = new Swiper('.swiper-container', {
 // 对轮播图片进行位置设定
 var swiperMaTop = (EventUtils.getViewport().height - $("#app-show .p-title").outerHeight(true) - $("#app-show .p-subtitle").outerHeight(true) - $("#app-show .swiper-container").outerHeight()) / 2;
 $(".swiper-container").css("margin-top", swiperMaTop + "px");
+
+// 清除页面绑定事件
+window.onunload = function() {
+    appFront.$off();
+    appCoop.$off();
+}

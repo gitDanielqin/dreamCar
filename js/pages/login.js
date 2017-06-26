@@ -46,7 +46,7 @@ var appCont = new Vue({
         banner: {
             showindex: Math.floor(3 * Math.random()),
             images: [
-                { url: "images/bg-2.jpg", website: "http://www.baidu.com" },
+                { url: "images/login-pic02.jpg", website: "http://www.baidu.com" },
                 { url: "images/banner-lanlan.jpg", website: "http://www.xinchuang.sitekc.com/index.jsp" },
                 { url: "images/bg-recruit.jpg", website: "http://www.qq.com" },
             ]
@@ -281,7 +281,15 @@ var appModal = new Vue({
     }
 })
 
-//
+var appFooter = new Vue({
+    el: "#app-footer",
+    data: {},
+    methods: {
+        securityUrl: function(url) {
+            return EventUtils.securityUrl(url);
+        }
+    }
+})
 
 //
 function _init() {
@@ -320,5 +328,13 @@ function regisEventBind() {
         $(".regis").fadeOut();
         $(".login").fadeIn("slow");
     });
+}
 
+// 清除页面绑定事件
+window.onunload = function() {
+    $(".login .login-footer").click(null);
+    $(".check-box").click(null);
+    $(".logBox .log-nav li").click(null);
+    $(".regis .login-footer").click(null);
+    appCont.$off();
 }

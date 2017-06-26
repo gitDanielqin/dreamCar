@@ -9,8 +9,8 @@ webpackJsonp([2],{
 var Vue = __webpack_require__(1);
 (function () {
     var templMajor = '<div style="position:relative" class="pop-major-box">\
-          <span @click.stop="pop(1,$event.target)" class="major-input major-input-1"><input type="text" placeholder="一级专业" readonly v-model="selMajor" ></span>\
-          <span @click.stop="pop(2,$event.target)" class="major-input major-input-2"><input type="text" placeholder="二级专业" readonly v-model="selSubMajor"></span>\
+          <span @click.stop="pop(1,$event.target)" class="major-input major-input-1"><span class="input-frame"></span><input type="text" placeholder="一级专业" readonly v-model="selMajor" ></span>\
+          <span @click.stop="pop(2,$event.target)" class="major-input major-input-2"><span class="input-frame"></span><input type="text" placeholder="二级专业" readonly v-model="selSubMajor"></span>\
           <input type="text" class="ex-major" placeholder="请输入专业名称" v-model="exMajor" v-show="showExMajor"/>\
           <div class="pop-major-1 pop-major" v-show="showMajor1">\
                <h3 class="pop-major-title">专业名称<i class="pic-wrapper major-closer" @click=closePop><span class="pic-icon icon-close"></span></i></h3>\
@@ -592,8 +592,22 @@ var Vue = __webpack_require__(1);
         },
         methods: {
             switchCode: function switchCode() {
-                EventUtils.ajaxReq("/sys/img", "get", {}, function (resp, status) {
-                    $(".conf-psw-varifycode img")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
+                $.ajax({
+                    url: "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img",
+                    type: "get",
+                    async: false,
+                    data: {},
+                    success: function success(resp, status) {
+                        $(".conf-psw-varifycode img")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
+                    },
+                    error: function error(data, status) {
+                        swal({
+                            title: "",
+                            text: "请求服务器数据错误，请稍后重试！",
+                            type: "warning"
+                        });
+                    },
+                    timeout: 100000
                 });
             },
             confirm: function confirm() {
@@ -975,7 +989,7 @@ var Vue = __webpack_require__(1); /**
                                    */
 
 __webpack_require__(4);
-__webpack_require__(3);
+__webpack_require__(2);
 __webpack_require__(20);
 __webpack_require__(6);
 __webpack_require__(8);
@@ -992,7 +1006,7 @@ __webpack_require__(17);
 __webpack_require__(12);
 __webpack_require__(13);
 __webpack_require__(11);
-__webpack_require__(2);
+__webpack_require__(3);
 __webpack_require__(5);
 __webpack_require__(7);
 __webpack_require__(41);
@@ -2842,6 +2856,16 @@ function resumePercentCalculate(cvInfo) {
     appPorto.resumePercent = resumePercent;
     (0, _jquery2.default)("#app-porto .progress-real").css("width", resumePercent + "%");
 }
+
+// 清除页面绑定事件
+window.onunload = function () {
+    (0, _jquery2.default)(".resumeBox .btn-edit").click(null);
+    (0, _jquery2.default)(".resumeBox .edit-item .buttons button").click(null);
+    appPorto.$off();
+    appSider.$off();
+    appCont.$off();
+    appModal.$off();
+};
 
 /***/ })
 

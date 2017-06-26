@@ -51,8 +51,22 @@ var appCont = new Vue({
     methods: {
         switchcode: function() {
             // console.log(1);
-            EventUtils.ajaxReq("/sys/img", "get", {}, function(resp, status) {
-                $(".code-pic")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
+            $.ajax({
+                url: "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img",
+                type: "get",
+                async: false,
+                data: {},
+                success: function(resp, status) {
+                    $(".code-pic")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
+                },
+                error: function(data, status) {
+                    swal({
+                        title: "",
+                        text: "请求服务器数据错误，请稍后重试！",
+                        type: "warning"
+                    })
+                },
+                timeout: 100000
             })
         },
         nextstep: function(index) {
@@ -347,7 +361,20 @@ var appFooter = new Vue({
             if (parObj.userId) {
                 link += "userId=" + parObj.userId;
             }
-            window.location.href = EventUtils.security(link);
+            window.location.href = EventUtils.securityUrl(link);
+        },
+        footerLink: function(type) {
+            var link = "footer-page.html?theme=" + type;
+            if (parObj.userId) {
+                link += "&userId=" + parObj.userId;
+            }
+            link = EventUtils.securityUrl(link);
+            window.location.href = link;
         }
     }
 })
+
+// 清除页面绑定事件
+window.onunload = function() {
+    appCont.$off();
+}

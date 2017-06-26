@@ -679,14 +679,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Vue = __webpack_require__(1);
 __webpack_require__(4);
-__webpack_require__(3);
+__webpack_require__(2);
 __webpack_require__(6);
 __webpack_require__(8);
 __webpack_require__(18);
 __webpack_require__(25);
 __webpack_require__(26);
 __webpack_require__(9);
-__webpack_require__(2);
+__webpack_require__(3);
 __webpack_require__(5);
 __webpack_require__(7);
 __webpack_require__(37);
@@ -1394,6 +1394,9 @@ function navEventBind() {
 }
 
 function jobfairRequest(date, cvStatus, page, id) {
+    if (mapper.jobfair.length == 0) {
+        return false;
+    }
     var jobfairId;
     if (id) {
         jobfairId = id;
@@ -1443,6 +1446,9 @@ function jobfairRequest(date, cvStatus, page, id) {
 }
 
 function recruitRequest(job, cvStatus, page, id) {
+    if (mapper.recruit.length == 0) {
+        return false;
+    }
     var recruitId;
     if (id) {
         recruitId = id;
@@ -1541,6 +1547,19 @@ function positionRequest(type, page) {
         });
     }
 }
+//清除页面绑定事件
+window.onunload = function () {
+    (0, _jquery2.default)(".hr-navs li").each(function (index) {
+        (0, _jquery2.default)(this).click(null);
+    });
+    (0, _jquery2.default)(".pos-sider li").each(function (index) {
+        (0, _jquery2.default)(this).click(null);
+    });
+    (0, _jquery2.default)(".sider dt").click(null);
+    appTop.$off();
+    hrApp.$off();
+    appModal.$off();
+};
 
 /***/ })
 

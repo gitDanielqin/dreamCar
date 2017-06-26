@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>发布需求</title>
+    <link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
     <link href="css/commons.css" rel="stylesheet">
     <link href="css/incRequire.css" rel="stylesheet">
 </head>
@@ -11,8 +12,9 @@
 <body>
     <div class="top bg-gray3 H100 color-white" id="app-top" v-cloak>
         <div class="inner">
-            <a :href="homeLink"><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" /></a>
-            <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
+            <a :href="homeLink"><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" />
+                <h3 class="fl LH-H70 fSize30 maT30">校企职通车</h3>
+            </a>
             <h2 class="fl maL28 fSize32 color-yellow LH-H70 maT30">企业中心</h2>
             <div class="fr navs maT42">
                 <a :href="homeLink"><i class="pic-icon icon-home"></i></a>
@@ -238,12 +240,12 @@
             <div class=" W920 color-white fSize12">
                 <ul class="lis-inline bot-nav LH-H34">
                     <li @click="homeLink"><a href="javascript:void(0)">校企首页</a>-</li>
-                    <li><a href="footer-page.html?descript">关于校企</a>-</li>
-                    <li><a href="footer-page.html?coop">网站合作</a>-</li>
-                    <li><a href="footer-page.html?help">帮助中心</a>-</li>
-                    <li><a href="footer-page.html?employ">招贤纳士</a>-</li>
-                    <li><a href="footer-page.html">友情链接</a>-</li>
-                    <li><a href="footer-page.html">教育网</a></li>
+                    <li @click="footerLink('descript')"><a href="javascript:void(0)">关于校企</a>-</li>
+                    <li @click="footerLink('coop')"><a href="javascript:void(0)">网站合作</a>-</li>
+                    <li @click="footerLink('help')"><a href="javascript:void(0)">帮助中心</a>-</li>
+                    <li @click="footerLink('employ')"><a href="javascript:void(0)">招贤纳士</a>-</li>
+                    <li @click="footerLink('friend')"><a href="javascript:void(0)">友情链接</a>-</li>
+                    <li @click="footerLink('descript')"><a href="javascript:void(0)">教育网</a></li>
                 </ul>
                 <ul class="lis-inline bot-infos">
                     <li class="maR100"><i class="pic-icon maR15 icon-phone"></i>电话：0571-28277417-818</li>

@@ -455,6 +455,12 @@
     width: 275px;
 }
 
+.career-input[readonly="readonly"] {
+    background: url("../images/icon-prop.jpg") no-repeat 285px center;
+    padding-right: 23px;
+    width: 275px;
+}
+
 .resume-item {
     font-size: 14px;
     margin-bottom: 20px;

@@ -42,6 +42,7 @@ li {
 a {
     text-decoration: none;
     color: inherit;
+    outline: none;
 }
 
 a img {
@@ -181,6 +182,16 @@ table th {
     width: 100%;
     height: 100%;
     z-index: 5
+}
+
+.input-frame {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
 }
 
 .pic-wrapper {
@@ -3694,6 +3705,7 @@ textarea.hint-nullable {
 .major-input {
     display: inline-block;
     margin-right: 10px;
+    position: relative;
 }
 
 .major-input input {

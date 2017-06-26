@@ -205,3 +205,34 @@
     color: orange;
     cursor: pointer;
 }
+
+.friend-link {
+    display: inline-block;
+}
+
+.friendlink {
+    padding-top: 20px;
+}
+
+.friendlink ul li {
+    margin-bottom: 10px;
+}
+
+.friendlink p {
+    padding-left: 10px;
+    display: inline-block;
+}
+
+.friendlink .pic-wrapper {
+    width: 50px;
+    height: 50px;
+}
+
+.friendlink a:hover {
+    text-decoration: underline;
+}
+
+.friendlink .pic-wrapper img {
+    width: 100%;
+    height: auto;
+}

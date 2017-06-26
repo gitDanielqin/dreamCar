@@ -167,12 +167,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Vue = __webpack_require__(1);
 __webpack_require__(4);
-__webpack_require__(3);
+__webpack_require__(2);
 __webpack_require__(6);
 __webpack_require__(8);
 __webpack_require__(14);
 __webpack_require__(9);
-__webpack_require__(2);
+__webpack_require__(3);
 __webpack_require__(5);
 __webpack_require__(7);
 __webpack_require__(15);
@@ -653,6 +653,16 @@ function commentRequest(id, page) {
         }
     });
 }
+
+//清除页面绑定事件
+
+window.onunload = function () {
+    appTop.$off();
+    appBanner.$off();
+    appMain.$off();
+    appFooter.$off();
+    appModal.$off();
+};
 
 /***/ })
 

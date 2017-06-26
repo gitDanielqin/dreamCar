@@ -24,8 +24,8 @@ var Vue = __webpack_require__(1); /**
                                    */
 
 __webpack_require__(4);
-__webpack_require__(3);
 __webpack_require__(2);
+__webpack_require__(3);
 __webpack_require__(5);
 __webpack_require__(40);
 
@@ -64,7 +64,7 @@ var appCont = new Vue({
         },
         banner: {
             showindex: Math.floor(3 * Math.random()),
-            images: [{ url: "images/bg-2.jpg", website: "http://www.baidu.com" }, { url: "images/banner-lanlan.jpg", website: "http://www.xinchuang.sitekc.com/index.jsp" }, { url: "images/bg-recruit.jpg", website: "http://www.qq.com" }]
+            images: [{ url: "images/login-pic02.jpg", website: "http://www.baidu.com" }, { url: "images/banner-lanlan.jpg", website: "http://www.xinchuang.sitekc.com/index.jsp" }, { url: "images/bg-recruit.jpg", website: "http://www.qq.com" }]
         },
         show: {
             regis: parObj.newAcc == "1"
@@ -296,7 +296,15 @@ var appModal = new Vue({
     }
 });
 
-//
+var appFooter = new Vue({
+    el: "#app-footer",
+    data: {},
+    methods: {
+        securityUrl: function securityUrl(url) {
+            return EventUtils.securityUrl(url);
+        }
+    }
+});
 
 //
 function _init() {
@@ -336,6 +344,15 @@ function regisEventBind() {
         (0, _jquery2.default)(".login").fadeIn("slow");
     });
 }
+
+// 清除页面绑定事件
+window.onunload = function () {
+    (0, _jquery2.default)(".login .login-footer").click(null);
+    (0, _jquery2.default)(".check-box").click(null);
+    (0, _jquery2.default)(".logBox .log-nav li").click(null);
+    (0, _jquery2.default)(".regis .login-footer").click(null);
+    appCont.$off();
+};
 
 /***/ })
 

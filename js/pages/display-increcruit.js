@@ -702,3 +702,12 @@ function searchRequest(page) {
         }
     })
 }
+
+//清除页面绑定事件
+window.onunload = function() {
+    appTop.$off();
+    appQuery.$off();
+    appResult.$off();
+    appFooter.$off();
+    appModal.$off();
+}

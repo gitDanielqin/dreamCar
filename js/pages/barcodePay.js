@@ -81,6 +81,17 @@ function _init() {
         $(".pay-box").hide();
         $(".wepay-box").show();
     };
+    //对链接进行修改
+    var homelink = $(".top a.homepage").attr("href") + "?userId=" + parObj.userId;
+    $(".top a.homepage").attr("href", EventUtils.securityUrl(homelink));
+    $(".site-nav a").each(function() {
+        if ($(this).hasClass("homepage")) {
+            var link = $(this).attr("href") + "?userId=" + parObj.userId;
+        } else {
+            var link = $(this).attr("href") + "&userId=" + parObj.userId;
+        }
+        $(this).attr("href", EventUtils.securityUrl(link));
+    })
 
 }
 _init();

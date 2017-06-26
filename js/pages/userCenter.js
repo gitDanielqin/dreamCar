@@ -1890,3 +1890,13 @@ function resumePercentCalculate(cvInfo) {
     appPorto.resumePercent = resumePercent;
     $("#app-porto .progress-real").css("width", resumePercent + "%");
 }
+
+// 清除页面绑定事件
+window.onunload = function() {
+    $(".resumeBox .btn-edit").click(null)
+    $(".resumeBox .edit-item .buttons button").click(null)
+    appPorto.$off();
+    appSider.$off();
+    appCont.$off();
+    appModal.$off();
+}

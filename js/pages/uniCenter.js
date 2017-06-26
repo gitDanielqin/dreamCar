@@ -1629,3 +1629,11 @@ function freshRequest(pushId, type, tarifId) {
         console.log(resp);
     })
 }
+
+// 清除页面绑定事件
+window.onunload = function() {
+    appPorto.$off();
+    appSider.$off();
+    appCont.$off();
+    appModal.$off();
+}

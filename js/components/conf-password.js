@@ -24,8 +24,22 @@ var Vue = require("../libs/vue");
         },
         methods: {
             switchCode: function() {
-                EventUtils.ajaxReq("/sys/img", "get", {}, function(resp, status) {
-                    $(".conf-psw-varifycode img")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
+                $.ajax({
+                    url: "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img",
+                    type: "get",
+                    async: false,
+                    data: {},
+                    success: function(resp, status) {
+                        $(".conf-psw-varifycode img")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
+                    },
+                    error: function(data, status) {
+                        swal({
+                            title: "",
+                            text: "请求服务器数据错误，请稍后重试！",
+                            type: "warning"
+                        })
+                    },
+                    timeout: 100000
                 })
             },
             confirm: function() {

@@ -936,10 +936,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Vue = __webpack_require__(1);
 __webpack_require__(4);
 __webpack_require__(34);
-__webpack_require__(3);
+__webpack_require__(2);
 __webpack_require__(6);
 __webpack_require__(17);
-__webpack_require__(2);
+__webpack_require__(3);
 __webpack_require__(5);
 __webpack_require__(44);
 __webpack_require__(39);
@@ -1007,21 +1007,6 @@ function showEventBind() {
         }
     });
 }
-
-function turnEventBind() {
-    (0, _jquery2.default)(".class-show .turn-left").click(function () {
-        (0, _jquery2.default)(".show-pics li:first-child").removeClass("rotate-left").addClass("rotate-right");
-        (0, _jquery2.default)(".show-pics").append((0, _jquery2.default)(".show-pics li:first-child"));
-        (0, _jquery2.default)(".show-pics .rotate-center").removeClass("rotate-center").addClass("rotate-left");
-        (0, _jquery2.default)(".show-pics .rotate-right:nth-child(4)").removeClass("rotate-right").addClass("rotate-center");
-    });
-    (0, _jquery2.default)(".class-show .turn-right").click(function () {
-        (0, _jquery2.default)(".show-pics li:last-child").removeClass("rotate-right").addClass("rotate-left");
-        (0, _jquery2.default)(".show-pics li:first-child").before((0, _jquery2.default)(".show-pics li:last-child"));
-        (0, _jquery2.default)(".show-pics .rotate-center").removeClass("rotate-center").addClass("rotate-right");
-        (0, _jquery2.default)(".show-pics .rotate-left:nth-of-type(4)").removeClass("rotate-left").addClass("rotate-center");
-    });
-};
 
 function wheelEventBind(element, index) {
     var oEl = document.getElementById(element);
@@ -1346,25 +1331,31 @@ var appFooter = new Vue({
     },
     methods: {
         linkFoo: function linkFoo(item) {
+            var link;
             switch (item) {
                 case "关于我们":
-                    window.open("footer-page.html?descript");
+                    link = "footer-page.html?theme=descript";
                     break;
                 case "联系我们":
-                    window.open("footer-page.html?contact");
+                    link = "footer-page.html?theme=contact";
                     break;
                 case "网站合作":
-                    window.open("footer-page.html?coop");
+                    link = "footer-page.html?theme=coop";
                     break;
                 case "帮助中心":
-                    window.open("footer-page.html?help");
+                    link = "footer-page.html?theme=help";
                     break;
                 case "招聘中心":
-                    window.open("footer-page.html?employ");
+                    link = "footer-page.html?theme=employ";
                     break;
                 default:
-                    window.open("footer-page.html?descript");
+                    link = "footer-page.html?theme=descript";
             }
+            if (parObj.userId || localStorage.userId) {
+                link += "&userId=" + parObj.userId || localStorage.userId;
+            }
+            link = EventUtils.securityUrl(link);
+            window.location.href = link;
         }
     }
 });
@@ -1392,6 +1383,12 @@ var swiper = new Swiper('.swiper-container', {
 // 对轮播图片进行位置设定
 var swiperMaTop = (EventUtils.getViewport().height - (0, _jquery2.default)("#app-show .p-title").outerHeight(true) - (0, _jquery2.default)("#app-show .p-subtitle").outerHeight(true) - (0, _jquery2.default)("#app-show .swiper-container").outerHeight()) / 2;
 (0, _jquery2.default)(".swiper-container").css("margin-top", swiperMaTop + "px");
+
+// 清除页面绑定事件
+window.onunload = function () {
+    appFront.$off();
+    appCoop.$off();
+};
 
 /***/ })
 

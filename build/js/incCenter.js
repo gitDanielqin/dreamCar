@@ -424,8 +424,22 @@ var Vue = __webpack_require__(1);
         },
         methods: {
             switchCode: function switchCode() {
-                EventUtils.ajaxReq("/sys/img", "get", {}, function (resp, status) {
-                    $(".conf-psw-varifycode img")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
+                $.ajax({
+                    url: "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img",
+                    type: "get",
+                    async: false,
+                    data: {},
+                    success: function success(resp, status) {
+                        $(".conf-psw-varifycode img")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
+                    },
+                    error: function error(data, status) {
+                        swal({
+                            title: "",
+                            text: "请求服务器数据错误，请稍后重试！",
+                            type: "warning"
+                        });
+                    },
+                    timeout: 100000
                 });
             },
             confirm: function confirm() {
@@ -1223,8 +1237,8 @@ jQuery.extend({
         // add extra parameter
         var originalElement = $('<input type="hidden" name="" value="">');
         for (var key in data) {
-            name = key;
-            value = data[key];
+            var name = key;
+            var value = data[key];
             var cloneElement = originalElement.clone();
             cloneElement.attr({ 'name': name, 'value': value });
             $(cloneElement).appendTo(form);
@@ -1602,7 +1616,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Vue = __webpack_require__(1);
 __webpack_require__(4);
-__webpack_require__(3);
+__webpack_require__(2);
 __webpack_require__(28);
 __webpack_require__(20);
 __webpack_require__(6);
@@ -1619,7 +1633,7 @@ __webpack_require__(9);
 __webpack_require__(10);
 __webpack_require__(17);
 __webpack_require__(12);
-__webpack_require__(2);
+__webpack_require__(3);
 __webpack_require__(5);
 __webpack_require__(7);
 __webpack_require__(38);
@@ -2337,8 +2351,10 @@ var appCont = new Vue({
                     type: "warning"
                 });
                 obj.value = "";
+                return false;
             }
             this.resume.comLicense = obj.value;
+            console.log(obj.value);
         },
         showFile: function showFile(fid) {
             if (this.resume.comLicense != "") {
@@ -3153,6 +3169,16 @@ function coopRequest(applyindex, page) {
         appCont.coop.applystatus = applyindex;
     });
 }
+
+// 清除页面绑定事件
+window.onunload = function () {
+    (0, _jquery2.default)(".plan-sticky-table td").click(null);
+    appTop.$off();
+    appPorto.$off();
+    appCont.$off();
+    appSider.$off();
+    appModal.$off();
+};
 
 /***/ })
 

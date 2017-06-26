@@ -23,8 +23,8 @@ __webpack_require__(4); /**
                                     * Created by Administrator on 2017/1/21.
                                     */
 
-__webpack_require__(3);
 __webpack_require__(2);
+__webpack_require__(3);
 __webpack_require__(5);
 __webpack_require__(43);
 var parObj = EventUtils.urlExtrac(window.location);
@@ -99,9 +99,30 @@ function initEventBind() {
             (0, _jquery2.default)(".modal").hide();
         }
     });
+    //对链接进行修改
+    var homelink = (0, _jquery2.default)(".top a.homepage").attr("href") + "?userId=" + parObj.userId;
+    (0, _jquery2.default)(".top a.homepage").attr("href", EventUtils.securityUrl(homelink));
+    (0, _jquery2.default)(".site-nav a").each(function () {
+        if ((0, _jquery2.default)(this).hasClass("homepage")) {
+            var link = (0, _jquery2.default)(this).attr("href") + "?userId=" + parObj.userId;
+        } else {
+            var link = (0, _jquery2.default)(this).attr("href") + "&userId=" + parObj.userId;
+        }
+        (0, _jquery2.default)(this).attr("href", EventUtils.securityUrl(link));
+    });
 }
 
 initEventBind();
+
+// 清除页面绑定事件
+window.onunload = function () {
+    (0, _jquery2.default)(".pay-way li").unbind("click");
+    (0, _jquery2.default)(".plattform-sel i").click(null);
+    (0, _jquery2.default)(".barcode-pay button").click(null);
+    (0, _jquery2.default)(".checked-agree").click(null);
+    (0, _jquery2.default)("#payAgreebox").click(null);
+    (0, _jquery2.default)(".modal").click(null);
+};
 
 /***/ })
 

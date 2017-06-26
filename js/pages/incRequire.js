@@ -829,6 +829,14 @@ var appFooter = new Vue({
                 link += "userId=" + parObj.userId;
             }
             window.location.href = EventUtils.securityUrl(link);
+        },
+        footerLink: function(type) {
+            var link = "footer-page.html?theme=" + type;
+            if (parObj.userId) {
+                link += "&userId=" + parObj.userId;
+            }
+            link = EventUtils.securityUrl(link);
+            window.location.href = link;
         }
     }
 })
@@ -922,4 +930,12 @@ function datepickEventBind() {
     }).on('changeDate', function(ev) {
         jobfairdate.hide();
     }).data('datepicker');
+}
+
+// 清除页面绑定事件
+window.onunload = function() {
+    $(".time-table .t-cell").click(null)
+    $(".welfare-lis .check-box").click(null)
+    appMain.$off();
+    appModal.$off();
 }

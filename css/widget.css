@@ -183,6 +183,7 @@
 .major-input {
     display: inline-block;
     margin-right: 10px;
+    position: relative;
 }
 
 .major-input input {

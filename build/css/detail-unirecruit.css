@@ -560,6 +560,7 @@ a.login-link {
     top: 30px;
     background: #313131;
     width: 100%;
+    min-width: 98px;
     display: none;
 }
 

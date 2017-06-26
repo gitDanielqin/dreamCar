@@ -21,8 +21,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Vue = __webpack_require__(1);
 __webpack_require__(4);
-__webpack_require__(3);
 __webpack_require__(2);
+__webpack_require__(3);
 __webpack_require__(5);
 __webpack_require__(42);
 var regExp = {
@@ -71,8 +71,22 @@ var appCont = new Vue({
     methods: {
         switchcode: function switchcode() {
             // console.log(1);
-            EventUtils.ajaxReq("/sys/img", "get", {}, function (resp, status) {
-                (0, _jquery2.default)(".code-pic")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
+            _jquery2.default.ajax({
+                url: "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img",
+                type: "get",
+                async: false,
+                data: {},
+                success: function success(resp, status) {
+                    (0, _jquery2.default)(".code-pic")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
+                },
+                error: function error(data, status) {
+                    swal({
+                        title: "",
+                        text: "请求服务器数据错误，请稍后重试！",
+                        type: "warning"
+                    });
+                },
+                timeout: 100000
             });
         },
         nextstep: function nextstep(index) {
@@ -365,10 +379,23 @@ var appFooter = new Vue({
             if (parObj.userId) {
                 link += "userId=" + parObj.userId;
             }
-            window.location.href = EventUtils.security(link);
+            window.location.href = EventUtils.securityUrl(link);
+        },
+        footerLink: function footerLink(type) {
+            var link = "footer-page.html?theme=" + type;
+            if (parObj.userId) {
+                link += "&userId=" + parObj.userId;
+            }
+            link = EventUtils.securityUrl(link);
+            window.location.href = link;
         }
     }
 });
+
+// 清除页面绑定事件
+window.onunload = function () {
+    appCont.$off();
+};
 
 /***/ })
 

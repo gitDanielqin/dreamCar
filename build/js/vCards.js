@@ -24,11 +24,11 @@ var Vue = __webpack_require__(1); /**
                                    */
 
 __webpack_require__(4);
-__webpack_require__(3);
+__webpack_require__(2);
 __webpack_require__(6);
 __webpack_require__(10);
 __webpack_require__(17);
-__webpack_require__(2);
+__webpack_require__(3);
 __webpack_require__(5);
 __webpack_require__(47);
 
@@ -85,6 +85,9 @@ var appCont = new Vue({
         showInc: parObj.userType == "2"
     },
     methods: {
+        securityUrl: function securityUrl(url) {
+            return EventUtils.securityUrl(url);
+        },
         codequery: function codequery(mobile, obj) {
             if (!variableUtils.regExp.mobile.test(mobile)) {
                 swal({
@@ -264,6 +267,12 @@ var appCont = new Vue({
         (0, _jquery2.default)(".main").css("height", EventUtils.getViewport().height - 246 + "px");
     }
 });
+
+// 清除页面绑定事件
+window.onunload = function () {
+    appTop.$off();
+    appCont.$off();
+};
 
 /***/ })
 
