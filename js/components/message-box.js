@@ -1,4 +1,4 @@
-var Vue = require("../libs/vue");
+var Vue = require("../libs/vue.min");
 (function() {
     var msgTempl = '<div class="msg-box">\
         <h3 class="msg-box-head"><i class="pic-icon icon-return" v-show="!show.list" @click.stop="back"></i><i class="pic-icon icon-email" v-show="show.list"></i><span class="msg-head">消息提醒</span><span class="icon-wrapper" @click.stop="closeBox"><i class="pic-icon icon-close"></i></span></h3>\
@@ -60,11 +60,11 @@ var Vue = require("../libs/vue");
             },
             topage: function(page, type) {
                 var postdata = {
-                    userId: this.userid,
-                    index: page,
-                    count: 8
-                }
-                console.log(postdata);
+                        userId: this.userid,
+                        index: page,
+                        count: 8
+                    }
+                    //console.log(postdata);
                 this.msgList.curpage = page;
                 var _this = this;
                 EventUtils.ajaxReq("/message/getMessageList", "get", postdata, function(resp, status) {
@@ -131,7 +131,7 @@ var Vue = require("../libs/vue");
             }
             var _this = this;
             EventUtils.ajaxReq("/message/getMessageList", "get", postdata, function(resp, status) {
-                console.log(resp);
+                //console.log(resp);
                 var resultList = [];
                 if (resp.data && resp.data.resultList) {
                     resultList = resp.data.resultList.list;

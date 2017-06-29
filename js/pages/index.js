@@ -1,8 +1,8 @@
 import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
 require("../libs/sweetalert.min");
-require("../libs/swiper-3.4.2.jquery.min");
 require("../common/common")
+var Vue = require("../libs/vue.min");
+require("../libs/swiper-3.4.2.jquery.min");
 require("../components/dropdown")
 require("../../data/address")
 require("../../css/base.css")
@@ -21,7 +21,7 @@ function infoRequest() {
             userId: parObj.userId || localStorage.userId
         }
         EventUtils.ajaxReq("/center/user/getInfo", "get", postdata, function(resp, status) {
-            console.log(resp.data);
+            //console.log(resp.data);
             var account = {
                 userName: resp.data.userName,
                 userId: resp.data.userId,
@@ -87,7 +87,7 @@ function wheelEventBind(element, index) {
             } else {
                 wheelValue = ev.detail
             };
-            console.log(wheelValue);
+            //console.log(wheelValue);
             if (wheelValue < 0) {
                 if (document.body.scrollTop < EventUtils.getViewport().height * (index - 1)) {
                     $("body").animate({
@@ -352,11 +352,6 @@ var appShow = new Vue({
                 this.showInfos.splice(3, 0, activeItem);
             }
         }
-    },
-    mounted: function() {
-        //     wheelEventBind("app-show",2);
-        turnEventBind();
-        //showEventBind();
     }
 });
 
@@ -423,7 +418,7 @@ var appCoop = new Vue({
         }
     },
     mounted: function() {
-        // $("#app-coop").height(EventUtils.getViewport().height - 238);
+        $("#app-coop").height(EventUtils.getViewport().height - $("#app-footer").outerHeight(true));
     }
 });
 

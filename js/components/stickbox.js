@@ -1,4 +1,4 @@
-var Vue = require("../libs/vue");
+var Vue = require("../libs/vue.min");
 (function() {
     var stickTempl = '<div>\
         <div class="refresh-box sticky-box" v-show="sticky.show">\
@@ -281,7 +281,7 @@ var Vue = require("../libs/vue");
             contentType: type,
             id: tarifId
         };
-        console.log(postdata);
+        //console.log(postdata);
         EventUtils.ajaxReq("/sys/hotUp", "post", postdata, function(resp, statsu) {
             if (resp.code == "00000") {
                 if (resp.data.payImg) {
@@ -294,7 +294,7 @@ var Vue = require("../libs/vue");
                     }
                     var timer = setInterval(function() {
                         EventUtils.ajaxReq("/sys/getOrderStatus", "get", paycheckdata, function(resp, status) {
-                            console.log(resp);
+                            //console.log(resp);
                             if (resp.code == "00000") {
                                 clearInterval(timer);
                                 swal({

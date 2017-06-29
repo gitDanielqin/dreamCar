@@ -16,7 +16,7 @@ var postdata = {
 }
 var domainUrl = "";
 EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function(resp, status) {
-    console.log(resp.data);
+    //console.log(resp.data);
     if (resp.data) {
         switch (resp.data.userType) {
             case "0":
@@ -32,7 +32,7 @@ EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, fun
     }
 })
 EventUtils.ajaxReq("/sys/recharge", "post", postdata, function(resp, status) {
-    console.log(resp);
+    //console.log(resp);
     if (resp.data) {
         $("#aliBarcode")[0].src = resp.data.payImg;
         var amount = parseInt(parObj.amount).toFixed(2);
@@ -44,7 +44,7 @@ EventUtils.ajaxReq("/sys/recharge", "post", postdata, function(resp, status) {
         }
         var timer = setInterval(function() {
             EventUtils.ajaxReq("/sys/getOrderStatus", "get", paycheckdata, function(resp, status) {
-                console.log(resp);
+                //console.log(resp);
                 if (resp.code == "00000") {
                     clearInterval(timer);
                     swal({

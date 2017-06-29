@@ -1,4 +1,4 @@
-var Vue = require("../libs/vue");
+var Vue = require("../libs/vue.min");
 (function() {
     var vipRecTempl = '<div class="vip-records-box">\
                         <h3 class="vip-record-head">使用记录</h3>\
@@ -92,7 +92,7 @@ var Vue = require("../libs/vue");
             }
             var _this = this;
             EventUtils.ajaxReq("/sys/getOrderList", "get", postdata, function(resp, status) {
-                console.log(resp);
+                //console.log(resp);
                 if (resp && resp.data) {
                     _this.vip.totalpages = resp.data.totalPage;
                     _this.vip.records = resp.data.list;

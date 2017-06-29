@@ -1,5 +1,5 @@
 import $ from '../libs/jquery-3.1.0.min'
-var Vue = require("../libs/vue");
+var Vue = require("../libs/vue.min");
 (function() {
     var tempDrop = '<div :class="classStyle" @click.stop="clickEv($event.target)" style="display:inline-block"><span class="input-frame"></span><input type="text" :placeholder="placeholder" :value="value" disabled/><ul>' +
         '<li v-for="option in options" @click="selectItem(option,$event.target)" @mouseover="overItem($event.target)" @mouseout="outItem($event.target)">{{option}}</li>' +

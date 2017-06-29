@@ -1,7 +1,7 @@
 import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
 require("../libs/sweetalert.min");
 require("../common/common")
+var Vue = require("../libs/vue.min");
 require("../components/dropdown")
 require("../components/pagination")
 require("../components/detail-table")
@@ -21,10 +21,10 @@ function infoRequest() {
     if (parObj.userId) {
         postdata.userId = parObj.userId;
     }
-    console.log(postdata);
+    //console.log(postdata);
     EventUtils.ajaxReq("/recruit/getInfo", "get", postdata, function(resp, status) {
         respObj = resp.data;
-        console.log(respObj);
+        //console.log(respObj);
         var briefdata = {
             title: respObj.title,
             viewed: respObj.readCount,
@@ -213,7 +213,7 @@ var appBanner = new Vue({
                         recruitId: parObj.recruitId,
                     }
                     EventUtils.ajaxReq("/recruit/addMarkInfo", "post", postdata, function(resp, status) {
-                        console.log(resp);
+                        //console.log(resp);
                         $(obj).find("span").text("已收藏");
                         $(obj).addClass("collected");
                     })
@@ -240,7 +240,7 @@ var appBanner = new Vue({
                     recruitId: parObj.recruitId
                 }
                 EventUtils.ajaxReq("/recruit/cooperateRecruit", "post", postdata, function(resp, status) {
-                    // console.log(resp);
+                    // //console.log(resp);
                     if (resp.data.isApply == "0") {
                         appModal.showModal = true;
                         appModal.showLogin = false;
@@ -382,12 +382,12 @@ var appModal = new Vue({
                 appModal.showLogin = false;
                 //登录判断是否已收藏
                 var postdemand = {
-                    recruitId: parObj.recruitId,
-                    userId: accountObj.userId
-                }
-                console.log(postdemand);
+                        recruitId: parObj.recruitId,
+                        userId: accountObj.userId
+                    }
+                    //console.log(postdemand);
                 EventUtils.ajaxReq("/recruit/getInfo", "get", postdemand, function(resp, status) {
-                    console.log(resp.data);
+                    //console.log(resp.data);
                     if (resp.data.markStatus == "1") {
                         $("#app-banner .btn-collec").addClass("collected");
                         $("#app-banner .btn-collec span").html("已收藏");
@@ -448,13 +448,13 @@ function initEventBind() {
 // 申请记录请求
 function applyRequest(page) {
     var applydata = {
-        recruitId: parObj.recruitId,
-        index: page,
-        count: 13
-    }
-    console.log(applydata);
+            recruitId: parObj.recruitId,
+            index: page,
+            count: 13
+        }
+        //console.log(applydata);
     EventUtils.ajaxReq("/recruit/getApplyRecord", "get", applydata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp && resp.data) {
             appMain.tabledata.applyRec.totalpages = resp.data.totalPage;
             appMain.tabledata.applyRec.results = resp.data.list;
@@ -476,7 +476,7 @@ function commentRequest(id, page) {
         count: 6
     }
     EventUtils.ajaxReq("/sys/getCommentList", "post", commentdata, function(resp, status) {
-        //  console.log(resp);
+        //  //console.log(resp);
         if (resp && resp.data) {
             appMain.tabledata.comment.results = resp.data.list;
             appMain.tabledata.comment.totalpages = resp.data.totalPage;

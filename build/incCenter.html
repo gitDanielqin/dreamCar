@@ -104,7 +104,7 @@
                         <ul class="fl valid-upload color-gray6 fSize12">
                             <li><a href="javascript:void(0)"><label for="comlicense" v-show="resume.hasBusLicense">重新上传营业执照</label><label for="comlicense" v-show="!resume.hasBusLicense">上传营业执照</label><i class="pic-icon icon-upload"></i></a>
                                 <span>{{resume.comLicense}}</span>
-                                <button v-show="resume.hasBusLicense" class="color-orange" @click="showFile('file-busi')">（查看营业执照）</button>
+                                <button v-show="resume.hasBusLicense||resume.comLicense!=''" class="color-orange" @click="showFile('file-busi')">（查看营业执照）</button>
                                 <input type="file" name="image" id="file-busi" @change="changeComLicense($event.target)" />
                             </li>
                         </ul>

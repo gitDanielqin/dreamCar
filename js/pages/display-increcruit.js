@@ -2,9 +2,9 @@
  * Created by xuanyuan on 2016/12/31.
  */
 import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
 require("../libs/sweetalert.min");
 require("../common/common")
+var Vue = require("../libs/vue.min");
 require("../components/dropdown")
 require("../components/pagination")
 require("../components/common-footer")
@@ -48,7 +48,7 @@ function infoRequest() {
     if (parObj.userId) { // 如果是已登录状态
         postdata.userId = parObj.userId;
         EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
-            console.log(resp);
+            //console.log(resp);
             if (resp.data) {
                 appResult.increcruitList.totalpages = resp.data.totalPage;
                 appResult.increcruitList.totalitems = resp.data.totalRow;
@@ -69,7 +69,7 @@ function infoRequest() {
         })
     } else {
         EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
-            console.log(resp);
+            //console.log(resp);
             if (resp.data) {
                 appResult.increcruitList.totalpages = resp.data.totalPage;
                 appResult.increcruitList.totalitems = resp.data.totalRow;
@@ -146,7 +146,7 @@ var appTop = new Vue({
                 count: 8
             }
             EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
-                console.log(resp);
+                //console.log(resp);
                 if (resp.data) {
                     appResult.increcruitList.totalpages = resp.data.totalPage;
                     appResult.increcruitList.totalitems = resp.data.totalRow;
@@ -231,11 +231,7 @@ var appQuery = new Vue({
     },
     methods: {
         search: function() {
-            if (this.keywords != "") {
-                searchRequest(1);
-            } else {
-                resultsRequest(1);
-            }
+            resultsRequest(1);
         },
         selCity: function(index, obj) {
             $(".address .on").removeClass("on");
@@ -271,16 +267,12 @@ var appQuery = new Vue({
             resultsRequest(1);
         },
         selPos: function(pos, type) {
-            if (type == "uni") {
-                this.uniQuery.incReq.pos.pos_2 = pos;
-            } else if (type == "inc") {
-                this.incQuery.pos.pos_2 = pos;
-            } else if (type == "pos") {
-                this.posQuery.pos.pos_2 = pos;
-            } else if (type == "unirecruit") {
-                this.uniRecruit.incReq.pos.pos_2 = pos;
-            } else if (type == "increcruit") {
-                this.incRecruit.pos.pos_2 = pos
+            if (type == "increcruit") {
+                if (pos != "不限") {
+                    this.incRecruit.pos.pos_2 = pos
+                } else {
+                    this.incRecruit.pos.pos_2 = this.incRecruit.pos.pos_1
+                }
             }
             this.showPosBox = false;
         },
@@ -438,7 +430,7 @@ var appResult = new Vue({
                     jobFairId: id
                 }
                 EventUtils.ajaxReq("/jobfair/cooperateJobFair", "post", postdata, function(resp, status) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.data && resp.data.isApply == "0") {
                         appModal.showModal = true;
                         appModal.showLogin = false;
@@ -466,13 +458,8 @@ var appResult = new Vue({
             }
         },
         topage: function(page, type) {
-            if (this.resultType == 0) {
-                resultsRequest(page);
-            } else {
-                searchRequest(page);
-            }
+            resultsRequest(page);
         }
-
     },
     components: {
         'pagination': pagination
@@ -628,26 +615,27 @@ function resultsRequest(page) {
             break;
     }
     var postdata = {
-        jobFairType: 2,
-        index: page,
-        count: 8,
-        userAddress: appQuery.incRecruit.address,
-        cvEducation: appQuery.incRecruit.scolar,
-        profession: appQuery.incRecruit.major,
-        cvProject: appQuery.incRecruit.worksexp,
-        job: appQuery.incRecruit.pos.pos_1 == "" ? "" : appQuery.incRecruit.pos.pos_1 + ";" + appQuery.incRecruit.pos.pos_2,
-        jobCount: appQuery.incRecruit.posAmount,
-        cvSalary: appQuery.incRecruit.salary,
-        timeType: timeIndex
-    }
-    console.log(postdata);
+            jobFairType: 2,
+            index: page,
+            count: 8,
+            title: appQuery.keywords,
+            userAddress: appQuery.incRecruit.address,
+            cvEducation: appQuery.incRecruit.scolar,
+            profession: appQuery.incRecruit.major,
+            cvProject: appQuery.incRecruit.worksexp,
+            job: appQuery.incRecruit.pos.pos_1 == "" ? "" : appQuery.incRecruit.pos.pos_1 + ";" + appQuery.incRecruit.pos.pos_2,
+            jobCount: appQuery.incRecruit.posAmount,
+            cvSalary: appQuery.incRecruit.salary,
+            timeType: timeIndex
+        }
+        //console.log(postdata);
     if (accountObj && accountObj.userId) {
         postdata.userId = accountObj.userId;
     }
     // 清除发送数据对象值为空的属性
     postdata = EventUtils.filterReqdata(postdata);
     EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp.data) {
             appResult.increcruitList.totalpages = resp.data.totalPage;
             appResult.increcruitList.results = resp.data.list;
@@ -670,38 +658,38 @@ function resultsRequest(page) {
 }
 
 //搜索结果请求
-function searchRequest(page) {
-    appResult.resultType = 1;
-    var postdata = {
-        title: appQuery.keywords,
-        jobFairType: 2,
-        index: page,
-        count: 8
-    }
-    if (accountObj && accountObj.userId) {
-        postdata.userId = accountObj.userId;
-    }
-    EventUtils.ajaxReq("/jobfair/searchJobFair?", "get", postdata, function(resp, status) {
-        console.log(resp);
-        if (resp.data) {
-            appResult.increcruitList.totalpages = resp.data.totalPage;
-            appResult.increcruitList.results = resp.data.list;
-            appResult.increcruitList.totalitems = resp.data.totalRow;
-            //背景图像
-            if (resp.data.list.length <= 1) {
-                $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
-            } else {
-                $(".results").css("background", "none");
-            }
-        } else {
-            appResult.increcruitList.totalpages = 1;
-            appResult.increcruitList.results = [];
-            appResult.increcruitList.totalitems = 0;
-            //背景图像
-            $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
-        }
-    })
-}
+// function searchRequest(page) {
+//     appResult.resultType = 1;
+//     var postdata = {
+//         title: appQuery.keywords,
+//         jobFairType: 2,
+//         index: page,
+//         count: 8
+//     }
+//     if (accountObj && accountObj.userId) {
+//         postdata.userId = accountObj.userId;
+//     }
+//     EventUtils.ajaxReq("/jobfair/searchJobFair?", "get", postdata, function(resp, status) {
+//         //console.log(resp);
+//         if (resp.data) {
+//             appResult.increcruitList.totalpages = resp.data.totalPage;
+//             appResult.increcruitList.results = resp.data.list;
+//             appResult.increcruitList.totalitems = resp.data.totalRow;
+//             //背景图像
+//             if (resp.data.list.length <= 1) {
+//                 $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
+//             } else {
+//                 $(".results").css("background", "none");
+//             }
+//         } else {
+//             appResult.increcruitList.totalpages = 1;
+//             appResult.increcruitList.results = [];
+//             appResult.increcruitList.totalitems = 0;
+//             //背景图像
+//             $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
+//         }
+//     })
+// }
 
 //清除页面绑定事件
 window.onunload = function() {

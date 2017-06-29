@@ -1,7 +1,7 @@
 import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
 require("../libs/sweetalert.min");
 require("../common/common")
+var Vue = require("../libs/vue.min");
 require("../components/dropdown")
 require("../components/pagination")
 require("../components/detail-table")
@@ -23,7 +23,7 @@ function infoRequest() {
     }
     EventUtils.ajaxReq("/demand/getInfo", "get", postdemand, function(resp, status) {
         respObj = resp.data;
-        console.log(respObj);
+        //console.log(respObj);
         var briefdata = {
             title: respObj.title,
             viewed: respObj.readCount,
@@ -94,7 +94,7 @@ function infoRequest() {
     })
     if (parObj.userId) {
         EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId }, function(resp, status) {
-            //  console.log(resp);
+            //  //console.log(resp);
             accountObj = resp.data;
             if (accountObj) {
                 appTop.userName = resp.data.userName;
@@ -220,7 +220,7 @@ var appBanner = new Vue({
                         demandId: parObj.demandId,
                     }
                     EventUtils.ajaxReq("/demand/addMarkInfo", "post", postdata, function(resp, status) {
-                        console.log(resp);
+                        //console.log(resp);
                         $(obj).find("span").text("已收藏");
                         $(obj).addClass("collected");
                     })
@@ -391,7 +391,7 @@ var appModal = new Vue({
                     userId: accountObj.userId
                 }
                 EventUtils.ajaxReq("/demand/getInfo", "get", postdemand, function(resp, status) {
-                    console.log(resp.data);
+                    //console.log(resp.data);
                     if (resp.data.markStatus == "1") {
                         $("#app-banner .btn-collec").addClass("collected");
                         $("#app-banner .btn-collec span").html("已收藏");
@@ -460,13 +460,13 @@ function initEventBind() {
 
 function applyRequest(page) {
     var applydata = {
-        demandId: parObj.demandId,
-        index: page,
-        count: 13
-    }
-    console.log(applydata);
+            demandId: parObj.demandId,
+            index: page,
+            count: 13
+        }
+        //console.log(applydata);
     EventUtils.ajaxReq("/demand/getApplyRecord", "get", applydata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp && resp.data) {
             appMain.tabledata.applyRec.totalpages = resp.data.totalPage;
             appMain.tabledata.applyRec.results = resp.data.list;
@@ -481,14 +481,14 @@ function applyRequest(page) {
 
 function commentRequest(id, page) {
     var commentdata = {
-        reportUserId: id,
-        index: page,
-        count: 6
-    }
-    console.log(commentdata);
+            reportUserId: id,
+            index: page,
+            count: 6
+        }
+        //console.log(commentdata);
     EventUtils.ajaxReq("/sys/getCommentList", "post", commentdata, function(resp, status) {
-        //  console.log(resp);
-        console.log(resp);
+        //  //console.log(resp);
+        //console.log(resp);
         if (resp && resp.data) {
             appMain.tabledata.comment.results = resp.data.list;
             appMain.tabledata.comment.totalpages = resp.data.totalPage;

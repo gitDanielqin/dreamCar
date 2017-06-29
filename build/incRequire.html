@@ -124,7 +124,8 @@
                     <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
                     <p class="form-item"><label>联系人</label><input type="text" v-model="combiData.contact.person" /></p>
                     <p class="form-item"><label><span class="must-mark">*</span>联系电话</label><input type="text" class="phone-input must-input" v-model="combiData.contact.phone" /></p>
-                    <div class="form-item inc-addr pRel"><label><span class="must-mark">*</span>公司地址</label><input type="text" v-model="combiData.contact.address" class="dis-Addr must-input" disabled/><span class="color-red maL18 cur-pointer" @click.stop="popAddrBox($event.target)">请完善地址</span>
+                    <div class="form-item inc-addr pRel"><label><span class="must-mark">*</span>公司地址</label><span class="input-frame" @click.stop="popAddrBox($event.target)"></span><input type="text" v-model="combiData.contact.address" class="dis-Addr must-input" disabled/><span class="color-red maL18 cur-pointer"
+                            @click.stop="popAddrBox($event.target)">请完善地址</span>
                         <div class="addr-box disNo" @click.stop="">
                             <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
                             <input type="text" class="maT20 addr-ex" placeholder="请输入详细地址" />
@@ -174,7 +175,8 @@
                     <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
                     <p class="form-item"><label>联系人</label><input type="text" v-model="recruitData.contact.person" /></p>
                     <p class="form-item"><label><span class="must-mark">*</span>联系电话</label><input type="text" class="phone-input must-input" v-model="recruitData.contact.phone" /></p>
-                    <div class="form-item inc-addr pRel"><label><span class="must-mark">*</span>招聘会地点</label><input type="text" v-model="recruitData.contact.address" class="dis-Addr must-input" disabled/><span class="color-red maL18 cur-pointer" @click.stop="popAddrBox($event.target)">请完善地址</span>
+                    <div class="form-item inc-addr pRel"><label><span class="must-mark">*</span>招聘会地点</label><span class="input-frame" @click.stop="popAddrBox($event.target)"></span><input type="text" v-model="recruitData.contact.address" class="dis-Addr must-input" disabled/><span class="color-red maL18 cur-pointer"
+                            @click.stop="popAddrBox($event.target)">请完善地址</span>
                         <div class="addr-box disNo" @click.stop="">
                             <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
                             <input type="text" class="maT20 addr-ex" placeholder="请输入详细地址" />
@@ -223,7 +225,8 @@
                     <h3 class="LH-H75 fSize18 maT11">联系方式</h3>
                     <p class="form-item"><label>联系人</label><input type="text" v-model="directData.contact.person" /></p>
                     <p class="form-item"><label><span class="must-mark">*</span>联系电话</label><input type="text" class="phone-input must-input" v-model="directData.contact.phone" /></p>
-                    <div class="form-item inc-addr pRel"><label><span class="must-mark">*</span>工作地点</label><input type="text" v-model="directData.contact.address" class="dis-Addr must-input" disabled/><span class="color-red maL18 cur-pointer" @click.stop="popAddrBox($event.target)">请完善地址</span>
+                    <div class="form-item inc-addr pRel"><label><span class="must-mark">*</span>工作地点</label><span class="input-frame" @click.stop="popAddrBox($event.target)"></span><input type="text" v-model="directData.contact.address" class="dis-Addr must-input" disabled/><span class="color-red maL18 cur-pointer"
+                            @click.stop="popAddrBox($event.target)">请完善地址</span>
                         <div class="addr-box disNo" @click.stop="">
                             <addr-select :addrdata="database.addrData" class="sel-addr disInline"></addr-select>
                             <input type="text" class="maT20 addr-ex" placeholder="请输入详细地址" />

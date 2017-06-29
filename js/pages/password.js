@@ -1,7 +1,7 @@
 import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
 require("../libs/sweetalert.min");
 require("../common/common")
+var Vue = require("../libs/vue.min");
 require("../../css/base.css")
 require("../../css/sweetalert.css")
 require("../../css/password.css")
@@ -19,6 +19,25 @@ var imgHtml = ""
     // imgHtml = "<img style='" + resp + "' />"
     // $(".step-cont-1 .pic-code").text(resp);
     // })
+function switchCode() {
+    $.ajax({
+        url: "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img",
+        type: "get",
+        async: false,
+        data: {},
+        success: function(resp, status) {
+            $(".code-pic")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
+        },
+        error: function(data, status) {
+            swal({
+                title: "",
+                text: "请求服务器数据错误，请稍后重试！",
+                type: "warning"
+            })
+        },
+        timeout: 100000
+    })
+}
 
 var appCont = new Vue({
     el: "#app-content",
@@ -49,26 +68,7 @@ var appCont = new Vue({
         },
     },
     methods: {
-        switchcode: function() {
-            // console.log(1);
-            $.ajax({
-                url: "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img",
-                type: "get",
-                async: false,
-                data: {},
-                success: function(resp, status) {
-                    $(".code-pic")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
-                },
-                error: function(data, status) {
-                    swal({
-                        title: "",
-                        text: "请求服务器数据错误，请稍后重试！",
-                        type: "warning"
-                    })
-                },
-                timeout: 100000
-            })
-        },
+        switchcode: switchCode,
         nextstep: function(index) {
             if (index == 1) {
                 if (this.userInfo.account == "") {
@@ -90,9 +90,9 @@ var appCont = new Vue({
                         loginName: this.userInfo.account,
                         inputRandomCode: this.userInfo.picCode
                     }
-                    // console.log(postdata);
+                    // //console.log(postdata);
                 EventUtils.ajaxReq("/sys/getOldConection?", "get", postdata, function(resp, status) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.data) {
                         appCont.account.email = resp.data.email;
                         appCont.account.mobile = resp.data.mobile;
@@ -107,6 +107,8 @@ var appCont = new Vue({
                         })
                     }
                 });
+                switchCode();
+                this.show.hint = false;
             }
         },
         postcode: function(type, obj) {
@@ -243,7 +245,7 @@ var appCont = new Vue({
                 code: this.userInfo.emailValidCode
             }
             EventUtils.ajaxReq("/sys/checkCode", "get", postdata, function(resp, status) {
-                console.log(resp);
+                //console.log(resp);
                 if (resp.data.result == "1") {
                     appCont.show.step2 = false;
                     appCont.show.step3 = true;
@@ -274,7 +276,7 @@ var appCont = new Vue({
                 code: this.userInfo.mobileValidCode
             }
             EventUtils.ajaxReq("/sys/checkCode", "get", postdata, function(resp, status) {
-                console.log(resp);
+                //console.log(resp);
                 if (resp.data.result == "1") {
                     appCont.show.step2 = false;
                     appCont.show.step3 = true;
@@ -319,11 +321,11 @@ var appCont = new Vue({
                 return false;
             }
             var postdata = {
-                userId: this.account.userId,
-                password: this.userInfo.newPass,
-                dbPassword: this.userInfo.repeatPass
-            }
-            console.log(postdata);
+                    userId: this.account.userId,
+                    password: this.userInfo.newPass,
+                    dbPassword: this.userInfo.repeatPass
+                }
+                //console.log(postdata);
             EventUtils.ajaxReq("/center/user/resetPassword", "post", postdata, function(resp, status) {
                 if (resp.code == "00000") {
                     swal({
@@ -342,7 +344,7 @@ var appCont = new Vue({
                         type: "error",
                     });
                 }
-                console.log(resp);
+                //console.log(resp);
             })
             this.hint = "";
             this.show.hint = false;

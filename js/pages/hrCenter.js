@@ -1,7 +1,7 @@
 import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
 require("../libs/sweetalert.min");
 require("../common/common")
+var Vue = require("../libs/vue.min");
 require("../components/dropdown")
 require("../components/pagination")
 require("../components/message-box")
@@ -18,7 +18,7 @@ var respObj = {};
 var mapper = {}; //岗位,招聘会日期与id的对应表 
 function infoRequest() {
     EventUtils.ajaxReq("/hrcenter/getDownList", "get", { userId: parObj.userId }, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         for (var i = 0; i < resp.data.recruitList.length; i++) {
             resp.data.recruitList[i].job = EventUtils.infoExtrac(resp.data.recruitList[i].job);
         }
@@ -37,7 +37,7 @@ function infoRequest() {
         }
         hrApp.database.posList = recruitArray;
         hrApp.database.jobfairList = jobfairArray;
-        //  console.log(resp);
+        //  //console.log(resp);
         if (!parObj.jobfairId && !parObj.recruitId) { //既没有招聘ID又没有直聘ID,从HR中心按钮过来的
             hrApp.resumes.resumePos = recruitArray[0];
         }
@@ -131,13 +131,13 @@ var hrApp = new Vue({
             }
         },
         topage: function(page, type) {
-            console.log(type);
+            //console.log(type);
             if (type == "cv") {
                 if (this.resumes.resumeType == "企业直聘") {
                     recruitRequest(this.resumes.resumePos, this.resumes.resultIndex, page);
                 }
                 if (this.resumes.resumeType == "招聘会") {
-                    console.log(2);
+                    //console.log(2);
                     jobfairRequest(this.resumes.jobfairDate, this.resumes.resultIndex, page);
                 }
             };
@@ -194,7 +194,7 @@ var hrApp = new Vue({
             }
         },
         invite: function(item) {
-            console.log(item);
+            //console.log(item);
             if (item.jobFairId) {
                 var postdata = {
                     applyId: item.applyId,
@@ -275,7 +275,7 @@ var hrApp = new Vue({
         showCv: function(item) {
             EventUtils.ajaxReq("/user/user/getInfo", "get", { userId: item.userId }, function(resp, status) {
                 var respObj = resp.data;
-                //    console.log(respObj);
+                //    //console.log(respObj);
                 var briefdata = {
                     name: respObj.userInfo.realName,
                     gender: respObj.userInfo.sex == "1" ? "男" : "女",
@@ -744,7 +744,7 @@ function jobfairRequest(date, cvStatus, page, id) {
         count: 4
     };
     EventUtils.ajaxReq("/hrcenter/getJobFairList", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp.data && resp.data.resultList.totalRow >= 0) {
             var cvData = {
                 totalitems: resp.data.resultList.totalRow,
@@ -796,7 +796,7 @@ function recruitRequest(job, cvStatus, page, id) {
         count: 4
     }
     EventUtils.ajaxReq("/hrcenter/getRecruitList", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp.data && resp.data.resultList.totalRow >= 0) {
             var cvData = {
                 totalitems: resp.data.resultList.totalRow,
@@ -837,7 +837,7 @@ function positionRequest(type, page) {
             count: 4
         }
         EventUtils.ajaxReq("/recruit/getList", "get", postdata, function(resp, status) {
-            //     console.log(resp);
+            //     //console.log(resp);
             if (resp && resp.data) {
                 hrApp.position.totalpages = resp.data.totalPage;
                 hrApp.position.results = resp.data.list;
@@ -860,7 +860,7 @@ function positionRequest(type, page) {
             count: 4
         }
         EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
-            //     console.log(resp);
+            //     //console.log(resp);
             if (resp && resp.data) {
                 hrApp.position.totalpages = resp.data.totalPage;
                 hrApp.position.results = resp.data.list;

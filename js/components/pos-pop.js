@@ -1,10 +1,10 @@
-var Vue = require("../libs/vue");
+var Vue = require("../libs/vue.min");
 (function() {
     var templpos = '<div class="pos-pop-box W770">\
           <h3 class="LH-H36 bg-gray-e6 fSize14 paLeft30">选择职能<i class="pic-wrapper pos-closer fr maR30" @click.stop="cancel"><i class="pic-icon icon-close"></i></i></h3>\
           <div class="H330">\
                <div class="LH40 paLeft30">\
-                    <label class="color-gray6">最多可以选择3项</label>\
+                    <label class="color-gray6">最多可以选择<span class="color-orange">3</span>项</label>\
                     <ul class="lis-inline selectItems disInline v-mid maL15">\
                          <li v-for="item in selectedItems">{{item}}<img src="images/icon-close-1.png" @click.stop="delItem(item)"/></li>\
                     </ul>\

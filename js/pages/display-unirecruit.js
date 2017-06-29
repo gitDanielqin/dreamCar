@@ -2,9 +2,9 @@
  * Created by xuanyuan on 2016/12/31.
  */
 import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
 require("../libs/sweetalert.min");
 require("../common/common")
+var Vue = require("../libs/vue.min");
 require("../components/dropdown")
 require("../components/pagination")
 require("../components/common-footer")
@@ -43,7 +43,7 @@ function infoRequest() {
     if (parObj.userId) {
         postdata.userId = parObj.userId;
         EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
-            console.log(resp);
+            //console.log(resp);
             if (resp.data) {
                 appResult.unirecruitList.totalpages = resp.data.totalPage;
                 appResult.unirecruitList.totalitems = resp.data.totalRow;
@@ -55,7 +55,7 @@ function infoRequest() {
             }
         });
         EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId }, function(resp, status) {
-            //  console.log(resp);
+            //  //console.log(resp);
             accountObj = resp.data;
             if (accountObj) {
                 appTop.userName = resp.data.userName;
@@ -65,7 +65,7 @@ function infoRequest() {
         })
     } else {
         EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
-            console.log(resp);
+            //console.log(resp);
             if (resp.data) {
                 appResult.unirecruitList.totalpages = resp.data.totalPage;
                 appResult.unirecruitList.totalitems = resp.data.totalRow;
@@ -144,7 +144,7 @@ var appTop = new Vue({
                 count: 8
             }
             EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
-                console.log(resp);
+                //console.log(resp);
                 if (resp.data) {
                     appResult.unirecruitList.totalpages = resp.data.totalPage;
                     appResult.unirecruitList.totalitems = resp.data.totalRow;
@@ -236,11 +236,7 @@ var appQuery = new Vue({
     },
     methods: {
         search: function() {
-            if (this.keywords != "") {
-                searchRequest(1);
-            } else {
-                resultsRequest(1);
-            }
+            resultsRequest(1);
         },
         selCity: function(index, obj) {
             $(".address .on").removeClass("on");
@@ -276,16 +272,12 @@ var appQuery = new Vue({
             resultsRequest(1);
         },
         selPos: function(pos, type) {
-            if (type == "uni") {
-                this.uniQuery.incReq.pos.pos_2 = pos;
-            } else if (type == "inc") {
-                this.incQuery.pos.pos_2 = pos;
-            } else if (type == "pos") {
-                this.posQuery.pos.pos_2 = pos;
-            } else if (type == "unirecruit") {
-                this.uniRecruit.incReq.pos.pos_2 = pos;
-            } else if (type == "increcruit") {
-                this.incRecruit.pos.pos_2 = pos
+            if (type == "unirecruit") {
+                if (pos != "不限") {
+                    this.uniRecruit.incReq.pos.pos_2 = pos;
+                } else {
+                    this.uniRecruit.incReq.pos.pos_2 = this.uniRecruit.incReq.pos.pos_1
+                }
             }
             this.showPosBox = false;
         },
@@ -295,14 +287,13 @@ var appQuery = new Vue({
         },
         selArea: function(area, type) {
             $(".selectee ul").hide();
-            if (type == "uni") {
-                this.uniQuery.incReq.areas.area_2 = area;
-            } else if (type == "pos") {
-                this.posQuery.areas.area_2 = area;
-            } else if (type == "unirecruit") {
-                this.uniRecruit.incReq.areas.area_2 = area;
+            if (type == "unirecruit") {
+                if (area != "不限") {
+                    this.uniRecruit.incReq.areas.area_2 = area;
+                } else {
+                    this.uniRecruit.incReq.areas.area_2 = this.uniRecruit.incReq.areas.area_1;
+                }
             }
-
             this.showAreaBox = false;
         },
         clickArea: function() {
@@ -466,7 +457,7 @@ var appResult = new Vue({
                     jobFairId: id
                 }
                 EventUtils.ajaxReq("/jobfair/cooperateJobFair", "post", postdata, function(resp, status) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.data && resp.data.isApply == "0") {
                         item.applyStatus = 1;
                         appModal.showModal = true;
@@ -494,12 +485,7 @@ var appResult = new Vue({
             }
         },
         topage: function(page, type) {
-            if (this.resultType == 0) {
-                resultsRequest(page);
-            } else {
-                searchRequest(page);
-            }
-
+            resultsRequest(page);
         }
 
     },
@@ -558,7 +544,7 @@ var appModal = new Vue({
                         userId: accountObj.userId
                     }
                     EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
-                        console.log(resp);
+                        //console.log(resp);
                         if (resp.data) {
                             appResult.unirecruitList.totalpages = resp.data.totalPage;
                             appResult.unirecruitList.totalitems = resp.data.totalRow;
@@ -664,6 +650,7 @@ function resultsRequest(page) {
         jobFairType: 1,
         index: page,
         count: 8,
+        title: appQuery.keywords,
         userAddress: appQuery.uniRecruit.address,
         profession: appQuery.uniRecruit.major,
         professionCount: appQuery.uniRecruit.majorsum,
@@ -680,7 +667,7 @@ function resultsRequest(page) {
     // 清楚发送数据对象值为空的属性
     postdata = EventUtils.filterReqdata(postdata);
     EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp.data) {
             appResult.unirecruitList.totalpages = resp.data.totalPage;
             appResult.unirecruitList.results = resp.data.list;
@@ -703,37 +690,37 @@ function resultsRequest(page) {
 }
 
 //搜索结果请求
-function searchRequest(page) {
-    appResult.resultType = 1;
-    var postdata = {
-        jobFairType: 1,
-        title: appQuery.keywords,
-        index: page,
-        count: 8
-    }
-    if (accountObj && accountObj.userId) {
-        postdata.userId = accountObj.userId;
-    }
-    EventUtils.ajaxReq("/jobfair/searchJobFair?", "get", postdata, function(resp, status) {
-        console.log(resp);
-        if (resp.data) {
-            appResult.unirecruitList.totalpages = resp.data.totalPage;
-            appResult.unirecruitList.results = resp.data.list;
-            appResult.unirecruitList.totalitems = resp.data.totalRow;
-            //背景图像
-            if (resp.data.list.length <= 1) {
-                $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
-            } else {
-                $(".results").css("background", "none");
-            }
-        } else {
-            appResult.unirecruitList.results = [];
-            appResult.unirecruitList.totalitems = 0;
-            //背景图像
-            $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
-        }
-    })
-}
+// function searchRequest(page) {
+//     appResult.resultType = 1;
+//     var postdata = {
+//         jobFairType: 1,
+//         title: appQuery.keywords,
+//         index: page,
+//         count: 8
+//     }
+//     if (accountObj && accountObj.userId) {
+//         postdata.userId = accountObj.userId;
+//     }
+//     EventUtils.ajaxReq("/jobfair/searchJobFair?", "get", postdata, function(resp, status) {
+//         //console.log(resp);
+//         if (resp.data) {
+//             appResult.unirecruitList.totalpages = resp.data.totalPage;
+//             appResult.unirecruitList.results = resp.data.list;
+//             appResult.unirecruitList.totalitems = resp.data.totalRow;
+//             //背景图像
+//             if (resp.data.list.length <= 1) {
+//                 $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
+//             } else {
+//                 $(".results").css("background", "none");
+//             }
+//         } else {
+//             appResult.unirecruitList.results = [];
+//             appResult.unirecruitList.totalitems = 0;
+//             //背景图像
+//             $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
+//         }
+//     })
+// }
 
 //清除页面绑定事件
 window.onunload = function() {

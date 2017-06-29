@@ -1,7 +1,7 @@
 import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
 require("../libs/sweetalert.min");
 require("../common/common")
+var Vue = require("../libs/vue.min");
 require("../components/dropdown")
 require("../components/major-pop")
 require("../components/pagination")
@@ -18,7 +18,7 @@ require("../../css/widget.css")
 require("../../css/foundation-datepicker.min.css")
 require("../../css/require.css")
 var parObj = EventUtils.urlExtrac(window.location);
-console.log(parObj);
+//console.log(parObj);
 var isNewRequire = true;
 var respObj = {};
 if (parObj.new && parObj.new != "1") { //非首次发布
@@ -38,7 +38,7 @@ function infoRequest() {
         }
         EventUtils.ajaxReq("/demand/getInfo", "get", postdata, function(resp, status) {
             respObj = resp.data;
-            console.log(respObj);
+            //console.log(respObj);
 
             var combidata = {
                 datatype: "combi",
@@ -93,7 +93,7 @@ function infoRequest() {
         }
         EventUtils.ajaxReq("/jobfair/getInfo", "get", postdata, function(resp, status) {
             respObj = resp.data;
-            console.log(respObj);
+            //console.log(respObj);
             var initpos = "";
             if (respObj.job) {
                 initpos = {
@@ -137,14 +137,14 @@ function infoRequest() {
     }
     if (parObj.demandSrc == "2") { //如果是企业直聘需求详情 
         var postdata = {
-            userId: parObj.userId,
-            loginIdentifier: parObj.loginId,
-            recruitId: parObj.recruitId,
-        }
-        console.log(postdata);
+                userId: parObj.userId,
+                loginIdentifier: parObj.loginId,
+                recruitId: parObj.recruitId,
+            }
+            //console.log(postdata);
         EventUtils.ajaxReq("/recruit/getInfo", "get", postdata, function(resp, status) {
             respObj = resp.data;
-            console.log(respObj);
+            //console.log(respObj);
             var gender = "";
             switch (respObj.sex) {
                 case "1":
@@ -498,8 +498,8 @@ var appMain = new Vue({
                 if (parObj.demandId) {
                     postdata.demandId = parObj.demandId;
                 }
-                //     console.log(postdata);
-                // console.log(postdata);
+                //     //console.log(postdata);
+                // //console.log(postdata);
                 if (isNewRequire) {
                     EventUtils.ajaxReq('/demand/apply', 'post', postdata, function(resp, status) {
                         if (resp.code == "00000") {
@@ -594,25 +594,25 @@ var appMain = new Vue({
                 });
                 welfare = welfare.slice(0, -1);
                 var postdata = {
-                    userId: parObj.userId,
-                    jobFairType: 2,
-                    title: this.recruitData.header,
-                    job: $(".cont-recruit .sel-pos-1 input").val() + ";" + $(".cont-recruit .sel-pos-2 input").val() + ";" + $(".cont-recruit .sel-pos-3 input").val(),
-                    workType: this.recruitData.postype,
-                    jobCount: this.recruitData.jobAmount,
-                    cvEducation: this.recruitData.scolar,
-                    profession: $(".cont-recruit .major-input-1 input").val() + ";" + $(".cont-recruit .major-input-2 input").val(),
-                    cvSex: this.recruitData.gender,
-                    cvProject: this.recruitData.worksexp,
-                    cvSalary: this.recruitData.salary,
-                    cvWelfare: welfare,
-                    startTime: $("#jobfair-date").val(),
-                    discription: this.recruitData.desc,
-                    linkMan: this.recruitData.contact.person,
-                    mobile: this.recruitData.contact.phone,
-                    jobFairAddress: this.recruitData.contact.address == "" ? "" : this.recruitData.contact.address.split("-").join(";")
-                }
-                console.log(postdata);
+                        userId: parObj.userId,
+                        jobFairType: 2,
+                        title: this.recruitData.header,
+                        job: $(".cont-recruit .sel-pos-1 input").val() + ";" + $(".cont-recruit .sel-pos-2 input").val() + ";" + $(".cont-recruit .sel-pos-3 input").val(),
+                        workType: this.recruitData.postype,
+                        jobCount: this.recruitData.jobAmount,
+                        cvEducation: this.recruitData.scolar,
+                        profession: $(".cont-recruit .major-input-1 input").val() + ";" + $(".cont-recruit .major-input-2 input").val(),
+                        cvSex: this.recruitData.gender,
+                        cvProject: this.recruitData.worksexp,
+                        cvSalary: this.recruitData.salary,
+                        cvWelfare: welfare,
+                        startTime: $("#jobfair-date").val(),
+                        discription: this.recruitData.desc,
+                        linkMan: this.recruitData.contact.person,
+                        mobile: this.recruitData.contact.phone,
+                        jobFairAddress: this.recruitData.contact.address == "" ? "" : this.recruitData.contact.address.split("-").join(";")
+                    }
+                    //console.log(postdata);
                 if (isNewRequire) {
                     EventUtils.ajaxReq('/jobfair/apply', 'post', postdata, function(resp, status) {
                         if (resp.code = "00000") {
@@ -639,16 +639,24 @@ var appMain = new Vue({
                 } else {
                     postdata.jobFairId = parObj.jobfairId;
                     EventUtils.ajaxReq('/jobfair/modifyInfo', 'post', postdata, function(resp, status) {
-                        swal({
-                            title: "",
-                            text: "修改成功！",
-                            type: "success",
-                            showConfirmButton: false
-                        });
-                        setTimeout(function() {
-                            var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require&demandSrc=1";
-                            window.location.href = EventUtils.securityUrl(link);
-                        }, 1000);
+                        if (resp.data.status == "0") {
+                            swal({
+                                title: "",
+                                text: "不允许同一天发布多场招聘会，请删除后重发！",
+                                type: "warning"
+                            });
+                        } else {
+                            swal({
+                                title: "",
+                                text: "修改成功！",
+                                type: "success",
+                                showConfirmButton: false
+                            });
+                            setTimeout(function() {
+                                var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require&demandSrc=1";
+                                window.location.href = EventUtils.securityUrl(link);
+                            }, 1000);
+                        }
                     })
                 }
 
@@ -719,31 +727,31 @@ var appMain = new Vue({
                 });
                 welfare = welfare.slice(0, -1);
                 var postdata = {
-                    userId: parObj.userId,
-                    title: this.directData.header,
-                    workType: this.directData.postype,
-                    job: $(".cont-direct .sel-pos-1 input").val() + ";" + $(".cont-direct .sel-pos-2 input").val() + ";" + $(".cont-direct .sel-pos-3 input").val(),
-                    profession: $(".cont-direct .major-input-1 input").val() + ";" + $(".cont-direct .major-input-2 input").val(),
-                    recruitCount: this.directData.amount,
-                    education: this.directData.scolar,
-                    sex: sex,
-                    salary: this.directData.salary,
-                    workTime: this.directData.worksexp,
-                    welfare: welfare,
-                    discription: this.directData.desc,
-                    linkMan: this.directData.contact.person,
-                    mobile: this.directData.contact.phone,
-                    companyAddress: this.directData.contact.address != "" ? this.directData.contact.address.split("-").join(";") : ""
-                }
-                console.log(postdata);
+                        userId: parObj.userId,
+                        title: this.directData.header,
+                        workType: this.directData.postype,
+                        job: $(".cont-direct .sel-pos-1 input").val() + ";" + $(".cont-direct .sel-pos-2 input").val() + ";" + $(".cont-direct .sel-pos-3 input").val(),
+                        profession: $(".cont-direct .major-input-1 input").val() + ";" + $(".cont-direct .major-input-2 input").val(),
+                        recruitCount: this.directData.amount,
+                        education: this.directData.scolar,
+                        sex: sex,
+                        salary: this.directData.salary,
+                        workTime: this.directData.worksexp,
+                        welfare: welfare,
+                        discription: this.directData.desc,
+                        linkMan: this.directData.contact.person,
+                        mobile: this.directData.contact.phone,
+                        companyAddress: this.directData.contact.address != "" ? this.directData.contact.address.split("-").join(";") : ""
+                    }
+                    //console.log(postdata);
                 if (isNewRequire) {
                     EventUtils.ajaxReq('/recruit/apply', 'post', postdata, function(resp, status) {
-                        console.log(resp);
+                        //console.log(resp);
                         if (resp.code == "00000") {
                             if (resp.data.status == "0") {
                                 swal({
                                     title: "",
-                                    text: "您已发布过该岗位，请删除后再发！",
+                                    text: "您已发布过该岗位，请删除后重发！",
                                     type: "warning"
                                 })
                             } else {
@@ -764,16 +772,24 @@ var appMain = new Vue({
                     postdata.recruitId = parObj.recruitId;
                     EventUtils.ajaxReq('/recruit/modifyInfo', 'post', postdata, function(resp, status) {
                         if (resp.code == "00000") {
-                            swal({
-                                title: "",
-                                text: "修改成功！",
-                                type: "success",
-                                showConfirmButton: false
-                            });
-                            setTimeout(function() {
-                                var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require&demandSrc=2";
-                                window.location.href = EventUtils.securityUrl(link);
-                            }, 1000);
+                            if (resp.data.status == "0") {
+                                swal({
+                                    title: "",
+                                    text: "您已发布过该岗位，请删除后重发！",
+                                    type: "warning"
+                                })
+                            } else {
+                                swal({
+                                    title: "",
+                                    text: "修改成功！",
+                                    type: "success",
+                                    showConfirmButton: false
+                                });
+                                setTimeout(function() {
+                                    var link = "incCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&theme=require&demandSrc=2";
+                                    window.location.href = EventUtils.securityUrl(link);
+                                }, 1000);
+                            }
                         }
                     })
                 }
@@ -886,7 +902,7 @@ if (parObj.new && parObj.new != "1") { //非首次发布
 function selectRepos() {
     $(".selectee ul").each(function() {
         var sibInput = $(this).siblings("input");
-        //console.log(sibInput.height());
+        ////console.log(sibInput.height());
         $(this).width(sibInput.outerWidth() - 2);
         $(this).css({
             left: sibInput.css("margin-left") + "px",

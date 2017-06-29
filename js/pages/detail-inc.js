@@ -1,7 +1,7 @@
 import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
 require("../libs/sweetalert.min")
 require("../common/common")
+var Vue = require("../libs/vue.min");
 require("../components/dropdown")
 require("../components/pagination")
 require("../components/detail-table")
@@ -24,7 +24,7 @@ function infoRequest() {
     }
     EventUtils.ajaxReq("/demand/getInfo", "get", postdemand, function(resp, status) {
         respObj = resp.data;
-        console.log(respObj);
+        //console.log(respObj);
         var baseinfo = {
             userIcon: resp.data.userIcon,
             inc: resp.data.userName,
@@ -91,7 +91,7 @@ function infoRequest() {
     });
 
     if (parObj.userId) {
-        console.log(parObj.userId);
+        //console.log(parObj.userId);
         var getdata = {
             userId: parObj.userId
         }
@@ -214,10 +214,10 @@ var appBanner = new Vue({
                 var isCollected = $(obj).hasClass("collected");
                 if (!isCollected) {
                     var postdata = {
-                        userId: parObj.userId,
-                        demandId: parObj.demandId
-                    }
-                    console.log(postdata);
+                            userId: parObj.userId,
+                            demandId: parObj.demandId
+                        }
+                        //console.log(postdata);
                     EventUtils.ajaxReq("/demand/addMarkInfo", "get", postdata, function(resp, status) {
                         $(obj).find("span").text("已收藏");
                         $(obj).addClass("collected");
@@ -246,7 +246,7 @@ var appBanner = new Vue({
                     demandId: parObj.demandId
                 }
                 EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.data.isApply == "0") {
                         appModal.showModal = true;
                         appModal.showLogin = false;
@@ -454,7 +454,7 @@ function applyRequest(page) {
         count: 13
     }
     EventUtils.ajaxReq("/demand/getApplyRecord", "get", applydata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp && resp.data) {
             appMain.tabledata.applyRec.totalpages = resp.data.totalPage;
             appMain.tabledata.applyRec.results = resp.data.list;
@@ -474,7 +474,7 @@ function commentRequest(id, page) {
         count: 6
     }
     EventUtils.ajaxReq("/sys/getCommentList", "post", commentdata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp && resp.data) {
             appMain.tabledata.comment.results = resp.data.list;
             appMain.tabledata.comment.totalpages = resp.data.totalPage;

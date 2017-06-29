@@ -1,4 +1,4 @@
-var Vue = require("../libs/vue");
+var Vue = require("../libs/vue.min");
 (function() {
     var templAddr = '<div>\
           <dropdown placeholder="省份" :options="province" v-model="selProvince"></dropdown>\

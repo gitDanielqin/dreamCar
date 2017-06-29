@@ -1,7 +1,7 @@
 import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
 require("../libs/sweetalert.min");
 require("../common/common")
+var Vue = require("../libs/vue.min");
 require("../common/ajaxfileupload")
 require("../common/cropbox")
 require("../components/dropdown")
@@ -37,7 +37,7 @@ function infoRequest() {
 
     EventUtils.ajaxReq('/user/school/getInfo', 'get', postdata, function(resp, status) {
         respObj = resp.data;
-        console.log(respObj);
+        //console.log(respObj);
         if (respObj.userIcon) {
             $("#avatar-box").html("<img src='" + respObj.userIcon + "' />");
         }
@@ -83,15 +83,15 @@ function infoRequest() {
                     edit: respObj.infoStatus == "0",
                     view: respObj.infoStatus != "0"
                 }
-                //    console.log(resumedata);
-                //console.log(resumedata);
+                //    //console.log(resumedata);
+                ////console.log(resumedata);
             appCont.resume = resumedata;
         }
     });
 
     //获取用户平台信息
     EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         // 账户信息
         var percent = 0;
         if (resp.data.mobile && resp.data.mobile != "") {
@@ -114,7 +114,7 @@ function infoRequest() {
     });
     //获取用户账户及免费刷新次数等信息
     EventUtils.ajaxReq("/center/user/getAccount", "get", { userId: parObj.userId }, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         appModal.account.money = resp.data.useableBalance;
         appModal.account.freeFreshTimes = resp.data.freeRefresh;
     })
@@ -169,18 +169,18 @@ var appPorto = new Vue({
             this.briefInfo.address.district = $(".edit-brief .sel-district input").val();
             this.viewInfo = true;
             var postdata = {
-                userId: parObj.userId,
-                schoolId: respObj.schoolId,
-                loginName: respObj.loginName,
-                property: this.briefInfo.level,
-                province: this.briefInfo.address.province,
-                city: this.briefInfo.address.city,
-                area: this.briefInfo.address.district,
-                email: this.briefInfo.email
-            }
-            console.log(postdata);
+                    userId: parObj.userId,
+                    schoolId: respObj.schoolId,
+                    loginName: respObj.loginName,
+                    property: this.briefInfo.level,
+                    province: this.briefInfo.address.province,
+                    city: this.briefInfo.address.city,
+                    area: this.briefInfo.address.district,
+                    email: this.briefInfo.email
+                }
+                //console.log(postdata);
             EventUtils.ajaxReq('/user/school/modifyInfo', 'post', postdata, function(resp, status) {
-                console.log(resp);
+                //console.log(resp);
             })
         },
         cancel: function() {
@@ -467,7 +467,7 @@ var appCont = new Vue({
             this.resume.comLicense = obj.value
         },
         changeUniLicense: function(obj) {
-            //     console.log(obj.files[0].size);
+            //     //console.log(obj.files[0].size);
             if (obj.files[0].size > 3 * 1024 * 1024) {
                 swal({
                     title: "",
@@ -683,10 +683,10 @@ var appCont = new Vue({
                         fileName: appCont.resume.comLicense //传递参数，用于解析出文件名
                     }, // 键:值，传递文件名
                     success: function(data, status) {
-                        console.log(1);
+                        //console.log(1);
                         hascomUrl = true;
                         appCont.resume.comLicenseUrl = data.data;
-                        // console.log(data.data);
+                        // //console.log(data.data);
                     },
                     error: function(data, status) {
 
@@ -707,16 +707,16 @@ var appCont = new Vue({
                         fileName: appCont.resume.uniLicense //传递参数，用于解析出文件名
                     }, // 键:值，传递文件名
                     success: function(data, status) {
-                        console.log(2);
+                        //console.log(2);
                         hasuniUrl = true;
                         appCont.resume.uniLicenseUrl = data.data;
                     },
                     error: function(data, status) {
-                        //	console.log(data,2);
+                        //	//console.log(data,2);
                     }
                 });
             };
-            //   console.log(3);
+            //   //console.log(3);
             var majorstring = "";
             for (var i = 0; i < appCont.resume.specialmajor.length; i++) {
                 if (appCont.resume.specialmajor[i].major != "") {
@@ -740,7 +740,7 @@ var appCont = new Vue({
                             type: "error"
                         })
                     } else {
-                        console.log(appCont.resume.comLicenseUrl, appCont.resume.uniLicenseUrl);
+                        //console.log(appCont.resume.comLicenseUrl, appCont.resume.uniLicenseUrl);
                         var postdata = {
                             userId: parObj.userId,
                             schoolId: respObj.schoolId,
@@ -793,7 +793,7 @@ var appCont = new Vue({
         },
         checkExlv: function(obj) {
             $(obj).toggleClass("selected");
-            console.log(1);
+            //console.log(1);
             if ($(".uni-level .lv985").hasClass("selected")) {
                 this.resume.specialLv = "0";
             } else if ($(".uni-level .lv211").hasClass("selected")) {
@@ -911,7 +911,7 @@ var appCont = new Vue({
                 demandId: demandId
             }
             EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
-                console.log(resp);
+                //console.log(resp);
                 if (resp.data && resp.data.isApply == "0") {
                     swal({
                         title: "",
@@ -942,7 +942,7 @@ var appCont = new Vue({
             appModal.show.comment = true;
         },
         popCard: function(item) {
-            console.log(item)
+            //console.log(item)
             var postdata = {
                 userId: item.applyUserId,
                 applyId: item.applyId,
@@ -956,7 +956,7 @@ var appCont = new Vue({
                 appModal.cardInfo.infosrc = 1;
             }
             EventUtils.ajaxReq("/readcard/getCardInfo", "get", postdata, function(resp, status) {
-                console.log(resp);
+                //console.log(resp);
                 appModal.cardInfo.cardtype = "inc";
                 appModal.cardInfo.applyId = resp.data.applyId;
                 var infosets = resp.data.viewReadCard;
@@ -1173,7 +1173,7 @@ var appModal = new Vue({
                 reportUserId: this.comment.cooperId
             }
             EventUtils.ajaxReq("/sys/comment", "post", postdata, function(resp, status) {
-                console.log(resp);
+                //console.log(resp);
                 appModal.comment.text = "";
                 appModal.show.comment = false;
                 appModal.showModal = false;
@@ -1334,7 +1334,7 @@ function uploadEventBind() {
     var cropper = $('.imgBox').cropbox(options);
     $('#upload-file').on('change', function() {
         // if(this.files[0].size)
-        // console.log(this.value, this.files[0].size);
+        // //console.log(this.value, this.files[0].size);
 
         var reader = new FileReader();
         reader.onload = function(e) {
@@ -1353,7 +1353,7 @@ function uploadEventBind() {
 
     $('#btnSubmit').on('click', function() {
         var imgsrc = cropper.getDataURL();
-        // console.log(imgsrc.length);
+        // //console.log(imgsrc.length);
         if (imgsrc.length > 500 * 1024) {
             swal({
                 title: "",
@@ -1454,10 +1454,10 @@ function autoStickSum() {
         var startWeekday = tempDate.getDay();
         for (var j = 0; j < (diffDays + 1) % 7; j++) {
             var row_index = (j + startWeekday) % 7;
-            //  console.log(row_index);
+            //  //console.log(row_index);
             $(".plan-sticky-table td[col='" + row_index + "']").each(function() {
                 if ($(this).hasClass("on")) {
-                    //        console.log($(this).attr("row"));
+                    //        //console.log($(this).attr("row"));
                     if ($(this).attr("row") == "1") {
                         summe += 70;
                     } else if ($(this).attr("row") == "2")
@@ -1483,7 +1483,7 @@ function demandRequest(index, page) {
             count: 3
         }
         EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-            console.log(resp);
+            //console.log(resp);
             if (resp.data) {
                 appCont.require.totalpages = resp.data.totalPage;
                 appCont.require.results = resp.data.list;
@@ -1506,7 +1506,7 @@ function demandRequest(index, page) {
             count: 3
         }
         EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function(resp, status) {
-            console.log(resp);
+            //console.log(resp);
             if (resp.data) {
                 appCont.require.totalpages = resp.data.totalPage;
                 appCont.require.results = resp.data.list;
@@ -1534,7 +1534,7 @@ function collectRequest(timeindex, page) {
         count: 3
     };
     EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp.data) {
             appCont.collect.totalpages = resp.data.totalPage;
             appCont.collect.totalitems = resp.data.totalRow;
@@ -1556,7 +1556,7 @@ function combiMsgRequest(applystatus, page) {
         count: 3
     }
     EventUtils.ajaxReq("/demand/getDemandApply", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp && resp.data) {
             appCont.message.combi.totalitems = resp.data.totalRow;
             appCont.message.combi.totalpages = resp.data.totalPage;
@@ -1578,7 +1578,7 @@ function recruitMsgRequest(page) {
         count: 3
     }
     EventUtils.ajaxReq("/jobfair/getApplySchool", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp && resp.data) {
             appCont.message.recruit.totalitems = resp.data.totalRow;
             appCont.message.recruit.totalpages = resp.data.totalPage;
@@ -1594,15 +1594,15 @@ function recruitMsgRequest(page) {
 function coopRequest(applyindex, page) {
     appCont.coop.curpage = page;
     var postdata = {
-        userId: parObj.userId,
-        loginIdentifier: parObj.loginId,
-        index: page,
-        count: 3,
-        applyStatus: applyindex
-    }
-    console.log(postdata);
+            userId: parObj.userId,
+            loginIdentifier: parObj.loginId,
+            index: page,
+            count: 3,
+            applyStatus: applyindex
+        }
+        //console.log(postdata);
     EventUtils.ajaxReq("/demand/getDemandApplyList", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp && resp.data) {
             appCont.coop.totalitems = resp.data.totalRow;
             appCont.coop.totalpages = resp.data.totalPage;
@@ -1619,14 +1619,14 @@ function coopRequest(applyindex, page) {
 //刷新请求
 function freshRequest(pushId, type, tarifId) {
     var postdata = {
-        userId: parObj.userId,
-        pushId: pushId,
-        contentType: type,
-        id: tarifId
-    }
-    console.log(postdata);
+            userId: parObj.userId,
+            pushId: pushId,
+            contentType: type,
+            id: tarifId
+        }
+        //console.log(postdata);
     EventUtils.ajaxReq("/sys/refresh", "post", postdata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
     })
 }
 

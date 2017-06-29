@@ -1,4 +1,4 @@
-var Vue = require("../libs/vue");
+var Vue = require("../libs/vue.min");
 (function() {
     var freshTempl = '<div>\
         <div class="refresh-box fresh-box" v-show="fresh.show">\
@@ -107,7 +107,7 @@ var Vue = require("../libs/vue");
             },
             freshAction: function(obj) {
                 if ($(obj).html() == "立即刷新" || $(obj).hasClass("refresh-barcodepay")) {
-                    console.log(this.freshitem);
+                    //   console.log(this.freshitem);
                     this.fresh.title = this.freshitem.title;
                     if (this.freshitem.demandId) { //刷新校企合作需求
                         if (!this.fresh.smart) {
@@ -245,15 +245,15 @@ var Vue = require("../libs/vue");
     //刷新请求
     function freshRequest(userId, pushId, type, tarifId, freshObj) {
         var postdata = {
-            userId: userId,
-            pushId: pushId,
-            contentType: type,
-            id: tarifId
-        }
-        console.log(postdata);
+                userId: userId,
+                pushId: pushId,
+                contentType: type,
+                id: tarifId
+            }
+            // console.log(postdata);
         EventUtils.ajaxReq("/sys/refresh", "post", postdata, function(resp, status) {
             //    console.log(resp);
-            console.log(resp);
+            //   console.log(resp);
             if (resp.code == "00000") {
                 if (resp.data.payImg) {
                     if (freshObj.fresh.smart) {
@@ -269,7 +269,7 @@ var Vue = require("../libs/vue");
                     }
                     var timer = setInterval(function() {
                         EventUtils.ajaxReq("/sys/getOrderStatus", "get", paycheckdata, function(resp, status) {
-                            console.log(resp);
+                            // console.log(resp);
                             if (resp.code == "00000") {
                                 clearInterval(timer);
                                 swal({
@@ -298,7 +298,7 @@ var Vue = require("../libs/vue");
         $(".fresh-smart-list .icon-radio.on").removeClass("on");
         $(".fresh-smart-list .icon-radio:first").addClass("on");
         EventUtils.ajaxReq("/center/user/getAccount", "get", { userId: freshObj.userid }, function(resp, status) {
-            console.log(resp);
+            //  console.log(resp);
             freshObj.account.money = resp.data.useableBalance;
             freshObj.account.freeFreshTimes = resp.data.freeRefresh;
             freshObj.fresh.sum = freshObj.fresh.content[0].amount;

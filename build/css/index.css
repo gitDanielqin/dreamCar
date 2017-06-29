@@ -485,7 +485,7 @@
 /*合作伙伴*/
 
 .coop {
-    height: 472px;
+    min-height: 472px;
 }
 
 .coop-frame {

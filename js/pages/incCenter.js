@@ -1,7 +1,7 @@
 import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
 require("../libs/sweetalert.min");
 require("../common/common")
+var Vue = require("../libs/vue.min");
 require("../common/ajaxfileupload")
 require("../common/cropbox")
 require("../components/dropdown")
@@ -30,10 +30,10 @@ function infoRequest() {
         userId: parObj.userId || localStorage.userId,
         loginIdentifier: parObj.loginId || localStorage.loginId
     };
-    console.log(postdata);
+    //console.log(postdata);
     EventUtils.ajaxReq('/user/company/getInfo', 'get', postdata, function(resp, status) {
         respObj = resp.data;
-        console.log(resp);
+        //console.log(resp);
         if (respObj.userIcon) {
             $("#avatar-box").html("<img src='" + respObj.userIcon + "' />");
         }
@@ -152,18 +152,18 @@ var appPorto = new Vue({
             this.briefInfo.address.district = $(".edit-brief .sel-district input").val();
             this.viewInfo = true;
             var postdata = {
-                userId: parObj.userId,
-                companyId: respObj.companyId,
-                //    loginName:parObj.loginName,
-                property: this.briefInfo.IncProps,
-                province: this.briefInfo.address.province,
-                city: this.briefInfo.address.city,
-                area: this.briefInfo.address.district,
-                email: this.briefInfo.email
-            }
-            console.log(postdata);
+                    userId: parObj.userId,
+                    companyId: respObj.companyId,
+                    //    loginName:parObj.loginName,
+                    property: this.briefInfo.IncProps,
+                    province: this.briefInfo.address.province,
+                    city: this.briefInfo.address.city,
+                    area: this.briefInfo.address.district,
+                    email: this.briefInfo.email
+                }
+                //console.log(postdata);
             EventUtils.ajaxReq('/user/company/modifyInfo', 'post', postdata, function(resp, status) {
-                console.log(resp);
+                //console.log(resp);
             })
         },
         cancel: function() {
@@ -568,7 +568,7 @@ var appCont = new Vue({
                     success: function(data, status) {
                         hascomUrl = true;
                         appCont.resume.comLicenseUrl = data.data;
-                        console.log(data.data);
+                        //console.log(data.data);
                     },
                     error: function(data, status) {}
                 });
@@ -672,7 +672,7 @@ var appCont = new Vue({
 
         },
         modItem: function(item) {
-            console.log(item);
+            //console.log(item);
             var link = "incRequire.html?new=0&userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandSrc=" + appCont.require.demandSrc;
             if (item.demandId) {
                 link += "&demandId=" + item.demandId + "&demandType=" + item.demandType;
@@ -743,7 +743,7 @@ var appCont = new Vue({
                 return false;
             }
             this.resume.comLicense = obj.value
-            console.log(obj.value);
+                //console.log(obj.value);
         },
         showFile: function(fid) {
             if (this.resume.comLicense != "") {
@@ -768,13 +768,13 @@ var appCont = new Vue({
         applyCollect: function(item) {
             if (item.demandId) {
                 var postdata = {
-                    userId: parObj.userId,
-                    loginIdentifier: parObj.loginId,
-                    demandId: item.demandId
-                }
-                console.log(postdata);
+                        userId: parObj.userId,
+                        loginIdentifier: parObj.loginId,
+                        demandId: item.demandId
+                    }
+                    //console.log(postdata);
                 EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.data && resp.data.isApply == "0") {
                         swal({
                             title: "",
@@ -798,7 +798,7 @@ var appCont = new Vue({
                     jobFairId: item.jobFairId
                 }
                 EventUtils.ajaxReq("/jobfair/cooperateJobFair", "post", postdata, function(resp, status) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.data && resp.data.isApply == "0") {
                         swal({
                             title: "",
@@ -865,9 +865,9 @@ var appCont = new Vue({
             if (item.jobFairId) {
                 postdata.applyType = 2;
             }
-            console.log(postdata);
+            //console.log(postdata);
             EventUtils.ajaxReq("/readcard/getCardInfo", "get", postdata, function(resp, status) {
-                console.log(resp);
+                //console.log(resp);
                 appModal.cardInfo.cardtype = "uni";
                 appModal.cardInfo.applyId = resp.data.applyId;
                 var infosets = resp.data.viewReadCard;
@@ -1046,12 +1046,12 @@ var appModal = new Vue({
                 return false;
             }
             var postdata = {
-                userId: parObj.userId,
-                loginIdentifier: parObj.loginId,
-                comment: this.comment.text,
-                reportUserId: this.comment.cooperId
-            }
-            console.log(postdata);
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    comment: this.comment.text,
+                    reportUserId: this.comment.cooperId
+                }
+                //console.log(postdata);
             EventUtils.ajaxReq("/sys/comment", "post", postdata, function(resp, status) {
                 appModal.comment.text = "";
                 appModal.show.comment = false;
@@ -1401,7 +1401,7 @@ function demandRequest(type, page) {
             count: 3
         }
         EventUtils.ajaxReq("/recruit/getList", "get", postdata, function(resp, status) {
-            console.log(resp);
+            //console.log(resp);
             if (resp && resp.data) {
                 appCont.require.totalpages = resp.data.totalPage;
                 appCont.require.results = resp.data.list;
@@ -1428,7 +1428,7 @@ function collectRequest(type, page) {
             count: 3
         };
         EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function(resp, status) {
-            console.log(resp);
+            //console.log(resp);
             if (resp.data) {
                 appCont.collect.totalpages = resp.data.totalPage;
                 appCont.collect.totalitems = resp.data.totalRow;
@@ -1448,7 +1448,7 @@ function collectRequest(type, page) {
             count: 3
         };
         EventUtils.ajaxReq("/jobfair/getMarkList", "get", postdata, function(resp, status) {
-            console.log(resp);
+            //console.log(resp);
             if (resp.data) {
                 appCont.collect.totalpages = resp.data.totalPage;
                 appCont.collect.totalitems = resp.data.totalRow;
@@ -1472,7 +1472,7 @@ function combiMsgRequest(applystatus, page) {
         count: 3
     }
     EventUtils.ajaxReq("/demand/getDemandApply", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp && resp.data) {
             appCont.message.combi.totalitems = resp.data.totalRow;
             appCont.message.combi.totalpages = resp.data.totalPage;
@@ -1495,7 +1495,7 @@ function jobfairMsgRequest(applystatus, page) {
         count: 3
     }
     EventUtils.ajaxReq("/jobfair/getJobFair", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp && resp.data) {
             appCont.message.jobfair.totalitems = resp.data.totalRow;
             appCont.message.jobfair.totalpages = resp.data.totalPage;
@@ -1518,7 +1518,7 @@ function recruitMsgRequest(page) {
         count: 3
     }
     EventUtils.ajaxReq("/recruit/getReceiveList", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp && resp.data) {
             appCont.message.recruit.totalitems = resp.data.totalRow;
             appCont.message.recruit.totalpages = resp.data.totalPage;
@@ -1534,15 +1534,15 @@ function recruitMsgRequest(page) {
 function coopRequest(applyindex, page) {
     appCont.coop.curpage = page;
     var postdata = {
-        userId: parObj.userId,
-        loginIdentifier: parObj.loginId,
-        index: page,
-        count: 3,
-        applyStatus: applyindex
-    }
-    console.log(postdata);
+            userId: parObj.userId,
+            loginIdentifier: parObj.loginId,
+            index: page,
+            count: 3,
+            applyStatus: applyindex
+        }
+        //console.log(postdata);
     EventUtils.ajaxReq("/demand/getDemandApplyList", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp && resp.data) {
             appCont.coop.totalitems = resp.data.totalRow;
             appCont.coop.totalpages = resp.data.totalPage;

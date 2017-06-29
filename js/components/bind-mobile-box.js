@@ -1,4 +1,4 @@
-var Vue = require("../libs/vue");
+var Vue = require("../libs/vue.min");
 (function() {
     var mobileTempl = '<div class="bind-change mobile-bind">\
         <h2 class="bind-title">更换手机号<i class="pic-wrapper close" @click.stop="closeMobile"><i class="pic-icon icon-close"></i></i>\
@@ -43,12 +43,12 @@ var Vue = require("../libs/vue");
                 var start = 0;
                 var timer = setInterval(function() {
                     start++;
+                    $(obj).html("重新获取 (" + (60 - start) + "s)");
                     if (start == 60) {
                         $(obj).html("获取验证码");
                         $(obj).attr("disabled", false);
                         clearInterval(timer);
                     }
-                    $(obj).html("重新获取 (" + (60 - start) + "s)");
                 }, 1000);
                 var postdata = {
                     mobile: this.mobile,
@@ -96,6 +96,9 @@ var Vue = require("../libs/vue");
                             timer: 2000,
                             showConfirmButton: false,
                         });
+                        _this.mobile = "";
+                        _this.password = "";
+                        _this.validcode = "";
                         _this.$emit("closebox");
                     } else {
                         swal({

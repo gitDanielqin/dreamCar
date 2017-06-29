@@ -2,9 +2,9 @@
  * Created by xuanyuan on 2016/11/27.
  */
 import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
 require("../libs/sweetalert.min");
 require("../common/common")
+var Vue = require("../libs/vue.min");
 require("../common/cropbox")
 require("../components/dropdown")
 require("../components/pagination")
@@ -36,7 +36,7 @@ function infoRequest() {
     };
     EventUtils.ajaxReq("/user/user/getInfo", "get", postdata, function(resp, status) {
         respObj = resp.data;
-        console.log(respObj);
+        //console.log(respObj);
         var briefdata = {
             name: respObj.userInfo.realName,
             gender: respObj.userInfo.sex == "1" ? "男" : "女",
@@ -290,17 +290,17 @@ var appPorto = new Vue({
             this.briefInfo.address.city = $("#app-porto .address .sel-city input").val();
             this.briefInfo.address.district = $("#app-porto .address .sel-district input").val();
             var postdata = {
-                id: respObj.userInfo.id,
-                userId: parObj.userId,
-                loginIdentifier: parObj.loginId,
-                sex: this.briefInfo.gender == "男" ? 1 : 2,
-                birthday: this.briefInfo.birthyear + "-" + this.briefInfo.birthmonth + "-" + this.briefInfo.birthday,
-                liveStatus: this.briefInfo.state,
-                province: this.briefInfo.address.province,
-                city: this.briefInfo.address.city,
-                area: this.briefInfo.address.district,
-            }
-            console.log(postdata);
+                    id: respObj.userInfo.id,
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    sex: this.briefInfo.gender == "男" ? 1 : 2,
+                    birthday: this.briefInfo.birthyear + "-" + this.briefInfo.birthmonth + "-" + this.briefInfo.birthday,
+                    liveStatus: this.briefInfo.state,
+                    province: this.briefInfo.address.province,
+                    city: this.briefInfo.address.city,
+                    area: this.briefInfo.address.district,
+                }
+                //console.log(postdata);
             EventUtils.ajaxReq('/user/user/modifyInfo', 'post', postdata, function(resp, status) {
                 appPorto.viewInfo = true;
             })
@@ -724,7 +724,7 @@ var appCont = new Vue({
                             endyear: worksDate.eq(i).find(".sel-endyear input").val(),
                             endmonth: worksDate.eq(i).find(".sel-endmonth input").val(),
                         }
-                        // console.log(appCont.resume.worksExps[i].initdate);
+                        // //console.log(appCont.resume.worksExps[i].initdate);
                 };
                 //专业名称
                 var majorArray = $(".major-name");
@@ -853,6 +853,8 @@ var appCont = new Vue({
                 if (this.value == "") {
                     $(this).addClass("hint-nullable");
                     isFilled = false;
+                } else {
+                    $(this).removeClass("hint-nullable");
                 }
             });
             if (!isFilled) {
@@ -993,7 +995,7 @@ var appCont = new Vue({
                     recruitId: item.recruitId
                 }
                 EventUtils.ajaxReq("/recruit/cooperateRecruit", "post", postdata, function(resp, status) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.data && resp.data.isApply == "0") {
                         swal({
                             title: "",
@@ -1016,7 +1018,7 @@ var appCont = new Vue({
                     jobFairId: item.jobFairId
                 }
                 EventUtils.ajaxReq("/jobfair/cooperateJobFair", "post", postdata, function(resp, status) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.data && resp.data.isApply == "0") {
                         swal({
                             title: "",
@@ -1406,6 +1408,8 @@ function editEventBind() {
                 if (this.value == "") {
                     $(this).addClass("hint-nullable");
                     isFilled = false;
+                } else {
+                    $(this).removeClass("hint-nullable");
                 }
             });
             if (!isFilled) {
@@ -1473,7 +1477,7 @@ function editEventBind() {
                     languages: skillArray
                 }
                 EventUtils.ajaxReq("/user/user/modifyCvBaiscInfo", "post", postdata, function(resp, status) {
-                    console.log(resp, 2);
+                    //console.log(resp, 2);
                 })
                 break;
             case "selfeval":
@@ -1483,7 +1487,7 @@ function editEventBind() {
                     evaluation: appCont.resume.selfEval
                 }
                 EventUtils.ajaxReq("/user/user/modifyCvBaiscInfo", "post", postdata, function(resp, status) {
-                    console.log(resp, 2);
+                    //console.log(resp, 2);
                 });
                 break;
             case "psinfo":
@@ -1493,7 +1497,7 @@ function editEventBind() {
                     anymore: appCont.resume.psInfo
                 }
                 EventUtils.ajaxReq("/user/user/modifyCvBaiscInfo", "post", postdata, function(resp, status) {
-                    console.log(resp, 2);
+                    //console.log(resp, 2);
                 });
                 break;
             case "skill":
@@ -1503,7 +1507,7 @@ function editEventBind() {
                     speciality: appCont.resume.skills
                 }
                 EventUtils.ajaxReq("/user/user/modifyCvBaiscInfo", "post", postdata, function(resp, status) {
-                    console.log(resp, 2);
+                    //console.log(resp, 2);
                 });
                 break;
             default:
@@ -1542,7 +1546,7 @@ function delItem(editType, id) {
                 cvArray: JSON.stringify([{ cvCpyId: id, delFlg: "1" }])
             };
             EventUtils.ajaxReq("/user/user/modifyCvCo", "post", postdata, function(resp, status) {
-                console.log(resp, 3);
+                //console.log(resp, 3);
             });
             break;
         case "edu":
@@ -1551,7 +1555,7 @@ function delItem(editType, id) {
                 cvArray: JSON.stringify([{ cvEduId: id, delFlg: "1" }])
             }
             EventUtils.ajaxReq("/user/user/modifyCvEdu", "post", postdata, function(resp, status) {
-                console.log(resp, 4);
+                //console.log(resp, 4);
             });
             break;
         case "project":
@@ -1560,7 +1564,7 @@ function delItem(editType, id) {
                 cvArray: JSON.stringify([{ cvProId: id, delFlg: "1" }])
             }
             EventUtils.ajaxReq("/user/user/modifyCvPro", "post", postdata, function(resp, status) {
-                console.log(resp, 5);
+                //console.log(resp, 5);
             });
             break;
     }
@@ -1587,7 +1591,7 @@ function postResume(editType, isDel) {
             cvStatus: 1
         }
         EventUtils.ajaxReq("/user/user/modifyInfo", "post", postUserdata, function(resp, status) {
-            console.log(resp, 1);
+            //console.log(resp, 1);
         })
     }
 
@@ -1604,20 +1608,20 @@ function postResume(editType, isDel) {
         });
         appCont.resume.laSkills = JSON.stringify(skillArray);
         var postCvdata = {
-            userId: parObj.userId,
-            cvId: respObj.cvInfo.cvId,
-            expJob: appCont.resume.expect.tradeItems,
-            expJobFunction: appCont.resume.expect.posItems,
-            expPlace: appCont.resume.expect.province + ";" + appCont.resume.expect.city + ";" + appCont.resume.expect.district,
-            expSalary: appCont.resume.expect.salary,
-            evaluation: appCont.resume.selfEval,
-            anymore: appCont.resume.psInfo,
-            speciality: appCont.resume.skills,
-            languages: appCont.resume.laSkills
-        }
-        console.log(postCvdata, 2);
+                userId: parObj.userId,
+                cvId: respObj.cvInfo.cvId,
+                expJob: appCont.resume.expect.tradeItems,
+                expJobFunction: appCont.resume.expect.posItems,
+                expPlace: appCont.resume.expect.province + ";" + appCont.resume.expect.city + ";" + appCont.resume.expect.district,
+                expSalary: appCont.resume.expect.salary,
+                evaluation: appCont.resume.selfEval,
+                anymore: appCont.resume.psInfo,
+                speciality: appCont.resume.skills,
+                languages: appCont.resume.laSkills
+            }
+            //console.log(postCvdata, 2);
         EventUtils.ajaxReq("/user/user/modifyCvBaiscInfo", "post", postCvdata, function(resp, status) {
-            //  console.log(resp, 2);
+            //  //console.log(resp, 2);
         })
     }
 
@@ -1653,11 +1657,11 @@ function postResume(editType, isDel) {
             }
             postCvWorks.push(workexp);
         }
-        console.log(postCvWorks, 3);
+        //console.log(postCvWorks, 3);
         postCvWorks = JSON.stringify(postCvWorks);
 
         EventUtils.ajaxReq("/user/user/modifyCvCo", "post", { userId: parObj.userId, cvArray: postCvWorks }, function(resp, status) {
-            console.log(resp, 3);
+            //console.log(resp, 3);
             for (var i = 0; i < appCont.resume.worksExps.length; i++) {
                 appCont.resume.worksExps[i].cvCpyId = resp.data[i].cv_cpy_id;
             }
@@ -1693,14 +1697,14 @@ function postResume(editType, isDel) {
             }
             postCvEdus.push(edu);
         }
-        console.log(postCvEdus, 4);
+        //console.log(postCvEdus, 4);
         postCvEdus = JSON.stringify(postCvEdus);
 
         EventUtils.ajaxReq("/user/user/modifyCvEdu", "post", { userId: parObj.userId, cvArray: postCvEdus }, function(resp, status) {
             for (var i = 0; i < appCont.resume.edus.length; i++) {
                 appCont.resume.edus[i].cvEduId = resp.data[i].cv_edu_id;
             }
-            console.log(resp, 4);
+            //console.log(resp, 4);
         })
     }
 
@@ -1727,14 +1731,14 @@ function postResume(editType, isDel) {
             };
             postCvProjects.push(project);
         }
-        console.log(postCvProjects, 5)
+        //console.log(postCvProjects, 5)
         postCvProjects = JSON.stringify(postCvProjects);
 
         EventUtils.ajaxReq("/user/user/modifyCvPro", "post", { userId: parObj.userId, cvArray: postCvProjects }, function(resp, status) {
             for (var i = 0; i < appCont.resume.projects.length; i++) {
                 appCont.resume.projects[i].cvProId = resp.data[i].cv_pro_id;
             }
-            console.log(resp, 5);
+            //console.log(resp, 5);
         })
     }
 }
@@ -1749,9 +1753,9 @@ function colposRequest(index, page) {
             count: 3,
             applyStatus: index
         }
-        //  console.log(postdata);
+        //  //console.log(postdata);
     EventUtils.ajaxReq("/recruit/getMarkList", "get", postdata, function(resp, status) {
-        //   console.log(resp);
+        //   //console.log(resp);
         if (resp.data) {
             appCont.colPosList.results = resp.data.list;
             appCont.colPosList.totalpages = resp.data.totalPage;
@@ -1775,7 +1779,7 @@ function colrecRequest(index, page) {
         applyStatus: index
     }
     EventUtils.ajaxReq("/jobfair/getMarkList", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp.data) {
             appCont.colRecList.results = resp.data.list;
             appCont.colRecList.totalpages = resp.data.totalPage;
@@ -1801,7 +1805,7 @@ function posRequest(type, state, page) {
         count: 3
     }
     EventUtils.ajaxReq("/user/user/getMyApply", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp && resp.data) {
             appCont.myPosList.results = resp.data.list;
             appCont.myPosList.totalpages = resp.data.totalPage;

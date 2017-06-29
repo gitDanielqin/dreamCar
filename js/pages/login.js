@@ -3,9 +3,9 @@
  */
 
 import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
 require("../libs/sweetalert.min");
 require("../common/common")
+var Vue = require("../libs/vue.min");
 require("../../css/base.css")
 require("../../css/sweetalert.css")
 require("../../css/login.css")
@@ -46,9 +46,11 @@ var appCont = new Vue({
         banner: {
             showindex: Math.floor(3 * Math.random()),
             images: [
-                { url: "images/login-pic02.jpg", website: "http://www.baidu.com" },
+                { url: "images/login-pic02.jpg", website: "http://www.xiaoqiztc.com" },
                 { url: "images/banner-lanlan.jpg", website: "http://www.xinchuang.sitekc.com/index.jsp" },
-                { url: "images/bg-recruit.jpg", website: "http://www.qq.com" },
+                { url: "images/企业.jpg", website: "http://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-company.html?" },
+                { url: "images/高校.jpg", website: "http://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-uni.html?" },
+                { url: "images/个人.jpg", website: "http://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-position.html?" },
             ]
         },
         show: {
@@ -141,7 +143,7 @@ var appCont = new Vue({
                 loginName: this.login.account,
                 password: this.login.password
             };
-            console.log(postdata);
+            //console.log(postdata);
             var callback = function(resp, status) {
                 if (resp.code == "10002") {
                     swal({
@@ -256,9 +258,9 @@ var appCont = new Vue({
         }
     },
     mounted: function() {
-        var timerindex = Math.floor(3 * Math.random());
+        var timerindex = Math.floor(5 * Math.random());
         setInterval(function() {
-            appCont.banner.showindex = timerindex % 3;
+            appCont.banner.showindex = timerindex % 5;
             timerindex++;
         }, 10000)
         EventUtils.placeholderFill();
@@ -303,7 +305,7 @@ _init();
 function initSize() {
     var contHeight = EventUtils.getViewport().height - $(".top").outerHeight(true) - $(".bot").outerHeight(true);
     $(".banner").height(contHeight);
-    console.log($("body").width(), $("body").height());
+    //console.log($("body").width(), $("body").height());
     $(".banner-frame").width(EventUtils.getViewport().width);
     $(".banner-frame").height($("body").height());
 }

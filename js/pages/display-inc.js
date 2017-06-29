@@ -2,9 +2,9 @@
  * Created by xuanyuan on 2016/12/31.
  */
 import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
 require("../libs/sweetalert.min");
 require("../common/common")
+var Vue = require("../libs/vue.min");
 require("../components/dropdown")
 require("../components/pagination")
 require("../components/common-footer")
@@ -43,7 +43,7 @@ function infoRequest() {
     if (parObj.userId) { // 如果是已登录状态
         postdata.userId = parObj.userId;
         EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-            console.log(resp);
+            //console.log(resp);
             if (resp.data) {
                 appResult.incList.totalpages = resp.data.totalPage;
                 appResult.incList.results = resp.data.list;
@@ -53,11 +53,11 @@ function infoRequest() {
             }
             if (parObj.searchtext) {
                 appQuery.keywords = decodeURI(parObj.searchtext);
-                searchRequest(1);
+                resultsRequest(1);
             }
         });
         EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId }, function(resp, status) {
-            //  console.log(resp);
+            //  //console.log(resp);
             accountObj = resp.data;
             if (accountObj) {
                 appTop.userName = resp.data.userName;
@@ -67,7 +67,7 @@ function infoRequest() {
         })
     } else {
         EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-            console.log(resp);
+            //console.log(resp);
             if (resp.data) {
                 appResult.incList.totalpages = resp.data.totalPage;
                 appResult.incList.results = resp.data.list;
@@ -77,7 +77,7 @@ function infoRequest() {
             }
             if (parObj.searchtext) {
                 appQuery.keywords = decodeURI(parObj.searchtext);
-                searchRequest(1);
+                resultsRequest(1);
             }
         });
     }
@@ -240,11 +240,7 @@ var appQuery = new Vue({
     },
     methods: {
         search: function() {
-            if (this.keywords != "") {
-                searchRequest(1);
-            } else {
-                resultsRequest(1);
-            }
+            resultsRequest(1);
         },
         selCity: function(index, obj) {
             $(".address .on").removeClass("on");
@@ -280,16 +276,12 @@ var appQuery = new Vue({
             resultsRequest(1);
         },
         selPos: function(pos, type) {
-            if (type == "uni") {
-                this.uniQuery.incReq.pos.pos_2 = pos;
-            } else if (type == "inc") {
-                this.incQuery.pos.pos_2 = pos;
-            } else if (type == "pos") {
-                this.posQuery.pos.pos_2 = pos;
-            } else if (type == "unirecruit") {
-                this.uniRecruit.incReq.pos.pos_2 = pos;
-            } else if (type == "increcruit") {
-                this.incRecruit.pos.pos_2 = pos
+            if (type == "inc") {
+                if (pos != "不限") {
+                    this.incQuery.pos.pos_2 = pos;
+                } else {
+                    this.incQuery.pos.pos_2 = this.incQuery.pos.pos_1;
+                }
             }
             this.showPosBox = false;
         },
@@ -428,7 +420,7 @@ var appResult = new Vue({
                     demandId: id
                 }
                 EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.data.isApply == "0") {
                         item.applyStatus = 1;
                         appModal.showModal = true;
@@ -456,12 +448,7 @@ var appResult = new Vue({
             }
         },
         topage: function(page, type) {
-            if (this.resultType == 0) {
-                resultsRequest(page);
-            } else {
-                searchRequest(page);
-            }
-
+            resultsRequest(page);
         }
 
     },
@@ -519,7 +506,7 @@ var appModal = new Vue({
                         count: 8
                     }
                     EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-                        // console.log(resp);
+                        // //console.log(resp);
                         if (resp.code == "00000") {
                             if (resp.data) {
                                 appResult.incList.totalpages = resp.data.totalPage;
@@ -641,6 +628,7 @@ function resultsRequest(page) {
             userId: accountObj && accountObj.userId ? accountObj.userId : "",
             index: page,
             count: 8,
+            title: appQuery.keywords,
             userAddress: appQuery.incQuery.address,
             schoolProperty: appQuery.incQuery.uniReq.uniprops,
             profession: $(".queryform .major-input-1 input").val() == "" ? "不限" : appQuery.incQuery.uniReq.major,
@@ -651,10 +639,10 @@ function resultsRequest(page) {
             timeType: dateindex
         }
         // 清除发送数据对象值为空的属性
-    console.log(postdata);
+        //console.log(postdata);
     postdata = EventUtils.filterReqdata(postdata);
     EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp.data) {
             appResult.incList.totalpages = resp.data.totalPage;
             appResult.incList.results = resp.data.list;
@@ -671,35 +659,35 @@ function resultsRequest(page) {
     })
 }
 
-//搜索结果请求
-function searchRequest(page) {
-    appResult.resultType = 1;
-    var postdata = {
-        demandType: 2,
-        title: appQuery.keywords,
-        index: page,
-        count: 8
-    }
-    if (accountObj && accountObj.userId) {
-        postdata.userId = accountObj.userId;
-    }
-    EventUtils.ajaxReq("/demand/searchDemand?", "get", postdata, function(resp, status) {
-        console.log(resp);
-        if (resp.data) {
-            appResult.incList.totalpages = resp.data.totalPage;
-            appResult.incList.results = resp.data.list;
-            if (resp.data.list.length <= 1) {
-                $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
-            } else {
-                $(".results").css("background", "none");
-            }
-        } else {
-            appResult.incList.totalpages = 1;
-            appResult.incList.results = [];
-            $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
-        }
-    })
-}
+// //搜索结果请求
+// function searchRequest(page) {
+//     appResult.resultType = 1;
+//     var postdata = {
+//         demandType: 2,
+//         title: appQuery.keywords,
+//         index: page,
+//         count: 8
+//     }
+//     if (accountObj && accountObj.userId) {
+//         postdata.userId = accountObj.userId;
+//     }
+//     EventUtils.ajaxReq("/demand/searchDemand?", "get", postdata, function(resp, status) {
+//         //console.log(resp);
+//         if (resp.data) {
+//             appResult.incList.totalpages = resp.data.totalPage;
+//             appResult.incList.results = resp.data.list;
+//             if (resp.data.list.length <= 1) {
+//                 $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
+//             } else {
+//                 $(".results").css("background", "none");
+//             }
+//         } else {
+//             appResult.incList.totalpages = 1;
+//             appResult.incList.results = [];
+//             $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
+//         }
+//     })
+// }
 
 //清除页面绑定事件
 window.onunload = function() {

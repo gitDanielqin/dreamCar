@@ -1,4 +1,4 @@
-var Vue = require("../libs/vue");
+var Vue = require("../libs/vue.min");
 (function() {
     var footerTempl = '<div class="inner clearfix common-footer">\
             <div class="fl">\

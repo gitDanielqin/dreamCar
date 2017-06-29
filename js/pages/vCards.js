@@ -2,9 +2,9 @@
  * Created by xuanyuan on 2016/11/7.
  */
 import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
 require("../libs/sweetalert.min");
 require("../common/common")
+var Vue = require("../libs/vue.min");
 require("../components/dropdown")
 require("../../data/commondata")
 require("../../data/address")

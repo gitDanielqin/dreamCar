@@ -2,9 +2,9 @@
  * Created by xuanyuan on 2016/12/31.
  */
 import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
 require("../libs/sweetalert.min");
 require("../common/common")
+var Vue = require("../libs/vue.min");
 require("../components/dropdown")
 require("../components/pagination")
 require("../components/common-footer")
@@ -43,25 +43,25 @@ function infoRequest() {
     if (parObj.userId) {
         postdata.userId = parObj.userId;
         EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-            console.log(resp);
+            //console.log(resp);
             if (resp.data) {
                 appResult.uniList.totalpages = resp.data.totalPage;
                 appResult.uniList.results = resp.data.list;
                 if (parObj.searchtext) {
                     appQuery.keywords = decodeURI(parObj.searchtext);
-                    searchRequest(1);
+                    resultsRequest(1);
                 }
             } else {
                 appResult.uniList.totalpages = 1;
                 appResult.uniList.results = [];
                 if (parObj.searchtext) {
                     appQuery.keywords = decodeURI(parObj.searchtext);
-                    searchRequest(1);
+                    resultsRequest(1);
                 }
             }
         });
         EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId }, function(resp, status) {
-            console.log(resp);
+            //console.log(resp);
             accountObj = resp.data;
             if (resp && resp.data) {
                 appTop.userName = resp.data.userName;
@@ -71,20 +71,20 @@ function infoRequest() {
         })
     } else {
         EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-            console.log(resp);
+            //console.log(resp);
             if (resp.data) {
                 appResult.uniList.totalpages = resp.data.totalPage;
                 appResult.uniList.results = resp.data.list;
                 if (parObj.searchtext) {
                     appQuery.keywords = decodeURI(parObj.searchtext);
-                    searchRequest(1);
+                    resultsRequest(1);
                 }
             } else {
                 appResult.uniList.totalpages = 1;
                 appResult.uniList.results = [];
                 if (parObj.searchtext) {
                     appQuery.keywords = decodeURI(parObj.searchtext);
-                    searchRequest(1);
+                    resultsRequest(1);
                 }
             }
         });
@@ -153,20 +153,20 @@ var appTop = new Vue({
                 count: 8
             };
             EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-                console.log(resp);
+                //console.log(resp);
                 if (resp.data) {
                     appResult.uniList.totalpages = resp.data.totalPage;
                     appResult.uniList.results = resp.data.list;
                     if (parObj.searchtext) {
                         appQuery.keywords = decodeURI(parObj.searchtext);
-                        searchRequest(1);
+                        resultsRequest(1);
                     }
                 } else {
                     appResult.uniList.totalpages = 1;
                     appResult.uniList.results = [];
                     if (parObj.searchtext) {
                         appQuery.keywords = decodeURI(parObj.searchtext);
-                        searchRequest(1);
+                        resultsRequest(1);
                     }
                 }
             });
@@ -251,11 +251,7 @@ var appQuery = new Vue({
     },
     methods: {
         search: function() {
-            if (this.keywords != "") {
-                searchRequest(1);
-            } else {
-                resultsRequest(1);
-            }
+            resultsRequest(1);
         },
         selCity: function(index, obj) {
             $(".address .on").removeClass("on");
@@ -292,25 +288,21 @@ var appQuery = new Vue({
         },
         selPos: function(pos, type) {
             if (type == "uni") {
-                this.uniQuery.incReq.pos.pos_2 = pos;
-            } else if (type == "inc") {
-                this.incQuery.pos.pos_2 = pos;
-            } else if (type == "pos") {
-                this.posQuery.pos.pos_2 = pos;
-            } else if (type == "unirecruit") {
-                this.uniRecruit.incReq.pos.pos_2 = pos;
-            } else if (type == "increcruit") {
-                this.incRecruit.pos.pos_2 = pos
+                if (pos != "不限") {
+                    this.uniQuery.incReq.pos.pos_2 = pos;
+                } else {
+                    this.uniQuery.incReq.pos.pos_2 = this.uniQuery.incReq.pos.pos_1;
+                }
             }
             this.showPosBox = false;
         },
         selArea: function(area, type) {
             if (type == "uni") {
-                this.uniQuery.incReq.areas.area_2 = area;
-            } else if (type == "pos") {
-                this.posQuery.areas.area_2 = area;
-            } else if (type == "unirecruit") {
-                this.uniRecruit.incReq.areas.area_2 = area;
+                if (area != "不限") {
+                    this.uniQuery.incReq.areas.area_2 = area;
+                } else {
+                    this.uniQuery.incReq.areas.area_2 = this.uniQuery.incReq.areas.area_1
+                }
             }
             this.showAreaBox = false;
         },
@@ -460,7 +452,7 @@ var appResult = new Vue({
                     demandId: id
                 }
                 EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function(resp, status) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.data.isApply == "0") {
                         item.applyStatus = 1;
                         appModal.showModal = true;
@@ -488,12 +480,7 @@ var appResult = new Vue({
             }
         },
         topage: function(page, type) {
-            if (this.resultType == 0) {
-                resultsRequest(page);
-            } else {
-                searchRequest(page);
-            }
-
+            resultsRequest(page);
         }
 
     },
@@ -541,7 +528,7 @@ var appModal = new Vue({
                 password: this.login.password
             };
             EventUtils.ajaxReq("/center/user/login", "post", postdata, function(resp, status) {
-                console.log(resp);
+                //console.log(resp);
                 if (resp.data) {
                     accountObj = resp.data;
                     var postdata = {
@@ -551,20 +538,20 @@ var appModal = new Vue({
                         userId: accountObj.userId
                     }
                     EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-                        console.log(resp);
+                        //console.log(resp);
                         if (resp.data) {
                             appResult.uniList.totalpages = resp.data.totalPage;
                             appResult.uniList.results = resp.data.list;
                             if (parObj.searchtext) {
                                 appQuery.keywords = decodeURI(parObj.searchtext);
-                                searchRequest(1);
+                                resultsRequest(1);
                             }
                         } else {
                             appResult.uniList.totalpages = 1;
                             appResult.uniList.results = [];
                             if (parObj.searchtext) {
                                 appQuery.keywords = decodeURI(parObj.searchtext);
-                                searchRequest(1);
+                                resultsRequest(1);
                             }
                         }
                     });
@@ -670,6 +657,7 @@ function resultsRequest(page) {
         demandType: 1,
         index: page,
         count: 8,
+        title: appQuery.keywords,
         userAddress: appQuery.uniQuery.address,
         companyProperty: appQuery.uniQuery.incReq.IncProps,
         companyScale: appQuery.uniQuery.incReq.IncScale,
@@ -686,9 +674,9 @@ function resultsRequest(page) {
     }
     // 清楚发送数据对象值为空的属性
     postdata = EventUtils.filterReqdata(postdata);
-    console.log(postdata);
+    //console.log(postdata);
     EventUtils.ajaxReq("/demand/getList", "get", postdata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp.data) {
             appResult.uniList.totalpages = resp.data.totalPage;
             appResult.uniList.results = resp.data.list;
@@ -708,36 +696,36 @@ function resultsRequest(page) {
 }
 
 //搜索结果请求
-function searchRequest(page) {
-    appResult.resultType = 1;
-    var postdata = {
-        demandType: 1,
-        title: appQuery.keywords,
-        index: page,
-        count: 8
-    }
-    if (accountObj && accountObj.userId) {
-        postdata.userId = accountObj.userId;
-    }
-    EventUtils.ajaxReq("/demand/searchDemand?", "get", postdata, function(resp, status) {
-        console.log(resp);
-        if (resp.data) {
-            appResult.uniList.totalpages = resp.data.totalPage;
-            appResult.uniList.results = resp.data.list;
-            //背景图像
-            if (resp.data.list.length <= 1) {
-                $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
-            } else {
-                $(".results").css("background", "none");
-            }
-        } else {
-            appResult.uniList.totalpages = 1;
-            appResult.uniList.results = [];
-            //背景图像
-            $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
-        }
-    })
-}
+// function searchRequest(page) {
+//     appResult.resultType = 1;
+//     var postdata = {
+//         demandType: 1,
+//         title: appQuery.keywords,
+//         index: page,
+//         count: 8
+//     }
+//     if (accountObj && accountObj.userId) {
+//         postdata.userId = accountObj.userId;
+//     }
+//     EventUtils.ajaxReq("/demand/searchDemand?", "get", postdata, function(resp, status) {
+//         //console.log(resp);
+//         if (resp.data) {
+//             appResult.uniList.totalpages = resp.data.totalPage;
+//             appResult.uniList.results = resp.data.list;
+//             //背景图像
+//             if (resp.data.list.length <= 1) {
+//                 $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
+//             } else {
+//                 $(".results").css("background", "none");
+//             }
+//         } else {
+//             appResult.uniList.totalpages = 1;
+//             appResult.uniList.results = [];
+//             //背景图像
+//             $(".results").css("background", "url('images/display-bg.png') no-repeat bottom center");
+//         }
+//     })
+// }
 
 //清除页面绑定事件
 window.onunload = function() {

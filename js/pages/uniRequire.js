@@ -1,7 +1,7 @@
 import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
 require("../libs/sweetalert.min");
 require("../common/common")
+var Vue = require("../libs/vue.min");
 require("../components/dropdown")
 require("../components/major-pop")
 require("../components/pagination")
@@ -38,7 +38,7 @@ function infoRequest(demandSrc) {
         }
         EventUtils.ajaxReq("/demand/getInfo", "get", postdata, function(resp, status) {
             respObj = resp.data;
-            console.log(respObj);
+            //console.log(respObj);
             var initAddr = "";
             var initPos = "";
             if (respObj.companyAddress) {
@@ -103,7 +103,7 @@ function infoRequest(demandSrc) {
             jobFairId: parObj.jobfairId
         }
         EventUtils.ajaxReq("/jobfair/getInfo", "get", postdata, function(resp, status) {
-            console.log(resp);
+            //console.log(resp);
             respObj = resp.data;
             var initpos = "";
             if (respObj.companyType) { //企业行业数据
@@ -431,10 +431,10 @@ var appMain = new Vue({
                         mobile: this.combiData.contact.phone,
                         schoolAddress: this.combiData.contact.address.split("-").join(";")
                     }
-                    // console.log(postdata);
+                    // //console.log(postdata);
                 if (isNewRequire) {
                     EventUtils.ajaxReq('/demand/apply', 'post', postdata, function(resp, status) {
-                        console.log(resp);
+                        //console.log(resp);
                         if (resp.code == "00000") {
                             swal({
                                 title: "",
@@ -517,27 +517,27 @@ var appMain = new Vue({
                 }
                 //准备发送数据
                 var postdata = {
-                    userId: parObj.userId,
-                    jobFairType: 1,
-                    title: this.recruitData.header,
-                    companyType: $(".cont-recruit .input-area-1 input").val() + ";" + $(".cont-recruit .input-area-2 input").val(),
-                    companyProperty: this.recruitData.incReq.incProps,
-                    companyScale: this.recruitData.incReq.incScale,
-                    job: $(".cont-recruit .sel-pos-1 input").val() + ";" + $(".cont-recruit .sel-pos-2 input").val() + ";" + $(".cont-recruit .sel-pos-3 input").val(),
-                    jobCount: this.recruitData.incReq.posAmount,
-                    companyAddress: $(".company-address .sel-province input").val() + ";" + $(".company-address .sel-city input").val() + ";" + $(".company-address .sel-district input").val(),
-                    profession: $(".cont-recruit .major-input-1 input").val() + ";" + $(".cont-recruit .major-input-2 input").val(),
-                    professionCount: this.recruitData.stuScale,
-                    startTime: $("#jobfair-date").val(),
-                    discription: this.recruitData.desc,
-                    linkMan: this.recruitData.contact.person,
-                    mobile: this.recruitData.contact.phone,
-                    jobFairAddress: this.recruitData.contact.address == "" ? "" : this.recruitData.contact.address.split("-").join(";")
-                }
-                console.log(postdata);
+                        userId: parObj.userId,
+                        jobFairType: 1,
+                        title: this.recruitData.header,
+                        companyType: $(".cont-recruit .input-area-1 input").val() + ";" + $(".cont-recruit .input-area-2 input").val(),
+                        companyProperty: this.recruitData.incReq.incProps,
+                        companyScale: this.recruitData.incReq.incScale,
+                        job: $(".cont-recruit .sel-pos-1 input").val() + ";" + $(".cont-recruit .sel-pos-2 input").val() + ";" + $(".cont-recruit .sel-pos-3 input").val(),
+                        jobCount: this.recruitData.incReq.posAmount,
+                        companyAddress: $(".company-address .sel-province input").val() + ";" + $(".company-address .sel-city input").val() + ";" + $(".company-address .sel-district input").val(),
+                        profession: $(".cont-recruit .major-input-1 input").val() + ";" + $(".cont-recruit .major-input-2 input").val(),
+                        professionCount: this.recruitData.stuScale,
+                        startTime: $("#jobfair-date").val(),
+                        discription: this.recruitData.desc,
+                        linkMan: this.recruitData.contact.person,
+                        mobile: this.recruitData.contact.phone,
+                        jobFairAddress: this.recruitData.contact.address == "" ? "" : this.recruitData.contact.address.split("-").join(";")
+                    }
+                    //console.log(postdata);
                 if (isNewRequire) {
                     EventUtils.ajaxReq('/jobfair/apply', 'post', postdata, function(resp, status) {
-                        console.log(resp);
+                        //console.log(resp);
                         if (resp.code == "00000") {
                             if (resp.data.status == "0") {
                                 swal({
@@ -563,16 +563,25 @@ var appMain = new Vue({
                     postdata.jobFairId = parObj.jobfairId;
                     EventUtils.ajaxReq('/jobfair/modifyInfo', 'post', postdata, function(resp, status) {
                         if (resp.code == "00000") {
-                            swal({
-                                title: "",
-                                text: "修改成功！",
-                                type: "success",
-                                showConfirmButton: false
-                            });
-                            setTimeout(function() {
-                                var link = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require&demandSrc=1";
-                                window.location.href = EventUtils.securityUrl(link);
-                            }, 1000);
+                            if (resp.data.status == "0") {
+                                swal({
+                                    title: "",
+                                    text: "不允许同一天发布多场招聘会，请删除后重发！",
+                                    type: "warning"
+                                });
+                            } else {
+                                swal({
+                                    title: "",
+                                    text: "修改成功！",
+                                    type: "success",
+                                    showConfirmButton: false
+                                });
+                                setTimeout(function() {
+                                    var link = "uniCenter.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + parObj.demandId + "&theme=require&demandSrc=1";
+                                    window.location.href = EventUtils.securityUrl(link);
+                                }, 1000);
+                            }
+
                         }
                     })
                 }

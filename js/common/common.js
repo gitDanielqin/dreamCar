@@ -220,7 +220,7 @@ window.EventUtils = {
         },
         ajaxReq: function(url, method, postdata, callback) {
             $.ajax({
-                url: "http://www.xiaoqiztc.com/easily_xq_WebApi" + url,
+                url: "https://www.xiaoqiztc.com/easily_xq_WebApi" + url,
                 //url: "http://192.168.0.105:8080/easily_xq_WebApi" + url,
                 type: method,
                 async: false,
@@ -262,16 +262,16 @@ window.EventUtils = {
             if (navigator.userAgent.indexOf("MSIE") > 0) {
                 return "MSIE";
             }
-            if (isFirefox = navigator.userAgent.indexOf("Firefox") > 0) {
+            if (navigator.userAgent.indexOf("Firefox") > 0) {
                 return "Firefox";
             }
-            if (isSafari = navigator.userAgent.indexOf("Safari") > 0) {
+            if (navigator.userAgent.indexOf("Safari") > 0) {
                 return "Safari";
             }
-            if (isCamino = navigator.userAgent.indexOf("Camino") > 0) {
+            if (navigator.userAgent.indexOf("Camino") > 0) {
                 return "Camino";
             }
-            if (isMozilla = navigator.userAgent.indexOf("Gecko/") > 0) {
+            if (navigator.userAgent.indexOf("Gecko/") > 0) {
                 return "Gecko";
             }
         },
@@ -363,12 +363,12 @@ window.EventUtils = {
                 // $(this).attr("placeholder");
                 $(this).val($(this).attr("placeholder"));
                 $(this).focus(function() {
-                    console.log(1);
+                    //console.log(1);
                     if ($(this).val() == $(this).attr("placeholder")) {
                         $(this).val("");
                     }
                 }).blur(function() {
-                    console.log(2);
+                    //console.log(2);
                     if ($(this).val() == "") {
                         $(this).val($(this).attr("placeholder"));
                     }
@@ -389,15 +389,3 @@ Array.prototype.remove = function(val) {
         this.splice(index, 1);
     }
 };
-
-var mybrowser = EventUtils.getBrowserType();
-if (mybrowser && mybrowser.indexOf("IE") > -1) {
-    console.log(parseInt(mybrowser.slice(2)) < 10);
-    if (parseInt(mybrowser.slice(2)) < 10) {
-        swal({
-            title: "",
-            text: "亲爱的用户，由于您的浏览器版本过低，导致页面无法正常显示。请升级您的浏览器，我们推荐使用谷歌浏览器~",
-            type: "warning"
-        })
-    };
-}

@@ -1,4 +1,4 @@
-var Vue = require("../libs/vue");
+var Vue = require("../libs/vue.min");
 (function() {
     var emailTempl = '<div class="bind-change email-bind">\
         <h2 class="bind-title">更换绑定邮箱<i class="pic-wrapper close" @click.stop="closeBox"><i class="pic-icon icon-close"></i></i>\
@@ -43,18 +43,18 @@ var Vue = require("../libs/vue");
                 var start = 0;
                 var timer = setInterval(function() {
                     start++;
+                    $(obj).html("重新获取 (" + (60 - start) + "s)");
                     if (start == 60) {
                         $(obj).html("获取验证码");
                         $(obj).attr("disabled", false);
                         clearInterval(timer);
                     }
-                    $(obj).html("重新获取 (" + (60 - start) + "s)");
                 }, 1000);
                 var postdata = {
                     email: this.email,
                     type: 2
                 };
-                console.log(postdata);
+                // console.log(postdata);
                 EventUtils.ajaxReq('/sys/emailCode', 'post', postdata, function(resp, status) {
                     swal({
                         title: "",
@@ -97,6 +97,9 @@ var Vue = require("../libs/vue");
                             timer: 1500,
                             showConfirmButton: false,
                         });
+                        _this.email = "";
+                        _this.validcode = "";
+                        _this.password = "";
                         _this.$emit("closebox");
                     } else {
                         swal({

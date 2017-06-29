@@ -215,7 +215,7 @@
 }
 
 .friendlink ul li {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .friendlink p {
@@ -224,8 +224,10 @@
 }
 
 .friendlink .pic-wrapper {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
+    margin-right: 15px;
+    vertical-align: middle;
 }
 
 .friendlink a:hover {

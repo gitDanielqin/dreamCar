@@ -278,10 +278,6 @@
     background: #48c1e4;
 }
 
-.btn-apply[disabled]:hover {
-    background: cadetblue;
-}
-
 .item-name {
     width: 136px;
     white-space: nowrap;

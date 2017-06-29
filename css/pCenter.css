@@ -42,6 +42,10 @@
     background: url("../images/cross.png") no-repeat center center;
 }
 
+#app-modal .porto-img {
+    border: none;
+}
+
 .porto-img img {
     width: 100%;
 }

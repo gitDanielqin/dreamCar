@@ -1,7 +1,7 @@
 import $ from "../libs/jquery-3.1.0.min";
-var Vue = require("../libs/vue");
 require("../libs/sweetalert.min");
 require("../common/common")
+var Vue = require("../libs/vue.min");
 require("../components/dropdown")
 require("../components/pagination")
 require("../components/detail-table")
@@ -22,10 +22,10 @@ function infoRequest() {
     if (parObj.userId) {
         postdata.userId = parObj.userId;
     }
-    // console.log(postdata);
+    // //console.log(postdata);
     EventUtils.ajaxReq("/jobfair/getInfo", "get", postdata, function(resp, status) {
         respObj = resp.data;
-        console.log(respObj);
+        //console.log(respObj);
         var briefdata = {
             title: respObj.title,
             viewed: respObj.readCount,
@@ -87,9 +87,9 @@ function infoRequest() {
 
     if (parObj.userId) {
         EventUtils.ajaxReq("/center/user/getInfo", "post", { userId: parObj.userId }, function(resp, status) {
-            //  console.log(resp);
+            //  //console.log(resp);
             accountObj = resp.data;
-            //   console.log(accountObj);
+            //   //console.log(accountObj);
             if (accountObj) {
                 appTop.userName = resp.data.userName;
                 appTop.userType = resp.data.userType;
@@ -212,7 +212,7 @@ var appBanner = new Vue({
                         jobFairId: parObj.jobfairId,
                     }
                     EventUtils.ajaxReq("/jobfair/addMarkInfo", "post", postdata, function(resp, status) {
-                        console.log(resp);
+                        //console.log(resp);
                         $(obj).find("span").text("已收藏");
                         $(obj).addClass("collected");
                     })
@@ -239,7 +239,7 @@ var appBanner = new Vue({
                     jobFairId: parObj.jobfairId
                 }
                 EventUtils.ajaxReq("/jobfair/cooperateJobFair", "post", postdata, function(resp, status) {
-                    // console.log(resp);
+                    // //console.log(resp);
                     if (resp.data.isApply == "0") {
                         appModal.showModal = true;
                         appModal.showLogin = false;
@@ -373,7 +373,7 @@ var appModal = new Vue({
                 loginName: this.login.account,
                 password: this.login.password
             };
-            console.log(postdata);
+            //console.log(postdata);
             EventUtils.ajaxReq("/center/user/login", "post", postdata, function(resp, status) {
                 accountObj = resp.data;
                 appTop.userType = resp.data.userType;
@@ -383,12 +383,12 @@ var appModal = new Vue({
                 appModal.showLogin = false;
                 //登录判断是否已收藏
                 var postdemand = {
-                    jobFairId: parObj.jobfairId,
-                    userId: accountObj.userId
-                }
-                console.log(postdemand);
+                        jobFairId: parObj.jobfairId,
+                        userId: accountObj.userId
+                    }
+                    //console.log(postdemand);
                 EventUtils.ajaxReq("/jobfair/getInfo", "get", postdemand, function(resp, status) {
-                    console.log(resp.data);
+                    //console.log(resp.data);
                     if (resp.data.markStatus == "1") {
                         $("#app-banner .btn-collec").addClass("collected");
                         $("#app-banner .btn-collec span").html("已收藏");
@@ -449,13 +449,13 @@ function initEventBind() {
 // 申请记录请求
 function applyRequest(page) {
     var applydata = {
-        jobFairId: parObj.jobfairId,
-        index: page,
-        count: 13
-    }
-    console.log(applydata);
+            jobFairId: parObj.jobfairId,
+            index: page,
+            count: 13
+        }
+        //console.log(applydata);
     EventUtils.ajaxReq("/jobfair/getApplyRecord", "get", applydata, function(resp, status) {
-        console.log(resp);
+        //console.log(resp);
         if (resp && resp.data) {
             appMain.tabledata.applyRec.totalpages = resp.data.totalPage;
             appMain.tabledata.applyRec.results = resp.data.list;
@@ -476,7 +476,7 @@ function commentRequest(id, page) {
         count: 6
     }
     EventUtils.ajaxReq("/sys/getCommentList", "post", commentdata, function(resp, status) {
-        //  console.log(resp);
+        //  //console.log(resp);
         if (resp && resp.data) {
             appMain.tabledata.comment.results = resp.data.list;
             appMain.tabledata.comment.totalpages = resp.data.totalPage;
