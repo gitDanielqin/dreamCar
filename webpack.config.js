@@ -62,7 +62,7 @@ module.exports = {
             filename: "js/commons.js",
             minChunks: 6
         }),
-        //    new webpack.optimize.UglifyJsPlugin(),
+        new webpack.optimize.UglifyJsPlugin(),
         new ExtractTextPlugin("css/[name].css"),
         new webpack.ProvidePlugin({
             $: "jquery",
