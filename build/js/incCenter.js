@@ -1,1 +1,3182 @@
-webpackJsonp([1],{20:function(e,t,s){"use strict";(function(i){var a,o,r;!function(i){o=[s(0)],a=i,void 0!==(r="function"==typeof a?a.apply(t,o):a)&&(e.exports=r)}(function(e){var t=function(t,s){var s=s||e(t.imageBox),i={state:{},ratio:1,options:t,imageBox:s,thumbBox:s.find(t.thumbBox),spinner:s.find(t.spinner),image:new Image,getDataURL:function(){var e=this.thumbBox.width(),t=this.thumbBox.height(),i=document.createElement("canvas"),a=s.css("background-position").split(" "),o=s.css("background-size").split(" "),r=parseInt(a[0])-s.width()/2+e/2,n=parseInt(a[1])-s.height()/2+t/2,c=parseInt(o[0]),l=parseInt(o[1]),d=parseInt(this.image.height),u=parseInt(this.image.width);return i.width=e,i.height=t,i.getContext("2d").drawImage(this.image,0,0,u,d,r,n,c,l),i.toDataURL("image/png")},getBlob:function(){for(var e=this.getDataURL(),t=e.replace("data:image/png;base64,",""),s=atob(t),i=[],a=0;a<s.length;a++)i.push(s.charCodeAt(a));return new Blob([new Uint8Array(i)],{type:"image/png"})},zoomIn:function(){this.ratio*=1.1,a()},zoomOut:function(){this.ratio*=.9,a()}},a=function(){var e=parseInt(i.image.width)*i.ratio,t=parseInt(i.image.height)*i.ratio,a=(s.width()-e)/2,o=(s.height()-t)/2;s.css({"background-image":"url("+i.image.src+")","background-size":e+"px "+t+"px","background-position":a+"px "+o+"px","background-repeat":"no-repeat"})},o=function(e){e.stopImmediatePropagation(),i.state.dragable=!0,i.state.mouseX=e.clientX,i.state.mouseY=e.clientY},r=function(e){if(e.stopImmediatePropagation(),i.state.dragable){var t=e.clientX-i.state.mouseX,a=e.clientY-i.state.mouseY,o=s.css("background-position").split(" "),r=t+parseInt(o[0]),n=a+parseInt(o[1]);s.css("background-position",r+"px "+n+"px"),i.state.mouseX=e.clientX,i.state.mouseY=e.clientY}},n=function(e){e.stopImmediatePropagation(),i.state.dragable=!1},c=function(e){return e.originalEvent.wheelDelta>0||e.originalEvent.detail<0?i.ratio*=1.1:i.ratio*=.9,a(),!1};return i.spinner.show(),i.image.onload=function(){i.spinner.hide(),a(),s.bind("mousedown",o),s.bind("mousemove",r),e(window).bind("mouseup",n),s.bind("mousewheel DOMMouseScroll",c)},i.image.src=t.imgSrc,s.on("remove",function(){e(window).unbind("mouseup",n)}),i};i.fn.cropbox=function(e){return new t(e,this)}})}).call(t,s(0))},21:function(e,t,s){"use strict";(function(e){var t=s(1);!function(){t.component("bind-email-box",{template:'<div class="bind-change email-bind">        <h2 class="bind-title">更换绑定邮箱<i class="pic-wrapper close" @click.stop="closeBox"><i class="pic-icon icon-close"></i></i>        </h2>        <div class="bind-form">            <h3 class="bind-form-title">请输入新的邮箱，完成邮箱绑定</h3>            <p><input type="text" placeholder="请输入邮箱" v-model="email" class="input-email"></p>            <p><input type="text" placeholder="请输入验证码" v-model="validcode" class="input-code"><button @click.stop="codeRequest($event.target)"  class="code-request">获取验证码</button></p>            <p><input type="password" placeholder="请输入登录密码" v-model="password" class="input-password"></p>            <div class="btn-submit"><button @click.stop="bindConfirm">完成绑定</button><button @click.stop="closeBox">返回</button></div>        </div>    </div>',props:["userid"],data:function(){return{email:"",validcode:"",password:""}},methods:{codeRequest:function(t){if(""==this.email)return swal({title:"",text:"邮箱不能为空！",type:"warning"}),!1;if(!variableUtils.regExp.email.test(this.email))return swal({title:"",text:"请输入合法的邮箱地址！",type:"warning"}),!1;e(t).attr("disabled",!0);var s=0,i=setInterval(function(){s++,e(t).html("重新获取 ("+(60-s)+"s)"),60==s&&(e(t).html("获取验证码"),e(t).attr("disabled",!1),clearInterval(i))},1e3),a={email:this.email,type:2};EventUtils.ajaxReq("/sys/emailCode","post",a,function(e,t){swal({title:"",text:e.info,type:"warning"})})},bindConfirm:function(){if(""==this.email||""==this.password||""==this.code)return swal({title:"",text:"请检查信息是否完整！",type:"warning"}),!1;if(!variableUtils.regExp.email.test(this.email))return swal({title:"",text:"请输入正确的邮箱地址！",type:"warning"}),!1;var e={userId:this.userid,code:this.validcode,password:this.password,conection:this.email,type:1},t=this;EventUtils.ajaxReq("/sys/modifyConection?","post",e,function(e,s){"00000"==e.code?(swal({title:"",text:e.info,type:"success",timer:1500,showConfirmButton:!1}),t.email="",t.validcode="",t.password="",t.$emit("closebox")):swal({title:"",text:e.info,type:"warning"})})},closeBox:function(){this.$emit("closebox")}}})}()}).call(t,s(0))},22:function(e,t,s){"use strict";(function(e){var t=s(1);!function(){t.component("bind-mobile-box",{template:'<div class="bind-change mobile-bind">        <h2 class="bind-title">更换手机号<i class="pic-wrapper close" @click.stop="closeMobile"><i class="pic-icon icon-close"></i></i>        </h2>        <div class="bind-form">            <h3 class="bind-form-title">请输入新的手机号，完成手机号绑定</h3>            <p><input type="text" placeholder="请输入手机号" v-model="mobile" class="input-mobile"></p>            <p><input type="text" placeholder="请输入短信认证码" v-model="validcode" class="input-code"><button @click.stop="codeRequest($event.target)"  class="code-request">获取验证码</button></p>            <p><input type="password" placeholder="请输入登录密码" v-model="password" class="input-password"></p>            <div class="btn-submit"><button @click.stop="bindConfirm">完成绑定</button><button @click.stop="closeMobile">返回</button></div>        </div>    </div>',props:["userid"],data:function(){return{mobile:"",validcode:"",password:""}},methods:{codeRequest:function(t){if(""==this.mobile)return swal({title:"",text:"手机号不能为空！",type:"warning"}),!1;if(!variableUtils.regExp.mobile.test(this.mobile))return swal({title:"",text:"请输入合法的手机号！",type:"warning"}),!1;e(t).attr("disabled",!0);var s=0,i=setInterval(function(){s++,e(t).html("重新获取 ("+(60-s)+"s)"),60==s&&(e(t).html("获取验证码"),e(t).attr("disabled",!1),clearInterval(i))},1e3),a={mobile:this.mobile,type:2};EventUtils.ajaxReq("/sys/mobileCode","post",a,function(e,t){swal({title:"",text:e.info,type:"warning"})})},bindConfirm:function(){if(""==this.mobile||""==this.password||""==this.code)return swal({title:"",text:"请检查信息是否完整！",type:"warning"}),!1;if(!variableUtils.regExp.mobile.test(this.mobile))return swal({title:"",text:"请输入正确的手机号！",type:"warning"}),!1;var e={userId:this.userid,code:this.validcode,password:this.password,conection:this.mobile,type:0},t=this;EventUtils.ajaxReq("/sys/modifyConection?","post",e,function(e,s){"00000"==e.code?(swal({title:"",text:e.info,type:"success",timer:2e3,showConfirmButton:!1}),t.mobile="",t.password="",t.validcode="",t.$emit("closebox")):swal({title:"",text:e.info,type:"warning"})})},closeMobile:function(){this.$emit("closebox")}}})}()}).call(t,s(0))},23:function(e,t,s){"use strict";(function(e){var t=s(1);!function(){function s(){e.ajax({url:"https://www.xiaoqiztc.com/easily_xq_WebApi/sys/img",type:"get",async:!1,data:{},success:function(t,s){e(".conf-psw-varifycode img")[0].src="https://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?"+Math.random()},error:function(e,t){swal({title:"",text:"请求服务器数据错误，请稍后重试！",type:"warning"})},timeout:1e5})}t.component("config-password",{template:'<div>                <h2 class="conf-psw-title">修改密码</h2>                <form class="conf-psw-form">                    <div><label>登陆账号</label><span>{{account.loginName}}</span></div>                    <div><label>当前密码</label><input type="password" placeholder="6-16字母、数字、无空格" v-model="oldpsw"/></div>                    <div><label>新密码</label><input type="password" placeholder="6-16字母、数字、无空格" v-model="newpsw"/></div>                    <div><label>确认密码</label><input type="password" placeholder="6-16字母、数字、无空格" v-model="dbpsw"/></div>                    <div><label>验证码</label><input type="text" v-model="validcode"/><i class="conf-psw-varifycode"><img src="https://www.xiaoqiztc.com/easily_xq_WebApi/sys/img" /><span class="conf-psw-codetext" @click="switchCode">看不清？换一张</span></i></div>                    <div class="conf-psw-confirm"><button type="button" @click="confirm">确认修改</button></div>                </form>        </div>',props:["account","usertype"],data:function(){return{oldpsw:"",newpsw:"",dbpsw:"",validcode:""}},methods:{switchCode:s,confirm:function(){var t=!0;if(e(".conf-psw-form input").each(function(s){""==e(this).val()?(e(this).addClass("hint-nullable"),t=!1):e(this).removeClass("hint-nullable")}),!t)return swal({title:"",text:"请检查信息是否完整！",type:"warning"}),s(),!1;if(!variableUtils.regExp.password.test(this.newpsw))return swal({title:"",text:"新密码格式不正确！",type:"warning"}),s(),!1;if(this.newpsw!=this.dbpsw)return swal({title:"",text:"两次密码输入不一致！",type:"warning"}),s(),!1;var i={userId:this.account.userId,oldPassword:this.oldpsw,password:this.newpsw,dbPassword:this.dbpsw,inputRandomCode:this.validcode,userType:this.usertype};EventUtils.ajaxReq("/center/user/modifyPassword","post",i,function(e,t){"00000"==e.code?swal({title:"",text:e.info,type:"success",timer:1500,showConfirmButton:!1}):swal({title:"",text:e.info,type:"error"})}),s(),this.oldpsw="",this.newpsw="",this.dbpsw="",this.validcode=""}}})}()}).call(t,s(0))},25:function(e,t,s){"use strict";(function(e){var t=s(1);!function(){function s(e,t,s,i,a){var o={userId:e,pushId:t,contentType:s,id:i};EventUtils.ajaxReq("/sys/refresh","post",o,function(t,s){if("00000"==t.code)if(t.data.payImg){a.fresh.smart?a.barcode.smart=!0:a.barcode.normal=!0,a.barcode.imgsrc=t.data.payImg;var i={userId:e,orderId:t.data.orderId},o=setInterval(function(){EventUtils.ajaxReq("/sys/getOrderStatus","get",i,function(e,t){"00000"==e.code&&(clearInterval(o),swal({title:"",text:"支付成功！",type:"success",timer:2e3,showConfirmButton:!1}),a.barcode.smart=!1,a.barcode.normal=!1)})},1e3)}else a.fresh.time=t.data,a.fresh.show=!1})}function i(t){e(".fresh-navs .on").removeClass("on"),e(".fresh-navs .fresh-tab:first").addClass("on"),e(".fresh-smart-list .icon-radio.on").removeClass("on"),e(".fresh-smart-list .icon-radio:first").addClass("on"),EventUtils.ajaxReq("/center/user/getAccount","get",{userId:t.userid},function(e,s){t.account.money=e.data.useableBalance,t.account.freeFreshTimes=e.data.freeRefresh,t.fresh.sum=t.fresh.content[0].amount,t.fresh.presum=4,t.fresh.smart=!0,t.barcode.smart=!1,t.barcode.normal=!1,t.fresh.show=!0})}t.component("fresh-box",{template:'<div>        <div class="refresh-box fresh-box" v-show="fresh.show">            <h2 class="refresh-hd">                <span class="refresh-header">刷新提示</span>                <ul class="lis-inline fresh-navs">                    <li><span class="on fresh-tab" @click.stop="selectFreshWay(\'smart\',$event.target)">智能刷新</span></li>                    <li><span class="fresh-tab" @click.stop="selectFreshWay(\'sofort\',$event.target)">普通刷新</span></li>                </ul>                <span class="pic-wrapper refresh-closer fr" @click="closeFresh">                    <i class="pic-icon"></i>               </span>            </h2>            <div v-show="fresh.smart">                <div class="refresh-cont" v-show="!barcode.smart">                    <p class="refresh-title"><img src="images/fresh-title.png" /></p>                    <table class="fresh-smart-list">                        <tr v-for="(item,index) in fresh.content">                            <td style="width:210px"><span class="icon-radio" :class="{\'on\':index==0}" @click="selectfreshitem(index,$event.target)"><i class="pic-icon"></i></span>{{item.content.split(";")[0]}}</td>                            <td style="width:90px;"><span class="color-orange-fc">{{item.amount}}</span>元</td>                            <td>{{item.content.split(";")[1]}}</td>                        </tr>                    </table>                    <p class="refresh-ps">注：每6小时执行一次，购买后立即执行。</p>                </div>                <div class="refresh-barcode" v-show="barcode.smart"><img :src="barcode.imgsrc" /><p>打开支付宝，扫一扫立即支付！</p></div>                <div class="refresh-bot">                    <p style="line-height:50px">应付金额<span style="color:#fc4f05;">{{fresh.sum}}</span>元<span class="price-pre">原价：{{fresh.presum}}元</span></p>                    \x3c!--<p style="line-height:20px"><i class="pic-icon icon-checkbox on" @click="checkAutopay($event.target)"></i>自动续费<span style="color:#fc4f05;">{{fresh.discount}}</span></p>--\x3e                    <p style="line-height:20px">账户余额：<span class="color-orange-fc">{{account.money}}</span>元</p>                    <p class="autopay-hint"><span class="disNo">（系统将在智能刷新到期后自动帮您续费，可通过选中自动续费启用或取消）</span></p>                    <button class="refresh-barcodepay" v-show="fresh.sum>account.money" @click.stop="freshAction($event.target)">扫一扫，立即支付</button>                    <button type="button" class="refresh-btn" @click="freshAction($event.target)">{{fresh.smartBtn}}</button>                </div>            </div>            <div v-show="!fresh.smart">                <div class="refresh-cont-normal-free" v-show="account.freeFreshTimes>0&&!barcode.normal">                    <p style="color:#ec7d0e;">信息刷新后：排名靠前，时间显示最新，能获得更多浏览机会</p>                    <p><span style="color:#fc4f05;">智能刷新</span>，效果翻倍，每次最低仅需<span style="color:#fc4f05;">0.7</span>元</p>                    <p style="font-size:18px; line-height:123px;">本次刷新<span style="color:#fc4f05;">免费</span>，是否确定刷新？</p>                </div>                <div class="refresh-cont-normal" v-show="account.freeFreshTimes==0&&!barcode.normal">                    <p style="color:#ec7d0e;">信息刷新后：排名靠前，时间显示最新，能获得更多浏览机会</p>                    <p><span style="color:#fc4f05;">智能刷新</span>，效果翻倍，每次最低仅需<span style="color:#fc4f05;">0.7</span>元</p>                    <p>提示：免费刷新次数已经用完，不享有免费刷新。</p>                    <p>本次刷新需要扣除推广金 <span style="color:#fc4f05;">1.0</span>元，是否确定刷新？</p>                </div>                <div class="refresh-barcode" v-show="barcode.normal"><img :src="barcode.imgsrc" /><p>打开支付宝，扫一扫立即支付！</p></div>                <div class="refresh-bot refresh-bot-normal">                    <span style="display:block;" v-show="account.freeFreshTimes==0">您的校企余额：<b style="color:#fc4f05;">{{regMoney(account.money)}}</b>元</span><button type="button" class="fresh-sofort-btn" @click="freshAction($event.target)">{{fresh.sofortBtn}}</button>                    <button class="refresh-barcodepay" v-show="fresh.sum>account.money" @click="freshAction($event.target)">扫一扫，立即支付</button>                </div>            </div>        </div>        <div class="refresh-hint-box fresh-hint-box" v-show="!fresh.show">            <h2 class="refresh-hint-hd">帖子刷新提示                <span class="pic-wrapper refresh-closer fr" @click="closeFresh">                    <i class="pic-icon"></i>               </span>            </h2>            <div class="refresh-hint-content">                <p class="LH43 fSize18">成功刷新<span class="color-orange-fc">1</span>条信息，并从余额中扣除<span class="color-orange-fc">{{fresh.sum}}</span>元</p>                <p class="LH40 fSize14">同类别的信息有刷新间隔限制，必须等上一条信息刷新成功后，系统才能帮您执行刷新请求。</p>                <div class="refresh-text-box">                    <h3>刷新内容</h3>                    <p class="fSize14 LH43"><span class="stick-name">{{fresh.title}}</span>您的信息已<span class="color-orange-fc">刷新成功</span>，正在让更多的客户<span class="color-orange-fc">查看</span></p>                    <p class="sticky-time">执行刷新时间： {{fresh.time}}</p>                    <p class="LH58 t-center fSize14">智能刷新，低价获得更多展示，每次刷新<span class="color-orange-fc">0.7</span>元起<button class="color-blue" @click="toSmartFresh">立即使用</button></p>                </div>            </div>        </div>    </div>',props:["freshitem","userid","showfresh"],data:function(){return{account:{freeFreshTimes:0,money:0},fresh:{show:!0,title:"",content:[],sum:4,presum:4,time:"",tarifId:5,discount:"9折",smartBtn:"立即充值",sofortBtn:"立即刷新",smart:!0},barcode:{smart:!1,normal:!1,imgsrc:""}}},methods:{checkAutopay:function(t){e(t).toggleClass("on")},freshAction:function(t){("立即刷新"==e(t).html()||e(t).hasClass("refresh-barcodepay"))&&(this.fresh.title=this.freshitem.title,this.freshitem.demandId&&(this.fresh.smart?s(this.userid,this.freshitem.demandId,1,this.fresh.tarifId,this):s(this.userid,this.freshitem.demandId,1,9,this)),this.freshitem.jobFairId&&(this.fresh.smart?s(this.userid,this.freshitem.jobFairId,3,this.fresh.tarifId,this):s(this.userid,this.freshitem.jobFairId,3,9,this)),this.freshitem.recruitId&&(this.fresh.smart?s(this.userid,this.freshitem.recruitId,2,this.fresh.tarifId,this):s(this.userid,this.freshitem.recruitId,2,9,this))),"立即充值"==e(t).html()&&(window.location.href=EventUtils.securityUrl("recharge.html?userId="+this.userid))},selectfreshitem:function(t,s){switch(e(".fresh-smart-list .icon-radio").removeClass("on"),e(s).addClass("on"),t){case 0:this.fresh.presum=4,this.fresh.sum=4,this.fresh.tarifId=5;break;case 1:this.fresh.presum=12,this.fresh.sum=this.fresh.presum*.9.toFixed(1),this.fresh.tarifId=6;break;case 2:this.fresh.presum=20,this.fresh.sum=Math.floor(.8*this.fresh.presum).toFixed(1),this.fresh.tarifId=7;break;case 3:this.fresh.presum=40,this.fresh.sum=Math.floor(.7*this.fresh.presum).toFixed(1),this.fresh.tarifId=8}},selectFreshWay:function(t,s){e(".fresh-navs .on").removeClass("on"),e(s).addClass("on"),this.fresh.smart="smart"==t},closeFresh:function(){this.fresh.show=!0,this.$emit("closefresh")},toSmartFresh:function(){this.fresh.show=!0},regMoney:function(e){return e?e.toFixed(2):0}},watch:{showfresh:function(e){e?i(this):(this.fresh.show=!0,this.fresh.smart=!0)},"fresh.smart":function(t){t?(e(".fresh-smart-list .icon-radio.on").removeClass("on"),e(".fresh-smart-list .icon-radio:first").addClass("on"),this.fresh.sum=this.fresh.content[0].amount,this.fresh.presum=4):this.account.freeFreshTimes>0?this.fresh.sum=0:this.fresh.sum=1},"fresh.sum":function(e){this.fresh.sofortBtn=e>this.account.money?"立即充值":"立即刷新",this.fresh.smartBtn=e>this.account.money?"立即充值":"立即刷新"},"account.money":function(e){this.fresh.sofortBtn=this.fresh.sum>e?"立即充值":"立即刷新",this.fresh.smartBtn=this.fresh.sum>e?"立即充值":"立即刷新"},"fresh.show":function(t){t?i(this):EventUtils.absCenter(e(".fresh-hint-box"))}},mounted:function(){var e=this,t={userId:this.userid,type:1};EventUtils.ajaxReq("/sys/getRefreshHotInfoList","post",t,function(t,s){t.data&&(t.data.shift(),e.fresh.content=t.data)})}})}()}).call(t,s(0))},26:function(e,t,s){"use strict";(function(e){var t=s(1);!function(){function s(e){e.sticky.sofort=!0,e.sticky.presum=e.sticky.sum=e.sticky.content[0].amount,EventUtils.ajaxReq("/center/user/getAccount","get",{userId:e.userid},function(t,s){e.account.money=t.data.useableBalance,e.sticky.show=!0,e.barcode.sofort=!1})}function i(e,t,s,i,a){var o={userId:e,pushId:t,contentType:s,id:i};EventUtils.ajaxReq("/sys/hotUp","post",o,function(t,s){if("00000"==t.code)if(t.data.payImg){a.barcode.sofort=!0,a.barcode.imgsrc=t.data.payImg;var i={userId:e,orderId:t.data.orderId},o=setInterval(function(){EventUtils.ajaxReq("/sys/getOrderStatus","get",i,function(e,t){"00000"==e.code&&(clearInterval(o),swal({title:"",text:"支付成功！",type:"success",timer:2e3,showConfirmButton:!1}),a.barcode.sofort=!1)})},1500)}else a.sticky.show=!1})}t.component("stick-box",{template:'<div>        <div class="refresh-box sticky-box" v-show="sticky.show">            <h2 class="refresh-hd">                <span class="refresh-header">置顶提示</span>                <ul class="lis-inline fresh-navs stick-navs">                    <li><span class="on" @click.stop="selectStickWay(\'sofort\',$event.target)">立即置顶</span></li>                    \x3c!--<li><span @click.stop="selectStickWay(\'plan\',$event.target)">计划置顶</span></li>--\x3e                </ul>                <span class="pic-wrapper refresh-closer fr" @click="closeSticky">                   <i class="pic-icon"></i>              </span>            </h2>            <div v-show="sticky.sofort">                <div class="refresh-cont" v-show="!barcode.sofort">                    <p class="stick-cont-title">信息置顶，排名提前到第一页，获得海量曝光，效果翻倍，赶快来试试吧！</p>                    <table class="sticky-sofort-list">                        <tr v-for="(item,index) in sticky.content">                            <td class="W210"><span class="icon-radio" :class="{\'on\':index==0}" @click="selectStickyItem(index,$event.target)"><i class="pic-icon"></i></span>{{item.content.split(";")[0]}}</td>                            <td class="W90"><span class="color-orange-fc">{{item.amount}}</span>元</td>                            <td>{{item.content.split(";")[1]}}</td>                        </tr>                    </table>                    <p class="refresh-ps">注：每24小时执行一次，购买后立即执行。</p>                </div>                <div class="refresh-barcode" v-show="barcode.sofort"><img :src="barcode.imgsrc" /><p>打开支付宝，扫一扫立即支付！</p></div>                <div class="refresh-bot">                    <p class="LH50">应付金额<span class="color-orange-fc">{{sticky.sum}}</span>元<span class="price-pre">原价：{{sticky.presum}}元</span></p>                    \x3c!--<p class="LH20"><i class="pic-icon icon-checkbox on" @click="checkAutopay($event.target)"></i>自动续费<span class="color-orange-fc">{{sticky.discount}}</span></p>--\x3e                    <p class="LH20">账户余额：<span class="color-orange-fc">{{account.money}}</span>元</p>                    <p class="autopay-hint"><span class="disNo">（系统将在智能置顶到期后自动帮您续费，可通过选中自动续费启用或取消）</span></p>                    <button type="button" class="refresh-btn" @click="stickAction($event.target)">{{sticky.sofortBtn}}</button>                    <button type="button" class="refresh-barcodepay" v-show="sticky.sum>account.money" @click="stickAction($event.target)">扫一扫，立即支付</button>                </div>            </div>            <div v-show="!sticky.sofort">                <div class="refresh-cont paLeft50 paBot20">                    <p class="LH52 fSize14 color-orange2">信息置顶，排名提前到第一页，获得海量曝光，效果翻倍，赶快来试试吧！</p>                    <p class="LH26 fSize16"><label class="plan-label">计划时间</label><input type="text" class="date-input" placeholder="2016-12-17" />到<input type="text" class="date-input" placeholder="2016-12-17" /></p>                    <p class="maT11 LH34"><label class="plan-label">置顶时段</label></p>                    <table class="plan-sticky-table">                        <tr>                            <th>时间</th>                            <th>星期一</th>                            <th>星期二</th>                            <th>星期三</th>                            <th>星期四</th>                            <th>星期五</th>                            <th>星期六</th>                            <th>星期日</th>                        </tr>                        <tr>                            <td class="td-title">全天置顶</td>                            <td name="1"></td>                            <td name="2"></td>                            <td name="3"></td>                            <td name="4"></td>                            <td name="5"></td>                            <td name="6"></td>                            <td name="7"></td>                        </tr>                        <tr>                            <td class="td-title">早8点-晚8点</td>                            <td name="1"></td>                            <td name="2"></td>                            <td name="3"></td>                            <td name="4"></td>                            <td name="5"></td>                            <td name="6"></td>                            <td name="7"></td>                        </tr>                        <tr>                            <td class="td-title">不置顶</td>                            <td name="1"></td>                            <td name="2"></td>                            <td name="3"></td>                            <td name="4"></td>                            <td name="5"></td>                            <td name="6"></td>                            <td name="7"></td>                        </tr>                    </table>                </div>                <div class="stick-bot-plan">                    <ul class="LH36">                        <li>总计价格：<span class="color-orange-fc">{{sticky.sum}}</span>元</li>                        <li>账户余额：<span class="color-orange-fc">{{account.money}}</span>元</li>                    </ul>                    <button type="button" class="refresh-btn plan-btn">{{sticky.planBtn}}</button>                </div>            </div>        </div>        <div class="refresh-hint-box stick-hint-box" v-show="!sticky.show">            <h2 class="refresh-hint-hd">帖子置顶提示                <span class="pic-wrapper refresh-closer fr" @click="closeSticky">                   <i class="pic-icon"></i>              </span>            </h2>            <div class="refresh-hint-content">                <p class="LH43 fSize18">成功置顶<span class="color-orange-fc">1</span>条信息，并从余额中扣除<span class="color-orange-fc">{{sticky.sum}}</span>元</p>                <p class="LH40 fSize14">同类别的信息有置顶间隔限制，必须等上一条信息置顶成功后，系统才能帮您执行置顶请求。</p>                <div class="refresh-text-box">                    <h3 class="stick-hint-title">置顶内容</h3>                    <p class="fSize14 LH43"><span class="stick-name">{{sticky.title}}</span>您的信息已<span class="color-orange-fc">置顶成功</span>，正在让更多的客户<span class="color-orange-fc">查看</span></p>                    <p class="sticky-time">执行置顶时间：{{sticky.time}}</p>                    <p class="LH58 t-center fSize14">计划置顶，低价获得更多展示，每次置顶<span class="color-orange-fc">7</span>元起<button class="color-blue" @click="toPlanSticky">立即使用</button></p>                </div>            </div>        </div>    </div>',props:["stickitem","userid","showsticky"],data:function(){return{account:{money:0},sticky:{content:[],show:!0,sum:0,presum:0,tarifId:1,title:"",time:"16:08:02",discount:"9折",sofortBtn:"立即充值",planBtn:"立即置顶",sofort:!0},barcode:{sofort:!1,imgsrc:""}}},methods:{checkAutopay:function(t){e(t).toggleClass("on")},stickAction:function(t){this.sticky.title=this.stickitem.title,("立即置顶"==e(t).html()||e(t).hasClass("refresh-barcodepay"))&&(this.sticky.title=this.stickitem.title,this.stickitem.demandId&&(this.sticky.sofort?i(this.userid,this.stickitem.demandId,1,this.sticky.tarifId,this):i(this.userid,this.stickitem.demandId,1,9,this)),this.stickitem.jobFairId&&(this.sticky.sofort?i(this.userid,this.stickitem.jobFairId,3,this.sticky.tarifId,this):i(this.userid,this.stickitem.jobFairId,3,9,this)),this.stickitem.recruitId&&(this.sticky.sofort?i(this.userid,this.stickitem.recruitId,2,this.sticky.tarifId,this):i(this.userid,this.stickitem.recruitId,2,9,this))),"立即充值"==e(t).html()&&(window.location.href=EventUtils.securityUrl("recharge.html?userId="+this.userid))},selectStickWay:function(t,s){if(e(".stick-navs .on").removeClass("on"),e(s).addClass("on"),"sofort"==t)e(".sticky-sofort-list .icon-radio.on").removeClass("on"),e(".sticky-sofort-list .icon-radio:first").addClass("on"),this.sticky.sofort=!0,this.sticky.sum=parseInt(this.sticky.content[0].amount),this.sticky.presum=parseInt(this.sticky.content[0].amount);else{this.sticky.sofort=!1;var i=0;e(".plan-sticky-table tr").each(function(t){1==t?i+=70*e(this).find("td.on").length:2==t&&(i+=50*e(this).find("td.on").length)}),this.sticky.sum=i}},selectStickyItem:function(t,s){switch(e(".sticky-sofort-list .icon-radio").removeClass("on"),e(s).addClass("on"),this.sticky.sum=parseInt(this.sticky.content[t].amount),this.sticky.tarifId=this.sticky.content[t].id,t){case 0:this.sticky.presum=10;break;case 1:this.sticky.presum=30;break;case 2:this.sticky.presum=50;break;case 3:this.sticky.presum=100}},toPlanSticky:function(){var e=this;EventUtils.ajaxReq("/center/user/getAccount","get",{userId:this.userid},function(t,s){e.account.money=t.data.useableBalance,e.sticky.show=!0})},closeSticky:function(){this.$emit("closesticky")}},watch:{showsticky:function(t){t&&(e(".sticky-sofort-list .icon-radio.on").removeClass("on"),e(".sticky-sofort-list .icon-radio:first").addClass("on"),s(this))},"sticky.sum":function(e){this.sticky.sofortBtn=e>this.account.money?"立即充值":"立即置顶",this.sticky.planBtn=e>this.account.money?"立即充值":"立即置顶"},"account.money":function(e){this.sticky.sofortBtn=this.sticky.sum>e?"立即充值":"立即置顶",this.sticky.planBtn=this.sticky.sum>e?"立即充值":"立即置顶"},"sticky.show":function(t){t?s(this):EventUtils.absCenter(e(".stick-hint-box"))}},mounted:function(){var e=this,t={userId:this.userid,type:2};EventUtils.ajaxReq("/sys/getRefreshHotInfoList","post",t,function(t,s){t.data&&(e.sticky.content=t.data)})}})}()}).call(t,s(0))},28:function(module,exports,__webpack_require__){"use strict";(function(jQuery,$){jQuery.extend({createUploadIframe:function(e,t){var s="jUploadFrame"+e;if(window.ActiveXObject){var i=document.createElement('<iframe id="'+s+'" name="'+s+'" />');"boolean"==typeof t?i.src="javascript:false":"string"==typeof t&&(i.src=t)}else{var i=document.createElement("iframe");i.id=s,i.name=s}return i.style.position="absolute",i.style.top="-1000px",i.style.left="-1000px",document.body.appendChild(i),i},createUploadForm:function(e,t){var s="jUploadForm"+e,i="jUploadFile"+e,a=$('<form  action="" method="POST" name="'+s+'" id="'+s+'" enctype="multipart/form-data"></form>'),o=$("#"+t),r=$(o).clone();return $(o).attr("id",i),$(o).before(r),$(o).appendTo(a),$(a).css("position","absolute"),$(a).css("top","-1200px"),$(a).css("left","-1200px"),$(a).appendTo("body"),a},addOtherRequestsToForm:function(e,t){var s=$('<input type="hidden" name="" value="">');for(var i in t){var a=i,o=t[i],r=s.clone();r.attr({name:a,value:o}),$(r).appendTo(e)}return e},ajaxFileUpload:function(e){e=jQuery.extend({},jQuery.ajaxSettings,e);var t=(new Date).getTime(),s=jQuery.createUploadForm(t,e.fileElementId);e.data&&(s=jQuery.addOtherRequestsToForm(s,e.data));var i=(jQuery.createUploadIframe(t,e.secureuri),"jUploadFrame"+t),a="jUploadForm"+t;e.global&&!jQuery.active++&&jQuery.event.trigger("ajaxStart");var o=!1,r={};e.global&&jQuery.event.trigger("ajaxSend",[r,e]);var n=function(t){var a=document.getElementById(i);try{a.contentWindow?(r.responseText=a.contentWindow.document.body?a.contentWindow.document.body.innerHTML:null,r.responseXML=a.contentWindow.document.XMLDocument?a.contentWindow.document.XMLDocument:a.contentWindow.document):a.contentDocument&&(r.responseText=a.contentDocument.document.body?a.contentDocument.document.body.innerHTML:null,r.responseXML=a.contentDocument.document.XMLDocument?a.contentDocument.document.XMLDocument:a.contentDocument.document)}catch(t){jQuery.handleError(e,r,null,t)}if(r||"timeout"==t){o=!0;var n;try{if("error"!=(n="timeout"!=t?"success":"error")){var c=jQuery.uploadHttpData(r,e.dataType);e.success&&e.success(c,n),e.global&&jQuery.event.trigger("ajaxSuccess",[r,e])}else jQuery.handleError(e,r,n)}catch(t){n="error",jQuery.handleError(e,r,n,t)}e.global&&jQuery.event.trigger("ajaxComplete",[r,e]),e.global&&!--jQuery.active&&jQuery.event.trigger("ajaxStop"),e.complete&&e.complete(r,n),jQuery(a).unbind(),setTimeout(function(){try{$(a).remove(),$(s).remove()}catch(t){jQuery.handleError(e,r,null,t)}},100),r=null}};e.timeout>0&&setTimeout(function(){o||n("timeout")},e.timeout);try{var s=$("#"+a);$(s).attr("action",e.url),$(s).attr("method","POST"),$(s).attr("target",i),s.encoding?s.encoding="multipart/form-data":s.enctype="multipart/form-data",$(s).submit()}catch(t){jQuery.handleError(e,r,null,t)}return window.attachEvent?document.getElementById(i).attachEvent("onload",n):document.getElementById(i).addEventListener("load",n,!1),{abort:function(){}}},uploadHttpData:function uploadHttpData(r,type){var data=!type;if(data="xml"==type||data?r.responseXML:r.responseText,"script"==type&&jQuery.globalEval(data),"json"==type){var data=r.responseText,rx=new RegExp("<pre.*?>(.*?)</pre>","i"),am=rx.exec(data),data=am?am[1]:"";eval("data = "+data)}return"html"==type&&jQuery("<div>").html(data).evalScripts(),data},handleError:function(e,t,s,i){e.error&&e.error(t,s,i),e.global&&jQuery.event.trigger("ajaxError",[t,e,i])}})}).call(exports,__webpack_require__(0),__webpack_require__(0))},29:function(e,t,s){"use strict";var i=s(1);!function(){i.component("minicard",{template:'<div class="minicard" v-cloak>        <h2 class="card-header"><span class="card-header-title" v-show="cardtype==\'inc\'">企业名片</span><span class="card-header-title" v-show="cardtype==\'uni\'">高校名片</span></h2>        <div class="card-body" v-show="cardtype==\'inc\'">            <div class="clearfix body-top">                <i class="pic-wrapper fl card-avatar"><img :src="infosets.userIcon"></i>                <div class="fl">                    <h3 class="body-title">{{infosets.userName}}</h3>                    <table class="basic-info">                        <tr>                            <td>企业性质：</td>                            <td style="padding-right: 15px;">{{infosets.userProperty}}</td>                            <td>企业规模：</td>                            <td>{{infosets.userScale}}</td>                        </tr>                        <tr>                            <td>联系方式：</td>                            <td style="padding-right: 15px;">{{infosets.mobile}}</td>                            <td>企业邮箱：</td>                            <td>{{infosets.email}}</td>                        </tr>                    </table>                    <p><label>公司地址：</label>{{infosets.userAddress}}</p>                </div>            </div>            <div class="body-bot">                <h3>公司简介</h3>                <p>{{infosets.userDiscription}}</p>            </div>        </div>        <div class="card-body" v-show="cardtype==\'uni\'">            <div class="clearfix body-top">                <i class="pic-wrapper fl card-avatar"><img :src="infosets.userIcon"></i>                <div class="fl">                    <h3 class="body-title">{{infosets.userName}}</h3>                    <table class="basic-info">                        <tr>                            <td>高校类别：</td>                            <td style="padding-right: 15px;">{{infosets.userType}}</td>                            <td>高校性质：</td>                            <td>{{infosets.userProperty}}</td>                        </tr>                        <tr>                            <td>联系电话：</td>                            <td style="padding-right: 15px;">{{infosets.mobile}}</td>                            <td>高校邮箱：</td>                            <td>{{infosets.email}}</td>                        </tr>                        <tr>                            <td>在校人数：</td>                            <td style="padding-right: 15px;">{{infosets.userScale}}</td>                            <td>重点专业：</td>                            <td>{{infosets.userProfession}}</td>                        </tr>                    </table>                    <p><label>学校地址：</label>{{infosets.userAddress}}</p>                </div>            </div>            <div class="body-bot">                <h3>高校简介</h3>                <p>{{infosets.userDiscription}}</p>            </div>        </div>        <div class="card-operations">            <button class="button-agree" type="button" @click.stop="agreeEv">同意</button>            <button class="button-deny" type="button" @click.stop="denyEv">不同意</button>        </div>    </div>',props:["cardtype","infosets"],methods:{agreeEv:function(){this.$emit("agree")},denyEv:function(){this.$emit("deny")}}})}()},30:function(e,t,s){"use strict";var i=s(1);!function(){i.component("vip-record",{template:'<div class="vip-records-box">                        <h3 class="vip-record-head">使用记录</h3>                        <ul class="vip-records" v-show="vip.totalitems>0">                            <li v-for="record in vip.records"><span class="W182">{{dateExtrac(record.createTime)}}</span><span class="W212">{{typeExtrac(record.orderType)}}：{{record.count}}次</span><span class="W216"><b class="fSize14">{{priceInteger(record.amount,record.orderType)}}</b>{{priceDecimal(record.amount)}} 元</span><span class="">交易完成</span></li>                        </ul>                        <p class="t-center" v-show="vip.totalitems==0">暂无使用记录~</p>                        <div class="more-records" v-show="vip.totalitems>0">                            <button class="more-records-btn" v-show="!show.page" @click.stop="showMoreRec">查看更多使用记录</button>                            <pagination :showpages="showpage(vip.totalpages)" :totalpages="vip.totalpages" type="coop" @topage="topage" v-show="show.page"></pagination>                        </div>                    </div>',props:["userid"],data:function(){return{vip:{totalpages:1,totalitems:0,records:[]},show:{page:!1}}},methods:{dateExtrac:function(e){return e?e.split(" ")[0]:"---"},typeExtrac:function(e){switch(e){case"0":return"账户充值";case"1":return"信息刷新";case"2":return"信息置顶"}},showpage:function(e){return e>3?3:e},topage:function(e,t){var s={userId:this.userid,index:e,count:5},i=this;EventUtils.ajaxReq("/sys/getOrderList","get",s,function(e,t){e.data?i.vip.records=e.data.list:i.vip.records=[]})},showMoreRec:function(){this.show.page=!0},priceInteger:function(e,t){var s=parseInt(e);return"0"!=t?"- "+s:s>0?"+ "+s:void 0},priceDecimal:function(e){var t=(100*parseFloat(e)-100*parseInt(e))%100;return t<10&&(t+="0"),"."+t}},mounted:function(){var e={userId:this.userid,index:1,count:5},t=this;EventUtils.ajaxReq("/sys/getOrderList","get",e,function(e,s){e&&e.data?(t.vip.totalpages=e.data.totalPage,t.vip.records=e.data.list,t.vip.totalitems=e.data.totalRow):(t.vip.totalpages=1,t.vip.records=[],t.vip.totalitems=0)})},components:{pagination:pagination}})}()},38:function(e,t){},61:function(e,t,s){"use strict";function i(){var e={thumbBox:".thumbBox",spinner:".spinner",imgSrc:"images/avatar.png"},t=(0,f.default)(".imgBox").cropbox(e);(0,f.default)("#upload-file").on("change",function(){var s=new FileReader;s.onload=function(s){e.imgSrc=s.target.result,t=(0,f.default)(".imgBox").cropbox(e)},s.readAsDataURL(this.files[0]),this.files=null}),(0,f.default)(".zoom-in").on("click",function(){t.zoomIn()}),(0,f.default)(".zoom-out").on("click",function(){t.zoomOut()}),(0,f.default)("#btnSubmit").on("click",function(){var e=t.getDataURL();if(e.length>512e3)return void swal({title:"",text:"请上传小于500K的头像！",type:"warning"});var s={userId:h.userId,userIcon:e};EventUtils.ajaxReq("/center/user/uploadIcon","post",s,function(e,t){e.data+="?"+Math.random(),(0,f.default)("#avatar-box").html("<img src='"+e.data+"' />")}),w.show.upload=!1,w.showModal=!1})}function a(e){var t=Math.floor((0,f.default)(".safe-range").width()*e/100)-16+"px";(0,f.default)(".r-pointer").css("left",t),(0,f.default)("#safe-progress").css("width",e+"%")}function o(){(0,f.default)(".plan-sticky-table td").click(function(){if(!(0,f.default)(this).hasClass("td-title")){(0,f.default)(".plan-sticky-table td[name='"+(0,f.default)(this).attr("name")+"']").removeClass("on"),(0,f.default)(this).addClass("on");var e=0;(0,f.default)(".plan-sticky-table tr").each(function(t){1==t?e+=70*(0,f.default)(this).find("td.on").length:2==t&&(e+=50*(0,f.default)(this).find("td.on").length)}),w.sticky.sum=e}})}function r(e,t){if(y.require.curpage=t,0==e){var s={userId:h.userId,loginIdentifier:h.loginId,isCenter:1,demandType:2,index:t,count:3};EventUtils.ajaxReq("/demand/getList","get",s,function(e,t){e&&e.data?(y.require.totalpages=e.data.totalPage,y.require.results=e.data.list,y.require.totalitems=e.data.totalRow):(y.require.totalpages=1,y.require.results=[],y.require.totalitems=0),y.require.demandSrc=0,y.require.state="校企合作"})}else if(1==e){var s={userId:h.userId,loginIdentifier:h.loginId,isCenter:1,jobFairType:2,index:t,count:3};EventUtils.ajaxReq("/jobfair/getList","get",s,function(e,t){e&&e.data?(y.require.totalpages=e.data.totalPage,y.require.results=e.data.list,y.require.totalitems=e.data.totalRow):(y.require.totalpages=1,y.require.results=[],y.require.totalitems=0),y.require.demandSrc=1,y.require.state="招聘会"})}else if(2==e){var s={userId:h.userId,loginIdentifier:h.loginId,isCenter:1,index:t,count:3};EventUtils.ajaxReq("/recruit/getList","get",s,function(e,t){e&&e.data?(y.require.totalpages=e.data.totalPage,y.require.results=e.data.list,y.require.totalitems=e.data.totalRow):(y.require.totalpages=1,y.require.results=[],y.require.totalitems=0),y.require.demandSrc=2,y.require.state="企业直聘"})}}function n(e,t){if(y.collect.curpage=1,0==e){var s={userId:h.userId,loginIdentifier:h.loginId,index:t,count:3};EventUtils.ajaxReq("/demand/getMarkList","get",s,function(e,t){e.data?(y.collect.totalpages=e.data.totalPage,y.collect.totalitems=e.data.totalRow,y.collect.results=e.data.list):(y.collect.totalpages=1,y.collect.results=[],y.collect.totalitems=0),y.collect.collectSrc=0})}else if(1==e){var s={userId:h.userId,loginIdentifier:h.loginId,index:t,count:3};EventUtils.ajaxReq("/jobfair/getMarkList","get",s,function(e,t){e.data?(y.collect.totalpages=e.data.totalPage,y.collect.totalitems=e.data.totalRow,y.collect.results=e.data.list):(y.collect.totalpages=1,y.collect.results=[],y.collect.totalitems=0),y.collect.collectSrc=1})}}function c(e,t){y.message.combi.curpage=t;var s={userId:h.userId,applyStatus:e,index:t,count:3};EventUtils.ajaxReq("/demand/getDemandApply","get",s,function(t,s){t&&t.data?(y.message.combi.totalitems=t.data.totalRow,y.message.combi.totalpages=t.data.totalPage,y.message.combi.results=t.data.list):(y.message.combi.results=[],y.message.combi.totalitems=0,y.message.combi.totalpages=1),y.message.combi.msgsrc=e})}function l(e,t){y.message.jobfair.curpage=t;var s={userId:h.userId,applyStatus:e,index:t,count:3};EventUtils.ajaxReq("/jobfair/getJobFair","get",s,function(t,s){t&&t.data?(y.message.jobfair.totalitems=t.data.totalRow,y.message.jobfair.totalpages=t.data.totalPage,y.message.jobfair.results=t.data.list):(y.message.jobfair.results=[],y.message.jobfair.totalitems=0,y.message.jobfair.totalpages=1),y.message.jobfair.msgsrc=e})}function d(e){y.message.recruit.curpage=e;var t={userId:h.userId,index:e,count:3};EventUtils.ajaxReq("/recruit/getReceiveList","get",t,function(e,t){e&&e.data?(y.message.recruit.totalitems=e.data.totalRow,y.message.recruit.totalpages=e.data.totalPage,y.message.recruit.results=e.data.list):(y.message.recruit.results=[],y.message.recruit.totalpages=1,y.message.recruit.totalitems=0)})}function u(e,t){y.coop.curpage=t;var s={userId:h.userId,loginIdentifier:h.loginId,index:t,count:3,applyStatus:e};EventUtils.ajaxReq("/demand/getDemandApplyList","get",s,function(t,s){t&&t.data?(y.coop.totalitems=t.data.totalRow,y.coop.totalpages=t.data.totalPage,y.coop.results=t.data.list):(y.coop.results=[],y.coop.totalitems=0,y.coop.totalpages=1),y.coop.applystatus=e})}var p=s(0),f=function(e){return e&&e.__esModule?e:{default:e}}(p);s(4),s(2);var m=s(1);s(28),s(20),s(6),s(8),s(29),s(22),s(21),s(18),s(25),s(26),s(30),s(23),s(9),s(10),s(17),s(12),s(3),s(5),s(7),s(38);var h=EventUtils.urlExtrac(window.location),v={},g=new m({el:"#app-top",data:{homeLink:EventUtils.securityUrl("index.html?userId="+h.userId)},methods:{showMsgbox:function(){w.show.message=!0,w.showModal=!0}}}),b=new m({el:"#app-porto",data:{viewInfo:!0,inc:"企业名称",database:{incprops:xqdatabase.incProps,incscale:xqdatabase.incScale,addrData:addArray},briefInfo:{IncProps:"民营企业",IncScale:"600人以上",address:{province:"浙江",city:"杭州",district:"滨江"},email:"xqztc@qq.com"},initAddress:{province:"",city:"",district:""},cloneInfo:{}},methods:{uploading:function(){w.showModal=!0,w.show.upload=!0},save:function(){this.briefInfo.address.province=(0,f.default)(".edit-brief .sel-province input").val(),this.briefInfo.address.city=(0,f.default)(".edit-brief .sel-city input").val(),this.briefInfo.address.district=(0,f.default)(".edit-brief .sel-district input").val(),this.viewInfo=!0;var e={userId:h.userId,companyId:v.companyId,property:this.briefInfo.IncProps,province:this.briefInfo.address.province,city:this.briefInfo.address.city,area:this.briefInfo.address.district,email:this.briefInfo.email};EventUtils.ajaxReq("/user/company/modifyInfo","post",e,function(e,t){})},cancel:function(){this.briefInfo=EventUtils.cloneObj(this.cloneInfo),this.viewInfo=!0},edit:function(){this.cloneInfo=EventUtils.cloneObj(this.briefInfo),this.initAddress=EventUtils.cloneObj(this.briefInfo.address),this.viewInfo=!1,this.$nextTick(function(){selectInitInput(),selectInitPos()})}}});xqdatabase.incProps.remove("中国500强"),xqdatabase.incProps.remove("世界500强");var y=new m({el:"#app-content",data:{database:{IncScale:xqdatabase.incScale,IncProps:xqdatabase.incProps},account:{userId:h.userId,money:""},resume:{Inc:"",trade:"",scale:"",props:"民营企业",specialLv:"",intro:"国际领先的互联网科技公司",comLicense:"",comLicenseUrl:"",hasBusLicense:!1,edit:!1,view:!0},require:{state:"校企合作",demandSrc:0,curpage:1,totalpages:1,totalitems:0,results:[],showCombi:!0,showRecruit:!0},collect:{state:"校企合作",curpage:1,collectSrc:0,totalpages:1,totalitems:0,results:[]},message:{combi:{state:"发出的邀请",curpage:1,totalpages:1,totalitems:0,msgsrc:1,results:[]},jobfair:{state:"发出的邀请",curpage:1,totalpages:1,totalitems:0,msgsrc:2,results:[]},recruit:{state:"全部状态",curpage:1,totalpages:1,totalitems:0,results:[]}},vip:{tarif:[{level:"初级会员",prior:1,refresh:1,mapping:8,price:585,icon:"images/crown-junior.png"},{level:"中级会员",prior:2,refresh:4,mapping:12,price:1040,icon:"images/crown-middle.png"},{level:"高级会员",prior:4,refresh:8,mapping:16,price:1560,icon:"images/crown-senior.png"}]},coop:{state:"校企合作",curpage:1,totalpages:1,totalitems:0,applystatus:1,results:[]},config:{loginName:"",userId:h.userId,safeLevel:"80%",bind:{mobile:"",email:""}}},watch:{"config.bind.mobile":function(e){var t=0;""!=this.config.bind.mobile&&(t+=50),""!=this.config.bind.email&&(t+=30),a(t),t+="%",this.config.safeLevel=t},"config.bind.email":function(e){var t=0;""!=this.config.bind.mobile&&(t+=50),""!=this.config.bind.email&&(t+=30),a(t),t+="%",this.config.safeLevel=t},"require.state":function(e){"校企合作"==e?r(0,1):"招聘会"==e?r(1,1):"企业直聘"==e&&r(2,1)},"collect.state":function(e){"校企合作"==e&&n(0,1),"高校招聘会"==e&&n(1,1)},"message.combi.state":function(e){"发出的邀请"==e?c(1,1):"收到的邀请"==e&&c(2,1),this.message.combi.curpage=1},"message.jobfair.state":function(e){"发出的邀请"==e?l(1,1):l(2,1)},"coop.state":function(e){"校企合作"==e?u(1,1):"招聘会"==e&&u(2,1)},"resume.intro":function(e){this.resume.intro=EventUtils.limitWords(1e3,e)}},methods:{newRequire:function(){if(!v.cvStatus||"0"==v.cvStatus)return swal({title:"",text:"请先完善您的企业信息！",type:"warning"}),!1;var e=EventUtils.securityUrl("incRequire.html?new=1&userId="+h.userId+"&loginId="+h.loginId);window.location.href=e},selvipnav:function(e){if((0,f.default)(e).hasClass("vip-li")){""==this.account.money&&EventUtils.ajaxReq("/center/user/getAccount","get",{userId:h.userId},function(e,t){y.account.money=e.data.useableBalance});var t=(0,f.default)(e).index();(0,f.default)(".vip-navs li.on").removeClass("on"),(0,f.default)(e).addClass("on"),(0,f.default)(".vip-cont").removeClass("on"),(0,f.default)(".vip-center .vip-cont").eq(t).addClass("on")}},recharge:function(){var e="recharge.html?"+window.btoa("userId="+h.userId);window.location.href=e},priceInteger:function(e){return parseInt(e)},priceDecimal:function(e){var t=(100*parseFloat(e)-100*parseInt(e))%100;return t=parseInt(t),t<10&&(t+="0"),"."+t},regAddress:function(e){return e?e.split(";").join("-"):""},infoExtrac:function(e){return e?e=EventUtils.infoExtrac(e):""},infoShow:function(e,t){return EventUtils.infoShow(e,t)},dateExtrac:function(e){return e?e.split(" ")[0]:""},cityExtrac:function(e){return e?e.split(";")[1]:""},requireLink:function(e){if(e.demandId){var t="detail-company.html?userId="+h.userId+"&loginId="+h.loginId+"&demandId="+e.demandId+"&userType=2";return EventUtils.securityUrl(t)}if(e.recruitId){var t="detail-position.html?userId="+h.userId+"&recruitId="+e.recruitId;return EventUtils.securityUrl(t)}if(e.jobFairId){var t="detail-increcruit.html?userId="+h.userId+"&jobfairId="+e.jobFairId;return EventUtils.securityUrl(t)}},collectLink:function(e){if(e.demandId){var t="detail-uni.html?userId="+h.userId+"&demandId="+e.demandId;return EventUtils.securityUrl(t)}if(e.jobFairId){var t="detail-unirecruit.html?userId="+h.userId+"&jobfairId="+e.jobFairId;return EventUtils.securityUrl(t)}},messageLink:function(e,t){if("combi"==e){if(1==y.message.combi.msgsrc){var s="detail-uni.html?demandId="+t+"&userId="+h.userId;return EventUtils.securityUrl(s)}var s="detail-company.html?demandId="+t+"&userId="+h.userId;return EventUtils.securityUrl(s)}if("jobfair"==e){if(1==y.message.jobfair.msgsrc){var s="detail-unirecruit.html?jobfairId="+t+"&userId="+h.userId;return EventUtils.securityUrl(s)}var s="detail-increcruit.html?jobfairId="+t+"&userId="+h.userId;return EventUtils.securityUrl(s)}},coopLink:function(e){if(e.demandId){if("1"==e.releaseType){var t="detail-uni.html?demandId="+e.demandId+"&userId="+h.userId;return EventUtils.securityUrl(t)}var t="detail-company.html?demandId="+e.demandId+"&userId="+h.userId;return EventUtils.securityUrl(t)}if(e.jobFairId){var t="detail-unirecruit.html?jobfairId="+e.jobFairId+"&userId="+h.userId;return EventUtils.securityUrl(t)}},popComment:function(e){"1"==e.releaseType&&(w.comment.cooperId=e.userId),"2"==e.releaseType&&(w.comment.cooperId=e.applyUserId),e.releaseType||(w.comment.cooperId=e.userId),w.showModal=!0,w.show.comment=!0},popTrade:function(){w.showModal=!0,w.show.trade=!0},editSwipe:function(){"世界500强"==y.resume.specialLv?(0,f.default)(".lv-world").addClass("selected"):"中国500强"==y.resume.specialLv&&(0,f.default)(".lv-china").addClass("selected"),this.resume.firstEdit=!1,this.resume.edit=!0,this.resume.view=!1,this.$nextTick(function(){selectInitInput(),selectInitPos()})},saveResume:function(){var e=!0;if((0,f.default)(".resumeCont input[type='text']:visible").each(function(){""==(0,f.default)(this).val()?((0,f.default)(this).addClass("hint-nullable"),e=!1):(0,f.default)(this).removeClass("hint-nullable")}),""==(0,f.default)(".resumeCont textarea").val()?((0,f.default)(".resumeCont textarea").addClass("hint-nullable"),e=!1):(0,f.default)(".resumeCont textarea").removeClass("hint-nullable"),""!=this.resume.comLicense||""!=this.resume.comLicenseUrl?this.resume.hasBusLicense=!0:(this.resume.hasBusLicense=!1,e=!1),!e)return swal({title:"",text:"请完善您的企业信息！",type:"warning"}),!1;if(""==this.resume.comLicense&&""==this.resume.comLicenseUrl)return this.resume.hasBusLicense=!1,swal({title:"",text:"请上传您的营业执照！",type:"warning"}),!1;if(this.resume.hasBusLicense=!0,""!=this.resume.comLicense){var t=!1;f.default.ajaxFileUpload({url:"http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload",secureuri:!1,fileElementId:"file-busi",dataType:"json",data:{userId:h.userId,type:2,fileName:y.resume.comLicense},success:function(e,s){t=!0,y.resume.comLicenseUrl=e.data},error:function(e,t){}})}if(""!=this.resume.comLicense)setTimeout(function(){if(""==y.resume.comLicense||t){var e={userId:h.userId,companyId:v.companyId,name:y.resume.Inc,type:y.resume.trade,property:y.resume.props,scale:y.resume.scale,discription:y.resume.intro,imgUrl:y.resume.comLicenseUrl,isWorld:"世界500强"==y.resume.specialLv?1:0,isCountry:"中国500强"==y.resume.specialLv?1:0};EventUtils.ajaxReq("/user/company/modifyInfo","post",e,function(e,t){y.resume.edit=!1,y.resume.view=!0})}else swal({title:"",text:"文件上传失败，请重新上传！",type:"error"})},500);else{var s={userId:h.userId,companyId:v.companyId,name:y.resume.Inc,type:y.resume.trade,property:y.resume.props,scale:y.resume.scale,discription:y.resume.intro,imgUrl:y.resume.comLicenseUrl,isWorld:"世界500强"==y.resume.specialLv?1:0,isCountry:"中国500强"==y.resume.specialLv?1:0};EventUtils.ajaxReq("/user/company/modifyInfo","post",s,function(e,t){y.resume.edit=!1,y.resume.view=!0})}},checkExlv:function(e){(0,f.default)(e).toggleClass("selected"),(0,f.default)(".lv-world").hasClass("selected")?this.resume.specialLv="世界500强":(0,f.default)(".lv-china").hasClass("selected")?this.resume.specialLv="中国500强":this.resume.specialLv=""},delItem:function(e){if(e.demandId){var t={userId:h.userId,loginIdentifier:h.loginId,demandId:e.demandId};EventUtils.ajaxReq("/demand/delInfo","post",t,function(e,t){1==y.require.results.length&&y.require.curpage>1&&(y.require.curpage-=1),(0,f.default)(".requireBox .pagination a.page").eq(y.require.curpage-1).parent().trigger("click")})}if(e.jobFairId){var t={userId:h.userId,loginIdentifier:h.loginId,jobFairId:e.jobFairId};EventUtils.ajaxReq("/jobfair/delInfo","post",t,function(e,t){1==y.require.results.length&&y.require.curpage>1&&(y.require.curpage-=1),(0,f.default)(".requireBox .pagination a.page").eq(y.require.curpage-1).parent().trigger("click")})}if(e.recruitId){var t={userId:h.userId,loginIdentifier:h.loginId,recruitId:e.recruitId};EventUtils.ajaxReq("/recruit/delInfo","post",t,function(e,t){1==y.require.results.length&&y.require.curpage>1&&(y.require.curpage-=1),(0,f.default)(".requireBox .pagination a.page").eq(y.require.curpage-1).parent().trigger("click")})}},modItem:function(e){var t="incRequire.html?new=0&userId="+h.userId+"&loginId="+h.loginId+"&demandSrc="+y.require.demandSrc;e.demandId&&(t+="&demandId="+e.demandId+"&demandType="+e.demandType),e.jobFairId&&(t+="&jobfairId="+e.jobFairId),e.recruitId&&(t+="&recruitId="+e.recruitId),t=EventUtils.securityUrl(t),window.open(t,"_blank")},freshItem:function(e){w.fresh.freshItem=e,w.showModal=!0,w.show.freshbox=!0},stickItem:function(e){w.sticky.stickItem=e,w.showModal=!0,w.show.stickybox=!0},priceCal1:function(e){var t=parseInt(e);return 0==t?"- "+t:t>0?"+ "+t:void 0},priceCal2:function(e){var t=(100*parseFloat(e)-100*parseInt(e))%100;return t<10&&(t+="0"),"."+t},showpage:function(e){return e<3?e:3},topage:function(e,t){"require"==t?r(y.require.demandSrc,e):"collect"==t?n(y.collect.collectSrc,e):"msg-combi"==t?c(y.message.combi.msgsrc,e):"msg-jobfair"==t?l(y.message.jobfair.msgsrc,e):"msg-recruit"==t?d(e):"coop"==t&&u(y.coop.applystatus,e)},changeComLicense:function(e){if(e.files[0].size>3698688)return swal({title:"",text:"请上传小于3M的文件！",type:"warning"}),e.value="",!1;this.resume.comLicense=e.value},showFile:function(e){""!=this.resume.comLicense?w.preImgUrl=EventUtils.getLocalImgUrl(e):""!=this.resume.comLicenseUrl&&(w.preImgUrl=this.resume.comLicenseUrl),w.showModal=!0,w.show.preImg=!0},showPrefile:function(e){"com"==e?(w.preImgUrl=y.resume.comLicenseUrl,w.showModal=!0,w.show.preImg=!0):"uni"==e&&(w.preImgUrl=y.resume.uniLicenseUrl,w.showModal=!0,w.show.preImg=!0)},applyCollect:function(e){if(e.demandId){var t={userId:h.userId,loginIdentifier:h.loginId,demandId:e.demandId};EventUtils.ajaxReq("/demand/cooperateDemand","post",t,function(t,s){t.data&&"0"==t.data.isApply?(swal({title:"",text:"申请已发出！",type:"success"}),e.applyStatus=1):swal({title:"",text:t.info,type:"error"})})}if(e.jobFairId){var t={userId:h.userId,loginIdentifier:h.loginId,jobFairId:e.jobFairId};EventUtils.ajaxReq("/jobfair/cooperateJobFair","post",t,function(t,s){t.data&&"0"==t.data.isApply?(swal({title:"",text:"申请已发出！",type:"success"}),e.status=1):swal({title:"",text:t.info,type:"error"})})}},cancelCollect:function(e,t){if("combi"==e){var s={id:t};EventUtils.ajaxReq("/demand/delMarkInfo","post",s,function(e,t){1==y.collect.results.length&&y.collect.curpage>1&&(y.collect.curpage-=1),(0,f.default)(".collectBox .pagination a.page").eq(y.collect.curpage-1).parent().trigger("click")})}if("jobfair"==e){var s={id:t};EventUtils.ajaxReq("/jobfair/delMarkInfo","post",s,function(e,t){1==y.collect.results.length&&y.collect.curpage>1&&(y.collect.curpage-=1),(0,f.default)(".collectBox .pagination a.page").eq(y.collect.curpage-1).parent().trigger("click")})}},modifyMobile:function(){w.show.mobile=!0,w.showModal=!0},modifyEmail:function(){w.show.email=!0,w.showModal=!0},bindWechat:function(){w.show.wechat=!0,w.showModal=!0},showCard:function(e){var t={userId:e.applyUserId,applyId:e.applyId};e.demandId&&(t.applyType=1),e.jobFairId&&(t.applyType=2),EventUtils.ajaxReq("/readcard/getCardInfo","get",t,function(e,t){w.cardInfo.cardtype="uni",w.cardInfo.applyId=e.data.applyId;var s=e.data.viewReadCard;s.userAddress=s.userAddress?s.userAddress.split(";").join(""):"不详",w.cardInfo.infosets=s,w.showModal=!0,w.show.minicard=!0})},wordscal:function(e){return EventUtils.remainWords(1e3,e)},checkCvs:function(e){if(e.jobFairId)var t="HR-center.html?jobfairId="+e.jobFairId+"&userId="+h.userId+"&loginId="+h.loginId;if(e.recruitId)var t="HR-center.html?recruitId="+e.recruitId+"&userId="+h.userId+"&loginId="+h.loginId;t=EventUtils.securityUrl(t),window.location.href=t}},components:{pagination:pagination}}),I=new m({el:"#app-side",data:{},methods:{toHR:function(){if(h.userId)var e="HR-center.html?userId="+h.userId+"&loginId="+h.loginId;e=EventUtils.securityUrl(e),window.open(e)},selnav:function(e){(0,f.default)(e).hasClass("sider-li")&&((0,f.default)(".sideBox .sider-li.on").removeClass("on"),(0,f.default)(".sideBox .sub-li").hide(),(0,f.default)(e).addClass("on"),(0,f.default)(e).children(".sub-li").length>0&&((0,f.default)(e).children(".sub-li").show(),(0,f.default)(e).find(".sub-item.on").trigger("click")),(0,f.default)(e).attr("paneid")&&((0,f.default)(".content").children().hide(),(0,f.default)(".content").children("."+(0,f.default)(e).attr("paneid")).show()),"requireBox"==(0,f.default)(e).attr("paneid")&&r(y.require.demandSrc,1),"collectBox"==(0,f.default)(e).attr("paneid")&&n(y.collect.collectSrc,1),"uni-coop"==(0,f.default)(e).attr("paneid")&&u(y.coop.applystatus,1),selectInitPos()),(0,f.default)(e).hasClass("sub-item")&&((0,f.default)(e).siblings(".sub-item.on").removeClass("on"),(0,f.default)(e).addClass("on"),(0,f.default)(".content").children().hide(),(0,f.default)(".content").children("."+(0,f.default)(e).attr("paneid")).show(),"combi-msg"==(0,f.default)(e).attr("paneid")&&("发出的邀请"==y.message.combi.state?c(1,1):c(2,1)),"jobfair-msg"==(0,f.default)(e).attr("paneid")&&("发出的邀请"==y.message.combi.state?l(1,1):l(2,1)),"recruit-msg"==(0,f.default)(e).attr("paneid")&&d(1),selectInitPos())}}}),w=(new m({el:"#app-footer",data:{userId:h.userId}}),new m({el:"#app-modal",data:{account:{money:0,userId:h.userId,freeFreshTimes:0},show:{stickybox:!1,freshbox:!1,minicard:!1,mobile:!1,email:!1,wechat:!1,preImg:!1,comment:!1,trade:!1,upload:!1,message:!1},showModal:!1,preImgUrl:"",cardInfo:{cardtype:"inc",applyId:"",infosets:{userName:"",imgsrc:"",userProperty:"",userScale:"",tel:"",email:"",address:"",userType:"",profession:"",description:""}},sticky:{stickItem:null},fresh:{freshItem:null},comment:{cooperId:0,text:""},checkedTrades:[],trades:workareas},methods:{closeMsg:function(){this.show.message=!1,this.showModal=!1},remainText:function(e){return EventUtils.remainWords(400,e)},checkText:function(e){"comment"==e&&(this.comment.text=EventUtils.limitWords(400,this.comment.text))},confirmComment:function(){if(""==this.comment.text)return swal({title:"",text:"评价内容不能为空！",type:"warning"}),!1;var e={userId:h.userId,loginIdentifier:h.loginId,comment:this.comment.text,reportUserId:this.comment.cooperId};EventUtils.ajaxReq("/sys/comment","post",e,function(e,t){w.comment.text="",w.show.comment=!1,w.showModal=!1})},cancelComment:function(){this.comment.text="",this.show.comment=!1,this.showModal=!1},closeSticky:function(){this.show.stickybox=!1,this.showModal=!1},closeFresh:function(){this.show.freshbox=!1,this.showModal=!1},closeTrade:function(){this.show.trade=!1,this.showModal=!1},checkfunc:function(e,t){if(t.checked){if(this.checkedTrades.length>=3)return t.checked=!1,!1;this.checkedTrades.push(e)}else this.checkedTrades.remove(e)},submitTrade:function(){y.resume.trade=(0,f.default)(".trade-single-table input[type='radio']:checked").val(),this.show.trade=!1,this.showModal=!1},cancelTrade:function(){this.show.trade=!1,this.showModal=!1},hidemodal:function(e){if((0,f.default)(e).hasClass("modal")){this.showModal=!1;for(var t in w.show)w.show[t]=!1}},closePorto:function(){this.show.upload=!1,this.showModal=!1},closeMobile:function(){EventUtils.ajaxReq("/center/user/getInfo","get",{userId:h.userId},function(e,t){y.config.bind.mobile=e.data.mobile,y.config.bind.email=e.data.email}),this.show.mobile=!1,this.showModal=!1},closeWechat:function(){this.show.wechat=!1,this.showModal=!1},closeEmail:function(){EventUtils.ajaxReq("/center/user/getInfo","get",{userId:h.userId},function(e,t){y.config.bind.mobile=e.data.mobile,y.config.bind.email=e.data.email}),this.show.email=!1,this.showModal=!1},agreeApply:function(e){var t={applyId:e,result:1};EventUtils.ajaxReq("/readcard/disposeDemand","get",t,function(e,t){c(2,1),w.show.minicard=!1,w.showModal=!1})},denyApply:function(e){var t={applyId:e,result:2};EventUtils.ajaxReq("/readcard/disposeDemand","get",t,function(e,t){c(2,1),w.show.minicard=!1,w.showModal=!1})}},watch:{"show.message":function(e){if(e)this.$nextTick(function(){EventUtils.absCenter((0,f.default)("#app-modal .msg-box"))});else{var t={userId:h.userId,index:1,count:8};EventUtils.ajaxReq("/message/getMessageList","get",t,function(e,t){e.data&&e.data.count>0?((0,f.default)(".msg-center .msg-info").html(e.data.count),(0,f.default)(".msg-center .msg-info").show()):(0,f.default)(".msg-center .msg-info").hide()})}},"show.minicard":function(e){e&&EventUtils.absCenter((0,f.default)(".minicard"))},"show.preImg":function(e){e&&e&&EventUtils.absCenter((0,f.default)("#app-modal .preview-file"))},"show.upload":function(e){e&&this.$nextTick(function(){EventUtils.absCenter((0,f.default)("#app-modal .porto-upload"))})},"show.trade":function(e){e&&this.$nextTick(function(){EventUtils.absCenter((0,f.default)("#app-modal .trade-box"))})},"show.mobile":function(e){e&&this.$nextTick(function(){EventUtils.absCenter((0,f.default)("#app-modal .mobile-bind"))})},"show.email":function(e){e&&this.$nextTick(function(){EventUtils.absCenter((0,f.default)("#app-modal .email-bind"))})},"show.wechat":function(e){e&&this.$nextTick(function(){EventUtils.absCenter((0,f.default)("#app-modal .wechat-bind"))})},"show.comment":function(e){e&&this.$nextTick(function(){EventUtils.absCenter((0,f.default)("#app-modal .comment-box"))})},"show.stickybox":function(e){e&&this.$nextTick(function(){EventUtils.absCenter((0,f.default)("#app-modal .sticky-box"))})},"show.freshbox":function(e){e&&this.$nextTick(function(){EventUtils.absCenter((0,f.default)("#app-modal .fresh-box"))})}}}));!function(){var e={userId:h.userId||localStorage.userId,loginIdentifier:h.loginId||localStorage.loginId};EventUtils.ajaxReq("/user/company/getInfo","get",e,function(e,t){if(v=e.data,v.userIcon&&(0,f.default)("#avatar-box").html("<img src='"+v.userIcon+"' />"),v){var s={IncProps:v.property,IncScale:v.scale,address:{province:v.province,city:v.city,district:v.area},email:v.email};b.inc=v.name,b.briefInfo=s;var i="";"1"==v.isWorld?(i="世界500强",(0,f.default)(".uni-level input[value='0']").attr("checked","true")):"1"==v.isCountry&&(i="中国500强",(0,f.default)(".uni-level input[value='1']").attr("checked","true"));var a={Inc:v.name,trade:v.type,scale:v.scale,props:v.property,specialLv:i,intro:void 0!=v.discription?v.discription:"",comLicense:"",comLicenseUrl:v.imgUrl,hasBusLicense:v.imgUrl&&""!=v.imgUrl,edit:"0"==v.infoStatus,view:"0"!=v.infoStatus};y.resume=a}}),EventUtils.ajaxReq("/center/user/getInfo","get",{userId:h.userId},function(e,t){var s=0;""!=e.data.mobile&&(s+=50),""!=e.data.email&&(s+=30),a(s);var i={loginName:e.data.loginName,userId:h.userId,safeLevel:s+"%",bind:{mobile:e.data.mobile,email:e.data.email}};y.config=i})}(),function(){if(h.theme)switch(h.theme){case"vip":(0,f.default)(".sideBox li[paneid='vip-center']").trigger("click");break;case"require":h.demandSrc&&(y.require.demandSrc=h.demandSrc),(0,f.default)(".sideBox li[paneid='requireBox']").trigger("click");break;case"combi":(0,f.default)(".sideBox li[paneid='uni-coop']").trigger("click");break;case"collect":(0,f.default)(".sideBox li[paneid='collectBox']").trigger("click")}selectInitInput(),selectInitPos(),o(),i()}(),window.onunload=function(){(0,f.default)(".plan-sticky-table td").click(null),g.$off(),b.$off(),y.$off(),I.$off(),w.$off()}}},[61]);
+webpackJsonp([1],{
+
+/***/ 20:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(jQuery) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
+ * Created by ezgoing on 14/9/2014.
+ */
+
+
+
+(function (factory) {
+    if (true) {
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    } else {
+        factory(jQuery);
+    }
+})(function ($) {
+    var cropbox = function cropbox(options, el) {
+        var el = el || $(options.imageBox),
+            obj = {
+            state: {},
+            ratio: 1,
+            options: options,
+            imageBox: el,
+            thumbBox: el.find(options.thumbBox),
+            spinner: el.find(options.spinner),
+            image: new Image(),
+            getDataURL: function getDataURL() {
+                var width = this.thumbBox.width(),
+                    height = this.thumbBox.height(),
+                    canvas = document.createElement("canvas"),
+                    dim = el.css('background-position').split(' '),
+                    size = el.css('background-size').split(' '),
+                    dx = parseInt(dim[0]) - el.width() / 2 + width / 2,
+                    dy = parseInt(dim[1]) - el.height() / 2 + height / 2,
+                    dw = parseInt(size[0]),
+                    dh = parseInt(size[1]),
+                    sh = parseInt(this.image.height),
+                    sw = parseInt(this.image.width);
+
+                canvas.width = width;
+                canvas.height = height;
+                var context = canvas.getContext("2d");
+                context.drawImage(this.image, 0, 0, sw, sh, dx, dy, dw, dh);
+                var imageData = canvas.toDataURL('image/png');
+                return imageData;
+            },
+            getBlob: function getBlob() {
+                var imageData = this.getDataURL();
+                var b64 = imageData.replace('data:image/png;base64,', '');
+                var binary = atob(b64);
+                var array = [];
+                for (var i = 0; i < binary.length; i++) {
+                    array.push(binary.charCodeAt(i));
+                }
+                return new Blob([new Uint8Array(array)], { type: 'image/png' });
+            },
+            zoomIn: function zoomIn() {
+                this.ratio *= 1.1;
+                setBackground();
+            },
+            zoomOut: function zoomOut() {
+                this.ratio *= 0.9;
+                setBackground();
+            }
+        },
+            setBackground = function setBackground() {
+            var w = parseInt(obj.image.width) * obj.ratio;
+            var h = parseInt(obj.image.height) * obj.ratio;
+
+            var pw = (el.width() - w) / 2;
+            var ph = (el.height() - h) / 2;
+
+            el.css({
+                'background-image': 'url(' + obj.image.src + ')',
+                'background-size': w + 'px ' + h + 'px',
+                'background-position': pw + 'px ' + ph + 'px',
+                'background-repeat': 'no-repeat' });
+        },
+            imgMouseDown = function imgMouseDown(e) {
+            e.stopImmediatePropagation();
+
+            obj.state.dragable = true;
+            obj.state.mouseX = e.clientX;
+            obj.state.mouseY = e.clientY;
+        },
+            imgMouseMove = function imgMouseMove(e) {
+            e.stopImmediatePropagation();
+
+            if (obj.state.dragable) {
+                var x = e.clientX - obj.state.mouseX;
+                var y = e.clientY - obj.state.mouseY;
+
+                var bg = el.css('background-position').split(' ');
+
+                var bgX = x + parseInt(bg[0]);
+                var bgY = y + parseInt(bg[1]);
+
+                el.css('background-position', bgX + 'px ' + bgY + 'px');
+
+                obj.state.mouseX = e.clientX;
+                obj.state.mouseY = e.clientY;
+            }
+        },
+            imgMouseUp = function imgMouseUp(e) {
+            e.stopImmediatePropagation();
+            obj.state.dragable = false;
+        },
+            zoomImage = function zoomImage(e) {
+            e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0 ? obj.ratio *= 1.1 : obj.ratio *= 0.9;
+            setBackground();
+            return false;
+        };
+
+        obj.spinner.show();
+        obj.image.onload = function () {
+            obj.spinner.hide();
+            setBackground();
+
+            el.bind('mousedown', imgMouseDown);
+            el.bind('mousemove', imgMouseMove);
+            $(window).bind('mouseup', imgMouseUp);
+            el.bind('mousewheel DOMMouseScroll', zoomImage);
+        };
+        obj.image.src = options.imgSrc;
+        el.on('remove', function () {
+            $(window).unbind('mouseup', imgMouseUp);
+        });
+
+        return obj;
+    };
+
+    jQuery.fn.cropbox = function (options) {
+        return new cropbox(options, this);
+    };
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 21:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+var Vue = __webpack_require__(1);
+(function () {
+    var emailTempl = '<div class="bind-change email-bind">\
+        <h2 class="bind-title">更换绑定邮箱<i class="pic-wrapper close" @click.stop="closeBox"><i class="pic-icon icon-close"></i></i>\
+        </h2>\
+        <div class="bind-form">\
+            <h3 class="bind-form-title">请输入新的邮箱，完成邮箱绑定</h3>\
+            <p><input type="text" placeholder="请输入邮箱" v-model="email" class="input-email"></p>\
+            <p><input type="text" placeholder="请输入验证码" v-model="validcode" class="input-code"><button @click.stop="codeRequest($event.target)"  class="code-request">获取验证码</button></p>\
+            <p><input type="password" placeholder="请输入登录密码" v-model="password" class="input-password"></p>\
+            <div class="btn-submit"><button @click.stop="bindConfirm">完成绑定</button><button @click.stop="closeBox">返回</button></div>\
+        </div>\
+    </div>';
+    Vue.component("bind-email-box", {
+        template: emailTempl,
+        props: ["userid"],
+        data: function data() {
+            return {
+                email: "",
+                validcode: "",
+                password: ""
+            };
+        },
+        methods: {
+            codeRequest: function codeRequest(obj) {
+                if (this.email == "") {
+                    swal({
+                        title: "",
+                        text: "邮箱不能为空！",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                if (!variableUtils.regExp.email.test(this.email)) {
+                    swal({
+                        title: "",
+                        text: "请输入合法的邮箱地址！",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                $(obj).attr("disabled", true);
+                var start = 0;
+                var timer = setInterval(function () {
+                    start++;
+                    $(obj).html("重新获取 (" + (60 - start) + "s)");
+                    if (start == 60) {
+                        $(obj).html("获取验证码");
+                        $(obj).attr("disabled", false);
+                        clearInterval(timer);
+                    }
+                }, 1000);
+                var postdata = {
+                    email: this.email,
+                    type: 2
+                };
+                // console.log(postdata);
+                EventUtils.ajaxReq('/sys/emailCode', 'post', postdata, function (resp, status) {
+                    swal({
+                        title: "",
+                        text: resp.info,
+                        type: "warning"
+                    });
+                });
+            },
+            bindConfirm: function bindConfirm() {
+                if (this.email == "" || this.password == "" || this.code == "") {
+                    swal({
+                        title: "",
+                        text: "请检查信息是否完整！",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                if (!variableUtils.regExp.email.test(this.email)) {
+                    swal({
+                        title: "",
+                        text: "请输入正确的邮箱地址！",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                var postdata = {
+                    userId: this.userid,
+                    code: this.validcode,
+                    password: this.password,
+                    conection: this.email,
+                    type: 1
+                };
+                var _this = this;
+                EventUtils.ajaxReq('/sys/modifyConection?', 'post', postdata, function (resp, status) {
+                    if (resp.code == "00000") {
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                        _this.email = "";
+                        _this.validcode = "";
+                        _this.password = "";
+                        _this.$emit("closebox");
+                    } else {
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "warning"
+                        });
+                    }
+                });
+            },
+            closeBox: function closeBox() {
+                this.$emit("closebox");
+            }
+        }
+    });
+})();
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 22:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+var Vue = __webpack_require__(1);
+(function () {
+    var mobileTempl = '<div class="bind-change mobile-bind">\
+        <h2 class="bind-title">更换手机号<i class="pic-wrapper close" @click.stop="closeMobile"><i class="pic-icon icon-close"></i></i>\
+        </h2>\
+        <div class="bind-form">\
+            <h3 class="bind-form-title">请输入新的手机号，完成手机号绑定</h3>\
+            <p><input type="text" placeholder="请输入手机号" v-model="mobile" class="input-mobile"></p>\
+            <p><input type="text" placeholder="请输入短信认证码" v-model="validcode" class="input-code"><button @click.stop="codeRequest($event.target)"  class="code-request">获取验证码</button></p>\
+            <p><input type="password" placeholder="请输入登录密码" v-model="password" class="input-password"></p>\
+            <div class="btn-submit"><button @click.stop="bindConfirm">完成绑定</button><button @click.stop="closeMobile">返回</button></div>\
+        </div>\
+    </div>';
+    Vue.component("bind-mobile-box", {
+        template: mobileTempl,
+        props: ["userid"],
+        data: function data() {
+            return {
+                mobile: "",
+                validcode: "",
+                password: ""
+            };
+        },
+        methods: {
+            codeRequest: function codeRequest(obj) {
+                if (this.mobile == "") {
+                    swal({
+                        title: "",
+                        text: "手机号不能为空！",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                if (!variableUtils.regExp.mobile.test(this.mobile)) {
+                    swal({
+                        title: "",
+                        text: "请输入合法的手机号！",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                $(obj).attr("disabled", true);
+                var start = 0;
+                var timer = setInterval(function () {
+                    start++;
+                    $(obj).html("重新获取 (" + (60 - start) + "s)");
+                    if (start == 60) {
+                        $(obj).html("获取验证码");
+                        $(obj).attr("disabled", false);
+                        clearInterval(timer);
+                    }
+                }, 1000);
+                var postdata = {
+                    mobile: this.mobile,
+                    type: 2
+                };
+                EventUtils.ajaxReq('/sys/mobileCode', 'post', postdata, function (resp, status) {
+                    swal({
+                        title: "",
+                        text: resp.info,
+                        type: "warning"
+                    });
+                });
+            },
+            bindConfirm: function bindConfirm() {
+                if (this.mobile == "" || this.password == "" || this.code == "") {
+                    swal({
+                        title: "",
+                        text: "请检查信息是否完整！",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                if (!variableUtils.regExp.mobile.test(this.mobile)) {
+                    swal({
+                        title: "",
+                        text: "请输入正确的手机号！",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                var postdata = {
+                    userId: this.userid,
+                    code: this.validcode,
+                    password: this.password,
+                    conection: this.mobile,
+                    type: 0
+                };
+                var _this = this;
+                EventUtils.ajaxReq('/sys/modifyConection?', 'post', postdata, function (resp, status) {
+                    if (resp.code == "00000") {
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "success",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        _this.mobile = "";
+                        _this.password = "";
+                        _this.validcode = "";
+                        _this.$emit("closebox");
+                    } else {
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "warning"
+                        });
+                    }
+                });
+            },
+            closeMobile: function closeMobile() {
+                this.$emit("closebox");
+            }
+        }
+    });
+})();
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 23:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+var Vue = __webpack_require__(1);
+(function () {
+
+    function switchCode() {
+        //请求更换验证码
+        $.ajax({
+            url: "https://www.xiaoqiztc.com/easily_xq_WebApi/sys/img",
+            type: "get",
+            async: false,
+            data: {},
+            success: function success(resp, status) {
+                $(".conf-psw-varifycode img")[0].src = "https://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
+            },
+            error: function error(data, status) {
+                swal({
+                    title: "",
+                    text: "请求服务器数据错误，请稍后重试！",
+                    type: "warning"
+                });
+            },
+            timeout: 100000
+        });
+    }
+
+    var pswTempl = '<div>\
+                <h2 class="conf-psw-title">修改密码</h2>\
+                <form class="conf-psw-form">\
+                    <div><label>登陆账号</label><span>{{account.loginName}}</span></div>\
+                    <div><label>当前密码</label><input type="password" placeholder="6-16字母、数字、无空格" v-model="oldpsw"/></div>\
+                    <div><label>新密码</label><input type="password" placeholder="6-16字母、数字、无空格" v-model="newpsw"/></div>\
+                    <div><label>确认密码</label><input type="password" placeholder="6-16字母、数字、无空格" v-model="dbpsw"/></div>\
+                    <div><label>验证码</label><input type="text" v-model="validcode"/><i class="conf-psw-varifycode"><img src="https://www.xiaoqiztc.com/easily_xq_WebApi/sys/img" /><span class="conf-psw-codetext" @click="switchCode">看不清？换一张</span></i></div>\
+                    <div class="conf-psw-confirm"><button type="button" @click="confirm">确认修改</button></div>\
+                </form>\
+        </div>';
+    Vue.component("config-password", {
+        template: pswTempl,
+        props: ["account", "usertype"],
+        data: function data() {
+            return {
+                oldpsw: "",
+                newpsw: "",
+                dbpsw: "",
+                validcode: ""
+            };
+        },
+        methods: {
+            switchCode: switchCode,
+            confirm: function confirm() {
+                var isFilled = true;
+                $(".conf-psw-form input").each(function (index) {
+                    if ($(this).val() == "") {
+                        $(this).addClass("hint-nullable");
+                        isFilled = false;
+                    } else {
+                        $(this).removeClass("hint-nullable");
+                    }
+                });
+                if (!isFilled) {
+                    swal({
+                        title: "",
+                        text: "请检查信息是否完整！",
+                        type: "warning"
+                    });
+                    switchCode();
+                    return false;
+                }
+                if (!variableUtils.regExp.password.test(this.newpsw)) {
+                    swal({
+                        title: "",
+                        text: "新密码格式不正确！",
+                        type: "warning"
+                    });
+                    switchCode();
+                    return false;
+                }
+                if (this.newpsw != this.dbpsw) {
+                    swal({
+                        title: "",
+                        text: "两次密码输入不一致！",
+                        type: "warning"
+                    });
+                    switchCode();
+                    return false;
+                }
+                var postdata = {
+                    userId: this.account.userId,
+                    oldPassword: this.oldpsw,
+                    password: this.newpsw,
+                    dbPassword: this.dbpsw,
+                    inputRandomCode: this.validcode,
+                    userType: this.usertype
+                };
+                EventUtils.ajaxReq("/center/user/modifyPassword", "post", postdata, function (resp, status) {
+                    //console.log(resp);
+                    if (resp.code == "00000") {
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "error"
+                        });
+                    };
+                });
+                switchCode();
+                this.oldpsw = "";
+                this.newpsw = "";
+                this.dbpsw = "";
+                this.validcode = "";
+            }
+        }
+    });
+})();
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 25:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+var Vue = __webpack_require__(1);
+(function () {
+    var freshTempl = '<div>\
+        <div class="refresh-box fresh-box" v-show="fresh.show">\
+            <h2 class="refresh-hd">\
+                <span class="refresh-header">刷新提示</span>\
+                <ul class="lis-inline fresh-navs">\
+                    <li><span class="on fresh-tab" @click.stop="selectFreshWay(\'smart\',$event.target)">智能刷新</span></li>\
+                    <li><span class="fresh-tab" @click.stop="selectFreshWay(\'sofort\',$event.target)">普通刷新</span></li>\
+                </ul>\
+                <span class="pic-wrapper refresh-closer fr" @click="closeFresh">\
+                    <i class="pic-icon"></i>\
+               </span>\
+            </h2>\
+            <div v-show="fresh.smart">\
+                <div class="refresh-cont" v-show="!barcode.smart">\
+                    <p class="refresh-title"><img src="images/fresh-title.png" /></p>\
+                    <table class="fresh-smart-list">\
+                        <tr v-for="(item,index) in fresh.content">\
+                            <td style="width:210px"><span class="icon-radio" :class="{\'on\':index==0}" @click="selectfreshitem(index,$event.target)"><i class="pic-icon"></i></span>{{item.content.split(";")[0]}}</td>\
+                            <td style="width:90px;"><span class="color-orange-fc">{{item.amount}}</span>元</td>\
+                            <td>{{item.content.split(";")[1]}}</td>\
+                        </tr>\
+                    </table>\
+                    <p class="refresh-ps">注：每6小时执行一次，购买后立即执行。</p>\
+                </div>\
+                <div class="refresh-barcode" v-show="barcode.smart"><img :src="barcode.imgsrc" /><p>打开支付宝，扫一扫立即支付！</p></div>\
+                <div class="refresh-bot">\
+                    <p style="line-height:50px">应付金额<span style="color:#fc4f05;">{{fresh.sum}}</span>元<span class="price-pre">原价：{{fresh.presum}}元</span></p>\
+                    <!--<p style="line-height:20px"><i class="pic-icon icon-checkbox on" @click="checkAutopay($event.target)"></i>自动续费<span style="color:#fc4f05;">{{fresh.discount}}</span></p>-->\
+                    <p style="line-height:20px">账户余额：<span class="color-orange-fc">{{account.money}}</span>元</p>\
+                    <p class="autopay-hint"><span class="disNo">（系统将在智能刷新到期后自动帮您续费，可通过选中自动续费启用或取消）</span></p>\
+                    <button class="refresh-barcodepay" v-show="fresh.sum>account.money" @click.stop="freshAction($event.target)">扫一扫，立即支付</button>\
+                    <button type="button" class="refresh-btn" @click="freshAction($event.target)">{{fresh.smartBtn}}</button>\
+                </div>\
+            </div>\
+            <div v-show="!fresh.smart">\
+                <div class="refresh-cont-normal-free" v-show="account.freeFreshTimes>0&&!barcode.normal">\
+                    <p style="color:#ec7d0e;">信息刷新后：排名靠前，时间显示最新，能获得更多浏览机会</p>\
+                    <p><span style="color:#fc4f05;">智能刷新</span>，效果翻倍，每次最低仅需<span style="color:#fc4f05;">0.7</span>元</p>\
+                    <p style="font-size:18px; line-height:123px;">本次刷新<span style="color:#fc4f05;">免费</span>，是否确定刷新？</p>\
+                </div>\
+                <div class="refresh-cont-normal" v-show="account.freeFreshTimes==0&&!barcode.normal">\
+                    <p style="color:#ec7d0e;">信息刷新后：排名靠前，时间显示最新，能获得更多浏览机会</p>\
+                    <p><span style="color:#fc4f05;">智能刷新</span>，效果翻倍，每次最低仅需<span style="color:#fc4f05;">0.7</span>元</p>\
+                    <p>提示：免费刷新次数已经用完，不享有免费刷新。</p>\
+                    <p>本次刷新需要扣除推广金 <span style="color:#fc4f05;">1.0</span>元，是否确定刷新？</p>\
+                </div>\
+                <div class="refresh-barcode" v-show="barcode.normal"><img :src="barcode.imgsrc" /><p>打开支付宝，扫一扫立即支付！</p></div>\
+                <div class="refresh-bot refresh-bot-normal">\
+                    <span style="display:block;" v-show="account.freeFreshTimes==0">您的校企余额：<b style="color:#fc4f05;">{{regMoney(account.money)}}</b>元</span><button type="button" class="fresh-sofort-btn" @click="freshAction($event.target)">{{fresh.sofortBtn}}</button>\
+                    <button class="refresh-barcodepay" v-show="fresh.sum>account.money" @click="freshAction($event.target)">扫一扫，立即支付</button>\
+                </div>\
+            </div>\
+        </div>\
+        <div class="refresh-hint-box fresh-hint-box" v-show="!fresh.show">\
+            <h2 class="refresh-hint-hd">帖子刷新提示\
+                <span class="pic-wrapper refresh-closer fr" @click="closeFresh">\
+                    <i class="pic-icon"></i>\
+               </span>\
+            </h2>\
+            <div class="refresh-hint-content">\
+                <p class="LH43 fSize18">成功刷新<span class="color-orange-fc">1</span>条信息，并从余额中扣除<span class="color-orange-fc">{{fresh.sum}}</span>元</p>\
+                <p class="LH40 fSize14">同类别的信息有刷新间隔限制，必须等上一条信息刷新成功后，系统才能帮您执行刷新请求。</p>\
+                <div class="refresh-text-box">\
+                    <h3>刷新内容</h3>\
+                    <p class="fSize14 LH43"><span class="stick-name">{{fresh.title}}</span>您的信息已<span class="color-orange-fc">刷新成功</span>，正在让更多的客户<span class="color-orange-fc">查看</span></p>\
+                    <p class="sticky-time">执行刷新时间： {{fresh.time}}</p>\
+                    <p class="LH58 t-center fSize14">智能刷新，低价获得更多展示，每次刷新<span class="color-orange-fc">0.7</span>元起<button class="color-blue" @click="toSmartFresh">立即使用</button></p>\
+                </div>\
+            </div>\
+        </div>\
+    </div>';
+    var freshbox = Vue.component("fresh-box", {
+        template: freshTempl,
+        props: ["freshitem", "userid", "showfresh"],
+        data: function data() {
+            var freshObj = {
+                account: {
+                    freeFreshTimes: 0,
+                    money: 0
+                },
+                fresh: {
+                    show: true,
+                    title: "",
+                    content: [],
+                    sum: 4,
+                    presum: 4,
+                    time: "",
+                    tarifId: 5,
+                    discount: "9折",
+                    smartBtn: "立即充值",
+                    sofortBtn: "立即刷新",
+                    smart: true
+                },
+                barcode: {
+                    smart: false,
+                    normal: false,
+                    imgsrc: ""
+                }
+            };
+            return freshObj;
+        },
+        methods: {
+            checkAutopay: function checkAutopay(obj) {
+                $(obj).toggleClass("on");
+            },
+            freshAction: function freshAction(obj) {
+                if ($(obj).html() == "立即刷新" || $(obj).hasClass("refresh-barcodepay")) {
+                    //   console.log(this.freshitem);
+                    this.fresh.title = this.freshitem.title;
+                    if (this.freshitem.demandId) {
+                        //刷新校企合作需求
+                        if (!this.fresh.smart) {
+                            freshRequest(this.userid, this.freshitem.demandId, 1, 9, this);
+                        } else {
+                            freshRequest(this.userid, this.freshitem.demandId, 1, this.fresh.tarifId, this);
+                        }
+                    }
+                    if (this.freshitem.jobFairId) {
+                        //刷新招聘会需求
+                        if (!this.fresh.smart) {
+                            freshRequest(this.userid, this.freshitem.jobFairId, 3, 9, this);
+                        } else {
+                            freshRequest(this.userid, this.freshitem.jobFairId, 3, this.fresh.tarifId, this);
+                        }
+                    }
+                    if (this.freshitem.recruitId) {
+                        //刷新直聘需求
+                        if (!this.fresh.smart) {
+                            freshRequest(this.userid, this.freshitem.recruitId, 2, 9, this);
+                        } else {
+                            freshRequest(this.userid, this.freshitem.recruitId, 2, this.fresh.tarifId, this);
+                        }
+                    }
+                }
+                if ($(obj).html() == "立即充值") {
+                    window.location.href = EventUtils.securityUrl("recharge.html?userId=" + this.userid);
+                }
+            },
+            selectfreshitem: function selectfreshitem(index, obj) {
+                $(".fresh-smart-list .icon-radio").removeClass("on");
+                $(obj).addClass("on");
+                switch (index) {
+                    case 0:
+                        this.fresh.presum = 1 * 4;
+                        this.fresh.sum = 4;
+                        this.fresh.tarifId = 5;
+                        break;
+                    case 1:
+                        this.fresh.presum = 1 * 4 * 3;
+                        this.fresh.sum = this.fresh.presum * 0.9.toFixed(1);
+                        this.fresh.tarifId = 6;
+                        break;
+                    case 2:
+                        this.fresh.presum = 1 * 4 * 5;
+                        this.fresh.sum = Math.floor(this.fresh.presum * 0.8).toFixed(1);
+                        this.fresh.tarifId = 7;
+                        break;
+                    case 3:
+                        this.fresh.presum = 1 * 4 * 10;
+                        this.fresh.sum = Math.floor(this.fresh.presum * 0.7).toFixed(1);
+                        this.fresh.tarifId = 8;
+                        break;
+                    default:
+                }
+            },
+            selectFreshWay: function selectFreshWay(way, obj) {
+                $(".fresh-navs .on").removeClass("on");
+                $(obj).addClass("on");
+                if (way == "smart") {
+                    this.fresh.smart = true;
+                } else {
+                    this.fresh.smart = false;
+                }
+            },
+            closeFresh: function closeFresh() {
+                this.fresh.show = true;
+                this.$emit("closefresh");
+            },
+            toSmartFresh: function toSmartFresh() {
+                this.fresh.show = true;
+            },
+            regMoney: function regMoney(money) {
+                if (money) {
+                    return money.toFixed(2);
+                } else {
+                    return 0;
+                }
+            }
+        },
+        watch: {
+            "showfresh": function showfresh(curval) {
+                //初始化
+                if (curval) {
+                    initFresh(this);
+                } else {
+                    this.fresh.show = true;
+                    this.fresh.smart = true;
+                }
+            },
+            "fresh.smart": function freshSmart(curval) {
+                //当上面分页切换时，重置总计价格
+                if (curval) {
+                    $(".fresh-smart-list .icon-radio.on").removeClass("on");
+                    $(".fresh-smart-list .icon-radio:first").addClass("on");
+                    this.fresh.sum = this.fresh.content[0].amount;
+                    this.fresh.presum = 4;
+                } else {
+                    if (this.account.freeFreshTimes > 0) {
+                        this.fresh.sum = 0;
+                    } else {
+                        this.fresh.sum = 1;
+                    }
+                }
+            },
+            "fresh.sum": function freshSum(curval) {
+                this.fresh.sofortBtn = curval > this.account.money ? "立即充值" : "立即刷新";
+                this.fresh.smartBtn = curval > this.account.money ? "立即充值" : "立即刷新";
+            },
+            "account.money": function accountMoney(curval) {
+                this.fresh.sofortBtn = this.fresh.sum > curval ? "立即充值" : "立即刷新";
+                this.fresh.smartBtn = this.fresh.sum > curval ? "立即充值" : "立即刷新";
+            },
+            "fresh.show": function freshShow(curval) {
+                if (curval) {
+                    initFresh(this);
+                } else {
+                    EventUtils.absCenter($(".fresh-hint-box"));
+                }
+            }
+        },
+        mounted: function mounted() {
+            var _this = this;
+            //获取刷新模板信息
+            var postdata = {
+                userId: this.userid,
+                type: 1
+            };
+            EventUtils.ajaxReq("/sys/getRefreshHotInfoList", "post", postdata, function (resp, status) {
+                if (resp.data) {
+                    //   console.log(resp.data);
+                    resp.data.shift();
+                    _this.fresh.content = resp.data;
+                }
+            });
+        }
+    });
+
+    //刷新请求
+    function freshRequest(userId, pushId, type, tarifId, freshObj) {
+        var postdata = {
+            userId: userId,
+            pushId: pushId,
+            contentType: type,
+            id: tarifId
+            // console.log(postdata);
+        };EventUtils.ajaxReq("/sys/refresh", "post", postdata, function (resp, status) {
+            //    console.log(resp);
+            //   console.log(resp);
+            if (resp.code == "00000") {
+                if (resp.data.payImg) {
+                    if (freshObj.fresh.smart) {
+                        freshObj.barcode.smart = true;
+                    } else {
+                        freshObj.barcode.normal = true;
+                    }
+                    freshObj.barcode.imgsrc = resp.data.payImg;
+                    //轮询查看是否支付成功
+                    var paycheckdata = {
+                        userId: userId,
+                        orderId: resp.data.orderId
+                    };
+                    var timer = setInterval(function () {
+                        EventUtils.ajaxReq("/sys/getOrderStatus", "get", paycheckdata, function (resp, status) {
+                            // console.log(resp);
+                            if (resp.code == "00000") {
+                                clearInterval(timer);
+                                swal({
+                                    title: "",
+                                    text: "支付成功！",
+                                    type: "success",
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                });
+                                freshObj.barcode.smart = false;
+                                freshObj.barcode.normal = false;
+                            }
+                        });
+                    }, 1000);
+                } else {
+                    freshObj.fresh.time = resp.data;
+                    freshObj.fresh.show = false;
+                }
+            }
+        });
+    }
+    //初始化刷新盒子
+    function initFresh(freshObj) {
+        $(".fresh-navs .on").removeClass("on");
+        $(".fresh-navs .fresh-tab:first").addClass("on");
+        $(".fresh-smart-list .icon-radio.on").removeClass("on");
+        $(".fresh-smart-list .icon-radio:first").addClass("on");
+        EventUtils.ajaxReq("/center/user/getAccount", "get", { userId: freshObj.userid }, function (resp, status) {
+            //  console.log(resp);
+            freshObj.account.money = resp.data.useableBalance;
+            freshObj.account.freeFreshTimes = resp.data.freeRefresh;
+            freshObj.fresh.sum = freshObj.fresh.content[0].amount;
+            freshObj.fresh.presum = 4;
+            freshObj.fresh.smart = true;
+            freshObj.barcode.smart = false;
+            freshObj.barcode.normal = false;
+            freshObj.fresh.show = true;
+        });
+    }
+})();
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 26:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+var Vue = __webpack_require__(1);
+(function () {
+    var stickTempl = '<div>\
+        <div class="refresh-box sticky-box" v-show="sticky.show">\
+            <h2 class="refresh-hd">\
+                <span class="refresh-header">置顶提示</span>\
+                <ul class="lis-inline fresh-navs stick-navs">\
+                    <li><span class="on" @click.stop="selectStickWay(\'sofort\',$event.target)">立即置顶</span></li>\
+                    <!--<li><span @click.stop="selectStickWay(\'plan\',$event.target)">计划置顶</span></li>-->\
+                </ul>\
+                <span class="pic-wrapper refresh-closer fr" @click="closeSticky">\
+                   <i class="pic-icon"></i>\
+              </span>\
+            </h2>\
+            <div v-show="sticky.sofort">\
+                <div class="refresh-cont" v-show="!barcode.sofort">\
+                    <p class="stick-cont-title">信息置顶，排名提前到第一页，获得海量曝光，效果翻倍，赶快来试试吧！</p>\
+                    <table class="sticky-sofort-list">\
+                        <tr v-for="(item,index) in sticky.content">\
+                            <td class="W210"><span class="icon-radio" :class="{\'on\':index==0}" @click="selectStickyItem(index,$event.target)"><i class="pic-icon"></i></span>{{item.content.split(";")[0]}}</td>\
+                            <td class="W90"><span class="color-orange-fc">{{item.amount}}</span>元</td>\
+                            <td>{{item.content.split(";")[1]}}</td>\
+                        </tr>\
+                    </table>\
+                    <p class="refresh-ps">注：每24小时执行一次，购买后立即执行。</p>\
+                </div>\
+                <div class="refresh-barcode" v-show="barcode.sofort"><img :src="barcode.imgsrc" /><p>打开支付宝，扫一扫立即支付！</p></div>\
+                <div class="refresh-bot">\
+                    <p class="LH50">应付金额<span class="color-orange-fc">{{sticky.sum}}</span>元<span class="price-pre">原价：{{sticky.presum}}元</span></p>\
+                    <!--<p class="LH20"><i class="pic-icon icon-checkbox on" @click="checkAutopay($event.target)"></i>自动续费<span class="color-orange-fc">{{sticky.discount}}</span></p>-->\
+                    <p class="LH20">账户余额：<span class="color-orange-fc">{{account.money}}</span>元</p>\
+                    <p class="autopay-hint"><span class="disNo">（系统将在智能置顶到期后自动帮您续费，可通过选中自动续费启用或取消）</span></p>\
+                    <button type="button" class="refresh-btn" @click="stickAction($event.target)">{{sticky.sofortBtn}}</button>\
+                    <button type="button" class="refresh-barcodepay" v-show="sticky.sum>account.money" @click="stickAction($event.target)">扫一扫，立即支付</button>\
+                </div>\
+            </div>\
+            <div v-show="!sticky.sofort">\
+                <div class="refresh-cont paLeft50 paBot20">\
+                    <p class="LH52 fSize14 color-orange2">信息置顶，排名提前到第一页，获得海量曝光，效果翻倍，赶快来试试吧！</p>\
+                    <p class="LH26 fSize16"><label class="plan-label">计划时间</label><input type="text" class="date-input" placeholder="2016-12-17" />到<input type="text" class="date-input" placeholder="2016-12-17" /></p>\
+                    <p class="maT11 LH34"><label class="plan-label">置顶时段</label></p>\
+                    <table class="plan-sticky-table">\
+                        <tr>\
+                            <th>时间</th>\
+                            <th>星期一</th>\
+                            <th>星期二</th>\
+                            <th>星期三</th>\
+                            <th>星期四</th>\
+                            <th>星期五</th>\
+                            <th>星期六</th>\
+                            <th>星期日</th>\
+                        </tr>\
+                        <tr>\
+                            <td class="td-title">全天置顶</td>\
+                            <td name="1"></td>\
+                            <td name="2"></td>\
+                            <td name="3"></td>\
+                            <td name="4"></td>\
+                            <td name="5"></td>\
+                            <td name="6"></td>\
+                            <td name="7"></td>\
+                        </tr>\
+                        <tr>\
+                            <td class="td-title">早8点-晚8点</td>\
+                            <td name="1"></td>\
+                            <td name="2"></td>\
+                            <td name="3"></td>\
+                            <td name="4"></td>\
+                            <td name="5"></td>\
+                            <td name="6"></td>\
+                            <td name="7"></td>\
+                        </tr>\
+                        <tr>\
+                            <td class="td-title">不置顶</td>\
+                            <td name="1"></td>\
+                            <td name="2"></td>\
+                            <td name="3"></td>\
+                            <td name="4"></td>\
+                            <td name="5"></td>\
+                            <td name="6"></td>\
+                            <td name="7"></td>\
+                        </tr>\
+                    </table>\
+                </div>\
+                <div class="stick-bot-plan">\
+                    <ul class="LH36">\
+                        <li>总计价格：<span class="color-orange-fc">{{sticky.sum}}</span>元</li>\
+                        <li>账户余额：<span class="color-orange-fc">{{account.money}}</span>元</li>\
+                    </ul>\
+                    <button type="button" class="refresh-btn plan-btn">{{sticky.planBtn}}</button>\
+                </div>\
+            </div>\
+        </div>\
+        <div class="refresh-hint-box stick-hint-box" v-show="!sticky.show">\
+            <h2 class="refresh-hint-hd">帖子置顶提示\
+                <span class="pic-wrapper refresh-closer fr" @click="closeSticky">\
+                   <i class="pic-icon"></i>\
+              </span>\
+            </h2>\
+            <div class="refresh-hint-content">\
+                <p class="LH43 fSize18">成功置顶<span class="color-orange-fc">1</span>条信息，并从余额中扣除<span class="color-orange-fc">{{sticky.sum}}</span>元</p>\
+                <p class="LH40 fSize14">同类别的信息有置顶间隔限制，必须等上一条信息置顶成功后，系统才能帮您执行置顶请求。</p>\
+                <div class="refresh-text-box">\
+                    <h3 class="stick-hint-title">置顶内容</h3>\
+                    <p class="fSize14 LH43"><span class="stick-name">{{sticky.title}}</span>您的信息已<span class="color-orange-fc">置顶成功</span>，正在让更多的客户<span class="color-orange-fc">查看</span></p>\
+                    <p class="sticky-time">执行置顶时间：{{sticky.time}}</p>\
+                    <p class="LH58 t-center fSize14">计划置顶，低价获得更多展示，每次置顶<span class="color-orange-fc">7</span>元起<button class="color-blue" @click="toPlanSticky">立即使用</button></p>\
+                </div>\
+            </div>\
+        </div>\
+    </div>';
+
+    Vue.component("stick-box", {
+        template: stickTempl,
+        props: ["stickitem", "userid", "showsticky"],
+        data: function data() {
+            return {
+                account: {
+                    money: 0
+                },
+                sticky: {
+                    content: [],
+                    show: true,
+                    sum: 0,
+                    presum: 0,
+                    tarifId: 1,
+                    title: "",
+                    time: "16:08:02",
+                    discount: "9折",
+                    sofortBtn: "立即充值",
+                    planBtn: "立即置顶",
+                    sofort: true
+                },
+                barcode: {
+                    sofort: false,
+                    imgsrc: ""
+                }
+            };
+        },
+        methods: {
+            checkAutopay: function checkAutopay(obj) {
+                $(obj).toggleClass("on");
+            },
+            stickAction: function stickAction(obj) {
+                this.sticky.title = this.stickitem.title;
+                if ($(obj).html() == "立即置顶" || $(obj).hasClass("refresh-barcodepay")) {
+                    this.sticky.title = this.stickitem.title;
+                    if (this.stickitem.demandId) {
+                        //刷新校企合作需求
+                        if (!this.sticky.sofort) {
+                            stickRequest(this.userid, this.stickitem.demandId, 1, 9, this);
+                        } else {
+                            stickRequest(this.userid, this.stickitem.demandId, 1, this.sticky.tarifId, this);
+                        }
+                    }
+                    if (this.stickitem.jobFairId) {
+                        //刷新招聘会需求
+                        if (!this.sticky.sofort) {
+                            stickRequest(this.userid, this.stickitem.jobFairId, 3, 9, this);
+                        } else {
+                            stickRequest(this.userid, this.stickitem.jobFairId, 3, this.sticky.tarifId, this);
+                        }
+                    }
+                    if (this.stickitem.recruitId) {
+                        //刷新直聘需求
+                        if (!this.sticky.sofort) {
+                            stickRequest(this.userid, this.stickitem.recruitId, 2, 9, this);
+                        } else {
+                            stickRequest(this.userid, this.stickitem.recruitId, 2, this.sticky.tarifId, this);
+                        }
+                    }
+                }
+                if ($(obj).html() == "立即充值") {
+                    window.location.href = EventUtils.securityUrl("recharge.html?userId=" + this.userid);
+                }
+            },
+            selectStickWay: function selectStickWay(way, obj) {
+                $(".stick-navs .on").removeClass("on");
+                $(obj).addClass("on");
+                if (way == "sofort") {
+                    $(".sticky-sofort-list .icon-radio.on").removeClass("on");
+                    $(".sticky-sofort-list .icon-radio:first").addClass("on");
+                    this.sticky.sofort = true;
+                    this.sticky.sum = parseInt(this.sticky.content[0].amount);
+                    this.sticky.presum = parseInt(this.sticky.content[0].amount);
+                } else {
+                    this.sticky.sofort = false;
+                    var summe = 0;
+                    $(".plan-sticky-table tr").each(function (index) {
+                        if (index == 1) {
+                            summe += $(this).find("td.on").length * 70;
+                        } else if (index == 2) {
+                            summe += $(this).find("td.on").length * 50;
+                        };
+                    });
+                    this.sticky.sum = summe;
+                }
+            },
+            selectStickyItem: function selectStickyItem(index, obj) {
+                $(".sticky-sofort-list .icon-radio").removeClass("on");
+                $(obj).addClass("on");
+                this.sticky.sum = parseInt(this.sticky.content[index].amount);
+                this.sticky.tarifId = this.sticky.content[index].id;
+                switch (index) {
+                    case 0:
+                        this.sticky.presum = 10;
+                        break;
+                    case 1:
+                        this.sticky.presum = 10 * 3;
+                        break;
+                    case 2:
+                        this.sticky.presum = 10 * 5;
+                        break;
+                    case 3:
+                        this.sticky.presum = 10 * 10;
+                        break;
+                    default:
+                }
+            },
+            toPlanSticky: function toPlanSticky() {
+                var _this = this;
+                EventUtils.ajaxReq("/center/user/getAccount", "get", { userId: this.userid }, function (resp, status) {
+                    _this.account.money = resp.data.useableBalance;
+                    _this.sticky.show = true;
+                });
+            },
+            closeSticky: function closeSticky() {
+                this.$emit("closesticky");
+            }
+        },
+        watch: {
+            "showsticky": function showsticky(curval) {
+                if (curval) {
+                    //初始化页面信息 
+                    $(".sticky-sofort-list .icon-radio.on").removeClass("on");
+                    $(".sticky-sofort-list .icon-radio:first").addClass("on");
+                    initSticky(this);
+                }
+            },
+            "sticky.sum": function stickySum(curval) {
+                this.sticky.sofortBtn = curval > this.account.money ? "立即充值" : "立即置顶";
+                this.sticky.planBtn = curval > this.account.money ? "立即充值" : "立即置顶";
+            },
+            "account.money": function accountMoney(curval) {
+                this.sticky.sofortBtn = this.sticky.sum > curval ? "立即充值" : "立即置顶";
+                this.sticky.planBtn = this.sticky.sum > curval ? "立即充值" : "立即置顶";
+            },
+            "sticky.show": function stickyShow(curval) {
+                if (!curval) {
+                    EventUtils.absCenter($(".stick-hint-box"));
+                } else {
+                    initSticky(this);
+                }
+            }
+        },
+        mounted: function mounted() {
+            var _this = this;
+            //获取刷新模板信息
+            var postdata = {
+                userId: this.userid,
+                type: 2
+            };
+            EventUtils.ajaxReq("/sys/getRefreshHotInfoList", "post", postdata, function (resp, status) {
+                if (resp.data) {
+                    _this.sticky.content = resp.data;
+                }
+            });
+        }
+    });
+
+    function initSticky(stickyObj) {
+        stickyObj.sticky.sofort = true;
+        stickyObj.sticky.presum = stickyObj.sticky.sum = stickyObj.sticky.content[0].amount;
+        EventUtils.ajaxReq("/center/user/getAccount", "get", { userId: stickyObj.userid }, function (resp, status) {
+            stickyObj.account.money = resp.data.useableBalance;
+            stickyObj.sticky.show = true;
+            stickyObj.barcode.sofort = false;
+        });
+    }
+
+    function stickRequest(userId, pushId, type, tarifId, stickObj) {
+        var postdata = {
+            userId: userId,
+            pushId: pushId,
+            contentType: type,
+            id: tarifId
+        };
+        //console.log(postdata);
+        EventUtils.ajaxReq("/sys/hotUp", "post", postdata, function (resp, statsu) {
+            if (resp.code == "00000") {
+                if (resp.data.payImg) {
+                    stickObj.barcode.sofort = true;
+                    stickObj.barcode.imgsrc = resp.data.payImg;
+                    //轮询查看是否支付成功
+                    var paycheckdata = {
+                        userId: userId,
+                        orderId: resp.data.orderId
+                    };
+                    var timer = setInterval(function () {
+                        EventUtils.ajaxReq("/sys/getOrderStatus", "get", paycheckdata, function (resp, status) {
+                            //console.log(resp);
+                            if (resp.code == "00000") {
+                                clearInterval(timer);
+                                swal({
+                                    title: "",
+                                    text: "支付成功！",
+                                    type: "success",
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                });
+                                stickObj.barcode.sofort = false;
+                            }
+                        });
+                    }, 1500);
+                } else {
+                    stickObj.sticky.show = false;
+                }
+            }
+        });
+    }
+})();
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 28:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(jQuery, $) {
+
+jQuery.extend({
+
+    createUploadIframe: function createUploadIframe(id, uri) {
+        //create frame
+        var frameId = 'jUploadFrame' + id;
+
+        if (window.ActiveXObject) {
+            var io = document.createElement('<iframe id="' + frameId + '" name="' + frameId + '" />');
+            if (typeof uri == 'boolean') {
+                io.src = 'javascript:false';
+            } else if (typeof uri == 'string') {
+                io.src = uri;
+            }
+        } else {
+            var io = document.createElement('iframe');
+            io.id = frameId;
+            io.name = frameId;
+        }
+        io.style.position = 'absolute';
+        io.style.top = '-1000px';
+        io.style.left = '-1000px';
+
+        document.body.appendChild(io);
+
+        return io;
+    },
+    createUploadForm: function createUploadForm(id, fileElementId) {
+        //create form
+        var formId = 'jUploadForm' + id;
+        var fileId = 'jUploadFile' + id;
+        var form = $('<form  action="" method="POST" name="' + formId + '" id="' + formId + '" enctype="multipart/form-data"></form>');
+        var oldElement = $('#' + fileElementId);
+        var newElement = $(oldElement).clone();
+        $(oldElement).attr('id', fileId);
+        $(oldElement).before(newElement);
+        $(oldElement).appendTo(form);
+        //set attributes
+        $(form).css('position', 'absolute');
+        $(form).css('top', '-1200px');
+        $(form).css('left', '-1200px');
+        $(form).appendTo('body');
+        return form;
+    },
+    addOtherRequestsToForm: function addOtherRequestsToForm(form, data) {
+        // add extra parameter
+        var originalElement = $('<input type="hidden" name="" value="">');
+        for (var key in data) {
+            var name = key;
+            var value = data[key];
+            var cloneElement = originalElement.clone();
+            cloneElement.attr({ 'name': name, 'value': value });
+            $(cloneElement).appendTo(form);
+        }
+        return form;
+    },
+
+    ajaxFileUpload: function ajaxFileUpload(s) {
+        // TODO introduce global settings, allowing the client to modify them for all requests, not only timeout
+        s = jQuery.extend({}, jQuery.ajaxSettings, s);
+        var id = new Date().getTime();
+        var form = jQuery.createUploadForm(id, s.fileElementId);
+        if (s.data) form = jQuery.addOtherRequestsToForm(form, s.data);
+        var io = jQuery.createUploadIframe(id, s.secureuri);
+        var frameId = 'jUploadFrame' + id;
+        var formId = 'jUploadForm' + id;
+        // Watch for a new set of requests
+        if (s.global && !jQuery.active++) {
+            jQuery.event.trigger("ajaxStart");
+        }
+        var requestDone = false;
+        // Create the request object
+        var xml = {};
+        if (s.global) jQuery.event.trigger("ajaxSend", [xml, s]);
+        // Wait for a response to come back
+        var uploadCallback = function uploadCallback(isTimeout) {
+            var io = document.getElementById(frameId);
+            try {
+                if (io.contentWindow) {
+                    xml.responseText = io.contentWindow.document.body ? io.contentWindow.document.body.innerHTML : null;
+                    xml.responseXML = io.contentWindow.document.XMLDocument ? io.contentWindow.document.XMLDocument : io.contentWindow.document;
+                } else if (io.contentDocument) {
+                    xml.responseText = io.contentDocument.document.body ? io.contentDocument.document.body.innerHTML : null;
+                    xml.responseXML = io.contentDocument.document.XMLDocument ? io.contentDocument.document.XMLDocument : io.contentDocument.document;
+                }
+            } catch (e) {
+                jQuery.handleError(s, xml, null, e);
+            }
+            if (xml || isTimeout == "timeout") {
+                requestDone = true;
+                var status;
+                try {
+                    status = isTimeout != "timeout" ? "success" : "error";
+                    // Make sure that the request was successful or notmodified
+                    if (status != "error") {
+                        // process the data (runs the xml through httpData regardless of callback)
+                        var data = jQuery.uploadHttpData(xml, s.dataType);
+                        // If a local callback was specified, fire it and pass it the data
+                        if (s.success) s.success(data, status);
+
+                        // Fire the global callback
+                        if (s.global) jQuery.event.trigger("ajaxSuccess", [xml, s]);
+                    } else jQuery.handleError(s, xml, status);
+                } catch (e) {
+                    status = "error";
+                    jQuery.handleError(s, xml, status, e);
+                }
+
+                // The request was completed
+                if (s.global) jQuery.event.trigger("ajaxComplete", [xml, s]);
+
+                // Handle the global AJAX counter
+                if (s.global && ! --jQuery.active) jQuery.event.trigger("ajaxStop");
+
+                // Process result
+                if (s.complete) s.complete(xml, status);
+
+                jQuery(io).unbind();
+
+                setTimeout(function () {
+                    try {
+                        $(io).remove();
+                        $(form).remove();
+                    } catch (e) {
+                        jQuery.handleError(s, xml, null, e);
+                    }
+                }, 100);
+
+                xml = null;
+            }
+        };
+        // Timeout checker
+        if (s.timeout > 0) {
+            setTimeout(function () {
+                // Check to see if the request is still happening
+                if (!requestDone) uploadCallback("timeout");
+            }, s.timeout);
+        }
+        try {
+            // var io = $('#' + frameId);
+            var form = $('#' + formId);
+            $(form).attr('action', s.url);
+            $(form).attr('method', 'POST');
+            $(form).attr('target', frameId);
+            if (form.encoding) {
+                form.encoding = 'multipart/form-data';
+            } else {
+                form.enctype = 'multipart/form-data';
+            }
+            $(form).submit();
+        } catch (e) {
+            jQuery.handleError(s, xml, null, e);
+        }
+        if (window.attachEvent) {
+            document.getElementById(frameId).attachEvent('onload', uploadCallback);
+        } else {
+            document.getElementById(frameId).addEventListener('load', uploadCallback, false);
+        }
+        return { abort: function abort() {} };
+    },
+
+    uploadHttpData: function uploadHttpData(r, type) {
+        var data = !type;
+        data = type == "xml" || data ? r.responseXML : r.responseText;
+        // If the type is "script", eval it in global context
+        if (type == "script") jQuery.globalEval(data);
+        // Get the JavaScript object, if JSON is used.
+        if (type == "json") {
+            // If you add mimetype in your response,
+            // you have to delete the '<pre></pre>' tag.
+            // The pre tag in Chrome has attribute, so have to use regex to remove
+            var data = r.responseText;
+            var rx = new RegExp("<pre.*?>(.*?)</pre>", "i");
+            var am = rx.exec(data);
+            //this is the desired data extracted
+            var data = am ? am[1] : ""; //the only submatch or empty
+            eval("data = " + data);
+        }
+        // evaluate scripts within html
+        if (type == "html") jQuery("<div>").html(data).evalScripts();
+        //alert($('param', data).each(function(){alert($(this).attr('value'));}));
+        return data;
+    },
+    handleError: function handleError(s, xml, status, e) {
+        // If a local callback was specified, fire it
+        if (s.error) s.error(xml, status, e);
+        // Fire the global callback
+        if (s.global) jQuery.event.trigger("ajaxError", [xml, s, e]);
+    }
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 29:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Vue = __webpack_require__(1);
+(function () {
+    var templCard = '<div class="minicard" v-cloak>\
+        <h2 class="card-header"><span class="card-header-title" v-show="cardtype==\'inc\'">企业名片</span><span class="card-header-title" v-show="cardtype==\'uni\'">高校名片</span></h2>\
+        <div class="card-body" v-show="cardtype==\'inc\'">\
+            <div class="clearfix body-top">\
+                <i class="pic-wrapper fl card-avatar"><img :src="infosets.userIcon"></i>\
+                <div class="fl">\
+                    <h3 class="body-title">{{infosets.userName}}</h3>\
+                    <table class="basic-info">\
+                        <tr>\
+                            <td>企业性质：</td>\
+                            <td style="padding-right: 15px;">{{infosets.userProperty}}</td>\
+                            <td>企业规模：</td>\
+                            <td>{{infosets.userScale}}</td>\
+                        </tr>\
+                        <tr>\
+                            <td>联系方式：</td>\
+                            <td style="padding-right: 15px;">{{infosets.mobile}}</td>\
+                            <td>企业邮箱：</td>\
+                            <td>{{infosets.email}}</td>\
+                        </tr>\
+                    </table>\
+                    <p><label>公司地址：</label>{{infosets.userAddress}}</p>\
+                </div>\
+            </div>\
+            <div class="body-bot">\
+                <h3>公司简介</h3>\
+                <p>{{infosets.userDiscription}}</p>\
+            </div>\
+        </div>\
+        <div class="card-body" v-show="cardtype==\'uni\'">\
+            <div class="clearfix body-top">\
+                <i class="pic-wrapper fl card-avatar"><img :src="infosets.userIcon"></i>\
+                <div class="fl">\
+                    <h3 class="body-title">{{infosets.userName}}</h3>\
+                    <table class="basic-info">\
+                        <tr>\
+                            <td>高校类别：</td>\
+                            <td style="padding-right: 15px;">{{infosets.userType}}</td>\
+                            <td>高校性质：</td>\
+                            <td>{{infosets.userProperty}}</td>\
+                        </tr>\
+                        <tr>\
+                            <td>联系电话：</td>\
+                            <td style="padding-right: 15px;">{{infosets.mobile}}</td>\
+                            <td>高校邮箱：</td>\
+                            <td>{{infosets.email}}</td>\
+                        </tr>\
+                        <tr>\
+                            <td>在校人数：</td>\
+                            <td style="padding-right: 15px;">{{infosets.userScale}}</td>\
+                            <td>重点专业：</td>\
+                            <td>{{infosets.userProfession}}</td>\
+                        </tr>\
+                    </table>\
+                    <p><label>学校地址：</label>{{infosets.userAddress}}</p>\
+                </div>\
+            </div>\
+            <div class="body-bot">\
+                <h3>高校简介</h3>\
+                <p>{{infosets.userDiscription}}</p>\
+            </div>\
+        </div>\
+        <div class="card-operations">\
+            <button class="button-agree" type="button" @click.stop="agreeEv">同意</button>\
+            <button class="button-deny" type="button" @click.stop="denyEv">不同意</button>\
+        </div>\
+    </div>';
+
+    Vue.component("minicard", {
+        template: templCard,
+        props: ["cardtype", "infosets"],
+        methods: {
+            agreeEv: function agreeEv() {
+                this.$emit("agree");
+            },
+            denyEv: function denyEv() {
+                this.$emit("deny");
+            }
+        }
+    });
+})();
+
+/***/ }),
+
+/***/ 30:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Vue = __webpack_require__(1);
+(function () {
+    var vipRecTempl = '<div class="vip-records-box">\
+                        <h3 class="vip-record-head">使用记录</h3>\
+                        <ul class="vip-records" v-show="vip.totalitems>0">\
+                            <li v-for="record in vip.records"><span class="W182">{{dateExtrac(record.createTime)}}</span><span class="W212">{{typeExtrac(record.orderType)}}：{{record.count}}次</span><span class="W216"><b class="fSize14">{{priceInteger(record.amount,record.orderType)}}</b>{{priceDecimal(record.amount)}} 元</span><span class="">交易完成</span></li>\
+                        </ul>\
+                        <p class="t-center" v-show="vip.totalitems==0">暂无使用记录~</p>\
+                        <div class="more-records" v-show="vip.totalitems>0">\
+                            <button class="more-records-btn" v-show="!show.page" @click.stop="showMoreRec">查看更多使用记录</button>\
+                            <pagination :showpages="showpage(vip.totalpages)" :totalpages="vip.totalpages" type="coop" @topage="topage" v-show="show.page"></pagination>\
+                        </div>\
+                    </div>';
+    Vue.component("vip-record", {
+        template: vipRecTempl,
+        props: ["userid"],
+        data: function data() {
+            return {
+                vip: {
+                    totalpages: 1,
+                    totalitems: 0,
+                    records: []
+                },
+                show: {
+                    page: false
+                }
+            };
+        },
+        methods: {
+            dateExtrac: function dateExtrac(date) {
+                if (date) {
+                    return date.split(" ")[0];
+                } else {
+                    return "---";
+                }
+            },
+            typeExtrac: function typeExtrac(type) {
+                switch (type) {
+                    case "0":
+                        return "账户充值";
+                    case "1":
+                        return "信息刷新";
+                    case "2":
+                        return "信息置顶";
+                }
+            },
+            showpage: function showpage(totalpages) {
+                if (totalpages > 3) {
+                    return 3;
+                } else {
+                    return totalpages;
+                }
+            },
+            topage: function topage(page, type) {
+                var postdata = {
+                    userId: this.userid,
+                    index: page,
+                    count: 5
+                };
+                var _this = this;
+                EventUtils.ajaxReq("/sys/getOrderList", "get", postdata, function (resp, status) {
+                    if (resp.data) {
+                        _this.vip.records = resp.data.list;
+                    } else {
+                        _this.vip.records = [];
+                    }
+                });
+            },
+            showMoreRec: function showMoreRec() {
+                this.show.page = true;
+            },
+            priceInteger: function priceInteger(val, type) {
+                var priceInt = parseInt(val);
+                if (type != '0') {
+                    return "- " + priceInt;
+                } else if (priceInt > 0) {
+                    return "+ " + priceInt;
+                }
+            },
+            priceDecimal: function priceDecimal(val) {
+                var priceF = (parseFloat(val) * 100 - parseInt(val) * 100) % 100;
+                //    if(priceF*10%1==0) priceF+="0";
+                if (priceF < 10) priceF += "0";
+                return "." + priceF;
+            }
+        },
+        mounted: function mounted() {
+            var postdata = {
+                userId: this.userid,
+                index: 1,
+                count: 5
+            };
+            var _this = this;
+            EventUtils.ajaxReq("/sys/getOrderList", "get", postdata, function (resp, status) {
+                //console.log(resp);
+                if (resp && resp.data) {
+                    _this.vip.totalpages = resp.data.totalPage;
+                    _this.vip.records = resp.data.list;
+                    _this.vip.totalitems = resp.data.totalRow;
+                } else {
+                    _this.vip.totalpages = 1;
+                    _this.vip.records = [];
+                    _this.vip.totalitems = 0;
+                }
+            });
+        },
+        components: {
+            'pagination': pagination
+        }
+    });
+})();
+
+/***/ }),
+
+/***/ 38:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 61:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+__webpack_require__(4);
+__webpack_require__(2);
+var Vue = __webpack_require__(1);
+__webpack_require__(28);
+__webpack_require__(20);
+__webpack_require__(6);
+__webpack_require__(8);
+__webpack_require__(29);
+__webpack_require__(22);
+__webpack_require__(21);
+__webpack_require__(18);
+__webpack_require__(25);
+__webpack_require__(26);
+__webpack_require__(30);
+__webpack_require__(23);
+__webpack_require__(9);
+__webpack_require__(10);
+__webpack_require__(17);
+__webpack_require__(12);
+__webpack_require__(3);
+__webpack_require__(5);
+__webpack_require__(7);
+__webpack_require__(38);
+var parObj = EventUtils.urlExtrac(window.location);
+var respObj = {}; //请求的本页面的数据集合
+
+function infoRequest() {
+    var postdata = {
+        userId: parObj.userId || localStorage.userId,
+        loginIdentifier: parObj.loginId || localStorage.loginId
+    };
+    //console.log(postdata);
+    EventUtils.ajaxReq('/user/company/getInfo', 'get', postdata, function (resp, status) {
+        respObj = resp.data;
+        //console.log(resp);
+        if (respObj.userIcon) {
+            (0, _jquery2.default)("#avatar-box").html("<img src='" + respObj.userIcon + "' />");
+        }
+        if (respObj) {
+            var portobrief = {
+                IncProps: respObj.property,
+                IncScale: respObj.scale,
+                address: {
+                    province: respObj.province,
+                    city: respObj.city,
+                    district: respObj.area
+                },
+                email: respObj.email
+            };
+            appPorto.inc = respObj.name;
+            appPorto.briefInfo = portobrief;
+
+            var specialLevel = "";
+            if (respObj.isWorld == "1") {
+                specialLevel = "世界500强";
+                (0, _jquery2.default)(".uni-level input[value='0']").attr("checked", "true");
+            } else if (respObj.isCountry == "1") {
+                specialLevel = "中国500强";
+                (0, _jquery2.default)(".uni-level input[value='1']").attr("checked", "true");
+            }
+            var resumedata = {
+                Inc: respObj.name,
+                trade: respObj.type,
+                scale: respObj.scale,
+                props: respObj.property,
+                specialLv: specialLevel,
+                intro: respObj.discription != undefined ? respObj.discription : "",
+                comLicense: "",
+                comLicenseUrl: respObj.imgUrl,
+                hasBusLicense: respObj.imgUrl && respObj.imgUrl != "",
+                edit: respObj.infoStatus == "0",
+                view: respObj.infoStatus != "0"
+            };
+            appCont.resume = resumedata;
+        }
+    }
+
+    //获取用户平台信息
+    );EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function (resp, status) {
+        // 账户信息
+        var percent = 0;
+        if (resp.data.mobile != "") {
+            percent += 50;
+        }
+        if (resp.data.email != "") {
+            percent += 30;
+        }
+        init_safepos(percent);
+        var configdata = {
+            loginName: resp.data.loginName,
+            userId: parObj.userId,
+            safeLevel: percent + "%",
+            bind: {
+                mobile: resp.data.mobile,
+                email: resp.data.email
+            }
+        };
+        appCont.config = configdata;
+    });
+}
+
+var appTop = new Vue({
+    el: "#app-top",
+    data: {
+        homeLink: EventUtils.securityUrl("index.html?userId=" + parObj.userId)
+    },
+    methods: {
+        showMsgbox: function showMsgbox() {
+            appModal.show.message = true;
+            appModal.showModal = true;
+        }
+    }
+});
+
+var appPorto = new Vue({
+    el: "#app-porto",
+    data: {
+        viewInfo: true,
+        inc: "企业名称",
+        database: {
+            incprops: xqdatabase.incProps,
+            incscale: xqdatabase.incScale,
+            addrData: addArray
+        },
+        briefInfo: {
+            IncProps: "民营企业",
+            IncScale: "600人以上",
+            address: {
+                province: "浙江",
+                city: "杭州",
+                district: "滨江"
+            },
+            email: "xqztc@qq.com"
+        },
+        initAddress: {
+            province: "",
+            city: "",
+            district: ""
+        },
+        cloneInfo: {}
+    },
+    methods: {
+        uploading: function uploading() {
+            appModal.showModal = true;
+            appModal.show.upload = true;
+        },
+        save: function save() {
+            this.briefInfo.address.province = (0, _jquery2.default)(".edit-brief .sel-province input").val();
+            this.briefInfo.address.city = (0, _jquery2.default)(".edit-brief .sel-city input").val();
+            this.briefInfo.address.district = (0, _jquery2.default)(".edit-brief .sel-district input").val();
+            this.viewInfo = true;
+            var postdata = {
+                userId: parObj.userId,
+                companyId: respObj.companyId,
+                //    loginName:parObj.loginName,
+                property: this.briefInfo.IncProps,
+                province: this.briefInfo.address.province,
+                city: this.briefInfo.address.city,
+                area: this.briefInfo.address.district,
+                email: this.briefInfo.email
+                //console.log(postdata);
+            };EventUtils.ajaxReq('/user/company/modifyInfo', 'post', postdata, function (resp, status) {
+                //console.log(resp);
+            });
+        },
+        cancel: function cancel() {
+            this.briefInfo = EventUtils.cloneObj(this.cloneInfo);
+            this.viewInfo = true;
+        },
+        edit: function edit() {
+            this.cloneInfo = EventUtils.cloneObj(this.briefInfo);
+            this.initAddress = EventUtils.cloneObj(this.briefInfo.address);
+            this.viewInfo = false;
+            this.$nextTick(function () {
+                selectInitInput();
+                selectInitPos();
+            });
+        }
+    }
+});
+// 移除多余的两项
+xqdatabase.incProps.remove("中国500强");
+xqdatabase.incProps.remove("世界500强");
+var appCont = new Vue({
+    el: "#app-content",
+    data: {
+        database: {
+            IncScale: xqdatabase.incScale,
+            IncProps: xqdatabase.incProps
+        },
+        account: {
+            userId: parObj.userId,
+            money: ""
+        },
+        resume: {
+            Inc: "",
+            trade: "",
+            scale: "",
+            props: "民营企业",
+            specialLv: "",
+            intro: "国际领先的互联网科技公司",
+            comLicense: "",
+            comLicenseUrl: "",
+            hasBusLicense: false,
+            edit: false,
+            view: true
+        },
+        require: {
+            state: "校企合作",
+            demandSrc: 0, //0 校企合作 1 招聘会 2 企业
+            curpage: 1,
+            totalpages: 1,
+            totalitems: 0,
+            results: [],
+            showCombi: true,
+            showRecruit: true
+        },
+        collect: {
+            state: "校企合作",
+            curpage: 1,
+            collectSrc: 0,
+            totalpages: 1,
+            totalitems: 0,
+            results: []
+        },
+        message: {
+            combi: {
+                state: "发出的邀请",
+                curpage: 1,
+                totalpages: 1,
+                totalitems: 0,
+                msgsrc: 1,
+                results: []
+            },
+            jobfair: {
+                state: "发出的邀请",
+                curpage: 1,
+                totalpages: 1,
+                totalitems: 0,
+                msgsrc: 2,
+                results: []
+            },
+            recruit: {
+                state: "全部状态",
+                curpage: 1,
+                totalpages: 1,
+                totalitems: 0,
+                results: []
+            }
+        },
+        vip: {
+            tarif: [{ level: "初级会员", prior: 1, refresh: 1, mapping: 8, price: 585, icon: "images/crown-junior.png" }, { level: "中级会员", prior: 2, refresh: 4, mapping: 12, price: 1040, icon: "images/crown-middle.png" }, { level: "高级会员", prior: 4, refresh: 8, mapping: 16, price: 1560, icon: "images/crown-senior.png" }]
+        },
+        coop: {
+            state: "校企合作",
+            curpage: 1,
+            totalpages: 1,
+            totalitems: 0,
+            applystatus: 1,
+            results: []
+        },
+        config: {
+            loginName: "",
+            userId: parObj.userId,
+            safeLevel: "80%",
+            bind: { mobile: "", email: "" }
+        }
+    },
+    watch: {
+        "config.bind.mobile": function configBindMobile(curval) {
+            var percent = 0;
+            if (this.config.bind.mobile != "") {
+                percent += 50;
+            }
+            if (this.config.bind.email != "") {
+                percent += 30;
+            }
+            init_safepos(percent);
+            percent += "%";
+            this.config.safeLevel = percent;
+        },
+        "config.bind.email": function configBindEmail(curval) {
+            var percent = 0;
+            if (this.config.bind.mobile != "") {
+                percent += 50;
+            }
+            if (this.config.bind.email != "") {
+                percent += 30;
+            }
+            init_safepos(percent);
+            percent += "%";
+            this.config.safeLevel = percent;
+        },
+        "require.state": function requireState(curval) {
+            if (curval == "校企合作") {
+                demandRequest(0, 1);
+            } else if (curval == "招聘会") {
+                demandRequest(1, 1);
+            } else if (curval == "企业直聘") {
+                demandRequest(2, 1);
+            }
+        },
+        "collect.state": function collectState(curval) {
+            if (curval == "校企合作") {
+                collectRequest(0, 1);
+            }
+            if (curval == "高校招聘会") {
+                collectRequest(1, 1);
+            }
+        },
+        "message.combi.state": function messageCombiState(curval) {
+            if (curval == "发出的邀请") {
+                combiMsgRequest(1, 1);
+            } else if (curval == "收到的邀请") {
+                combiMsgRequest(2, 1);
+            };
+            this.message.combi.curpage = 1;
+        },
+        "message.jobfair.state": function messageJobfairState(curval) {
+            if (curval == "发出的邀请") {
+                jobfairMsgRequest(1, 1);
+            } else {
+                jobfairMsgRequest(2, 1);
+            }
+        },
+        "coop.state": function coopState(curval) {
+            if (curval == "校企合作") {
+                coopRequest(1, 1);
+            } else if (curval == "招聘会") {
+                coopRequest(2, 1);
+            }
+        },
+        "resume.intro": function resumeIntro(curval) {
+            this.resume.intro = EventUtils.limitWords(1000, curval);
+        }
+    },
+    methods: {
+        newRequire: function newRequire() {
+            if (!respObj.cvStatus || respObj.cvStatus == "0") {
+                swal({
+                    title: "",
+                    text: "请先完善您的企业信息！",
+                    type: "warning"
+                });
+                return false;
+            }
+            var link = EventUtils.securityUrl("incRequire.html?new=1&userId=" + parObj.userId + "&loginId=" + parObj.loginId);
+            window.location.href = link;
+        },
+        selvipnav: function selvipnav(obj) {
+            if ((0, _jquery2.default)(obj).hasClass("vip-li")) {
+                if (this.account.money == "") {
+                    EventUtils.ajaxReq("/center/user/getAccount", "get", { userId: parObj.userId }, function (resp, status) {
+                        appCont.account.money = resp.data.useableBalance;
+                    });
+                }
+                var index = (0, _jquery2.default)(obj).index();
+                (0, _jquery2.default)(".vip-navs li.on").removeClass("on");
+                (0, _jquery2.default)(obj).addClass("on");
+                (0, _jquery2.default)(".vip-cont").removeClass("on");
+                (0, _jquery2.default)(".vip-center .vip-cont").eq(index).addClass("on");
+            }
+        },
+        recharge: function recharge() {
+            var link = "recharge.html?" + window.btoa("userId=" + parObj.userId);
+            //  new EventUtils.submitForm("recharge.html?", { userId: parObj.userId }).post();
+            // new EventUtils.submitForm('/Activity/ActivityInformation', { a_id: "1" }).post();
+            window.location.href = link;
+        },
+        priceInteger: function priceInteger(val) {
+            return parseInt(val);
+        },
+        priceDecimal: function priceDecimal(val) {
+            var priceF = (parseFloat(val) * 100 - parseInt(val) * 100) % 100;
+            priceF = parseInt(priceF);
+            if (priceF < 10) priceF += "0";
+            return "." + priceF;
+        },
+        regAddress: function regAddress(address) {
+            if (address) {
+                return address.split(";").join("-");
+            } else {
+                return "";
+            }
+        },
+        infoExtrac: function infoExtrac(text) {
+            if (text) {
+                text = EventUtils.infoExtrac(text);
+                return text;
+            } else {
+                return "";
+            }
+        },
+        infoShow: function infoShow(text, type) {
+            return EventUtils.infoShow(text, type);
+        },
+        dateExtrac: function dateExtrac(date) {
+            if (date) {
+                return date.split(" ")[0];
+            } else {
+                return "";
+            }
+        },
+        cityExtrac: function cityExtrac(text) {
+            if (text) {
+                return text.split(";")[1];
+            } else {
+                return "";
+            }
+        },
+        requireLink: function requireLink(item) {
+            if (item.demandId) {
+                var link = "detail-company.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandId=" + item.demandId + "&userType=2";
+                return EventUtils.securityUrl(link);
+            }
+            if (item.recruitId) {
+                var link = "detail-position.html?userId=" + parObj.userId + "&recruitId=" + item.recruitId;
+                return EventUtils.securityUrl(link);
+            }
+            if (item.jobFairId) {
+                var link = "detail-increcruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
+                return EventUtils.securityUrl(link);
+            }
+        },
+        collectLink: function collectLink(item) {
+            if (item.demandId) {
+                var link = "detail-uni.html?userId=" + parObj.userId + "&demandId=" + item.demandId;
+                return EventUtils.securityUrl(link);
+            }
+            if (item.jobFairId) {
+                var link = "detail-unirecruit.html?userId=" + parObj.userId + "&jobfairId=" + item.jobFairId;
+                return EventUtils.securityUrl(link);
+            }
+        },
+        messageLink: function messageLink(type, id) {
+            if (type == "combi") {
+                if (appCont.message.combi.msgsrc == 1) {
+                    var link = "detail-uni.html?demandId=" + id + "&userId=" + parObj.userId;
+                    return EventUtils.securityUrl(link);
+                } else {
+                    var link = "detail-company.html?demandId=" + id + "&userId=" + parObj.userId;
+                    return EventUtils.securityUrl(link);
+                }
+            }
+            if (type == "jobfair") {
+                if (appCont.message.jobfair.msgsrc == 1) {
+                    var link = "detail-unirecruit.html?jobfairId=" + id + "&userId=" + parObj.userId;
+                    return EventUtils.securityUrl(link);
+                } else {
+                    var link = "detail-increcruit.html?jobfairId=" + id + "&userId=" + parObj.userId;
+                    return EventUtils.securityUrl(link);
+                }
+            }
+        },
+        coopLink: function coopLink(item) {
+            if (item.demandId) {
+                if (item.releaseType == "1") {
+                    var link = "detail-uni.html?demandId=" + item.demandId + "&userId=" + parObj.userId;
+                    return EventUtils.securityUrl(link);
+                } else {
+                    var link = "detail-company.html?demandId=" + item.demandId + "&userId=" + parObj.userId;
+                    return EventUtils.securityUrl(link);
+                }
+            }
+            if (item.jobFairId) {
+                var link = "detail-unirecruit.html?jobfairId=" + item.jobFairId + "&userId=" + parObj.userId;
+                return EventUtils.securityUrl(link);
+            }
+        },
+        popComment: function popComment(item) {
+            if (item.releaseType == "1") {
+                //发布者为高校
+                appModal.comment.cooperId = item.userId;
+            }
+            if (item.releaseType == "2") {
+                //发布者为企业
+                appModal.comment.cooperId = item.applyUserId;
+            }
+            if (!item.releaseType) {
+                // 招聘会
+                appModal.comment.cooperId = item.userId;
+            }
+            appModal.showModal = true;
+            appModal.show.comment = true;
+        },
+        popTrade: function popTrade() {
+            appModal.showModal = true;
+            appModal.show.trade = true;
+        },
+        editSwipe: function editSwipe() {
+            if (appCont.resume.specialLv == "世界500强") {
+                (0, _jquery2.default)(".lv-world").addClass("selected");
+            } else if (appCont.resume.specialLv == "中国500强") {
+                (0, _jquery2.default)(".lv-china").addClass("selected");
+            }
+            this.resume.firstEdit = false;
+            this.resume.edit = true;
+            this.resume.view = false;
+            this.$nextTick(function () {
+                selectInitInput();
+                selectInitPos();
+            });
+        },
+        saveResume: function saveResume() {
+            var isFilled = true;
+            (0, _jquery2.default)(".resumeCont input[type='text']:visible").each(function () {
+                if ((0, _jquery2.default)(this).val() == "") {
+                    (0, _jquery2.default)(this).addClass("hint-nullable");
+                    isFilled = false;
+                } else {
+                    (0, _jquery2.default)(this).removeClass("hint-nullable");
+                }
+            });
+            if ((0, _jquery2.default)(".resumeCont textarea").val() == "") {
+                (0, _jquery2.default)(".resumeCont textarea").addClass("hint-nullable");
+                isFilled = false;
+            } else {
+                (0, _jquery2.default)(".resumeCont textarea").removeClass("hint-nullable");
+            }
+            if (this.resume.comLicense != "" || this.resume.comLicenseUrl != "") {
+                this.resume.hasBusLicense = true;
+            } else {
+                this.resume.hasBusLicense = false;
+                isFilled = false;
+            }
+
+            if (!isFilled) {
+                swal({
+                    title: "",
+                    text: "请完善您的企业信息！",
+                    type: "warning"
+                });
+                return false;
+            }
+            if (this.resume.comLicense != "" || this.resume.comLicenseUrl != "") {
+                this.resume.hasBusLicense = true;
+            } else {
+                this.resume.hasBusLicense = false;
+                swal({
+                    title: "",
+                    text: "请上传您的营业执照！",
+                    type: "warning"
+                });
+                return false;
+            }
+
+            // this.resume.edit = false;
+            // this.resume.view = true;
+            //上传许可证等图片文件
+            if (this.resume.comLicense != "") {
+                var hascomUrl = false;
+                _jquery2.default.ajaxFileUpload({
+                    url: 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload', //提交的路径
+                    secureuri: false, // 是否启用安全提交，默认为false
+                    fileElementId: 'file-busi', // file控件id
+                    dataType: 'json',
+                    data: {
+                        userId: parObj.userId,
+                        type: 2,
+                        fileName: appCont.resume.comLicense //传递参数，用于解析出文件名
+                    }, // 键:值，传递文件名
+                    success: function success(data, status) {
+                        hascomUrl = true;
+                        appCont.resume.comLicenseUrl = data.data;
+                        //console.log(data.data);
+                    },
+                    error: function error(data, status) {}
+                });
+            };
+            if (this.resume.comLicense != "") {
+                //如果用户有上传文件
+                setTimeout(function () {
+                    if (appCont.resume.comLicense != "" && !hascomUrl) {
+                        swal({
+                            title: "",
+                            text: "文件上传失败，请重新上传！",
+                            type: "error"
+                        });
+                    } else {
+                        var postdata = {
+                            userId: parObj.userId,
+                            companyId: respObj.companyId,
+                            name: appCont.resume.Inc,
+                            type: appCont.resume.trade,
+                            property: appCont.resume.props,
+                            scale: appCont.resume.scale,
+                            discription: appCont.resume.intro,
+                            imgUrl: appCont.resume.comLicenseUrl,
+                            isWorld: appCont.resume.specialLv == "世界500强" ? 1 : 0,
+                            isCountry: appCont.resume.specialLv == "中国500强" ? 1 : 0
+                        };
+                        EventUtils.ajaxReq('/user/company/modifyInfo', 'post', postdata, function (resp, status) {
+                            appCont.resume.edit = false;
+                            appCont.resume.view = true;
+                        });
+                    }
+                }, 500);
+            } else {
+                var postdata = {
+                    userId: parObj.userId,
+                    companyId: respObj.companyId,
+                    name: appCont.resume.Inc,
+                    type: appCont.resume.trade,
+                    property: appCont.resume.props,
+                    scale: appCont.resume.scale,
+                    discription: appCont.resume.intro,
+                    imgUrl: appCont.resume.comLicenseUrl,
+                    isWorld: appCont.resume.specialLv == "世界500强" ? 1 : 0,
+                    isCountry: appCont.resume.specialLv == "中国500强" ? 1 : 0
+                };
+                EventUtils.ajaxReq('/user/company/modifyInfo', 'post', postdata, function (resp, status) {
+                    appCont.resume.edit = false;
+                    appCont.resume.view = true;
+                });
+            }
+        },
+        checkExlv: function checkExlv(obj) {
+            (0, _jquery2.default)(obj).toggleClass("selected");
+            if ((0, _jquery2.default)(".lv-world").hasClass("selected")) {
+                this.resume.specialLv = "世界500强";
+            } else if ((0, _jquery2.default)(".lv-china").hasClass("selected")) {
+                this.resume.specialLv = "中国500强";
+            } else {
+                this.resume.specialLv = "";
+            }
+        },
+        delItem: function delItem(item) {
+            if (item.demandId) {
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    demandId: item.demandId
+                };
+                EventUtils.ajaxReq("/demand/delInfo", "post", postdata, function (resp, status) {
+                    if (appCont.require.results.length == 1 && appCont.require.curpage > 1) {
+                        appCont.require.curpage -= 1;
+                    }
+                    (0, _jquery2.default)(".requireBox .pagination a.page").eq(appCont.require.curpage - 1).parent().trigger("click");
+                });
+            }
+            if (item.jobFairId) {
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    jobFairId: item.jobFairId
+                };
+                EventUtils.ajaxReq("/jobfair/delInfo", "post", postdata, function (resp, status) {
+                    if (appCont.require.results.length == 1 && appCont.require.curpage > 1) {
+                        appCont.require.curpage -= 1;
+                    }
+                    (0, _jquery2.default)(".requireBox .pagination a.page").eq(appCont.require.curpage - 1).parent().trigger("click");
+                });
+            }
+            if (item.recruitId) {
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    recruitId: item.recruitId
+                };
+                EventUtils.ajaxReq("/recruit/delInfo", "post", postdata, function (resp, status) {
+                    if (appCont.require.results.length == 1 && appCont.require.curpage > 1) {
+                        appCont.require.curpage -= 1;
+                    }
+                    (0, _jquery2.default)(".requireBox .pagination a.page").eq(appCont.require.curpage - 1).parent().trigger("click");
+                });
+            }
+        },
+        modItem: function modItem(item) {
+            //console.log(item);
+            var link = "incRequire.html?new=0&userId=" + parObj.userId + "&loginId=" + parObj.loginId + "&demandSrc=" + appCont.require.demandSrc;
+            if (item.demandId) {
+                link += "&demandId=" + item.demandId + "&demandType=" + item.demandType;
+            }
+            if (item.jobFairId) {
+                link += "&jobfairId=" + item.jobFairId;
+            }
+            if (item.recruitId) {
+                link += "&recruitId=" + item.recruitId;
+            }
+            link = EventUtils.securityUrl(link);
+            window.open(link, "_blank");
+        },
+        freshItem: function freshItem(item) {
+            appModal.fresh.freshItem = item;
+            appModal.showModal = true;
+            appModal.show.freshbox = true;
+        },
+        stickItem: function stickItem(item) {
+            appModal.sticky.stickItem = item;
+            appModal.showModal = true;
+            appModal.show.stickybox = true;
+        },
+        priceCal1: function priceCal1(val) {
+            var priceInt = parseInt(val);
+            if (priceInt == 0) {
+                return "- " + priceInt;
+            } else if (priceInt > 0) {
+                return "+ " + priceInt;
+            }
+        },
+        priceCal2: function priceCal2(val) {
+            var priceF = (parseFloat(val) * 100 - parseInt(val) * 100) % 100;
+            //    if(priceF*10%1==0) priceF+="0";
+            if (priceF < 10) priceF += "0";
+            return "." + priceF;
+        },
+        showpage: function showpage(totalpage) {
+            if (totalpage < 3) {
+                return totalpage;
+            } else {
+                return 3;
+            }
+        },
+        topage: function topage(page, type) {
+            if (type == "require") {
+                demandRequest(appCont.require.demandSrc, page);
+            } else if (type == "collect") {
+                collectRequest(appCont.collect.collectSrc, page);
+            } else if (type == "msg-combi") {
+                combiMsgRequest(appCont.message.combi.msgsrc, page);
+            } else if (type == "msg-jobfair") {
+                jobfairMsgRequest(appCont.message.jobfair.msgsrc, page);
+            } else if (type == "msg-recruit") {
+                recruitMsgRequest(page);
+            } else if (type == "coop") {
+                coopRequest(appCont.coop.applystatus, page);
+            }
+        },
+        changeComLicense: function changeComLicense(obj) {
+            if (obj.files[0].size > 3 * 1024 * 1204) {
+                swal({
+                    title: "",
+                    text: "请上传小于3M的文件！",
+                    type: "warning"
+                });
+                obj.value = "";
+                return false;
+            }
+            this.resume.comLicense = obj.value;
+            //console.log(obj.value);
+        },
+        showFile: function showFile(fid) {
+            if (this.resume.comLicense != "") {
+                appModal.preImgUrl = EventUtils.getLocalImgUrl(fid);
+            } else if (this.resume.comLicenseUrl != "") {
+                appModal.preImgUrl = this.resume.comLicenseUrl;
+            }
+            appModal.showModal = true;
+            appModal.show.preImg = true;
+        },
+        showPrefile: function showPrefile(type) {
+            if (type == "com") {
+                appModal.preImgUrl = appCont.resume.comLicenseUrl;
+                appModal.showModal = true;
+                appModal.show.preImg = true;
+            } else if (type == "uni") {
+                appModal.preImgUrl = appCont.resume.uniLicenseUrl;
+                appModal.showModal = true;
+                appModal.show.preImg = true;
+            }
+        },
+        applyCollect: function applyCollect(item) {
+            if (item.demandId) {
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    demandId: item.demandId
+                    //console.log(postdata);
+                };EventUtils.ajaxReq("/demand/cooperateDemand", "post", postdata, function (resp, status) {
+                    //console.log(resp);
+                    if (resp.data && resp.data.isApply == "0") {
+                        swal({
+                            title: "",
+                            text: "申请已发出！",
+                            type: "success"
+                        });
+                        item.applyStatus = 1;
+                    } else {
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "error"
+                        });
+                    }
+                });
+            }
+            if (item.jobFairId) {
+                var postdata = {
+                    userId: parObj.userId,
+                    loginIdentifier: parObj.loginId,
+                    jobFairId: item.jobFairId
+                };
+                EventUtils.ajaxReq("/jobfair/cooperateJobFair", "post", postdata, function (resp, status) {
+                    //console.log(resp);
+                    if (resp.data && resp.data.isApply == "0") {
+                        swal({
+                            title: "",
+                            text: "申请已发出！",
+                            type: "success"
+                        });
+                        item.status = 1;
+                    } else {
+                        swal({
+                            title: "",
+                            text: resp.info,
+                            type: "error"
+                        });
+                    }
+                });
+            }
+        },
+        cancelCollect: function cancelCollect(type, id) {
+            if (type == "combi") {
+                var postdata = {
+                    id: id
+                };
+                EventUtils.ajaxReq("/demand/delMarkInfo", "post", postdata, function (resp, status) {
+
+                    if (appCont.collect.results.length == 1 && appCont.collect.curpage > 1) {
+                        appCont.collect.curpage -= 1;
+                    }
+                    (0, _jquery2.default)(".collectBox .pagination a.page").eq(appCont.collect.curpage - 1).parent().trigger("click");
+                });
+            }
+            if (type == "jobfair") {
+                var postdata = {
+                    id: id
+                };
+                EventUtils.ajaxReq("/jobfair/delMarkInfo", "post", postdata, function (resp, status) {
+                    if (appCont.collect.results.length == 1 && appCont.collect.curpage > 1) {
+                        appCont.collect.curpage -= 1;
+                    }
+                    (0, _jquery2.default)(".collectBox .pagination a.page").eq(appCont.collect.curpage - 1).parent().trigger("click");
+                });
+            }
+        },
+        modifyMobile: function modifyMobile() {
+            appModal.show.mobile = true;
+            appModal.showModal = true;
+        },
+        modifyEmail: function modifyEmail() {
+            appModal.show.email = true;
+            appModal.showModal = true;
+        },
+        bindWechat: function bindWechat() {
+            appModal.show.wechat = true;
+            appModal.showModal = true;
+        },
+        showCard: function showCard(item) {
+            //查看对方名片
+            var postdata = {
+                userId: item.applyUserId,
+                applyId: item.applyId
+            };
+            if (item.demandId) {
+                postdata.applyType = 1;
+            }
+            if (item.jobFairId) {
+                postdata.applyType = 2;
+            }
+            //console.log(postdata);
+            EventUtils.ajaxReq("/readcard/getCardInfo", "get", postdata, function (resp, status) {
+                //console.log(resp);
+                appModal.cardInfo.cardtype = "uni";
+                appModal.cardInfo.applyId = resp.data.applyId;
+                var infosets = resp.data.viewReadCard;
+                infosets.userAddress = infosets.userAddress ? infosets.userAddress.split(";").join("") : "不详";
+                appModal.cardInfo.infosets = infosets;
+                appModal.showModal = true;
+                appModal.show.minicard = true;
+            });
+        },
+        wordscal: function wordscal(str) {
+            //简介还剩多少字
+            return EventUtils.remainWords(1000, str);
+        },
+        checkCvs: function checkCvs(item) {
+            if (item.jobFairId) {
+                var link = "HR-center.html?jobfairId=" + item.jobFairId + "&userId=" + parObj.userId + "&loginId=" + parObj.loginId;
+            }
+            if (item.recruitId) {
+                var link = "HR-center.html?recruitId=" + item.recruitId + "&userId=" + parObj.userId + "&loginId=" + parObj.loginId;
+            }
+            link = EventUtils.securityUrl(link);
+            window.location.href = link;
+        }
+    },
+    components: {
+        'pagination': pagination
+    }
+});
+var appSider = new Vue({
+    el: "#app-side",
+    data: {},
+    methods: {
+        toHR: function toHR() {
+            if (parObj.userId) {
+                var link = "HR-center.html?userId=" + parObj.userId + "&loginId=" + parObj.loginId;
+            }
+            link = EventUtils.securityUrl(link);
+            window.open(link);
+        },
+        selnav: function selnav(obj) {
+            if ((0, _jquery2.default)(obj).hasClass("sider-li")) {
+                (0, _jquery2.default)(".sideBox .sider-li.on").removeClass("on");
+                (0, _jquery2.default)(".sideBox .sub-li").hide();
+                (0, _jquery2.default)(obj).addClass("on");
+                if ((0, _jquery2.default)(obj).children(".sub-li").length > 0) {
+                    (0, _jquery2.default)(obj).children(".sub-li").show();
+                    (0, _jquery2.default)(obj).find(".sub-item.on").trigger("click");
+                }
+                if ((0, _jquery2.default)(obj).attr("paneid")) {
+                    (0, _jquery2.default)(".content").children().hide();
+                    (0, _jquery2.default)(".content").children("." + (0, _jquery2.default)(obj).attr("paneid")).show();
+                }
+                //需求面板请求结果
+                if ((0, _jquery2.default)(obj).attr("paneid") == "requireBox") {
+                    demandRequest(appCont.require.demandSrc, 1);
+                }
+                // 收藏面板请求结果
+                if ((0, _jquery2.default)(obj).attr("paneid") == "collectBox") {
+                    collectRequest(appCont.collect.collectSrc, 1);
+                }
+                //校企合作
+                if ((0, _jquery2.default)(obj).attr("paneid") == "uni-coop") {
+                    coopRequest(appCont.coop.applystatus, 1);
+                }
+                selectInitPos();
+            }
+            if ((0, _jquery2.default)(obj).hasClass("sub-item")) {
+                (0, _jquery2.default)(obj).siblings(".sub-item.on").removeClass("on");
+                (0, _jquery2.default)(obj).addClass("on");
+                (0, _jquery2.default)(".content").children().hide();
+                (0, _jquery2.default)(".content").children("." + (0, _jquery2.default)(obj).attr("paneid")).show();
+                if ((0, _jquery2.default)(obj).attr("paneid") == "combi-msg") {
+                    //请求校企合作消息
+                    if (appCont.message.combi.state == "发出的邀请") {
+                        combiMsgRequest(1, 1);
+                    } else {
+                        combiMsgRequest(2, 1);
+                    }
+                }
+                if ((0, _jquery2.default)(obj).attr("paneid") == "jobfair-msg") {
+                    //请求校企合作消息
+                    if (appCont.message.combi.state == "发出的邀请") {
+                        jobfairMsgRequest(1, 1);
+                    } else {
+                        jobfairMsgRequest(2, 1);
+                    }
+                }
+                if ((0, _jquery2.default)(obj).attr("paneid") == "recruit-msg") {
+                    recruitMsgRequest(1);
+                }
+                selectInitPos();
+            }
+        }
+    }
+});
+
+var appFooter = new Vue({
+    el: "#app-footer",
+    data: {
+        userId: parObj.userId
+    }
+});
+var appModal = new Vue({
+    el: "#app-modal",
+    data: {
+        account: {
+            money: 0,
+            userId: parObj.userId,
+            freeFreshTimes: 0
+        },
+        show: {
+            stickybox: false,
+            freshbox: false,
+            minicard: false,
+            mobile: false,
+            email: false,
+            wechat: false,
+            preImg: false,
+            comment: false,
+            trade: false,
+            upload: false,
+            message: false
+        },
+        showModal: false,
+        preImgUrl: "",
+        cardInfo: {
+            cardtype: "inc",
+            applyId: "",
+            infosets: {
+                userName: "",
+                imgsrc: "",
+                userProperty: "",
+                userScale: "",
+                tel: "",
+                email: "",
+                address: "",
+                userType: "",
+                profession: "",
+                description: ""
+            }
+        },
+        sticky: {
+            stickItem: null
+        },
+        fresh: {
+            freshItem: null
+        },
+        comment: {
+            cooperId: 0,
+            text: ""
+        },
+        checkedTrades: [],
+        trades: workareas
+        // baseInfo: appPorto.oldInfo,
+        // resumeInfo: appCont.resume
+    },
+    methods: {
+        closeMsg: function closeMsg() {
+            this.show.message = false;
+            this.showModal = false;
+        },
+        remainText: function remainText(text) {
+            return EventUtils.remainWords(400, text);
+        },
+        checkText: function checkText(type) {
+            if (type == "comment") {
+                this.comment.text = EventUtils.limitWords(400, this.comment.text);
+            }
+        },
+        confirmComment: function confirmComment() {
+            if (this.comment.text == "") {
+                swal({
+                    title: "",
+                    text: "评价内容不能为空！",
+                    type: "warning"
+                });
+                return false;
+            }
+            var postdata = {
+                userId: parObj.userId,
+                loginIdentifier: parObj.loginId,
+                comment: this.comment.text,
+                reportUserId: this.comment.cooperId
+                //console.log(postdata);
+            };EventUtils.ajaxReq("/sys/comment", "post", postdata, function (resp, status) {
+                appModal.comment.text = "";
+                appModal.show.comment = false;
+                appModal.showModal = false;
+            });
+        },
+        cancelComment: function cancelComment() {
+            this.comment.text = "";
+            this.show.comment = false;
+            this.showModal = false;
+        },
+        closeSticky: function closeSticky() {
+            this.show.stickybox = false;
+            this.showModal = false;
+        },
+        closeFresh: function closeFresh() {
+            this.show.freshbox = false;
+            this.showModal = false;
+        },
+        closeTrade: function closeTrade() {
+            this.show.trade = false;
+            this.showModal = false;
+        },
+        checkfunc: function checkfunc(item, target) {
+            if (!target.checked) {
+                this.checkedTrades.remove(item);
+            } else if (this.checkedTrades.length >= 3) {
+                target.checked = false;
+                return false;
+            } else {
+                this.checkedTrades.push(item);
+            }
+        },
+        submitTrade: function submitTrade() {
+            appCont.resume.trade = (0, _jquery2.default)(".trade-single-table input[type='radio']:checked").val();
+            this.show.trade = false;
+            this.showModal = false;
+        },
+        cancelTrade: function cancelTrade() {
+            this.show.trade = false;
+            this.showModal = false;
+        },
+        hidemodal: function hidemodal(obj) {
+            if ((0, _jquery2.default)(obj).hasClass("modal")) {
+                this.showModal = false;
+                for (var key in appModal.show) {
+                    appModal.show[key] = false;
+                }
+            }
+        },
+        closePorto: function closePorto() {
+            this.show.upload = false;
+            this.showModal = false;
+        },
+        closeMobile: function closeMobile() {
+            EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function (resp, status) {
+                appCont.config.bind.mobile = resp.data.mobile;
+                appCont.config.bind.email = resp.data.email;
+            });
+            this.show.mobile = false;
+            this.showModal = false;
+        },
+        closeWechat: function closeWechat() {
+            this.show.wechat = false;
+            this.showModal = false;
+        },
+        closeEmail: function closeEmail() {
+            EventUtils.ajaxReq("/center/user/getInfo", "get", { userId: parObj.userId }, function (resp, status) {
+                appCont.config.bind.mobile = resp.data.mobile;
+                appCont.config.bind.email = resp.data.email;
+            });
+            this.show.email = false;
+            this.showModal = false;
+        },
+        agreeApply: function agreeApply(applyId) {
+            var postdata = {
+                applyId: applyId,
+                result: 1
+            };
+            EventUtils.ajaxReq("/readcard/disposeDemand", "get", postdata, function (resp, status) {
+                combiMsgRequest(2, 1);
+                appModal.show.minicard = false;
+                appModal.showModal = false;
+            });
+        },
+        denyApply: function denyApply(applyId) {
+            var postdata = {
+                applyId: applyId,
+                result: 2
+            };
+            EventUtils.ajaxReq("/readcard/disposeDemand", "get", postdata, function (resp, status) {
+                combiMsgRequest(2, 1);
+                appModal.show.minicard = false;
+                appModal.showModal = false;
+            });
+        }
+    },
+    watch: {
+        "show.message": function showMessage(curval) {
+            if (curval) {
+                this.$nextTick(function () {
+                    EventUtils.absCenter((0, _jquery2.default)("#app-modal .msg-box"));
+                });
+            } else {
+                var postdata = {
+                    userId: parObj.userId,
+                    index: 1,
+                    count: 8
+                };
+                EventUtils.ajaxReq("/message/getMessageList", "get", postdata, function (resp, status) {
+                    if (resp.data && resp.data.count > 0) {
+                        (0, _jquery2.default)(".msg-center .msg-info").html(resp.data.count);
+                        (0, _jquery2.default)(".msg-center .msg-info").show();
+                    } else {
+                        (0, _jquery2.default)(".msg-center .msg-info").hide();
+                    }
+                });
+            }
+        },
+        "show.minicard": function showMinicard(curval) {
+            if (curval) {
+                EventUtils.absCenter((0, _jquery2.default)(".minicard"));
+            }
+        },
+        "show.preImg": function showPreImg(curval) {
+            if (curval) {
+                if (curval) {
+                    EventUtils.absCenter((0, _jquery2.default)("#app-modal .preview-file"));
+                }
+            }
+        },
+        "show.upload": function showUpload(curval) {
+            if (curval) {
+                this.$nextTick(function () {
+                    EventUtils.absCenter((0, _jquery2.default)("#app-modal .porto-upload"));
+                });
+            }
+        },
+        'show.trade': function showTrade(curval) {
+            if (curval) {
+                this.$nextTick(function () {
+                    EventUtils.absCenter((0, _jquery2.default)("#app-modal .trade-box"));
+                });
+            }
+        },
+        "show.mobile": function showMobile(curval) {
+            if (curval) {
+                this.$nextTick(function () {
+                    EventUtils.absCenter((0, _jquery2.default)("#app-modal .mobile-bind"));
+                });
+            }
+        },
+        "show.email": function showEmail(curval) {
+            if (curval) {
+                this.$nextTick(function () {
+                    EventUtils.absCenter((0, _jquery2.default)("#app-modal .email-bind"));
+                });
+            }
+        },
+        "show.wechat": function showWechat(curval) {
+            if (curval) {
+                this.$nextTick(function () {
+                    EventUtils.absCenter((0, _jquery2.default)("#app-modal .wechat-bind"));
+                });
+            }
+        },
+        "show.comment": function showComment(curval) {
+            if (curval) {
+                this.$nextTick(function () {
+                    EventUtils.absCenter((0, _jquery2.default)("#app-modal .comment-box"));
+                });
+            }
+        },
+        "show.stickybox": function showStickybox(curval) {
+            if (curval) {
+                this.$nextTick(function () {
+                    EventUtils.absCenter((0, _jquery2.default)("#app-modal .sticky-box"));
+                });
+            }
+        },
+        "show.freshbox": function showFreshbox(curval) {
+            if (curval) {
+                this.$nextTick(function () {
+                    EventUtils.absCenter((0, _jquery2.default)("#app-modal .fresh-box"));
+                });
+            }
+        }
+    }
+});
+
+infoRequest();
+
+function init_center() {
+    //如果有主题跳转信息
+    if (parObj.theme) {
+        switch (parObj.theme) {
+            case "vip":
+                (0, _jquery2.default)(".sideBox li[paneid='vip-center']").trigger("click");
+                break;
+            case "require":
+                if (parObj.demandSrc) {
+                    appCont.require.demandSrc = parObj.demandSrc;
+                }
+                (0, _jquery2.default)(".sideBox li[paneid='requireBox']").trigger("click");
+                break;
+            case "combi":
+                (0, _jquery2.default)(".sideBox li[paneid='uni-coop']").trigger("click");
+                break;
+            case "collect":
+                (0, _jquery2.default)(".sideBox li[paneid='collectBox']").trigger("click");
+                break;
+        }
+    }
+    selectInitInput();
+    selectInitPos();
+    refreshEventBind();
+    uploadEventBind();
+}
+init_center();
+
+function uploadEventBind() {
+    var options = {
+        thumbBox: '.thumbBox',
+        spinner: '.spinner',
+        imgSrc: 'images/avatar.png'
+    };
+    var cropper = (0, _jquery2.default)('.imgBox').cropbox(options);
+    (0, _jquery2.default)('#upload-file').on('change', function () {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            options.imgSrc = e.target.result;
+            cropper = (0, _jquery2.default)('.imgBox').cropbox(options);
+        };
+        reader.readAsDataURL(this.files[0]);
+        this.files = null;
+    });
+    (0, _jquery2.default)('.zoom-in').on('click', function () {
+        cropper.zoomIn();
+    });
+    (0, _jquery2.default)('.zoom-out').on('click', function () {
+        cropper.zoomOut();
+    });
+
+    (0, _jquery2.default)('#btnSubmit').on('click', function () {
+        var imgsrc = cropper.getDataURL();
+        if (imgsrc.length > 500 * 1024) {
+            swal({
+                title: "",
+                text: "请上传小于500K的头像！",
+                type: "warning"
+            });
+            return;
+        }
+        var postdata = {
+            userId: parObj.userId,
+            userIcon: imgsrc
+        };
+        EventUtils.ajaxReq("/center/user/uploadIcon", "post", postdata, function (resp, status) {
+            resp.data += "?" + Math.random();
+            (0, _jquery2.default)("#avatar-box").html("<img src='" + resp.data + "' />");
+        });
+        appModal.show.upload = false;
+        appModal.showModal = false;
+    });
+}
+
+function init_safepos(percent) {
+    var p_left = Math.floor((0, _jquery2.default)(".safe-range").width() * percent / 100) - 16 + "px";
+    (0, _jquery2.default)(".r-pointer").css("left", p_left);
+    (0, _jquery2.default)("#safe-progress").css("width", percent + "%");
+}
+
+function refreshEventBind() {
+    (0, _jquery2.default)(".plan-sticky-table td").click(function () {
+        if (!(0, _jquery2.default)(this).hasClass("td-title")) {
+            (0, _jquery2.default)(".plan-sticky-table td[name='" + (0, _jquery2.default)(this).attr("name") + "']").removeClass("on");
+            (0, _jquery2.default)(this).addClass("on");
+            var summe = 0;
+            (0, _jquery2.default)(".plan-sticky-table tr").each(function (index) {
+                if (index == 1) {
+                    summe += (0, _jquery2.default)(this).find("td.on").length * 70;
+                } else if (index == 2) {
+                    summe += (0, _jquery2.default)(this).find("td.on").length * 50;
+                };
+            });
+            appModal.sticky.sum = summe;
+        }
+    });
+}
+
+//企业需求数据请求
+function demandRequest(type, page) {
+    appCont.require.curpage = page;
+    if (type == 0) {
+        // 校企合作
+        var postdata = {
+            userId: parObj.userId,
+            loginIdentifier: parObj.loginId,
+            isCenter: 1,
+            demandType: 2,
+            index: page,
+            count: 3
+        };
+        EventUtils.ajaxReq("/demand/getList", "get", postdata, function (resp, status) {
+            if (resp && resp.data) {
+                appCont.require.totalpages = resp.data.totalPage;
+                appCont.require.results = resp.data.list;
+                appCont.require.totalitems = resp.data.totalRow;
+            } else {
+                appCont.require.totalpages = 1;
+                appCont.require.results = [];
+                appCont.require.totalitems = 0;
+            }
+            appCont.require.demandSrc = 0;
+            appCont.require.state = "校企合作";
+        });
+    } else if (type == 1) {
+        //招聘会
+        var postdata = {
+            userId: parObj.userId,
+            loginIdentifier: parObj.loginId,
+            isCenter: 1,
+            jobFairType: 2,
+            index: page,
+            count: 3
+        };
+        EventUtils.ajaxReq("/jobfair/getList", "get", postdata, function (resp, status) {
+            if (resp && resp.data) {
+                appCont.require.totalpages = resp.data.totalPage;
+                appCont.require.results = resp.data.list;
+                appCont.require.totalitems = resp.data.totalRow;
+            } else {
+                appCont.require.totalpages = 1;
+                appCont.require.results = [];
+                appCont.require.totalitems = 0;
+            }
+            appCont.require.demandSrc = 1;
+            appCont.require.state = "招聘会";
+        });
+    } else if (type == 2) {
+        //企业直聘
+        var postdata = {
+            userId: parObj.userId,
+            loginIdentifier: parObj.loginId,
+            isCenter: 1,
+            index: page,
+            count: 3
+        };
+        EventUtils.ajaxReq("/recruit/getList", "get", postdata, function (resp, status) {
+            //console.log(resp);
+            if (resp && resp.data) {
+                appCont.require.totalpages = resp.data.totalPage;
+                appCont.require.results = resp.data.list;
+                appCont.require.totalitems = resp.data.totalRow;
+            } else {
+                appCont.require.totalpages = 1;
+                appCont.require.results = [];
+                appCont.require.totalitems = 0;
+            }
+            appCont.require.demandSrc = 2;
+            appCont.require.state = "企业直聘";
+        });
+    }
+}
+
+//企业收藏信息请求
+function collectRequest(type, page) {
+    appCont.collect.curpage = 1;
+    if (type == 0) {
+        //校企合作
+        var postdata = {
+            userId: parObj.userId,
+            loginIdentifier: parObj.loginId,
+            index: page,
+            count: 3
+        };
+        EventUtils.ajaxReq("/demand/getMarkList", "get", postdata, function (resp, status) {
+            //console.log(resp);
+            if (resp.data) {
+                appCont.collect.totalpages = resp.data.totalPage;
+                appCont.collect.totalitems = resp.data.totalRow;
+                appCont.collect.results = resp.data.list;
+            } else {
+                appCont.collect.totalpages = 1;
+                appCont.collect.results = [];
+                appCont.collect.totalitems = 0;
+            }
+            appCont.collect.collectSrc = 0;
+        });
+    } else if (type == 1) {
+        //招聘会
+        var postdata = {
+            userId: parObj.userId,
+            loginIdentifier: parObj.loginId,
+            index: page,
+            count: 3
+        };
+        EventUtils.ajaxReq("/jobfair/getMarkList", "get", postdata, function (resp, status) {
+            //console.log(resp);
+            if (resp.data) {
+                appCont.collect.totalpages = resp.data.totalPage;
+                appCont.collect.totalitems = resp.data.totalRow;
+                appCont.collect.results = resp.data.list;
+            } else {
+                appCont.collect.totalpages = 1;
+                appCont.collect.results = [];
+                appCont.collect.totalitems = 0;
+            }
+            appCont.collect.collectSrc = 1;
+        });
+    }
+}
+// 校企合作消息数据请求
+function combiMsgRequest(applystatus, page) {
+    appCont.message.combi.curpage = page;
+    var postdata = {
+        userId: parObj.userId,
+        applyStatus: applystatus,
+        index: page,
+        count: 3
+    };
+    EventUtils.ajaxReq("/demand/getDemandApply", "get", postdata, function (resp, status) {
+        //console.log(resp);
+        if (resp && resp.data) {
+            appCont.message.combi.totalitems = resp.data.totalRow;
+            appCont.message.combi.totalpages = resp.data.totalPage;
+            appCont.message.combi.results = resp.data.list;
+        } else {
+            appCont.message.combi.results = [];
+            appCont.message.combi.totalitems = 0;
+            appCont.message.combi.totalpages = 1;
+        }
+        appCont.message.combi.msgsrc = applystatus;
+    });
+}
+//招聘会消息数据请求
+function jobfairMsgRequest(applystatus, page) {
+    appCont.message.jobfair.curpage = page;
+    var postdata = {
+        userId: parObj.userId,
+        applyStatus: applystatus,
+        index: page,
+        count: 3
+    };
+    EventUtils.ajaxReq("/jobfair/getJobFair", "get", postdata, function (resp, status) {
+        //console.log(resp);
+        if (resp && resp.data) {
+            appCont.message.jobfair.totalitems = resp.data.totalRow;
+            appCont.message.jobfair.totalpages = resp.data.totalPage;
+            appCont.message.jobfair.results = resp.data.list;
+        } else {
+            appCont.message.jobfair.results = [];
+            appCont.message.jobfair.totalitems = 0;
+            appCont.message.jobfair.totalpages = 1;
+        }
+        appCont.message.jobfair.msgsrc = applystatus;
+    });
+}
+
+//直聘消息数据请求
+function recruitMsgRequest(page) {
+    appCont.message.recruit.curpage = page;
+    var postdata = {
+        userId: parObj.userId,
+        index: page,
+        count: 3
+    };
+    EventUtils.ajaxReq("/recruit/getReceiveList", "get", postdata, function (resp, status) {
+        //console.log(resp);
+        if (resp && resp.data) {
+            appCont.message.recruit.totalitems = resp.data.totalRow;
+            appCont.message.recruit.totalpages = resp.data.totalPage;
+            appCont.message.recruit.results = resp.data.list;
+        } else {
+            appCont.message.recruit.results = [];
+            appCont.message.recruit.totalpages = 1;
+            appCont.message.recruit.totalitems = 0;
+        }
+    });
+}
+//校企合作一览
+function coopRequest(applyindex, page) {
+    appCont.coop.curpage = page;
+    var postdata = {
+        userId: parObj.userId,
+        loginIdentifier: parObj.loginId,
+        index: page,
+        count: 3,
+        applyStatus: applyindex
+        //console.log(postdata);
+    };EventUtils.ajaxReq("/demand/getDemandApplyList", "get", postdata, function (resp, status) {
+        //console.log(resp);
+        if (resp && resp.data) {
+            appCont.coop.totalitems = resp.data.totalRow;
+            appCont.coop.totalpages = resp.data.totalPage;
+            appCont.coop.results = resp.data.list;
+        } else {
+            appCont.coop.results = [];
+            appCont.coop.totalitems = 0;
+            appCont.coop.totalpages = 1;
+        }
+        appCont.coop.applystatus = applyindex;
+    });
+}
+
+// 清除页面绑定事件
+window.onunload = function () {
+    (0, _jquery2.default)(".plan-sticky-table td").click(null);
+    appTop.$off();
+    appPorto.$off();
+    appCont.$off();
+    appSider.$off();
+    appModal.$off();
+};
+
+/***/ })
+
+},[61]);

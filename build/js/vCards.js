@@ -1,1 +1,279 @@
-webpackJsonp([12],{47:function(e,t){},71:function(e,t,n){"use strict";var i=n(0),a=function(e){return e&&e.__esModule?e:{default:e}}(i);n(4),n(2);var l=n(1);n(6),n(10),n(17),n(3),n(5),n(47);var s=EventUtils.urlExtrac(window.location),r=new l({el:"#app-top",data:{displayCity:s.addr?decodeURI(s.addr):"杭州市"}}),o=new l({el:"#app-content",data:{database:{workstates:xqdatabase.workstates,addrData:addArray,uniLevel:xqdatabase.unilevel,incProps:xqdatabase.incProps,incScales:xqdatabase.incScale,date:xqdatabase.date},pInfo:{name:"",birth:{year:"",month:""},workstate:"",email:""},uniInfo:{name:"",props:"",linkMan:"",mobile:"",validCode:"",unable:!0},incInfo:{name:"",props:"",scale:"",linkMan:"",mobile:"",validCode:"",unable:!0},workstate:"",uniLevel:"",incProp:"",incScale:"",showPerson:"0"==s.userType||""==window.location.search,showUni:"1"==s.userType,showInc:"2"==s.userType},methods:{securityUrl:function(e){return EventUtils.securityUrl(e)},codequery:function(e,t){if(!variableUtils.regExp.mobile.test(e))return swal({title:"",text:"手机格式不正确！",type:"warning"}),!1;(0,a.default)(t).attr("disabled",!0);var n=0,i=setInterval(function(){n++,60==n?((0,a.default)(t).html("获取验证码"),(0,a.default)(t).attr("disabled",!1),clearInterval(i)):(0,a.default)(t).html("重新获取 ("+(60-n)+"s)")},1e3),l={mobile:e,type:3},s=function(e,t){swal({title:"",text:e.info,type:"warning"})};EventUtils.ajaxReq("/sys/mobileCode","post",l,s)},selectGender:function(e){(0,a.default)(".gender .on").removeClass("on"),(0,a.default)(e).addClass("on")},submitCard:function(e){var t=!0;if((0,a.default)("#app-content input:visible").each(function(){""==(0,a.default)(this).val()?(t=!1,(0,a.default)(this).addClass("hint-nullable")):(0,a.default)(this).removeClass("hint-nullable")}),!t)return swal({title:"",text:"请完成所有的卡片信息！",type:"warning"}),!1;var n="",i={},l="";if("person"==e){if(n="/user/user/createCard",l="pCenter.html?",!variableUtils.regExp.email.test(this.pInfo.email))return swal({title:"",text:"邮箱格式不正确！",type:"warning"}),!1;i={userId:s.userId,realName:this.pInfo.name,birthday:this.pInfo.birth.year+"-"+this.pInfo.birth.month+"-01",liveStatus:this.pInfo.workstate,sex:"男"==(0,a.default)(".personCard .gender .on").text()?1:2,province:(0,a.default)(".personCard .sel-province input").val(),city:(0,a.default)(".personCard .sel-city input").val(),area:(0,a.default)(".personCard .sel-district input").val(),email:this.pInfo.email}}else if("uni"==e){if(!variableUtils.regExp.mobile.test(this.uniInfo.mobile))return swal({title:"",text:"手机格式不正确！",type:"warning"}),!1;n="/user/school/createCard",i={userId:s.userId,name:this.uniInfo.name,property:this.uniInfo.props,province:(0,a.default)(".uniCard .sel-province input").val(),city:(0,a.default)(".uniCard .sel-city input").val(),area:(0,a.default)(".uniCard .sel-district input").val(),linkMan:this.uniInfo.linkMan,mobile:this.uniInfo.mobile,code:this.uniInfo.validCode},l="uniCenter.html?"}else if("inc"==e){if(!variableUtils.regExp.mobile.test(this.incInfo.mobile))return swal({title:"",text:"手机格式不正确！",type:"warning"}),!1;n="/user/company/createCard",i={userId:s.userId,name:this.incInfo.name,property:this.incInfo.props,scale:this.incInfo.scale,province:(0,a.default)(".bsCard .sel-province input").val(),city:(0,a.default)(".bsCard .sel-city input").val(),area:(0,a.default)(".bsCard .sel-district input").val(),linkMan:this.incInfo.linkMan,mobile:this.incInfo.mobile,code:this.incInfo.validCode},l="incCenter.html?"}if(!s.userId)return swal({title:"",text:"网页数据出错，请返回注册页重新注册！",type:"warning"}),!1;EventUtils.ajaxReq(n,"post",i,function(e,t){"00000"==e.code?(swal({title:"",text:e.info,type:"success",showConfirmButton:!1}),setTimeout(function(){var e="userId="+s.userId+"&loginId="+s.loginId;window.location.href=EventUtils.securityUrl(l+e)},1e3)):swal({title:"",text:e.info,type:"error"})})}},watch:{"uniInfo.mobile":function(e){this.uniInfo.unable=""==e},"incInfo.mobile":function(e){this.incInfo.unable=""==e}},mounted:function(){selectInitInput(),selectInitPos(),(0,a.default)(".main").css("height",EventUtils.getViewport().height-246+"px")}});window.onunload=function(){r.$off(),o.$off()}}},[71]);
+webpackJsonp([12],{
+
+/***/ 47:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 71:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+__webpack_require__(4); /**
+                                    * Created by xuanyuan on 2016/11/7.
+                                    */
+
+__webpack_require__(2);
+var Vue = __webpack_require__(1);
+__webpack_require__(6);
+__webpack_require__(10);
+__webpack_require__(17);
+__webpack_require__(3);
+__webpack_require__(5);
+__webpack_require__(47);
+
+var parObj = EventUtils.urlExtrac(window.location);
+var appTop = new Vue({
+    el: "#app-top",
+    data: {
+        displayCity: parObj.addr ? decodeURI(parObj.addr) : "杭州市"
+    }
+});
+var appCont = new Vue({
+    el: "#app-content",
+    data: {
+        database: {
+            workstates: xqdatabase.workstates,
+            addrData: addArray,
+            uniLevel: xqdatabase.unilevel,
+            incProps: xqdatabase.incProps,
+            incScales: xqdatabase.incScale,
+            date: xqdatabase.date
+        },
+        pInfo: {
+            name: "",
+            birth: {
+                year: "",
+                month: ""
+            },
+            workstate: "",
+            email: ""
+        },
+        uniInfo: {
+            name: "",
+            props: "",
+            linkMan: "",
+            mobile: "",
+            validCode: "",
+            unable: true
+        },
+        incInfo: {
+            name: "",
+            props: "",
+            scale: "",
+            linkMan: "",
+            mobile: "",
+            validCode: "",
+            unable: true
+        },
+        workstate: "",
+        uniLevel: "",
+        incProp: "",
+        incScale: "",
+        showPerson: parObj.userType == "0" || window.location.search == "",
+        showUni: parObj.userType == "1",
+        showInc: parObj.userType == "2"
+    },
+    methods: {
+        securityUrl: function securityUrl(url) {
+            return EventUtils.securityUrl(url);
+        },
+        codequery: function codequery(mobile, obj) {
+            if (!variableUtils.regExp.mobile.test(mobile)) {
+                swal({
+                    title: "",
+                    text: "手机格式不正确！",
+                    type: "warning"
+                });
+                return false;
+            }
+            (0, _jquery2.default)(obj).attr("disabled", true);
+            var start = 0;
+            var timer = setInterval(function () {
+                start++;
+                if (start == 60) {
+                    (0, _jquery2.default)(obj).html("获取验证码");
+                    (0, _jquery2.default)(obj).attr("disabled", false);
+                    clearInterval(timer);
+                } else {
+                    (0, _jquery2.default)(obj).html("重新获取 (" + (60 - start) + "s)");
+                }
+            }, 1000);
+            var postdata = {
+                mobile: mobile,
+                type: 3
+            };
+            var callback = function callback(data, status) {
+                swal({
+                    title: "",
+                    text: data.info,
+                    type: "warning"
+                });
+            };
+            EventUtils.ajaxReq('/sys/mobileCode', 'post', postdata, callback);
+        },
+        selectGender: function selectGender(obj) {
+            (0, _jquery2.default)(".gender .on").removeClass("on");
+            (0, _jquery2.default)(obj).addClass("on");
+        },
+        submitCard: function submitCard(type) {
+            var isFilled = true;
+            (0, _jquery2.default)("#app-content input:visible").each(function () {
+                if ((0, _jquery2.default)(this).val() == "") {
+                    isFilled = false;
+                    (0, _jquery2.default)(this).addClass("hint-nullable");
+                } else {
+                    (0, _jquery2.default)(this).removeClass("hint-nullable");
+                }
+            });
+            if (!isFilled) {
+                swal({
+                    title: "",
+                    text: "请完成所有的卡片信息！",
+                    type: "warning"
+                });
+                return false;
+            }
+            var posturl = "";
+            var postdata = {};
+            var domainUrl = "";
+            if (type == "person") {
+                posturl = "/user/user/createCard";
+                domainUrl = "pCenter.html?";
+                if (!variableUtils.regExp.email.test(this.pInfo.email)) {
+                    swal({
+                        title: "",
+                        text: "邮箱格式不正确！",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                postdata = {
+                    userId: parObj.userId,
+                    realName: this.pInfo.name,
+                    birthday: this.pInfo.birth.year + "-" + this.pInfo.birth.month + "-01",
+                    liveStatus: this.pInfo.workstate,
+                    sex: (0, _jquery2.default)(".personCard .gender .on").text() == "男" ? 1 : 2,
+                    province: (0, _jquery2.default)(".personCard .sel-province input").val(),
+                    city: (0, _jquery2.default)(".personCard .sel-city input").val(),
+                    area: (0, _jquery2.default)(".personCard .sel-district input").val(),
+                    email: this.pInfo.email
+                };
+            } else if (type == "uni") {
+                if (!variableUtils.regExp.mobile.test(this.uniInfo.mobile)) {
+                    swal({
+                        title: "",
+                        text: "手机格式不正确！",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                posturl = "/user/school/createCard";
+                postdata = {
+                    userId: parObj.userId,
+                    name: this.uniInfo.name,
+                    property: this.uniInfo.props,
+                    province: (0, _jquery2.default)(".uniCard .sel-province input").val(),
+                    city: (0, _jquery2.default)(".uniCard .sel-city input").val(),
+                    area: (0, _jquery2.default)(".uniCard .sel-district input").val(),
+                    linkMan: this.uniInfo.linkMan,
+                    mobile: this.uniInfo.mobile,
+                    code: this.uniInfo.validCode
+                };
+                domainUrl = "uniCenter.html?";
+            } else if (type == "inc") {
+                if (!variableUtils.regExp.mobile.test(this.incInfo.mobile)) {
+                    swal({
+                        title: "",
+                        text: "手机格式不正确！",
+                        type: "warning"
+                    });
+                    return false;
+                }
+                posturl = "/user/company/createCard";
+                postdata = {
+                    userId: parObj.userId,
+                    name: this.incInfo.name,
+                    property: this.incInfo.props,
+                    scale: this.incInfo.scale,
+                    province: (0, _jquery2.default)(".bsCard .sel-province input").val(),
+                    city: (0, _jquery2.default)(".bsCard .sel-city input").val(),
+                    area: (0, _jquery2.default)(".bsCard .sel-district input").val(),
+                    linkMan: this.incInfo.linkMan,
+                    mobile: this.incInfo.mobile,
+                    code: this.incInfo.validCode
+                };
+                domainUrl = "incCenter.html?";
+            }
+            if (!parObj.userId) {
+                swal({
+                    title: "",
+                    text: "网页数据出错，请返回注册页重新注册！",
+                    type: "warning"
+                });
+                return false;
+            }
+            EventUtils.ajaxReq(posturl, 'post', postdata, function (resp, status) {
+                if (resp.code == "00000") {
+                    swal({
+                        title: "",
+                        text: resp.info,
+                        type: "success",
+                        showConfirmButton: false
+                    });
+                    setTimeout(function () {
+                        var parstring = "userId=" + parObj.userId + "&loginId=" + parObj.loginId;
+                        window.location.href = EventUtils.securityUrl(domainUrl + parstring);
+                    }, 1000);
+                } else {
+                    swal({
+                        title: "",
+                        text: resp.info,
+                        type: "error"
+                    });
+                }
+            });
+        }
+    },
+    watch: {
+        'uniInfo.mobile': function uniInfoMobile(curval) {
+            if (curval != "") {
+                this.uniInfo.unable = false;
+            } else {
+                this.uniInfo.unable = true;
+            }
+        },
+        'incInfo.mobile': function incInfoMobile(curval) {
+            if (curval != "") {
+                this.incInfo.unable = false;
+            } else {
+                this.incInfo.unable = true;
+            }
+        }
+    },
+    mounted: function mounted() {
+        selectInitInput();
+        selectInitPos();
+        (0, _jquery2.default)(".main").css("height", EventUtils.getViewport().height - 246 + "px");
+    }
+});
+
+// 清除页面绑定事件
+window.onunload = function () {
+    appTop.$off();
+    appCont.$off();
+};
+
+/***/ })
+
+},[71]);

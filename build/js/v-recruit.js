@@ -1,1 +1,72 @@
-webpackJsonp([13],{46:function(t,e){},70:function(t,e,n){"use strict";var r=n(0),i=function(t){return t&&t.__esModule?t:{default:t}}(r);n(2);var o=n(1);n(3),n(46);var u=EventUtils.urlExtrac(window.location),d=new o({el:"#app",data:{},methods:{homeLink:function(){var t="index.html?";u.userId&&(t+="userId="+u.userId),window.location.href=EventUtils.securityUrl(t)},footerLink:function(t){var e="footer-page.html?theme="+t;u.userId&&(e+="&userId="+u.userId),window.location.href=EventUtils.securityUrl(e)},enterUni:function(){var t="display-unirecruit.html?";u.userId&&(t+="userId="+u.userId),window.location.href=EventUtils.securityUrl(t)},enterInc:function(){var t="display-increcruit.html?";u.userId&&(t+="userId="+u.userId),window.location.href=EventUtils.securityUrl(t)}}});(0,i.default)("#main-content").height(EventUtils.getViewport().height-(0,i.default)(".top").outerHeight(!0)-(0,i.default)(".bot").outerHeight(!0)),window.onunload=function(){d.$off()}}},[70]);
+webpackJsonp([13],{
+
+/***/ 46:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 70:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+__webpack_require__(2);
+var Vue = __webpack_require__(1);
+__webpack_require__(3);
+__webpack_require__(46);
+
+var parObj = EventUtils.urlExtrac(window.location);
+
+var myapp = new Vue({
+    el: "#app",
+    data: {},
+    methods: {
+        homeLink: function homeLink() {
+            var link = "index.html?";
+            if (parObj.userId) {
+                link += "userId=" + parObj.userId;
+            }
+            window.location.href = EventUtils.securityUrl(link);
+        },
+        footerLink: function footerLink(type) {
+            var link = "footer-page.html?theme=" + type;
+            if (parObj.userId) {
+                link += "&userId=" + parObj.userId;
+            }
+            window.location.href = EventUtils.securityUrl(link);
+        },
+        enterUni: function enterUni() {
+            var link = "display-unirecruit.html?";
+            if (parObj.userId) {
+                link += "userId=" + parObj.userId;
+            }
+            window.location.href = EventUtils.securityUrl(link);
+        },
+        enterInc: function enterInc() {
+            var link = "display-increcruit.html?";
+            if (parObj.userId) {
+                link += "userId=" + parObj.userId;
+            }
+            window.location.href = EventUtils.securityUrl(link);
+        }
+    }
+});
+(0, _jquery2.default)("#main-content").height(EventUtils.getViewport().height - (0, _jquery2.default)(".top").outerHeight(true) - (0, _jquery2.default)(".bot").outerHeight(true));
+
+// 清除页面绑定事件
+window.onunload = function () {
+    myapp.$off();
+};
+
+/***/ })
+
+},[70]);
