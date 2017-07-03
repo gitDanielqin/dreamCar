@@ -673,7 +673,7 @@ var appCont = new Vue({
             if (this.resume.comLicense != "") {
                 var hascomUrl = false;
                 $.ajaxFileUpload({
-                    url: 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload', //提交的路径
+                    url: 'https://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload', //提交的路径
                     secureuri: false, // 是否启用安全提交，默认为false
                     fileElementId: 'file-busi', // file控件id
                     dataType: 'json',
@@ -697,7 +697,7 @@ var appCont = new Vue({
             if (this.resume.uniLicense != "") {
                 var hasuniUrl = false;
                 $.ajaxFileUpload({
-                    url: 'http://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload', //提交的路径
+                    url: 'https://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload', //提交的路径
                     secureuri: false, // 是否启用安全提交，默认为false
                     fileElementId: 'file-uni', // file控件id
                     dataType: 'json',
