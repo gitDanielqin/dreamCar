@@ -57,6 +57,7 @@ function init_pos() {
         //关于我们图标的显示
     $(".about-lis").css("top", Math.floor(winH * 0.5));
     $(".about-lis").css("left", Math.floor(winW * 0.5 - $(".inner").width() * 0.5));
+    // console.log($(".inner").width(), $(".about-lis img").width());
 }
 //init_pos();
 

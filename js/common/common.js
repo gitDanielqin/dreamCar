@@ -31,7 +31,7 @@ var variableUtils = {
         name: /^[\u4E00-\u9FA5A-Za-z]{1,12}$/,
         mobile: /^1[34578]\d{9}$/,
         email: /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/,
-        password: /^[a-zA-Z0-9]{6,16}$/,
+        password: /^[a-zA-Z0-9\W_]{6,16}$/,
         phone: /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/,
     },
     xqInfo: {

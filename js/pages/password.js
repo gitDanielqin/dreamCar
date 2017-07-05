@@ -21,12 +21,12 @@ var imgHtml = ""
     // })
 function switchCode() {
     $.ajax({
-        url: "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img",
+        url: "https://www.xiaoqiztc.com/easily_xq_WebApi/sys/img",
         type: "get",
         async: false,
         data: {},
         success: function(resp, status) {
-            $(".code-pic")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
+            $(".code-pic")[0].src = "https://www.xiaoqiztc.com/easily_xq_WebApi/sys/img?" + Math.random();
         },
         error: function(data, status) {
             swal({
@@ -104,10 +104,10 @@ var appCont = new Vue({
                             title: "",
                             text: resp.info,
                             type: "error"
-                        })
+                        });
+                        switchCode();
                     }
                 });
-                switchCode();
                 this.show.hint = false;
             }
         },
@@ -351,7 +351,7 @@ var appCont = new Vue({
         }
     },
     mounted: function() {
-        $(".code-pic")[0].src = "http://www.xiaoqiztc.com/easily_xq_WebApi/sys/img";
+        $(".code-pic")[0].src = "https://www.xiaoqiztc.com/easily_xq_WebApi/sys/img";
     }
 })
 
