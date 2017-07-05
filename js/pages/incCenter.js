@@ -555,6 +555,7 @@ var appCont = new Vue({
             //上传许可证等图片文件
             if (this.resume.comLicense != "") {
                 var hascomUrl = false;
+                var uploadFail = false;
                 $.ajaxFileUpload({
                     url: 'https://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload', //提交的路径
                     secureuri: false, // 是否启用安全提交，默认为false
@@ -570,18 +571,37 @@ var appCont = new Vue({
                         appCont.resume.comLicenseUrl = data.data;
                         //console.log(data.data);
                     },
-                    error: function(data, status) {}
+                    error: function(data, status) {
+                        uploadFail = true;
+                    }
                 });
             };
             if (this.resume.comLicense != "") { //如果用户有上传文件
-                setTimeout(function() {
-                    if (appCont.resume.comLicense != "" && !hascomUrl) {
+                var timer_count = 0;
+                var timer = setInterval(function() {
+                    if (uploadFail) {
                         swal({
                             title: "",
                             text: "文件上传失败，请重新上传！",
                             type: "error"
-                        })
+                        });
+                        clearInterval(timer);
+                        return false;
+                    }
+                    timer_count++;
+                    if (timer_count > 50) {
+                        swal({
+                            title: "",
+                            text: "文件上传超时，请重新上传！",
+                            type: "error"
+                        });
+                        clearInterval(timer);
+                        return false;
+                    }
+                    if (appCont.resume.comLicense != "" && !hascomUrl) {
+
                     } else {
+                        clearInterval(timer);
                         var postdata = {
                             userId: parObj.userId,
                             companyId: respObj.companyId,
@@ -597,9 +617,10 @@ var appCont = new Vue({
                         EventUtils.ajaxReq('/user/company/modifyInfo', 'post', postdata, function(resp, status) {
                             appCont.resume.edit = false;
                             appCont.resume.view = true;
+                            respObj.cvStatus = 1;
                         })
                     }
-                }, 500)
+                }, 100)
             } else {
                 var postdata = {
                     userId: parObj.userId,

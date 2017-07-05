@@ -14,7 +14,7 @@ var parObj = EventUtils.urlExtrac(window.location);
 var regExp = {
     mobile: /^1[34578]\d{9}$/,
     email: /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/,
-    password: /^[a-zA-Z0-9]{6,16}$/,
+    password: /^[a-zA-Z0-9\W_]{6,16}$/,
     phone: /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/
 }
 
@@ -46,11 +46,11 @@ var appCont = new Vue({
         banner: {
             showindex: Math.floor(3 * Math.random()),
             images: [
-                { url: "images/login-pic02.jpg", website: "http://www.xiaoqiztc.com" },
+                { url: "images/login-pic02.jpg", website: "https://www.xiaoqiztc.com" },
                 { url: "images/banner-lanlan.jpg", website: "http://www.xinchuang.sitekc.com/index.jsp" },
-                { url: "images/企业.jpg", website: "http://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-company.html?" },
-                { url: "images/高校.jpg", website: "http://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-uni.html?" },
-                { url: "images/个人.jpg", website: "http://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-position.html?" },
+                { url: "images/企业.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-company.html?" },
+                { url: "images/高校.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-uni.html?" },
+                { url: "images/个人.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-position.html?" },
             ]
         },
         show: {

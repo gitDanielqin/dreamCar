@@ -11,8 +11,8 @@ var Vue = require("../libs/vue.min");
             <li cont="cont-comment" v-if="tabletype==1||tabletype==3">高校评价<i class="msg-info" v-show="options.comment.totalitems>0">{{hintshow(options.comment.totalitems)}}</i></li>\
             <li cont="cont-comment" v-if="tabletype==2||tabletype==4||tabletype==5">企业评价<i class="msg-info" v-show="options.comment.totalitems>0">{{hintshow(options.comment.totalitems)}}</i></li>\
         </ul>\
-        <p class="tab-cont fSize14 LH38 color-gray6 cont-demand" style="display:block ">{{options.desc}}</p>\
-        <p class="tab-cont LH42 fSize14 color-gray6 cont-desc">{{options.userdesc}}</p>\
+        <p class="tab-cont fSize14 LH38 color-gray6 cont-demand" style="display:block" v-html="textFilter(options.desc)"></p>\
+        <p class="tab-cont LH42 fSize14 color-gray6 cont-desc" v-html="textFilter(options.userdesc)"></p>\
         <div class="cont-apply tab-cont">\
             <table class="LH48 fSize12 result-table">\
                 <tr class="bg-gray-f2 color-gray79 fSize14">\
@@ -69,6 +69,9 @@ var Vue = require("../libs/vue.min");
                     ellipseName += "*";
                 }
                 return ellipseName;
+            },
+            textFilter: function(text) {
+                return text.replace(/\n/g, '<br/>');
             },
             selectTab: function(obj) {
                 if ($(obj).hasClass("msg-info")) {

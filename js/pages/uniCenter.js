@@ -672,6 +672,7 @@ var appCont = new Vue({
             //上传许可证等图片文件
             if (this.resume.comLicense != "") {
                 var hascomUrl = false;
+                var uploadBusFail = false
                 $.ajaxFileUpload({
                     url: 'https://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload', //提交的路径
                     secureuri: false, // 是否启用安全提交，默认为false
@@ -689,13 +690,14 @@ var appCont = new Vue({
                         // //console.log(data.data);
                     },
                     error: function(data, status) {
-
+                        uploadBusFail = true;
                     }
                 });
             };
 
             if (this.resume.uniLicense != "") {
                 var hasuniUrl = false;
+                var uploadUniFail = false;
                 $.ajaxFileUpload({
                     url: 'https://www.xiaoqiztc.com/easily_xq_WebApi/sys/imageUpload', //提交的路径
                     secureuri: false, // 是否启用安全提交，默认为false
@@ -712,6 +714,7 @@ var appCont = new Vue({
                         appCont.resume.uniLicenseUrl = data.data;
                     },
                     error: function(data, status) {
+                        uploadUniFail = true;
                         //	//console.log(data,2);
                     }
                 });
@@ -732,15 +735,40 @@ var appCont = new Vue({
             }
 
             if (this.resume.comLicense != "" || this.resume.uniLicense != "") { //如果用户有上传文件
-                setTimeout(function() {
-                    if (appCont.resume.comLicense != "" && !hascomUrl || appCont.resume.uniLicense != "" && !hasuniUrl) {
+                var timer_count = 0; //计数器
+                var timer = setInterval(function() {
+                    if (uploadUniFail) { //上传办学许可证失败
                         swal({
                             title: "",
-                            text: "文件上传失败，请重新上传！",
+                            text: "办学许可证上传失败，请重新上传！",
                             type: "error"
-                        })
-                    } else {
+                        });
+                        clearInterval(timer);
+                        return false;
+                    }
+                    if (uploadBusFail) { //上传营业执照失败
+                        swal({
+                            title: "",
+                            text: "营业执照上传失败，请重新上传！",
+                            type: "error"
+                        });
+                        clearInterval(timer);
+                        return false;
+                    }
+                    timer_count++;
+                    if (timer_count > 50) { //超过5s定义为上传文件超时
+                        swal({
+                            title: "",
+                            text: "上传文件超时，请重新上传！",
+                            type: "error"
+                        });
+                        clearInterval(timer);
+                        return false;
+                    }
+                    if (appCont.resume.comLicense != "" && !hascomUrl || appCont.resume.uniLicense != "" && !hasuniUrl) {
                         //console.log(appCont.resume.comLicenseUrl, appCont.resume.uniLicenseUrl);
+                    } else {
+                        clearInterval(timer);
                         var postdata = {
                             userId: parObj.userId,
                             schoolId: respObj.schoolId,
@@ -760,7 +788,7 @@ var appCont = new Vue({
                             respObj.cvStatus = 1;
                         })
                     }
-                }, 500)
+                }, 100)
             } else {
                 var postdata = {
                     userId: parObj.userId,
