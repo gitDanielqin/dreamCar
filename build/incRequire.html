@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>发布需求</title>
+    <title>企业发布需求页-校企职通车</title>
     <link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
     <link href="css/commons.css" rel="stylesheet">
     <link href="css/incRequire.css" rel="stylesheet">
@@ -47,7 +47,7 @@
             </div>
             <div class="navs maT20" v-show="!newRequire"></div>
             <div class="nav-cont cont-combi" v-show="showpage.page1">
-                <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写校企合作信息</h2>
+                <h2 class="nav-cont-header">填写校企合作信息，与千万高校共同培养大学生</h2>
                 <div class="form-cont paLeft68">
                     <p class="maT39 head-input"><label><span class="must-mark">*</span>标　　题</label><input class="must-input" type="text" v-model="combiData.header" maxlength="12" /><span class="color-red">（请小于12个字）</span></p>
                     <h3 class="LH-H75 fSize18 maT11">我对高校的要求</h3>
@@ -132,11 +132,11 @@
                             <p><button class="confirm-btn" @click.stop="confirmIncAddr($event.target,combiData.datatype)">确认</button></p>
                         </div>
                     </div>
-                    <button class="confirm-publish-btn" @click.stop="publish('combi')">确认发布</button>
+                    <div class="t-center"><button class="confirm-publish-btn" @click.stop="publish('combi')">确认发布</button></div>
                 </div>
             </div>
             <div class="nav-cont cont-recruit" v-show="showpage.page2">
-                <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写招聘会信息</h2>
+                <h2 class="nav-cont-header">填写招聘会信息，让五湖四海的人才来找你</h2>
                 <div class="form-cont paLeft68">
                     <p class="maT39 head-input"><label><span class="must-mark">*</span>标　　题</label><input type="text" class="must-input" v-model="recruitData.header" maxlength="12" /><span class="color-red">（请小于12个字）</span></p>
                     <p class="form-item maT28"><label><span class="must-mark">*</span>岗位名称</label>
@@ -183,11 +183,11 @@
                             <p><button class="confirm-btn" @click.stop="confirmIncAddr($event.target,recruitData.datatype)">确认</button></p>
                         </div>
                     </div>
-                    <button class="confirm-publish-btn" @click.stop="publish('jobfair')">确认发布</button>
+                    <div class="t-center"><button class="confirm-publish-btn" @click.stop="publish('jobfair')">确认发布</button></div>
                 </div>
             </div>
             <div class="nav-cont cont-direct" v-show="showpage.page3">
-                <h2 class="LH-H66 bg-orange-f7 color-green30 paLeft70">填写直聘信息</h2>
+                <h2 class="nav-cont-header">填写直聘信息，招贤纳士广纳天下英才</h2>
                 <div class="form-cont paLeft68">
                     <p class="maT39 head-input"><label><span class="must-mark">*</span>标　　题</label><input type="text" class="must-input" v-model="directData.header" maxlength="12" /><span class="color-red">（请小于12个字）</span></p>
                     <p class="form-item maT28"><label><span class="must-mark">*</span>岗位名称</label>
@@ -233,7 +233,7 @@
                             <p><button class="confirm-btn" @click.stop="confirmIncAddr($event.target,directData.datatype)">确认</button></p>
                         </div>
                     </div>
-                    <button class="confirm-publish-btn" @click.stop="publish('recruit')">确认发布</button>
+                    <div class="t-center"><button class="confirm-publish-btn" @click.stop="publish('recruit')">确认发布</button></div>
                 </div>
             </div>
         </div>

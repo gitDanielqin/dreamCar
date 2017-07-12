@@ -1,6 +1,7 @@
 (function() {
     // 工资
     var salaryItems = [
+        "面议",
         "1k-2k",
         "2k-4k",
         "4k-6k",

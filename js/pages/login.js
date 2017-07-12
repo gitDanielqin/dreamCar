@@ -45,12 +45,19 @@ var appCont = new Vue({
         },
         banner: {
             showindex: Math.floor(3 * Math.random()),
+            // images: [
+            //     { url: "images/login-pic02.jpg", website: "https://www.xiaoqiztc.com" },
+            //     { url: "images/banner-lanlan.jpg", website: "http://www.xinchuang.sitekc.com/index.jsp" },
+            //     { url: "images/企业.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-company.html?" },
+            //     { url: "images/高校.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-uni.html?" },
+            //     { url: "images/个人.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-position.html?" },
+            // ],
             images: [
-                { url: "images/login-pic02.jpg", website: "https://www.xiaoqiztc.com" },
-                { url: "images/banner-lanlan.jpg", website: "http://www.xinchuang.sitekc.com/index.jsp" },
-                { url: "images/企业.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-company.html?" },
-                { url: "images/高校.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-uni.html?" },
-                { url: "images/个人.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-position.html?" },
+                { url: "http://os9bwedvi.bkt.clouddn.com/login-pic02.jpg", website: "https://www.xiaoqiztc.com" },
+                { url: "http://os9bwedvi.bkt.clouddn.com/banner-lanlan.jpg", website: "http://www.xinchuang.sitekc.com/index.jsp" },
+                { url: "http://os9bwedvi.bkt.clouddn.com/企业.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-company.html?" },
+                { url: "http://os9bwedvi.bkt.clouddn.com/高校.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-uni.html?" },
+                { url: "http://os9bwedvi.bkt.clouddn.com/个人.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-position.html?" },
             ]
         },
         show: {

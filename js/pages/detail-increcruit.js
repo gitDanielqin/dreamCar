@@ -45,7 +45,7 @@ function infoRequest() {
         }
         appBanner.increcdata = briefdata;
         if (respObj.jobFairAddress && respObj.jobFairAddress.indexOf(";") >= 0) {
-            var address = respObj.jobFairAddress.split(';')[1];
+            var address = respObj.jobFairAddress.split(';').join("-");
         } else {
             var address = "";
         }

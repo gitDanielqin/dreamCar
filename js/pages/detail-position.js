@@ -46,7 +46,7 @@ function infoRequest() {
         appBanner.posdata = briefdata;
 
         if (respObj.companyAddress && respObj.companyAddress.indexOf(";") >= 0) {
-            var address = respObj.companyAddress.split(';')[1];
+            var address = respObj.companyAddress.split(';').join("-");
         } else {
             var address = "";
         }

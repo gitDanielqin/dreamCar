@@ -489,10 +489,10 @@ var appResult = new Vue({
             }
         },
         showpage: function(totalpage) {
-            if (totalpage < 3) {
+            if (totalpage < 5) {
                 return totalpage;
             } else {
-                return 3;
+                return 5;
             }
         },
         topage: function(page, type) {

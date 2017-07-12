@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>HR中心</title>
+    <title>HR中心-校企职通车</title>
     <link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
     <link href="css/commons.css" rel="stylesheet">
     <link href="css/hrCenter.css" rel="stylesheet" />
@@ -213,7 +213,7 @@
                     </h3>
                     <div class="infopane maT13 maB16" v-for="edu in resumeInfo.edus">
                         <h4 class="LH-H26 bg-gray-f2 fSize14 paLeft13 pRel maB14"><span class="maR24">{{edu.startyear}}.{{edu.startmonth}}--{{edu.endyear}}.{{edu.endmonth}}</span>{{edu.uni}}<i class="headmark"></i></h4>
-                        <p class="LH-H25"><span class="W250 disInline">专业名称：{{edu.major}}/{{edu.submajor}}</span><span>学历：{{edu.qualification}}</span></p>
+                        <p class="LH-H25"><span class="disInline" style="width:340px;">专业名称：{{edu.major}}/{{edu.submajor}}</span><span>学历：{{edu.qualification}}</span></p>
                     </div>
                 </div>
                 <div class="itemBox">
@@ -236,15 +236,15 @@
                 </div>
                 <div class="itemBox text-box">
                     <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-comment"></span></i>自我评价</h3>
-                    <p class="LH-H20 maT9 paLeft40">{{resumeInfo.selfEval}}</p>
+                    <p>{{resumeInfo.selfEval}}</p>
                 </div>
                 <div class="itemBox text-box">
                     <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-attach"></span></i>附加信息</h3>
-                    <p class="LH-H20 maT9 paLeft40">{{resumeInfo.psInfo}}</p>
+                    <p>{{resumeInfo.psInfo}}</p>
                 </div>
                 <div class="itemBox text-box" style="border-bottom:none">
                     <h3 class="title"><i class="pic-wrapper"><span class="pic-icon icon-skills"></span></i>擅长技能</h3>
-                    <p class="LH-H20 maT9 paLeft40">{{resumeInfo.skills}}</p>
+                    <p>{{resumeInfo.skills}}</p>
                 </div>
             </div>
             <div class="H26 bg-white-ec"></div>

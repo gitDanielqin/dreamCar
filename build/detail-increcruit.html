@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>企业招聘详情页</title>
+    <title>企业招聘会详情页-校企职通车</title>
     <link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
     <link href="css/commons.css" rel="stylesheet">
     <link href="css/detail-increcruit.css" rel="stylesheet">
@@ -93,7 +93,8 @@
                     </ul>
                     <p class="LH40"><label>联系电话：</label><span class="fSize24 color-orange-f7 v-mid">{{showContact(increcdata.contact)}}</span><button class="contact-btn" @click="showPhone">点击查看完整号码</button></p>
                     <p class="LH40 fSize14"><label>联系人：</label>{{increcdata.contactP}}</p>
-                    <p class="LH52 fSize14"><label>招聘会地点：</label>{{increcdata.recruitAddr}}<label style="margin-left:220px;">招聘会日期：</label>{{increcdata.recruitDate}}</p>
+                    <p class="LH52 fSize14"><label>招聘会日期：</label>{{increcdata.recruitDate}}</p>
+                    <p class="LH52 fSize14"><label>招聘会地点：</label>{{increcdata.recruitAddr}}</p>
                     <div class="LH30"><label>福利待遇：</label>
                         <ul class="lis-inline disInline pos-welfares v-mid">
                             <li v-for="(item,index) in increcdata.welfare">{{item}}<i v-if="index<increcdata.welfare.length-1" style="margin:0 7px;">|</i></li>

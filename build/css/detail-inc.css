@@ -373,6 +373,7 @@ button.btn-apply[disabled] {
     width: 784px;
     border: 1px solid #ff8a00;
     padding: 10px;
+    overflow: auto;
     margin-bottom: 10px;
 }
 

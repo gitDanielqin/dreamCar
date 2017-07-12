@@ -609,12 +609,12 @@ var appMain = new Vue({
     },
     watch: {
         "combiData.contact.phone": function(curval, oldval) {
-            if (!/^\d*$/.test(curval) || curval.length > 11) {
+            if (!/^[\d-]*$/.test(curval)) {
                 this.combiData.contact.phone = oldval;
             }
         },
         "recruitData.contact.phone": function(curval, oldval) {
-            if (!/^\d*$/.test(curval) || curval.length > 11) {
+            if (!/^[\d-]*$/.test(curval)) {
                 this.recruitData.contact.phone = oldval;
             }
         }

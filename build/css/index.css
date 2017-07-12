@@ -27,7 +27,8 @@
 }
 
 .front-page {
-    background: url(../images/bg-2.jpg) no-repeat center 0;
+    /*background: url("../images/bg-2.jpg") no-repeat center 0;*/
+    background: url("http://os9bwedvi.bkt.clouddn.com/bg-2.jpg") no-repeat center 0;
     background-size: cover;
 }
 
@@ -460,7 +461,8 @@
 }
 
 .about-us {
-    background: url(../images/about-bg.jpg) no-repeat center center;
+    /*background: url("../images/about-bg.jpg") no-repeat center center;*/
+    background: url("http://os9bwedvi.bkt.clouddn.com/about-bg.jpg") no-repeat center center;
     background-size: cover;
 }
 

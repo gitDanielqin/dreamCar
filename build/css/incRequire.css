@@ -124,6 +124,15 @@
 
 /*内容部分*/
 
+.nav-cont-header {
+    line-height: 66px;
+    height: 66px;
+    background: #f7d58f;
+    color: #300;
+    text-align: center;
+    font-family: cursive;
+}
+
 .form-cont {
     border: 2px solid #f7d58f;
     margin-bottom: 40px;
@@ -267,7 +276,7 @@ input.dis-Addr {
     background: #f7b632;
     color: white;
     font-size: 18px;
-    margin-left: 108px;
+    margin-left: -68px;
     margin-bottom: 57px;
 }
 
