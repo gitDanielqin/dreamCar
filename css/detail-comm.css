@@ -121,24 +121,12 @@ button.btn-apply[disabled] {
 }
 
 .descript h3 {
+    border-left: 4px #ffa800 solid;
     padding-left: 25px;
-    color: white;
     line-height: 40px;
     height: 40px;
     font-size: 18px;
     border-bottom: 1px solid #dcdcdc;
-}
-
-.descript h3:first-child {
-    background: url("../images/head-bg.png") no-repeat 0 0;
-}
-
-.descript h3:nth-of-type(2) {
-    background: url("../images/head-bg2.png") no-repeat 0 0;
-}
-
-.descript h3:nth-of-type(3) {
-    background: url("../images/head-bg3.png") no-repeat 0 0;
 }
 
 .descript ul {

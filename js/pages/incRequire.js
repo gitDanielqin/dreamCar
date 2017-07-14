@@ -23,6 +23,8 @@ var isNewRequire = true;
 var respObj = {};
 if (parObj.new && parObj.new != "1") { //非首次发布
     isNewRequire = false;
+} else {
+    $(".modal-entry").show();
 }
 //初始化数据库信息
 EventUtils.initDatabase();
@@ -817,7 +819,7 @@ var appMain = new Vue({
         selectInitPos();
         selectTime();
         selectWelfare();
-        datepickEventBind()
+        datepickEventBind();
     }
 })
 var appFooter = new Vue({
@@ -841,44 +843,62 @@ var appFooter = new Vue({
     }
 })
 var appModal = new Vue({
-    el: "#app-modal",
-    data: {
-        account: {
-            userId: parObj.userId
+        el: "#app-modal",
+        data: {
+            account: {
+                userId: parObj.userId
+            },
+            show: { modal: false, message: false }
         },
-        show: { modal: false, message: false }
-    },
-    methods: {
-        closeMsg: function() {
-            this.show.message = false;
-            this.show.modal = false;
-        }
-    },
-    watch: {
-        "show.message": function(curval) {
-            if (curval) {
-                this.$nextTick(function() {
-                    EventUtils.absCenter($("#app-modal .msg-box"));
-                })
-            } else {
-                var postdata = {
-                    userId: parObj.userId,
-                    index: 1,
-                    count: 8
-                }
-                EventUtils.ajaxReq("/message/getMessageList", "get", postdata, function(resp, status) {
-                    if (resp.data && resp.data.count > 0) {
-                        $(".msg-center .msg-info").html(resp.data.count);
-                        $(".msg-center .msg-info").show();
-                    } else {
-                        $(".msg-center .msg-info").hide();
+        methods: {
+            closeMsg: function() {
+                this.show.message = false;
+                this.show.modal = false;
+            }
+        },
+        watch: {
+            "show.message": function(curval) {
+                if (curval) {
+                    this.$nextTick(function() {
+                        EventUtils.absCenter($("#app-modal .msg-box"));
+                    })
+                } else {
+                    var postdata = {
+                        userId: parObj.userId,
+                        index: 1,
+                        count: 8
                     }
-                })
+                    EventUtils.ajaxReq("/message/getMessageList", "get", postdata, function(resp, status) {
+                        if (resp.data && resp.data.count > 0) {
+                            $(".msg-center .msg-info").html(resp.data.count);
+                            $(".msg-center .msg-info").show();
+                        } else {
+                            $(".msg-center .msg-info").hide();
+                        }
+                    })
+                }
             }
         }
-    }
-})
-
+    })
+    //发布入口事件绑定
+function entryEventBind() {
+    EventUtils.absCenter($(".entry-lis"));
+    $(".entry-btn").click(function() {
+        if ($(this).hasClass("entry-jobfair")) {
+            appMain.showpage.page1 = appMain.showpage.page2 = appMain.showpage.page3 = false;
+            appMain.showpage.page2 = true;
+        }
+        if ($(this).hasClass("entry-recruit")) {
+            appMain.showpage.page1 = appMain.showpage.page2 = appMain.showpage.page3 = false;
+            appMain.showpage.page3 = true;
+        }
+        $(".steps li:nth-of-type(1)").removeClass("past");
+        $(".steps li:nth-of-type(2)").removeClass("on");
+        selectInitPos();
+        $(".modal-entry").hide()
+    })
+}
+entryEventBind();
 if (parObj.new && parObj.new != "1") { //非首次发布
     infoRequest()
 }
@@ -932,9 +952,11 @@ function datepickEventBind() {
     }).data('datepicker');
 }
 
+
 // 清除页面绑定事件
 window.onunload = function() {
-    $(".time-table .t-cell").click(null)
+    $(".entry-btn").click(null);
+    $(".time-table .t-cell").click(null);
     $(".welfare-lis .check-box").click(null)
     appMain.$off();
     appModal.$off();

@@ -4,12 +4,28 @@
 <head>
     <meta charset="utf-8">
     <title>发布需求-校企职通车</title>
-    <link href="css/commons.css" rel="stylesheet">
-    <link href="css/uniRequire.css" rel="stylesheet">
+    <link href="css/commons.css?v=1.0.2" rel="stylesheet">
+    <link href="css/uniRequire.css?v=1.0.2" rel="stylesheet">
     <link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
 </head>
 
 <body>
+    <div class="modal-entry">
+        <ul class="entry-lis lis-inline">
+            <li>
+                <i class="pic-wrapper"><img src="images/inc-require-coop.png" /></i>
+                <h3 class="entry-title">校企合作</h3>
+                <p class="entry-descript">校企联合培养大学生专业实践能力<br>校方负责组织学生，企业负责提供培训<br>让大学生不出校门得到更多offer</p>
+                <button class="entry-btn entry-coop">校企合作<span>>></span></button>
+            </li>
+            <li>
+                <i class="pic-wrapper"><img src="images/inc-require-jobfair.png" /></i>
+                <h3 class="entry-title">招聘会</h3>
+                <p class="entry-descript">招聘会发布精准需求<br>优质企业主主动上门<br>一起办一场轰轰烈烈的校园招聘会</p>
+                <button class="entry-btn entry-jobfair">招聘会<span>>></span></button>
+            </li>
+        </ul>
+    </div>
     <div class="top bg-gray3 H100 color-white" id="app-top" v-cloak>
         <div class="inner">
             <a :href="homeLink"><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" />
@@ -37,14 +53,14 @@
                 </ul>
                 <i class="pic-wrapper progress-txt"><img src="images/require-txt.png" /></i>
             </div>
-            <div class="navs clearfix" v-show="newRequire">
+            <!-- <div class="navs clearfix" v-show="newRequire">
                 <ul class="lis-inline fl">
                     <li class="on" name="combi">校企合作</li>
                     <li name="recruit">招聘会</li>
                 </ul>
                 <p class="W810 bg-gray-ef fl H32"></p>
-            </div>
-            <div class="navs maT20" v-show="!newRequire"></div>
+            </div> -->
+            <div class="navs maT20"></div>
             <div class="nav-cont cont-combi" v-show="showCombi">
                 <h2 class="nav-cont-header">填写校企合作信息，与千万企业共同培养大学生</h2>
                 <div class="form-cont paLeft68">
@@ -212,8 +228,8 @@
     <div class="modal" id="app-modal" v-show="show.modal" v-cloak>
         <message-box :userid="account.userId" :showmsg="show.message" @closebox="closeMsg" v-show="show.message"></message-box>
     </div>
-    <script src="js/commons.js"></script>
-    <script src="js/uniRequire.js"></script>
+    <script src="js/commons.js?v=1.0.2"></script>
+    <script src="js/uniRequire.js?v=1.0.2"></script>
 </body>
 
 </html>

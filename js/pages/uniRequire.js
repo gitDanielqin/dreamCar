@@ -26,6 +26,8 @@ var respObj = {}
 if (parObj.new && parObj.new != "1") { //非新需求
     isNewRequire = false;
     pageindex = parObj.demandSrc;
+} else {
+    $(".modal-entry").show();
 };
 //初始化数据库信息
 EventUtils.initDatabase();
@@ -601,7 +603,6 @@ var appMain = new Vue({
         })
         selectInitInput();
         selectInitPos();
-        navEventBind();
         // selectRepos();
         datepickEventBind();
         // selectInit();
@@ -678,6 +679,19 @@ var appModal = new Vue({
     }
 })
 
+function entryEventBind() {
+    EventUtils.absCenter($(".entry-lis"));
+    $(".entry-btn").click(function() {
+        if ($(this).hasClass("entry-jobfair")) {
+            appMain.showCombi = false;
+        }
+        $(".steps li:nth-of-type(1)").removeClass("past");
+        $(".steps li:nth-of-type(2)").removeClass("on");
+        selectInitPos();
+        $(".modal-entry").hide()
+    })
+}
+entryEventBind();
 if (parObj.new && parObj.new != "1") { //非新需求
     infoRequest(parObj.demandSrc);
 };

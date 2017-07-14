@@ -46,11 +46,11 @@ var appCont = new Vue({
         banner: {
             showindex: Math.floor(3 * Math.random()),
             // images: [
-            //     { url: "images/login-pic02.jpg", website: "https://www.xiaoqiztc.com" },
-            //     { url: "images/banner-lanlan.jpg", website: "http://www.xinchuang.sitekc.com/index.jsp" },
-            //     { url: "images/企业.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-company.html?" },
-            //     { url: "images/高校.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-uni.html?" },
-            //     { url: "images/个人.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-position.html?" },
+            //     { url: "https://www.xiaoqiztc.com/login-pic02.jpg", website: "https://www.xiaoqiztc.com" },
+            //     { url: "https://www.xiaoqiztc.com/banner-lanlan.jpg", website: "http://www.xinchuang.sitekc.com/index.jsp" },
+            //     { url: "https://www.xiaoqiztc.com/企业.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-company.html?" },
+            //     { url: "https://www.xiaoqiztc.com/高校.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-uni.html?" },
+            //     { url: "https://www.xiaoqiztc.com/个人.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-position.html?" },
             // ],
             images: [
                 { url: "http://os9bwedvi.bkt.clouddn.com/login-pic02.jpg", website: "https://www.xiaoqiztc.com" },

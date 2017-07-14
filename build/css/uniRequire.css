@@ -362,3 +362,57 @@ input.dis-Addr {
     height: 12px;
     background: url(../images/sprite.png) no-repeat -93px -160px;
 }
+
+
+/*入口模态层样式*/
+
+.modal-entry {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.entry-lis {
+    position: absolute;
+    color: white;
+}
+
+.entry-lis li {
+    width: 335px;
+    text-align: center;
+}
+
+.entry-lis .pic-wrapper {
+    height: 85px;
+}
+
+.modal-entry .entry-title {
+    line-height: 62px;
+    font-size: 24px;
+}
+
+.modal-entry .entry-descript {
+    line-height: 24px;
+    font-size: 14px;
+}
+
+.entry-btn {
+    width: 175px;
+    height: 55px;
+    background: #f7b632;
+    border-radius: 5px;
+    font-size: 18px;
+    margin-top: 46px;
+    color: #300;
+    box-shadow: 0 0 5px #f7b632;
+}
+
+.entry-btn span {
+    margin-left: 10px;
+    font-family: consolas;
+}

@@ -15,6 +15,7 @@ body {
 .front-page {
     /*background: url("../images/bg-2.jpg") no-repeat center 0;*/
     background: url("http://os9bwedvi.bkt.clouddn.com/bg-2.jpg") no-repeat center 0;
+    /* background: url("https://www.xiaoqiztc.com/bg-2.jpg") no-repeat center 0; */
     background-size: cover;
 }
 
@@ -449,6 +450,7 @@ body {
 .about-us {
     /*background: url("../images/about-bg.jpg") no-repeat center center;*/
     background: url("http://os9bwedvi.bkt.clouddn.com/about-bg.jpg") no-repeat center center;
+    /* background: url("https://www.xiaoqiztc.com/about-bg.jpg") no-repeat center center; */
     background-size: cover;
 }
 

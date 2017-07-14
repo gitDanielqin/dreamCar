@@ -5,11 +5,83 @@
     <meta charset="utf-8">
     <title>企业发布需求页-校企职通车</title>
     <link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
-    <link href="css/commons.css" rel="stylesheet">
-    <link href="css/incRequire.css" rel="stylesheet">
+    <link href="css/commons.css?v=1.0.2" rel="stylesheet">
+    <link href="css/incRequire.css?v=1.0.2" rel="stylesheet">
+    <!-- <style>
+        .modal-entry {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+        }
+        
+        .entry-lis {
+            position: absolute;
+            color: white;
+        }
+        
+        .entry-lis li {
+            width: 335px;
+            text-align: center;
+        }
+        
+        .entry-lis .pic-wrapper {
+            height: 85px;
+        }
+        
+        .modal-entry .entry-title {
+            line-height: 62px;
+            font-size: 24px;
+        }
+        
+        .modal-entry .entry-descript {
+            line-height: 24px;
+            font-size: 14px;
+        }
+        
+        .entry-btn {
+            width: 175px;
+            height: 55px;
+            background: #f7b632;
+            border-radius: 5px;
+            font-size: 18px;
+            margin-top: 46px;
+            color: #300;
+            box-shadow: 0 0 5px #f7b632;
+        }
+        
+        .entry-btn span {
+            margin-left: 10px;
+            font-family: consolas;
+        }
+    </style> -->
 </head>
 
 <body>
+    <div class="modal-entry">
+        <ul class="entry-lis lis-inline">
+            <li>
+                <i class="pic-wrapper"><img src="images/inc-require-coop.png" /></i>
+                <h3 class="entry-title">校企合作</h3>
+                <p class="entry-descript">校企联合培养企业真正所需人才<br>口碑落地，加强产学研结合</p>
+                <button class="entry-btn entry-coop">校企合作<span>>></span></button>
+            </li>
+            <li>
+                <i class="pic-wrapper"><img src="images/inc-require-jobfair.png" /></i>
+                <h3 class="entry-title">招聘会</h3>
+                <p class="entry-descript">职通车联合企业举办属于自己的招聘会<br>多渠道提升招聘效率及影响力</p>
+                <button class="entry-btn entry-jobfair">招聘会<span>>></span></button>
+            </li>
+            <li>
+                <i class="pic-wrapper"><img src="images/inc-require-recruit.png" /></i>
+                <h3 class="entry-title">直聘</h3>
+                <p class="entry-descript">急用人才，一步到位<br>让更多优秀的人才找到你</p>
+                <button class="entry-btn entry-recruit">企业直聘<span>>></span></button>
+            </li>
+        </ul>
+    </div>
     <div class="top bg-gray3 H100 color-white" id="app-top" v-cloak>
         <div class="inner">
             <a :href="homeLink"><img src="images/logo.png" class="fl maR21 maT24" style="margin-left:-62px;" />
@@ -37,15 +109,15 @@
                 </ul>
                 <i class="pic-wrapper progress-txt"><img src="images/require-txt.png" /></i>
             </div>
-            <div class="navs clearfix" v-show="newRequire">
+            <!-- <div class="navs clearfix" v-show="newRequire">
                 <ul class="lis-inline fl">
                     <li class="on" @click.stop="clickNav('combi',$event.target)">校企合作</li>
                     <li @click.stop="clickNav('recruit',$event.target)">招聘会</li>
                     <li @click.stop="clickNav('direct',$event.target)">直聘</li>
                 </ul>
                 <p class="W740 bg-gray-ef fl H32"></p>
-            </div>
-            <div class="navs maT20" v-show="!newRequire"></div>
+            </div> -->
+            <div class="navs maT20"></div>
             <div class="nav-cont cont-combi" v-show="showpage.page1">
                 <h2 class="nav-cont-header">填写校企合作信息，与千万高校共同培养大学生</h2>
                 <div class="form-cont paLeft68">
@@ -265,8 +337,11 @@
     <div class="modal" id="app-modal" v-show="show.modal" v-cloak>
         <message-box :userid="account.userId" :showmsg="show.message" @closebox="closeMsg" v-show="show.message"></message-box>
     </div>
-    <script src="js/commons.js"></script>
-    <script src="js/incRequire.js"></script>
+
+    <script src="js/commons.js?v=1.0.2"></script>
+    <script src="js/incRequire.js?v=1.0.2"></script>
+    <script>
+    </script>
 </body>
 
 </html>
