@@ -44,21 +44,23 @@ var appCont = new Vue({
                 // password: ""
         },
         banner: {
-            showindex: Math.floor(3 * Math.random()),
-            // images: [
-            //     { url: "https://www.xiaoqiztc.com/login-pic02.jpg", website: "https://www.xiaoqiztc.com" },
-            //     { url: "https://www.xiaoqiztc.com/banner-lanlan.jpg", website: "http://www.xinchuang.sitekc.com/index.jsp" },
-            //     { url: "https://www.xiaoqiztc.com/企业.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-company.html?" },
-            //     { url: "https://www.xiaoqiztc.com/高校.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-uni.html?" },
-            //     { url: "https://www.xiaoqiztc.com/个人.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-position.html?" },
-            // ],
+            showindex: Math.floor(6 * Math.random()),
             images: [
-                { url: "http://os9bwedvi.bkt.clouddn.com/login-pic02.jpg", website: "https://www.xiaoqiztc.com" },
-                { url: "http://os9bwedvi.bkt.clouddn.com/banner-lanlan.jpg", website: "http://www.xinchuang.sitekc.com/index.jsp" },
-                { url: "http://os9bwedvi.bkt.clouddn.com/企业.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-company.html?" },
-                { url: "http://os9bwedvi.bkt.clouddn.com/高校.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-uni.html?" },
-                { url: "http://os9bwedvi.bkt.clouddn.com/个人.jpg", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-position.html?" },
-            ]
+                { url: "http://os9bwedvi.bkt.clouddn.com/banner-car.jpg?imageslim", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/advertisement.html" },
+                { url: "http://os9bwedvi.bkt.clouddn.com/banner-qique.jpg?imageslim", website: "http://www.qiqueqiao.com" },
+                { url: "http://os9bwedvi.bkt.clouddn.com/banner-lanlan.jpg?imageslim", website: "http://www.xinchuang.sitekc.com/index.jsp" },
+                { url: "http://os9bwedvi.bkt.clouddn.com/企业.jpg?imageslim", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-company.html?" },
+                { url: "http://os9bwedvi.bkt.clouddn.com/高校.jpg?imageslim", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-uni.html?" },
+                { url: "http://os9bwedvi.bkt.clouddn.com/个人.jpg?imageslim", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-position.html?" },
+            ],
+            // images: [
+            //     { url: "https://qiniucdn.xiaoqiztc.com/banner-car.jpg?imageslim", website: "https://www.xiaoqiztc.com" },
+            //     { url: "https://qiniucdn.xiaoqiztc.com/banner-qique.jpg?imageslim", website: "http://www.qiqueqiao.com" },
+            //     { url: "https://qiniucdn.xiaoqiztc.com/banner-lanlan.jpg?imageslim", website: "http://www.xinchuang.sitekc.com/index.jsp" },
+            //     { url: "https://qiniucdn.xiaoqiztc.com/企业.jpg?imageslim", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-company.html?" },
+            //     { url: "https://qiniucdn.xiaoqiztc.com/高校.jpg?imageslim", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-uni.html?" },
+            //     { url: "https://qiniucdn.xiaoqiztc.com/个人.jpg?imageslim", website: "https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/display-position.html?" },
+            // ]
         },
         show: {
             regis: parObj.newAcc == "1",
@@ -66,8 +68,20 @@ var appCont = new Vue({
         validText: "获取验证码"
     },
     methods: {
+        swipeBanner: function(index) {
+            this.banner.showindex = index;
+        },
         checkAccount: function() {
             if (this.register.account != "") {
+                if (this.register.userType == 0 && !variableUtils.regExp.mobile.test(this.register.account)) {
+                    $("#account-valid-hint").html("手机格式不正确！").show();
+                    return false;
+                } else if (this.register.userType != 0 && !variableUtils.regExp.email.test(this.register.account)) {
+                    $("#account-valid-hint").html("邮箱格式不正确！").show();
+                    return false;
+                } else {
+                    $("#account-valid-hint").hide();
+                }
                 EventUtils.ajaxReq("/center/user/checkLoginName", "post", { loginName: this.register.account }, function(resp, status) {
                     if (resp.data.result == "1") {
                         appCont.register.isRegis = true;
@@ -75,6 +89,16 @@ var appCont = new Vue({
                         appCont.register.isRegis = false;
                     }
                 })
+            } else {
+                appCont.register.isRegis = false;
+                $("#account-valid-hint").hide();
+            }
+        },
+        checkPassword: function() {
+            if (this.register.password != "" && !variableUtils.regExp.password.test(this.register.password)) {
+                $("#password-valid-hint").show();
+            } else {
+                $("#password-valid-hint").hide();
             }
         },
         showAgreement: function() {
@@ -265,10 +289,20 @@ var appCont = new Vue({
         }
     },
     mounted: function() {
-        var timerindex = Math.floor(5 * Math.random());
+        var timerindex = this.banner.showindex;
+        $(".banner-frame-image")[timerindex].src = $(".banner-frame-image")[timerindex].getAttribute("data-src");
+        // this.banner.showindex = timerindex % 6;
+        $(".banner-frame-image")[timerindex].onload = function() {
+            $(".banner-frame-image").each(function() {
+                this.src = $(this).attr("data-src");
+            })
+        }
         setInterval(function() {
-            appCont.banner.showindex = timerindex % 5;
-            timerindex++;
+            if (appCont.banner.showindex == appCont.banner.images.length - 1) {
+                appCont.banner.showindex = 0;
+            } else {
+                appCont.banner.showindex++;
+            }
         }, 10000)
         EventUtils.placeholderFill();
     }

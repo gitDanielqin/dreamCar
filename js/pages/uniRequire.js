@@ -618,6 +618,11 @@ var appMain = new Vue({
             if (!/^[\d-]*$/.test(curval)) {
                 this.recruitData.contact.phone = oldval;
             }
+        },
+        "showCombi": function(curval) {
+            this.$nextTick(function() {
+                selectInitPos();
+            })
         }
     }
 })
@@ -687,7 +692,6 @@ function entryEventBind() {
         }
         $(".steps li:nth-of-type(1)").removeClass("past");
         $(".steps li:nth-of-type(2)").removeClass("on");
-        selectInitPos();
         $(".modal-entry").hide()
     })
 }

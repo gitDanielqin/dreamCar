@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:wb="http://open.weibo.com/wb">
 
 <head>
     <meta charset="UTF-8">
@@ -8,8 +8,32 @@
     <meta name="description" content="校企职通车主张用校企联合培养的方式，专注解决大学生专业对口就业和企业招聘用人难的问题，找工作，找人才，上校企！">
     <title>登录/注册-校企职通车</title>
     <link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
-    <link href="css/commons.css?v=1.0.2" rel="stylesheet">
-    <link href="css/login.css?v=1.0.2" rel="stylesheet">
+    <link href="css/commons.css?v=1.0.3.1" rel="stylesheet">
+    <link href="css/login.css?v=1.0.3.1" rel="stylesheet">
+    <style>
+        .icon-weibo a img {
+            display: none;
+        }
+        
+        .banner-image-navs {
+            position: absolute;
+            left: 10px;
+            top: 200px;
+        }
+        
+        .banner-image-navs li {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin: 15px;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+        }
+        
+        .banner-image-navs li.on {
+            background: orange;
+        }
+    </style>
 </head>
 
 <body>
@@ -22,11 +46,16 @@
             <!--<h3 id="sel-add" class="city fl LH-H80 fSize18 maT16 maL60"><b>{{displayCity}}</b></h3>-->
         </div>
     </div>
+
     <div class="banner H573" id="app-content" v-cloak>
         <!--banner背景图片轮播-->
+
+        <ul class="banner-image-navs">
+            <li v-for="(image,index) in banner.images" :class="{on:banner.showindex==index}" @click="swipeBanner(index)"></li>
+        </ul>
         <div class="banner-frame" v-for="(image,index) in banner.images">
             <transition name="fade">
-                <img v-show="banner.showindex==index" :src="image.url" />
+                <img v-show="banner.showindex==index" class="banner-frame-image" src="" :data-src="image.url" />
             </transition>
         </div>
         <div class="inner pRel">
@@ -38,8 +67,9 @@
                     <li @click="register.userType=2">企业</li>
                 </ul>
                 <form class="W350 bg-white t-center">
-                    <p class="pRel"><input class="maT34 account" type="text" :placeholder="accontType(register.userType)" v-model="register.account" @blur="checkAccount" /><span class="account-hint" v-show="register.isRegis">该用户已注册！</span></p>
-                    <input class="maT22" type="password" placeholder="密码 (6-16字母、数字、无空格)" v-model="register.password" />
+                    <p class="pRel"><input class="maT34 account" type="text" :placeholder="accontType(register.userType)" v-model="register.account" @blur="checkAccount" /><span class="account-hint" v-show="register.isRegis">该用户已注册！</span>
+                        <span class="isFormatValid" id="account-valid-hint">手机或邮箱格式不正确！</span></p>
+                    <p class="pRel"><input class="maT22" type="password" placeholder="密码 (6-16字母、数字、无空格)" v-model="register.password" @blur="checkPassword" /><span class="isFormatValid" id="password-valid-hint">密码格式不正确！</span></p>
                     <div class="valid maT28">
                         <input class="v-mid" type="text" placeholder="验证码" v-model="register.validcode">
                         <button type="button" class="W108 LH-H42 maL20 v-mid fSize14 color-white codeReq" :disabled="validUnable||register.unableCode || register.isRegis" @click="reqValidCode($event.target)">{{validText}}</button>
@@ -57,12 +87,14 @@
                     <button id="logBtn" class="LH-H50 W305 bg-orange fSize24 color-white maT24 maB17" @click.prevent="loginEv">登录</button>
                     <p class="LH-H30 fSize16 t-left W305 maCenter"><label class="color-gray6"><i class="check-box"></i>下次自动登录</label><a class="fr color-red cur-pointer" href="password.html">忘记密码？</a></p>
                     <div class="quicklogin">
-                        <h3 class="LH-H30 fSize16 pRel color-gray6">快捷登录<span class="line-l"></span><span class="line-r"></span></h3>
+                        <h3 class="LH-H30 fSize16 pRel color-gray6">快捷登录（个人）<span class="line-l"></span><span class="line-r"></span></h3>
                         <div class="quick-icon H45 maT7">
-                            <i class="pic-icon icon-qq"></i>
-                            <i class="pic-icon icon-weibo"></i>
-                            <i class="pic-icon icon-wechat"></i>
+                            <!-- <i class="pic-icon icon-qq"></i> -->
+                            <i class="pic-icon icon-qq" id="qq_connect_btn"></i>
+                            <i class="pic-icon icon-weibo" id="wb_connect_btn"></i>
+                            <i class="pic-icon icon-wechat" id="wechat_connect_btn"></i>
                         </div>
+                        <!-- <wb:login-button type="3,2" onlogin="login" onlogout="logout"></wb:login-button> -->
                     </div>
                 </form>
                 <p class="login-footer LH-H50 fSize20 t-center bg-grayC color-gray3">还未注册，<span class="color-orange">马上注册</span></p>
@@ -88,8 +120,8 @@
                 <p>4. 用户对其自行发表、上传或传送的内容负全部责任，所有用户不得在本社区任何页面发布、转载、传送含有下列内容之一的信息，否则本社区有权自行处理并不通知用户：<br/>(1) 违反宪法确定的基本原则的；<br/>(2) 危害国家安全，泄漏国家机密，颠覆国家政权，破坏国家统一的；<br/>(3) 损害国家荣誉和利益的；<br/>(4) 煽动民族仇恨、民族歧视，破坏民族团结的；<br/>(5) 破坏国家宗教政策，宣扬邪教和封建迷信的；<br/>(6) 散布谣言，扰乱社会秩序，破坏社会稳定的；<br/>(7)
                     散布淫秽、色情、赌博、暴力、恐怖或者教唆犯罪的；
                     <br/>(8) 侮辱或者诽谤他人，侵害他人合法权益的；<br/>(9) 煽动非法集会、结社、游行、示威、聚众扰乱社会秩序的；<br/>(10) 以非法民间组织名义活动的；<br/>(11) 含有法律、行政法规禁止的其他内容的。</p>
-                <p>5. 用户在使用校企职通车平台服务同时应做到：<br/>(1) 遵守所有与网络服务有关的网络协议、规定和程序；<br/>(2) 不得为任何非法目的而使用网络服务系统；<br/>(3) 不得侵犯其他任何第三方的专利权、著作权、商标权、名誉权或其他任何合法权益；<br/>(4) 不得利用校企职通车平台服务系统进行未经校企职通车授权的广告；<br/>(5) 未经本网站同意，禁止给公布信息的个人或公司发电子邮件、打电话、寄信或进行其他接触的行为。<br/>(6) 用户接受以其注册的电子邮件地址接校企职通车平台发送的邮件或其他邮件资料，若希望"退订"这些邮件资料，可点击电子邮件中的退订链接退订，也可向校企职通车邮箱market@xiaoqiztc.com申请取消订阅。<br/>(7)
-                    用户不得通过任何技术手段侵入校企职通数据库，进行查阅、直接下载或者转发等功能操作，一经发现校企职通车有权停止该用户的账户所有功能，并停止为该用户所在公司名下的所有其他用户提供任何服务。
+                <p>5. 用户在使用校企职通车平台服务同时应做到：<br/>(1) 遵守所有与网络服务有关的网络协议、规定和程序；<br/>(2) 不得为任何非法目的而使用网络服务系统；<br/>(3) 不得侵犯其他任何第三方的专利权、著作权、商标权、名誉权或其他任何合法权益；<br/>(4) 不得利用校企职通车平台服务系统进行未经校企职通车授权的广告；<br/>(5) 未经本网站同意，禁止给公布信息的个人或公司发电子邮件、打电话、寄信或进行其他接触的行为。<br/>(6) 用户接受以其注册的电子邮件地址接校企职通车平台发送的邮件或其他邮件资料，若希望"退订"这些邮件资料，可点击电子邮件中的退订链接退订，也可向校企职通车邮箱market@xiaoqiztc.com申请取消订阅。
+                    <br/>(7) 用户不得通过任何技术手段侵入校企职通数据库，进行查阅、直接下载或者转发等功能操作，一经发现校企职通车有权停止该用户的账户所有功能，并停止为该用户所在公司名下的所有其他用户提供任何服务。
                     <br/>(8) 用户有义务保证其在校企职通车上发布的信息的真实性，不得夸张描述或编造虚假信息，一经发现，校企职通车有权停止相应账户的所有功能，同时停止与该账户所有相关联账户的全部功能。</p>
                 <p>6. 如用户违反以上规则造成校企职通车被第三方索赔的，用户应全额补偿校什职通车平台一切费用(包括但不限于各种赔偿费、诉讼代理费及为此支出的其它合理费用)。</p>
                 <p>7. 如用户违反以上规则，校企职通车有权要求用户改正或直接采取一切必要的措施(包括但不限于删除用户张贴的内容、暂停或终止用户使用网络服务的权利)以减轻用户不当行为而造成的影响，被终止使用网络服务的用户已缴纳的费用不予以退还。</p>
@@ -137,8 +169,46 @@
         </div>
         <p class="LH24 color-gray6 fSize12">校企职通车版权所有©2017XIAOQI 浙ICP备17007975号-2 浙公网安备3481464号</p>
     </div>
-    <script src="js/commons.js?v=1.0.2"></script>
-    <script src="js/login.js?v=1.0.2"></script>
+    <script src="js/commons.js?v=1.0.3.4"></script>
+    <script src="js/login.js?v=1.0.3.4"></script>
+    <!--微博登录  -->
+    <script type="text/javascript" src="https://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=66150529" charset="utf-8"></script>
+
+    <script>
+        var path_weibo = 'https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/quickLogin.html?directway=weibo'; //登录后回调的地址
+        document.getElementById("wb_connect_btn").onclick = function() {
+            window.open("https://api.weibo.com/oauth2/authorize?client_id=66150529&response_type=code&redirect_uri=" + path_weibo)
+        }
+        WB2.anyWhere(function(W) {
+            W.widget.connectButton({
+                id: "wb_connect_btn",
+                type: "4,2",
+                callback: {
+                    login: function(o) { //登录后的回调函数
+                    },
+                    logout: function() { //退出后的回调函数
+                    }
+                }
+            });
+        });
+    </script>
+    <!-- QQ登录 -->
+    <script id="qq" type="text/javascript" src="https://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="1106171905" charset="utf-8"></script>
+    <script>
+        var path_qq = 'https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/quickLogin.html?directway=qq';
+        document.getElementById("qq_connect_btn").onclick = function() {
+            window.open('https://graph.qq.com/oauth2.0/authorize?response_type=token&client_id=101417882&redirect_uri=' + path_qq + '&scope=[THE_SCOPE]'); //打开二维码页面，扫码成功后会回调到path地址
+        }
+    </script>
+    <!--微信登录-->
+
+    <script>
+        var path_wechat = 'https://www.xiaoqiztc.com/easily_xq_WebApi/dreamcar/quickLogin.html?directway=wechat'; //登录后回调的地址
+        var appid = 'wx2d5a4e37aeed3231'; //注册申请的appid
+        document.getElementById("wechat_connect_btn").onclick = function() {
+            window.open('https://open.weixin.qq.com/connect/qrconnect?appid=' + appid + '&redirect_uri=' + path_wechat + '&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect'); //打开二维码页面，扫码成功后会回调到path地址
+        }
+    </script>
 </body>
 
 </html>

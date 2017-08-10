@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/commons.css">
+    <link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
+    <style>
+        html,
+        body {
+            height: 100%;
+            position: relative;
+        }
+        
+        .bind-mobile-box {
+            width: 420px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        
+        .bind-mobile-title {
+            line-height: 40px;
+            color: orange;
+        }
+        
+        .bind-mobile-form {
+            border: 1px solid orange;
+            height: 400px;
+            margin: 0 auto;
+            /* padding: 10px 20px; */
+            background: white;
+        }
+        
+        .bind-mobile-form input {
+            background: #ededed;
+            line-height: 40px;
+            vertical-align: middle;
+            padding: 0 10px;
+        }
+        
+        .bind-mobile-form h3 {
+            padding: 5px 10px;
+            line-height: 35px;
+            font-size: 16px;
+            text-align: center;
+            background: orange;
+            color: white;
+        }
+        
+        .bind-mobile-form p {
+            text-align: center;
+            line-height: 50px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .bind-mobile-data {
+            padding-top: 50px;
+        }
+        
+        .mobile-data label {
+            display: inline-block;
+            width: 60px;
+            text-align: left;
+        }
+        
+        .mobile-data input {
+            width: 200px;
+        }
+        
+        .bind-mobile-form .form-short {
+            width: 110px;
+        }
+        
+        #submitBtn {
+            width: 280px;
+            font-size: 16px;
+            height: 40px;
+            background: orange;
+            color: white;
+        }
+        
+        .code-data button {
+            color: orange;
+        }
+        
+        .code-data button[disabled] {
+            color: #999;
+        }
+        
+        .bg {
+            height: 50%;
+            background: #333;
+            display: none;
+        }
+        
+        .bg-logo img {
+            float: left;
+            margin: 24px 21px 0 30px;
+        }
+        
+        .bg-logo h3 {
+            float: left;
+            line-height: 70px;
+            font-size: 30px;
+            margin-top: 30px;
+            color: white;
+        }
+        
+        .bot-text {
+            position: relative;
+            color: #888;
+        }
+        
+        .bot-line {
+            display: inline-block;
+            width: 66px;
+            border-top: 1px solid #888;
+            position: absolute;
+            top: 24px;
+        }
+        
+        .line-left {
+            left: 0;
+        }
+        
+        .line-right {
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg">
+        <a href="index.html" class="bg-logo clearfix"><img src="images/logo.png" />
+            <h3>校企职通车</h3>
+        </a>
+    </div>
+    <div class="bind-mobile-box">
+        <!-- <h2 class="bind-mobile-title">请关联你的校企账号</h2> -->
+        <form class="bind-mobile-form">
+            <h3>请关联你的校企账号</h3>
+            <div class="bind-mobile-data">
+                <p class="mobile-data"><label>手机号</label><input type="text" placeholder="请输入要绑定的手机号" /></p>
+                <p class="valid-data"><input type="text" placeholder="请证明你不是机器人" /><i class="pic-wrapper pic-code form-short"><img class="code-pic" src="https://www.xiaoqiztc.com/easily_xq_WebApi/sys/img" /></i></p>
+                <p class="code-data"><input type="text" placeholder="请输入手机验证码" /><button type="button" class="form-short">获取验证码</button></p>
+                <p><button id="submitBtn" type="button">绑定手机</button></p>
+                <p class="bot-text"><i class="bot-line line-left"></i>请输入一个手机号，用来绑定第三方账号<i class="bot-line line-right"></i></p>
+            </div>
+        </form>
+    </div>
+    <script src="js/commons.js?v=1.0.3"></script>
+    <script src="js/quickLogin.js?v=1.0.3"></script>
+</body>
+
+</html>

@@ -169,6 +169,16 @@ window.EventUtils = {
             };
             return paraObj;
         },
+        urlExtracNormal: function(url) {
+            var paraStr = url.search.substr(1);
+            var paraArray = paraStr.split("&");
+            var paraObj = {};
+            for (var i = 0; i < paraArray.length; i++) {
+                var pars = paraArray[i].split("=");
+                paraObj[pars[0]] = pars[1];
+            };
+            return paraObj;
+        },
         infoExtrac: function(info) {
             if (info) {
                 var infoArray = info.split(";");
@@ -221,11 +231,13 @@ window.EventUtils = {
         ajaxReq: function(url, method, postdata, callback) {
             $.ajax({
                 url: "https://www.xiaoqiztc.com/easily_xq_WebApi" + url,
+                // url: "https://www.xiaoqiztc.com/easily_xq_WebApi_test" + url,
                 //url: "http://192.168.0.105:8080/easily_xq_WebApi" + url,
                 type: method,
                 async: false,
                 data: postdata,
                 success: function(resp, status) {
+                    // console.log(resp);
                     if (resp.code == "00000" || resp.code == "10005") {
                         callback(resp, status);
                     } else if (resp.code == "10002") {

@@ -6,6 +6,7 @@ require("../components/dropdown")
 require("../components/pagination")
 require("../components/detail-table")
 require("../components/common-footer")
+require("../components/login-box")
 require("../../css/base.css")
 require("../../css//sweetalert.css")
 require("../../css/widget.css")
@@ -368,10 +369,10 @@ var appModal = new Vue({
             this.showLogin = false;
             this.showModal = false;
         },
-        loginEv: function() {
+        loginEv: function(loginObj) {
             var postdata = {
-                loginName: this.login.account,
-                password: this.login.password
+                loginName: loginObj.account,
+                password: loginObj.password
             };
             //console.log(postdata);
             EventUtils.ajaxReq("/center/user/login", "post", postdata, function(resp, status) {

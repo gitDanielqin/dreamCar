@@ -8,6 +8,7 @@ var Vue = require("../libs/vue.min");
 require("../components/dropdown")
 require("../components/pagination")
 require("../components/common-footer")
+require("../components/login-box")
 require("../../data/commondata")
 require("../../data/major")
 require("../../data/position")
@@ -537,10 +538,10 @@ var appModal = new Vue({
             this.showLogin = false;
             this.showModal = false;
         },
-        loginEv: function() {
+        loginEv: function(loginObj) {
             var postdata = {
-                loginName: this.login.account,
-                password: this.login.password
+                loginName: loginObj.account,
+                password: loginObj.password
             };
             EventUtils.ajaxReq("/center/user/login", "post", postdata, function(resp, status) {
                 accountObj = resp.data;

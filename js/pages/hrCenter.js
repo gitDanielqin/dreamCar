@@ -724,6 +724,18 @@ function navEventBind() {
 
 function jobfairRequest(date, cvStatus, page, id) {
     if (mapper.jobfair.length == 0) {
+        var cvData = {
+            totalitems: 0,
+            totalpages: 1,
+            curpage: 1,
+            resultIndex: cvStatus,
+            resumePos: hrApp.resumes.resumePos,
+            handleCount: 0,
+            resumeType: "招聘会",
+            jobfairDate: "",
+            cvList: []
+        };
+        hrApp.resumes = cvData;
         return false;
     }
     var jobfairId;
@@ -776,6 +788,18 @@ function jobfairRequest(date, cvStatus, page, id) {
 
 function recruitRequest(job, cvStatus, page, id) {
     if (mapper.recruit.length == 0) {
+        var cvData = {
+            totalitems: 0,
+            totalpages: 1,
+            curpage: 1,
+            resultIndex: cvStatus,
+            resumePos: "",
+            handleCount: resp.data.count,
+            resumeType: "企业直聘",
+            jobfairDate: hrApp.resumes.jobfairDate,
+            cvList: []
+        }
+        hrApp.resumes = cvData;
         return false;
     }
     var recruitId;

@@ -50,6 +50,11 @@
     transform: translate(-50%, -50%);
 }
 
+.preview-file img {
+    max-height: 600px;
+    max-width: 500px;
+}
+
 .selectee {
     position: relative;
     display: inline-block;
@@ -343,7 +348,7 @@
     height: 58px;
     text-align: center;
     width: 100%;
-    background: #48c1e4;
+    background: #f7b632;
     color: white;
     border: 1px solid #ccc;
     border-bottom: none;

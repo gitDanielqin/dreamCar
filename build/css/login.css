@@ -24,6 +24,15 @@ body {
     height: 100%;
 }
 
+.isFormatValid {
+    display: none;
+    padding: 5px;
+    position: absolute;
+    left: 20px;
+    bottom: -22px;
+    color: red;
+}
+
 
 /*banner过渡淡入淡出动画*/
 

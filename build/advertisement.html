@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
+    <style>
+        html,
+        body {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+        img {
+            width: 100%;
+            vertical-align: bottom
+        }
+        
+        .apply-form {
+            position: absolute;
+            left: 340px;
+            top: 500px;
+        }
+        
+        .apply-form label {
+            font-weight: bold;
+        }
+        
+        .apply-form input {
+            line-height: 30px;
+            background: black;
+            border: none;
+            padding: 0 5px;
+            outline: none;
+            color: white;
+        }
+        
+        .apply-form button {
+            line-height: 28px;
+            width: 80px;
+            color: orange;
+            background: black;
+            border: none;
+            outline: none;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="http://os9bwedvi.bkt.clouddn.com/carschool.jpg?imageslim" />
+    <form class="apply-form">
+        <label>报名电话：</label><input type="text" id="apply-mobile" placeholder="请输入手机号" />
+        <label style="margin-left:30px;">您的名字：</label><input type="text" id="apply-name" placeholder="请输入您的名字" />
+        <button type="button" id="apply-btn">领福利</button>
+    </form>
+    <script src="js/jquery-3.1.0.min.js"></script>
+    <script>
+        // 输入手机号验证
+        document.getElementById("apply-mobile").oninput = function() {
+                if (!/^\d{0,11}$/.test(this.value)) {
+                    this.value = this.value.slice(0, -1);
+                }
+            }
+            // 提交
+        document.getElementById("apply-btn").onclick = function() {
+            if ($("#apply-mobile").val() == "" || $("#apply-name").val() == "") {
+                alert("请检查信息是否完整！");
+                return false;
+            }
+            if (!/^1[34578]\d{9}$/.test($("#apply-mobile").val())) {
+                alert("请输入正确的手机号码！");
+                return false;
+            }
+            $.ajax({
+                url: "https://www.xiaoqiztc.com/easily_xq_WebApi/sys/learnCar",
+                type: "post",
+                async: false,
+                data: {
+                    phone: $("#apply-mobile").val(),
+                    name: $("#apply-name").val()
+                },
+                success: function(resp, status) {
+                    if (resp.code == "00000" || resp.code == "10005") {
+                        alert(resp.info);
+                    } else if (resp.code == "10002") {
+                        alert(resp.info);
+                    } else {
+                        alert("系统错误，请稍后重试！")
+                    }
+                },
+                error: function(data, status) {
+                    alert("请求服务器数据错误，请稍后重试！");
+                },
+                timeout: 100000
+            })
+        }
+    </script>
+</body>
+
+</html>

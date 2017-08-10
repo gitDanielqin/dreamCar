@@ -44,6 +44,11 @@
     transform: translate(-50%, -50%);
 }
 
+.preview-file img {
+    max-height: 600px;
+    max-width: 500px;
+}
+
 .class-name a:hover {
     text-decoration: underline;
 }

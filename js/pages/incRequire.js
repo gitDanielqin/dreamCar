@@ -802,6 +802,27 @@ var appMain = new Vue({
             if (!/^[\d-]*$/.test(curval)) {
                 this.directData.contact.phone = oldval;
             }
+        },
+        "showpage.page1": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    selectInitPos();
+                })
+            }
+        },
+        "showpage.page2": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    selectInitPos();
+                })
+            }
+        },
+        "showpage.page3": function(curval) {
+            if (curval) {
+                this.$nextTick(function() {
+                    selectInitPos();
+                })
+            }
         }
     },
     mounted: function() {

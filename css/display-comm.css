@@ -578,6 +578,14 @@ a.login-link {
     background: url("../images/sprite.png") no-repeat -361px -267px;
 }
 
+.fast-login {
+    font-size: 0;
+}
+
+.icon-weibo a img {
+    display: none;
+}
+
 .fast-login i.pic-icon {
     margin-right: 35px;
 }

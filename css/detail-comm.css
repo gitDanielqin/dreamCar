@@ -289,26 +289,27 @@ button.btn-apply[disabled] {
 }
 
 .result-tabs {
-    border-top: 2px solid #bfbfbf;
-    border-bottom: 4px solid #ff8a00;
-    width: 806px;
+    border: 1px solid #d1d1d1;
+    border-bottom: none;
+    width: 799px;
+    font-size: 18px;
 }
 
 .result-tabs li {
     width: 199px;
-    border-right: 2px solid #bfbfbf;
     position: relative;
     cursor: pointer;
+    border-right: 1px solid #e5e5e5;
+    line-height: 58px;
 }
 
-.result-tabs li:first-child {
-    border-left: 2px solid #bfbfbf;
+.result-tabs li:last-child {
+    border-right: none;
 }
 
 .result-tabs li.on {
     background: #ff8a00;
     color: white;
-    border-color: #ff8a00
 }
 
 .result-tabs .msg-info {
@@ -326,6 +327,8 @@ button.btn-apply[disabled] {
 
 .result-table {
     border-collapse: collapse;
+    border: 1px solid #d1d1d1;
+    width: 779px;
 }
 
 .result-table th {
@@ -356,13 +359,15 @@ button.btn-apply[disabled] {
 }
 
 .tab-cont {
-    height: 750px;
     display: none;
-    width: 784px;
-    border: 1px solid #ff8a00;
     padding: 10px;
+    padding-top: 30px;
     overflow: auto;
     margin-bottom: 10px;
+    width: 779px;
+    border: 1px solid #d1d1d1;
+    border-top: none;
+    min-height: 500px;
 }
 
 .cont-comment li {
@@ -503,6 +508,14 @@ a.login-link {
     background: url("../images/sprite.png") no-repeat -190px -152px;
     width: 32px;
     height: 26px;
+}
+
+.fast-login {
+    font-size: 0;
+}
+
+.icon-weibo a img {
+    display: none;
 }
 
 .login-link .pic-icon {
